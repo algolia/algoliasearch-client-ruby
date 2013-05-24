@@ -36,7 +36,7 @@ You can use the following optional arguments:
  * **tags**: filter the query by a set of tags. You can AND tags by separating them by commas. To OR tags, you must add parentheses. For example, `tags=tag1,(tag2,tag3)` means *tag1 AND (tag2 OR tag3)*.<br/>At indexing, tags should be added in the _tags attribute of objects (for example `{"_tags":["tag1","tag2"]}` )
 
 ```ruby
-index = client.initIndex("cities")
+index = Algolia::Index.new("cities")
 res = index.search("query string")
 res = index.search("query string", { "attributes" => "population,name", "hitsPerPage" => 20})
 ```
