@@ -2,6 +2,7 @@ Algolia Search API Client for Ruby
 ==================
 
 This Ruby client let you easily use the Algolia Search API from your backend.
+The service is currently in Beta, you can request an invite on our [website](http://www.algolia.com/pricing/).
 
 Setup
 -------------
@@ -17,6 +18,34 @@ require 'algoliasearch-client-ruby'
 Algolia.init :hosts             => ["user-1.algolia.com", "user-2.algolia.com", "user-3.algolia.com"],
              :application_id    => "YourApplicationID",
              :api_key           => "YourAPIKey"
+```
+
+Quick Start
+-------------
+This quick start is a 30 seconds tutorial where you can discover how to index and search objects.
+
+Without any prior-configuration, you can index the 1000 world's biggest cities in the ```cities``` index with the following code:
+```ruby
+index = Algolia::Index.new("cities")
+batch = JSON.parse(File.read("1000-cities.json"))
+index.add_objects(batch["objects"])
+```
+The [1000-cities.json](https://github.com/algolia/algoliasearch-client-php/blob/master/1000-cities.json) file contains city names extracted from [Geonames](http://www.geonames.org) and formated in our [batch format](http://docs.algoliav1.apiary.io/#post-%2F1%2Findexes%2F%7BindexName%7D%2Fbatch). The ```body```attribute contains the user-object that can be any valid JSON.
+
+You can then start to search for a city name (even with typos):
+```ruby
+puts index.search('san fran').to_json
+puts index.search('loz anqel').to_json
+```
+
+Settings can be customized to tune the index behavior. For example you can add a custom sort by population to the already good out-of-the-box relevance to raise bigger cities above smaller ones. To update the settings, use the following code:
+```ruby
+index.set_settings({"customRanking" => ["desc(population)", "asc(name)"]})
+```
+
+And then search for all cities that start with an "s":
+```ruby
+puts index.search('s').to_json
 ```
 
 Search 
