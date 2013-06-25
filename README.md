@@ -15,7 +15,9 @@ To setup your project, follow these steps:
 require 'rubygems'
 require 'algoliasearch-client-ruby'
 
-Algolia.init :hosts             => ["Hostname-1.algolia.com", "Hostname-2.algolia.com", "Hostname-3.algolia.com"],
+Algolia.init :hosts             => ["Hostname-1.algolia.com", 
+                                    "Hostname-2.algolia.com", 
+                                    "Hostname-3.algolia.com"],
              :application_id    => "YourApplicationID",
              :api_key           => "YourAPIKey"
 ```
