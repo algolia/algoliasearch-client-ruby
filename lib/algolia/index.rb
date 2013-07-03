@@ -255,5 +255,39 @@ module Algolia
     def get_settings
       Algolia.client.get(Protocol.settings_uri(name))
     end 
+
+    # List all existing user keys with their associated ACLs
+    def list_user_keys
+        Algolia.client.get(Protocol.index_keys_uri(name))
+    end
+ 
+    # Get ACL of a user key
+    def get_user_key(key)
+        Algolia.client.get(Protocol.index_key_uri(name, key))
+    end
+ 
+    #
+    #  Create a new user key
+    #
+    #  @param acls the list of ACL for this key. Defined by an array of strings that 
+    #         can contains the following values:
+    #           - search: allow to search (https and http)
+    #           - addObject: allows to add a new object in the index (https only)
+    #           - updateObject : allows to change content of an existing object (https only)
+    #           - deleteObject : allows to delete an existing object (https only)
+    #           - deleteIndex : allows to delete index content (https only)
+    #           - settings : allows to get index settings (https only)
+    #           - editSettings : allows to change index settings (https only)
+    #  @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
+    #
+    def add_user_key(acls, validity = 0)
+        Algolia.client.post(Protocol.index_keys_uri(name), {"acl" => acls, "validity" => validity}.to_json)
+    end
+ 
+    # Delete an existing user key
+    def delete_user_key(key)
+        Algolia.client.delete(Protocol.index_key_uri(name, key))
+    end
+
   end
 end

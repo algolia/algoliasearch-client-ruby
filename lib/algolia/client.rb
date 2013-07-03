@@ -136,9 +136,10 @@ module Algolia
   #           - deleteIndex : allows to delete index content (https only)
   #           - settings : allows to get index settings (https only)
   #           - editSettings : allows to change index settings (https only)
+  #  @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
   #
-  def Algolia.add_user_key(acls)
-      Algolia.client.post(Protocol.keys_uri, {"acl" => acls}.to_json)
+  def Algolia.add_user_key(acls, validity = 0)
+      Algolia.client.post(Protocol.keys_uri, {"acl" => acls, "validity" => validity}.to_json)
   end
 
   # Delete an existing user key

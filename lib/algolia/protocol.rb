@@ -73,6 +73,14 @@ module Algolia
       "/#{VERSION}/keys/#{key}"
     end
 
+    def Protocol.index_key_uri(index, key)
+      "#{index_uri(index)}/keys/#{key}"
+    end
+
+    def Protocol.index_keys_uri(index)
+      "#{index_uri(index)}/keys"
+    end
+
     private
     def Protocol.to_query(params)
       params.map do |k, v|
