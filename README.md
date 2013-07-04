@@ -262,23 +262,25 @@ index.delete
 Wait indexing
 -------------
 
-All write operations return a `taskID` when the job is securely stored on our infrastructure but not when the job is published in your index. You can easily wait indexing using the same method with a `!`.
+All write operations return a `taskID` when the job is securely stored on our infrastructure but not when the job is published in your index. Even if it's extremely fast, you can easily ensure indexing is complete using the same method with a `!`.
 
-For example to wait for indexing of a new object:
+For example, to wait for indexing of a new object:
 ```ruby
 res = index.add_object!({"name" => "San Francisco", 
                          "population" => 805235})
 ```
+
+If you want to ensure multiple objects have been indexed, you can only check the biggest taskID.
 
 Batch writes
 -------------
 
 You may want to perform multiple operations with one API call to reduce latency.
 We expose two methods to perform batch:
- * `add_objects`: add an array of object using automatic `objectID` assignement
- * `save_objects`: add or update an array of object that contains an `objectID` attribute
+ * `addObjects`: add an array of object using automatic `objectID` assignement
+ * `saveObjects`: add or update an array of object that contains an `objectID` attribute
 
-Example using automatic `objectID` assignement
+Example using automatic `objectID` assignement:
 ```ruby
 res = index.add_objects([{"name" => "San Francisco", 
                           "population" => 805235},
