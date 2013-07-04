@@ -19,7 +19,10 @@ Table of Content
 1. [Get an object](#get-an-object)
 1. [Delete an object](#delete-an-object)
 1. [Index settings](#index-settings)
+1. [List indexes](#list-indexes)
 1. [Delete an index](#delete-an-index)
+1. [Wait indexing](#wait-indexing)
+1. [Batch writes](#batch-writes)
 1. [Security / User API Keys](#security--user-api-keys)
 
 Setup
@@ -50,7 +53,7 @@ index = Algolia::Index.new("cities")
 batch = JSON.parse(File.read("1000-cities.json"))
 index.add_objects(batch["objects"])
 ```
-The [1000-cities.json](https://github.com/algolia/algoliasearch-client-ruby/blob/master/1000-cities.json) file contains city names extracted from [Geonames](http://www.geonames.org) and formated in our [batch format](http://docs.algoliav1.apiary.io/#post-%2F1%2Findexes%2F%7BindexName%7D%2Fbatch). The ```body```attribute contains the user-object that can be any valid JSON.
+The [1000-cities.json](https://github.com/algolia/algoliasearch-client-ruby/blob/master/1000-cities.json) file contains city names extracted from [Geonames](http://www.geonames.org).
 
 You can then start to search for a city name (even with typos):
 ```ruby
@@ -239,6 +242,14 @@ puts settings.to_json
 index.set_settings({"customRanking" => ["desc(population)", "asc(name)"]})
 ```
 
+List indexes
+-------------
+You can list all your indexes with their associated information (number of entries, disk size, etc.) with the `list_indexes` method:
+
+```ruby
+Algolia.list_indexes
+```
+
 Delete an index
 -------------
 You can delete an index using its name:
@@ -246,6 +257,43 @@ You can delete an index using its name:
 ```ruby
 index = Algolia::Index.new("cities")
 index.delete
+```
+
+Wait indexing
+-------------
+
+All write operations return a `taskID` when the job is securely stored on our infrastructure but not when the job is published in your index. You can easily wait indexing using the same method with a `!`.
+
+For example to wait for indexing of a new object:
+```ruby
+res = index.add_object!({"name" => "San Francisco", 
+                         "population" => 805235})
+```
+
+Batch writes
+-------------
+
+You may want to perform multiple operations with one API call to reduce latency.
+We expose two methods to perform batch:
+ * `add_objects`: add an array of object using automatic `objectID` assignement
+ * `save_objects`: add or update an array of object that contains an `objectID` attribute
+
+Example using automatic `objectID` assignement
+```ruby
+res = index.add_objects([{"name" => "San Francisco", 
+                          "population" => 805235},
+                         {"name" => "Los Angeles",
+                          "population" => 3792621}])
+```
+
+Example with user defined `objectID` (add or update):
+```ruby
+res = index.save_objects([{"name" => "San Francisco", 
+                           "population" => 805235,
+                           "objectID" => "SFO"},
+                          {"name" => "Los Angeles",
+                           "population" => 3792621,
+                           "objectID" => "LA"}])
 ```
 
 Security / User API Keys
