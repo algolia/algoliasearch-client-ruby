@@ -19,15 +19,17 @@ Gem::Specification.new do |s|
   s.files = [
     "1000-cities.json",
     "Gemfile",
+    "Gemfile.lock",
     "LICENSE.txt",
     "README.md",
     "Rakefile",
     "VERSION",
-    "algoliasearch-client-ruby.gemspec",
+    "algoliasearch.gemspec",
     "lib/algolia/client.rb",
     "lib/algolia/error.rb",
     "lib/algolia/index.rb",
-    "lib/algolia/protocol.rb"
+    "lib/algolia/protocol.rb",
+    "lib/algoliasearch.rb"
   ]
   s.homepage = %q{http://github.com/algolia/algoliasearch-client-ruby}
   s.licenses = [%q{MIT}]
