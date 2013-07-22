@@ -34,7 +34,7 @@ To setup your project, follow these steps:
 
 ```ruby
 require 'rubygems'
-require 'algoliasearch-client-ruby'
+require 'algoliasearch'
 
 Algolia.init :hosts             => ["YourHostname-1.algolia.com", 
                                     "YourHostname-2.algolia.com", 

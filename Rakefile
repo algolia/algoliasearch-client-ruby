@@ -14,7 +14,7 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "algoliasearch-client-ruby"
+  gem.name = "algoliasearch"
   gem.homepage = "http://github.com/algolia/algoliasearch-client-ruby"
   gem.license = "MIT"
   gem.summary = %Q{A simple Ruby client for the algolia.com REST API}
@@ -38,7 +38,7 @@ require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "algoliasearch-client-ruby #{version}"
+  rdoc.title = "algoliasearch #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
