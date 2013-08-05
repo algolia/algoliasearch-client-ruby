@@ -17,8 +17,8 @@ module Algolia
       @application_id = data[:application_id]
       @api_key        = data[:api_key]
       @gzip           = data[:gzip].nil? ? false : data[:gzip]
-
-      rhosts = data[:hosts].shuffle
+      rhosts          = (data[:hosts] || 1.upto(3).map { |i| "#{@application_id}-#{i}.algolia.io" }).shuffle
+      
       @hosts = []
       rhosts.each do |host|
         hinfo = {}
@@ -32,7 +32,7 @@ module Algolia
           s.headers["User-Agent"]              = "Algolia for Ruby"
           s.verbose                            = true if data[:debug]
         end
-        @hosts.push(hinfo)
+        @hosts << hinfo
       end
     end
 

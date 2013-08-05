@@ -30,17 +30,14 @@ Setup
 To setup your project, follow these steps:
 
  2. Install AlgoliaSearch using <code>gem install algoliasearch</code>.
- 2. Initialize the client with your ApplicationID, API-Key and list of hostnames (you can find all of them on your Algolia account).
+ 2. Initialize the client with your ApplicationID and API-Key (you can find all of them on your Algolia account).
 
 ```ruby
 require 'rubygems'
 require 'algoliasearch'
 
-Algolia.init :hosts             => ["YourHostname-1.algolia.com", 
-                                    "YourHostname-2.algolia.com", 
-                                    "YourHostname-3.algolia.com"],
-             :application_id    => "YourApplicationID",
-             :api_key           => "YourAPIKey"
+Algolia.init :application_id => "YourApplicationID",
+             :api_key        => "YourAPIKey"
 ```
 
 Quick Start
