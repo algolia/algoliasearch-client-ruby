@@ -205,7 +205,8 @@ Example to replace all the content of an existing object:
 
 ```ruby
 index.save_object({"firstname" => "Jimmie", 
-                   "lastname" => "Barninger", 
+                   "lastname" => "Barninger",
+                   "city" => "New York",
                    "objectID" => "myID"})
 ```
 
