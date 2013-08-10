@@ -69,7 +69,8 @@ index.set_settings({"customRanking" => ["desc(followers)"]})
 ```
 You can also configure the list of attributes you want to index by order of importance (first = most important):
 ```ruby
-index.set_settings({"attributesToIndex" => ["lastname", "firstname", "company", "email", "city", "address"]})
+index.set_settings({"attributesToIndex" => ["lastname", "firstname", "company", 
+                                            "email", "city", "address"]})
 ```
 
 Since the engine is designed to suggest results as you type, you'll generally search by prefix. In this case the order of attributes is very important to decide which hit is the best:
