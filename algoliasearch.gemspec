@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
     "README.md"
   ]
   s.files = [
-    "1000-cities.json",
+    "contacts.json",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",

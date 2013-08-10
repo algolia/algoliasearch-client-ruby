@@ -44,28 +44,38 @@ Quick Start
 -------------
 This quick start is a 30 seconds tutorial where you can discover how to index and search objects.
 
-Without any prior-configuration, you can index the 1000 world's biggest cities in the ```cities``` index with the following code:
+Without any prior-configuration, you can index [500 contacts](https://github.com/algolia/algoliasearch-client-ruby/blob/master/contacts.json) in the ```contacts``` index with the following code:
 ```ruby
-index = Algolia::Index.new("cities")
-batch = JSON.parse(File.read("1000-cities.json"))
-index.add_objects(batch["objects"])
-```
-The [1000-cities.json](https://github.com/algolia/algoliasearch-client-ruby/blob/master/1000-cities.json) file contains city names extracted from [Geonames](http://www.geonames.org).
-
-You can then start to search for a city name (even with typos):
-```ruby
-puts index.search('san fran').to_json
-puts index.search('loz anqel').to_json
+index = Algolia::Index.new("contacts")
+batch = JSON.parse(File.read("contacts.json"))
+index.add_objects(batch)
 ```
 
-Settings can be customized to tune the index behavior. For example you can add a custom sort by population to the already good out-of-the-box relevance to raise bigger cities above smaller ones. To update the settings, use the following code:
+You can then start to search for a contact firstname, lastname, company, ... (even with typos):
 ```ruby
-index.set_settings({"customRanking" => ["desc(population)", "asc(name)"]})
+# search by firstname
+puts index.search('jimmie').to_json
+# search a firstname with typo
+puts index.search('jimie').to_json
+# search for a company
+puts index.search('california paint').to_json
+# search for a firstname & company
+puts index.search('jimmie paint').to_json
 ```
 
-And then search for all cities that start with an "s":
+Settings can be customized to tune the search behavior. For example you can add a custom sort by number of followers to the already good out-of-the-box relevance:
 ```ruby
-puts index.search('s').to_json
+index.set_settings({"customRanking" => ["desc(followers)"]})
+```
+You can also configure the list of attributes you want to index by order of importance (first = most important):
+```ruby
+index.set_settings({"attributesToIndex" => ["lastname", "firstname", "company", "email", "city", "address"]})
+```
+
+Since the engine is designed to suggest results as you type, you'll generally search by prefix. In this case the order of attributes is very important to decide which hit is the best:
+```ruby
+puts index.search('or').to_json
+puts index.search('jim').to_json
 ```
 
 Search
@@ -92,9 +102,9 @@ You can use the following optional arguments:
  * **tags**: filter the query by a set of tags. You can AND tags by separating them by commas. To OR tags, you must add parentheses. For example, `tags=tag1,(tag2,tag3)` means *tag1 AND (tag2 OR tag3)*.<br/>At indexing, tags should be added in the _tags attribute of objects (for example `{"_tags":["tag1","tag2"]}` )
 
 ```ruby
-index = Algolia::Index.new("cities")
+index = Algolia::Index.new("contacts")
 res = index.search("query string")
-res = index.search("query string", { "attributes" => "population,name", "hitsPerPage" => 20})
+res = index.search("query string", { "attributes" => "firstname,lastname", "hitsPerPage" => 20})
 ```
 
 The server response will look like:
@@ -141,16 +151,16 @@ Objects are schema less, you don't need any configuration to start indexing. The
 Example with automatic `objectID` assignement:
 
 ```ruby
-res = index.add_object({"name" => "San Francisco", 
-                        "population" => 805235})
+res = index.add_object({"firstname" => "Jimmie", 
+                        "lastname" => "Barninger"})
 puts "ObjectID=" + res["objectID"]
 ```
 
 Example with manual `objectID` assignement:
 
 ```ruby
-res = index.add_object({"name" => "San Francisco", 
-                        "population" => 805235}, "myID")
+res = index.add_object({"firstname" => "Jimmie", 
+                        "lastname" => "Barninger"}, "myID")
 puts "ObjectID=" + res["objectID"]
 ```
 
@@ -165,15 +175,15 @@ You have two options to update an existing object:
 Example to replace all the content of an existing object:
 
 ```ruby
-index.save_object({"name" => "San Francisco", 
-                   "population" => 805235, 
+index.save_object({"firstname" => "Jimmie", 
+                   "lastname" => "Barninger", 
                    "objectID" => "myID"})
 ```
 
-Example to update only the population attribute of an existing object:
+Example to update only the city attribute of an existing object:
 
 ```ruby
-index.partial_update_object({"population" => 805235, 
+index.partial_update_object({"city" => "San Francisco", 
                              "objectID" => "myID"})
 ```
 
@@ -185,10 +195,10 @@ You can easily retrieve an object using its `objectID` and optionnaly a list of 
 ```ruby
 # Retrieves all attributes
 index.get_object("myID")
-# Retrieves name and population attributes
-res = index.get_object("myID", "name,population")
-# Retrieves only the name attribute
-res = index.get_object("myID", "name")
+# Retrieves firstname and lastname attributes
+res = index.get_object("myID", "firstname,lastname")
+# Retrieves only the firstname attribute
+res = index.get_object("myID", "fistname")
 ```
 
 Delete an object
@@ -237,7 +247,7 @@ puts settings.to_json
 ```
 
 ```ruby
-index.set_settings({"customRanking" => ["desc(population)", "asc(name)"]})
+index.set_settings({"customRanking" => ["desc(followers)"]})
 ```
 
 List indexes
@@ -253,7 +263,7 @@ Delete an index
 You can delete an index using its name:
 
 ```ruby
-index = Algolia::Index.new("cities")
+index = Algolia::Index.new("contacts")
 index.delete
 ```
 
@@ -264,8 +274,8 @@ All write operations return a `taskID` when the job is securely stored on our in
 
 For example, to wait for indexing of a new object:
 ```ruby
-res = index.add_object!({"name" => "San Francisco", 
-                         "population" => 805235})
+res = index.add_object!({"firstname" => "Jimmie", 
+                         "lastname" => "Barninger"})
 ```
 
 If you want to ensure multiple objects have been indexed, you can only check the biggest taskID.
@@ -280,20 +290,20 @@ We expose two methods to perform batch:
 
 Example using automatic `objectID` assignement:
 ```ruby
-res = index.add_objects([{"name" => "San Francisco", 
-                          "population" => 805235},
-                         {"name" => "Los Angeles",
-                          "population" => 3792621}])
+res = index.add_objects([{"firstname" => "Jimmie", 
+                          "lastname" => "Barninger"},
+                         {"firstname" => "Warren", 
+                          "lastname" => "Speach"}])
 ```
 
 Example with user defined `objectID` (add or update):
 ```ruby
-res = index.save_objects([{"name" => "San Francisco", 
-                           "population" => 805235,
-                           "objectID" => "SFO"},
-                          {"name" => "Los Angeles",
-                           "population" => 3792621,
-                           "objectID" => "LA"}])
+res = index.save_objects([{"firstname" => "Jimmie", 
+                          "lastname" => "Barninger",
+                           "objectID" => "myID1"},
+                          {"firstname" => "Warren", 
+                          "lastname" => "Speach",
+                           "objectID" => "myID2"}])
 ```
 
 Security / User API Keys
