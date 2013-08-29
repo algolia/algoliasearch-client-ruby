@@ -29,8 +29,8 @@ Setup
 -------------
 To setup your project, follow these steps:
 
- 2. Install AlgoliaSearch using <code>gem install algoliasearch</code>.
- 2. Initialize the client with your ApplicationID and API-Key (you can find all of them on your Algolia account).
+ 1. Install AlgoliaSearch using <code>gem install algoliasearch</code>.
+ 2. Initialize the client with your ApplicationID and API-Key. You can find all of them on [your Algolia account](http://www.algolia.com/users/edit).
 
 ```ruby
 require 'rubygems'
