@@ -308,7 +308,7 @@ res = index.add_object!({"firstname" => "Jimmie",
                          "lastname" => "Barninger"})
 ```
 
-If you want to ensure multiple objects have been indexed, you can only check the biggest taskID.
+If you want to ensure multiple objects have been indexed, you can only check the biggest taskID with `wait_task`.
 
 Batch writes
 -------------
