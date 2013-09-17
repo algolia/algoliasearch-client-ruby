@@ -114,6 +114,36 @@ module Algolia
       Algolia.client.get(Protocol.indexes_uri)
   end
 
+  #
+  # Move an existing index.
+  # @param srcIndexName the name of index to copy.
+  # @param dstIndexName the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+  #
+  def Algolia.move_index(src_index, dst_index)
+      request = {"operation" => "move", "destination" => dst_index};
+      Algolia.client.post(Protocol.index_operation_uri(src_index), request.to_json)
+  end
+
+  #
+  # Copy an existing index.
+  # @param srcIndexName the name of index to copy.
+  # @param dstIndexName the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+  #
+  def Algolia.copy_index(src_index, dst_index)
+      request = {"operation" => "copy", "destination" => dst_index};
+      Algolia.client.post(Protocol.index_operation_uri(src_index), request.to_json)
+  end
+
+  #
+  # Return last logs entries.
+  #
+  # @param offset Specify the first entry to retrieve (0-based, 0 is the most recent log entry).
+  # @param length Specify the maximum number of entries to retrieve starting at offset. Maximum allowed value: 1000.
+  #
+  def Algolia.get_logs(offset = 0, length = 10)
+      Algolia.client.get(Protocol.logs(offset, length))
+  end
+
   # List all existing user keys with their associated ACLs
   def Algolia.list_user_keys
       Algolia.client.get(Protocol.keys_uri)

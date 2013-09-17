@@ -43,6 +43,10 @@ module Algolia
       "/#{VERSION}/indexes/#{index}/batch"
     end
     
+    def Protocol.index_operation_uri(index)
+      "/#{VERSION}/indexes/#{index}/operation"
+    end
+
     def Protocol.task_uri(index, task_id)
       "#{index_uri(index)}/task/#{task_id}"
     end
@@ -65,6 +69,10 @@ module Algolia
       "#{index_uri(index)}/settings"
     end
     
+    def Protocol.logs(offset, length)
+      "/#{VERSION}/logs?offset=#{offset}&length=#{length}"
+    end
+
     def Protocol.keys_uri
       "/#{VERSION}/keys"
     end
