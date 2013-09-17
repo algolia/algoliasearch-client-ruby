@@ -215,6 +215,17 @@ module Algolia
     end
     
     #
+    # Delete an object from the index and wait end of indexing
+    # 
+    # @param objectID the unique identifier of object to delete
+    #
+    def delete_object!(objectID)
+      res = delete_object(objectID)
+      wait_task(res["taskID"])
+      return res
+    end
+    
+    #
     # Set settings for this index
     # 
     # @param settigns the settings object that can contains :
