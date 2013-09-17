@@ -4,14 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = "algoliasearch"
-  s.version = "1.0.1"
+  s.name = %q{algoliasearch}
+  s.version = "1.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Algolia"]
-  s.date = "2013-08-13"
-  s.description = "A simple Ruby client for the algolia.com REST API"
-  s.email = "contact@algolia.com"
+  s.authors = [%q{Algolia}]
+  s.date = %q{2013-09-17}
+  s.description = %q{A simple Ruby client for the algolia.com REST API}
+  s.email = %q{contact@algolia.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.md"
@@ -31,11 +31,11 @@ Gem::Specification.new do |s|
     "lib/algolia/protocol.rb",
     "lib/algoliasearch.rb"
   ]
-  s.homepage = "http://github.com/algolia/algoliasearch-client-ruby"
-  s.licenses = ["MIT"]
-  s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.25"
-  s.summary = "A simple Ruby client for the algolia.com REST API"
+  s.homepage = %q{http://github.com/algolia/algoliasearch-client-ruby}
+  s.licenses = [%q{MIT}]
+  s.require_paths = [%q{lib}]
+  s.rubygems_version = %q{1.8.5}
+  s.summary = %q{A simple Ruby client for the algolia.com REST API}
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
