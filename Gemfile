@@ -5,6 +5,7 @@ gem "curb"
 group :development do
 	gem "bundler"
   gem "jeweler"
+  gem "travis"
 end
 
 group :test do 
