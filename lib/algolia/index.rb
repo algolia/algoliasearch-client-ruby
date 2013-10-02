@@ -24,6 +24,7 @@ module Algolia
     # @param objectID (optional) an objectID you want to attribute to this object 
     #  (if the attribute already exist the old object will be overwrite)
     def add_object(obj, objectID = nil)
+      raise ArgumentError.new("argument must not be an array") if obj.is_a?(Array)
       if objectID == nil
         Algolia.client.post(Protocol.index_uri(name), obj.to_json)
       else
@@ -50,8 +51,10 @@ module Algolia
     # @param objectID (optional) an objectID you want to attribute to this object 
     #  (if the attribute already exist the old object will be overwrite)
     def add_objects(objs)
+        raise ArgumentError.new("argument must be an array of object") if !objs.is_a?(Array)
         requests = []
         objs.each do |obj|
+            raise ArgumentError.new("argument must be an array of object") if obj.is_a?(Array)
             requests.push({"action" => "addObject", "body" => obj})
         end
         request = {"requests" => requests};
