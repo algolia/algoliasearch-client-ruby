@@ -52,7 +52,7 @@ module Algolia
             session.post_body = data
             session.http_post
           when :PUT
-            session.http_put(data)
+            session.put(data)
           when :DELETE
             session.http_delete
           end

@@ -1,15 +1,17 @@
 source "http://rubygems.org"
 
-# Add dependencies to develop your gem here.
-# Include everything needed to run rake, tests, features, etc.
+gem "curb"
+
 group :development do
 	gem "bundler"
   gem "jeweler"
-  gem "test-unit"
-  gem "rspec"
-  gem 'shoulda-context'
-  gem 'webmock'
-  gem 'redgreen'
+  gem "travis"
 end
 
-gem "curb"
+group :test do 
+  gem 'rspec'
+  gem 'autotest'
+  gem 'autotest-fsevent'
+  gem 'redgreen'
+  gem 'autotest-growl'
+end
