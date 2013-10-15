@@ -26,4 +26,18 @@ describe 'Client' do
     expect { @index.add_objects!([ [ {:name => "test"} ] ]) }.to raise_error(ArgumentError)
   end
 
+  it "should be thread safe" do
+    threads = []
+    64.times do
+      t = Thread.new do
+        10.times do
+          res = @index.search("john")
+          res["hits"].length.should eq(1)
+        end
+      end
+      threads << t
+    end
+    threads.each { |t| t.join }
+  end
+
 end

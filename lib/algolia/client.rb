@@ -7,33 +7,17 @@ module Algolia
   # A class which encapsulates the HTTPS communication with the Algolia
   # API server. Uses the Curb (Curl) library for low-level HTTP communication.
   class Client
-    attr_accessor :hosts
-    attr_accessor :ssl
-    attr_accessor :application_id
-    attr_accessor :api_key
+    attr_reader :hosts
+    attr_reader :application_id
+    attr_reader :api_key
 
     def initialize(data = {})
       @ssl            = data[:ssl].nil? ? true : data[:ssl]
       @application_id = data[:application_id]
       @api_key        = data[:api_key]
       @gzip           = data[:gzip].nil? ? false : data[:gzip]
-      rhosts          = (data[:hosts] || 1.upto(3).map { |i| "#{@application_id}-#{i}.algolia.io" }).shuffle
-      
-      @hosts = []
-      rhosts.each do |host|
-        hinfo = {}
-        hinfo["base_url"] = "http#{@ssl ? 's' : ''}://#{host}"
-        hinfo["host"] = host
-        hinfo["session"] = Curl::Easy.new(@base_url) do |s|
-          s.headers[Protocol::HEADER_API_KEY]  = @api_key
-          s.headers[Protocol::HEADER_APP_ID]   = @application_id
-          s.headers["Content-Type"]            = "application/json; charset=utf-8"
-          s.headers["Accept"]                  = "Accept-Encoding: gzip,deflate" if @gzip
-          s.headers["User-Agent"]              = "Algolia for Ruby"
-          s.verbose                            = true if data[:debug]
-        end
-        @hosts << hinfo
-      end
+      @hosts          = (data[:hosts] || 1.upto(3).map { |i| "#{@application_id}-#{i}.algolia.io" }).shuffle
+      @debug          = data[:debug]
     end
 
     # Perform an HTTP request for the given uri and method
@@ -41,7 +25,7 @@ module Algolia
     # AlgoliaProtocolError if the response has an error status code,
     # and will return the parsed JSON body on success, if there is one.
     def request(uri, method, data = nil)
-      @hosts.each do |host|
+      thread_local_hosts.each do |host|
         begin
           session = host["session"]
           session.url = host["base_url"] + uri
@@ -84,6 +68,29 @@ module Algolia
 
     def delete(uri)
       request(uri, :DELETE)
+    end
+
+    private
+
+    # this method returns a thread-local array of sessions
+    def thread_local_hosts
+      if Thread.current[:hosts].nil?
+        Thread.current[:hosts] = hosts.map do |host|
+          hinfo = {}
+          hinfo["base_url"] = "http#{@ssl ? 's' : ''}://#{host}"
+          hinfo["host"] = host
+          hinfo["session"] = Curl::Easy.new do |s|
+            s.headers[Protocol::HEADER_API_KEY]  = api_key
+            s.headers[Protocol::HEADER_APP_ID]   = application_id
+            s.headers["Content-Type"]            = "application/json; charset=utf-8"
+            s.headers["Accept"]                  = "Accept-Encoding: gzip,deflate" if @gzip
+            s.headers["User-Agent"]              = "Algolia for Ruby"
+            s.verbose                            = true if @debug
+          end
+          hinfo
+        end
+      end
+      Thread.current[:hosts]
     end
 
   end
