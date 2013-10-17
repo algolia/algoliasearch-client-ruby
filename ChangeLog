@@ -1,0 +1,22 @@
+CHANGELOG
+
+2013-10-17  1.1.4
+
+      * Fixed wait_task not sleeping at all
+
+2013-10-15  1.1.3
+
+      * Fixed thread-safety issues.  - Curl sessions are now thread-local
+
+2013-10-02  1.1.2
+
+      * Fixed instance/class method conflict
+
+2013-10-01  1.1.1
+
+      * Updated documentation
+      * Plug copy/move index
+
+2013-09-17  1.1.0
+
+      * Initial import
