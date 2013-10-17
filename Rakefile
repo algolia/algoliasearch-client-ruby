@@ -11,6 +11,8 @@ rescue Bundler::BundlerError => e
 end
 require 'rake'
 
+require File.join(__FILE__, '..', 'lib', 'algolia', 'version')
+
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
@@ -21,6 +23,7 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{A simple Ruby client for the algolia.com REST API}
   gem.email = "contact@algolia.com"
   gem.authors = ["Algolia"]
+  gem.version = Algolia::VERSION
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
@@ -34,7 +37,7 @@ end
 
 require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
+  version = Algolia::VERSION
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title = "algoliasearch #{version}"
   rdoc.rdoc_files.include('README*')

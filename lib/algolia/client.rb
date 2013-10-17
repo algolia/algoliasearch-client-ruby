@@ -1,5 +1,6 @@
 require 'algolia/protocol'
 require 'algolia/error'
+require 'algolia/version'
 require 'json'
 
 module Algolia
@@ -84,7 +85,7 @@ module Algolia
             s.headers[Protocol::HEADER_APP_ID]   = application_id
             s.headers["Content-Type"]            = "application/json; charset=utf-8"
             s.headers["Accept"]                  = "Accept-Encoding: gzip,deflate" if @gzip
-            s.headers["User-Agent"]              = "Algolia for Ruby"
+            s.headers["User-Agent"]              = "Algolia for Ruby #{::Algolia::VERSION}"
             s.verbose                            = true if @debug
           end
           hinfo

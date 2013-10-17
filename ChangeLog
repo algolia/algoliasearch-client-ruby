@@ -1,5 +1,9 @@
 CHANGELOG
 
+2013-10-17  1.1.5
+
+      * Version is now part of the user-agent
+
 2013-10-17  1.1.4
 
       * Fixed wait_task not sleeping at all

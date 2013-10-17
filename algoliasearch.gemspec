@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "algoliasearch"
-  s.version = "1.1.4"
+  s.version = "1.1.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Algolia"]
@@ -26,13 +26,13 @@ Gem::Specification.new do |s|
     "LICENSE.txt",
     "README.md",
     "Rakefile",
-    "VERSION",
     "algoliasearch.gemspec",
     "contacts.json",
     "lib/algolia/client.rb",
     "lib/algolia/error.rb",
     "lib/algolia/index.rb",
     "lib/algolia/protocol.rb",
+    "lib/algolia/version.rb",
     "lib/algoliasearch.rb",
     "spec/client_spec.rb",
     "spec/spec_helper.rb"
