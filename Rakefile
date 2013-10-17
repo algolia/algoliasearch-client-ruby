@@ -11,7 +11,7 @@ rescue Bundler::BundlerError => e
 end
 require 'rake'
 
-require File.join(__FILE__, '..', 'lib', 'algolia', 'version')
+require File.expand_path('../lib/algolia/version', __FILE__)
 
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
