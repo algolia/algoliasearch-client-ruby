@@ -40,4 +40,9 @@ describe 'Client' do
     threads.each { |t| t.join }
   end
 
+  it "should clear the index" do
+    @index.clear!
+    @index.search("")["hits"].length.should eq(0)
+  end
+
 end

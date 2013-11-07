@@ -231,6 +231,23 @@ module Algolia
       wait_task(res["taskID"])
       return res
     end
+
+    #
+    # Delete the index content
+    # 
+    #
+    def clear
+      Algolia.client.post(Protocol.clear_uri(name), nil)
+    end
+    
+    #
+    # Delete the index content and wait end of indexing
+    #
+    def clear!
+      res = clear
+      wait_task(res["taskID"])
+      return res
+    end
     
     #
     # Set settings for this index

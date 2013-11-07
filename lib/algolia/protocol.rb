@@ -69,6 +69,10 @@ module Algolia
       "#{index_uri(index)}/settings"
     end
     
+    def Protocol.clear_uri(index)
+      "#{index_uri(index)}/clear"
+    end
+    
     def Protocol.logs(offset, length)
       "/#{VERSION}/logs?offset=#{offset}&length=#{length}"
     end
