@@ -1,5 +1,10 @@
 CHANGELOG
 
+2013-11-07  1.1.6
+
+      * Index: clear and clear! methods can now be used the delete the whole content of an index
+      * User keys: plug new maxQueriesPerIPPerHour and maxHitsPerQuery parameters
+
 2013-10-17  1.1.5
 
       * Version is now part of the user-agent
