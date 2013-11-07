@@ -2,6 +2,18 @@ Algolia Search API Client for Ruby
 ==================
 
 
+[Algolia Search](http://www.algolia.com) is a search API that provides hosted full-text, numerical and faceted search.
+Algolia’s Search API makes it easy to deliver a great search experience in your apps & websites providing:
+
+ * REST and JSON-based API
+ * search among infinite attributes from a single searchbox
+ * instant-search after each keystroke
+ * relevance & popularity combination
+ * typo-tolerance in any language
+ * faceting
+ * 99.99% SLA
+ * first-class data security
+
 This Ruby client let you easily use the Algolia Search API from your backend. It wraps [Algolia's REST API](http://www.algolia.com/doc/rest_api).
 
 [![Build Status](https://travis-ci.org/algolia/algoliasearch-client-ruby.png?branch=master)](https://travis-ci.org/algolia/algoliasearch-client-ruby) [![Gem Version](https://badge.fury.io/rb/algoliasearch.png)](http://badge.fury.io/rb/algoliasearch) [![Code Climate](https://codeclimate.com/github/algolia/algoliasearch-client-ruby.png)](https://codeclimate.com/github/algolia/algoliasearch-client-ruby)
