@@ -1,8 +1,15 @@
 require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 
+# avoid concurrent access to the same index
+def safe_index_name(name)
+  return name if ENV['TRAVIS'].to_s != "true"
+  id = ENV['TRAVIS_JOB_NUMBER'].split('.').last
+  "#{name}_travis-#{id}"
+end
+
 describe 'Client' do
   before(:all) do
-    @index = Algolia::Index.new("friends")
+    @index = Algolia::Index.new(safe_index_name("friends"))
     @index.delete rescue "not fatal"
   end
 
