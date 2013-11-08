@@ -1,5 +1,9 @@
 CHANGELOG
 
+2013-11-08  1.1.7
+
+      * Search params: encode array-based parameters (tagFilters, facetFilters, ...)
+
 2013-11-07  1.1.6
 
       * Index: clear and clear! methods can now be used the delete the whole content of an index
