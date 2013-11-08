@@ -130,7 +130,8 @@ module Algolia
     # - optionalWords: a string that contains the list of words that should be considered as optional when found in the query. 
     #   The list of words is comma separated.    #
     def search(query, params = {})
-      Algolia.client.get(Protocol.search_uri(name, query, params))
+      encoded_params = Hash[params.map { |k,v| [k.to_s, v.is_a?(Array) ? v.to_json : v] }]
+      Algolia.client.get(Protocol.search_uri(name, query, encoded_params))
     end
 
     #

@@ -52,4 +52,41 @@ describe 'Client' do
     @index.search("")["hits"].length.should eq(0)
   end
 
+  it "should allow an array of tags" do
+    @index.add_object!({ :name => "P1", :_tags => "t1" })
+    @index.add_object!({ :name => "P2", :_tags => "t1" })
+    @index.add_object!({ :name => "P3", :_tags => "t2" })
+    @index.add_object!({ :name => "P4", :_tags => "t3" })
+    @index.add_object!({ :name => "P5", :_tags => ["t3", "t4"] })
+
+    @index.search("", { tagFilters: ["t1"] })['hits'].length.should eq(2)         # t1
+    @index.search("", { tagFilters: ["t1", "t2"] })['hits'].length.should eq(0)   # t1 AND t2
+    @index.search("", { tagFilters: ["t3", "t4"] })['hits'].length.should eq(1)   # t3 AND t4
+    @index.search("", { tagFilters: [["t1", "t2"]] })['hits'].length.should eq(3) # t1 OR t2
+  end
+
+  it "should be facetable" do
+    @index.clear!
+    @index.set_settings( { attributesForFacetting: ["f", "g"] })
+    @index.add_object!({ :name => "P1", :f => "f1", :g => "g1" })
+    @index.add_object!({ :name => "P2", :f => "f1", :g => "g2" })
+    @index.add_object!({ :name => "P3", :f => "f2", :g => "g2" })
+    @index.add_object!({ :name => "P4", :f => "f3", :g => "g2" })
+
+    res = @index.search("", { facets: "f" })
+    res['facets']['f']['f1'].should eq(2)
+    res['facets']['f']['f2'].should eq(1)
+    res['facets']['f']['f3'].should eq(1)
+
+    res = @index.search("", { facets: "f", facetFilters: ["f:f1"] })
+    res['facets']['f']['f1'].should eq(2)
+    res['facets']['f']['f2'].should be_nil
+    res['facets']['f']['f3'].should be_nil
+
+    res = @index.search("", { facets: "f", facetFilters: ["f:f1", "g:g2"] })
+    res['facets']['f']['f1'].should eq(1)
+    res['facets']['f']['f2'].should be_nil
+    res['facets']['f']['f3'].should be_nil
+  end
+
 end
