@@ -26,6 +26,7 @@ module Algolia
     # AlgoliaProtocolError if the response has an error status code,
     # and will return the parsed JSON body on success, if there is one.
     def request(uri, method, data = nil)
+      exceptions = []
       thread_local_hosts.each do |host|
         begin
           session = host["session"]
@@ -42,17 +43,17 @@ module Algolia
             session.http_delete
           end
           if session.response_code >= 400 || session.response_code < 200
-            raise AlgoliaProtocolError.new(session.response_code, "#{method} #{session.url}: #{session.body_str}")
+            raise AlgoliaProtocolError.new(session.response_code, "Cannot #{method} to #{session.url}: #{session.body_str} (#{session.response_code})")
           end
           return JSON.parse(session.body_str)          
         rescue AlgoliaProtocolError => e
-          if e.code != Protocol::ERROR_TIMEOUT and e.code != Protocol::ERROR_UNAVAILABLE 
-            raise
-          end
+          raise if e.code != Protocol::ERROR_TIMEOUT and e.code != Protocol::ERROR_UNAVAILABLE
+          exceptions << e
         rescue Curl::Err::CurlError => e
+          exceptions << e
         end
       end
-      raise AlgoliaProtocolError.new(0, "Cannot reach any hosts")
+      raise AlgoliaProtocolError.new(0, "Cannot reach any host: #{exceptions.map { |e| e.to_s }.join(', ')}")
     end
 
     def get(uri)
