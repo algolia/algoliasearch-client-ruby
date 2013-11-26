@@ -197,7 +197,7 @@ module Algolia
 
     # Override the content of several objects and wait indexing
     # 
-    # @param object contains the javascript object to save, the object must contains an objectID attribute
+    # @param object contains the object to save, the object must contains an objectID attribute
     #    
     def save_objects!(objs)
       res = save_objects(objs)
@@ -208,7 +208,7 @@ module Algolia
     #
     # Update partially an object (only update attributes passed in argument)
     # 
-    # @param obj contains the javascript attributes to override, the 
+    # @param obj contains the object attributes to override, the 
     #  object must contains an objectID attribute
     #
     def partial_update_object(obj)
@@ -216,9 +216,34 @@ module Algolia
     end
     
     #
+    # Partially Override the content of several objects
+    # 
+    # @param objs contains an array of objects to update (each object must contains a objectID attribute)
+    #
+    def partial_update_objects(objs)
+        requests = []
+        objs.each do |obj|
+            requests.push({"action" => "partialUpdateObject", "objectID" => obj["objectID"], "body" => obj})
+        end
+        request = {"requests" => requests};
+        Algolia.client.post(Protocol.batch_uri(name), request.to_json)
+    end
+
+    #
+    # Partially Override the content of several objects
+    # 
+    # @param objs contains an array of objects to update (each object must contains a objectID attribute)
+    #
+    def partial_update_objects!(objs)
+        res = partial_update_objects(obj)
+        wait_task(res["taskID"])
+        return res
+    end
+
+    #
     # Update partially an object (only update attributes passed in argument) and wait indexing
     # 
-    # @param obj contains the javascript attributes to override, the 
+    # @param obj contains the attributes to override, the 
     #  object must contains an objectID attribute
     #
     def partial_update_object!(obj)

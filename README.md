@@ -328,8 +328,9 @@ Batch writes
 
 You may want to perform multiple operations with one API call to reduce latency.
 We expose two methods to perform batch:
- * `addObjects`: add an array of object using automatic `objectID` assignement
- * `saveObjects`: add or update an array of object that contains an `objectID` attribute
+ * `add_objects`: add an array of object using automatic `objectID` assignement
+ * `save_objects`: add or update an array of object that contains an `objectID` attribute
+ * `partial_update_objects`: partially update an array of objects that contain an `objectID` attribute (only specified attributes will be updated, other will remain unchanged)
 
 Example using automatic `objectID` assignement:
 ```ruby
@@ -347,6 +348,14 @@ res = index.save_objects([{"firstname" => "Jimmie",
                           {"firstname" => "Warren", 
                           "lastname" => "Speach",
                            "objectID" => "myID2"}])
+```
+
+Example that update only the `firstname` attribute:
+```ruby
+res = index.partial_update_objects([{"firstname" => "Jimmie", 
+                                     "objectID" => "SFO"},
+                                    {"firstname" => "Warren", 
+                                     "objectID" => "myID2"}]);
 ```
 
 Security / User API Keys
