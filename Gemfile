@@ -2,6 +2,7 @@ source "http://rubygems.org"
 
 gem "curb"
 
+gem 'rubysl', platform: :rbx
 group :development do
 	gem "bundler"
   gem "jeweler"
