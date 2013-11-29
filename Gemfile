@@ -1,8 +1,8 @@
 source "http://rubygems.org"
 
 gem "curb"
+gem 'rubysl' if RUBY_ENGINE == 'rbx'
 
-gem 'rubysl', platform: :rbx
 group :development do
 	gem "bundler"
   gem "jeweler"
