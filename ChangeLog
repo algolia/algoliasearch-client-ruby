@@ -1,5 +1,17 @@
 CHANGELOG
 
+2013-11-29  1.1.10
+
+      * Fixed gzip handling bug
+
+2013-11-28  1.1.9
+
+      * Added gzip support
+
+2013-11-26  1.1.8
+
+      * Add partial_update_objects method
+
 2013-11-08  1.1.7
 
       * Search params: encode array-based parameters (tagFilters, facetFilters, ...)
