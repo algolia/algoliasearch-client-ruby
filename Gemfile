@@ -1,7 +1,6 @@
 source "http://rubygems.org"
 
 gem "curb"
-gem 'rubysl' if RUBY_ENGINE == 'rbx'
 
 group :development do
 	gem "bundler"
