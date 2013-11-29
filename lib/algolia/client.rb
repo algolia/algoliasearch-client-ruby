@@ -17,7 +17,6 @@ module Algolia
       @ssl            = data[:ssl].nil? ? true : data[:ssl]
       @application_id = data[:application_id]
       @api_key        = data[:api_key]
-      @gzip           = data[:gzip].nil? ? true : data[:gzip]
       @hosts          = (data[:hosts] || 1.upto(3).map { |i| "#{@application_id}-#{i}.algolia.io" }).shuffle
       @debug          = data[:debug]
     end
@@ -46,11 +45,7 @@ module Algolia
           if session.response_code >= 400 || session.response_code < 200
             raise AlgoliaProtocolError.new(session.response_code, "Cannot #{method} to #{session.url}: #{session.body_str} (#{session.response_code})")
           end
-	  if @gzip
-	     gz = Zlib::GzipReader.new(StringIO.new(session.body_str))
-	     return JSON.parse(gz.read)
-	  end
-          return JSON.parse(session.body_str)          
+          return JSON.parse(session.body_str)
         rescue AlgoliaProtocolError => e
           raise if e.code != Protocol::ERROR_TIMEOUT and e.code != Protocol::ERROR_UNAVAILABLE
           exceptions << e
@@ -91,8 +86,8 @@ module Algolia
             s.headers[Protocol::HEADER_APP_ID]   = application_id
             s.headers["Content-Type"]            = "application/json; charset=utf-8"
             s.headers["User-Agent"]              = "Algolia for Ruby #{::Algolia::VERSION}"
-            s.headers["Accept-Encoding"]         = "gzip,deflate" if @gzip
             s.verbose                            = true if @debug
+            s.encoding                           = ''
           end
           hinfo
         end
