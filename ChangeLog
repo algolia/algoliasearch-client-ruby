@@ -1,5 +1,9 @@
 CHANGELOG
 
+2013-11-29  1.1.11
+
+      * Remove rubysl (rbx required dependencies)
+
 2013-11-29  1.1.10
 
       * Fixed gzip handling bug
