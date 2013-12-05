@@ -135,6 +135,17 @@ module Algolia
     end
 
     #
+    # Browse all index content
+    #
+    # @param page Pagination parameter used to select the page to retrieve.
+    #             Page is zero-based and defaults to 0. Thus, to retrieve the 10th page you need to set page=9
+    # @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
+    #
+    def browse(page = 0, hitsPerPage = 1000)
+     Algolia.client.get(Protocol.browse_uri(name, {"page" => page, "hitsPerPage" => hitsPerPage}))
+    end
+
+    #
     # Get an object from this index
     # 
     # @param objectID the unique identifier of the object to retrieve

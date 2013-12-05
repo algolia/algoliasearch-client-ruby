@@ -61,6 +61,11 @@ module Algolia
       "#{index_uri(index)}?query=#{CGI.escape(query)}&#{params}"
     end
 
+    def Protocol.browse_uri(index, params = {})
+      params = params.nil? || params.size == 0 ? "" : "?#{to_query(params)}"
+      "#{index_uri(index)}/browse#{params}"
+    end
+
     def Protocol.partial_object_uri(index, object_id)
       "#{index_uri(index)}/#{object_id}/partial"
     end
