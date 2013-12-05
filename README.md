@@ -358,7 +358,7 @@ Example that update only the `firstname` attribute:
 res = index.partial_update_objects([{"firstname" => "Jimmie", 
                                      "objectID" => "SFO"},
                                     {"firstname" => "Warren", 
-                                     "objectID" => "myID2"}]);
+                                     "objectID" => "myID2"}])
 ```
 
 Security / User API Keys
@@ -455,9 +455,9 @@ This method retrieve 1000 objects by API call and support pagination.
 
 ```ruby
 # Get first page
-puts index.browse(0);
+puts index.browse(0)
 # Get second page
-puts index.browse(1);
+puts index.browse(1)
 ```
 
 Logs
