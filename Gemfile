@@ -14,4 +14,5 @@ group :test do
   gem 'autotest-fsevent'
   gem 'redgreen'
   gem 'autotest-growl'
+  gem 'webmock'
 end
