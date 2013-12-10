@@ -1,8 +1,12 @@
 CHANGELOG
 
-2013-12-10  1.1.12
+2013-12-10  1.1.13
 
       * WebMock integration
+
+2013-12-05  1.1.12
+
+      * Add browse command
 
 2013-11-29  1.1.11
 
