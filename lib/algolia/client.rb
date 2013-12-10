@@ -76,8 +76,8 @@ module Algolia
 
     # this method returns a thread-local array of sessions
     def thread_local_hosts
-      if Thread.current[:hosts].nil?
-        Thread.current[:hosts] = hosts.map do |host|
+      if Thread.current[:algolia_hosts].nil?
+        Thread.current[:algolia_hosts] = hosts.map do |host|
           hinfo = {}
           hinfo["base_url"] = "http#{@ssl ? 's' : ''}://#{host}"
           hinfo["host"] = host
@@ -92,7 +92,7 @@ module Algolia
           hinfo
         end
       end
-      Thread.current[:hosts]
+      Thread.current[:algolia_hosts]
     end
 
   end
