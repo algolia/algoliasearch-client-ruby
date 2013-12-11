@@ -380,8 +380,8 @@ module Algolia
     #           - editSettings : allows to change index settings (https only)
     #  @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
     #
-    def add_user_key(acls, validity = 0)
-        Algolia.client.post(Protocol.index_keys_uri(name), {"acl" => acls, "validity" => validity}.to_json)
+    def add_user_key(acls, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0)
+        Algolia.client.post(Protocol.index_keys_uri(name), {"acl" => acls, "validity" => validity, "maxQueriesPerIPPerHour" => maxQueriesPerIPPerHour.to_i, "maxHitsPerQuery" => maxHitsPerQuery.to_i}.to_json)
     end
  
     # Delete an existing user key
