@@ -87,6 +87,7 @@ module Algolia
             s.headers["Content-Type"]            = "application/json; charset=utf-8"
             s.headers["User-Agent"]              = "Algolia for Ruby #{::Algolia::VERSION}"
             s.verbose                            = true if @debug
+            s.cacert                             = File.join File.dirname(__FILE__), '..', '..', 'resources', 'ca-bundle.crt'
             s.encoding                           = ''
           end
           hinfo
