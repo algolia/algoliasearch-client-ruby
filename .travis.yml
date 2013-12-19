@@ -5,7 +5,6 @@ branches:
 rvm:
 - 2.0.0
 - 1.9.3
-- rbx-2.2.1
 env:
   global:
   - secure: lBLtTjQyeJW7+TWgGmf1mmsXgUzsTnq3/KHvCk+BvOGwoHXTBR1Y6yiczWWHEP4/wBeXXm31xUQC+VoYc/7Ev/2NNB/mqlXAgGw+D0nwQriNXjYt1WV6lQvyoiaUzQ+w+7VahWdx0LuKvSYI+khe8M8BfHQqYacu0VlpAUnjb2I=
