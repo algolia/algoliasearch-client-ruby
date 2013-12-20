@@ -12,20 +12,20 @@ module Algolia
     
     # Delete an index
     # 
-    # return an object of the form array(:deletedAt => "2013-01-18T15:33:13.556Z")
+    # return an hash of the form { "deletedAt" => "2013-01-18T15:33:13.556Z" }
     def delete
       Algolia.client.delete(Protocol.index_uri(name))
     end
 
     # Add an object in this index
     # 
-    # @param content contains the object to add inside the index. 
+    # @param obj the object to add to the index. 
     #  The object is represented by an associative array
     # @param objectID (optional) an objectID you want to attribute to this object 
-    #  (if the attribute already exist the old object will be overwrite)
+    #  (if the attribute already exist the old object will be overridden)
     def add_object(obj, objectID = nil)
-      raise ArgumentError.new("argument must not be an array") if obj.is_a?(Array)
-      if objectID == nil
+      check_object obj
+      if objectID.nil?
         Algolia.client.post(Protocol.index_uri(name), obj.to_json)
       else
         Algolia.client.put(Protocol.object_uri(name, objectID), obj.to_json)        
@@ -34,10 +34,10 @@ module Algolia
     
     # Add an object in this index and wait end of indexing
     # 
-    # @param content contains the object to add inside the index. 
+    # @param obj the object to add to the index.
     #  The object is represented by an associative array
     # @param objectID (optional) an objectID you want to attribute to this object 
-    #  (if the attribute already exist the old object will be overwrite)
+    #  (if the attribute already exist the old object will be overridden)
     def add_object!(obj, objectID = nil)
       res = add_object(obj, objectID)
       wait_task(res["taskID"])
@@ -46,27 +46,23 @@ module Algolia
 
     # Add several objects in this index
     # 
-    # @param content contains the object to add inside the index. 
-    #  The object is represented by an associative array
-    # @param objectID (optional) an objectID you want to attribute to this object 
-    #  (if the attribute already exist the old object will be overwrite)
+    # @param objs the array of objects to add inside the index. 
+    #  Each object is represented by an associative array
     def add_objects(objs)
-        raise ArgumentError.new("argument must be an array of object") if !objs.is_a?(Array)
-        requests = []
-        objs.each do |obj|
-            raise ArgumentError.new("argument must be an array of object") if obj.is_a?(Array)
-            requests.push({"action" => "addObject", "body" => obj})
-        end
-        request = {"requests" => requests};
-        Algolia.client.post(Protocol.batch_uri(name), request.to_json)
+      check_array objs
+      requests = []
+      objs.each do |obj|
+        check_object obj, true
+        requests.push({"action" => "addObject", "body" => obj})
+      end
+      request = {"requests" => requests};
+      Algolia.client.post(Protocol.batch_uri(name), request.to_json)
     end
     
     # Add several objects in this index and wait end of indexing
     # 
-    # @param content contains the object to add inside the index. 
-    #  The object is represented by an associative array
-    # @param objectID (optional) an objectID you want to attribute to this object 
-    #  (if the attribute already exist the old object will be overwrite)
+    # @param objs the array of objects to add inside the index. 
+    #  Each object is represented by an associative array
     def add_objects!(obj)
       res = add_objects(obj)
       wait_task(res["taskID"])
@@ -152,7 +148,7 @@ module Algolia
     # @param attributesToRetrieve (optional) if set, contains the list of attributes to retrieve as a string separated by ","
     #
     def get_object(objectID, attributesToRetrieve = nil)
-      if attributesToRetrieve == nil
+      if attributesToRetrieve.nil?
         Algolia.client.get(Protocol.object_uri(name, objectID, nil))
       else
         Algolia.client.get(Protocol.object_uri(name, objectID, {"attributes" => attributesToRetrieve}))
@@ -169,46 +165,55 @@ module Algolia
       loop do
         status = Algolia.client.get(Protocol.task_uri(name, taskID))["status"]
         if status == "published"
-            return
+          return
         end
         sleep(timeBeforeRetry.to_f / 1000)
       end
     end
 
-    # Override the content of object
+    # Override the content of an object
     # 
-    # @param object contains the object to save, the object must contains an objectID attribute
+    # @param obj the object to save
+    # @param objectID the associated objectID, if nil 'obj' must contain an 'objectID' key
     #
-    def save_object(obj)
-      Algolia.client.put(Protocol.object_uri(name, obj["objectID"]), obj.to_json)
+    def save_object(obj, objectID = nil)
+      check_object obj
+      objectID ||= obj[:objectID] || obj["objectID"]
+      raise ArgumentError.new("Missing 'objectID'") if objectID.nil?
+      Algolia.client.put(Protocol.object_uri(name, objectID), obj.to_json)
     end
 
     # Override the content of object and wait indexing
     # 
-    # @param object contains the object to save, the object must contains an objectID attribute
+    # @param obj the object to save
+    # @param objectID the associated objectID, if nil 'obj' must contain an 'objectID' key
     #    
-    def save_object!(obj)
-      res = save_object(obj)
+    def save_object!(obj, objectID = nil)
+      res = save_object(obj, objectID)
       wait_task(res["taskID"])
       return res
     end
 
     # Override the content of several objects
     # 
-    # @param object contains the object to save, the object must contains an objectID attribute
+    # @param objs the array of objects to save, each object must contain an 'objectID' key
     #
     def save_objects(objs)
-        requests = []
-        objs.each do |obj|
-            requests.push({"action" => "updateObject", "objectID" => obj["objectID"], "body" => obj})
-        end
-        request = {"requests" => requests};
-        Algolia.client.post(Protocol.batch_uri(name), request.to_json)
+      check_array objs
+      requests = []
+      objs.each do |obj|
+        check_object obj, true
+        objectID = obj[:objectID] || obj["objectID"]
+        raise ArgumentError.new("Missing 'objectID'") if objectID.nil?
+        requests.push({"action" => "updateObject", "objectID" => objectID, "body" => obj})
+      end
+      request = {"requests" => requests};
+      Algolia.client.post(Protocol.batch_uri(name), request.to_json)
     end
 
     # Override the content of several objects and wait indexing
     # 
-    # @param object contains the object to save, the object must contains an objectID attribute
+    # @param objs the array of objects to save, each object must contain an objectID attribute
     #    
     def save_objects!(objs)
       res = save_objects(objs)
@@ -219,46 +224,53 @@ module Algolia
     #
     # Update partially an object (only update attributes passed in argument)
     # 
-    # @param obj contains the object attributes to override, the 
-    #  object must contains an objectID attribute
+    # @param obj the object attributes to override
+    # @param objectID the associated objectID, if nil 'obj' must contain an 'objectID' key
     #
-    def partial_update_object(obj)
-      Algolia.client.post(Protocol.partial_object_uri(name, obj["objectID"]), obj.to_json)
+    def partial_update_object(obj, objectID = nil)
+      check_object obj
+      objectID ||= obj[:objectID] || obj["objectID"]
+      raise ArgumentError.new("Missing 'objectID'") if objectID.nil?
+      Algolia.client.post(Protocol.partial_object_uri(name, objectID), obj.to_json)
     end
     
     #
     # Partially Override the content of several objects
     # 
-    # @param objs contains an array of objects to update (each object must contains a objectID attribute)
+    # @param objs an array of objects to update (each object must contains a objectID attribute)
     #
     def partial_update_objects(objs)
-        requests = []
-        objs.each do |obj|
-            requests.push({"action" => "partialUpdateObject", "objectID" => obj["objectID"], "body" => obj})
-        end
-        request = {"requests" => requests};
-        Algolia.client.post(Protocol.batch_uri(name), request.to_json)
+      check_array objs
+      requests = []
+      objs.each do |obj|
+        check_object obj, true
+        objectID = obj[:objectID] || obj["objectID"]
+        raise ArgumentError.new("Missing 'objectID'") if objectID.nil?
+        requests.push({"action" => "partialUpdateObject", "objectID" => objectID, "body" => obj})
+      end
+      request = {"requests" => requests};
+      Algolia.client.post(Protocol.batch_uri(name), request.to_json)
     end
 
     #
     # Partially Override the content of several objects
     # 
-    # @param objs contains an array of objects to update (each object must contains a objectID attribute)
+    # @param objs an array of objects to update (each object must contains a objectID attribute)
     #
     def partial_update_objects!(objs)
-        res = partial_update_objects(obj)
-        wait_task(res["taskID"])
-        return res
+      res = partial_update_objects(obj)
+      wait_task(res["taskID"])
+      return res
     end
 
     #
     # Update partially an object (only update attributes passed in argument) and wait indexing
     # 
-    # @param obj contains the attributes to override, the 
-    #  object must contains an objectID attribute
+    # @param obj the attributes to override
+    # @param objectID the associated objectID, if nil 'obj' must contain an 'objectID' key
     #
-    def partial_update_object!(obj)
-      res = partial_update_object(obj)
+    def partial_update_object!(obj, objectID = nil)
+      res = partial_update_object(obj, objectID)
       wait_task(res["taskID"])
       return res
     end
@@ -269,9 +281,6 @@ module Algolia
     # @param objectID the unique identifier of object to delete
     #
     def delete_object(objectID)
-      if (objectID == nil || objectID.length == 0) then
-        raise AlgoliaProtocolError.new(0, "objectID is required")
-      end
       Algolia.client.delete(Protocol.object_uri(name, objectID))
     end
     
@@ -358,12 +367,12 @@ module Algolia
 
     # List all existing user keys with their associated ACLs
     def list_user_keys
-        Algolia.client.get(Protocol.index_keys_uri(name))
+      Algolia.client.get(Protocol.index_keys_uri(name))
     end
  
     # Get ACL of a user key
     def get_user_key(key)
-        Algolia.client.get(Protocol.index_key_uri(name, key))
+      Algolia.client.get(Protocol.index_key_uri(name, key))
     end
  
     #
@@ -381,12 +390,28 @@ module Algolia
     #  @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
     #
     def add_user_key(acls, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0)
-        Algolia.client.post(Protocol.index_keys_uri(name), {"acl" => acls, "validity" => validity, "maxQueriesPerIPPerHour" => maxQueriesPerIPPerHour.to_i, "maxHitsPerQuery" => maxHitsPerQuery.to_i}.to_json)
+      Algolia.client.post(Protocol.index_keys_uri(name), {"acl" => acls, "validity" => validity, "maxQueriesPerIPPerHour" => maxQueriesPerIPPerHour.to_i, "maxHitsPerQuery" => maxHitsPerQuery.to_i}.to_json)
     end
  
     # Delete an existing user key
     def delete_user_key(key)
-        Algolia.client.delete(Protocol.index_key_uri(name, key))
+      Algolia.client.delete(Protocol.index_key_uri(name, key))
+    end
+
+    private
+    def check_array(objs)
+      raise ArgumentError.new("argument must be an array of objects") if !objs.is_a?(Array)
+    end
+
+    def check_object(obj, in_array = false)
+      case obj
+      when Array
+        raise ArgumentError.new(in_array ? "argument must be an array of objects" : "argument must not be an array")
+      when String, Integer, Float, TrueClass, FalseClass, NilClass
+        raise ArgumentError.new("argument must be an #{'array of' if in_array} object, got: #{obj.inspect}")
+      else
+        # ok
+      end
     end
 
   end

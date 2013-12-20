@@ -31,6 +31,13 @@ describe 'Client' do
   it "should throw an exception if invalid argument" do
     expect { @index.add_object!([ {:name => "test"} ]) }.to raise_error(ArgumentError)
     expect { @index.add_objects!([ [ {:name => "test"} ] ]) }.to raise_error(ArgumentError)
+    expect { @index.save_object(1) }.to raise_error(ArgumentError)
+    expect { @index.save_object("test") }.to raise_error(ArgumentError)
+    expect { @index.save_object({ objectID: 42 }.to_json) }.to raise_error(ArgumentError)
+    expect { @index.save_objects([{}, ""]) }.to raise_error(ArgumentError)
+    expect { @index.save_objects([1]) }.to raise_error(ArgumentError)
+    expect { @index.save_objects!([1]) }.to raise_error(ArgumentError)
+    expect { @index.save_object({ foo: 42 }) }.to raise_error(ArgumentError) # missing objectID
   end
 
   it "should be thread safe" do
