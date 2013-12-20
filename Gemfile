@@ -1,15 +1,15 @@
-source "http://rubygems.org"
+source 'http://rubygems.org'
 
-gem "curb"
+gem 'curb', '~> 0.8'
+gem 'json', '>= 1.5.1'
 
 group :development do
-	gem "bundler"
-  gem "jeweler"
-  gem "travis"
+  gem 'jeweler'
+  gem 'travis'
 end
 
 group :test do 
-  gem 'rspec'
+  gem 'rspec', '>= 2.5.0'
   gem 'autotest'
   gem 'autotest-fsevent'
   gem 'redgreen'
