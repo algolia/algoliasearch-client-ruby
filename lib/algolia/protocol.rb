@@ -20,6 +20,10 @@ module Algolia
     # Algolia API.
     HEADER_API_KEY  = "X-Algolia-API-Key"
     
+    HEADER_FORWARDED_IP = "X-Forwarded-For"
+
+    HEADER_FORWARDED_API_KEY = "X-Forwarded-API-Key"
+    
     # HTTP ERROR CODES
     # ----------------------------------------
 

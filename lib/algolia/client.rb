@@ -72,8 +72,6 @@ module Algolia
       request(uri, :DELETE)
     end
 
-    private
-
     # this method returns a thread-local array of sessions
     def thread_local_hosts
       if Thread.current[:algolia_hosts].nil?
@@ -112,6 +110,34 @@ module Algolia
     defaulted.merge!(options)
 
     @@client = Client.new(defaulted)
+  end
+
+  #
+  # Allow to use IP rate limit when you have a proxy between end-user and Algolia.
+  # This option will set the X-Forwarded-For HTTP header with the client IP and the X-Forwarded-API-Key with the API Key having rate limits.
+  # @param adminAPIKey the admin API Key you can find in your dashboard
+  # @param endUserIP the end user IP (you can use both IPV4 or IPV6 syntax)
+  # @param rateLimitAPIKey the API key on which you have a rate limit
+  #
+  def Algolia.enable_rate_limit_forward(admin_api_key, end_user_ip, rate_limit_api_key)
+    Algolia.client.thread_local_hosts.each do |host|
+      session = host["session"]
+      session.headers[Protocol::HEADER_API_KEY] = admin_api_key
+      session.headers[Protocol::HEADER_FORWARDED_IP] = end_user_ip
+      session.headers[Protocol::HEADER_FORWARDED_API_KEY] = rate_limit_api_key
+    end
+  end
+
+  #
+  # Disable IP rate limit enabled with enableRateLimitForward() function
+  #
+  def Algolia.disable_rate_limit_forward()
+    Algolia.client.thread_local_hosts.each do |host|
+      session = host["session"]
+      session.headers[Protocol::HEADER_API_KEY] = Algolia.client.api_key
+      session.headers.delete(Protocol::HEADER_FORWARDED_IP)
+      session.headers.delete(Protocol::HEADER_FORWARDED_API_KEY)
+    end
   end
 
   #
