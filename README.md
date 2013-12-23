@@ -427,7 +427,7 @@ You can also create an API Key with advanced restrictions:
  * Add a validity period: the key will be valid only for a specific period of time (in seconds),
  * Specify the maximum number of API calls allowed from an IP address per hour. Each time an API call is performed with this key, a check is performed. If the IP at the origin of the call did more than this number of calls in the last hour, a 403 code is returned. Defaults to 0 (no rate limit). This parameter can be used to protect you from attempts at retrieving your entire content by massively querying the index.
 
-  Note: If you are sending the query through your servers, you must use the `Algolia.enable_rate_limit_forward("TheAdminAPIKey", "EndUserIP", "APIKeyWithRateLimit")` funtion to enable rate-limit.
+  Note: If you are sending the query through your servers, you must use the `Algolia.enable_rate_limit_forward("TheAdminAPIKey", "EndUserIP", "APIKeyWithRateLimit")` function to enable rate-limit.
  * Specify the maximum number of hits this API key can retrieve in one call. Defaults to 0 (unlimited). This parameter can be used to protect you from attempts at retrieving your entire content by massively querying the index.
 
 ```ruby
