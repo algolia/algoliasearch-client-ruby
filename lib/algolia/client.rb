@@ -108,7 +108,7 @@ module Algolia
   def Algolia.init(options = {})
     application_id = ENV["ALGOLIA_API_ID"] || ENV["ALGOLIA_APPLICATION_ID"]
     api_key = ENV["ALGOLIA_REST_API_KEY"] || ENV['ALGOLIA_API_KEY']
-    
+
     defaulted = { :application_id => application_id, :api_key => api_key }
     defaulted.merge!(options)
 
@@ -118,9 +118,9 @@ module Algolia
   #
   # Allow to use IP rate limit when you have a proxy between end-user and Algolia.
   # This option will set the X-Forwarded-For HTTP header with the client IP and the X-Forwarded-API-Key with the API Key having rate limits.
-  # @param adminAPIKey the admin API Key you can find in your dashboard
-  # @param endUserIP the end user IP (you can use both IPV4 or IPV6 syntax)
-  # @param rateLimitAPIKey the API key on which you have a rate limit
+  # @param admin_api_key the admin API Key you can find in your dashboard
+  # @param end_user_ip the end user IP (you can use both IPV4 or IPV6 syntax)
+  # @param rate_limit_api_key the API key on which you have a rate limit
   #
   def Algolia.enable_rate_limit_forward(admin_api_key, end_user_ip, rate_limit_api_key)
     Algolia.client.thread_local_hosts.each do |host|
@@ -155,8 +155,8 @@ module Algolia
 
   #
   # Move an existing index.
-  # @param srcIndexName the name of index to copy.
-  # @param dstIndexName the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+  # @param src_index the name of index to copy.
+  # @param dst_index the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
   #
   def Algolia.move_index(src_index, dst_index)
       request = {"operation" => "move", "destination" => dst_index};
@@ -165,8 +165,8 @@ module Algolia
 
   #
   # Copy an existing index.
-  # @param srcIndexName the name of index to copy.
-  # @param dstIndexName the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+  # @param src_index the name of index to copy.
+  # @param dst_index the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
   #
   def Algolia.copy_index(src_index, dst_index)
       request = {"operation" => "copy", "destination" => dst_index};
