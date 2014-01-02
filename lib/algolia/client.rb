@@ -134,7 +134,7 @@ module Algolia
   #
   # Disable IP rate limit enabled with enableRateLimitForward() function
   #
-  def Algolia.disable_rate_limit_forward()
+  def Algolia.disable_rate_limit_forward
     Algolia.client.thread_local_hosts.each do |host|
       session = host["session"]
       session.headers[Protocol::HEADER_API_KEY] = Algolia.client.api_key
