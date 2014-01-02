@@ -106,7 +106,10 @@ module Algolia
   # Initialize the singleton instance of Client which is used
   # by all API methods.
   def Algolia.init(options = {})
-    defaulted = { :api_id => ENV["ALGOLIA_API_ID"], :api_key => ENV["ALGOLIA_REST_API_KEY"] }
+    application_id = ENV["ALGOLIA_API_ID"] || ENV["ALGOLIA_APPLICATION_ID"]
+    api_key = ENV["ALGOLIA_REST_API_KEY"] || ENV['ALGOLIA_API_KEY']
+    
+    defaulted = { :application_id => application_id, :api_key => api_key }
     defaulted.merge!(options)
 
     @@client = Client.new(defaulted)
