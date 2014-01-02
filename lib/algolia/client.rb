@@ -144,6 +144,18 @@ module Algolia
   end
 
   #
+  # Convenience method thats wraps enable_rate_limit_forward/disable_rate_limit_forward
+  #
+  def Algolia.with_rate_limits(end_user_ip, rate_limit_api_key, &block)
+    Algolia.enable_rate_limit_forward(Algolia.client.api_key, end_user_ip, rate_limit_api_key)
+    begin
+      yield
+    ensure
+      Algolia.disable_rate_limit_forward
+    end
+  end
+
+  #
   # List all existing indexes
   # return an Answer object with answer in the form 
   #     {"items": [{ "name": "contacts", "createdAt": "2013-01-18T15:33:13.556Z"},
