@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Algolia"]
-  s.date = "2013-12-23"
+  s.date = "2014-01-02"
   s.description = "A simple Ruby client for the algolia.com REST API"
   s.email = "contact@algolia.com"
   s.extra_rdoc_files = [
@@ -39,7 +39,8 @@ Gem::Specification.new do |s|
     "resources/ca-bundle.crt",
     "spec/client_spec.rb",
     "spec/mock_spec.rb",
-    "spec/spec_helper.rb"
+    "spec/spec_helper.rb",
+    "spec/stub_spec.rb"
   ]
   s.homepage = "http://github.com/algolia/algoliasearch-client-ruby"
   s.licenses = ["MIT"]

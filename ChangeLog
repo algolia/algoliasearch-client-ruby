@@ -1,5 +1,10 @@
 CHANGELOG
 
+2014-01-02  1.1.17
+
+      * Ability to use IP rate limit behind a proxy forwarding the end-user's IP
+      * Add documentation for the new 'attributeForDistinct' setting and 'distinct' search parameter
+
 2013-12-16  1.1.16
 
       * Add arguments type-checking
