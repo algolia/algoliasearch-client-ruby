@@ -74,24 +74,21 @@ module Algolia
 
     # this method returns a thread-local array of sessions
     def thread_local_hosts
-      if Thread.current[:algolia_hosts].nil?
-        Thread.current[:algolia_hosts] = hosts.map do |host|
-          hinfo = {}
-          hinfo["base_url"] = "http#{@ssl ? 's' : ''}://#{host}"
-          hinfo["host"] = host
-          hinfo["session"] = Curl::Easy.new do |s|
-            s.headers[Protocol::HEADER_API_KEY]  = api_key
-            s.headers[Protocol::HEADER_APP_ID]   = application_id
-            s.headers["Content-Type"]            = "application/json; charset=utf-8"
-            s.headers["User-Agent"]              = "Algolia for Ruby #{::Algolia::VERSION}"
-            s.verbose                            = true if @debug
-            s.cacert                             = File.join File.dirname(__FILE__), '..', '..', 'resources', 'ca-bundle.crt'
-            s.encoding                           = ''
-          end
-          hinfo
+      Thread.current[:algolia_hosts] ||= hosts.map do |host|
+        hinfo = {}
+        hinfo["base_url"] = "http#{@ssl ? 's' : ''}://#{host}"
+        hinfo["host"] = host
+        hinfo["session"] = Curl::Easy.new do |s|
+          s.headers[Protocol::HEADER_API_KEY]  = api_key
+          s.headers[Protocol::HEADER_APP_ID]   = application_id
+          s.headers["Content-Type"]            = "application/json; charset=utf-8"
+          s.headers["User-Agent"]              = "Algolia for Ruby #{::Algolia::VERSION}"
+          s.verbose                            = true if @debug
+          s.cacert                             = File.join File.dirname(__FILE__), '..', '..', 'resources', 'ca-bundle.crt'
+          s.encoding                           = ''
         end
+        hinfo
       end
-      Thread.current[:algolia_hosts]
     end
 
   end
