@@ -105,7 +105,7 @@ module Algolia
     private
     def Protocol.to_query(params)
       params.map do |k, v|
-        "#{CGI.escape(k)}=#{CGI.escape(v.to_s)}"
+        "#{CGI.escape(k.to_s)}=#{CGI.escape(v.to_s)}"
       end.join('&')
     end
     
