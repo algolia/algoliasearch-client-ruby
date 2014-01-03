@@ -29,22 +29,7 @@ module Algolia
       exceptions = []
       thread_local_hosts.each do |host|
         begin
-          session = host["session"]
-          session.url = host["base_url"] + uri
-          case method
-          when :GET
-            session.http_get
-          when :POST
-            session.post_body = data
-            session.http_post
-          when :PUT
-            session.put(data)
-          when :DELETE
-            session.http_delete
-          end
-          if session.response_code >= 400 || session.response_code < 200
-            raise AlgoliaProtocolError.new(session.response_code, "Cannot #{method} to #{session.url}: #{session.body_str} (#{session.response_code})")
-          end
+          session = perform_request(host, uri, method, data)
           return JSON.parse(session.body_str)
         rescue AlgoliaProtocolError => e
           raise if e.code != Protocol::ERROR_TIMEOUT and e.code != Protocol::ERROR_UNAVAILABLE
@@ -78,17 +63,42 @@ module Algolia
         hinfo = {}
         hinfo["base_url"] = "http#{@ssl ? 's' : ''}://#{host}"
         hinfo["host"] = host
-        hinfo["session"] = Curl::Easy.new do |s|
-          s.headers[Protocol::HEADER_API_KEY]  = api_key
-          s.headers[Protocol::HEADER_APP_ID]   = application_id
-          s.headers["Content-Type"]            = "application/json; charset=utf-8"
-          s.headers["User-Agent"]              = "Algolia for Ruby #{::Algolia::VERSION}"
-          s.verbose                            = true if @debug
-          s.cacert                             = File.join File.dirname(__FILE__), '..', '..', 'resources', 'ca-bundle.crt'
-          s.encoding                           = ''
-        end
+        hinfo["session"] = init_session
         hinfo
       end
+    end
+
+    private
+    def perform_request(host, uri, method, data)
+        session = host["session"]
+        session.url = host["base_url"] + uri
+        case method
+        when :GET
+          session.http_get
+        when :POST
+          session.post_body = data
+          session.http_post
+        when :PUT
+          session.put(data)
+        when :DELETE
+          session.http_delete
+        end
+        if session.response_code >= 400 || session.response_code < 200
+          raise AlgoliaProtocolError.new(session.response_code, "Cannot #{method} to #{session.url}: #{session.body_str} (#{session.response_code})")
+        end
+        session;
+    end
+
+    def init_session
+      s = Curl::Easy.new
+      s.headers[Protocol::HEADER_API_KEY]  = api_key
+      s.headers[Protocol::HEADER_APP_ID]   = application_id
+      s.headers["Content-Type"]            = "application/json; charset=utf-8"
+      s.headers["User-Agent"]              = "Algolia for Ruby #{::Algolia::VERSION}"
+      s.verbose                            = true if @debug
+      s.cacert                             = File.join File.dirname(__FILE__), '..', '..', 'resources', 'ca-bundle.crt'
+      s.encoding                           = ''
+      s
     end
 
   end
