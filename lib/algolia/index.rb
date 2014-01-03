@@ -49,13 +49,7 @@ module Algolia
     # @param objs the array of objects to add inside the index. 
     #  Each object is represented by an associative array
     def add_objects(objs)
-      check_array objs
-      requests = []
-      objs.each do |obj|
-        check_object obj, true
-        requests.push({"action" => "addObject", "body" => obj})
-      end
-      request = {"requests" => requests};
+      request = build_batch('addObject', objs, false)
       Algolia.client.post(Protocol.batch_uri(name), request.to_json)
     end
     
@@ -143,7 +137,7 @@ module Algolia
     # @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
     #
     def browse(page = 0, hitsPerPage = 1000)
-     Algolia.client.get(Protocol.browse_uri(name, {"page" => page, "hitsPerPage" => hitsPerPage}))
+     Algolia.client.get(Protocol.browse_uri(name, {:page => page, :hitsPerPage => hitsPerPage}))
     end
 
     #
@@ -156,7 +150,7 @@ module Algolia
       if attributesToRetrieve.nil?
         Algolia.client.get(Protocol.object_uri(name, objectID, nil))
       else
-        Algolia.client.get(Protocol.object_uri(name, objectID, {"attributes" => attributesToRetrieve}))
+        Algolia.client.get(Protocol.object_uri(name, objectID, {:attributes => attributesToRetrieve}))
       end
     end
 
@@ -182,10 +176,7 @@ module Algolia
     # @param objectID the associated objectID, if nil 'obj' must contain an 'objectID' key
     #
     def save_object(obj, objectID = nil)
-      check_object obj
-      objectID ||= obj[:objectID] || obj["objectID"]
-      raise ArgumentError.new("Missing 'objectID'") if objectID.nil?
-      Algolia.client.put(Protocol.object_uri(name, objectID), obj.to_json)
+      Algolia.client.put(Protocol.object_uri(name, get_objectID(obj, objectID)), obj.to_json)
     end
 
     # Override the content of object and wait indexing
@@ -204,15 +195,7 @@ module Algolia
     # @param objs the array of objects to save, each object must contain an 'objectID' key
     #
     def save_objects(objs)
-      check_array objs
-      requests = []
-      objs.each do |obj|
-        check_object obj, true
-        objectID = obj[:objectID] || obj["objectID"]
-        raise ArgumentError.new("Missing 'objectID'") if objectID.nil?
-        requests.push({"action" => "updateObject", "objectID" => objectID, "body" => obj})
-      end
-      request = {"requests" => requests};
+      request = build_batch('updateObject', objs, true)
       Algolia.client.post(Protocol.batch_uri(name), request.to_json)
     end
 
@@ -233,10 +216,7 @@ module Algolia
     # @param objectID the associated objectID, if nil 'obj' must contain an 'objectID' key
     #
     def partial_update_object(obj, objectID = nil)
-      check_object obj
-      objectID ||= obj[:objectID] || obj["objectID"]
-      raise ArgumentError.new("Missing 'objectID'") if objectID.nil?
-      Algolia.client.post(Protocol.partial_object_uri(name, objectID), obj.to_json)
+      Algolia.client.post(Protocol.partial_object_uri(name, get_objectID(obj, objectID)), obj.to_json)
     end
     
     #
@@ -245,15 +225,7 @@ module Algolia
     # @param objs an array of objects to update (each object must contains a objectID attribute)
     #
     def partial_update_objects(objs)
-      check_array objs
-      requests = []
-      objs.each do |obj|
-        check_object obj, true
-        objectID = obj[:objectID] || obj["objectID"]
-        raise ArgumentError.new("Missing 'objectID'") if objectID.nil?
-        requests.push({"action" => "partialUpdateObject", "objectID" => objectID, "body" => obj})
-      end
-      request = {"requests" => requests};
+      request = build_batch('partialUpdateObject', objs, true)
       Algolia.client.post(Protocol.batch_uri(name), request.to_json)
     end
 
@@ -402,7 +374,7 @@ module Algolia
     #  @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
     #
     def add_user_key(acls, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0)
-      Algolia.client.post(Protocol.index_keys_uri(name), {"acl" => acls, "validity" => validity, "maxQueriesPerIPPerHour" => maxQueriesPerIPPerHour.to_i, "maxHitsPerQuery" => maxHitsPerQuery.to_i}.to_json)
+      Algolia.client.post(Protocol.index_keys_uri(name), {:acl => acls, :validity => validity, :maxQueriesPerIPPerHour => maxQueriesPerIPPerHour.to_i, :maxHitsPerQuery => maxHitsPerQuery.to_i}.to_json)
     end
  
     # Delete an existing user key
@@ -424,6 +396,25 @@ module Algolia
       else
         # ok
       end
+    end
+
+    def get_objectID(obj, objectID = nil)
+      check_object obj
+      objectID ||= obj[:objectID] || obj["objectID"]
+      raise ArgumentError.new("Missing 'objectID'") if objectID.nil?
+      return objectID
+    end
+
+    def build_batch(action, objs, with_object_id = false)
+      check_array objs
+      {
+        :requests => objs.map { |obj|
+          check_object obj, true
+          h = { :action => action, :body => obj }
+          h[:objectID] = get_objectID(obj, nil, true) if with_object_id
+          h
+        }
+      }
     end
 
   end
