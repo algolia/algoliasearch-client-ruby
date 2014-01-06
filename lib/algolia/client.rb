@@ -7,18 +7,22 @@ require 'zlib'
 module Algolia
 
   # A class which encapsulates the HTTPS communication with the Algolia
-  # API server. Uses the Curb (Curl) library for low-level HTTP communication.
+  # API server. Uses the HTTPClient library for low-level HTTP communication.
   class Client
-    attr_reader :hosts
-    attr_reader :application_id
-    attr_reader :api_key
+    attr_reader :hosts, :application_id, :api_key, :headers
+
 
     def initialize(data = {})
       @ssl            = data[:ssl].nil? ? true : data[:ssl]
       @application_id = data[:application_id]
       @api_key        = data[:api_key]
       @hosts          = (data[:hosts] || 1.upto(3).map { |i| "#{@application_id}-#{i}.algolia.io" }).shuffle
-      @debug          = data[:debug]
+      @headers = {
+        Protocol::HEADER_API_KEY => api_key,
+        Protocol::HEADER_APP_ID  => application_id,
+        'Content-Type'           => 'application/json; charset=utf-8',
+        'User-Agent'             => "Algolia for Ruby #{::Algolia::VERSION}"
+      }
     end
 
     # Perform an HTTP request for the given uri and method
@@ -28,28 +32,27 @@ module Algolia
     def request(uri, method, data = nil)
       exceptions = []
       thread_local_hosts.each do |host|
+        session = host[:session]
         begin
-          session = host["session"]
-          session.url = host["base_url"] + uri
-          case method
+          url = host[:base_url] + uri
+          response = case method
           when :GET
-            session.http_get
+            session.get(url, { :header => @headers })
           when :POST
-            session.post_body = data
-            session.http_post
+            session.post(url, { :body => data, :header => @headers })
           when :PUT
-            session.put(data)
+            session.put(url, { :body => data, :header => @headers })
           when :DELETE
-            session.http_delete
+            session.delete(url, { :header => @headers })
           end
-          if session.response_code >= 400 || session.response_code < 200
-            raise AlgoliaProtocolError.new(session.response_code, "Cannot #{method} to #{session.url}: #{session.body_str} (#{session.response_code})")
+          if response.code >= 400 || response.code < 200
+            raise AlgoliaProtocolError.new(response.code, "Cannot #{method} to #{url}: #{response.content} (#{response.code})")
           end
-          return JSON.parse(session.body_str)
+          return JSON.parse(response.content)
         rescue AlgoliaProtocolError => e
           raise if e.code != Protocol::ERROR_TIMEOUT and e.code != Protocol::ERROR_UNAVAILABLE
           exceptions << e
-        rescue Curl::Err::CurlError => e
+        rescue HTTPClient::BadResponseError, OpenSSL::SSL::SSLError => e
           exceptions << e
         end
       end
@@ -60,11 +63,11 @@ module Algolia
       request(uri, :GET)
     end
 
-    def post(uri, body)
+    def post(uri, body = {})
       request(uri, :POST, body)
     end
 
-    def put(uri, body)
+    def put(uri, body = {})
       request(uri, :PUT, body)
     end
 
@@ -72,21 +75,16 @@ module Algolia
       request(uri, :DELETE)
     end
 
+    private
+
     # this method returns a thread-local array of sessions
     def thread_local_hosts
       Thread.current[:algolia_hosts] ||= hosts.map do |host|
-        hinfo = {}
-        hinfo["base_url"] = "http#{@ssl ? 's' : ''}://#{host}"
-        hinfo["host"] = host
-        hinfo["session"] = Curl::Easy.new do |s|
-          s.headers[Protocol::HEADER_API_KEY]  = api_key
-          s.headers[Protocol::HEADER_APP_ID]   = application_id
-          s.headers["Content-Type"]            = "application/json; charset=utf-8"
-          s.headers["User-Agent"]              = "Algolia for Ruby #{::Algolia::VERSION}"
-          s.verbose                            = true if @debug
-          s.cacert                             = File.join File.dirname(__FILE__), '..', '..', 'resources', 'ca-bundle.crt'
-          s.encoding                           = ''
-        end
+        hinfo = {
+          :base_url => "http#{@ssl ? 's' : ''}://#{host}",
+          :session => HTTPClient.new
+        }
+        hinfo[:session].ssl_config.add_trust_ca File.join(File.dirname(__FILE__), '..', '..', 'resources', 'ca-bundle.crt')
         hinfo
       end
     end
@@ -120,24 +118,18 @@ module Algolia
   # @param rate_limit_api_key the API key on which you have a rate limit
   #
   def Algolia.enable_rate_limit_forward(admin_api_key, end_user_ip, rate_limit_api_key)
-    Algolia.client.thread_local_hosts.each do |host|
-      session = host["session"]
-      session.headers[Protocol::HEADER_API_KEY] = admin_api_key
-      session.headers[Protocol::HEADER_FORWARDED_IP] = end_user_ip
-      session.headers[Protocol::HEADER_FORWARDED_API_KEY] = rate_limit_api_key
-    end
+    Algolia.client.headers[Protocol::HEADER_API_KEY] = admin_api_key
+    Algolia.client.headers[Protocol::HEADER_FORWARDED_IP] = end_user_ip
+    Algolia.client.headers[Protocol::HEADER_FORWARDED_API_KEY] = rate_limit_api_key
   end
 
   #
   # Disable IP rate limit enabled with enableRateLimitForward() function
   #
   def Algolia.disable_rate_limit_forward
-    Algolia.client.thread_local_hosts.each do |host|
-      session = host["session"]
-      session.headers[Protocol::HEADER_API_KEY] = Algolia.client.api_key
-      session.headers.delete(Protocol::HEADER_FORWARDED_IP)
-      session.headers.delete(Protocol::HEADER_FORWARDED_API_KEY)
-    end
+    Algolia.client.headers[Protocol::HEADER_API_KEY] = Algolia.client.api_key
+    Algolia.client.headers.delete(Protocol::HEADER_FORWARDED_IP)
+    Algolia.client.headers.delete(Protocol::HEADER_FORWARDED_API_KEY)
   end
 
   #

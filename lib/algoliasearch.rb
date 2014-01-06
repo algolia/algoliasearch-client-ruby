@@ -8,7 +8,7 @@ require "rubygems"
 require "bundler/setup"
 
 require 'json'
-require 'curb'
+require 'httpclient'
 require 'date'
 require 'cgi'
 

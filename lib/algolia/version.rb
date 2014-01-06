@@ -1,3 +1,3 @@
 module Algolia
-  VERSION = "1.1.17"
+  VERSION = "1.2.1"
 end

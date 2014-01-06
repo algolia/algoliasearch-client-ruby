@@ -1,5 +1,9 @@
 CHANGELOG
 
+2014-01-06  1.2.1
+
+      * Removed 'curb' dependency and switched on 'httpclient' to avoid fork-safety issue (see issue #5)
+
 2014-01-02  1.1.17
 
       * Ability to use IP rate limit behind a proxy forwarding the end-user's IP
