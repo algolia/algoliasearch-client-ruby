@@ -1,5 +1,9 @@
 CHANGELOG
 
+2014-01-06  1.1.18
+
+      * Fixed batch request builder (broken since last refactoring)
+
 2014-01-02  1.1.17
 
       * Ability to use IP rate limit behind a proxy forwarding the end-user's IP
