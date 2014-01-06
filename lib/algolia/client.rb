@@ -84,6 +84,7 @@ module Algolia
           :base_url => "http#{@ssl ? 's' : ''}://#{host}",
           :session => HTTPClient.new
         }
+        hinfo[:session].transparent_gzip_decompression = true
         hinfo[:session].ssl_config.add_trust_ca File.join(File.dirname(__FILE__), '..', '..', 'resources', 'ca-bundle.crt')
         hinfo
       end
