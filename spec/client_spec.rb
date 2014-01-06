@@ -28,6 +28,15 @@ describe 'Client' do
     res["hits"].length.should eq(2)
   end
 
+  it "should save a set of objects with their ids" do
+    @index.save_objects!([
+      { :name => "objectid", :email => "objectid1@example.org", :objectID => 101 },
+      { :name => "objectid", :email => "objectid2@example.org", :objectID => 102 }
+    ])
+    res = @index.search("objectid")
+    res["hits"].length.should eq(2)
+  end
+
   it "should throw an exception if invalid argument" do
     expect { @index.add_object!([ {:name => "test"} ]) }.to raise_error(ArgumentError)
     expect { @index.add_objects!([ [ {:name => "test"} ] ]) }.to raise_error(ArgumentError)

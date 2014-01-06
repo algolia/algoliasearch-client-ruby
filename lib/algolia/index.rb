@@ -411,7 +411,7 @@ module Algolia
         :requests => objs.map { |obj|
           check_object obj, true
           h = { :action => action, :body => obj }
-          h[:objectID] = get_objectID(obj, nil, true) if with_object_id
+          h[:objectID] = get_objectID(obj).to_s if with_object_id
           h
         }
       }
