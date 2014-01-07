@@ -54,6 +54,8 @@ GEM
     pusher-client (0.4.0)
       websocket (~> 1.0.0)
     rake (10.1.1)
+    rdoc (4.1.0)
+      json (~> 1.4)
     redgreen (1.2.2)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
@@ -300,6 +302,7 @@ DEPENDENCIES
   httpclient (~> 2.3)
   json (>= 1.5.1)
   rake
+  rdoc
   redgreen
   rspec (>= 2.5.0)
   rubysl (~> 2.0)

@@ -7,6 +7,7 @@ gem 'rubysl', '~> 2.0', platform: :rbx
 group :development do
   gem 'travis'
   gem 'rake'
+  gem 'rdoc'
 end
 
 group :test do 
