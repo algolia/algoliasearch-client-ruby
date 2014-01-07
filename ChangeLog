@@ -1,5 +1,9 @@
 CHANGELOG
 
+2014-01-07  1.2.1
+
+      * Removed 'jeweler' since it doesn't support platform specific deps (see https://github.com/technicalpickles/jeweler/issues/170)
+
 2014-01-07  1.2.0
 
       * Removed 'curb' dependency and switched on 'httpclient' to avoid fork-safety issue (see issue #5)

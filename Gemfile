@@ -5,8 +5,8 @@ gem 'json', '>= 1.5.1'
 gem 'rubysl', '~> 2.0', platform: :rbx
 
 group :development do
-  gem 'jeweler'
   gem 'travis'
+  gem 'rake'
 end
 
 group :test do 

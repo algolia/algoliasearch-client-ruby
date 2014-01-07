@@ -13,21 +13,6 @@ require 'rake'
 
 require File.expand_path('../lib/algolia/version', __FILE__)
 
-require 'jeweler'
-Jeweler::Tasks.new do |gem|
-  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "algoliasearch"
-  gem.homepage = "http://github.com/algolia/algoliasearch-client-ruby"
-  gem.license = "MIT"
-  gem.summary = %Q{A simple Ruby client for the algolia.com REST API}
-  gem.description = %Q{A simple Ruby client for the algolia.com REST API}
-  gem.email = "contact@algolia.com"
-  gem.authors = ["Algolia"]
-  gem.version = Algolia::VERSION
-  # dependencies defined in Gemfile
-end
-Jeweler::RubygemsDotOrgTasks.new
-
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
   test.libs << 'lib' << 'test'
