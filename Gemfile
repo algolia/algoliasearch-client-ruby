@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'curb', '~> 0.8'
+gem 'httpclient', '~> 2.3'
 gem 'json', '>= 1.5.1'
 
 group :development do

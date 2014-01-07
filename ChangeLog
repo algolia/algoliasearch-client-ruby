@@ -1,5 +1,9 @@
 CHANGELOG
 
+2014-01-07  1.2.0
+
+      * Removed 'curb' dependency and switched on 'httpclient' to avoid fork-safety issue (see issue #5)
+
 2014-01-06  1.1.18
 
       * Fixed batch request builder (broken since last refactoring)

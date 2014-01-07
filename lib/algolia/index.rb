@@ -277,7 +277,7 @@ module Algolia
     # 
     #
     def clear
-      Algolia.client.post(Protocol.clear_uri(name), nil)
+      Algolia.client.post(Protocol.clear_uri(name))
     end
     
     #
