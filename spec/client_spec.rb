@@ -63,16 +63,18 @@ describe 'Client' do
     threads.each { |t| t.join }
   end
 
-  it "should be fork safe" do
-    8.times do
-      Process.fork do
-        10.times do
-          res = @index.search("john")
-          res["hits"].length.should eq(1)
+  if !defined?(RUBY_ENGINE) || RUBY_ENGINE != 'jruby'
+    it "should be fork safe" do
+      8.times do
+        Process.fork do
+          10.times do
+            res = @index.search("john")
+            res["hits"].length.should eq(1)
+          end
         end
       end
+      Process.waitall
     end
-    Process.waitall
   end
 
   it "should clear the index" do

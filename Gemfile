@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 gem 'httpclient', '~> 2.3'
 gem 'json', '>= 1.5.1'
+gem 'rubysl', '~> 2.0', platform: :rbx
 
 group :development do
   gem 'jeweler'
