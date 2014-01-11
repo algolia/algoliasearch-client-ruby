@@ -1,5 +1,9 @@
 CHANGELOG
 
+2014-01-11  1.2.2
+
+      * Expose batch requests
+
 2014-01-07  1.2.1
 
       * Removed 'jeweler' since it doesn't support platform specific deps (see https://github.com/technicalpickles/jeweler/issues/170)

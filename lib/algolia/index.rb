@@ -49,8 +49,7 @@ module Algolia
     # @param objs the array of objects to add inside the index. 
     #  Each object is represented by an associative array
     def add_objects(objs)
-      request = build_batch('addObject', objs, false)
-      Algolia.client.post(Protocol.batch_uri(name), request.to_json)
+      batch build_batch('addObject', objs, false)
     end
     
     # Add several objects in this index and wait end of indexing
@@ -195,8 +194,7 @@ module Algolia
     # @param objs the array of objects to save, each object must contain an 'objectID' key
     #
     def save_objects(objs)
-      request = build_batch('updateObject', objs, true)
-      Algolia.client.post(Protocol.batch_uri(name), request.to_json)
+      batch build_batch('updateObject', objs, true)
     end
 
     # Override the content of several objects and wait indexing
@@ -225,8 +223,7 @@ module Algolia
     # @param objs an array of objects to update (each object must contains a objectID attribute)
     #
     def partial_update_objects(objs)
-      request = build_batch('partialUpdateObject', objs, true)
-      Algolia.client.post(Protocol.batch_uri(name), request.to_json)
+      batch build_batch('partialUpdateObject', objs, true)
     end
 
     #
@@ -380,6 +377,11 @@ module Algolia
     # Delete an existing user key
     def delete_user_key(key)
       Algolia.client.delete(Protocol.index_key_uri(name, key))
+    end
+
+    # Send a batch request
+    def batch(request)
+      Algolia.client.post(Protocol.batch_uri(name), request.to_json)
     end
 
     private
