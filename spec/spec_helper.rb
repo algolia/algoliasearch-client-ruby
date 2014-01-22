@@ -4,6 +4,8 @@ if ENV['COVERAGE']
     SimpleCov.start
 end
 
+require 'coveralls'
+Coveralls.wear!
 
 require 'rubygems'
 Bundler.setup :test

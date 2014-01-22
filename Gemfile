@@ -5,6 +5,7 @@ gem 'json', '>= 1.5.1'
 gem 'rubysl', '~> 2.0', platform: :rbx
 
 group :development do
+  gem 'coveralls'
   gem 'travis'
   gem 'rake'
   gem 'rdoc'

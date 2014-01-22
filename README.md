@@ -15,7 +15,7 @@ Algolia’s Search API makes it easy to deliver a great search experience in you
 
 This Ruby client let you easily use the Algolia Search API from your backend. It wraps [Algolia's REST API](http://www.algolia.com/doc/rest_api).
 
-[![Build Status](https://travis-ci.org/algolia/algoliasearch-client-ruby.png?branch=master)](https://travis-ci.org/algolia/algoliasearch-client-ruby) [![Gem Version](https://badge.fury.io/rb/algoliasearch.png)](http://badge.fury.io/rb/algoliasearch) [![Code Climate](https://codeclimate.com/github/algolia/algoliasearch-client-ruby.png)](https://codeclimate.com/github/algolia/algoliasearch-client-ruby)
+[![Build Status](https://travis-ci.org/algolia/algoliasearch-client-ruby.png?branch=master)](https://travis-ci.org/algolia/algoliasearch-client-ruby) [![Gem Version](https://badge.fury.io/rb/algoliasearch.png)](http://badge.fury.io/rb/algoliasearch) [![Code Climate](https://codeclimate.com/github/algolia/algoliasearch-client-ruby.png)](https://codeclimate.com/github/algolia/algoliasearch-client-ruby) [![Coverage Status](https://coveralls.io/repos/algolia/algoliasearch-client-ruby/badge.png)](https://coveralls.io/r/algolia/algoliasearch-client-ruby)
 
 Table of Content
 -------------
