@@ -16,6 +16,7 @@ module Algolia
     def delete
       Algolia.client.delete(Protocol.index_uri(name))
     end
+    alias_method :delete_index, :delete
 
     # Add an object in this index
     # 

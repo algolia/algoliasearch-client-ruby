@@ -329,7 +329,7 @@ You can delete an index using its name:
 
 ```ruby
 index = Algolia::Index.new("contacts")
-index.delete
+index.delete_index
 ```
 
 Clear an index
@@ -534,8 +534,8 @@ describe 'With a mocked client' do
     index = Algolia::Index.new("friends")
     index.add_object!({ :name => "John Doe", :email => "john@doe.org" })
     index.search('').should == {} # mocked
-    index.clear
-    index.delete
+    index.clear_index
+    index.delete_index
   end
 
   after(:each) do
