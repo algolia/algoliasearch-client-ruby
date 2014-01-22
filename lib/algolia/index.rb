@@ -232,7 +232,7 @@ module Algolia
     # @param objs an array of objects to update (each object must contains a objectID attribute)
     #
     def partial_update_objects!(objs)
-      res = partial_update_objects(obj)
+      res = partial_update_objects(objs)
       wait_task(res["taskID"])
       return res
     end
