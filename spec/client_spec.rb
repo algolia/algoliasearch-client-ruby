@@ -259,6 +259,35 @@ describe 'Client' do
     res['facets']['f']['f3'].should be_nil
   end
 
+  it "should test keys" do
+    resIndex = @index.list_user_keys
+    newIndexKey = @index.add_user_key(['search'])
+    newIndexKey['key'].should_not eq("")
+    resIndexAfter = @index.list_user_keys
+    resIndex['keys'].size.should eq(resIndexAfter['keys'].size - 1)
+    indexKey = @index.get_user_key(newIndexKey['key'])
+    indexKey['acl'][0].should eq('search')
+    @index.delete_user_key(newIndexKey['key'])
+    sleep 1 # Dirty but temporary
+    resIndexEnd = @index.list_user_keys
+    resIndex['keys'].size.should eq(resIndexEnd['keys'].size)
+
+
+    res = Algolia.list_user_keys
+    newKey = Algolia.add_user_key(['search'])
+    newKey['key'].should_not eq("")
+    resAfter = Algolia.list_user_keys
+    res['keys'].size.should eq(resAfter['keys'].size - 1)
+    key = Algolia.get_user_key(newKey['key'])
+    key['acl'][0].should eq('search')
+    Algolia.delete_user_key(newKey['key'])
+    sleep 1 # Dirty but temporary
+    resEnd = Algolia.list_user_keys
+    res['keys'].size.should eq(resEnd['keys'].size)
+
+    
+  end
+
   it "should check functions" do
     @index.get_settings
     @index.list_user_keys
