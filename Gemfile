@@ -17,4 +17,5 @@ group :test do
   gem 'redgreen'
   gem 'autotest-growl'
   gem 'webmock'
+  gem 'simplecov'
 end

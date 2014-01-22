@@ -14,8 +14,17 @@ describe 'Client' do
   end
 
   it "should add a simple object" do
-    @index.add_object!({ :name => "John Doe", :email => "john@doe.org" })
+    @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
     res = @index.search("john")
+    res["hits"].length.should eq(1)
+  end
+
+  it "should partial update a simple object" do
+    @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
+    res = @index.search("john")
+    res["hits"].length.should eq(1)
+    @index.partial_update_object!({ :name => "Robert Doe"}, "1")
+    res = @index.search("robert")
     res["hits"].length.should eq(1)
   end
 
@@ -26,6 +35,22 @@ describe 'Client' do
     ])
     res = @index.search("another")
     res["hits"].length.should eq(2)
+  end
+
+  it "should partial update a simple object" do
+    @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
+    @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "2")
+    res = @index.search("john")
+    res["hits"].length.should eq(2)
+    @index.partial_update_objects!([{ :name => "Robert Doe", :objectID => "1"}, { :name => "Robert Doe", :objectID => "2"}])
+    res = @index.search("robert")
+    res["hits"].length.should eq(2)
+  end
+
+  it "should save a set of objects with their ids" do
+    @index.save_object!({ :name => "objectid", :email => "objectid1@example.org", :objectID => 101 })
+    res = @index.search("objectid")
+    res["hits"].length.should eq(1)
   end
 
   it "should save a set of objects with their ids" do
@@ -55,7 +80,7 @@ describe 'Client' do
       t = Thread.new do
         10.times do
           res = @index.search("john")
-          res["hits"].length.should eq(1)
+          res["hits"].length.should eq(2)
         end
       end
       threads << t
@@ -69,7 +94,7 @@ describe 'Client' do
         Process.fork do
           10.times do
             res = @index.search("john")
-            res["hits"].length.should eq(1)
+            res["hits"].length.should eq(2)
           end
         end
       end
@@ -80,6 +105,119 @@ describe 'Client' do
   it "should clear the index" do
     @index.clear!
     @index.search("")["hits"].length.should eq(0)
+  end
+
+  it "should have another index after" do
+    index = Algolia::Index.new(safe_index_name("friends_2"))
+    begin
+      index.delete()
+    rescue
+      # friends_2 does not exist
+    end
+    res = Algolia.list_indexes()
+    index.add_object!({ :name => "Robert" })
+    resAfter = Algolia.list_indexes();
+
+    res['items'].size. should eq(resAfter['items'].size - 1)
+  end
+
+  it "should get a object" do
+    @index.add_object!({:firstname => "Robert"})
+    res = @index.search('')
+    @index.search("")["nbHits"].should eq(1)
+    object = @index.get_object(res['hits'][0]['objectID'])
+    object['firstname'].should eq('Robert')
+    object = @index.get_object(res['hits'][0]['objectID'], 'firstname')
+    object['firstname'].should eq('Robert') 
+  end
+
+  it "should delete the object" do
+    @index.clear()
+    @index.add_object!({:firstname => "Robert"})
+    res = @index.search('')
+    @index.search('')['nbHits'].should eq(1)
+    object = @index.delete_object!(res['hits'][0]['objectID'])
+    @index.search('')['nbHits'].should eq(0)
+  end
+
+  it "should copy the index" do
+    @index.clear()
+    index = Algolia::Index.new(safe_index_name("friends_2"))
+    begin
+      index.delete()
+    rescue
+      # friends_2 does not exist
+    end
+
+    @index.add_object!({:firstname => "Robert"})
+    @index.search('')['nbHits'].should eq(1)
+    
+    Algolia.copy_index('friends', 'friends_2')
+    @index.delete()
+    
+    index.search('')['nbHits'].should eq(1)
+  end
+
+  it "should move the index" do
+    @index.clear() rescue "friends does not exist"
+    index = Algolia::Index.new(safe_index_name("friends_2"))
+    begin
+      index.delete()
+    rescue
+      # friends_2 does not exist
+    end
+
+    @index.add_object!({:firstname => "Robert"})
+    @index.search('')['nbHits'].should eq(1)
+    
+    Algolia.move_index('friends', 'friends_2')
+    
+    index.search('')['nbHits'].should eq(1)
+  end
+
+  it "should retrieve the object" do
+    @index.clear() rescue "friends does not exist"
+    @index.add_object!({:firstname => "Robert"})
+
+    res = @index.browse()
+
+    res['hits'].size.should eq(1)
+    res['hits'][0]['firstname'].should eq("Robert")
+  end 
+
+  it "should get logs" do
+    res = Algolia.get_logs()
+
+    res['logs'].size.should > 0
+  end
+
+  it "shoud accept custom batch" do
+    request = { "requests" => [
+      {
+        "action" => "addObject",
+        "body" => {"firstname" => "Jimmie", 
+        "lastname" => "Barninger"}
+      },
+      {
+        "action" => "addObject",
+        "body" => {"firstname" => "Warren", 
+        "lastname" => "Speach"}
+      },
+      {
+        "action" => "updateObject",
+        "body" => {"firstname" => "Jimmie", 
+        "lastname" => "Barninger",
+        "objectID" => "43"}
+      },
+      {
+        "action" => "updateObject",
+        "body" => {"firstname" => "Warren", 
+        "lastname" => "Speach"},
+        "objectID" => "42"
+      }
+      ]}
+    res = @index.batch(request)
+    
   end
 
   it "should allow an array of tags" do
@@ -117,6 +255,13 @@ describe 'Client' do
     res['facets']['f']['f1'].should eq(1)
     res['facets']['f']['f2'].should be_nil
     res['facets']['f']['f3'].should be_nil
+  end
+
+  it "should check functions" do
+    @index.get_settings
+    @index.list_user_keys
+    Algolia.list_user_keys
+
   end
 
 end
