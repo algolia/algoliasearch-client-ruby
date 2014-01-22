@@ -10,7 +10,7 @@ end
 describe 'Client' do
   before(:all) do
     @index = Algolia::Index.new(safe_index_name("friends"))
-    @index.delete rescue "not fatal"
+    @index.delete_index rescue "not fatal"
   end
 
   it "should add a simple object" do
@@ -110,7 +110,8 @@ describe 'Client' do
   it "should have another index after" do
     index = Algolia::Index.new(safe_index_name("friends_2"))
     begin
-      index.delete
+      index.delete_index
+      sleep 4 # Dirty but temporary
     rescue
       # friends_2 does not exist
     end
@@ -118,7 +119,7 @@ describe 'Client' do
     index.add_object!({ :name => "Robert" })
     resAfter = Algolia.list_indexes;
 
-    res['items'].size. should eq(resAfter['items'].size - 1)
+    res['items'].size.should eq(resAfter['items'].size - 1)
   end
 
   it "should get a object" do
@@ -143,8 +144,8 @@ describe 'Client' do
   it "should copy the index" do
     index = Algolia::Index.new(safe_index_name("friends_2"))
     begin
-      @index.clear
-      index.delete
+      @index.clear_index
+      index.delete_index
     rescue
       # friends_2 does not exist
     end
@@ -153,16 +154,16 @@ describe 'Client' do
     @index.search('')['nbHits'].should eq(1)
     
     Algolia.copy_index(safe_index_name('friends'), safe_index_name('friends_2'))
-    @index.delete
+    @index.delete_index
     
     index.search('')['nbHits'].should eq(1)
   end
 
   it "should move the index" do
-    @index.clear rescue "friends does not exist"
+    @index.clear_index rescue "friends does not exist"
     index = Algolia::Index.new(safe_index_name("friends_2"))
     begin
-      index.delete
+      index.delete_index
     rescue
       # friends_2 does not exist
     end
@@ -176,7 +177,7 @@ describe 'Client' do
   end
 
   it "should retrieve the object" do
-    @index.clear rescue "friends does not exist"
+    @index.clear_index rescue "friends does not exist"
     @index.add_object!({:firstname => "Robert"})
 
     res = @index.browse
