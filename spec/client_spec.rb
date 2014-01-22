@@ -110,13 +110,13 @@ describe 'Client' do
   it "should have another index after" do
     index = Algolia::Index.new(safe_index_name("friends_2"))
     begin
-      index.delete()
+      index.delete
     rescue
       # friends_2 does not exist
     end
-    res = Algolia.list_indexes()
+    res = Algolia.list_indexes
     index.add_object!({ :name => "Robert" })
-    resAfter = Algolia.list_indexes();
+    resAfter = Algolia.list_indexes;
 
     res['items'].size. should eq(resAfter['items'].size - 1)
   end
@@ -132,7 +132,7 @@ describe 'Client' do
   end
 
   it "should delete the object" do
-    @index.clear()
+    @index.clear
     @index.add_object!({:firstname => "Robert"})
     res = @index.search('')
     @index.search('')['nbHits'].should eq(1)
@@ -143,8 +143,8 @@ describe 'Client' do
   it "should copy the index" do
     index = Algolia::Index.new(safe_index_name("friends_2"))
     begin
-      @index.clear()
-      index.delete()
+      @index.clear
+      index.delete
     rescue
       # friends_2 does not exist
     end
@@ -153,16 +153,16 @@ describe 'Client' do
     @index.search('')['nbHits'].should eq(1)
     
     Algolia.copy_index(safe_index_name('friends'), safe_index_name('friends_2'))
-    @index.delete()
+    @index.delete
     
     index.search('')['nbHits'].should eq(1)
   end
 
   it "should move the index" do
-    @index.clear() rescue "friends does not exist"
+    @index.clear rescue "friends does not exist"
     index = Algolia::Index.new(safe_index_name("friends_2"))
     begin
-      index.delete()
+      index.delete
     rescue
       # friends_2 does not exist
     end
@@ -176,22 +176,23 @@ describe 'Client' do
   end
 
   it "should retrieve the object" do
-    @index.clear() rescue "friends does not exist"
+    @index.clear rescue "friends does not exist"
     @index.add_object!({:firstname => "Robert"})
 
-    res = @index.browse()
+    res = @index.browse
 
     res['hits'].size.should eq(1)
     res['hits'][0]['firstname'].should eq("Robert")
   end 
 
   it "should get logs" do
-    res = Algolia.get_logs()
+    res = Algolia.get_logs
 
     res['logs'].size.should > 0
   end
 
   it "shoud accept custom batch" do
+    @index.clear_index! rescue "Not fatal"
     request = { "requests" => [
       {
         "action" => "addObject",
@@ -217,7 +218,7 @@ describe 'Client' do
       }
       ]}
     res = @index.batch(request)
-    
+    @index.search('')['nbHits'].should eq(4)
   end
 
   it "should allow an array of tags" do
