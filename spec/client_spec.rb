@@ -141,9 +141,9 @@ describe 'Client' do
   end
 
   it "should copy the index" do
-    @index.clear()
     index = Algolia::Index.new(safe_index_name("friends_2"))
     begin
+      @index.clear()
       index.delete()
     rescue
       # friends_2 does not exist
@@ -152,7 +152,7 @@ describe 'Client' do
     @index.add_object!({:firstname => "Robert"})
     @index.search('')['nbHits'].should eq(1)
     
-    Algolia.copy_index('friends', 'friends_2')
+    Algolia.copy_index(safe_index_name('friends'), safe_index_name('friends_2'))
     @index.delete()
     
     index.search('')['nbHits'].should eq(1)
@@ -170,7 +170,7 @@ describe 'Client' do
     @index.add_object!({:firstname => "Robert"})
     @index.search('')['nbHits'].should eq(1)
     
-    Algolia.move_index('friends', 'friends_2')
+    Algolia.move_index(safe_index_name('friends'), safe_index_name('friends_2'))
     
     index.search('')['nbHits'].should eq(1)
   end
