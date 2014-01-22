@@ -276,6 +276,7 @@ module Algolia
     def clear
       Algolia.client.post(Protocol.clear_uri(name))
     end
+    alias_method :clear_index, :clear
     
     #
     # Delete the index content and wait end of indexing
@@ -285,6 +286,7 @@ module Algolia
       wait_task(res["taskID"])
       return res
     end
+    alias_method :clear_index!, :clear!
     
     #
     # Set settings for this index

@@ -338,7 +338,7 @@ Clear an index
 You can delete the index content without removing settings and index specific API keys with the clearIndex command:
 
 ```ruby
-index.clear
+index.clear_index
 ```
 
 Wait indexing
