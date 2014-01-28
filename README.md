@@ -1,6 +1,8 @@
 Algolia Search API Client for Ruby
 ==================
 
+
+
 [Algolia Search](http://www.algolia.com) is a search API that provides hosted full-text, numerical and faceted search.
 Algolia’s Search API makes it easy to deliver a great search experience in your apps & websites providing:
 
@@ -21,12 +23,14 @@ Table of Content
 -------------
 **Get started**
 
-1. [Setup](#setup) 
+1. [Setup](#setup)
 1. [Quick Start](#quick-start)
+
 
 **Commands reference**
 
 1. [Search](#search)
+
 1. [Add a new object](#add-a-new-object-in-the-index)
 1. [Update an object](#update-an-existing-object-in-the-index)
 1. [Get an object](#get-an-object)
@@ -42,6 +46,7 @@ Table of Content
 1. [Backup / Retrieve all index content](#backup--retrieve-all-index-content)
 1. [Logs](#logs)
 1. [Mock](#mock)
+
 
 Setup
 -------------
@@ -60,6 +65,7 @@ Algolia.init :application_id => "YourApplicationID",
 
 Quick Start
 -------------
+
 This quick start is a 30 seconds tutorial where you can discover how to index and search objects.
 
 Without any prior-configuration, you can index [500 contacts](https://github.com/algolia/algoliasearch-client-ruby/blob/master/contacts.json) in the ```contacts``` index with the following code:
@@ -85,6 +91,7 @@ Settings can be customized to tune the search behavior. For example you can add 
 ```ruby
 index.set_settings({"customRanking" => ["desc(followers)"]})
 ```
+
 You can also configure the list of attributes you want to index by order of importance (first = most important):
 ```ruby
 index.set_settings({"attributesToIndex" => ["lastname", "firstname", "company", 
@@ -97,13 +104,16 @@ puts index.search('or').to_json
 puts index.search('jim').to_json
 ```
 
+
+
+
 Search
 -------------
-> **Opening note:** If you are building a web application, you may be more interested in using our [javascript client](https://github.com/algolia/algoliasearch-client-js) to send queries. It brings two benefits: (i) your users get a better response time by avoiding to go through your servers, and (ii) it will offload your servers of unnecessary tasks.
+ **Opening note:** If you are building a web application, you may be more interested in using our [javascript client](https://github.com/algolia/algoliasearch-client-js) to send queries. It brings two benefits: (i) your users get a better response time by avoiding to go through your servers, and (ii) it will offload your servers of unnecessary tasks.
 
-To perform a search, you just need to initialize the index and perform a call to the search function.<br/>
+To perform a search, you just need to initialize the index and perform a call to the search function.
+
 You can use the following optional arguments:
-
 
 ### Query parameters
 
@@ -192,6 +202,7 @@ The server response will look like:
 }
 ```
 
+
 Add a new object in the Index
 -------------
 
@@ -269,7 +280,8 @@ index.delete_object("myID")
 Index Settings
 -------------
 
-You can retrieve all settings using the `getSettings` function. The result will contains the following attributes:
+You can retrieve all settings using the `get_settings` function. The result will contains the following attributes:
+
 
 #### Indexing parameters
  * **attributesToIndex**: (array of strings) the list of fields you want to index.<br/>If set to null, all textual and numerical attributes of your objects are indexed, but you should update it to get optimal results.<br/>This parameter has two important uses:
@@ -292,6 +304,7 @@ For example `"customRanking" => ["desc(population)", "asc(name)"]`
   * **prefixAll**: all query words are interpreted as prefixes,
   * **prefixLast**: only the last word is interpreted as a prefix (default behavior),
   * **prefixNone**: no query word is interpreted as a prefix. This option is not recommended.
+ * **slaves**: The list of indexes on which you want to replicate all write operations. In order to get response times in milliseconds, we pre-compute part of the ranking during indexing. If you want to use different ranking configurations depending of the use-case, you need to create one index per ranking configuration. This option enables you to perform write operations only on this index, and to automatically update slave indexes with the same operations.
 
 #### Default query parameters (can be overwrite by query)
  * **minWordSizefor1Typo**: (integer) the minimum number of characters to accept one typo (default = 3).
@@ -334,7 +347,6 @@ index.delete_index
 
 Clear an index
 -------------
-
 You can delete the index content without removing settings and index specific API keys with the clearIndex command:
 
 ```ruby
@@ -344,7 +356,7 @@ index.clear_index
 Wait indexing
 -------------
 
-All write operations return a `taskID` when the job is securely stored on our infrastructure but not when the job is published in your index. Even if it's extremely fast, you can easily ensure indexing is complete using the same method with a `!`.
+All write operations return a `taskID` when the job is securely stored on our infrastructure but not when the job is published in your index. Even if it's extremely fast, you can easily ensure indexing is complete using  the same method with a `!`. 
 
 For example, to wait for indexing of a new object:
 ```ruby
@@ -352,13 +364,14 @@ res = index.add_object!({"firstname" => "Jimmie",
                          "lastname" => "Barninger"})
 ```
 
+
 If you want to ensure multiple objects have been indexed, you can only check the biggest taskID with `wait_task`.
 
 Batch writes
 -------------
 
 You may want to perform multiple operations with one API call to reduce latency.
-We expose two methods to perform batch:
+We expose three methods to perform batch:
  * `add_objects`: add an array of object using automatic `objectID` assignement
  * `save_objects`: add or update an array of object that contains an `objectID` attribute
  * `partial_update_objects`: partially update an array of objects that contain an `objectID` attribute (only specified attributes will be updated, other will remain unchanged)
@@ -422,10 +435,12 @@ puts res['key']
 res = index.add_user_key(["search"])
 puts res['key']
 ```
+
 You can also create an API Key with advanced restrictions:
 
  * Add a validity period: the key will be valid only for a specific period of time (in seconds),
  * Specify the maximum number of API calls allowed from an IP address per hour. Each time an API call is performed with this key, a check is performed. If the IP at the origin of the call did more than this number of calls in the last hour, a 403 code is returned. Defaults to 0 (no rate limit). This parameter can be used to protect you from attempts at retrieving your entire content by massively querying the index.
+
 
   Note: If you are sending the query through your servers, you must use the `Algolia.with_rate_limits("EndUserIP", "APIKeyWithRateLimit") do ... end` block to enable rate-limit.
 
@@ -544,3 +559,6 @@ describe 'With a mocked client' do
 
 end
 ```
+
+
+
