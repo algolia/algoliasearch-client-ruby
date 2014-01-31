@@ -295,4 +295,16 @@ describe 'Client' do
 
   end
 
+  it "should handle slash in objectId" do
+    @index.clear_index!()
+    @index.add_object!({:firstname => "Robert", :objectID => "A/go/?a"})
+    res = @index.search('')
+    @index.search("")["nbHits"].should eq(1)
+    object = @index.get_object(res['hits'][0]['objectID'])
+    object['firstname'].should eq('Robert')
+    object = @index.get_object(res['hits'][0]['objectID'], 'firstname')
+    object['firstname'].should eq('Robert') 
+  end
+
+
 end

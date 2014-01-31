@@ -40,11 +40,11 @@ module Algolia
 
     # Construct a uri referencing a given Algolia index
     def Protocol.index_uri(index)
-      "/#{VERSION}/indexes/#{index}"
+      "/#{VERSION}/indexes/#{CGI.escape(index)}"
     end
 
     def Protocol.batch_uri(index)
-      "/#{VERSION}/indexes/#{index}/batch"
+      "#{index_uri(index)}/batch"
     end
     
     def Protocol.index_operation_uri(index)
@@ -57,7 +57,7 @@ module Algolia
     
     def Protocol.object_uri(index, object_id, params = {})
       params = params.nil? || params.size == 0 ? "" : "?#{to_query(params)}"
-      "#{index_uri(index)}/#{object_id}#{params}"
+      "#{index_uri(index)}/#{CGI.escape(object_id.to_s)}#{params}"
     end
 
     def Protocol.search_uri(index, query, params = {})
