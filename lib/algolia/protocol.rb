@@ -71,7 +71,7 @@ module Algolia
     end
 
     def Protocol.partial_object_uri(index, object_id)
-      "#{index_uri(index)}/#{object_id}/partial"
+      "#{index_uri(index)}/#{CGI.escape(object_id)}/partial"
     end
     
     def Protocol.settings_uri(index)

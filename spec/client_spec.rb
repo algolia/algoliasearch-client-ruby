@@ -304,6 +304,19 @@ describe 'Client' do
     object['firstname'].should eq('Robert')
     object = @index.get_object(res['hits'][0]['objectID'], 'firstname')
     object['firstname'].should eq('Robert') 
+
+    @index.save_object!({:firstname => "George", :objectID => "A/go/?a"})
+    res = @index.search('')
+    @index.search("")["nbHits"].should eq(1)
+    object = @index.get_object(res['hits'][0]['objectID'])
+    object['firstname'].should eq('George')
+
+    @index.partial_update_object!({:firstname => "Sylvain", :objectID => "A/go/?a"})
+    res = @index.search('')
+    @index.search("")["nbHits"].should eq(1)
+    object = @index.get_object(res['hits'][0]['objectID'])
+    object['firstname'].should eq('Sylvain')
+
   end
 
 
