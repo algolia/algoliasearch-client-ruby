@@ -9,8 +9,13 @@ end
 
 describe 'Client' do
   before(:all) do
-    @index = Algolia::Index.new(safe_index_name("friends"))
+    @index = Algolia::Index.new(safe_index_name("àlgol?a"))
     @index.delete_index rescue "not fatal"
+  end
+
+  after(:suite) do
+    Algolia.destroy
+    expect { Algolia.client }.to raise_error(AlgoliaError)
   end
 
   it "should add a simple object" do
@@ -108,7 +113,7 @@ describe 'Client' do
   end
 
   it "should have another index after" do
-    index = Algolia::Index.new(safe_index_name("friends_2"))
+    index = Algolia::Index.new(safe_index_name("àlgol?a"))
     begin
       index.delete_index
       sleep 4 # Dirty but temporary
@@ -123,6 +128,7 @@ describe 'Client' do
   end
 
   it "should get a object" do
+    @index.clear_index
     @index.add_object!({:firstname => "Robert"})
     res = @index.search('')
     @index.search("")["nbHits"].should eq(1)
@@ -142,7 +148,7 @@ describe 'Client' do
   end
 
   it "should copy the index" do
-    index = Algolia::Index.new(safe_index_name("friends_2"))
+    index = Algolia::Index.new(safe_index_name("àlgol?à"))
     begin
       @index.clear_index
       index.delete_index
@@ -153,7 +159,7 @@ describe 'Client' do
     @index.add_object!({:firstname => "Robert"})
     @index.search('')['nbHits'].should eq(1)
     
-    Algolia.copy_index(safe_index_name('friends'), safe_index_name('friends_2'))
+    Algolia.copy_index(safe_index_name("àlgol?a"), safe_index_name("àlgol?à"))
     @index.delete_index
     
     index.search('')['nbHits'].should eq(1)
@@ -161,7 +167,7 @@ describe 'Client' do
 
   it "should move the index" do
     @index.clear_index rescue "friends does not exist"
-    index = Algolia::Index.new(safe_index_name("friends_2"))
+    index = Algolia::Index.new(safe_index_name("àlgol?à"))
     begin
       index.delete_index
     rescue
@@ -171,7 +177,7 @@ describe 'Client' do
     @index.add_object!({:firstname => "Robert"})
     @index.search('')['nbHits'].should eq(1)
     
-    Algolia.move_index(safe_index_name('friends'), safe_index_name('friends_2'))
+    Algolia.move_index(safe_index_name("àlgol?a"), safe_index_name("àlgol?à"))
     
     index.search('')['nbHits'].should eq(1)
   end
@@ -318,6 +324,5 @@ describe 'Client' do
     object['firstname'].should eq('Sylvain')
 
   end
-
 
 end

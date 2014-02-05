@@ -48,7 +48,7 @@ module Algolia
     end
     
     def Protocol.index_operation_uri(index)
-      "/#{VERSION}/indexes/#{index}/operation"
+      "#{index_uri(index)}/operation"
     end
 
     def Protocol.task_uri(index, task_id)
