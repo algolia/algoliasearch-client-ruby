@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 
 # avoid concurrent access to the same index
@@ -325,4 +326,213 @@ describe 'Client' do
 
   end
 
+  it "Check attributes list_indexes:" do
+    res = Algolia.list_indexes
+    res.should have_key('items')     
+    res['items'][0].should have_key('name')    
+    res['items'][0]['name'].should be_a(String)    
+    res['items'][0].should have_key('createdAt')    
+    res['items'][0]['createdAt'].should be_a(String)    
+    res['items'][0].should have_key('updatedAt')    
+    res['items'][0]['updatedAt'].should be_a(String)    
+    res['items'][0].should have_key('entries')    
+    res['items'][0]['entries'].should be_a(Integer)    
+    res['items'][0].should have_key('pendingTask')    
+    [true, false].should include(res['items'][0]['pendingTask']) 
+  end
+
+  it 'Check attributes search : ' do
+    res = @index.search('')
+    res.should have_key('hits')     
+    res['hits'].should be_a(Array)
+    res.should have_key('page')     
+    res['page'].should be_a(Integer)     
+    res.should have_key('nbHits')     
+    res['nbHits'].should be_a(Integer)     
+    res.should have_key('nbPages')     
+    res['nbPages'].should be_a(Integer)     
+    res.should have_key('hitsPerPage')     
+    res['hitsPerPage'].should be_a(Integer)     
+    res.should have_key('processingTimeMS')     
+    res['processingTimeMS'].should be_a(Integer)     
+    res.should have_key('query')     
+    res['query'].should be_a(String)     
+    res.should have_key('params')     
+    res['params'].should be_a(String)     
+  end
+
+  it 'Check attributes delete_index : ' do
+    index = Algolia::Index.new(safe_index_name("àlgol?à2"))
+    index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
+    task = index.delete_index()
+    task.should have_key('deletedAt')
+    task['deletedAt'].should be_a(String)
+    task.should have_key('taskID')
+    task['taskID'].should be_a(Integer)
+  end
+
+  it 'Check attributes clear_index : ' do
+    task = @index.clear_index
+    task.should have_key('updatedAt')
+    task['updatedAt'].should be_a(String)
+    task.should have_key('taskID')
+    task['taskID'].should be_a(Integer)
+  end
+  
+  it 'Check attributes add object : ' do
+    task = @index.add_object({ :name => "John Doe", :email => "john@doe.org" })
+    task.should have_key('createdAt')
+    task['createdAt'].should be_a(String)
+    task.should have_key('taskID')
+    task['taskID'].should be_a(Integer)
+    task.should have_key('objectID')
+    task['objectID'].should be_a(String)
+  end
+
+  it 'Check attributes add object id: ' do
+    task = @index.add_object({ :name => "John Doe", :email => "john@doe.org" }, "1")
+    task.should have_key('updatedAt')
+    task['updatedAt'].should be_a(String)
+    task.should have_key('taskID')
+    task['taskID'].should be_a(Integer)
+    #task.should have_key('objectID')
+    #task['objectID'].should be_a(String) #TODO normal ou pas
+    #task['objectID'].should eq("1") #TODO 
+  end
+
+  it 'Check attributes partial update: ' do
+    task = @index.partial_update_object({ :name => "John Doe", :email => "john@doe.org" }, "1")
+    task.should have_key('updatedAt')
+    task['updatedAt'].should be_a(String)
+    task.should have_key('taskID')
+    task['taskID'].should be_a(Integer)
+    task.should have_key('objectID')
+    task['objectID'].should be_a(String)
+    task['objectID'].should eq("1")
+  end
+
+  it 'Check attributes delete object: ' do
+    @index.add_object({ :name => "John Doe", :email => "john@doe.org" }, "1")
+    task = @index.delete_object("1")
+    task.should have_key('deletedAt')
+    task['deletedAt'].should be_a(String)
+    task.should have_key('taskID')
+    task['taskID'].should be_a(Integer)
+  end
+
+  it 'Check attributes add objects: ' do
+    task = @index.add_objects([{ :name => "John Doe", :email => "john@doe.org", :objectID => "1" }])
+    task.should have_key('taskID')
+    task['taskID'].should be_a(Integer)
+    task.should have_key('objectIDs')
+    task['objectIDs'].should be_a(Array)
+  end
+
+  it 'Check attributes browse: ' do
+    res = @index.browse()
+    res.should have_key('hits')
+    res['hits'].should be_a(Array)
+    res.should have_key('page')
+    res['page'].should be_a(Integer)
+    res.should have_key('nbHits')
+    res['nbHits'].should be_a(Integer)
+    res.should have_key('nbPages')
+    res['nbPages'].should be_a(Integer)
+    res.should have_key('hitsPerPage')
+    res['hitsPerPage'].should be_a(Integer)
+    res.should have_key('processingTimeMS')
+    res['processingTimeMS'].should be_a(Integer)
+    res.should have_key('query')
+    res['query'].should be_a(String)
+    res.should have_key('params')
+    res['params'].should be_a(String)
+  end
+
+  it 'Check attributes get settings: ' do
+    task = @index.set_settings({})
+    task.should have_key('taskID')
+    task['taskID'].should be_a(Integer)
+    task.should have_key('updatedAt')
+    task['updatedAt'].should be_a(String)
+  end
+
+  it 'Check attributes move_index : ' do
+    index = Algolia::Index.new(safe_index_name("àlgol?à2"))
+    index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
+    task = Algolia.move_index(safe_index_name("àlgol?à2"), safe_index_name("àlgol?à"))
+    #task.should have_key('updatedAt')
+    #task['updatedAt'].should be_a(String)
+    task.should have_key('taskID')
+    task['taskID'].should be_a(Integer)
+  end
+
+  it 'Check attributes copy_index : ' do
+    index = Algolia::Index.new(safe_index_name("àlgol?à2"))
+    index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
+    task = Algolia.copy_index(safe_index_name("àlgol?à2"), safe_index_name("àlgol?à"))
+    #task.should have_key('updatedAt')
+    #task['updatedAt'].should be_a(String)
+    task.should have_key('taskID')
+    task['taskID'].should be_a(Integer)
+  end
+
+  it 'Check attributes wait_task : ' do
+    task = @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
+    task = Algolia.client.get(Algolia::Protocol.task_uri(safe_index_name("àlgol?a"), task['objectID']))
+    task.should have_key('status')
+    task['status'].should be_a(String)
+    task.should have_key('pendingTask')
+    [true, false].should include(task['pendingTask']) 
+  end
+
+  it "Check add keys" do
+    newIndexKey = @index.add_user_key(['search'])
+    newIndexKey.should have_key('key')
+    newIndexKey['key'].should be_a(String)
+    newIndexKey.should have_key('createdAt')
+    newIndexKey['createdAt'].should be_a(String)
+    resIndex = @index.list_user_keys
+    resIndex.should have_key('keys')
+    resIndex['keys'].should be_a(Array)
+    resIndex['keys'][0].should have_key('value')
+    resIndex['keys'][0]['value'].should be_a(String)
+    resIndex['keys'][0].should have_key('acl')
+    resIndex['keys'][0]['acl'].should be_a(Array)
+    resIndex['keys'][0].should have_key('validity')
+    resIndex['keys'][0]['validity'].should be_a(Integer)
+    indexKey = @index.get_user_key(newIndexKey['key'])
+    indexKey.should have_key('value')
+    indexKey['value'].should be_a(String)
+    indexKey.should have_key('acl')
+    indexKey['acl'].should be_a(Array)
+    indexKey.should have_key('validity')
+    indexKey['validity'].should be_a(Integer)
+    task = @index.delete_user_key(newIndexKey['key'])
+    task.should have_key('deletedAt')
+    task['deletedAt'].should be_a(String)
+  end
+
+  it 'Check attributes log : ' do
+    logs = Algolia.get_logs()
+    logs.should have_key('logs')
+    logs['logs'].should be_a(Array)
+    logs['logs'][0].should have_key('timestamp')
+    logs['logs'][0]['timestamp'].should be_a(String)
+    logs['logs'][0].should have_key('method')
+    logs['logs'][0]['method'].should be_a(String)
+    logs['logs'][0].should have_key('answer_code')
+    logs['logs'][0]['answer_code'].should be_a(String)
+    logs['logs'][0].should have_key('query_body')
+    logs['logs'][0]['query_body'].should be_a(String)
+    logs['logs'][0].should have_key('answer')
+    logs['logs'][0]['answer'].should be_a(String)
+    logs['logs'][0].should have_key('url')
+    logs['logs'][0]['url'].should be_a(String)
+    logs['logs'][0].should have_key('ip')
+    logs['logs'][0]['ip'].should be_a(String)
+    logs['logs'][0].should have_key('query_headers')
+    logs['logs'][0]['query_headers'].should be_a(String)
+    logs['logs'][0].should have_key('sha1')
+    logs['logs'][0]['sha1'].should be_a(String)
+  end
 end
