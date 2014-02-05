@@ -93,18 +93,6 @@ module Algolia
       return JSON.parse(response.content)
     end
 
-    def init_session
-      s = Curl::Easy.new
-      s.headers[Protocol::HEADER_API_KEY]  = api_key
-      s.headers[Protocol::HEADER_APP_ID]   = application_id
-      s.headers["Content-Type"]            = "application/json; charset=utf-8"
-      s.headers["User-Agent"]              = "Algolia for Ruby #{::Algolia::VERSION}"
-      s.verbose                            = true if @debug
-      s.cacert                             = File.join File.dirname(__FILE__), '..', '..', 'resources', 'ca-bundle.crt'
-      s.encoding                           = ''
-      s
-    end
-
   end
 
   # Module methods
