@@ -23,9 +23,8 @@ describe 'Client' do
     @index.delete_index rescue "not fatal"
   end
 
-  after(:suite) do
-    Algolia.destroy
-    expect { Algolia.client }.to raise_error(AlgoliaError)
+  after(:all) do
+    @index.delete_index rescue "not fatal"
   end
 
   it "should add a simple object" do
@@ -173,6 +172,7 @@ describe 'Client' do
     @index.delete_index
     
     index.search('')['nbHits'].should eq(1)
+    index.delete_index
   end
 
   it "should move the index" do
@@ -190,6 +190,7 @@ describe 'Client' do
     Algolia.move_index(safe_index_name("àlgol?a"), safe_index_name("àlgol?à"))
     
     index.search('')['nbHits'].should eq(1)
+    index.delete_index
   end
 
   it "should retrieve the object" do
@@ -467,23 +468,28 @@ describe 'Client' do
   end
 
   it 'Check attributes move_index : ' do
-    index = Algolia::Index.new(safe_index_name("àlgol?à2"))
-    index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
+    index = Algolia::Index.new(safe_index_name("àlgol?à"))
+    index2 = Algolia::Index.new(safe_index_name("àlgol?à2"))
+    index2.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
     task = Algolia.move_index(safe_index_name("àlgol?à2"), safe_index_name("àlgol?à"))
-    #task.should have_key('updatedAt')
-    #task['updatedAt'].should be_a(String)
+    task.should have_key('updatedAt')
+    task['updatedAt'].should be_a(String)
     task.should have_key('taskID')
     task['taskID'].should be_a(Integer)
+    index.delete_index
   end
 
   it 'Check attributes copy_index : ' do
-    index = Algolia::Index.new(safe_index_name("àlgol?à2"))
-    index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
+    index = Algolia::Index.new(safe_index_name("àlgol?à"))
+    index2 = Algolia::Index.new(safe_index_name("àlgol?à2"))
+    index2.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
     task = Algolia.copy_index(safe_index_name("àlgol?à2"), safe_index_name("àlgol?à"))
     task.should have_key('updatedAt')
     task['updatedAt'].should be_a(String)
     task.should have_key('taskID')
     task['taskID'].should be_a(Integer)
+    index.delete_index
+    index2.delete_index
   end
 
   it 'Check attributes wait_task : ' do
