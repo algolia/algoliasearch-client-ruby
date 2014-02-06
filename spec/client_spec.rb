@@ -395,9 +395,10 @@ describe 'Client' do
     task['updatedAt'].should be_a(String)
     task.should have_key('taskID')
     task['taskID'].should be_a(Integer)
-    #task.should have_key('objectID')
-    #task['objectID'].should be_a(String) #TODO normal ou pas
-    #task['objectID'].should eq("1") #TODO 
+    #task.to_s.should eq("")
+    task.should have_key('objectID')
+    task['objectID'].should be_a(String)
+    task['objectID'].should eq("1") 
   end
 
   it 'Check attributes partial update: ' do
