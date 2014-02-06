@@ -131,10 +131,10 @@ describe 'Client' do
       # friends_2 does not exist
     end
     res = Algolia.list_indexes
-    is_present(res['items'], 'name', 'àlgol?a').should eq(false)
+    is_present(res['items'], 'name', safe_index_name('àlgol?a')).should eq(false)
     index.add_object!({ :name => "Robert" })
     resAfter = Algolia.list_indexes;
-    is_present(resAfter['items'], 'name', 'àlgol?a').should eq(true)
+    is_present(resAfter['items'], 'name', safe_index_name('àlgol?a')).should eq(true)
   end
 
   it "should get a object" do
