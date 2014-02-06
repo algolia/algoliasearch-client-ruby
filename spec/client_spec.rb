@@ -8,6 +8,15 @@ def safe_index_name(name)
   "#{name}_travis-#{id}"
 end
 
+def is_present(array, attr, value)
+  array.each do |elt|
+    if elt[attr] == value
+      return true
+    end
+  end
+  return false
+end
+
 describe 'Client' do
   before(:all) do
     @index = Algolia::Index.new(safe_index_name("àlgol?a"))
@@ -122,10 +131,10 @@ describe 'Client' do
       # friends_2 does not exist
     end
     res = Algolia.list_indexes
+    is_present(res['items'], 'name', 'àlgol?a').should eq(false)
     index.add_object!({ :name => "Robert" })
     resAfter = Algolia.list_indexes;
-
-    res['items'].size.should eq(resAfter['items'].size - 1)
+    is_present(resAfter['items'], 'name', 'àlgol?a').should eq(true)
   end
 
   it "should get a object" do
