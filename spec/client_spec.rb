@@ -471,8 +471,8 @@ describe 'Client' do
     index = Algolia::Index.new(safe_index_name("àlgol?à2"))
     index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
     task = Algolia.copy_index(safe_index_name("àlgol?à2"), safe_index_name("àlgol?à"))
-    #task.should have_key('updatedAt')
-    #task['updatedAt'].should be_a(String)
+    task.should have_key('updatedAt')
+    task['updatedAt'].should be_a(String)
     task.should have_key('taskID')
     task['taskID'].should be_a(Integer)
   end
