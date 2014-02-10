@@ -26,7 +26,7 @@ module Algolia
     #  (if the attribute already exist the old object will be overridden)
     def add_object(obj, objectID = nil)
       check_object obj
-      if objectID.nil?
+      if objectID.nil? || objectID.to_s.empty?
         Algolia.client.post(Protocol.index_uri(name), obj.to_json)
       else
         Algolia.client.put(Protocol.object_uri(name, objectID), obj.to_json)        

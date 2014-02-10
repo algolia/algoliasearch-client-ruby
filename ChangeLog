@@ -1,5 +1,9 @@
 CHANGELOG
 
+2014-02-10  1.2.3
+
+      * add_object: POST request if objectID is nil OR empty
+
 2014-01-11  1.2.2
 
       * Expose batch requests
