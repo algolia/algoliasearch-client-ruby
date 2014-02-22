@@ -152,7 +152,17 @@ describe 'Client' do
     @index.add_object!({:firstname => "Robert"})
     res = @index.search('')
     @index.search('')['nbHits'].should eq(1)
-    object = @index.delete_object!(res['hits'][0]['objectID'])
+    @index.delete_object!(res['hits'][0]['objectID'])
+    @index.search('')['nbHits'].should eq(0)
+  end
+
+  it "should delete several objects" do
+    @index.clear
+    @index.add_object!({:firstname => "Robert1"})
+    @index.add_object!({:firstname => "Robert2"})
+    res = @index.search('')
+    @index.search('')['nbHits'].should eq(2)
+    @index.delete_objects!(res['hits'].map { |h| h['objectID'] })
     @index.search('')['nbHits'].should eq(0)
   end
 

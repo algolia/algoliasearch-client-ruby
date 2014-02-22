@@ -271,6 +271,27 @@ module Algolia
     end
 
     #
+    # Delete several objects
+    # 
+    # @param objs an array of objectIDs
+    #
+    def delete_objects(objs)
+      check_array objs
+      batch build_batch('deleteObject', objs.map { |objectID| { objectID: objectID } }, false)
+    end
+
+    #
+    # Delete several objects and wait end of indexing
+    # 
+    # @param objs an array of objectIDs
+    #
+    def delete_objects!(objs)
+      res = delete_objects(objs)
+      wait_task(res["taskID"])
+      return res
+    end
+
+    #
     # Delete the index content
     # 
     #

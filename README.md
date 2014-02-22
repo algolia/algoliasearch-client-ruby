@@ -409,6 +409,7 @@ You may want to perform multiple operations with one API call to reduce latency.
 We expose three methods to perform batch:
  * `add_objects`: add an array of object using automatic `objectID` assignement
  * `save_objects`: add or update an array of object that contains an `objectID` attribute
+ * `delete_objects`: delete an array of objectIDs
  * `partial_update_objects`: partially update an array of objects that contain an `objectID` attribute (only specified attributes will be updated, other will remain unchanged)
 
 Example using automatic `objectID` assignement:
@@ -427,6 +428,11 @@ res = index.save_objects([{"firstname" => "Jimmie",
                           {"firstname" => "Warren", 
                           "lastname" => "Speach",
                            "objectID" => "myID2"}])
+```
+
+Example that delete a set of records:
+```ruby
+res = index.delete_objects(["myID1", "myID2"])
 ```
 
 Example that update only the `firstname` attribute:
