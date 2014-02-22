@@ -179,7 +179,7 @@ module Algolia
       Algolia.client.put(Protocol.object_uri(name, get_objectID(obj, objectID)), obj.to_json)
     end
 
-    # Override the content of object and wait indexing
+    # Override the content of object and wait end of indexing
     # 
     # @param obj the object to save
     # @param objectID the associated objectID, if nil 'obj' must contain an 'objectID' key
@@ -198,7 +198,7 @@ module Algolia
       batch build_batch('updateObject', objs, true)
     end
 
-    # Override the content of several objects and wait indexing
+    # Override the content of several objects and wait end of indexing
     # 
     # @param objs the array of objects to save, each object must contain an objectID attribute
     #    
@@ -228,7 +228,7 @@ module Algolia
     end
 
     #
-    # Partially Override the content of several objects
+    # Partially Override the content of several objects and wait end of indexing
     # 
     # @param objs an array of objects to update (each object must contains a objectID attribute)
     #
