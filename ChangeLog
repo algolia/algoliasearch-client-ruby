@@ -1,5 +1,9 @@
 CHANGELOG
 
+2014-02-21  1.2.4
+
+      * Added delete_objects
+
 2014-02-10  1.2.3
 
       * add_object: POST request if objectID is nil OR empty
