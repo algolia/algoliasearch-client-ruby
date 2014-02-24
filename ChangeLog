@@ -1,5 +1,10 @@
 CHANGELOG
 
+2014-02-24  1.2.5
+
+      * Ability to generate secured API key from a list of tags + optional user_token
+      * Ability to specify a list of indexes targeted by the user key
+
 2014-02-21  1.2.4
 
       * Added delete_objects
