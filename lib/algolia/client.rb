@@ -213,9 +213,17 @@ module Algolia
   #  @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
   #  @param maxQueriesPerIPPerHour the maximum number of API calls allowed from an IP address per hour (0 means unlimited)
   #  @param maxHitsPerQuery  the maximum number of hits this API key can retrieve in one call (0 means unlimited)
+  #  @param indexes the optional list of targeted indexes
   #
-  def Algolia.add_user_key(acls, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0)
-      Algolia.client.post(Protocol.keys_uri, {"acl" => acls, "validity" => validity.to_i, "maxQueriesPerIPPerHour" => maxQueriesPerIPPerHour.to_i, "maxHitsPerQuery" => maxHitsPerQuery.to_i}.to_json)
+  def Algolia.add_user_key(acls, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
+    params = {
+      :acl => acls,
+      :validity => validity.to_i,
+      :maxQueriesPerIPPerHour => maxQueriesPerIPPerHour.to_i,
+      :maxHitsPerQuery => maxHitsPerQuery.to_i
+    }
+    params[:indexes] = indexes if indexes
+    Algolia.client.post(Protocol.keys_uri, params.to_json)
   end
 
   # Delete an existing user key
