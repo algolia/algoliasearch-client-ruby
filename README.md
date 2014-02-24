@@ -295,6 +295,8 @@ The server response will look like:
 
 
 
+
+
 Get an object
 -------------
 
@@ -494,13 +496,18 @@ You can also create an API Key with advanced restrictions:
   Note: If you are sending the query through your servers, you must use the `Algolia.with_rate_limits("EndUserIP", "APIKeyWithRateLimit") do ... end` block to enable rate-limit.
 
  * Specify the maximum number of hits this API key can retrieve in one call. Defaults to 0 (unlimited). This parameter can be used to protect you from attempts at retrieving your entire content by massively querying the index.
+ * Specify the list of targeted indexes. Defaults to all indexes if empty of blank.
 
 ```ruby
 # Creates a new global API key that is valid for 300 seconds
 res = Algolia.add_user_key(["search"], 300)
 puts res['key']
-# Creates a new index specific API key valid for 300 seconds, with a rate limit of 100 calls per hour per IP and a maximum of 20 hits
-res = index.add_user_key(["search"], 300, 100, 20)
+# Creates a new index specific API key:
+#  - valid for 300 seconds
+#  - rate limit of 100 calls per hour per IP
+#  - maximum of 20 hits
+#  - valid on 'my_index1' and 'my_index2'
+res = index.add_user_key(["search"], 300, 100, 20, ['my_index1', 'my_index2'])
 puts res['key']
 ```
 
@@ -518,6 +525,49 @@ Delete an existing key:
 Algolia.delete_user_key("f420238212c54dcfad07ea0aa6d5c45f")
 # Deletes an index specific key
 index.delete_user_key("71671c38001bf3ac857bc82052485107")
+```
+
+You may have a single index containing per-user data. In that case, all records should be tagged with their associated user_id in order to add a `tagFilters=(public,user_42)` filter at query time to retrieve only what a user has access to. If you're using the [JavaScript client](http://github.com/algolia/algoliasearch-client-js), it will result in a security breach since the user is able to modify the `tagFilters` you've set modifying the code from the browser. To keep using the JavaScript client (recommended for optimal latency) and target secured records, you can generate secured API key from your backend:
+
+```ruby
+# generate a public API key for user 42. Here, records are tagged with:
+#  - 'public' if they are visible by all users
+#  - 'user_XXXX' if they are visible by user XXXX
+public_key = Algolia.generate_secured_api_key 'YourSearchOnlyApiKey', '(public,user_42)'
+```
+
+This public API key must then be used in your JavaScript code as follow:
+
+```javascript
+<script type="text/javascript">
+  var algolia = new AlgoliaSearch('YourApplicationID', '<%= public_api_key %>');
+  algolia.setSecurityTags('(public,user_42)'); // must be same than those used at generation-time
+  algolia.initIndex('YourIndex').search($('#q').val(), function(success, content) {
+    // [...]
+  });
+</script>
+```
+
+You can mix rate limits and secured API keys setting an extra `user_token` attribute both at API key generation-time and query-time. When set, a uniq user will be identified by her `IP + user_token` instead of only her `IP`. It allows you to restrict a single user to perform maximum `N` API calls per hour, even if she share her `IP` with another user.
+
+```ruby
+# generate a public API key for user 42. Here, records are tagged with:
+#  - 'public' if they are visible by all users
+#  - 'user_XXXX' if they are visible by user XXXX
+public_key = Algolia.generate_secured_api_key 'YourRateLimitedApiKey', '(public,user_42)', 'user_42'
+```
+
+This public API key must then be used in your JavaScript code as follow:
+
+```javascript
+<script type="text/javascript">
+  var algolia = new AlgoliaSearch('YourApplicationID', '<%= public_api_key %>');
+  algolia.setSecurityTags('(public,user_42)'); // must be same than those used at generation-time
+  algolia.setUserToken('user_42')              // must be same than the one used at generation-time
+  algolia.initIndex('YourIndex').search($('#q').val(), function(success, content) {
+    // [...]
+  });
+</script>
 ```
 
 Copy or rename an index
