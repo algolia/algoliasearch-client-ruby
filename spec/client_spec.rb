@@ -561,4 +561,15 @@ describe 'Client' do
     logs['logs'][0].should have_key('sha1')
     logs['logs'][0]['sha1'].should be_a(String)
   end
+
+  it 'should generate secured api keys' do
+    key = Algolia.generate_secured_api_key('my_api_key', '(public,user1)')
+    key.should eq(Digest::SHA256.hexdigest 'my_api_key(public,user1)')
+    key = Algolia.generate_secured_api_key('my_api_key', '(public,user1)', 42)
+    key.should eq(Digest::SHA256.hexdigest 'my_api_key(public,user1)42')
+    key = Algolia.generate_secured_api_key('my_api_key', ['public'])
+    key.should eq(Digest::SHA256.hexdigest 'my_api_keypublic')
+    key = Algolia.generate_secured_api_key('my_api_key', ['public', ['premium','vip']])
+    key.should eq(Digest::SHA256.hexdigest 'my_api_keypublic,(premium,vip)')
+  end
 end

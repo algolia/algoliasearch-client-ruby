@@ -149,6 +149,22 @@ module Algolia
   end
 
   #
+  # Generate a secured and public API Key from a list of tagFilters and an
+  # optional user token identifying the current user
+  #
+  # @param private_api_key your private API Key
+  # @param tag_filters the list of tags applied to the query (used as security)
+  # @param user_token an optional token identifying the current user
+  #
+  def Algolia.generate_secured_api_key(private_api_key, tag_filters, user_token = nil)
+    if tag_filters.is_a?(Array)
+      tag_filters = tag_filters.map { |t| t.is_a?(Array) ? "(#{t.join(',')})" : t }.join(',')
+    end
+    raise ArgumentError.new('Attribute "tag_filters" must be a list of tags') if !tag_filters.is_a?(String)
+    Digest::SHA256.hexdigest "#{private_api_key}#{tag_filters}#{user_token.to_s}"
+  end
+
+  #
   # List all existing indexes
   # return an Answer object with answer in the form 
   #     {"items": [{ "name": "contacts", "createdAt": "2013-01-18T15:33:13.556Z"},
