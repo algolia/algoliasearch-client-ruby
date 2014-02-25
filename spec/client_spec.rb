@@ -214,9 +214,6 @@ describe 'Client' do
   end 
 
   it "should get logs" do
-    host = Algolia.client.send(:thread_local_hosts).first
-    puts host[:session].get(host[:base_url] + Algolia::Protocol.logs(0, 10), { :header => Algolia.client.headers }).content
-
     res = Algolia.get_logs
 
     res['logs'].size.should > 0
