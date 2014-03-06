@@ -219,6 +219,12 @@ describe 'Client' do
     res['logs'].size.should > 0
   end
 
+  it "should search on multipleIndex" do
+    @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
+    res = Algolia.multipleQueries([{"indexName" => safe_index_name("àlgol?a"), "query" => ""}])
+    res["results"][0]["hits"].length.should eq(1)
+  end
+
   it "shoud accept custom batch" do
     @index.clear_index! rescue "Not fatal"
     request = { "requests" => [
@@ -571,5 +577,27 @@ describe 'Client' do
     key.should eq(Digest::SHA256.hexdigest 'my_api_keypublic')
     key = Algolia.generate_secured_api_key('my_api_key', ['public', ['premium','vip']])
     key.should eq(Digest::SHA256.hexdigest 'my_api_keypublic,(premium,vip)')
+  end 
+
+  it 'Check attributes multipleQueries' do
+    res = Algolia.multipleQueries([{"indexName" => safe_index_name("àlgol?a"), "query" => ""}])
+    res.should have_key('results')
+    res['results'].should be_a(Array)
+    res['results'][0].should have_key('hits')     
+    res['results'][0]['hits'].should be_a(Array)
+    res['results'][0].should have_key('page')     
+    res['results'][0]['page'].should be_a(Integer)     
+    res['results'][0].should have_key('nbHits')     
+    res['results'][0]['nbHits'].should be_a(Integer)     
+    res['results'][0].should have_key('nbPages')     
+    res['results'][0]['nbPages'].should be_a(Integer)     
+    res['results'][0].should have_key('hitsPerPage')     
+    res['results'][0]['hitsPerPage'].should be_a(Integer)     
+    res['results'][0].should have_key('processingTimeMS')     
+    res['results'][0]['processingTimeMS'].should be_a(Integer)     
+    res['results'][0].should have_key('query')     
+    res['results'][0]['query'].should be_a(String)     
+    res['results'][0].should have_key('params')     
+    res['results'][0]['params'].should be_a(String)  
   end
 end
