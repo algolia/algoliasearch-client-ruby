@@ -38,6 +38,10 @@ module Algolia
       "/#{VERSION}/indexes"
     end
 
+    def Protocol.multiple_queries_uri
+      "/#{VERSION}/indexes/*/queries"
+    end
+
     # Construct a uri referencing a given Algolia index
     def Protocol.index_uri(index)
       "/#{VERSION}/indexes/#{CGI.escape(index)}"
@@ -102,7 +106,6 @@ module Algolia
       "#{index_uri(index)}/keys"
     end
 
-    private
     def Protocol.to_query(params)
       params.map do |k, v|
         "#{CGI.escape(k.to_s)}=#{CGI.escape(v.to_s)}"

@@ -165,6 +165,19 @@ module Algolia
   end
 
   #
+  # This method allows to query multiple indexes with one API call
+  #
+  def Algolia.multipleQueries(queries, indexNameKey = "indexName")
+    requests = { :requests => queries.map { |query|
+      indexName = query[indexNameKey]
+      query.delete(indexNameKey)
+      h = { :indexName => indexName, :params => Protocol.to_query(query) }
+      h
+    } }
+    Algolia.client.post(Protocol.multiple_queries_uri, requests.to_json)
+  end
+
+  #
   # List all existing indexes
   # return an Answer object with answer in the form 
   #     {"items": [{ "name": "contacts", "createdAt": "2013-01-18T15:33:13.556Z"},
