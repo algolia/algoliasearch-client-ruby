@@ -8,7 +8,7 @@ def safe_index_name(name)
   "#{name}_travis-#{id}"
 end
 
-def is_present(array, attr, value)
+def is_include(array, attr, value)
   array.each do |elt|
     if elt[attr] == value
       return true
@@ -130,10 +130,10 @@ describe 'Client' do
       # friends_2 does not exist
     end
     res = Algolia.list_indexes
-    is_present(res['items'], 'name', safe_index_name('àlgol?a')).should eq(false)
+    is_include(res['items'], 'name', safe_index_name('àlgol?a')).should eq(false)
     index.add_object!({ :name => "Robert" })
     resAfter = Algolia.list_indexes;
-    is_present(resAfter['items'], 'name', safe_index_name('àlgol?a')).should eq(true)
+    is_include(resAfter['items'], 'name', safe_index_name('àlgol?a')).should eq(true)
   end
 
   it "should get a object" do
@@ -297,26 +297,28 @@ describe 'Client' do
     newIndexKey = @index.add_user_key(['search'])
     newIndexKey['key'].should_not eq("")
     resIndexAfter = @index.list_user_keys
-    resIndex['keys'].size.should eq(resIndexAfter['keys'].size - 1)
+    is_include(resIndex['keys'], 'value', newIndexKey['key']).should eq(false)
+    is_include(resIndexAfter['keys'], 'value', newIndexKey['key']).should eq(true)
     indexKey = @index.get_user_key(newIndexKey['key'])
     indexKey['acl'][0].should eq('search')
     @index.delete_user_key(newIndexKey['key'])
     sleep 1 # Dirty but temporary
     resIndexEnd = @index.list_user_keys
-    resIndex['keys'].size.should eq(resIndexEnd['keys'].size)
+    is_include(resIndexEnd['keys'], 'value', newIndexKey['key']).should eq(false)
 
 
     res = Algolia.list_user_keys
     newKey = Algolia.add_user_key(['search'])
     newKey['key'].should_not eq("")
     resAfter = Algolia.list_user_keys
-    res['keys'].size.should eq(resAfter['keys'].size - 1)
+    is_include(res['keys'], 'value', newKey['key']).should eq(false)
+    is_include(resAfter['keys'], 'value', newKey['key']).should eq(true)
     key = Algolia.get_user_key(newKey['key'])
     key['acl'][0].should eq('search')
     Algolia.delete_user_key(newKey['key'])
     sleep 1 # Dirty but temporary
     resEnd = Algolia.list_user_keys
-    res['keys'].size.should eq(resEnd['keys'].size)
+    is_include(resEnd['keys'], 'value', newKey['key']).should eq(false)
 
     
   end
