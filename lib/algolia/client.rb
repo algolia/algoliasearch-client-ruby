@@ -111,6 +111,8 @@ module Algolia
     defaulted = { :application_id => application_id, :api_key => api_key }
     defaulted.merge!(options)
 
+    raise ArgumentError.new("No APPLICATION_ID provided, please set :application_id") if defaulted[:application_id].nil?
+
     @@client = Client.new(defaulted)
   end
 
