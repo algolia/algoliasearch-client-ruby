@@ -628,6 +628,8 @@ You can retrieve the logs of your last 1000 API calls and browse them using the 
 puts Algolia.get_logs.to_json
 # Get last 100 log entries
 puts Algolia.get_logs(0, 100).to_json
+# Get last 100 errors
+puts Algolia.get_logs(0, 100, true).to_json
 ```
 
 Mock

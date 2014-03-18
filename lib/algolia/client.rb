@@ -215,8 +215,8 @@ module Algolia
   # @param offset Specify the first entry to retrieve (0-based, 0 is the most recent log entry).
   # @param length Specify the maximum number of entries to retrieve starting at offset. Maximum allowed value: 1000.
   #
-  def Algolia.get_logs(offset = 0, length = 10)
-      Algolia.client.get(Protocol.logs(offset, length))
+  def Algolia.get_logs(offset = 0, length = 10, only_errors = false)
+      Algolia.client.get(Protocol.logs(offset, length, only_errors))
   end
 
   # List all existing user keys with their associated ACLs
