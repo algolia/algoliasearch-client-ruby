@@ -572,13 +572,13 @@ describe 'Client' do
 
   it 'should generate secured api keys' do
     key = Algolia.generate_secured_api_key('my_api_key', '(public,user1)')
-    key.should eq(Digest::SHA256.hexdigest 'my_api_key(public,user1)')
+    key.should eq(Digest::HMAC.hexdigest('(public,user1)', 'my_api_key', Digest::SHA256))
     key = Algolia.generate_secured_api_key('my_api_key', '(public,user1)', 42)
-    key.should eq(Digest::SHA256.hexdigest 'my_api_key(public,user1)42')
+    key.should eq(Digest::HMAC.hexdigest('(public,user1)42', 'my_api_key', Digest::SHA256))
     key = Algolia.generate_secured_api_key('my_api_key', ['public'])
-    key.should eq(Digest::SHA256.hexdigest 'my_api_keypublic')
+    key.should eq(Digest::HMAC.hexdigest('public', 'my_api_key', Digest::SHA256))
     key = Algolia.generate_secured_api_key('my_api_key', ['public', ['premium','vip']])
-    key.should eq(Digest::SHA256.hexdigest 'my_api_keypublic,(premium,vip)')
+    key.should eq(Digest::HMAC.hexdigest('public,(premium,vip)', 'my_api_key', Digest::SHA256))
   end 
 
   it 'Check attributes multipleQueries' do

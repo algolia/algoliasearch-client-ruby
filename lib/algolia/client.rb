@@ -163,7 +163,7 @@ module Algolia
       tag_filters = tag_filters.map { |t| t.is_a?(Array) ? "(#{t.join(',')})" : t }.join(',')
     end
     raise ArgumentError.new('Attribute "tag_filters" must be a list of tags') if !tag_filters.is_a?(String)
-    Digest::SHA256.hexdigest "#{private_api_key}#{tag_filters}#{user_token.to_s}"
+    Digest::HMAC.hexdigest("#{tag_filters}#{user_token.to_s}", private_api_key, Digest::SHA256)
   end
 
   #
