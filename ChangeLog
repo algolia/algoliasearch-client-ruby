@@ -1,5 +1,12 @@
 CHANGELOG
 
+2014-03-19  1.2.6
+
+      * Raise an exception if no APPLICATION_ID is provided
+      * Ability to get last API call errors
+      * Ability to send multiple queries using a single API call
+      * Secured API keys generation is now based on secured HMAC-SHA256
+
 2014-02-24  1.2.5
 
       * Ability to generate secured API key from a list of tags + optional user_token
