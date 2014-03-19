@@ -169,14 +169,17 @@ module Algolia
 
   #
   # This method allows to query multiple indexes with one API call
+  # 
+  # @param queries the array of hash representing the query and associated index name
+  # @param index_name_key the name of the key used to fetch the index_name (:index_name by default)
   #
-  def Algolia.multipleQueries(queries, indexNameKey = "indexName")
-    requests = { :requests => queries.map { |query|
-      indexName = query[indexNameKey]
-      query.delete(indexNameKey)
-      h = { :indexName => indexName, :params => Protocol.to_query(query) }
-      h
-    } }
+  def Algolia.multiple_queries(queries, index_name_key = :index_name)
+    requests = {
+      :requests => queries.map do |query|
+        indexName = query.delete(index_name_key) || query.delete(index_name_key.to_s)
+        { :indexName => indexName, :params => Protocol.to_query(query) }
+      end
+    }
     Algolia.client.post(Protocol.multiple_queries_uri, requests.to_json)
   end
 

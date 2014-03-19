@@ -221,7 +221,10 @@ describe 'Client' do
 
   it "should search on multipleIndex" do
     @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
-    res = Algolia.multipleQueries([{"indexName" => safe_index_name("àlgol?a"), "query" => ""}])
+    res = Algolia.multiple_queries([{:index_name => safe_index_name("àlgol?a"), "query" => ""}])
+    res["results"][0]["hits"].length.should eq(1)
+
+    res = Algolia.multiple_queries([{"indexName" => safe_index_name("àlgol?a"), "query" => ""}], "indexName")
     res["results"][0]["hits"].length.should eq(1)
   end
 
@@ -582,7 +585,7 @@ describe 'Client' do
   end 
 
   it 'Check attributes multipleQueries' do
-    res = Algolia.multipleQueries([{"indexName" => safe_index_name("àlgol?a"), "query" => ""}])
+    res = Algolia.multiple_queries([{:index_name => safe_index_name("àlgol?a"), "query" => ""}])
     res.should have_key('results')
     res['results'].should be_a(Array)
     res['results'][0].should have_key('hits')     
