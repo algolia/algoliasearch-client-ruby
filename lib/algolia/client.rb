@@ -3,6 +3,7 @@ require 'algolia/error'
 require 'algolia/version'
 require 'json'
 require 'zlib'
+require 'openssl'
 
 module Algolia
 
@@ -163,7 +164,7 @@ module Algolia
       tag_filters = tag_filters.map { |t| t.is_a?(Array) ? "(#{t.join(',')})" : t }.join(',')
     end
     raise ArgumentError.new('Attribute "tag_filters" must be a list of tags') if !tag_filters.is_a?(String)
-    Digest::HMAC.hexdigest("#{tag_filters}#{user_token.to_s}", private_api_key, Digest::SHA256)
+    OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('sha256'), private_api_key, "#{tag_filters}#{user_token.to_s}")
   end
 
   #
