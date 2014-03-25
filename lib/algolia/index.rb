@@ -277,7 +277,7 @@ module Algolia
     #
     def delete_objects(objs)
       check_array objs
-      batch build_batch('deleteObject', objs.map { |objectID| { objectID: objectID } }, false)
+      batch build_batch('deleteObject', objs.map { |objectID| { :objectID => objectID } }, false)
     end
 
     #

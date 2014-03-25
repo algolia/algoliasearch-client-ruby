@@ -81,11 +81,11 @@ describe 'Client' do
     expect { @index.add_objects!([ [ {:name => "test"} ] ]) }.to raise_error(ArgumentError)
     expect { @index.save_object(1) }.to raise_error(ArgumentError)
     expect { @index.save_object("test") }.to raise_error(ArgumentError)
-    expect { @index.save_object({ objectID: 42 }.to_json) }.to raise_error(ArgumentError)
+    expect { @index.save_object({ :objectID => 42 }.to_json) }.to raise_error(ArgumentError)
     expect { @index.save_objects([{}, ""]) }.to raise_error(ArgumentError)
     expect { @index.save_objects([1]) }.to raise_error(ArgumentError)
     expect { @index.save_objects!([1]) }.to raise_error(ArgumentError)
-    expect { @index.save_object({ foo: 42 }) }.to raise_error(ArgumentError) # missing objectID
+    expect { @index.save_object({ :foo => 42 }) }.to raise_error(ArgumentError) # missing objectID
   end
 
   it "should be thread safe" do
@@ -265,31 +265,31 @@ describe 'Client' do
     @index.add_object!({ :name => "P4", :_tags => "t3" })
     @index.add_object!({ :name => "P5", :_tags => ["t3", "t4"] })
 
-    @index.search("", { tagFilters: ["t1"] })['hits'].length.should eq(2)         # t1
-    @index.search("", { tagFilters: ["t1", "t2"] })['hits'].length.should eq(0)   # t1 AND t2
-    @index.search("", { tagFilters: ["t3", "t4"] })['hits'].length.should eq(1)   # t3 AND t4
-    @index.search("", { tagFilters: [["t1", "t2"]] })['hits'].length.should eq(3) # t1 OR t2
+    @index.search("", { :tagFilters => ["t1"] })['hits'].length.should eq(2)         # t1
+    @index.search("", { :tagFilters => ["t1", "t2"] })['hits'].length.should eq(0)   # t1 AND t2
+    @index.search("", { :tagFilters => ["t3", "t4"] })['hits'].length.should eq(1)   # t3 AND t4
+    @index.search("", { :tagFilters => [["t1", "t2"]] })['hits'].length.should eq(3) # t1 OR t2
   end
 
   it "should be facetable" do
     @index.clear!
-    @index.set_settings( { attributesForFacetting: ["f", "g"] })
+    @index.set_settings( { :attributesForFacetting => ["f", "g"] })
     @index.add_object!({ :name => "P1", :f => "f1", :g => "g1" })
     @index.add_object!({ :name => "P2", :f => "f1", :g => "g2" })
     @index.add_object!({ :name => "P3", :f => "f2", :g => "g2" })
     @index.add_object!({ :name => "P4", :f => "f3", :g => "g2" })
 
-    res = @index.search("", { facets: "f" })
+    res = @index.search("", { :facets => "f" })
     res['facets']['f']['f1'].should eq(2)
     res['facets']['f']['f2'].should eq(1)
     res['facets']['f']['f3'].should eq(1)
 
-    res = @index.search("", { facets: "f", facetFilters: ["f:f1"] })
+    res = @index.search("", { :facets => "f", :facetFilters => ["f:f1"] })
     res['facets']['f']['f1'].should eq(2)
     res['facets']['f']['f2'].should be_nil
     res['facets']['f']['f3'].should be_nil
 
-    res = @index.search("", { facets: "f", facetFilters: ["f:f1", "g:g2"] })
+    res = @index.search("", { :facets => "f", :facetFilters => ["f:f1", "g:g2"] })
     res['facets']['f']['f1'].should eq(1)
     res['facets']['f']['f2'].should be_nil
     res['facets']['f']['f3'].should be_nil
