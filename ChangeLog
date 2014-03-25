@@ -1,5 +1,9 @@
 CHANGELOG
 
+2014-03-24  1.2.7
+
+      * Ruby 1.8 compatibility
+
 2014-03-19  1.2.6
 
       * Raise an exception if no APPLICATION_ID is provided
