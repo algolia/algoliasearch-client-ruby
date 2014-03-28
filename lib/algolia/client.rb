@@ -38,7 +38,7 @@ module Algolia
         rescue AlgoliaProtocolError => e
           raise if e.code != Protocol::ERROR_TIMEOUT and e.code != Protocol::ERROR_UNAVAILABLE
           exceptions << e
-        rescue HTTPClient::BadResponseError, OpenSSL::SSL::SSLError => e
+        rescue => e
           exceptions << e
         end
       end
