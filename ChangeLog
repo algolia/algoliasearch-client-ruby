@@ -1,5 +1,9 @@
 CHANGELOG
 
+2014-03-27  1.2.8
+
+      * Catch all exceptions before retrying with another host
+
 2014-03-24  1.2.7
 
       * Ruby 1.8 compatibility
