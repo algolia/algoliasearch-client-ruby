@@ -220,6 +220,7 @@ describe 'Client' do
   end
 
   it "should search on multipleIndex" do
+    @index.clear_index! rescue "Not fatal"
     @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
     res = Algolia.multiple_queries([{:index_name => safe_index_name("àlgol?a"), "query" => ""}])
     res["results"][0]["hits"].length.should eq(1)
