@@ -300,13 +300,14 @@ describe 'Client' do
     resIndex = @index.list_user_keys
     newIndexKey = @index.add_user_key(['search'])
     newIndexKey['key'].should_not eq("")
+    sleep 2 # no task ID here
     resIndexAfter = @index.list_user_keys
     is_include(resIndex['keys'], 'value', newIndexKey['key']).should eq(false)
     is_include(resIndexAfter['keys'], 'value', newIndexKey['key']).should eq(true)
     indexKey = @index.get_user_key(newIndexKey['key'])
     indexKey['acl'][0].should eq('search')
     @index.delete_user_key(newIndexKey['key'])
-    sleep 1 # Dirty but temporary
+    sleep 2 # no task ID here
     resIndexEnd = @index.list_user_keys
     is_include(resIndexEnd['keys'], 'value', newIndexKey['key']).should eq(false)
 
@@ -314,13 +315,14 @@ describe 'Client' do
     res = Algolia.list_user_keys
     newKey = Algolia.add_user_key(['search'])
     newKey['key'].should_not eq("")
+    sleep 2 # no task ID here
     resAfter = Algolia.list_user_keys
     is_include(res['keys'], 'value', newKey['key']).should eq(false)
     is_include(resAfter['keys'], 'value', newKey['key']).should eq(true)
     key = Algolia.get_user_key(newKey['key'])
     key['acl'][0].should eq('search')
     Algolia.delete_user_key(newKey['key'])
-    sleep 1 # Dirty but temporary
+    sleep 2 # no task ID here
     resEnd = Algolia.list_user_keys
     is_include(resEnd['keys'], 'value', newKey['key']).should eq(false)
 
@@ -529,6 +531,7 @@ describe 'Client' do
     newIndexKey['key'].should be_a(String)
     newIndexKey.should have_key('createdAt')
     newIndexKey['createdAt'].should be_a(String)
+    sleep 2 # no task ID here
     resIndex = @index.list_user_keys
     resIndex.should have_key('keys')
     resIndex['keys'].should be_a(Array)
