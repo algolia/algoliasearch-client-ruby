@@ -11,12 +11,22 @@ module Algolia
     end
     
     # Delete an index
-    # 
-    # return an hash of the form { "deletedAt" => "2013-01-18T15:33:13.556Z" }
+    #
+    # return an hash of the form { "deletedAt" => "2013-01-18T15:33:13.556Z", "taskID" => "42" }
     def delete
       Algolia.client.delete(Protocol.index_uri(name))
     end
     alias_method :delete_index, :delete
+
+    # Delete an index and wait until the deletion has been processed
+    #
+    # return an hash of the form { "deletedAt" => "2013-01-18T15:33:13.556Z", "taskID" => "42" }
+    def delete!
+      res = delete
+      wait_task(res['taskID'])
+      res
+    end
+    alias_method :delete_index!, :delete!
 
     # Add an object in this index
     # 

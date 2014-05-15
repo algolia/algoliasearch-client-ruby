@@ -235,6 +235,18 @@ module Algolia
       res
   end
 
+  # Delete an index
+  #
+  def delete_index(name)
+    Index.new(name).delete
+  end
+
+  # Delete an index and wait until the deletion has been processed.
+  #
+  def delete_index!(name)
+    Index.new(name).delete!
+  end
+
   #
   # Return last logs entries.
   #

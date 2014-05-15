@@ -124,8 +124,7 @@ describe 'Client' do
   it "should have another index after" do
     index = Algolia::Index.new(safe_index_name("àlgol?a"))
     begin
-      index.delete_index
-      sleep 4 # Dirty but temporary
+      index.delete_index!
     rescue
       # friends_2 does not exist
     end
@@ -170,7 +169,7 @@ describe 'Client' do
     index = Algolia::Index.new(safe_index_name("àlgol?à"))
     begin
       @index.clear_index
-      index.delete_index
+      Algolia.delete_index index.name
     rescue
       # friends_2 does not exist
     end
@@ -179,17 +178,17 @@ describe 'Client' do
     @index.search('')['nbHits'].should eq(1)
     
     Algolia.copy_index!(safe_index_name("àlgol?a"), safe_index_name("àlgol?à"))
-    @index.delete_index
+    @index.delete_index!
     
     index.search('')['nbHits'].should eq(1)
-    index.delete_index
+    index.delete_index!
   end
 
   it "should move the index" do
     @index.clear_index rescue "friends does not exist"
     index = Algolia::Index.new(safe_index_name("àlgol?à"))
     begin
-      index.delete_index
+      Algolia.delete_index! index.name
     rescue
       # friends_2 does not exist
     end
