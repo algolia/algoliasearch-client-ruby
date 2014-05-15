@@ -408,6 +408,13 @@ module Algolia
       Algolia.client.post(Protocol.batch_uri(name), request.to_json)
     end
 
+    # Send a batch request and wait the end of the indexing
+    def batch!(request)
+      res = batch(request)
+      wait_task(res['taskID'])
+      res
+    end
+
     private
     def check_array(objs)
       raise ArgumentError.new("argument must be an array of objects") if !objs.is_a?(Array)

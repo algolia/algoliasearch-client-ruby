@@ -204,6 +204,17 @@ module Algolia
   end
 
   #
+  # Move an existing index and wait until the move has been processed
+  # @param src_index the name of index to copy.
+  # @param dst_index the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+  #
+  def Algolia.move_index!(src_index, dst_index)
+      res = Algolia.move_index(src_index, dst_index)
+      Index.new(dst_index).wait_task(res['taskID'])
+      res
+  end
+
+  #
   # Copy an existing index.
   # @param src_index the name of index to copy.
   # @param dst_index the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
@@ -211,6 +222,17 @@ module Algolia
   def Algolia.copy_index(src_index, dst_index)
       request = {"operation" => "copy", "destination" => dst_index};
       Algolia.client.post(Protocol.index_operation_uri(src_index), request.to_json)
+  end
+
+  #
+  # Copy an existing index and wait until the copy has been processed.
+  # @param src_index the name of index to copy.
+  # @param dst_index the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+  #
+  def Algolia.copy_index!(src_index, dst_index)
+      res = Algolia.copy_index(src_index, dst_index)
+      Index.new(dst_index).wait_task(res['taskID'])
+      res
   end
 
   #

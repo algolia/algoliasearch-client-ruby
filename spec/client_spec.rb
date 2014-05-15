@@ -178,7 +178,7 @@ describe 'Client' do
     @index.add_object!({:firstname => "Robert"})
     @index.search('')['nbHits'].should eq(1)
     
-    Algolia.copy_index(safe_index_name("àlgol?a"), safe_index_name("àlgol?à"))
+    Algolia.copy_index!(safe_index_name("àlgol?a"), safe_index_name("àlgol?à"))
     @index.delete_index
     
     index.search('')['nbHits'].should eq(1)
@@ -197,7 +197,7 @@ describe 'Client' do
     @index.add_object!({:firstname => "Robert"})
     @index.search('')['nbHits'].should eq(1)
     
-    Algolia.move_index(safe_index_name("àlgol?a"), safe_index_name("àlgol?à"))
+    Algolia.move_index!(safe_index_name("àlgol?a"), safe_index_name("àlgol?à"))
     
     index.search('')['nbHits'].should eq(1)
     index.delete_index
@@ -255,7 +255,7 @@ describe 'Client' do
         "objectID" => "42"
       }
       ]}
-    res = @index.batch(request)
+    res = @index.batch!(request)
     @index.search('')['nbHits'].should eq(4)
   end
 
@@ -495,7 +495,7 @@ describe 'Client' do
     index = Algolia::Index.new(safe_index_name("àlgol?à"))
     index2 = Algolia::Index.new(safe_index_name("àlgol?à2"))
     index2.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
-    task = Algolia.move_index(safe_index_name("àlgol?à2"), safe_index_name("àlgol?à"))
+    task = Algolia.move_index!(safe_index_name("àlgol?à2"), safe_index_name("àlgol?à"))
     task.should have_key('updatedAt')
     task['updatedAt'].should be_a(String)
     task.should have_key('taskID')
@@ -507,7 +507,7 @@ describe 'Client' do
     index = Algolia::Index.new(safe_index_name("àlgol?à"))
     index2 = Algolia::Index.new(safe_index_name("àlgol?à2"))
     index2.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
-    task = Algolia.copy_index(safe_index_name("àlgol?à2"), safe_index_name("àlgol?à"))
+    task = Algolia.copy_index!(safe_index_name("àlgol?à2"), safe_index_name("àlgol?à"))
     task.should have_key('updatedAt')
     task['updatedAt'].should be_a(String)
     task.should have_key('taskID')
