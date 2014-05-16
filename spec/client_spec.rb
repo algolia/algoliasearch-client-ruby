@@ -608,4 +608,44 @@ describe 'Client' do
     res['results'][0].should have_key('params')     
     res['results'][0]['params'].should be_a(String)  
   end
+
+  it 'should handle disjunctive faceting' do
+    index = Algolia::Index.new(safe_index_name("test_hotels"))
+    index.set_settings :attributesForFacetting => ['city', 'stars', 'facilities']
+    index.clear_index rescue nil
+    index.add_objects! [
+      { :name => 'Hotel A', :stars => '*', :facilities => ['wifi', 'bath', 'spa'], :city => 'Paris' },
+      { :name => 'Hotel B', :stars => '*', :facilities => ['wifi'], :city => 'Paris' },
+      { :name => 'Hotel C', :stars => '**', :facilities => ['bath'], :city => 'San Francisco' },
+      { :name => 'Hotel D', :stars => '****', :facilities => ['spa'], :city => 'Paris' },
+      { :name => 'Hotel E', :stars => '****', :facilities => ['spa'], :city => 'New York' },
+    ]
+
+    answer = index.search_disjunctive_faceting('h', ['stars', 'facilities'], { :facets => 'city' })
+    answer['nbHits'].should eq(5)
+    answer['facets'].size.should eq(1)
+    answer['disjunctiveFacets'].size.should eq(2)
+
+    answer = index.search_disjunctive_faceting('h', ['stars', 'facilities'], { :facets => 'city' }, { :stars => ['*'] })
+    answer['nbHits'].should eq(2)
+    answer['facets'].size.should eq(1)
+    answer['disjunctiveFacets'].size.should eq(2)
+    answer['disjunctiveFacets']['stars']['*'].should eq(2)
+    answer['disjunctiveFacets']['stars']['**'].should eq(1)
+    answer['disjunctiveFacets']['stars']['****'].should eq(2)
+
+    answer = index.search_disjunctive_faceting('h', ['stars', 'facilities'], { :facets => 'city' }, { :stars => ['*'], :city => ['Paris'] })
+    answer['nbHits'].should eq(2)
+    answer['facets'].size.should eq(1)
+    answer['disjunctiveFacets'].size.should eq(2)
+    answer['disjunctiveFacets']['stars']['*'].should eq(2)
+    answer['disjunctiveFacets']['stars']['****'].should eq(1)
+
+    answer = index.search_disjunctive_faceting('h', ['stars', 'facilities'], { :facets => 'city' }, { :stars => ['*', '****'], :city => ['Paris'] })
+    answer['nbHits'].should eq(3)
+    answer['facets'].size.should eq(1)
+    answer['disjunctiveFacets'].size.should eq(2)
+    answer['disjunctiveFacets']['stars']['*'].should eq(2)
+    answer['disjunctiveFacets']['stars']['****'].should eq(1)
+  end
 end
