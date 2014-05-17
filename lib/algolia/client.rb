@@ -177,7 +177,8 @@ module Algolia
     requests = {
       :requests => queries.map do |query|
         indexName = query.delete(index_name_key) || query.delete(index_name_key.to_s)
-        { :indexName => indexName, :params => Protocol.to_query(query) }
+        encoded_params = Hash[query.map { |k,v| [k.to_s, v.is_a?(Array) ? v.to_json : v] }]
+        { :indexName => indexName, :params => Protocol.to_query(encoded_params) }
       end
     }
     Algolia.client.post(Protocol.multiple_queries_uri, requests.to_json)
