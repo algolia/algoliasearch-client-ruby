@@ -19,4 +19,5 @@ group :test do
   gem 'autotest-growl'
   gem 'webmock'
   gem 'simplecov'
+  gem 'mime-types', '< 2.0'
 end
