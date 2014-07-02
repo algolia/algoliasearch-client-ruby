@@ -293,6 +293,20 @@ describe 'Client' do
     res['facets']['f']['f1'].should eq(1)
     res['facets']['f']['f2'].should be_nil
     res['facets']['f']['f3'].should be_nil
+
+    res = @index.search("", { :facets => "f,g", :facetFilters => [["f:f1", "g:g2"]] })
+    res['nbHits'].should eq(4)
+    res['facets']['f']['f1'].should eq(2)
+    res['facets']['f']['f2'].should eq(1)
+    res['facets']['f']['f3'].should eq(1)
+
+    res = @index.search("", { :facets => "f,g", :facetFilters => [["f:f1", "g:g2"], "g:g1"] })
+    res['nbHits'].should eq(1)
+    res['facets']['f']['f1'].should eq(1)
+    res['facets']['f']['f2'].should be_nil
+    res['facets']['f']['f3'].should be_nil
+    res['facets']['g']['g1'].should eq(1)
+    res['facets']['g']['g2'].should be_nil
   end
 
   it "should test keys" do
