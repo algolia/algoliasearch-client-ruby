@@ -170,6 +170,15 @@ describe 'Client' do
     @index.search('')['nbHits'].should eq(0)
   end
 
+  it "should delete several objects by query" do
+    @index.clear
+    @index.add_object({:firstname => "Robert1"})
+    @index.add_object!({:firstname => "Robert2"})
+    @index.search('')['nbHits'].should eq(2)
+    @index.delete_by_query('rob')
+    @index.search('')['nbHits'].should eq(0)
+  end
+
   it "should copy the index" do
     index = Algolia::Index.new(safe_index_name("àlgol?à"))
     begin

@@ -2,6 +2,7 @@ CHANGELOG
 
 2014-07-08  1.2.9
 
+      * Add new 'delete_by_query' method to delete all objects matching a specific query
       * Add new 'get_objects' method to retrieve a list of objects from a single API call
       * Add a helper to perform disjunctive faceting
 

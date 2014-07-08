@@ -311,6 +311,28 @@ module Algolia
     end
 
     #
+    # Delete all objects matching a query
+    #
+    # @param query the query string
+    # @param params the optional query parameters
+    #
+    def delete_by_query(query, params = {})
+      params.delete(:hitsPerPage)
+      params.delete('hitsPerPage')
+      params.delete(:attributesToRetrieve)
+      params.delete('attributesToRetrieve')
+
+      params[:hitsPerPage] = 1000
+      params[:attributesToRetrieve] = ['objectID']
+      loop do
+        res = search(query, params)
+        break if res['hits'].empty?
+        res = delete_objects(res['hits'].map { |h| h['objectID'] })
+        wait_task res['taskID']
+      end
+    end
+
+    #
     # Delete the index content
     # 
     #
