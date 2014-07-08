@@ -138,12 +138,17 @@ describe 'Client' do
   it "should get a object" do
     @index.clear_index
     @index.add_object!({:firstname => "Robert"})
+    @index.add_object!({:firstname => "Robert2"})
     res = @index.search('')
-    @index.search("")["nbHits"].should eq(1)
+    res["nbHits"].should eq(2)
     object = @index.get_object(res['hits'][0]['objectID'])
-    object['firstname'].should eq('Robert')
+    object['firstname'].should eq(res['hits'][0]['firstname'])
+
     object = @index.get_object(res['hits'][0]['objectID'], 'firstname')
-    object['firstname'].should eq('Robert') 
+    object['firstname'].should eq(res['hits'][0]['firstname'])
+
+    objects = @index.get_objects([ res['hits'][0]['objectID'], res['hits'][1]['objectID'] ])
+    objects.size.should eq(2)
   end
 
   it "should delete the object" do

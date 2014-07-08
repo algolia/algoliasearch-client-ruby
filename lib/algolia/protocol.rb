@@ -42,6 +42,10 @@ module Algolia
       "/#{VERSION}/indexes/*/queries"
     end
 
+    def Protocol.objects_uri
+      "/#{VERSION}/indexes/*/objects"
+    end
+
     # Construct a uri referencing a given Algolia index
     def Protocol.index_uri(index)
       "/#{VERSION}/indexes/#{CGI.escape(index)}"

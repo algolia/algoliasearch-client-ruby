@@ -164,6 +164,15 @@ module Algolia
       end
     end
 
+    #
+    # Get a list of objects from this index
+    #
+    # @param objectIDs the array of unique identifier of the objects to retrieve
+    #
+    def get_objects(objectIDs)
+      Algolia.client.post(Protocol.objects_uri, { :requests => objectIDs.map { |objectID| { :indexName => name, :objectID => objectID } } }.to_json)['results']
+    end
+
     # Wait the publication of a task on the server. 
     # All server task are asynchronous and you can check with this method that the task is published.
     #
