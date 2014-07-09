@@ -540,6 +540,10 @@ module Algolia
       aggregated_answer
     end
 
+    def Index.all
+      Algolia.client.get(Protocol.indexes_uri)
+    end
+
     private
     def check_array(objs)
       raise ArgumentError.new("argument must be an array of objects") if !objs.is_a?(Array)
