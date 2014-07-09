@@ -509,6 +509,9 @@ module Algolia
           :query => query,
           :page => 0,
           :hitsPerPage => 1,
+          :attributesToRetrieve => [],
+          :attributesToHighlight => [],
+          :attributesToSnippet => [],
           :facets => disjunctive_facet,
           :facetFilters => filters
         })
