@@ -540,8 +540,11 @@ module Algolia
       aggregated_answer
     end
 
+    #
+    # Alias of Algolia.list_indexes
+    #
     def Index.all
-      Algolia.client.get(Protocol.indexes_uri)
+      Algolia.list_indexes
     end
 
     private

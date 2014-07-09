@@ -388,7 +388,7 @@ describe 'Client' do
   end
 
   it "Check attributes list_indexes:" do
-    res = Algolia.list_indexes
+    res = Algolia::Index.all
     res.should have_key('items')     
     res['items'][0].should have_key('name')    
     res['items'][0]['name'].should be_a(String)    
