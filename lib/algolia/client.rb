@@ -10,14 +10,17 @@ module Algolia
   # A class which encapsulates the HTTPS communication with the Algolia
   # API server. Uses the HTTPClient library for low-level HTTP communication.
   class Client
-    attr_reader :hosts, :application_id, :api_key, :headers
+    attr_reader :ssl, :hosts, :application_id, :api_key, :headers, :connect_timeout, :send_timeout, :receive_timeout
 
 
     def initialize(data = {})
-      @ssl            = data[:ssl].nil? ? true : data[:ssl]
-      @application_id = data[:application_id]
-      @api_key        = data[:api_key]
-      @hosts          = (data[:hosts] || 1.upto(3).map { |i| "#{@application_id}-#{i}.algolia.io" }).shuffle
+      @ssl             = data[:ssl].nil? ? true : data[:ssl]
+      @application_id  = data[:application_id]
+      @api_key         = data[:api_key]
+      @hosts           = (data[:hosts] || 1.upto(3).map { |i| "#{@application_id}-#{i}.algolia.io" }).shuffle
+      @connect_timeout = data[:connect_timeout]
+      @send_timeout    = data[:send_timeout]
+      @receive_timeout = data[:receive_timeout]
       @headers = {
         Protocol::HEADER_API_KEY => api_key,
         Protocol::HEADER_APP_ID  => application_id,
@@ -71,6 +74,9 @@ module Algolia
           :session => HTTPClient.new
         }
         hinfo[:session].transparent_gzip_decompression = true
+        hinfo[:session].connect_timeout = @connect_timeout if @connect_timeout
+        hinfo[:session].send_timeout = @send_timeout if @send_timeout
+        hinfo[:session].receive_timeout = @receive_timeout if @receive_timeout
         hinfo[:session].ssl_config.add_trust_ca File.join(File.dirname(__FILE__), '..', '..', 'resources', 'ca-bundle.crt')
         hinfo
       end
