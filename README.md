@@ -325,6 +325,12 @@ res = index.get_object("myID", "firstname,lastname")
 res = index.get_object("myID", "fistname")
 ```
 
+You can also retrieve a set of objects:
+
+```ruby
+res = index.get_objects(["myID", "myID2"])
+```
+
 Delete an object
 -------------
 
