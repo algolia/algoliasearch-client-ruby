@@ -39,6 +39,7 @@ Table of Content
 1. [Search](#search)
 1. [Get an object](#get-an-object)
 1. [Delete an object](#delete-an-object)
+1. [Delete by query](#delete-by-query)
 1. [Index settings](#index-settings)
 1. [List indexes](#list-indexes)
 1. [Delete an index](#delete-an-index)
@@ -308,6 +309,24 @@ The server response will look like:
 ```
 
 
+Multi-queries
+--------------
+
+You can send multiple queries with a single API call using a batch of queries:
+
+```ruby
+# perform 3 queries in a single API call:
+# - 1st query targets index `categories`
+# - 2nd and 3rd queries target index `products`
+res = Algolia.multiple_queries([{:index_name => "categories", "query" => my_query_string, "hitsPerPage" => 3}
+  , {:index_name => "products", "query" => my_query_string, "hitsPerPage" => 3, "tagFilters" => "promotion"}
+  , {:index_name => "products", "query" => my_query_string, "hitsPerPage" => 10}])
+
+puts res["results"]
+```
+
+
+
 
 
 
@@ -339,6 +358,18 @@ You can delete an object using its `objectID`:
 ```ruby
 index.delete_object("myID")
 ```
+
+
+Delete by query
+-------------
+
+You can delete all objects matching a single query with the following code. Internally, the API client performs the query, delete all matching hits, wait until the deletions have been applied and so on.
+
+```ruby
+params = {}
+index.delete_by_query("John", params)
+```
+
 
 Index Settings
 -------------
