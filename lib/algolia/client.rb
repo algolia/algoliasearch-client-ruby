@@ -10,7 +10,7 @@ module Algolia
   # A class which encapsulates the HTTPS communication with the Algolia
   # API server. Uses the HTTPClient library for low-level HTTP communication.
   class Client
-    attr_reader :ssl, :hosts, :application_id, :api_key, :headers, :connect_timeout, :send_timeout, :receive_timeout
+    attr_reader :ssl, :hosts, :application_id, :api_key, :headers, :connect_timeout, :send_timeout, :receive_timeout, :search_timeout
 
 
     def initialize(data = {})
@@ -21,6 +21,7 @@ module Algolia
       @connect_timeout = data[:connect_timeout]
       @send_timeout    = data[:send_timeout]
       @receive_timeout = data[:receive_timeout]
+      @search_timeout  = data[:search_timeout]
       @headers = {
         Protocol::HEADER_API_KEY => api_key,
         Protocol::HEADER_APP_ID  => application_id,
@@ -33,11 +34,11 @@ module Algolia
     # with common basic response handling. Will raise a
     # AlgoliaProtocolError if the response has an error status code,
     # and will return the parsed JSON body on success, if there is one.
-    def request(uri, method, data = nil)
+    def request(uri, method, data = nil, timeout = nil)
       exceptions = []
       thread_local_hosts.each do |host|
         begin
-          return perform_request(host[:session], host[:base_url] + uri, method, data)
+          return perform_request(host[:session], host[:base_url] + uri, method, data, timeout)
         rescue AlgoliaProtocolError => e
           raise if e.code != Protocol::ERROR_TIMEOUT and e.code != Protocol::ERROR_UNAVAILABLE
           exceptions << e
@@ -48,19 +49,19 @@ module Algolia
       raise AlgoliaProtocolError.new(0, "Cannot reach any host: #{exceptions.map { |e| e.to_s }.join(', ')}")
     end
 
-    def get(uri)
-      request(uri, :GET)
+    def get(uri, timeout = nil)
+      request(uri, :GET, nil, timeout)
     end
 
-    def post(uri, body = {})
-      request(uri, :POST, body)
+    def post(uri, body = {}, timeout = nil)
+      request(uri, :POST, body, timeout)
     end
 
-    def put(uri, body = {})
+    def put(uri, body = {}, timeout = nil)
       request(uri, :PUT, body)
     end
 
-    def delete(uri)
+    def delete(uri, timeout = nil)
       request(uri, :DELETE)
     end
 
@@ -83,21 +84,29 @@ module Algolia
     end
 
     private
-    def perform_request(session, url, method, data)
-      response = case method
-      when :GET
-        session.get(url, { :header => @headers })
-      when :POST
-        session.post(url, { :body => data, :header => @headers })
-      when :PUT
-        session.put(url, { :body => data, :header => @headers })
-      when :DELETE
-        session.delete(url, { :header => @headers })
+    def perform_request(session, url, method, data, timeout)
+      original_send_timeout = session.send_timeout
+      original_receive_timeout = session.receive_timeout
+      begin
+        session.send_timeout = session.receive_timeout = timeout if timeout
+        response = case method
+        when :GET
+          session.get(url, { :header => @headers })
+        when :POST
+          session.post(url, { :body => data, :header => @headers })
+        when :PUT
+          session.put(url, { :body => data, :header => @headers })
+        when :DELETE
+          session.delete(url, { :header => @headers })
+        end
+        if response.code >= 400 || response.code < 200
+          raise AlgoliaProtocolError.new(response.code, "Cannot #{method} to #{url}: #{response.content} (#{response.code})")
+        end
+        return JSON.parse(response.content)
+      ensure
+        session.send_timeout = original_send_timeout
+        session.receive_timeout = original_receive_timeout
       end
-      if response.code >= 400 || response.code < 200
-        raise AlgoliaProtocolError.new(response.code, "Cannot #{method} to #{url}: #{response.content} (#{response.code})")
-      end
-      return JSON.parse(response.content)
     end
 
   end
@@ -187,7 +196,7 @@ module Algolia
         { :indexName => indexName, :params => Protocol.to_query(encoded_params) }
       end
     }
-    Algolia.client.post(Protocol.multiple_queries_uri, requests.to_json)
+    Algolia.client.post(Protocol.multiple_queries_uri, requests.to_json, Algolia.client.search_timeout)
   end
 
   #

@@ -136,7 +136,7 @@ module Algolia
     #   one is kept and others are removed.
     def search(query, params = {})
       encoded_params = Hash[params.map { |k,v| [k.to_s, v.is_a?(Array) ? v.to_json : v] }]
-      Algolia.client.get(Protocol.search_uri(name, query, encoded_params))
+      Algolia.client.get(Protocol.search_uri(name, query, encoded_params), Algolia.client.search_timeout)
     end
 
     #
