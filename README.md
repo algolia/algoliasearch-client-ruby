@@ -151,17 +151,18 @@ puts index.search('jim').to_json
 Documentation
 ================
 
-Check our [online documentation](http://www.algolia.com/doc/ruby):
- * [Initial Import](http://www.algolia.com/doc/ruby#InitialImport)
- * [Ranking &amp; Relevance](http://www.algolia.com/doc/ruby#RankingRelevance)
- * [Indexing](http://www.algolia.com/doc/ruby#Indexing)
- * [Search](http://www.algolia.com/doc/ruby#Search)
- * [Sorting](http://www.algolia.com/doc/ruby#Sorting)
- * [Filtering](http://www.algolia.com/doc/ruby#Filtering)
- * [Faceting](http://www.algolia.com/doc/ruby#Faceting)
- * [Geo-Search](http://www.algolia.com/doc/ruby#Geo-Search)
- * [Security](http://www.algolia.com/doc/ruby#Security)
+Check our [online documentation](http://www.algolia.com/doc/guides/ruby):
+ * [Initial Import](http://www.algolia.com/doc/guides/ruby#InitialImport)
+ * [Ranking &amp; Relevance](http://www.algolia.com/doc/guides/ruby#RankingRelevance)
+ * [Indexing](http://www.algolia.com/doc/guides/ruby#Indexing)
+ * [Search](http://www.algolia.com/doc/guides/ruby#Search)
+ * [Sorting](http://www.algolia.com/doc/guides/ruby#Sorting)
+ * [Filtering](http://www.algolia.com/doc/guides/ruby#Filtering)
+ * [Faceting](http://www.algolia.com/doc/guides/ruby#Faceting)
+ * [Geo-Search](http://www.algolia.com/doc/guides/ruby#Geo-Search)
+ * [Security](http://www.algolia.com/doc/guides/ruby#Security)
  * [REST API](http://www.algolia.com/doc/rest)
+
 
 Tutorials
 ================
