@@ -1,5 +1,9 @@
 CHANGELOG
 
+2014-08-22  1.2.10
+
+      * Using Digest to remove "Digest::Digest is deprecated; Use Digest" warning (author: @dglancy)
+
 2014-07-10  1.2.9
 
       * Expose connect_timeout, receive_timeout and send_timeout
