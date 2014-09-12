@@ -352,7 +352,7 @@ describe 'Client' do
     is_include(resAfter['keys'], 'value', newKey['key']).should eq(true)
     key = Algolia.get_user_key(newKey['key'])
     key['acl'][0].should eq('search')
-    Algolia.add_user_key(newKey['key'], ['addObject'])
+    Algolia.update_user_key(newKey['key'], ['addObject'])
     sleep 2 # no task ID here
     key = Algolia.get_user_key(newKey['key'])
     key['acl'][0].should eq('addObject')

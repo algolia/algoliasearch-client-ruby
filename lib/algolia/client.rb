@@ -336,7 +336,7 @@ module Algolia
       :maxHitsPerQuery => maxHitsPerQuery.to_i
     }
     params[:indexes] = indexes if indexes
-    Algolia.client.put(Protocol.keys_uri(key), params.to_json)
+    Algolia.client.put(Protocol.key_uri(key), params.to_json)
   end
 
 
