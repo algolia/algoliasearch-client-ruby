@@ -333,6 +333,10 @@ describe 'Client' do
     is_include(resIndexAfter['keys'], 'value', newIndexKey['key']).should eq(true)
     indexKey = @index.get_user_key(newIndexKey['key'])
     indexKey['acl'][0].should eq('search')
+    @index.update_user_key(newIndexKey['key'], ['addObject'])
+    sleep 2 # no task ID here
+    indexKey = @index.get_user_key(newIndexKey['key'])
+    indexKey['acl'][0].should eq('addObject')
     @index.delete_user_key(newIndexKey['key'])
     sleep 2 # no task ID here
     resIndexEnd = @index.list_user_keys
@@ -348,6 +352,10 @@ describe 'Client' do
     is_include(resAfter['keys'], 'value', newKey['key']).should eq(true)
     key = Algolia.get_user_key(newKey['key'])
     key['acl'][0].should eq('search')
+    Algolia.add_user_key(newKey['key'], ['addObject'])
+    sleep 2 # no task ID here
+    key = Algolia.get_user_key(newKey['key'])
+    key['acl'][0].should eq('addObject')
     Algolia.delete_user_key(newKey['key'])
     sleep 2 # no task ID here
     resEnd = Algolia.list_user_keys
