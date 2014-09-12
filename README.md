@@ -631,6 +631,19 @@ res = index.add_user_key(["search"], 300, 100, 20, ['my_index1', 'my_index2'])
 puts res['key']
 ```
 
+Update the rights of an existing key:
+```ruby
+# Update an existing global API key that is valid for 300 seconds
+res = Algolia.update_user_key("myAPIKey", ["search"], 300)
+puts res['key']
+# Update an existing index specific API key:
+#  - valid for 300 seconds
+#  - rate limit of 100 calls per hour per IP
+#  - maximum of 20 hits
+#  - valid on 'my_index1' and 'my_index2'
+res = index.update_user_key("myAPIKey", ["search"], 300, 100, 20, ['my_index1', 'my_index2'])
+puts res['key']
+```
 Get the rights of a given key:
 ```ruby
 # Gets the rights of a global key
