@@ -104,8 +104,10 @@ module Algolia
         end
         return JSON.parse(response.content)
       ensure
-        session.send_timeout = original_send_timeout
-        session.receive_timeout = original_receive_timeout
+        if timeout
+          session.send_timeout = original_send_timeout unless timeout == original_send_timeout
+          session.receive_timeout = original_receive_timeout unless timeout == original_receive_timeout
+        end
       end
     end
 
