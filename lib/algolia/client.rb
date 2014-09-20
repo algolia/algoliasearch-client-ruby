@@ -58,11 +58,11 @@ module Algolia
     end
 
     def put(uri, body = {}, timeout = nil)
-      request(uri, :PUT, body)
+      request(uri, :PUT, body, timeout)
     end
 
     def delete(uri, timeout = nil)
-      request(uri, :DELETE)
+      request(uri, :DELETE, nil, timeout)
     end
 
     private
