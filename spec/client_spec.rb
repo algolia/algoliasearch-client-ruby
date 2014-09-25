@@ -614,13 +614,13 @@ describe 'Client' do
 
   it 'should generate secured api keys' do
     key = Algolia.generate_secured_api_key('my_api_key', '(public,user1)')
-    key.should eq(OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('sha256'), 'my_api_key', '(public,user1)'))
+    key.should eq(OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), 'my_api_key', '(public,user1)'))
     key = Algolia.generate_secured_api_key('my_api_key', '(public,user1)', 42)
-    key.should eq(OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('sha256'), 'my_api_key', '(public,user1)42'))
+    key.should eq(OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), 'my_api_key', '(public,user1)42'))
     key = Algolia.generate_secured_api_key('my_api_key', ['public'])
-    key.should eq(OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('sha256'), 'my_api_key', 'public'))
+    key.should eq(OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), 'my_api_key', 'public'))
     key = Algolia.generate_secured_api_key('my_api_key', ['public', ['premium','vip']])
-    key.should eq(OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('sha256'), 'my_api_key', 'public,(premium,vip)'))
+    key.should eq(OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), 'my_api_key', 'public,(premium,vip)'))
   end 
 
   it 'Check attributes multipleQueries' do
