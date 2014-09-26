@@ -349,7 +349,7 @@ module Algolia
 
   # Used mostly for testing. Lets you delete the api key global vars.
   def Algolia.destroy
-    @@client = nil
+    @@client = Thread.current[:algolia_hosts] = nil
     self
   end
 
