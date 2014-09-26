@@ -36,9 +36,9 @@ module Algolia
     # and will return the parsed JSON body on success, if there is one.
     def request(uri, method, data = nil, timeout = nil)
       exceptions = []
-      thread_local_hosts.each do |host|
+      thread_local_hosts(timeout).each do |host|
         begin
-          return perform_request(host[:session], host[:base_url] + uri, method, data, timeout)
+          return perform_request(host[:session], host[:base_url] + uri, method, data)
         rescue AlgoliaProtocolError => e
           raise if e.code != Protocol::ERROR_TIMEOUT and e.code != Protocol::ERROR_UNAVAILABLE
           exceptions << e
@@ -67,48 +67,48 @@ module Algolia
 
     private
 
-    # this method returns a thread-local array of sessions
-    def thread_local_hosts
-      Thread.current[:algolia_hosts] ||= hosts.map do |host|
+    # This method returns a thread-local array of sessions
+    # 
+    # Since the underlying httpclient library resets the connections pool
+    # if you change any of its attributes, we cannot change the timeout
+    # of an HTTP session dynamically. That being said, having 1 pool per
+    # timeout appears to be the only acceptable solution
+    def thread_local_hosts(forced_timeout)
+      Thread.current[:algolia_hosts] ||= {}
+      Thread.current[:algolia_hosts][forced_timeout.to_s] ||= hosts.map do |host|
         hinfo = {
           :base_url => "http#{@ssl ? 's' : ''}://#{host}",
           :session => HTTPClient.new
         }
         hinfo[:session].transparent_gzip_decompression = true
         hinfo[:session].connect_timeout = @connect_timeout if @connect_timeout
-        hinfo[:session].send_timeout = @send_timeout if @send_timeout
-        hinfo[:session].receive_timeout = @receive_timeout if @receive_timeout
+        if forced_timeout
+          hinfo[:session].send_timeout = hinfo[:session].receive_timeout = forced_timeout
+        else
+          hinfo[:session].send_timeout = @send_timeout if @send_timeout
+          hinfo[:session].receive_timeout = @receive_timeout if @receive_timeout
+        end
         hinfo[:session].ssl_config.add_trust_ca File.join(File.dirname(__FILE__), '..', '..', 'resources', 'ca-bundle.crt')
         hinfo
       end
     end
 
     private
-    def perform_request(session, url, method, data, timeout)
-      original_send_timeout = session.send_timeout
-      original_receive_timeout = session.receive_timeout
-      begin
-        session.send_timeout = session.receive_timeout = timeout if timeout
-        response = case method
-        when :GET
-          session.get(url, { :header => @headers })
-        when :POST
-          session.post(url, { :body => data, :header => @headers })
-        when :PUT
-          session.put(url, { :body => data, :header => @headers })
-        when :DELETE
-          session.delete(url, { :header => @headers })
-        end
-        if response.code >= 400 || response.code < 200
-          raise AlgoliaProtocolError.new(response.code, "Cannot #{method} to #{url}: #{response.content} (#{response.code})")
-        end
-        return JSON.parse(response.content)
-      ensure
-        if timeout
-          session.send_timeout = original_send_timeout unless timeout == original_send_timeout
-          session.receive_timeout = original_receive_timeout unless timeout == original_receive_timeout
-        end
+    def perform_request(session, url, method, data)
+      response = case method
+      when :GET
+        session.get(url, { :header => @headers })
+      when :POST
+        session.post(url, { :body => data, :header => @headers })
+      when :PUT
+        session.put(url, { :body => data, :header => @headers })
+      when :DELETE
+        session.delete(url, { :header => @headers })
       end
+      if response.code >= 400 || response.code < 200
+        raise AlgoliaProtocolError.new(response.code, "Cannot #{method} to #{url}: #{response.content} (#{response.code})")
+      end
+      return JSON.parse(response.content)
     end
 
   end
