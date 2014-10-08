@@ -1,5 +1,9 @@
 CHANGELOG
 
+2014-09-14  1.2.11
+
+      * Ability to update API keys
+
 2014-08-22  1.2.10
 
       * Using Digest to remove "Digest::Digest is deprecated; Use Digest" warning (author: @dglancy)
