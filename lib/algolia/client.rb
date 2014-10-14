@@ -135,6 +135,13 @@ module Algolia
   end
 
   #
+  # Allow to set custom headers
+  #
+  def Algolia.set_extra_header(key, value)
+    Algolia.client.headers[key] = value
+  end
+
+  #
   # Allow to use IP rate limit when you have a proxy between end-user and Algolia.
   # This option will set the X-Forwarded-For HTTP header with the client IP and the X-Forwarded-API-Key with the API Key having rate limits.
   # @param admin_api_key the admin API Key you can find in your dashboard
