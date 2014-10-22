@@ -1,5 +1,8 @@
 CHANGELOG
 
+2014-10-22 1.2.13
+      * Fix the loop on hosts to retry when the http code is different than 200, 201, 400, 403, 404
+
 2014-10-08  1.2.12
 
       * Upgrade to httpclient 2.4
