@@ -27,8 +27,9 @@ module Algolia
     # HTTP ERROR CODES
     # ----------------------------------------
 
-    ERROR_TIMEOUT = 124
-    ERROR_UNAVAILABLE = 503
+    ERROR_BAD_REQUEST = 400
+    ERROR_FORBIDDEN = 403
+    ERROR_NOT_FOUND = 404
 
     # URI Helpers
     # ----------------------------------------

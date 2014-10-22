@@ -40,7 +40,7 @@ module Algolia
         begin
           return perform_request(host[:session], host[:base_url] + uri, method, data)
         rescue AlgoliaProtocolError => e
-          raise if e.code != Protocol::ERROR_TIMEOUT and e.code != Protocol::ERROR_UNAVAILABLE
+          raise if e.code == Protocol::ERROR_BAD_REQUEST or e.code == Protocol::ERROR_FORBIDDEN or e.code == Protocol::ERROR_NOT_FOUND
           exceptions << e
         rescue => e
           exceptions << e
