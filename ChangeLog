@@ -1,5 +1,9 @@
 CHANGELOG
 
+2014-11-10 1.2.14
+      * Force the underlying httpclient dependency to be >= 2.4 in the gemspec as well
+      * Ability to force the SSL version
+
 2014-10-22 1.2.13
       * Fix the loop on hosts to retry when the http code is different than 200, 201, 400, 403, 404
 
