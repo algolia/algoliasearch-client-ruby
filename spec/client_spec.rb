@@ -42,6 +42,41 @@ describe 'Client' do
     res["hits"].length.should eq(1)
   end
 
+  it "should partial update a simple object, or add it if it doesn't exist" do
+    res = @index.search("tonny@parker.org")
+    res["hits"].length.should eq(0)
+    @index.partial_update_object!({ :email => "tonny@parker.org" }, "1")
+    res = @index.search("tonny@parker.org")
+    res["hits"].length.should eq(1)
+  end
+
+  it "should partial update a simple object, but don't add it if it doesn't exist" do
+    @index.partial_update_object!({ :email => "alex@boom.org" }, "51", false)
+    res = @index.search("alex@boom.org")
+    res["hits"].length.should eq(0)
+  end
+
+  it "should partial update a batch of objects, and add them if they don't exist" do
+    batch = [
+      { :objectID => "1", :email => "john@wanna.org" },
+      { :objectID => "2", :email => "robert@wanna.org" }
+    ]
+    @index.partial_update_objects!(batch)
+    res = @index.search("@wanna.org")
+    res["hits"].length.should eq(2)
+  end
+
+  it "should partial update a batch of objects, but don't add them if they don't exist" do
+    create_if_not_exits = false
+    batch = [
+      { :objectID => "11", :email => "john@be.org" },
+      { :objectID => "22", :email => "robert@be.org" }
+    ]
+    @index.partial_update_objects!(batch, create_if_not_exits)
+    res = @index.search("@be.org")
+    res["hits"].length.should eq(0)
+  end
+
   it "should add a set of objects" do
     @index.add_objects!([
       { :name => "Another", :email => "another1@example.org" },
@@ -677,3 +712,4 @@ describe 'Client' do
     answer['disjunctiveFacets']['stars']['****'].should eq(1)
   end
 end
+
