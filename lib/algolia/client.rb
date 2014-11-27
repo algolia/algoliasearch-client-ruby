@@ -15,10 +15,10 @@ module Algolia
 
     def initialize(data = {})
       @ssl             = data[:ssl].nil? ? true : data[:ssl]
-      @ssl_version     = data[:ssl_version].nil? ? nil : data[:ssl_version]      
+      @ssl_version     = data[:ssl_version].nil? ? nil : data[:ssl_version]
       @application_id  = data[:application_id]
       @api_key         = data[:api_key]
-      @hosts           = (data[:hosts] || 1.upto(3).map { |i| "#{@application_id}-#{i}.algolia.io" }).shuffle
+      @hosts           = (data[:hosts] || 1.upto(3).map { |i| "#{@application_id}-#{i}.algolia.net" }).shuffle
       @connect_timeout = data[:connect_timeout]
       @send_timeout    = data[:send_timeout]
       @receive_timeout = data[:receive_timeout]
