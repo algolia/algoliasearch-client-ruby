@@ -1,5 +1,25 @@
 CHANGELOG
 
+2014-11-10 1.2.14
+      * Force the underlying httpclient dependency to be >= 2.4 in the gemspec as well
+      * Ability to force the SSL version
+
+2014-10-22 1.2.13
+      * Fix the loop on hosts to retry when the http code is different than 200, 201, 400, 403, 404
+
+2014-10-08  1.2.12
+
+      * Upgrade to httpclient 2.4
+      * Do not reset the timeout on each requests
+
+2014-09-14  1.2.11
+
+      * Ability to update API keys
+
+2014-08-22  1.2.10
+
+      * Using Digest to remove "Digest::Digest is deprecated; Use Digest" warning (author: @dglancy)
+
 2014-07-10  1.2.9
 
       * Expose connect_timeout, receive_timeout and send_timeout

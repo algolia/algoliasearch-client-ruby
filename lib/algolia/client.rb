@@ -10,14 +10,15 @@ module Algolia
   # A class which encapsulates the HTTPS communication with the Algolia
   # API server. Uses the HTTPClient library for low-level HTTP communication.
   class Client
-    attr_reader :ssl, :hosts, :application_id, :api_key, :headers, :connect_timeout, :send_timeout, :receive_timeout, :search_timeout
+    attr_reader :ssl, :ssl_version, :hosts, :application_id, :api_key, :headers, :connect_timeout, :send_timeout, :receive_timeout, :search_timeout
 
 
     def initialize(data = {})
       @ssl             = data[:ssl].nil? ? true : data[:ssl]
+      @ssl_version     = data[:ssl_version].nil? ? nil : data[:ssl_version]
       @application_id  = data[:application_id]
       @api_key         = data[:api_key]
-      @hosts           = (data[:hosts] || 1.upto(3).map { |i| "#{@application_id}-#{i}.algolia.io" }).shuffle
+      @hosts           = (data[:hosts] || 1.upto(3).map { |i| "#{@application_id}-#{i}.algolia.net" }).shuffle
       @connect_timeout = data[:connect_timeout]
       @send_timeout    = data[:send_timeout]
       @receive_timeout = data[:receive_timeout]
@@ -36,11 +37,11 @@ module Algolia
     # and will return the parsed JSON body on success, if there is one.
     def request(uri, method, data = nil, timeout = nil)
       exceptions = []
-      thread_local_hosts.each do |host|
+      thread_local_hosts(timeout).each do |host|
         begin
-          return perform_request(host[:session], host[:base_url] + uri, method, data, timeout)
+          return perform_request(host[:session], host[:base_url] + uri, method, data)
         rescue AlgoliaProtocolError => e
-          raise if e.code != Protocol::ERROR_TIMEOUT and e.code != Protocol::ERROR_UNAVAILABLE
+          raise if e.code == Protocol::ERROR_BAD_REQUEST or e.code == Protocol::ERROR_FORBIDDEN or e.code == Protocol::ERROR_NOT_FOUND
           exceptions << e
         rescue => e
           exceptions << e
@@ -58,55 +59,59 @@ module Algolia
     end
 
     def put(uri, body = {}, timeout = nil)
-      request(uri, :PUT, body)
+      request(uri, :PUT, body, timeout)
     end
 
     def delete(uri, timeout = nil)
-      request(uri, :DELETE)
+      request(uri, :DELETE, nil, timeout)
     end
 
     private
 
-    # this method returns a thread-local array of sessions
-    def thread_local_hosts
-      Thread.current[:algolia_hosts] ||= hosts.map do |host|
+    # This method returns a thread-local array of sessions
+    # 
+    # Since the underlying httpclient library resets the connections pool
+    # if you change any of its attributes, we cannot change the timeout
+    # of an HTTP session dynamically. That being said, having 1 pool per
+    # timeout appears to be the only acceptable solution
+    def thread_local_hosts(forced_timeout)
+      Thread.current[:algolia_hosts] ||= {}
+      Thread.current[:algolia_hosts][forced_timeout.to_s] ||= hosts.map do |host|
+        client = HTTPClient.new
+        client.ssl_config.ssl_version = @ssl_version if @ssl && @ssl_version        
         hinfo = {
           :base_url => "http#{@ssl ? 's' : ''}://#{host}",
-          :session => HTTPClient.new
+          :session => client
         }
         hinfo[:session].transparent_gzip_decompression = true
         hinfo[:session].connect_timeout = @connect_timeout if @connect_timeout
-        hinfo[:session].send_timeout = @send_timeout if @send_timeout
-        hinfo[:session].receive_timeout = @receive_timeout if @receive_timeout
+        if forced_timeout
+          hinfo[:session].send_timeout = hinfo[:session].receive_timeout = forced_timeout
+        else
+          hinfo[:session].send_timeout = @send_timeout if @send_timeout
+          hinfo[:session].receive_timeout = @receive_timeout if @receive_timeout
+        end
         hinfo[:session].ssl_config.add_trust_ca File.join(File.dirname(__FILE__), '..', '..', 'resources', 'ca-bundle.crt')
         hinfo
       end
     end
 
     private
-    def perform_request(session, url, method, data, timeout)
-      original_send_timeout = session.send_timeout
-      original_receive_timeout = session.receive_timeout
-      begin
-        session.send_timeout = session.receive_timeout = timeout if timeout
-        response = case method
-        when :GET
-          session.get(url, { :header => @headers })
-        when :POST
-          session.post(url, { :body => data, :header => @headers })
-        when :PUT
-          session.put(url, { :body => data, :header => @headers })
-        when :DELETE
-          session.delete(url, { :header => @headers })
-        end
-        if response.code >= 400 || response.code < 200
-          raise AlgoliaProtocolError.new(response.code, "Cannot #{method} to #{url}: #{response.content} (#{response.code})")
-        end
-        return JSON.parse(response.content)
-      ensure
-        session.send_timeout = original_send_timeout
-        session.receive_timeout = original_receive_timeout
+    def perform_request(session, url, method, data)
+      response = case method
+      when :GET
+        session.get(url, { :header => @headers })
+      when :POST
+        session.post(url, { :body => data, :header => @headers })
+      when :PUT
+        session.put(url, { :body => data, :header => @headers })
+      when :DELETE
+        session.delete(url, { :header => @headers })
       end
+      if response.code >= 400 || response.code < 200
+        raise AlgoliaProtocolError.new(response.code, "Cannot #{method} to #{url}: #{response.content} (#{response.code})")
+      end
+      return JSON.parse(response.content)
     end
 
   end
@@ -130,6 +135,13 @@ module Algolia
     raise ArgumentError.new("No APPLICATION_ID provided, please set :application_id") if defaulted[:application_id].nil?
 
     @@client = Client.new(defaulted)
+  end
+
+  #
+  # Allow to set custom headers
+  #
+  def Algolia.set_extra_header(key, value)
+    Algolia.client.headers[key] = value
   end
 
   #
@@ -179,7 +191,7 @@ module Algolia
       tag_filters = tag_filters.map { |t| t.is_a?(Array) ? "(#{t.join(',')})" : t }.join(',')
     end
     raise ArgumentError.new('Attribute "tag_filters" must be a list of tags') if !tag_filters.is_a?(String)
-    OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('sha256'), private_api_key, "#{tag_filters}#{user_token.to_s}")
+    OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), private_api_key, "#{tag_filters}#{user_token.to_s}")
   end
 
   #
@@ -311,6 +323,35 @@ module Algolia
     Algolia.client.post(Protocol.keys_uri, params.to_json)
   end
 
+  #
+  #  Update a user key
+  #
+  #  @param acls the list of ACL for this key. Defined by an array of strings that 
+  #         can contains the following values:
+  #           - search: allow to search (https and http)
+  #           - addObject: allows to add a new object in the index (https only)
+  #           - updateObject : allows to change content of an existing object (https only)
+  #           - deleteObject : allows to delete an existing object (https only)
+  #           - deleteIndex : allows to delete index content (https only)
+  #           - settings : allows to get index settings (https only)
+  #           - editSettings : allows to change index settings (https only)
+  #  @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
+  #  @param maxQueriesPerIPPerHour the maximum number of API calls allowed from an IP address per hour (0 means unlimited)
+  #  @param maxHitsPerQuery  the maximum number of hits this API key can retrieve in one call (0 means unlimited)
+  #  @param indexes the optional list of targeted indexes
+  #
+  def Algolia.update_user_key(key, acls, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
+    params = {
+      :acl => acls,
+      :validity => validity.to_i,
+      :maxQueriesPerIPPerHour => maxQueriesPerIPPerHour.to_i,
+      :maxHitsPerQuery => maxHitsPerQuery.to_i
+    }
+    params[:indexes] = indexes if indexes
+    Algolia.client.put(Protocol.key_uri(key), params.to_json)
+  end
+
+
   # Delete an existing user key
   def Algolia.delete_user_key(key)
       Algolia.client.delete(Protocol.key_uri(key))
@@ -318,7 +359,7 @@ module Algolia
 
   # Used mostly for testing. Lets you delete the api key global vars.
   def Algolia.destroy
-    @@client = nil
+    @@client = Thread.current[:algolia_hosts] = nil
     self
   end
 

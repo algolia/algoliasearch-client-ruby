@@ -37,7 +37,7 @@ GEM
       net-http-persistent (>= 2.7)
       net-http-pipeline
     highline (1.6.21)
-    httpclient (2.3.4.1)
+    httpclient (2.4.0)
     json (1.8.1)
     json (1.8.1-java)
     launchy (2.4.2)
@@ -325,7 +325,7 @@ DEPENDENCIES
   autotest-fsevent
   autotest-growl
   coveralls
-  httpclient (~> 2.3)
+  httpclient (~> 2.4)
   json (>= 1.5.1)
   mime-types (< 2.0)
   rake
