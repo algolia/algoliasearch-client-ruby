@@ -1,6 +1,9 @@
 CHANGELOG
 
 2014-11-29  1.3.0
+      * Fixed wrong deployed version (1.3.0 was based on 1.2.13 instead of 1.2.14)
+
+2014-11-29  1.3.0
       * Use algolia.net domain instead of algolia.io
 
 2014-11-10 1.2.14
