@@ -10,11 +10,12 @@ module Algolia
   # A class which encapsulates the HTTPS communication with the Algolia
   # API server. Uses the HTTPClient library for low-level HTTP communication.
   class Client
-    attr_reader :ssl, :hosts, :application_id, :api_key, :headers, :connect_timeout, :send_timeout, :receive_timeout, :search_timeout
+    attr_reader :ssl, :ssl_version, :hosts, :application_id, :api_key, :headers, :connect_timeout, :send_timeout, :receive_timeout, :search_timeout
 
 
     def initialize(data = {})
       @ssl             = data[:ssl].nil? ? true : data[:ssl]
+      @ssl_version     = data[:ssl_version].nil? ? nil : data[:ssl_version]
       @application_id  = data[:application_id]
       @api_key         = data[:api_key]
       @hosts           = (data[:hosts] || 1.upto(3).map { |i| "#{@application_id}-#{i}.algolia.net" }).shuffle
@@ -40,7 +41,7 @@ module Algolia
         begin
           return perform_request(host[:session], host[:base_url] + uri, method, data)
         rescue AlgoliaProtocolError => e
-          raise if e.code != Protocol::ERROR_TIMEOUT and e.code != Protocol::ERROR_UNAVAILABLE
+          raise if e.code == Protocol::ERROR_BAD_REQUEST or e.code == Protocol::ERROR_FORBIDDEN or e.code == Protocol::ERROR_NOT_FOUND
           exceptions << e
         rescue => e
           exceptions << e
@@ -76,9 +77,11 @@ module Algolia
     def thread_local_hosts(forced_timeout)
       Thread.current[:algolia_hosts] ||= {}
       Thread.current[:algolia_hosts][forced_timeout.to_s] ||= hosts.map do |host|
+        client = HTTPClient.new
+        client.ssl_config.ssl_version = @ssl_version if @ssl && @ssl_version        
         hinfo = {
           :base_url => "http#{@ssl ? 's' : ''}://#{host}",
-          :session => HTTPClient.new
+          :session => client
         }
         hinfo[:session].transparent_gzip_decompression = true
         hinfo[:session].connect_timeout = @connect_timeout if @connect_timeout

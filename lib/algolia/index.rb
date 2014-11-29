@@ -232,27 +232,34 @@ module Algolia
     # 
     # @param obj the object attributes to override
     # @param objectID the associated objectID, if nil 'obj' must contain an 'objectID' key
+    # @param create_if_not_exits a boolean, if true creates the object if this one doesn't exist
     #
-    def partial_update_object(obj, objectID = nil)
-      Algolia.client.post(Protocol.partial_object_uri(name, get_objectID(obj, objectID)), obj.to_json)
+    def partial_update_object(obj, objectID = nil, create_if_not_exits = true)
+      Algolia.client.post(Protocol.partial_object_uri(name, get_objectID(obj, objectID), create_if_not_exits), obj.to_json)
     end
     
     #
     # Partially Override the content of several objects
     # 
     # @param objs an array of objects to update (each object must contains a objectID attribute)
+    # @param create_if_not_exits a boolean, if true create the objects if they don't exist
     #
-    def partial_update_objects(objs)
-      batch build_batch('partialUpdateObject', objs, true)
+    def partial_update_objects(objs, create_if_not_exits = true)
+      if create_if_not_exits
+        batch build_batch('partialUpdateObject', objs, true)
+      else
+        batch build_batch('partialUpdateObjectNoCreate', objs, true)
+      end
     end
 
     #
     # Partially Override the content of several objects and wait end of indexing
     # 
     # @param objs an array of objects to update (each object must contains a objectID attribute)
+    # @param create_if_not_exits a boolean, if true create the objects if they don't exist
     #
-    def partial_update_objects!(objs)
-      res = partial_update_objects(objs)
+    def partial_update_objects!(objs, create_if_not_exits = true)
+      res = partial_update_objects(objs, create_if_not_exits)
       wait_task(res["taskID"])
       return res
     end
@@ -262,9 +269,10 @@ module Algolia
     # 
     # @param obj the attributes to override
     # @param objectID the associated objectID, if nil 'obj' must contain an 'objectID' key
+    # @param create_if_not_exits a boolean, if true creates the object if this one doesn't exist
     #
-    def partial_update_object!(obj, objectID = nil)
-      res = partial_update_object(obj, objectID)
+    def partial_update_object!(obj, objectID = nil, create_if_not_exits = true)
+      res = partial_update_object(obj, objectID, create_if_not_exits)
       wait_task(res["taskID"])
       return res
     end

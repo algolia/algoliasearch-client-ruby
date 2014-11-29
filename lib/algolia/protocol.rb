@@ -27,8 +27,9 @@ module Algolia
     # HTTP ERROR CODES
     # ----------------------------------------
 
-    ERROR_TIMEOUT = 124
-    ERROR_UNAVAILABLE = 503
+    ERROR_BAD_REQUEST = 400
+    ERROR_FORBIDDEN = 403
+    ERROR_NOT_FOUND = 404
 
     # URI Helpers
     # ----------------------------------------
@@ -78,8 +79,9 @@ module Algolia
       "#{index_uri(index)}/browse#{params}"
     end
 
-    def Protocol.partial_object_uri(index, object_id)
-      "#{index_uri(index)}/#{CGI.escape(object_id)}/partial"
+    def Protocol.partial_object_uri(index, object_id, create_if_not_exits = true)
+      params = create_if_not_exits ? "" : "?createIfNotExists=false"
+      "#{index_uri(index)}/#{CGI.escape(object_id)}/partial#{params}"
     end
     
     def Protocol.settings_uri(index)
