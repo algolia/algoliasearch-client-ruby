@@ -261,10 +261,14 @@ You can use the following optional arguments:
   * **lastWords**: when a query does not return any result, the last word will be added as optional (the process is repeated with n-1 word, n-2 word, ... until there is results),
   * **firstWords**: when a query does not return any result, the first word will be added as optional (the process is repeated with second word, third word, ... until there is results),
   * **none**: No specific processing is done when a query does not return any result (default behavior).
- * **typoTolerance**: if set to false, disable the typo-tolerance. Defaults to true.
+ * **typoTolerance**: This setting has four different options:
+  * **true**: activate the typo-tolerance (default value).
+  * **false**: disable the typo-tolerance.
+  * **min**: keep only results with the lowest number of typo. For example if one result match without typos, then all results with typos will be hidden.
+  * **strict**: if there is a match without typo, then all results with 2 typos or more will be removed. This option is useful if you want to avoid as much as possible false positive.
  * **minWordSizefor1Typo**: the minimum number of characters in a query word to accept one typo in this word.<br/>Defaults to 4.
  * **minWordSizefor2Typos**: the minimum number of characters in a query word to accept two typos in this word.<br/>Defaults to 8.
- * **allowTyposOnNumericTokens**: if set to false, disable typo-tolerance on numeric tokens (numbers). Default to true.
+ * **allowTyposOnNumericTokens**: if set to false, disable typo-tolerance on numeric tokens (numbers). Default to false.
  * **ignorePlural**: If set to true, plural won't be considered as a typo (for example car/cars will be considered as equals). Default to false.
  * **restrictSearchableAttributes** List of attributes you want to use for textual search (must be a subset of the `attributesToIndex` index setting). Attributes are separated with a comma (for example `"name,address"`), you can also use a JSON string array encoding (for example encodeURIComponent("[\"name\",\"address\"]")). By default, all attributes specified in `attributesToIndex` settings are used to search.
  * **advancedSyntax**: Enable the advanced query syntax. Defaults to 0 (false).
@@ -737,7 +741,7 @@ puts Algolia.move_index("MyNewIndex", "MyIndex")
 Backup / Retrieve all index content
 -------------
 
-You can retrieve all index content for backup purpose or for analytics using the browse method.
+You can retrieve all index content for backup purpose or for SEO using the browse method.
 This method retrieve 1000 objects by API call and support pagination.
 
 ```ruby
