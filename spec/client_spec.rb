@@ -262,7 +262,7 @@ describe 'Client' do
   end 
 
   it "should get logs" do
-    res = Algolia.get_logs
+    res = Algolia.get_logs(0, 20, true)
 
     res['logs'].size.should > 0
   end
