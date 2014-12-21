@@ -213,10 +213,11 @@ puts "ObjectID=" + res["objectID"]
 Update an existing object in the Index
 -------------
 
-You have two options to update an existing object:
+You have three options to update an existing object:
 
  1. Replace all its attributes.
  2. Replace only some attributes.
+ 3. Apply an operation to some attributes
 
 Example to replace all the content of an existing object:
 
@@ -231,6 +232,41 @@ Example to update only the city attribute of an existing object:
 
 ```ruby
 index.partial_update_object({"city" => "San Francisco", 
+                             "objectID" => "myID"})
+```
+
+Example to add a tag:
+
+```ruby
+index.partial_update_object({"_tags" => {"value" => "MyTag", "_operation": "Add"},
+                             "objectID" => "myID"})
+```
+
+Example to remove a tag:
+
+```ruby
+index.partial_update_object({"_tags" => {"value" => "MyTag", "_operation": "Remove"},
+                             "objectID" => "myID"})
+```
+
+Example to add a tag if it doesn't exist:
+
+```ruby
+index.partial_update_object({"_tags" => {"value" => "MyTag", "_operation": "AddUnique"},
+                             "objectID" => "myID"})
+```
+
+Example to increment a numeric value:
+
+```ruby
+index.partial_update_object({"price" => {"value" => 42, "_operation": "Increment"},
+                             "objectID" => "myID"})
+```
+
+Example to decrement a numeric value:
+
+```ruby
+index.partial_update_object({"price" => {"value" => 42, "_operation": "Decrement"},
                              "objectID" => "myID"})
 ```
 
@@ -261,14 +297,15 @@ You can use the following optional arguments:
   * **lastWords**: when a query does not return any result, the last word will be added as optional (the process is repeated with n-1 word, n-2 word, ... until there is results),
   * **firstWords**: when a query does not return any result, the first word will be added as optional (the process is repeated with second word, third word, ... until there is results),
   * **none**: No specific processing is done when a query does not return any result (default behavior).
- * **typoTolerance**: This setting has four different options:
-  * **true**: activate the typo-tolerance (default value).
-  * **false**: disable the typo-tolerance.
-  * **min**: keep only results with the lowest number of typo. For example if one result match without typos, then all results with typos will be hidden.
-  * **strict**: if there is a match without typo, then all results with 2 typos or more will be removed. This option is useful if you want to avoid as much as possible false positive.
  * **minWordSizefor1Typo**: the minimum number of characters in a query word to accept one typo in this word.<br/>Defaults to 4.
  * **minWordSizefor2Typos**: the minimum number of characters in a query word to accept two typos in this word.<br/>Defaults to 8.
  * **allowTyposOnNumericTokens**: if set to false, disable typo-tolerance on numeric tokens (numbers). Default to false.
+ * **typoTolerance**:  This option allows you to control the number of typos in the result set:
+  * **true**: the typo-tolerance is enabled and all matching hits are retrieved. (Default behavior)
+  * **false**: the typo-tolerance is disabled. For example if one result match without typos, then all results with typos will be hidden.
+  * **min**: only keep the results with the minimum number of typos.
+  * **strict**: hits matching with 2 typos are not retrieved if there are some matching without typos. This option is useful if you want to avoid as much as possible false positive.
+ * **allowTyposOnNumericTokens**: if set to false, disable typo-tolerance on numeric tokens (numbers). Default to true.
  * **ignorePlural**: If set to true, plural won't be considered as a typo (for example car/cars will be considered as equals). Default to false.
  * **restrictSearchableAttributes** List of attributes you want to use for textual search (must be a subset of the `attributesToIndex` index setting). Attributes are separated with a comma (for example `"name,address"`), you can also use a JSON string array encoding (for example encodeURIComponent("[\"name\",\"address\"]")). By default, all attributes specified in `attributesToIndex` settings are used to search.
  * **advancedSyntax**: Enable the advanced query syntax. Defaults to 0 (false).
@@ -461,6 +498,7 @@ For example `"customRanking" => ["desc(population)", "asc(name)"]`
   * **prefixAll**: all query words are interpreted as prefixes,
   * **prefixLast**: only the last word is interpreted as a prefix (default behavior),
   * **prefixNone**: no query word is interpreted as a prefix. This option is not recommended.
+ * **separatorsToIndex**: Specify the separators (punctuation characters) to index. By default, separators are not indexed. Use `+#` to be able to search Google+ or C#.
  * **slaves**: The list of indices on which you want to replicate all write operations. In order to get response times in milliseconds, we pre-compute part of the ranking during indexing. If you want to use different ranking configurations depending of the use-case, you need to create one index per ranking configuration. This option enables you to perform write operations only on this index, and to automatically update slave indices with the same operations.
  * **unretrievableAttributes**: The list of attributes that cannot be retrieved at query time. This feature allow to have an attribute that is used for indexing and/or ranking but cannot be retrieved. Default to null.
  * **allowCompressionOfIntegerArray**: Allows compression of big integer arrays. We recommended to store the list of user ID or rights as an integer array and enable this setting. When enabled the integer array are reordered to reach a better compression ratio. Default to false.
@@ -605,6 +643,8 @@ Each key is defined by a set of rights that specify the authorized actions. The 
  * **deleteIndex**: allows to delete index content,
  * **settings**: allows to get index settings,
  * **editSettings**: allows to change index settings.
+ * **analytics**: allows to retrieve the analytics through the analytics API.
+ * **listIndexes**: allows to list all accessible indexes.
 
 Example of API Key creation:
 ```ruby
@@ -768,6 +808,11 @@ You can retrieve the last logs via this API. Each log entry contains:
 You can retrieve the logs of your last 1000 API calls and browse them using the offset/length parameters:
  * ***offset***: Specify the first entry to retrieve (0-based, 0 is the most recent log entry). Default to 0.
  * ***length***: Specify the maximum number of entries to retrieve starting at offset. Defaults to 10. Maximum allowed value: 1000.
+ * ***onlyErrors***: Retrieve only logs with an httpCode different than 200 and 201. (deprecated)
+ * ***type***: Specify the type of logs to retrieve:
+  * ***query***: Retrieve only the queries.
+  * ***build***: Retrieve only the build operations.
+  * ***error***: Retrieve only the errors. (same as ***onlyErrors*** parameters)
 
 ```ruby
 # Get last 10 log entries
