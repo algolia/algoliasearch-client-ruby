@@ -1,11 +1,15 @@
 require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 
+require 'webmock'
+WebMock.disable!
+
 require 'algolia/webmock'
 
 describe 'With a mocked client' do
 
   before(:each) do
     WebMock.enable!
+    Algola.load_webmocks!
     Thread.current[:algolia_hosts] = nil # reset session objects
   end
 
