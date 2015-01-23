@@ -9,6 +9,7 @@ describe 'With a mocked client' do
 
   before(:each) do
     WebMock.enable!
+    Algola.load_webmocks!
     Thread.current[:algolia_hosts] = nil # reset session objects
   end
 

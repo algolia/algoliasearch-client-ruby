@@ -46,8 +46,8 @@ ALGOLIA_WEBMOCKS = {
   [:delete, %r{/1/keys/[^/]+}] => '{ }',
 }
 
-RSpec.configure do |config|
-  config.before :each do
+module Algolia
+  def self.load_webmocks!
     WebMock.stub_request(:any, /.*\.algolia\.(io|net)/).to_return do |request|
       match = ALGOLIA_WEBMOCKS.find do |pattern, retval|
         request.method == pattern[0] && pattern[1].match(request.uri.path)
