@@ -723,13 +723,13 @@ describe 'Client' do
   it 'should apply jobs one after another if synchronous' do
     index = Algolia::Index.new(safe_index_name("sync"))
     begin
-      index.add_object! objectID: 1
+      index.add_object! :objectID => 1
       answer = index.search('')
       answer['nbHits'].should eq(1)
       answer['hits'][0]['objectID'].to_i.should eq(1)
       index.clear_index!
-      index.add_object! objectID: 2
-      index.add_object! objectID: 3
+      index.add_object! :objectID => 2
+      index.add_object! :objectID => 3
       answer = index.search('')
       answer['nbHits'].should eq(2)
       answer['hits'][0]['objectID'].to_i.should_not eq(1)
