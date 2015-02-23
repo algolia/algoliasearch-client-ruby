@@ -51,7 +51,6 @@ GEM
     multipart-post (2.0.0)
     net-http-persistent (2.9.4)
     net-http-pipeline (1.0.1)
-    netrc (0.10.2)
     pry (0.9.12.6)
       coderay (~> 1.0)
       method_source (~> 0.8)
@@ -68,9 +67,9 @@ GEM
     rdoc (4.2.0)
       json (~> 1.4)
     redgreen (1.2.2)
-    rest-client (1.7.3)
-      mime-types (>= 1.16, < 3.0)
-      netrc (~> 0.7)
+    rest-client (1.6.8)
+      mime-types (~> 1.16)
+      rdoc (>= 2.4.2)
     rspec (3.2.0)
       rspec-core (~> 3.2.0)
       rspec-expectations (~> 3.2.0)
@@ -331,6 +330,7 @@ DEPENDENCIES
   rake
   rdoc
   redgreen
+  rest-client (= 1.6.8)
   rspec (>= 2.5.0)
   rubysl (~> 2.0)
   safe_yaml (~> 1.0.4)

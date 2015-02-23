@@ -7,6 +7,7 @@ gem 'rubysl', '~> 2.0', :platform => :rbx
 group :development do
   gem 'coveralls'
   gem 'safe_yaml', '~> 1.0.4'
+  gem 'rest-client', '1.6.8'
   gem 'travis'
   gem 'rake'
   gem 'rdoc'
