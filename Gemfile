@@ -6,12 +6,13 @@ gem 'rubysl', '~> 2.0', :platform => :rbx
 
 group :development do
   gem 'coveralls'
+  gem 'safe_yaml', '~> 1.0.4'
   gem 'travis'
   gem 'rake'
   gem 'rdoc'
 end
 
-group :test do 
+group :test do
   gem 'rspec', '>= 2.5.0'
   gem 'autotest'
   gem 'autotest-fsevent'
