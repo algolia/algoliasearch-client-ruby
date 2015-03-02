@@ -36,7 +36,7 @@ GEM
       multi_json (~> 1.0)
       net-http-persistent (>= 2.7)
       net-http-pipeline
-    highline (1.7.1)
+    highline (1.6.21)
     httpclient (2.6.0.1)
     json (1.8.2)
     json (1.8.2-java)
@@ -324,6 +324,7 @@ DEPENDENCIES
   autotest-fsevent
   autotest-growl
   coveralls
+  highline (< 1.7.0)
   httpclient (~> 2.4)
   json (>= 1.5.1)
   mime-types (< 2.0)
