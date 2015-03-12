@@ -540,7 +540,8 @@ module Algolia
           :attributesToHighlight => [],
           :attributesToSnippet => [],
           :facets => disjunctive_facet,
-          :facetFilters => filters
+          :facetFilters => filters,
+          :analytics => false
         })
       end
       answers = Algolia.multiple_queries(queries)
