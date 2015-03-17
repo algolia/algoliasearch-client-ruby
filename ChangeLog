@@ -1,5 +1,9 @@
 CHANGELOG
 
+2015-03-17  1.4.0
+      * High-available DNS: search queries are now targeting "APPID-DSN.algolia.net" first, then the main cluster using NSOne, then the main cluster using Route53.
+        Indexing queries are targeting "APPID.algolia.net" first, then the main cluster using NSOne, then the main cluster using Route53.
+
 2014-11-29  1.3.1
       * Fixed wrong deployed version (1.3.0 was based on 1.2.13 instead of 1.2.14)
 
