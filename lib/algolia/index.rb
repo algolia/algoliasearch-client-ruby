@@ -136,7 +136,7 @@ module Algolia
     #   one is kept and others are removed.
     def search(query, params = {})
       encoded_params = Hash[params.map { |k,v| [k.to_s, v.is_a?(Array) ? v.to_json : v] }]
-      Algolia.client.get(Protocol.search_uri(name, query, encoded_params), Algolia.client.search_timeout)
+      Algolia.client.get(Protocol.search_uri(name, query, encoded_params), Algolia.client.search_timeout, true)
     end
 
     #
@@ -158,9 +158,9 @@ module Algolia
     #
     def get_object(objectID, attributesToRetrieve = nil)
       if attributesToRetrieve.nil?
-        Algolia.client.get(Protocol.object_uri(name, objectID, nil))
+        Algolia.client.get(Protocol.object_uri(name, objectID, nil), Algolia.client.search_timeout, true)
       else
-        Algolia.client.get(Protocol.object_uri(name, objectID, {:attributes => attributesToRetrieve}))
+        Algolia.client.get(Protocol.object_uri(name, objectID, {:attributes => attributesToRetrieve}), Algolia.client.search_timeout, true)
       end
     end
 
@@ -170,7 +170,7 @@ module Algolia
     # @param objectIDs the array of unique identifier of the objects to retrieve
     #
     def get_objects(objectIDs)
-      Algolia.client.post(Protocol.objects_uri, { :requests => objectIDs.map { |objectID| { :indexName => name, :objectID => objectID } } }.to_json)['results']
+      Algolia.client.post(Protocol.objects_uri, { :requests => objectIDs.map { |objectID| { :indexName => name, :objectID => objectID } } }.to_json, Algolia.client.search_timeout, true)['results']
     end
 
     # Wait the publication of a task on the server. 
@@ -181,7 +181,7 @@ module Algolia
     #    
     def wait_task(taskID, timeBeforeRetry = 100)
       loop do
-        status = Algolia.client.get(Protocol.task_uri(name, taskID))["status"]
+        status = Algolia.client.get(Protocol.task_uri(name, taskID), nil, true)["status"]
         if status == "published"
           return
         end

@@ -6,7 +6,7 @@ describe 'With a rate limited client' do
 
   before(:each) do
     WebMock.enable!
-    Thread.current[:algolia_hosts] = nil
+    Thread.current[:algolia_hosts] = Thread.current[:algolia_search_hosts] = nil
   end
 
   it "should pass the right headers" do

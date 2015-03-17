@@ -10,7 +10,7 @@ module Algolia
   # A class which encapsulates the HTTPS communication with the Algolia
   # API server. Uses the HTTPClient library for low-level HTTP communication.
   class Client
-    attr_reader :ssl, :ssl_version, :hosts, :application_id, :api_key, :headers, :connect_timeout, :send_timeout, :receive_timeout, :search_timeout
+    attr_reader :ssl, :ssl_version, :hosts, :search_hosts, :application_id, :api_key, :headers, :connect_timeout, :send_timeout, :receive_timeout, :search_timeout
 
 
     def initialize(data = {})
@@ -18,7 +18,8 @@ module Algolia
       @ssl_version     = data[:ssl_version].nil? ? nil : data[:ssl_version]
       @application_id  = data[:application_id]
       @api_key         = data[:api_key]
-      @hosts           = (data[:hosts] || 1.upto(3).map { |i| "#{@application_id}-#{i}.algolia.net" }).shuffle
+      @hosts           = data[:hosts] || (["#{@application_id}.algolia.net"] + 1.upto(3).map { |i| "#{@application_id}-#{i}.algolia.net" }.shuffle + 1.upto(3).map { |i| "#{@application_id}-#{i}.algolianet.com" }.shuffle)
+      @search_hosts    = data[:search_hosts] || (["#{@application_id}-dsn.algolia.net"] + 1.upto(3).map { |i| "#{@application_id}-#{i}.algolia.net" }.shuffle + 1.upto(3).map { |i| "#{@application_id}-#{i}.algolianet.com" }.shuffle)
       @connect_timeout = data[:connect_timeout]
       @send_timeout    = data[:send_timeout]
       @receive_timeout = data[:receive_timeout]
@@ -35,9 +36,9 @@ module Algolia
     # with common basic response handling. Will raise a
     # AlgoliaProtocolError if the response has an error status code,
     # and will return the parsed JSON body on success, if there is one.
-    def request(uri, method, data = nil, timeout = nil)
+    def request(uri, method, data = nil, timeout = nil, read = false)
       exceptions = []
-      thread_local_hosts(timeout).each do |host|
+      thread_local_hosts(read, timeout).each do |host|
         begin
           return perform_request(host[:session], host[:base_url] + uri, method, data)
         rescue AlgoliaProtocolError => e
@@ -50,35 +51,36 @@ module Algolia
       raise AlgoliaProtocolError.new(0, "Cannot reach any host: #{exceptions.map { |e| e.to_s }.join(', ')}")
     end
 
-    def get(uri, timeout = nil)
-      request(uri, :GET, nil, timeout)
+    def get(uri, timeout = nil, read = false)
+      request(uri, :GET, nil, timeout, read)
     end
 
-    def post(uri, body = {}, timeout = nil)
-      request(uri, :POST, body, timeout)
+    def post(uri, body = {}, timeout = nil, read = false)
+      request(uri, :POST, body, timeout, read)
     end
 
-    def put(uri, body = {}, timeout = nil)
-      request(uri, :PUT, body, timeout)
+    def put(uri, body = {}, timeout = nil, read = false)
+      request(uri, :PUT, body, timeout, read)
     end
 
-    def delete(uri, timeout = nil)
-      request(uri, :DELETE, nil, timeout)
+    def delete(uri, timeout = nil, read = false)
+      request(uri, :DELETE, nil, timeout, read)
     end
 
     private
 
     # This method returns a thread-local array of sessions
-    # 
+    #
     # Since the underlying httpclient library resets the connections pool
     # if you change any of its attributes, we cannot change the timeout
     # of an HTTP session dynamically. That being said, having 1 pool per
     # timeout appears to be the only acceptable solution
-    def thread_local_hosts(forced_timeout)
-      Thread.current[:algolia_hosts] ||= {}
-      Thread.current[:algolia_hosts][forced_timeout.to_s] ||= hosts.map do |host|
+    def thread_local_hosts(read, forced_timeout)
+      k = read ? :algolia_search_hosts : :algolia_hosts
+      Thread.current[k] ||= {}
+      Thread.current[k][forced_timeout.to_s] ||= (read ? search_hosts : hosts).map do |host|
         client = HTTPClient.new
-        client.ssl_config.ssl_version = @ssl_version if @ssl && @ssl_version        
+        client.ssl_config.ssl_version = @ssl_version if @ssl && @ssl_version
         hinfo = {
           :base_url => "http#{@ssl ? 's' : ''}://#{host}",
           :session => client
@@ -208,7 +210,7 @@ module Algolia
         { :indexName => indexName, :params => Protocol.to_query(encoded_params) }
       end
     }
-    Algolia.client.post(Protocol.multiple_queries_uri, requests.to_json, Algolia.client.search_timeout)
+    Algolia.client.post(Protocol.multiple_queries_uri, requests.to_json, Algolia.client.search_timeout, true)
   end
 
   #
@@ -366,7 +368,7 @@ module Algolia
 
   # Used mostly for testing. Lets you delete the api key global vars.
   def Algolia.destroy
-    @@client = Thread.current[:algolia_hosts] = nil
+    @@client = Thread.current[:algolia_hosts] = Thread.current[:algolia_search_hosts] = nil
     self
   end
 
