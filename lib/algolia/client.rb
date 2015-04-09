@@ -18,8 +18,8 @@ module Algolia
       @ssl_version     = data[:ssl_version].nil? ? nil : data[:ssl_version]
       @application_id  = data[:application_id]
       @api_key         = data[:api_key]
-      @hosts           = data[:hosts] || (["#{@application_id}.algolia.net"] + 1.upto(3).map { |i| "#{@application_id}-#{i}.algolia.net" }.shuffle + 1.upto(3).map { |i| "#{@application_id}-#{i}.algolianet.com" }.shuffle)
-      @search_hosts    = data[:search_hosts] || (["#{@application_id}-dsn.algolia.net"] + 1.upto(3).map { |i| "#{@application_id}-#{i}.algolia.net" }.shuffle + 1.upto(3).map { |i| "#{@application_id}-#{i}.algolianet.com" }.shuffle)
+      @hosts           = data[:hosts] || (["#{@application_id}.algolia.net"] + 1.upto(3).map { |i| "#{@application_id}-#{i}.algolianet.com" }.shuffle)
+      @search_hosts    = data[:search_hosts] || data[:hosts] || (["#{@application_id}-dsn.algolia.net"] + 1.upto(3).map { |i| "#{@application_id}-#{i}.algolianet.com" }.shuffle)
       @connect_timeout = data[:connect_timeout]
       @send_timeout    = data[:send_timeout]
       @receive_timeout = data[:receive_timeout]
