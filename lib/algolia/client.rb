@@ -220,7 +220,7 @@ module Algolia
   #                {"name": "notes", "createdAt": "2013-01-18T15:33:13.556Z"}]}
   #
   def Algolia.list_indexes
-      Algolia.client.get(Protocol.indexes_uri)
+      Algolia.client.get(Protocol.indexes_uri, nil, true)
   end
 
   #
@@ -296,12 +296,12 @@ module Algolia
 
   # List all existing user keys with their associated ACLs
   def Algolia.list_user_keys
-      Algolia.client.get(Protocol.keys_uri)
+      Algolia.client.get(Protocol.keys_uri, nil, true)
   end
 
   # Get ACL of a user key
   def Algolia.get_user_key(key)
-      Algolia.client.get(Protocol.key_uri(key))
+      Algolia.client.get(Protocol.key_uri(key), nil, true)
   end
 
   #

@@ -147,7 +147,7 @@ module Algolia
     # @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
     #
     def browse(page = 0, hitsPerPage = 1000)
-     Algolia.client.get(Protocol.browse_uri(name, {:page => page, :hitsPerPage => hitsPerPage}))
+     Algolia.client.get(Protocol.browse_uri(name, {:page => page, :hitsPerPage => hitsPerPage}), nil, true)
     end
 
     #
@@ -416,17 +416,17 @@ module Algolia
     
     # Get settings of this index
     def get_settings
-      Algolia.client.get(Protocol.settings_uri(name))
+      Algolia.client.get(Protocol.settings_uri(name), nil, true)
     end 
 
     # List all existing user keys with their associated ACLs
     def list_user_keys
-      Algolia.client.get(Protocol.index_keys_uri(name))
+      Algolia.client.get(Protocol.index_keys_uri(name), nil, true)
     end
  
     # Get ACL of a user key
     def get_user_key(key)
-      Algolia.client.get(Protocol.index_key_uri(name, key))
+      Algolia.client.get(Protocol.index_key_uri(name, key), nil, true)
     end
  
     #
