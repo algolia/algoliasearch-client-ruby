@@ -136,7 +136,7 @@ module Algolia
     #   one is kept and others are removed.
     def search(query, params = {})
       encoded_params = Hash[params.map { |k,v| [k.to_s, v.is_a?(Array) ? v.to_json : v] }]
-      Algolia.client.get(Protocol.search_uri(name, query, encoded_params), Algolia.client.search_timeout, true)
+      Algolia.client.get(Protocol.search_uri(name, query, encoded_params), :search)
     end
 
     #
@@ -147,7 +147,7 @@ module Algolia
     # @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
     #
     def browse(page = 0, hitsPerPage = 1000)
-     Algolia.client.get(Protocol.browse_uri(name, {:page => page, :hitsPerPage => hitsPerPage}), nil, true)
+     Algolia.client.get(Protocol.browse_uri(name, {:page => page, :hitsPerPage => hitsPerPage}), :read)
     end
 
     #
@@ -158,9 +158,9 @@ module Algolia
     #
     def get_object(objectID, attributesToRetrieve = nil)
       if attributesToRetrieve.nil?
-        Algolia.client.get(Protocol.object_uri(name, objectID, nil), Algolia.client.search_timeout, true)
+        Algolia.client.get(Protocol.object_uri(name, objectID, nil), :read)
       else
-        Algolia.client.get(Protocol.object_uri(name, objectID, {:attributes => attributesToRetrieve}), Algolia.client.search_timeout, true)
+        Algolia.client.get(Protocol.object_uri(name, objectID, {:attributes => attributesToRetrieve}), :read)
       end
     end
 
@@ -170,7 +170,7 @@ module Algolia
     # @param objectIDs the array of unique identifier of the objects to retrieve
     #
     def get_objects(objectIDs)
-      Algolia.client.post(Protocol.objects_uri, { :requests => objectIDs.map { |objectID| { :indexName => name, :objectID => objectID } } }.to_json, Algolia.client.search_timeout, true)['results']
+      Algolia.client.post(Protocol.objects_uri, { :requests => objectIDs.map { |objectID| { :indexName => name, :objectID => objectID } } }.to_json, :read)['results']
     end
 
     # Wait the publication of a task on the server. 
@@ -181,7 +181,7 @@ module Algolia
     #    
     def wait_task(taskID, timeBeforeRetry = 100)
       loop do
-        status = Algolia.client.get(Protocol.task_uri(name, taskID), nil, true)["status"]
+        status = Algolia.client.get(Protocol.task_uri(name, taskID), :read)["status"]
         if status == "published"
           return
         end
@@ -416,17 +416,17 @@ module Algolia
     
     # Get settings of this index
     def get_settings
-      Algolia.client.get(Protocol.settings_uri(name), nil, true)
+      Algolia.client.get(Protocol.settings_uri(name), :read)
     end 
 
     # List all existing user keys with their associated ACLs
     def list_user_keys
-      Algolia.client.get(Protocol.index_keys_uri(name), nil, true)
+      Algolia.client.get(Protocol.index_keys_uri(name), :read)
     end
  
     # Get ACL of a user key
     def get_user_key(key)
-      Algolia.client.get(Protocol.index_key_uri(name, key), nil, true)
+      Algolia.client.get(Protocol.index_key_uri(name, key), :read)
     end
  
     #

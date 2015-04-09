@@ -12,6 +12,10 @@ module Algolia
   class Client
     attr_reader :ssl, :ssl_version, :hosts, :search_hosts, :application_id, :api_key, :headers, :connect_timeout, :send_timeout, :receive_timeout, :search_timeout
 
+    DEFAULT_CONNECT_TIMEOUT = 2
+    DEFAULT_RECEIVE_TIMEOUT = 30
+    DEFAULT_SEND_TIMEOUT    = 30
+    DEFAULT_SEARCH_TIMEOUT  = 5
 
     def initialize(data = {})
       @ssl             = data[:ssl].nil? ? true : data[:ssl]
@@ -20,10 +24,10 @@ module Algolia
       @api_key         = data[:api_key]
       @hosts           = data[:hosts] || (["#{@application_id}.algolia.net"] + 1.upto(3).map { |i| "#{@application_id}-#{i}.algolianet.com" }.shuffle)
       @search_hosts    = data[:search_hosts] || data[:hosts] || (["#{@application_id}-dsn.algolia.net"] + 1.upto(3).map { |i| "#{@application_id}-#{i}.algolianet.com" }.shuffle)
-      @connect_timeout = data[:connect_timeout]
-      @send_timeout    = data[:send_timeout]
-      @receive_timeout = data[:receive_timeout]
-      @search_timeout  = data[:search_timeout]
+      @connect_timeout = data[:connect_timeout] || DEFAULT_CONNECT_TIMEOUT
+      @send_timeout    = data[:send_timeout] || DEFAULT_SEND_TIMEOUT
+      @receive_timeout = data[:receive_timeout] || DEFAULT_RECEIVE_TIMEOUT
+      @search_timeout  = data[:search_timeout] || DEFAULT_SEARCH_TIMEOUT
       @headers = {
         Protocol::HEADER_API_KEY => api_key,
         Protocol::HEADER_APP_ID  => application_id,
@@ -36,9 +40,19 @@ module Algolia
     # with common basic response handling. Will raise a
     # AlgoliaProtocolError if the response has an error status code,
     # and will return the parsed JSON body on success, if there is one.
-    def request(uri, method, data = nil, timeout = nil, read = false)
+    def request(uri, method, data = nil, type = :write)
       exceptions = []
-      thread_local_hosts(read, timeout).each do |host|
+
+      connect_timeout = @connect_timeout
+      send_timeout = type == :search ? @search_timeout : @send_timeout
+      receive_timeout = type == :search ? @search_timeout : @receive_timeout
+
+      (type == :write ? @hosts : @search_hosts).size.times do |i|
+        connect_timeout += 2 if i == 2
+        send_timeout += 10 if i == 2
+        receive_timeout += 10 if i == 2
+
+        host = thread_local_hosts(type != :write, connect_timeout, send_timeout, receive_timeout)[i]
         begin
           return perform_request(host[:session], host[:base_url] + uri, method, data)
         rescue AlgoliaProtocolError => e
@@ -51,20 +65,20 @@ module Algolia
       raise AlgoliaProtocolError.new(0, "Cannot reach any host: #{exceptions.map { |e| e.to_s }.join(', ')}")
     end
 
-    def get(uri, timeout = nil, read = false)
-      request(uri, :GET, nil, timeout, read)
+    def get(uri, type = :write)
+      request(uri, :GET, nil, type)
     end
 
-    def post(uri, body = {}, timeout = nil, read = false)
-      request(uri, :POST, body, timeout, read)
+    def post(uri, body = {}, type = :write)
+      request(uri, :POST, body, type)
     end
 
-    def put(uri, body = {}, timeout = nil, read = false)
-      request(uri, :PUT, body, timeout, read)
+    def put(uri, body = {}, type = :write)
+      request(uri, :PUT, body, type)
     end
 
-    def delete(uri, timeout = nil, read = false)
-      request(uri, :DELETE, nil, timeout, read)
+    def delete(uri, type = :write)
+      request(uri, :DELETE, nil, type)
     end
 
     private
@@ -75,10 +89,10 @@ module Algolia
     # if you change any of its attributes, we cannot change the timeout
     # of an HTTP session dynamically. That being said, having 1 pool per
     # timeout appears to be the only acceptable solution
-    def thread_local_hosts(read, forced_timeout)
-      k = read ? :algolia_search_hosts : :algolia_hosts
-      Thread.current[k] ||= {}
-      Thread.current[k][forced_timeout.to_s] ||= (read ? search_hosts : hosts).map do |host|
+    def thread_local_hosts(read, connect_timeout, send_timeout, receive_timeout)
+      thread_local_var = read ? :algolia_search_hosts : :algolia_hosts
+      Thread.current[thread_local_var] ||= {}
+      Thread.current[thread_local_var]["#{connect_timeout}-#{send_timeout}-#{receive_timeout}"] ||= (read ? search_hosts : hosts).map do |host|
         client = HTTPClient.new
         client.ssl_config.ssl_version = @ssl_version if @ssl && @ssl_version
         hinfo = {
@@ -86,13 +100,9 @@ module Algolia
           :session => client
         }
         hinfo[:session].transparent_gzip_decompression = true
-        hinfo[:session].connect_timeout = @connect_timeout if @connect_timeout
-        if forced_timeout
-          hinfo[:session].send_timeout = hinfo[:session].receive_timeout = forced_timeout
-        else
-          hinfo[:session].send_timeout = @send_timeout if @send_timeout
-          hinfo[:session].receive_timeout = @receive_timeout if @receive_timeout
-        end
+        hinfo[:session].connect_timeout = connect_timeout
+        hinfo[:session].send_timeout = send_timeout
+        hinfo[:session].receive_timeout = receive_timeout
         hinfo[:session].ssl_config.add_trust_ca File.join(File.dirname(__FILE__), '..', '..', 'resources', 'ca-bundle.crt')
         hinfo
       end
@@ -210,7 +220,7 @@ module Algolia
         { :indexName => indexName, :params => Protocol.to_query(encoded_params) }
       end
     }
-    Algolia.client.post(Protocol.multiple_queries_uri, requests.to_json, Algolia.client.search_timeout, true)
+    Algolia.client.post(Protocol.multiple_queries_uri, requests.to_json, :search)
   end
 
   #
@@ -220,7 +230,7 @@ module Algolia
   #                {"name": "notes", "createdAt": "2013-01-18T15:33:13.556Z"}]}
   #
   def Algolia.list_indexes
-      Algolia.client.get(Protocol.indexes_uri, nil, true)
+      Algolia.client.get(Protocol.indexes_uri, :read)
   end
 
   #
@@ -296,12 +306,12 @@ module Algolia
 
   # List all existing user keys with their associated ACLs
   def Algolia.list_user_keys
-      Algolia.client.get(Protocol.keys_uri, nil, true)
+      Algolia.client.get(Protocol.keys_uri, :read)
   end
 
   # Get ACL of a user key
   def Algolia.get_user_key(key)
-      Algolia.client.get(Protocol.key_uri(key), nil, true)
+      Algolia.client.get(Protocol.key_uri(key), :read)
   end
 
   #
