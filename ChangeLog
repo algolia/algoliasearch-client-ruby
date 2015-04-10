@@ -1,5 +1,8 @@
 CHANGELOG
 
+2015-04-10  1.4.1
+      * Force the default connect/read/write/search/batch timeouts to Algolia-specific values
+
 2015-03-17  1.4.0
       * High-available DNS: search queries are now targeting "APPID-DSN.algolia.net" first, then the main cluster using NSOne, then the main cluster using Route53.
         Indexing queries are targeting "APPID.algolia.net" first, then the main cluster using NSOne, then the main cluster using Route53.
