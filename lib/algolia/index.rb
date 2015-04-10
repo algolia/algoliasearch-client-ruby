@@ -473,7 +473,7 @@ module Algolia
 
     # Send a batch request
     def batch(request)
-      Algolia.client.post(Protocol.batch_uri(name), request.to_json)
+      Algolia.client.post(Protocol.batch_uri(name), request.to_json, :batch)
     end
 
     # Send a batch request and wait the end of the indexing

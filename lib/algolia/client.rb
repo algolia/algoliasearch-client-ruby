@@ -10,11 +10,12 @@ module Algolia
   # A class which encapsulates the HTTPS communication with the Algolia
   # API server. Uses the HTTPClient library for low-level HTTP communication.
   class Client
-    attr_reader :ssl, :ssl_version, :hosts, :search_hosts, :application_id, :api_key, :headers, :connect_timeout, :send_timeout, :receive_timeout, :search_timeout
+    attr_reader :ssl, :ssl_version, :hosts, :search_hosts, :application_id, :api_key, :headers, :connect_timeout, :send_timeout, :receive_timeout, :search_timeout, :batch_timeout
 
     DEFAULT_CONNECT_TIMEOUT = 2
     DEFAULT_RECEIVE_TIMEOUT = 30
     DEFAULT_SEND_TIMEOUT    = 30
+    DEFAULT_BATCH_TIMEOUT   = 120
     DEFAULT_SEARCH_TIMEOUT  = 5
 
     def initialize(data = {})
@@ -26,6 +27,7 @@ module Algolia
       @search_hosts    = data[:search_hosts] || data[:hosts] || (["#{@application_id}-dsn.algolia.net"] + 1.upto(3).map { |i| "#{@application_id}-#{i}.algolianet.com" }.shuffle)
       @connect_timeout = data[:connect_timeout] || DEFAULT_CONNECT_TIMEOUT
       @send_timeout    = data[:send_timeout] || DEFAULT_SEND_TIMEOUT
+      @batch_timeout   = data[:batch_timeout] || DEFAULT_BATCH_TIMEOUT
       @receive_timeout = data[:receive_timeout] || DEFAULT_RECEIVE_TIMEOUT
       @search_timeout  = data[:search_timeout] || DEFAULT_SEARCH_TIMEOUT
       @headers = {
@@ -44,7 +46,14 @@ module Algolia
       exceptions = []
 
       connect_timeout = @connect_timeout
-      send_timeout = type == :search ? @search_timeout : @send_timeout
+      send_timeout = if type == :search
+        @search_timeout
+      elsif type == :batch
+        type = :write
+        @batch_timeout
+      else
+        @send_timeout
+      end
       receive_timeout = type == :search ? @search_timeout : @receive_timeout
 
       (type == :write ? @hosts : @search_hosts).size.times do |i|
