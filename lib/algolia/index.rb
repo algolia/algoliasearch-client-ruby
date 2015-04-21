@@ -432,37 +432,91 @@ module Algolia
     #
     #  Create a new user key
     #
-    #  @param acls the list of ACL for this key. Defined by an array of strings that 
-    #         can contains the following values:
-    #           - search: allow to search (https and http)
-    #           - addObject: allows to add a new object in the index (https only)
-    #           - updateObject : allows to change content of an existing object (https only)
-    #           - deleteObject : allows to delete an existing object (https only)
-    #           - deleteIndex : allows to delete index content (https only)
-    #           - settings : allows to get index settings (https only)
-    #           - editSettings : allows to change index settings (https only)
+    #  @param obj can be two different parameters:
+    #        The list of parameters for this key. Defined by a NSDictionary that
+    #        can contains the following values:
+    #          - acl: array of string
+    #          - validity: int
+    #          - referers: array of string
+    #          - description: string
+    #          - maxHitsPerQuery: integer
+    #          - queryParameters: string
+    #          - maxQueriesPerIPPerHour: integer
+    #        Or the list of ACL for this key. Defined by an array of NSString that
+    #        can contains the following values:
+    #          - search: allow to search (https and http)
+    #          - addObject: allows to add/update an object in the index (https only)
+    #          - deleteObject : allows to delete an existing object (https only)
+    #          - deleteIndex : allows to delete index content (https only)
+    #          - settings : allows to get index settings (https only)
+    #          - editSettings : allows to change index settings (https only)
     #  @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
+    #  @param maxQueriesPerIPPerHour the maximum number of API calls allowed from an IP address per hour (0 means unlimited)
+    #  @param maxHitsPerQuery  the maximum number of hits this API key can retrieve in one call (0 means unlimited)
     #
-    def add_user_key(acls, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0)
-      Algolia.client.post(Protocol.index_keys_uri(name), {:acl => acls, :validity => validity, :maxQueriesPerIPPerHour => maxQueriesPerIPPerHour.to_i, :maxHitsPerQuery => maxHitsPerQuery.to_i}.to_json)
+    def add_user_key(obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0)
+      if obj.instance_of? Array
+        params = {
+          :acl => obj
+        }
+      else
+        params = obj
+      end
+      if validity != 0
+        params["validity"] = validity.to_i
+      end
+      if maxQueriesPerIPPerHour != 0
+        params["maxQueriesPerIPPerHour"] = maxQueriesPerIPPerHour.to_i
+      end
+      if maxHitsPerQuery != 0
+        params["maxHitsPerQuery"] = maxHitsPerQuery.to_i
+      end
+      Algolia.client.post(Protocol.index_keys_uri(name), params.to_json)
     end
 
     #
     #  Update a user key
     #
-    #  @param acls the list of ACL for this key. Defined by an array of strings that 
-    #         can contains the following values:
-    #           - search: allow to search (https and http)
-    #           - addObject: allows to add a new object in the index (https only)
-    #           - updateObject : allows to change content of an existing object (https only)
-    #           - deleteObject : allows to delete an existing object (https only)
-    #           - deleteIndex : allows to delete index content (https only)
-    #           - settings : allows to get index settings (https only)
-    #           - editSettings : allows to change index settings (https only)
+    #  @param obj can be two different parameters:
+    #        The list of parameters for this key. Defined by a NSDictionary that
+    #        can contains the following values:
+    #          - acl: array of string
+    #          - validity: int
+    #          - referers: array of string
+    #          - description: string
+    #          - maxHitsPerQuery: integer
+    #          - queryParameters: string
+    #          - maxQueriesPerIPPerHour: integer
+    #        Or the list of ACL for this key. Defined by an array of NSString that
+    #        can contains the following values:
+    #          - search: allow to search (https and http)
+    #          - addObject: allows to add/update an object in the index (https only)
+    #          - deleteObject : allows to delete an existing object (https only)
+    #          - deleteIndex : allows to delete index content (https only)
+    #          - settings : allows to get index settings (https only)
+    #          - editSettings : allows to change index settings (https only)
     #  @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
+    #  @param maxQueriesPerIPPerHour the maximum number of API calls allowed from an IP address per hour (0 means unlimited)
+    #  @param maxHitsPerQuery  the maximum number of hits this API key can retrieve in one call (0 means unlimited)
     #
-    def update_user_key(key, acls, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0)
-      Algolia.client.put(Protocol.index_key_uri(name, key), {:acl => acls, :validity => validity, :maxQueriesPerIPPerHour => maxQueriesPerIPPerHour.to_i, :maxHitsPerQuery => maxHitsPerQuery.to_i}.to_json)
+    def update_user_key(key, obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0)
+      if obj.instance_of? Array
+        params = {
+          :acl => obj
+        }
+      else
+        params = obj
+      end
+      if validity != 0
+        params["validity"] = validity.to_i
+      end
+      if maxQueriesPerIPPerHour != 0
+        params["maxQueriesPerIPPerHour"] = maxQueriesPerIPPerHour.to_i
+      end
+      if maxHitsPerQuery != 0
+        params["maxHitsPerQuery"] = maxHitsPerQuery.to_i
+      end
+      Algolia.client.put(Protocol.index_key_uri(name, key), params.to_json)
     end
 
  

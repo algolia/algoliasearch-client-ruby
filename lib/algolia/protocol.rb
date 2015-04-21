@@ -39,8 +39,8 @@ module Algolia
       "/#{VERSION}/indexes"
     end
 
-    def Protocol.multiple_queries_uri
-      "/#{VERSION}/indexes/*/queries"
+    def Protocol.multiple_queries_uri(strategy = "none")
+      "/#{VERSION}/indexes/*/queries?strategy=#{strategy}"
     end
 
     def Protocol.objects_uri
