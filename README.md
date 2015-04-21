@@ -696,7 +696,7 @@ puts res['key']
 #  - rate limit of 100 calls per hour per IP
 #  - maximum of 20 hits
 #  - valid on 'my_index1' and 'my_index2'
-res = index.add_user_key(["search"], 300, 100, 20, ['my_index1', 'my_index2'])
+res = Algolia.add_user_key(["search"], 300, 100, 20, ['my_index1', 'my_index2'])
 puts res['key']
 ```
 
