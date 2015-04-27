@@ -77,6 +77,16 @@ describe 'Client' do
     res["hits"].length.should eq(0)
   end
 
+  it "should send a custom batch" do
+    batch = [
+      {:action => "addObject", :indexName => @index.name, :body => { :objectID => "11", :email => "john@be.org" }},
+      {:action => "addObject", :indexName => @index.name, :body => { :objectID => "22", :email => "robert@be.org" }}
+    ]
+    Algolia.batch!(batch)
+    res = @index.search("@be.org")
+    res["hits"].length.should eq(2)
+  end
+
   it "should add a set of objects" do
     @index.add_objects!([
       { :name => "Another", :email => "another1@example.org" },

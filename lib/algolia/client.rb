@@ -65,7 +65,7 @@ module Algolia
         begin
           return perform_request(host[:session], host[:base_url] + uri, method, data)
         rescue AlgoliaProtocolError => e
-          raise if e.code.to_f / 100 == 4
+          raise if e.code / 100 == 4
           exceptions << e
         rescue => e
           exceptions << e
@@ -427,16 +427,17 @@ module Algolia
   end
 
   # Send a batch request targeting multiple indices
-    def batch(requests)
-      Algolia.client.post(Protocol.batch_uri, {"requests" => requests}.to_json, :batch)
-    end
+  def Algolia.batch(requests)
+    Algolia.client.post(Protocol.batch_uri, {"requests" => requests}.to_json, :batch)
+  end
 
-    # Send a batch request targeting multiple indices and wait the end of the indexing
-    def batch!(requests)
-      res = batch(requests)
-      wait_task(res['taskID'])
-      res
-    end
+  # Send a batch request targeting multiple indices and wait the end of the indexing
+  def Algolia.batch!(requests)
+    res = batch(requests)
+    res['taskID'].each { |index, taskID|
+      Algolia::Index.new(index).wait_task(taskID)
+    }
+  end
 
   # Used mostly for testing. Lets you delete the api key global vars.
   def Algolia.destroy

@@ -52,7 +52,7 @@ module Algolia
       "/#{VERSION}/indexes/#{CGI.escape(index)}"
     end
 
-    def Protocol.batch_uri(index)
+    def Protocol.batch_uri(index = nil)
       "#{index.nil? ? "/#{VERSION}/indexes/*" : index_uri(index)}/batch"
     end  
     
