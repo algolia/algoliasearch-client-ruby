@@ -65,7 +65,7 @@ module Algolia
         begin
           return perform_request(host[:session], host[:base_url] + uri, method, data)
         rescue AlgoliaProtocolError => e
-          raise if e.code == Protocol::ERROR_BAD_REQUEST or e.code == Protocol::ERROR_FORBIDDEN or e.code == Protocol::ERROR_NOT_FOUND
+          raise if e.code.to_f / 100 == 4
           exceptions << e
         rescue => e
           exceptions << e
@@ -129,7 +129,7 @@ module Algolia
       when :DELETE
         session.delete(url, { :header => @headers })
       end
-      if response.code >= 400 || response.code < 200
+      if response.code / 100 != 2
         raise AlgoliaProtocolError.new(response.code, "Cannot #{method} to #{url}: #{response.content} (#{response.code})")
       end
       return JSON.parse(response.content)
@@ -425,6 +425,18 @@ module Algolia
   def Algolia.delete_user_key(key)
       Algolia.client.delete(Protocol.key_uri(key))
   end
+
+  # Send a batch request targeting multiple indices
+    def batch(requests)
+      Algolia.client.post(Protocol.batch_uri, {"requests" => requests}.to_json, :batch)
+    end
+
+    # Send a batch request targeting multiple indices and wait the end of the indexing
+    def batch!(requests)
+      res = batch(requests)
+      wait_task(res['taskID'])
+      res
+    end
 
   # Used mostly for testing. Lets you delete the api key global vars.
   def Algolia.destroy

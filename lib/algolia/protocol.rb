@@ -53,8 +53,8 @@ module Algolia
     end
 
     def Protocol.batch_uri(index)
-      "#{index_uri(index)}/batch"
-    end
+      "#{index.nil? ? "/#{VERSION}/indexes/*" : index_uri(index)}/batch"
+    end  
     
     def Protocol.index_operation_uri(index)
       "#{index_uri(index)}/operation"
