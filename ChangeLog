@@ -1,5 +1,11 @@
 CHANGELOG
 
+2015-05-04 1.4.2
+      * Add new methods to add/update api key
+      * Add batch method to target multiple indices
+      * Add strategy parameter for the multipleQueries
+      * Add new method to generate secured api key from query parameters
+
 2015-04-10  1.4.1
       * Force the default connect/read/write/search/batch timeouts to Algolia-specific values
 
