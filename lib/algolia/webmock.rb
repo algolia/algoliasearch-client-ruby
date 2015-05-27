@@ -5,9 +5,6 @@ rescue LoadError
   exit 1
 end
 
-# disable by default
-WebMock.disable!
-
 # list indexes
 WebMock.stub_request(:get, /.*\.algolia\.(io|net)\/1\/indexes/).to_return(:body => '{ "items": [] }')
 # query index
