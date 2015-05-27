@@ -1,5 +1,8 @@
 CHANGELOG
 
+2015-05-27 1.4.3
+      * Do not call `WebMock.disable!` in the helper
+
 2015-05-04 1.4.2
       * Add new methods to add/update api key
       * Add batch method to target multiple indices
