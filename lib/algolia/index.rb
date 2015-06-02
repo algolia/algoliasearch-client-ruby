@@ -143,7 +143,7 @@ module Algolia
       def initialize(name, params)
         @name = name
         @params = params
-        @cursor = nil
+        @cursor = params[:cursor] || params['cursor'] || nil
       end
 
       def browse(&block)

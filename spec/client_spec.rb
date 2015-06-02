@@ -773,4 +773,16 @@ describe 'Client' do
     test_browse(42, { :numericFilters => 'i<=42' })
   end
 
+  it "should browse the index using cursors from a cursor" do
+    @index.clear
+    @index.add_objects!(1.upto(1500).map { |i| { objectID: i, i: i } })
+    answer = @index.browse(0, 1000)
+
+    hits = {}
+    @index.browse(:cursor => answer['cursor']) do |hit|
+      hits[hit['objectID']] = true
+    end
+    hits.size.should eq(500)
+  end
+
 end
