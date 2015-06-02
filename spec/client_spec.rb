@@ -738,8 +738,6 @@ describe 'Client' do
     end
   end
 
-  
-
   it "should send a custom batch" do
     batch = [
       {:action => "addObject", :indexName => @index.name, :body => { :objectID => "11", :email => "john@be.org" }},
@@ -749,5 +747,30 @@ describe 'Client' do
     res = @index.search("@be.org")
     res["hits"].length.should eq(2)
   end
-end
 
+  def test_browse(expected, *args)
+    @index.clear
+    @index.add_objects!(1.upto(1500).map { |i| { objectID: i, i: i } })
+    hits = {}
+    @index.browse(*args) do |hit|
+      hits[hit['objectID']] = true
+    end
+    hits.size.should eq(expected)
+  end
+
+  it "should browse the index using cursors" do
+    test_browse(1500)
+    test_browse(500, 1, 1000)
+    test_browse(0, 2, 1000)
+  end
+
+  it "should browse the index using cursors specifying hitsPerPage" do
+    test_browse(1500, { :hitsPerPage => 500 })
+  end
+
+  it "should browse the index using cursors specifying params" do
+    test_browse(1, { :hitsPerPage => 500, :numericFilters => 'i=42' })
+    test_browse(42, { :numericFilters => 'i<=42' })
+  end
+
+end

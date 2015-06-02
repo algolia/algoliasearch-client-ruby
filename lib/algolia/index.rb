@@ -139,6 +139,25 @@ module Algolia
       Algolia.client.get(Protocol.search_uri(name, query, encoded_params), :search)
     end
 
+    class IndexBrowser
+      def initialize(name, params)
+        @name = name
+        @params = params
+        @cursor = nil
+      end
+
+      def browse(&block)
+        loop do
+          answer = Algolia.client.get(Protocol.browse_uri(@name, @params.merge({ :cursor => @cursor })), :read)
+          answer['hits'].each do |hit|
+            yield hit
+          end
+          @cursor = answer['cursor']
+          break if @cursor.nil?
+        end
+      end
+    end
+
     #
     # Browse all index content
     #
@@ -146,8 +165,25 @@ module Algolia
     #             Page is zero-based and defaults to 0. Thus, to retrieve the 10th page you need to set page=9
     # @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
     #
-    def browse(page = 0, hitsPerPage = 1000)
-     Algolia.client.get(Protocol.browse_uri(name, {:page => page, :hitsPerPage => hitsPerPage}), :read)
+    def browse(page = nil, hitsPerPage = nil, &block)
+      if block_given?
+        params = {}
+        if page.is_a?(Hash)
+          params.merge!(page)
+        else
+          params[:page] = page unless page.nil?
+        end
+        if hitsPerPage.is_a?(Hash)
+          params.merge!(hitsPerPage)
+        else
+          params[:hitsPerPage] = hitsPerPage unless hitsPerPage.nil?
+        end
+        IndexBrowser.new(name, params).browse(&block)
+      else
+        page ||= 0
+        hitsPerPage ||= 1000
+        Algolia.client.get(Protocol.browse_uri(name, {:page => page, :hitsPerPage => hitsPerPage}), :read)
+      end
     end
 
     #
