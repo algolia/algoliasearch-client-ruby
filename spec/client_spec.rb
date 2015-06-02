@@ -750,7 +750,7 @@ describe 'Client' do
 
   def test_browse(expected, *args)
     @index.clear
-    @index.add_objects!(1.upto(1500).map { |i| { objectID: i, i: i } })
+    @index.add_objects!(1.upto(1500).map { |i| { :objectID => i, :i => i } })
     hits = {}
     @index.browse(*args) do |hit|
       hits[hit['objectID']] = true
@@ -775,7 +775,7 @@ describe 'Client' do
 
   it "should browse the index using cursors from a cursor" do
     @index.clear
-    @index.add_objects!(1.upto(1500).map { |i| { objectID: i, i: i } })
+    @index.add_objects!(1.upto(1500).map { |i| { :objectID => i, :i => i } })
     answer = @index.browse(0, 1000)
 
     hits = {}
