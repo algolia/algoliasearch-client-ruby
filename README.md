@@ -423,6 +423,8 @@ res = Algolia.multiple_queries([{:index_name => "categories", "query" => my_quer
 puts res["results"]
 ```
 
+The resulting JSON answer contains a ```results``` array storing the underlying queries answers. The answers order is the same than the requests order.
+
 You can specify a strategy to optimize your multiple queries:
 - **none**: Execute the sequence of queries until the end.
 - **stopIfEnoughMatches**: Execute the sequence of queries until the number of hits is reached by the sum of hits.
@@ -569,7 +571,15 @@ index.clear_index
 Wait indexing
 -------------
 
-All write operations return a `taskID` when the job is securely stored on our infrastructure but not when the job is published in your index. Even if it's extremely fast, you can easily ensure indexing is complete using  the same method with a `!`.
+All write operations in Algolia are asynchronous by design.
+
+It means that when you add or update an object to your index, our servers will
+reply to your request with a `taskID` as soon as they understood the write
+operation.
+
+The actual insert and indexing will be done after replying to your code.
+
+You can wait for a task to complete using  the same method with a `!`.
 
 For example, to wait for indexing of a new object:
 ```ruby
@@ -577,8 +587,8 @@ res = index.add_object!({"firstname" => "Jimmie",
                          "lastname" => "Barninger"})
 ```
 
-
-If you want to ensure multiple objects have been indexed, you only need check the biggest taskID with `wait_task`.
+If you want to ensure multiple objects have been indexed, you only need to check
+the biggest `taskID` with `wait_task`.
 
 Batch writes
 -------------
