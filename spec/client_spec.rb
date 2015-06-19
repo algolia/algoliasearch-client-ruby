@@ -4,7 +4,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 # avoid concurrent access to the same index
 def safe_index_name(name)
   return name if ENV['TRAVIS'].to_s != "true"
-  id = ENV['TRAVIS_JOB_NUMBER'].split('.').last
+  id = ENV['TRAVIS_JOB_NUMBER']
   "#{name}_travis-#{id}"
 end
 
@@ -225,10 +225,10 @@ describe 'Client' do
 
     @index.add_object!({:firstname => "Robert"})
     @index.search('')['nbHits'].should eq(1)
-    
+
     Algolia.copy_index!(safe_index_name("àlgol?a"), safe_index_name("àlgol?à"))
     @index.delete_index!
-    
+
     index.search('')['nbHits'].should eq(1)
     index.delete_index!
   end
@@ -244,9 +244,9 @@ describe 'Client' do
 
     @index.add_object!({:firstname => "Robert"})
     @index.search('')['nbHits'].should eq(1)
-    
+
     Algolia.move_index!(safe_index_name("àlgol?a"), safe_index_name("àlgol?à"))
-    
+
     index.search('')['nbHits'].should eq(1)
     index.delete_index
   end
@@ -259,7 +259,7 @@ describe 'Client' do
 
     res['hits'].size.should eq(1)
     res['hits'][0]['firstname'].should eq("Robert")
-  end 
+  end
 
   it "should get logs" do
     res = Algolia.get_logs(0, 20, true)
@@ -282,23 +282,23 @@ describe 'Client' do
     request = { "requests" => [
       {
         "action" => "addObject",
-        "body" => {"firstname" => "Jimmie", 
+        "body" => {"firstname" => "Jimmie",
         "lastname" => "Barninger"}
       },
       {
         "action" => "addObject",
-        "body" => {"firstname" => "Warren", 
+        "body" => {"firstname" => "Warren",
         "lastname" => "Speach"}
       },
       {
         "action" => "updateObject",
-        "body" => {"firstname" => "Jimmie", 
+        "body" => {"firstname" => "Jimmie",
         "lastname" => "Barninger",
         "objectID" => "43"}
       },
       {
         "action" => "updateObject",
-        "body" => {"firstname" => "Warren", 
+        "body" => {"firstname" => "Warren",
         "lastname" => "Speach"},
         "objectID" => "42"
       }
@@ -396,7 +396,7 @@ describe 'Client' do
     resEnd = Algolia.list_user_keys
     is_include(resEnd['keys'], 'value', newKey['key']).should eq(false)
 
-    
+
   end
 
   it "should check functions" do
@@ -414,7 +414,7 @@ describe 'Client' do
     object = @index.get_object(res['hits'][0]['objectID'])
     object['firstname'].should eq('Robert')
     object = @index.get_object(res['hits'][0]['objectID'], 'firstname')
-    object['firstname'].should eq('Robert') 
+    object['firstname'].should eq('Robert')
 
     @index.save_object!({:firstname => "George", :objectID => "A/go/?a"})
     res = @index.search('')
@@ -432,37 +432,37 @@ describe 'Client' do
 
   it "Check attributes list_indexes:" do
     res = Algolia::Index.all
-    res.should have_key('items')     
-    res['items'][0].should have_key('name')    
-    res['items'][0]['name'].should be_a(String)    
-    res['items'][0].should have_key('createdAt')    
-    res['items'][0]['createdAt'].should be_a(String)    
-    res['items'][0].should have_key('updatedAt')    
-    res['items'][0]['updatedAt'].should be_a(String)    
-    res['items'][0].should have_key('entries')    
-    res['items'][0]['entries'].should be_a(Integer)    
-    res['items'][0].should have_key('pendingTask')    
-    [true, false].should include(res['items'][0]['pendingTask']) 
+    res.should have_key('items')
+    res['items'][0].should have_key('name')
+    res['items'][0]['name'].should be_a(String)
+    res['items'][0].should have_key('createdAt')
+    res['items'][0]['createdAt'].should be_a(String)
+    res['items'][0].should have_key('updatedAt')
+    res['items'][0]['updatedAt'].should be_a(String)
+    res['items'][0].should have_key('entries')
+    res['items'][0]['entries'].should be_a(Integer)
+    res['items'][0].should have_key('pendingTask')
+    [true, false].should include(res['items'][0]['pendingTask'])
   end
 
   it 'Check attributes search : ' do
     res = @index.search('')
-    res.should have_key('hits')     
+    res.should have_key('hits')
     res['hits'].should be_a(Array)
-    res.should have_key('page')     
-    res['page'].should be_a(Integer)     
-    res.should have_key('nbHits')     
-    res['nbHits'].should be_a(Integer)     
-    res.should have_key('nbPages')     
-    res['nbPages'].should be_a(Integer)     
-    res.should have_key('hitsPerPage')     
-    res['hitsPerPage'].should be_a(Integer)     
-    res.should have_key('processingTimeMS')     
-    res['processingTimeMS'].should be_a(Integer)     
-    res.should have_key('query')     
-    res['query'].should be_a(String)     
-    res.should have_key('params')     
-    res['params'].should be_a(String)     
+    res.should have_key('page')
+    res['page'].should be_a(Integer)
+    res.should have_key('nbHits')
+    res['nbHits'].should be_a(Integer)
+    res.should have_key('nbPages')
+    res['nbPages'].should be_a(Integer)
+    res.should have_key('hitsPerPage')
+    res['hitsPerPage'].should be_a(Integer)
+    res.should have_key('processingTimeMS')
+    res['processingTimeMS'].should be_a(Integer)
+    res.should have_key('query')
+    res['query'].should be_a(String)
+    res.should have_key('params')
+    res['params'].should be_a(String)
   end
 
   it 'Check attributes delete_index : ' do
@@ -482,7 +482,7 @@ describe 'Client' do
     task.should have_key('taskID')
     task['taskID'].should be_a(Integer)
   end
-  
+
   it 'Check attributes add object : ' do
     task = @index.add_object({ :name => "John Doe", :email => "john@doe.org" })
     task.should have_key('createdAt')
@@ -502,7 +502,7 @@ describe 'Client' do
     #task.to_s.should eq("")
     task.should have_key('objectID')
     task['objectID'].should be_a(String)
-    task['objectID'].should eq("1") 
+    task['objectID'].should eq("1")
   end
 
   it 'Check attributes partial update: ' do
@@ -592,7 +592,7 @@ describe 'Client' do
     task.should have_key('status')
     task['status'].should be_a(String)
     task.should have_key('pendingTask')
-    [true, false].should include(task['pendingTask']) 
+    [true, false].should include(task['pendingTask'])
   end
 
   it "Check add keys" do
@@ -656,28 +656,28 @@ describe 'Client' do
     key.should eq(OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), 'my_api_key', 'public'))
     key = Algolia.generate_secured_api_key('my_api_key', ['public', ['premium','vip']])
     key.should eq(OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), 'my_api_key', 'public,(premium,vip)'))
-  end 
+  end
 
   it 'Check attributes multipleQueries' do
     res = Algolia.multiple_queries([{:index_name => safe_index_name("àlgol?a"), "query" => ""}])
     res.should have_key('results')
     res['results'].should be_a(Array)
-    res['results'][0].should have_key('hits')     
+    res['results'][0].should have_key('hits')
     res['results'][0]['hits'].should be_a(Array)
-    res['results'][0].should have_key('page')     
-    res['results'][0]['page'].should be_a(Integer)     
-    res['results'][0].should have_key('nbHits')     
-    res['results'][0]['nbHits'].should be_a(Integer)     
-    res['results'][0].should have_key('nbPages')     
-    res['results'][0]['nbPages'].should be_a(Integer)     
-    res['results'][0].should have_key('hitsPerPage')     
-    res['results'][0]['hitsPerPage'].should be_a(Integer)     
-    res['results'][0].should have_key('processingTimeMS')     
-    res['results'][0]['processingTimeMS'].should be_a(Integer)     
-    res['results'][0].should have_key('query')     
-    res['results'][0]['query'].should be_a(String)     
-    res['results'][0].should have_key('params')     
-    res['results'][0]['params'].should be_a(String)  
+    res['results'][0].should have_key('page')
+    res['results'][0]['page'].should be_a(Integer)
+    res['results'][0].should have_key('nbHits')
+    res['results'][0]['nbHits'].should be_a(Integer)
+    res['results'][0].should have_key('nbPages')
+    res['results'][0]['nbPages'].should be_a(Integer)
+    res['results'][0].should have_key('hitsPerPage')
+    res['results'][0]['hitsPerPage'].should be_a(Integer)
+    res['results'][0].should have_key('processingTimeMS')
+    res['results'][0]['processingTimeMS'].should be_a(Integer)
+    res['results'][0].should have_key('query')
+    res['results'][0]['query'].should be_a(String)
+    res['results'][0].should have_key('params')
+    res['results'][0]['params'].should be_a(String)
   end
 
   it 'should handle disjunctive faceting' do
