@@ -779,10 +779,13 @@ describe 'Client' do
     answer = @index.browse(0, 1000)
 
     hits = {}
-    @index.browse(:cursor => answer['cursor']) do |hit|
+    @index.browse(:cursor => answer['cursor']) do |hit, cursor|
       hits[hit['objectID']] = true
+      cursor.should eq(answer['cursor'])
     end
     hits.size.should eq(500)
+
+    @index.browse_from(answer['cursor'])['hits'].size.should eq(500)
   end
 
 end

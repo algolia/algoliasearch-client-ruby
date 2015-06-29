@@ -150,7 +150,11 @@ module Algolia
         loop do
           answer = Algolia.client.get(Protocol.browse_uri(@name, @params.merge({ :cursor => @cursor })), :read)
           answer['hits'].each do |hit|
-            yield hit
+            if block.arity == 2
+              yield hit, @cursor
+            else
+              yield hit
+            end
           end
           @cursor = answer['cursor']
           break if @cursor.nil?
@@ -161,17 +165,20 @@ module Algolia
     #
     # Browse all index content
     #
-    # @param page Pagination parameter used to select the page to retrieve.
-    #             Page is zero-based and defaults to 0. Thus, to retrieve the 10th page you need to set page=9
+    # @param pageOrQueryParameters The hash of query parameters to use to browse
+    #                              To browse from a specific cursor, just add a ":cursor" parameters
+    #
+    # @DEPRECATED:
+    # @param pageOrQueryParameters Pagination parameter used to select the page to retrieve.
     # @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
     #
-    def browse(page = nil, hitsPerPage = nil, &block)
+    def browse(pageOrQueryParameters = nil, hitsPerPage = nil, &block)
       if block_given?
         params = {}
-        if page.is_a?(Hash)
-          params.merge!(page)
+        if pageOrQueryParameters.is_a?(Hash)
+          params.merge!(pageOrQueryParameters)
         else
-          params[:page] = page unless page.nil?
+          params[:page] = pageOrQueryParameters unless pageOrQueryParameters.nil?
         end
         if hitsPerPage.is_a?(Hash)
           params.merge!(hitsPerPage)
@@ -184,6 +191,13 @@ module Algolia
         hitsPerPage ||= 1000
         Algolia.client.get(Protocol.browse_uri(name, {:page => page, :hitsPerPage => hitsPerPage}), :read)
       end
+    end
+
+    #
+    # Browse a single page from a specific cursor
+    #
+    def browse_from(cursor, hitsPerPage = 1000)
+      Algolia.client.get(Protocol.browse_uri(name, { :cursor => cursor, :hitsPerPage => hitsPerPage }), :read)
     end
 
     #
