@@ -1,5 +1,8 @@
 CHANGELOG
 
+2015-07-14 1.5.1
+      * Ability to retrieve a single page from a cursor with `browse_from`
+
 2015-06-05 1.5.0
       * New cursor-based browse() implementation taking query parameters
 
