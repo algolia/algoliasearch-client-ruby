@@ -189,9 +189,9 @@ module Algolia
         end
         IndexBrowser.new(client, name, params).browse(&block)
       else
-        page ||= 0
+        pageOrQueryParameters ||= 0
         hitsPerPage ||= 1000
-        client.get(Protocol.browse_uri(name, {:page => page, :hitsPerPage => hitsPerPage}), :read)
+        client.get(Protocol.browse_uri(name, {:page => pageOrQueryParameters, :hitsPerPage => hitsPerPage}), :read)
       end
     end
 
