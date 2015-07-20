@@ -1,5 +1,8 @@
 CHANGELOG
 
+2015-07-19 1.6.0
+      * Ability to instantiate multiple API clients in the same process (was using a class variable before).
+
 2015-07-14 1.5.1
       * Ability to retrieve a single page from a cursor with `browse_from`
 
