@@ -137,7 +137,8 @@ module Algolia
     #   one is kept and others are removed.
     def search(query, params = {})
       encoded_params = Hash[params.map { |k,v| [k.to_s, v.is_a?(Array) ? v.to_json : v] }]
-      client.get(Protocol.search_uri(name, query, encoded_params), :search)
+      encoded_params[:query] = query
+      client.post(Protocol.search_post_uri(name), { :params => Protocol.to_query(encoded_params) }.to_json, :search)
     end
 
     class IndexBrowser

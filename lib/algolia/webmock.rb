@@ -9,7 +9,6 @@ end
 WebMock.stub_request(:get, /.*\.algolia\.(io|net)\/1\/indexes/).to_return(:body => '{ "items": [] }')
 # query index
 WebMock.stub_request(:get, /.*\.algolia\.(io|net)\/1\/indexes\/[^\/]+/).to_return(:body => '{ "hits": [ { "objectID": 42 } ], "page": 1, "hitsPerPage": 1 }')
-WebMock.stub_request(:post, /.*\.algolia\.(io|net)\/1\/indexes\/[^\/]+\/query/).to_return(:body => '{}')
 # delete index
 WebMock.stub_request(:delete, /.*\.algolia\.(io|net)\/1\/indexes\/[^\/]+/).to_return(:body => '{ "taskID": 42 }')
 # clear index
@@ -43,3 +42,5 @@ WebMock.stub_request(:post, /.*\.algolia\.(io|net)\/1\/keys/).to_return(:body =>
 WebMock.stub_request(:get, /.*\.algolia\.(io|net)\/1\/keys/).to_return(:body => '{ "keys": [] }')
 WebMock.stub_request(:get, /.*\.algolia\.(io|net)\/1\/keys\/[^\/]+/).to_return(:body => '{ }')
 WebMock.stub_request(:delete, /.*\.algolia\.(io|net)\/1\/keys\/[^\/]+/).to_return(:body => '{ }')
+# query POST
+WebMock.stub_request(:post, /.*\.algolia\.(io|net)\/1\/indexes\/[^\/]+\/query/).to_return(:body => '{ "hits": [ { "objectID": 42 } ], "page": 1, "hitsPerPage": 1 }')
