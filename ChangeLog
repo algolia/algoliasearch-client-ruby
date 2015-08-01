@@ -1,5 +1,8 @@
 CHANGELOG
 
+2015-08-01 1.6.1
+      * Search queries are now using POST requests
+
 2015-07-19 1.6.0
       * Ability to instantiate multiple API clients in the same process (was using a class variable before).
 
