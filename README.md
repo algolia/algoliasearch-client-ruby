@@ -242,35 +242,35 @@ index.partial_update_object({"city" => "San Francisco",
 Example to add a tag:
 
 ```ruby
-index.partial_update_object({"_tags" => {"value" => "MyTag", "_operation": "Add"},
+index.partial_update_object({"_tags" => {"value" => "MyTag", "_operation" => "Add"},
                              "objectID" => "myID"})
 ```
 
 Example to remove a tag:
 
 ```ruby
-index.partial_update_object({"_tags" => {"value" => "MyTag", "_operation": "Remove"},
+index.partial_update_object({"_tags" => {"value" => "MyTag", "_operation" => "Remove"},
                              "objectID" => "myID"})
 ```
 
 Example to add a tag if it doesn't exist:
 
 ```ruby
-index.partial_update_object({"_tags" => {"value" => "MyTag", "_operation": "AddUnique"},
+index.partial_update_object({"_tags" => {"value" => "MyTag", "_operation" => "AddUnique"},
                              "objectID" => "myID"})
 ```
 
 Example to increment a numeric value:
 
 ```ruby
-index.partial_update_object({"price" => {"value" => 42, "_operation": "Increment"},
+index.partial_update_object({"price" => {"value" => 42, "_operation" => "Increment"},
                              "objectID" => "myID"})
 ```
 
 Example to decrement a numeric value:
 
 ```ruby
-index.partial_update_object({"price" => {"value" => 42, "_operation": "Decrement"},
+index.partial_update_object({"price" => {"value" => 42, "_operation" => "Decrement"},
                              "objectID" => "myID"})
 ```
 
