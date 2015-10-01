@@ -104,7 +104,7 @@ index.set_settings({"customRanking" => ["desc(followers)"]})
 
 You can also configure the list of attributes you want to index by order of importance (first = most important):
 ```ruby
-index.set_settings({"attributesToIndex" => ["lastname", "firstname", "company", 
+index.set_settings({"attributesToIndex" => ["lastname", "firstname", "company",
                                             "email", "city", "address"]})
 ```
 
@@ -195,7 +195,7 @@ Objects are schema less so you don't need any configuration to start indexing. I
 Example with automatic `objectID` assignment:
 
 ```ruby
-res = index.add_object({"firstname" => "Jimmie", 
+res = index.add_object({"firstname" => "Jimmie",
                         "lastname" => "Barninger"})
 puts "ObjectID=" + res["objectID"]
 ```
@@ -203,7 +203,7 @@ puts "ObjectID=" + res["objectID"]
 Example with manual `objectID` assignment:
 
 ```ruby
-res = index.add_object({"firstname" => "Jimmie", 
+res = index.add_object({"firstname" => "Jimmie",
                         "lastname" => "Barninger"}, "myID")
 puts "ObjectID=" + res["objectID"]
 ```
@@ -220,7 +220,7 @@ You have three options when updating an existing object:
 Example on how to replace all attributes of an existing object:
 
 ```ruby
-index.save_object({"firstname" => "Jimmie", 
+index.save_object({"firstname" => "Jimmie",
                    "lastname" => "Barninger",
                    "city" => "New York",
                    "objectID" => "myID"})
@@ -238,7 +238,7 @@ You have many ways to update an object's attributes:
 Example to update only the city attribute of an existing object:
 
 ```ruby
-index.partial_update_object({"city" => "San Francisco", 
+index.partial_update_object({"city" => "San Francisco",
                              "objectID" => "myID"})
 ```
 
@@ -352,7 +352,7 @@ You can use the following optional arguments:
   * **none**: If none of the query terms were found.
  * **attributesToSnippet**: A string that contains the list of attributes to snippet alongside the number of words to return (syntax is `attributeName:nbWords`). Attributes are separated by commas (Example: `attributesToSnippet=name:10,content:10`). <br/>You can also use a string array encoding (Example: `attributesToSnippet: ["name:10","content:10"]`). By default, no snippet is computed.
  * **getRankingInfo**: If set to 1, the result hits will contain ranking information in the **_rankingInfo** attribute.
- 
+
 
 #### Numeric Search Parameters
  * **numericFilters**: A string that contains the comma separated list of numeric filters you want to apply. The filter syntax is `attributeName` followed by `operand` followed by `value`. Supported operands are `<`, `<=`, `=`, `>` and `>=`.
@@ -595,7 +595,7 @@ You can wait for a task to complete using  the same method with a `!`.
 
 For example, to wait for indexing of a new object:
 ```ruby
-res = index.add_object!({"firstname" => "Jimmie", 
+res = index.add_object!({"firstname" => "Jimmie",
                          "lastname" => "Barninger"})
 ```
 
@@ -614,18 +614,18 @@ We expose four methods to perform batch operations:
 
 Example using automatic `objectID` assignment:
 ```ruby
-res = index.add_objects([{"firstname" => "Jimmie", 
+res = index.add_objects([{"firstname" => "Jimmie",
                           "lastname" => "Barninger"},
-                         {"firstname" => "Warren", 
+                         {"firstname" => "Warren",
                           "lastname" => "Speach"}])
 ```
 
 Example with user defined `objectID` (add or update):
 ```ruby
-res = index.save_objects([{"firstname" => "Jimmie", 
+res = index.save_objects([{"firstname" => "Jimmie",
                           "lastname" => "Barninger",
                            "objectID" => "myID1"},
-                          {"firstname" => "Warren", 
+                          {"firstname" => "Warren",
                           "lastname" => "Speach",
                            "objectID" => "myID2"}])
 ```
@@ -637,9 +637,9 @@ res = index.delete_objects(["myID1", "myID2"])
 
 Example that updates only the `firstname` attribute:
 ```ruby
-res = index.partial_update_objects([{"firstname" => "Jimmie", 
+res = index.partial_update_objects([{"firstname" => "Jimmie",
                                      "objectID" => "SFO"},
-                                    {"firstname" => "Warren", 
+                                    {"firstname" => "Warren",
                                      "objectID" => "myID2"}])
 ```
 
@@ -649,9 +649,9 @@ If you have one index per user, you may want to perform a batch operations acros
 We expose a method to perform this type of batch:
 ```ruby
 res = index.batch([
-	{"action"=> "addObject", "indexName"=> "index1", "body": {"firstname" => "Jimmie", 
+	{"action"=> "addObject", "indexName"=> "index1", "body": {"firstname" => "Jimmie",
                           "lastname" => "Barninger"}},
-    {"action"=> "addObject", "indexName"=> "index2", "body": {"firstname" => "Warren", 
+    {"action"=> "addObject", "indexName"=> "index2", "body": {"firstname" => "Warren",
                           "lastname" => "Speach"}}])
 ```
 
@@ -937,7 +937,7 @@ describe 'With a mocked client' do
   it "shouldn't perform any API calls here" do
     index = Algolia::Index.new("friends")
     index.add_object!({ :name => "John Doe", :email => "john@doe.org" })
-    index.search('').should == {} # mocked
+    index.search('').should == {"hits"=>[{"objectID"=>42}], "page"=>1, "hitsPerPage"=>1} # mocked
     index.clear_index
     index.delete_index
   end
