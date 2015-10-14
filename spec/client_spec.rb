@@ -277,6 +277,10 @@ describe 'Client' do
     res["results"][0]["hits"].length.should eq(1)
   end
 
+  it "should throw if the index_name is missing in multiple_queries" do
+    expect { Algolia.multiple_queries([{"query" => ""}]) }.to raise_error(ArgumentError)
+  end
+
   it "shoud accept custom batch" do
     @index.clear_index! rescue "Not fatal"
     request = { "requests" => [
