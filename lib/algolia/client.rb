@@ -98,6 +98,7 @@ module Algolia
     def multiple_queries(queries, index_name_key = :index_name, strategy = "none")
       requests = {
         :requests => queries.map do |query|
+          query = query.dup
           indexName = query.delete(index_name_key) || query.delete(index_name_key.to_s)
           raise ArgumentError.new("Missing '#{index_name_key}' option") if indexName.nil?
           encoded_params = Hash[query.map { |k,v| [k.to_s, v.is_a?(Array) ? v.to_json : v] }]
