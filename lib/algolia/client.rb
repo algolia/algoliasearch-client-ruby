@@ -4,6 +4,7 @@ require 'algolia/version'
 require 'json'
 require 'zlib'
 require 'openssl'
+require 'base64'
 
 module Algolia
 
@@ -471,12 +472,21 @@ module Algolia
   # @param tag_filters the list of tags applied to the query (used as security)
   # @param user_token an optional token identifying the current user
   #
-  def Algolia.generate_secured_api_key(private_api_key, tag_filters, user_token = nil)
-    if tag_filters.is_a?(Array)
-      tag_filters = tag_filters.map { |t| t.is_a?(Array) ? "(#{t.join(',')})" : t }.join(',')
+  def Algolia.generate_secured_api_key(private_api_key, tag_filters_or_params, user_token = nil)
+    if tag_filters_or_params.is_a?(Hash) && user_token.nil?
+      encoded_params = Hash[tag_filters_or_params.map { |k,v| [k.to_s, v.is_a?(Array) ? v.to_json : v] }]
+      query_str = Protocol.to_query(encoded_params)
+      hmac = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), private_api_key, query_str)
+      Base64.strict_encode64("#{hmac}#{query_str}")
+    else
+      tag_filters = if tag_filters_or_params.is_a?(Array)
+        tag_filters = tag_filters_or_params.map { |t| t.is_a?(Array) ? "(#{t.join(',')})" : t }.join(',')
+      else
+        tag_filters_or_params
+      end
+      raise ArgumentError.new('Attribute "tag_filters" must be a list of tags') if !tag_filters.is_a?(String)
+      OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), private_api_key, "#{tag_filters}#{user_token.to_s}")
     end
-    raise ArgumentError.new('Attribute "tag_filters" must be a list of tags') if !tag_filters.is_a?(String)
-    OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), private_api_key, "#{tag_filters}#{user_token.to_s}")
   end
 
   #
