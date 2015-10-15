@@ -477,7 +477,7 @@ module Algolia
       encoded_params = Hash[tag_filters_or_params.map { |k,v| [k.to_s, v.is_a?(Array) ? v.to_json : v] }]
       query_str = Protocol.to_query(encoded_params)
       hmac = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), private_api_key, query_str)
-      Base64.strict_encode64("#{hmac}#{query_str}")
+      Base64.encode64("#{hmac}#{query_str}").gsub("\n", '')
     else
       tag_filters = if tag_filters_or_params.is_a?(Array)
         tag_filters = tag_filters_or_params.map { |t| t.is_a?(Array) ? "(#{t.join(',')})" : t }.join(',')

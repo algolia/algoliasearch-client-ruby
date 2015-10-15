@@ -665,7 +665,7 @@ describe 'Client' do
 
   it 'should generate secured api keys (new syntax)' do
     key = Algolia.generate_secured_api_key('my_api_key', :tagFilters => '(public,user1)')
-    key.should eq(Base64.strict_encode64("#{OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), 'my_api_key', 'tagFilters=%28public%2Cuser1%29')}tagFilters=%28public%2Cuser1%29"))
+    key.should eq(Base64.encode64("#{OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), 'my_api_key', 'tagFilters=%28public%2Cuser1%29')}tagFilters=%28public%2Cuser1%29").gsub("\n", ''))
     key = Algolia.generate_secured_api_key('182634d8894831d5dbce3b3185c50881', :tagFilters => '(public,user1)', :userToken => 42)
     key.should eq('OGYwN2NlNTdlOGM2ZmM4MjA5NGM0ZmYwNTk3MDBkNzMzZjQ0MDI3MWZjNTNjM2Y3YTAzMWM4NTBkMzRiNTM5YnRhZ0ZpbHRlcnM9JTI4cHVibGljJTJDdXNlcjElMjkmdXNlclRva2VuPTQy')
   end
