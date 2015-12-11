@@ -120,7 +120,7 @@ puts index.search('jim').to_json
   * It will offload unnecessary tasks from your servers
 
 ```html
-<script src="//cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+<script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
 <script>
 var client = algoliasearch('ApplicationID', 'apiKey');
 var index = client.initIndex('indexName');
