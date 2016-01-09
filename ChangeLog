@@ -1,5 +1,8 @@
 CHANGELOG
 
+2016-01-09 1.7.0
+      * New generate_secured_api_key embedding the filters in the resulting key
+
 2015-08-01 1.6.1
       * Search queries are now using POST requests
 
