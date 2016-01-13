@@ -31,7 +31,7 @@ GEM
       net-http-persistent (>= 2.7)
       net-http-pipeline
     highline (1.6.21)
-    httpclient (2.6.0.1)
+    httpclient (2.7.1)
     json (1.8.2)
     json (1.8.2-java)
     launchy (2.4.3)
@@ -314,7 +314,7 @@ PLATFORMS
 DEPENDENCIES
   coveralls
   highline (< 1.7.0)
-  httpclient (~> 2.4)
+  httpclient (~> 2.7.1)
   json (>= 1.5.1)
   mime-types (< 2.0)
   rake
@@ -327,3 +327,6 @@ DEPENDENCIES
   simplecov
   travis
   webmock
+
+BUNDLED WITH
+   1.11.2
