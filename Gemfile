@@ -16,10 +16,7 @@ end
 
 group :test do
   gem 'rspec', '>= 2.5.0'
-  gem 'autotest'
-  gem 'autotest-fsevent'
   gem 'redgreen'
-  gem 'autotest-growl'
   gem 'webmock'
   gem 'simplecov'
   gem 'mime-types', '< 2.0'
