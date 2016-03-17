@@ -196,6 +196,16 @@ describe 'Client' do
     @index.search('')['nbHits'].should eq(0)
   end
 
+  it "should not delete the index because the objectID is blank" do
+    @index.clear
+    @index.add_object!({:firstname => "Robert"})
+    res = @index.search('')
+    @index.search('')['nbHits'].should eq(1)
+    expect { @index.delete_object('') }.to raise_error(ArgumentError)
+    expect { @index.delete_object!(nil) }.to raise_error(ArgumentError)
+    @index.search('')['nbHits'].should eq(1)
+  end
+
   it "should delete several objects" do
     @index.clear
     @index.add_object!({:firstname => "Robert1"})

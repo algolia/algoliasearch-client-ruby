@@ -336,6 +336,7 @@ module Algolia
     # @param objectID the unique identifier of object to delete
     #
     def delete_object(objectID)
+      raise ArgumentError.new('objectID must not be blank') if objectID.nil? || objectID == ''
       client.delete(Protocol.object_uri(name, objectID))
     end
 
