@@ -1,7 +1,8 @@
 CHANGELOG
 
-2016-01-13 1.8.0
+2016-04-06 1.8.0
       * Upgraded to httpclient 2.7.1 (includes ruby 2.3.0 deprecation fixes)
+      * Upgraded WebMock URLs
 
 2016-01-09 1.7.0
       * New generate_secured_api_key embedding the filters in the resulting key
