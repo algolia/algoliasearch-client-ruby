@@ -867,6 +867,29 @@ describe 'Client' do
     @index.browse_from(answer['cursor'])['hits'].size.should eq(500)
   end
 
+  it "should test synonyms" do
+    @index.add_object! :name => '589 Howard St., San Francisco'
+    @index.search('Howard St San Francisco')['nbHits'].should eq(1)
+    @index.batch_synonyms! [
+      { :objectID => 'city', :type => 'synonym', :synonyms => ['San Francisco', 'SF'] },
+      { :objectID => 'street', :type => 'altCorrection1', :word => 'street', corrections: ['st'] }
+    ]
+    @index.search_synonyms('')['nbHits'].should eq(2)
+    @index.search('Howard St SF')['nbHits'].should eq(1)
+
+    s = @index.get_synonym('city')
+    s['objectID'].should eq('city')
+    s['type'].should eq('synonym')
+
+    @index.search('Howard Street')['nbHits'].should eq(1)
+
+    @index.delete_synonym! 'city'
+    @index.search('Howard Street SF')['nbHits'].should eq(0)
+
+    @index.clear_synonyms!
+    @index.search_synonyms('')['nbHits'].should eq(0)
+  end
+
   context 'DNS timeout' do
     before(:all) do
       @client = Algolia::Client.new :application_id => ENV['ALGOLIA_APPLICATION_ID'], :api_key => ENV['ALGOLIA_API_KEY'],
