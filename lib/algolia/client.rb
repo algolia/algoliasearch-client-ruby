@@ -389,7 +389,7 @@ module Algolia
         hinfo[:session].connect_timeout = connect_timeout
         hinfo[:session].send_timeout = send_timeout
         hinfo[:session].receive_timeout = receive_timeout
-        hinfo[:session].ssl_config.add_trust_ca File.join(File.dirname(__FILE__), '..', '..', 'resources', 'ca-bundle.crt')
+        hinfo[:session].ssl_config.add_trust_ca File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'resources', 'ca-bundle.crt'))
         hinfo
       end
     end
