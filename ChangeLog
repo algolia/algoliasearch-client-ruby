@@ -1,5 +1,8 @@
 CHANGELOG
 
+2016-04-14 1.8.1
+      * Ensure we're using an absolute path for the `ca-bundle.crt` file (could fix some `OpenSSL::X509::StoreError: system lib` errors)
+
 2016-04-06 1.8.0
       * Upgraded to httpclient 2.7.1 (includes ruby 2.3.0 deprecation fixes)
       * Upgraded WebMock URLs
