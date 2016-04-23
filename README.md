@@ -1947,8 +1947,8 @@ Example:
 
 ```ruby
 # Iterate with a filter over the index
-index.browse({:query => "test", :numericFilters => 'i=42'}) do
-	# Do something
+index.browse({:query => "test", :numericFilters => 'i=42'}) do |hit|
+  # Do something
 end
 ```
 
