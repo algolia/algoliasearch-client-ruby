@@ -373,7 +373,7 @@ describe 'Client' do
     res['facets']['g']['g2'].should be_nil
   end
 
-  it "should test keys" do
+  xit "should test keys" do
     resIndex = @index.list_user_keys
     newIndexKey = @index.add_user_key(['search'])
     newIndexKey['key'].should_not eq("")
