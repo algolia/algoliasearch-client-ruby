@@ -7,7 +7,6 @@
 
 
 
-
 <!--NO_HTML-->
 
 [Algolia Search](https://www.algolia.com) is a hosted full-text, numerical, and faceted search engine capable of delivering realtime results from the first keystroke.
@@ -15,7 +14,6 @@
 <!--/NO_HTML-->
 
 Our Ruby client lets you easily use the [Algolia Search API](https://www.algolia.com/doc/rest) from your backend. It wraps the [Algolia Search REST API](https://www.algolia.com/doc/rest).
-
 
 
 
@@ -32,7 +30,6 @@ Table of Contents
 
 1. [Setup](#setup)
 1. [Quick Start](#quick-start)
-
 1. [Guides & Tutorials](#guides-tutorials)
 
 
@@ -909,7 +906,7 @@ You can use the following optional arguments:
         </div>
       </td>
       <td class='client-readme-param-content'>
-        <p>String used as an ellipsis indicator when a snippet is truncated (defaults to empty).</p>
+        <p>String used as an ellipsis indicator when a snippet is truncated. Defaults to an empty string for all accounts created before 10/2/2016, and to <code>…</code> (UTF-8 U+2026) for accounts created after that date.</p>
 
       </td>
     </tr>
@@ -1929,7 +1926,6 @@ The move command is particularly useful if you want to update a big index atomic
 puts Algolia.move_index("MyNewIndex", "MyIndex")
 ```
 
-
 Backup / Export an index
 ==================
 
@@ -1955,10 +1951,12 @@ end
 
 
 
+
 API Keys
 ==================
 
-The ADMIN API key provides full control of all your indices.
+The **admin** API key provides full control of all your indices. *The admin API key should always be kept secure; do NOT use it from outside your back-end.*
+
 You can also generate user API keys to control security.
 These API keys can be restricted to a set of operations or/and restricted to a given index.
 
@@ -2227,6 +2225,8 @@ index.search('another query', function(err, content) {
   console.log(content);
 });
 ```
+
+
 
 
 Logs
