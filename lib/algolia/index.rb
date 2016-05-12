@@ -176,23 +176,24 @@ module Algolia
     # @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
     #
     def browse(pageOrQueryParameters = nil, hitsPerPage = nil, &block)
+      params = {}
+      if pageOrQueryParameters.is_a?(Hash)
+        params.merge!(pageOrQueryParameters)
+      else
+        params[:page] = pageOrQueryParameters unless pageOrQueryParameters.nil?
+      end
+      if hitsPerPage.is_a?(Hash)
+        params.merge!(hitsPerPage)
+      else
+        params[:hitsPerPage] = hitsPerPage unless hitsPerPage.nil?
+      end
+
       if block_given?
-        params = {}
-        if pageOrQueryParameters.is_a?(Hash)
-          params.merge!(pageOrQueryParameters)
-        else
-          params[:page] = pageOrQueryParameters unless pageOrQueryParameters.nil?
-        end
-        if hitsPerPage.is_a?(Hash)
-          params.merge!(hitsPerPage)
-        else
-          params[:hitsPerPage] = hitsPerPage unless hitsPerPage.nil?
-        end
         IndexBrowser.new(client, name, params).browse(&block)
       else
-        pageOrQueryParameters ||= 0
-        hitsPerPage ||= 1000
-        client.get(Protocol.browse_uri(name, {:page => pageOrQueryParameters, :hitsPerPage => hitsPerPage}), :read)
+        params[:page] ||= 0
+        params[:hitsPerPage] ||= 1000
+        client.get(Protocol.browse_uri(name, params), :read)
       end
     end
 
