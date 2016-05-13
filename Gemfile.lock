@@ -1,5 +1,5 @@
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     addressable (2.3.7)
     backports (3.6.4)
@@ -61,9 +61,6 @@ GEM
     rdoc (4.2.2)
       json (~> 1.4)
     redgreen (1.2.2)
-    rest-client (1.6.8)
-      mime-types (~> 1.16)
-      rdoc (>= 2.4.2)
     rspec (3.2.0)
       rspec-core (~> 3.2.0)
       rspec-expectations (~> 3.2.0)
@@ -320,7 +317,6 @@ DEPENDENCIES
   rake
   rdoc
   redgreen
-  rest-client (= 1.6.8)
   rspec (>= 2.5.0)
   rubysl (~> 2.0)
   safe_yaml (~> 1.0.4)

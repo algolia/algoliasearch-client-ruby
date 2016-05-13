@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 gem 'httpclient', '~> 2.7.1'
 gem 'json', '>= 1.5.1'
@@ -8,7 +8,6 @@ group :development do
   gem 'highline', '< 1.7.0'
   gem 'coveralls'
   gem 'safe_yaml', '~> 1.0.4'
-  gem 'rest-client', '1.6.8'
   gem 'travis'
   gem 'rake'
   gem 'rdoc'
