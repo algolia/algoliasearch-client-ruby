@@ -225,6 +225,10 @@ describe 'Client' do
     @index.search('')['nbHits'].should eq(0)
   end
 
+  it "should not wipe the entire index with delete_by_query" do
+    expect { @index.delete_by_query(nil) }.to raise_error(ArgumentError)
+  end
+
   it "should copy the index" do
     index = Algolia::Index.new(safe_index_name("àlgol?à"))
     begin
