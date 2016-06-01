@@ -379,7 +379,9 @@ module Algolia
     # @param query the query string
     # @param params the optional query parameters
     #
-    def delete_by_query(query, params = {})
+    def delete_by_query(query, params = nil)
+      raise ArgumentError.new('query cannot be nil, use the `clear` method to wipe the entire index') if query.nil? && params.nil?
+      params ||= {}
       params.delete(:hitsPerPage)
       params.delete('hitsPerPage')
       params.delete(:attributesToRetrieve)
