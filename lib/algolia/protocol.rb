@@ -5,7 +5,7 @@ module Algolia
   module Protocol
 
     # Basics
- 
+
     # The version of the REST API implemented by this module.
     VERSION         = 1
 
@@ -19,11 +19,11 @@ module Algolia
     # The HTTP header used for passing your API key to the
     # Algolia API.
     HEADER_API_KEY  = "X-Algolia-API-Key"
-    
+
     HEADER_FORWARDED_IP = "X-Forwarded-For"
 
     HEADER_FORWARDED_API_KEY = "X-Forwarded-API-Key"
-    
+
     # HTTP ERROR CODES
     # ----------------------------------------
 
@@ -35,7 +35,7 @@ module Algolia
     # ----------------------------------------
 
     # Construct a uri to list available indexes
-    def Protocol.indexes_uri      
+    def Protocol.indexes_uri
       "/#{VERSION}/indexes"
     end
 
@@ -54,8 +54,8 @@ module Algolia
 
     def Protocol.batch_uri(index = nil)
       "#{index.nil? ? "/#{VERSION}/indexes/*" : index_uri(index)}/batch"
-    end  
-    
+    end
+
     def Protocol.index_operation_uri(index)
       "#{index_uri(index)}/operation"
     end
@@ -63,7 +63,7 @@ module Algolia
     def Protocol.task_uri(index, task_id)
       "#{index_uri(index)}/task/#{task_id}"
     end
-    
+
     def Protocol.object_uri(index, object_id, params = {})
       params = params.nil? || params.size == 0 ? "" : "?#{to_query(params)}"
       "#{index_uri(index)}/#{CGI.escape(object_id.to_s)}#{params}"
@@ -87,15 +87,15 @@ module Algolia
       params = create_if_not_exits ? "" : "?createIfNotExists=false"
       "#{index_uri(index)}/#{CGI.escape(object_id)}/partial#{params}"
     end
-    
+
     def Protocol.settings_uri(index)
       "#{index_uri(index)}/settings"
     end
-    
+
     def Protocol.clear_uri(index)
       "#{index_uri(index)}/clear"
     end
-    
+
     def Protocol.logs(offset, length, only_errors = false)
       "/#{VERSION}/logs?offset=#{offset}&length=#{length}&onlyErrors=#{only_errors}"
     end
@@ -121,6 +121,26 @@ module Algolia
         "#{CGI.escape(k.to_s)}=#{CGI.escape(v.to_s)}"
       end.join('&')
     end
-    
+
+    def Protocol.synonyms_uri(index)
+      "#{index_uri(index)}/synonyms"
+    end
+
+    def Protocol.synonym_uri(index, object_id)
+      "#{synonyms_uri(index)}/#{CGI.escape(object_id)}"
+    end
+
+    def Protocol.search_synonyms_uri(index)
+      "#{synonyms_uri(index)}/search"
+    end
+
+    def Protocol.clear_synonyms_uri(index)
+      "#{synonyms_uri(index)}/clear"
+    end
+
+    def Protocol.batch_synonyms_uri(index)
+      "#{synonyms_uri(index)}/batch"
+    end
+
   end
 end
