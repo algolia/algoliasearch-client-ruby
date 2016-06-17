@@ -910,7 +910,7 @@ describe 'Client' do
     it "should fallback to the 2nd host after a few seconds" do
       start_time = Time.now
       @client.list_indexes # fallback on the second host after 5 sec (connection timeout)
-      expect(start_time.to_i + 5).to be <= Time.now.to_i - 1
+      expect(start_time.to_i + 5).to be <= Time.now.to_i + 1
     end
   end
 
