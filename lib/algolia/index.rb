@@ -656,10 +656,10 @@ module Algolia
       page = params[:page] || params['page'] || 0
       hits_per_page = params[:hitsPerPage] || params['hitsPerPage'] || 20
       params = {
-        query: query,
-        type: type.to_s,
-        page: page,
-        hitsPerPage: hits_per_page
+        :query => query,
+        :type => type.to_s,
+        :page => page,
+        :hitsPerPage => hits_per_page
       }
       client.post(Protocol.search_synonyms_uri(name), params.to_json, :read)
     end
