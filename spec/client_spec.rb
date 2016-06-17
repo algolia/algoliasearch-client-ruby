@@ -876,7 +876,7 @@ describe 'Client' do
     @index.search('Howard St San Francisco')['nbHits'].should eq(1)
     @index.batch_synonyms! [
       { :objectID => 'city', :type => 'synonym', :synonyms => ['San Francisco', 'SF'] },
-      { :objectID => 'street', :type => 'altCorrection1', :word => 'street', corrections: ['st'] }
+      { :objectID => 'street', :type => 'altCorrection1', :word => 'street', :corrections => ['st'] }
     ]
     @index.search_synonyms('')['nbHits'].should eq(2)
     @index.search('Howard St SF')['nbHits'].should eq(1)
