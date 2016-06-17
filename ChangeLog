@@ -1,5 +1,8 @@
 CHANGELOG
 
+2016-06-17 1.9.0
+      * New synonyms API
+
 2016-04-14 1.8.1
       * Ensure we're using an absolute path for the `ca-bundle.crt` file (could fix some `OpenSSL::X509::StoreError: system lib` errors)
 
