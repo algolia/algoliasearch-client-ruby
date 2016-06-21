@@ -2508,6 +2508,4 @@ describe 'With a mocked client' do
 end
 ```
 
-
-
-
+You can also require `'algolia/webmock_rspec'` which runs `load_webmocks!` in a before filter for you.

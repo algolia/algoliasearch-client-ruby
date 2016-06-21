@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
     "lib/algolia/protocol.rb",
     "lib/algolia/version.rb",
     "lib/algolia/webmock.rb",
+    "lib/algolia/webmock_rspec.rb",
     "lib/algoliasearch.rb",
     "resources/ca-bundle.crt",
     "spec/client_spec.rb",
@@ -64,4 +65,3 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<json>, [">= 1.5.1"])
   end
 end
-
