@@ -1241,6 +1241,13 @@ puts settings.to_json
 index.set_settings({"customRanking" => ["desc(followers)"]})
 ```
 
+## Slave settings
+
+You can forward all settings updates to the slaves of an index by using the `forwardToSlaves` option:
+
+```ruby
+index.set_settings({"customRanking" => ["desc(followers)"]}, {"forwardToSlave" => true})
+```
 
 ## Indexing parameters
 
