@@ -419,21 +419,22 @@ module Algolia
     #
     # Set settings for this index
     #
-    def set_settings(new_settings)
-      client.put(Protocol.settings_uri(name), new_settings.to_json)
+    def set_settings(new_settings, options = {})
+      client.put(Protocol.settings_uri(name, options), new_settings.to_json)
     end
 
     # Set settings for this index and wait end of indexing
     #
-    def set_settings!(new_settings)
-      res = set_settings(new_settings)
+    def set_settings!(new_settings, options = {})
+      res = set_settings(new_settings, options)
       wait_task(res["taskID"])
       return res
     end
 
     # Get settings of this index
-    def get_settings
-      client.get("#{Protocol.settings_uri(name)}?getVersion=2", :read)
+    def get_settings(options = {})
+      options['getVersion'] = 2 if !options[:getVersion] && !options['getVersion']
+      client.get("#{Protocol.settings_uri(name, options)}", :read)
     end
 
     # List all existing user keys with their associated ACLs

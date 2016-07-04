@@ -88,8 +88,9 @@ module Algolia
       "#{index_uri(index)}/#{CGI.escape(object_id)}/partial#{params}"
     end
 
-    def Protocol.settings_uri(index)
-      "#{index_uri(index)}/settings"
+    def Protocol.settings_uri(index, params = {})
+      params = params.nil? || params.size == 0 ? "" : "?#{to_query(params)}"
+      "#{index_uri(index)}/settings#{params}"
     end
 
     def Protocol.clear_uri(index)
