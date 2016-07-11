@@ -1,5 +1,8 @@
 CHANGELOG
 
+2016-07-11 1.10.0
+      * `{get,set}_settings` now take optional custom query parameters
+
 2016-06-17 1.9.0
       * New synonyms API
 
