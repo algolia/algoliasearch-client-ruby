@@ -2044,9 +2044,9 @@ The REST API lets your interact directly with Algolia platforms from anything th
 [Go to the REST API doc](https://algolia.com/doc/rest)
 
 
-
-
 ## Mocking
+
+### Webmock
 
 For testing purposes, you may want to mock Algolia's API calls. We provide a [WebMock](https://github.com/bblimke/webmock) configuration that you can use including `algolia/webmock`:
 
@@ -2073,6 +2073,7 @@ describe 'With a mocked client' do
 
 end
 ```
+
 
 
 
