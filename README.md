@@ -2043,7 +2043,7 @@ res = Algolia.add_user_key(params)
 puts res['key']
 ```
 
-### Update user key - `updateUserKey`
+### Update user key - `update_user_key`
 
 To update the permissions of an existing key:
 ```ruby
