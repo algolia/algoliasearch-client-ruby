@@ -1692,11 +1692,13 @@ This method saves a single synonym record into the index.
 In this example, we specify true to forward the creation to slave indices.
 By default the behavior is to save only on the specified index.
 
+```ruby
 index.save_synonym('a-unique-identifier', {
   :objectID => 'a-unique-identifier',
   :type => 'synonym',
   :synonyms => ['car', 'vehicle', 'auto']
 }, true)
+```
 
 ### Batch synonyms - `batch_synonyms`
 
@@ -1709,6 +1711,7 @@ You should always use replaceExistingSynonyms to atomically replace all synonyms
 on a production index. This is the only way to ensure the index always
 has a full list of synonyms to use during the indexing of the new list.
 
+```ruby
 # Batch synonyms, with slave forwarding and atomic replacement of existing synonyms
 index.batch_synonyms([{
   :objectID => 'a-unique-identifier',
@@ -1719,6 +1722,7 @@ index.batch_synonyms([{
   :type => 'synonym',
   :synonyms => ['street', 'st']
 }], true, true)
+```
 
 ### Editing Synonyms
 
@@ -1737,8 +1741,10 @@ Use the normal index delete method to delete synonyms,
 specifying the objectID of the synonym record you want to delete.
 Forward the deletion to slave indices by setting the forwardToSlaves parameter to true.
 
+```ruby
 # Delete and forward to slaves
 index.delete_synonym('a-unique-identifier', true)
+```
 
 ### Clear all synonyms - `clear_synonyms`
 
@@ -1750,15 +1756,19 @@ at all.
 To atomically replace all synonyms of an index,
 use the batch method with the replaceExistingSynonyms parameter set to true.
 
+```ruby
 # Clear synonyms and forward to slaves
 index.clear_synonyms(true)
+```
 
 ### Get synonym - `get_synonym`
 
 Search for synonym records by their objectID or by the text they contain.
 Both methods are covered here.
 
+```ruby
 synonym = index.get_synonym('a-unique-identifier')
+```
 
 ### Search synonyms - `search_synonyms`
 
@@ -1770,12 +1780,14 @@ Accepted search parameters:
 - page: the page to fetch when browsing through several pages of results. This value is zero-based.
 hitsPerPage: the number of synonyms to return for each call. The default value is 100.
 
+```ruby
 # Searching for "street" in synonyms and one-way synonyms; fetch the second page with 10 hits per page
 results = index.search_synonyms('street', {
   :type => ['synonym', 'oneWaySynonym'],
   :page => 1,
   :hitsPerPage => 10
 })
+```
 
 
 
