@@ -8,7 +8,6 @@
 
 
 
-
 [Algolia Search](https://www.algolia.com) is a hosted full-text, numerical, and faceted search engine capable of delivering realtime results from the first keystroke.
 
 
@@ -37,7 +36,8 @@ Our Ruby client lets you easily use the [Algolia Search API](https://www.algolia
 
 Getting started
 
-1. [Install and init](#install-and-init---init_index)
+1. [Install](#install)
+1. [Init index](#init-index---init_index)
 
 Search
 
@@ -86,7 +86,7 @@ Advanced
 1. [Wait for operations](#wait-for-operations---wait_task)
 1. [Multiple queries](#multiple-queries---multiple_queries)
 1. [Delete by query](#delete-by-query---delete_by_query)
-1. [Backup / Export an index](#backup-)-export-an-index---browse)
+1. [Backup / Export an index](#backup--export-an-index---browse)
 1. [List api keys](#list-api-keys---list_api_keys)
 1. [Add user key](#add-user-key---add_user_key)
 1. [Update user key](#update-user-key---update_user_key)
@@ -130,15 +130,24 @@ Check our [online guides](https://www.algolia.com/doc):
 
 ## Getting Started
 
-### Install and init - `init_index`
-
-To setup your project, follow these steps:
+### Install
 
 
 
 
- 1. Install AlgoliaSearch using <code>gem install algoliasearch</code>.
- 2. Initialize the client with your ApplicationID and API-Key. You can find all of them on [your Algolia account](http://www.algolia.com/users/edit).
+Install AlgoliaSearch using:
+
+```bash
+gem install algoliasearch
+```
+
+#### Ruby on Rails
+
+If you're a Ruby on Rails user; you're probably looking for the [algoliasearch-rails](https://github.com/algolia/algoliasearch-rails) gem.
+
+### Init index - `init_index`
+
+To initialize the client you need your ApplicationID and API-Key. You can find all of them on [your Algolia account](http://www.algolia.com/users/edit)
 
 ```ruby
 require 'rubygems'
@@ -147,10 +156,6 @@ require 'algoliasearch'
 Algolia.init :application_id => "YourApplicationID",
              :api_key        => "YourAPIKey"
 ```
-
-#### Ruby on Rails
-
-If you're a Ruby on Rails user; you're probably looking for the [algoliasearch-rails](https://github.com/algolia/algoliasearch-rails) gem.
 
 
 
@@ -248,11 +253,7 @@ function searchCallback(err, content) {
   * It will offload unnecessary tasks from your servers.
 
 
-
-
 To perform a search, you only need to initialize the index and perform a call to the search function.
-
-
 
 The search query allows only to retrieve 1000 hits, if you need to retrieve more than 1000 hits for seo, you can use [Backup / Retrieve all index content](#backup--export-an-index)
 
@@ -354,9 +355,9 @@ Parameters that can also be used in a setSettings also have the `indexing` [scop
 **Advanced**
 - [distinct](#distinct) `settings`, `search`
 - [rankingInfo](#rankinginfo) `search`
-- [numericFilters (deprecated)](#numericfilters+%28deprecated%29) `search`
-- [tagFilters (deprecated)](#tagfilters+%28deprecated%29) `search`
-- [facetFilters (deprecated)](#facetfilters+%28deprecated%29) `search`
+- [numericFilters (deprecated)](#numericfilters-deprecated) `search`
+- [tagFilters (deprecated)](#tagfilters-deprecated) `search`
+- [facetFilters (deprecated)](#facetfilters-deprecated) `search`
 - [analytics](#analytics) `settings`, `search`
 
 <!--/PARAMETERS_LINK-->
@@ -497,7 +498,6 @@ You can delete an object using its `objectID`:
 index.delete_object("myID")
 ```
 
-
 ### Delete by query - `delete_by_query`
 
 You can delete all objects matching a single query with the following code. Internally, the API client performs the query, deletes all matching hits, and waits until the deletions have been applied.
@@ -509,8 +509,6 @@ Take your precautions when using this method. Calling it with an empty query wil
 params = {}
 index.delete_by_query("John", params)
 ```
-
-
 
 ### Wait for operations - `wait_task`
 
@@ -645,11 +643,10 @@ They are three scopes:
 - [query](#query) `search`
 
 **Attributes**
-- [attributesToIndex](#attributestoindex) `settings`
 - [attributesForFaceting](#attributesforfaceting) `settings`
+- [attributesToIndex](#attributestoindex) `settings`
 - [attributesToRetrieve](#attributestoretrieve) `settings`, `search`
 - [unretrievableAttributes](#unretrievableattributes) `settings`
-- [attributesToRetrieve](#attributestoretrieve) `settings`, `search`
 
 
 **Ranking**
@@ -707,9 +704,9 @@ They are three scopes:
 - [rankingInfo](#rankinginfo) `search`
 - [numericAttributesToIndex](#numericattributestoindex) `settings`
 - [allowCompressionOfIntegerArray](#allowcompressionofintegerarray) `settings`
-- [numericFilters (deprecated)](#numericfilters+%28deprecated%29) `search`
-- [tagFilters (deprecated)](#tagfilters+%28deprecated%29) `search`
-- [facetFilters (deprecated)](#facetfilters+%28deprecated%29) `search`
+- [numericFilters (deprecated)](#numericfilters-deprecated) `search`
+- [tagFilters (deprecated)](#tagfilters-deprecated) `search`
+- [facetFilters (deprecated)](#facetfilters-deprecated) `search`
 - [analytics](#analytics) `settings`, `search`
 - [altCorrections](#altcorrections) `settings`
 - [placeholders](#placeholders) `settings`
@@ -1224,7 +1221,7 @@ if you have several geo-locations in your record).
 
 - scope: `settings`, `search`
 - type: `enum`
-- default: `<%= puts({'C#' => 'PREFIX_LAST', 'Java' => 'PREFIX_ALL', 'Android' => 'PREFIX_ALL'}, 'prefixLast') %>`
+- default: `'prefixLast'`
 
 
 Selects how the query words are interpreted. It can be one of the following values:
@@ -1239,7 +1236,7 @@ No query word is interpreted as a prefix. This option is not recommended.
 
 - scope: `settings`, `search`
 - type: `string`
-- default: `<%= puts({'C#' => 'NONE', 'Java' => 'REMOVE_NONE', 'Android' => 'REMOVE_NONE'}, 'none') %>`
+- default: `'none'`
 
 
 This option is used to select a strategy in order to avoid having an empty result page.
@@ -1274,7 +1271,7 @@ This syntax allow to do two things:
 #### optionalWords
 
 - scope: `settings`, `search`
-- type: `array of string`
+- type: `array of strings`
 - default: `[]`
 
 
@@ -1313,7 +1310,7 @@ For most use cases, it is better to not use this feature as people search by key
 #### disablePrefixOnAttributes
 
 - scope: `settings`
-- type: `array of string`
+- type: `array of strings`
 - default: `[]`
 
 
@@ -1327,7 +1324,7 @@ This setting is useful on attributes that contain string that should not be matc
 #### disableExactOnAttributes
 
 - scope: `settings`
-- type: `array of string`
+- type: `array of strings`
 - default: `[]`
 
 
@@ -1554,6 +1551,7 @@ For example:
 
 `"altCorrections": [ { "word" : "foot", "correction": "feet", "nbTypos": 1 }, { "word": "feet", "correction": "foot", "nbTypos": 1 } ]`.
 
+
 ## Manage Indices
 
 ### Create an index
@@ -1604,7 +1602,7 @@ puts Algolia.copy_index("MyIndex", "MyIndexCopy")
 ```
 
 
-### Move index - `move_index` 
+### Move index - `move_index`
 
 The move command is particularly useful if you want to update a big index atomically from one version to another. For example, if you recreate your index `MyIndex` each night from a database by batch, you only need to:
  1. Import your database into a new index using [batches](#batch-writes). Let's call this new index `MyNewIndex`.
@@ -2262,8 +2260,5 @@ describe 'With a mocked client' do
 
 end
 ```
-
-
-
 
 
