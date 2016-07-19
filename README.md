@@ -36,7 +36,8 @@ Our Ruby client lets you easily use the [Algolia Search API](https://www.algolia
 
 Getting started
 
-1. [Install and init](#install-and-init---init_index)
+1. [Install](#install)
+1. [Init index](#init-index---init_index)
 
 Search
 
@@ -129,13 +130,24 @@ Check our [online guides](https://www.algolia.com/doc):
 
 ## Getting Started
 
-### Install and init - `init_index`
+### Install
 
 
 
 
- 1. Install AlgoliaSearch using <code>gem install algoliasearch</code>.
- 2. Initialize the client with your ApplicationID and API-Key. You can find all of them on [your Algolia account](http://www.algolia.com/users/edit).
+Install AlgoliaSearch using:
+
+```bash
+gem install algoliasearch
+```
+
+#### Ruby on Rails
+
+If you're a Ruby on Rails user; you're probably looking for the [algoliasearch-rails](https://github.com/algolia/algoliasearch-rails) gem.
+
+### Init index - `init_index`
+
+To initialize the client you need your ApplicationID and API-Key. You can find all of them on [your Algolia account](http://www.algolia.com/users/edit)
 
 ```ruby
 require 'rubygems'
@@ -144,10 +156,6 @@ require 'algoliasearch'
 Algolia.init :application_id => "YourApplicationID",
              :api_key        => "YourAPIKey"
 ```
-
-#### Ruby on Rails
-
-If you're a Ruby on Rails user; you're probably looking for the [algoliasearch-rails](https://github.com/algolia/algoliasearch-rails) gem.
 
 
 
