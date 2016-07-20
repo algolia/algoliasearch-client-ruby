@@ -386,6 +386,8 @@ res = index.get_objects(["myID", "myID2"])
 
 ## Indexing
 
+
+
 ### Add objects - `add_objects`
 
 Each entry in an index has a unique identifier called `objectID`. There are two ways to add an entry to the index:
@@ -532,6 +534,8 @@ If you want to ensure multiple objects have been indexed, you only need to check
 the biggest `taskID` with `wait_task`.
 
 ## Settings
+
+
 
 ### Get settings - `get_settings`
 
@@ -1551,6 +1555,8 @@ For example:
 
 
 ## Manage Indices
+
+
 
 ### Create an index
 
