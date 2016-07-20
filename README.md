@@ -372,7 +372,7 @@ index.get_object("myID")
 # Retrieves firstname and lastname attributes
 res = index.get_object("myID", "firstname,lastname")
 # Retrieves only the firstname attribute
-res = index.get_object("myID", "fistname")
+res = index.get_object("myID", "firstname")
 ```
 
 You can also retrieve a set of objects:
