@@ -11,8 +11,7 @@ rvm:
 - 2.3.0
 - jruby
 - rbx-2
-install:
-- bundle install
+cache: bundler
 env:
   global:
   - secure: OFKp0J81VrKXfpQZWkwSfsG/knN4tr45yDAGekFy4FKcA6Ra6EqDUzcY1MVrkKq9YRUgLJRfjgqF3Ei0cm2qMo1dy5XUG/fY8upTVdQK2Nm1qfbjnh70+vnYpHidHg9pEI8QROwsM7n19QoT16j1af4UinGFE/HBiJpuXcABuLw=
