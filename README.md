@@ -630,7 +630,7 @@ operation.
 
 The actual insert and indexing will be done after replying to your code.
 
-You can wait for a task to complete using  the same method with a `!`.
+You can wait for a task to complete using 
 
 For example, to wait for indexing of a new object:
 ```ruby
