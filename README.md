@@ -2021,7 +2021,7 @@ You can also create an API Key with advanced settings:
         </div>
       </td>
       <td class='client-readme-param-content'>
-        <p>Specify the list of referers. You can target all referers starting with a prefix or ending with a suffix using the &#39;*&#39; character. For example, &quot;algolia.com/*&quot; matches all referers starting with &quot;algolia.com/&quot; and &quot;*.algolia.com&quot; matches all referers ending with &quot;.algolia.com&quot;. Defaults to all referers if empty or blank.</p>
+        <p>Specify the list of referers. You can target all referers starting with a prefix, ending with a suffix using the &#39;*&#39; character. For example, &quot;<a href="https://algolia.com/%5C*">https://algolia.com/\*</a>&quot; matches all referers starting with &quot;<a href="https://algolia.com/">https://algolia.com/</a>&quot; and &quot;*.algolia.com&quot; matches all referers ending with &quot;.algolia.com&quot;. If you want to allow the domain algolia.com you can use &quot;*algolia.com/*&quot;. Defaults to all referers if empty or blank.</p>
 
       </td>
     </tr>
