@@ -333,12 +333,14 @@ module Algolia
       end
       receive_timeout = type == :search ? @search_timeout : @receive_timeout
 
-      (type == :write ? @hosts : @search_hosts).size.times do |i|
+      thread_local_hosts(type != :write).each_with_index do |host, i|
         connect_timeout += 2 if i == 2
         send_timeout += 10 if i == 2
         receive_timeout += 10 if i == 2
 
-        host = thread_local_hosts(type != :write, connect_timeout, send_timeout, receive_timeout)[i]
+        host[:session].connect_timeout = connect_timeout
+        host[:session].send_timeout = send_timeout
+        host[:session].receive_timeout = receive_timeout
         begin
           return perform_request(host[:session], host[:base_url] + uri, method, data)
         rescue AlgoliaProtocolError => e
@@ -370,27 +372,16 @@ module Algolia
     private
 
     # This method returns a thread-local array of sessions
-    #
-    # Since the underlying httpclient library resets the connections pool
-    # if you change any of its attributes, we cannot change the timeout
-    # of an HTTP session dynamically. That being said, having 1 pool per
-    # timeout appears to be the only acceptable solution
-    def thread_local_hosts(read, connect_timeout, send_timeout, receive_timeout)
-      thread_local_var = read ? :algolia_search_hosts : :algolia_hosts
-      Thread.current[thread_local_var] ||= {}
-      Thread.current[thread_local_var]["#{self.hash}:#{connect_timeout}-#{send_timeout}-#{receive_timeout}"] ||= (read ? search_hosts : hosts).map do |host|
+    def thread_local_hosts(read)
+      Thread.current[read ? :algolia_search_hosts : :algolia_hosts] ||= (read ? search_hosts : hosts).map do |host|
         client = HTTPClient.new
         client.ssl_config.ssl_version = @ssl_version if @ssl && @ssl_version
-        hinfo = {
+        client.transparent_gzip_decompression = true
+        client.ssl_config.add_trust_ca File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'resources', 'ca-bundle.crt'))
+        {
           :base_url => "http#{@ssl ? 's' : ''}://#{host}",
           :session => client
         }
-        hinfo[:session].transparent_gzip_decompression = true
-        hinfo[:session].connect_timeout = connect_timeout
-        hinfo[:session].send_timeout = send_timeout
-        hinfo[:session].receive_timeout = receive_timeout
-        hinfo[:session].ssl_config.add_trust_ca File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'resources', 'ca-bundle.crt'))
-        hinfo
       end
     end
 
