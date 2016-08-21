@@ -738,7 +738,13 @@ describe 'Client' do
     key = Algolia.generate_secured_api_key('my_api_key', :tagFilters => '(public,user1)')
     key.should eq(Base64.encode64("#{OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), 'my_api_key', 'tagFilters=%28public%2Cuser1%29')}tagFilters=%28public%2Cuser1%29").gsub("\n", ''))
     key = Algolia.generate_secured_api_key('182634d8894831d5dbce3b3185c50881', :tagFilters => '(public,user1)', :userToken => 42)
-    key.should eq('OGYwN2NlNTdlOGM2ZmM4MjA5NGM0ZmYwNTk3MDBkNzMzZjQ0MDI3MWZjNTNjM2Y3YTAzMWM4NTBkMzRiNTM5YnRhZ0ZpbHRlcnM9JTI4cHVibGljJTJDdXNlcjElMjkmdXNlclRva2VuPTQy')
+    # in ruby 1.8.7, the map iteration doesn't have the same ordering,
+    # making the hash slightly different
+    expected_keys = [
+      'ZDU0N2YzZjA3NGZkZGM2OTUxNzY3NzhkZDI3YWFkMjhhNzU5OTBiOGIyYTgyYzFmMjFjZTY4NTA0ODNiN2I1ZnVzZXJUb2tlbj00MiZ0YWdGaWx0ZXJzPSUyOHB1YmxpYyUyQ3VzZXIxJTI5',
+      'OGYwN2NlNTdlOGM2ZmM4MjA5NGM0ZmYwNTk3MDBkNzMzZjQ0MDI3MWZjNTNjM2Y3YTAzMWM4NTBkMzRiNTM5YnRhZ0ZpbHRlcnM9JTI4cHVibGljJTJDdXNlcjElMjkmdXNlclRva2VuPTQy'
+    ]
+    expected_keys.include?(key).should eq(true)
   end
 
   it 'Check attributes multipleQueries' do

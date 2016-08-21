@@ -8,7 +8,8 @@ require "rubygems"
 require "bundler/setup"
 
 require 'json'
-if !defined?(RUBY_ENGINE) && defined?(RUBY_VERSION) && RUBY_VERSION == "1.8.7"
+if !defined?(RUBY_ENGINE) && defined?(RUBY_VERSION) && RUBY_VERSION == '1.8.7'
+  # work-around a limitation from nahi/httpclient, using the undefined RUBY_ENGINE constant
   RUBY_ENGINE = 'ruby1.8'
   require 'httpclient'
   Object.send(:remove_const, :RUBY_ENGINE)
