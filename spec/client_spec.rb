@@ -894,23 +894,25 @@ describe 'Client' do
     @index.search_synonyms('')['nbHits'].should eq(0)
   end
 
-  context 'DNS timeout' do
-    before(:all) do
-      @client = Algolia::Client.new :application_id => ENV['ALGOLIA_APPLICATION_ID'], :api_key => ENV['ALGOLIA_API_KEY'],
-        :hosts => [
-          "#{ENV['ALGOLIA_APPLICATION_ID']}.algolia.biz",
-          "#{ENV['ALGOLIA_APPLICATION_ID']}.algolia.net",
-          "#{ENV['ALGOLIA_APPLICATION_ID']}-1.algolianet.com",
-          "#{ENV['ALGOLIA_APPLICATION_ID']}-2.algolianet.com",
-          "#{ENV['ALGOLIA_APPLICATION_ID']}-3.algolianet.com"
-        ],
-        :connect_timeout => 5
-    end
+  if ENV['TRAVIS'].to_s != "true"
+    context 'DNS timeout' do
+      before(:all) do
+        @client = Algolia::Client.new :application_id => ENV['ALGOLIA_APPLICATION_ID'], :api_key => ENV['ALGOLIA_API_KEY'],
+          :hosts => [
+            "#{ENV['ALGOLIA_APPLICATION_ID']}.algolia.biz",
+            "#{ENV['ALGOLIA_APPLICATION_ID']}.algolia.net",
+            "#{ENV['ALGOLIA_APPLICATION_ID']}-1.algolianet.com",
+            "#{ENV['ALGOLIA_APPLICATION_ID']}-2.algolianet.com",
+            "#{ENV['ALGOLIA_APPLICATION_ID']}-3.algolianet.com"
+          ],
+          :connect_timeout => 5
+      end
 
-    it "should fallback to the 2nd host after a few seconds" do
-      start_time = Time.now
-      @client.list_indexes # fallback on the second host after 5 sec (connection timeout)
-      expect(start_time.to_i + 5).to be <= Time.now.to_i + 1
+      it "should fallback to the 2nd host after a few seconds" do
+        start_time = Time.now
+        @client.list_indexes # fallback on the second host after 5 sec (connection timeout)
+        expect(start_time.to_i + 5).to be <= Time.now.to_i + 1
+      end
     end
   end
 
