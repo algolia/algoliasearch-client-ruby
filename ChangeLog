@@ -1,5 +1,8 @@
 CHANGELOG
 
+2016-08-21 1.11.0
+      * Upgraded to httpclient 2.8.1 to avoid reseting the keep-alive while changing timeouts
+
 2016-07-11 1.10.0
       * `{get,set}_settings` now take optional custom query parameters
 
