@@ -8,7 +8,13 @@ require "rubygems"
 require "bundler/setup"
 
 require 'json'
-require 'httpclient'
+if !defined?(RUBY_ENGINE) && defined?(RUBY_VERSION) && RUBY_VERSION == "1.8.7"
+  RUBY_ENGINE = 'ruby1.8'
+  require 'httpclient'
+  Object.send(:remove_const, :RUBY_ENGINE)
+else
+  require 'httpclient'
+end
 require 'date'
 require 'cgi'
 
