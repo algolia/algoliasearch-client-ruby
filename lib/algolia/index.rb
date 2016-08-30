@@ -208,9 +208,10 @@ module Algolia
     # Get an object from this index
     #
     # @param objectID the unique identifier of the object to retrieve
-    # @param attributesToRetrieve (optional) if set, contains the list of attributes to retrieve as a string separated by ","
+    # @param attributesToRetrieve (optional) if set, contains the list of attributes to retrieve as an array of strings of a string separated by ","
     #
     def get_object(objectID, attributesToRetrieve = nil)
+      attributesToRetrieve = attributesToRetrieve.join(',') if attributesToRetrieve.is_a?(Array)
       if attributesToRetrieve.nil?
         client.get(Protocol.object_uri(name, objectID, nil), :read)
       else
@@ -222,9 +223,16 @@ module Algolia
     # Get a list of objects from this index
     #
     # @param objectIDs the array of unique identifier of the objects to retrieve
+    # @param attributesToRetrieve (optional) if set, contains the list of attributes to retrieve as an array of strings of a string separated by ","
     #
-    def get_objects(objectIDs)
-      client.post(Protocol.objects_uri, { :requests => objectIDs.map { |objectID| { :indexName => name, :objectID => objectID } } }.to_json, :read)['results']
+    def get_objects(objectIDs, attributesToRetrieve = nil)
+      attributesToRetrieve = attributesToRetrieve.join(',') if attributesToRetrieve.is_a?(Array)
+      requests = objectIDs.map do |objectID|
+        req = {:indexName => name, :objectID => objectID.to_s}
+        req[:attributesToRetrieve] = attributesToRetrieve unless attributesToRetrieve.nil?
+        req
+      end
+      client.post(Protocol.objects_uri, { :requests => requests }.to_json, :read)['results']
     end
 
     # Wait the publication of a task on the server.

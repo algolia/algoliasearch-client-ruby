@@ -187,6 +187,26 @@ describe 'Client' do
     objects.size.should eq(2)
   end
 
+  it "should restrict attributesToRetrieve" do
+    @index.clear_index
+    @index.add_object({:firstname => "Robert", :lastname => "foo", :objectID => 1})
+    @index.add_object!({:firstname => "Robert2", :lastname => "bar", :objectID => 2})
+    objects = @index.get_objects([1, 2], ['firstname'])
+    objects.size.should eq(2)
+    objects[0].should eq({"firstname"=>"Robert", "objectID"=>"1"})
+    objects[1].should eq({"firstname"=>"Robert2", "objectID"=>"2"})
+
+    objects = @index.get_objects([1, 2], [:firstname])
+    objects.size.should eq(2)
+    objects[0].should eq({"firstname"=>"Robert", "objectID"=>"1"})
+    objects[1].should eq({"firstname"=>"Robert2", "objectID"=>"2"})
+
+    objects = @index.get_objects(["1", "2"], 'firstname,lastname')
+    objects.size.should eq(2)
+    objects[0].should eq({"firstname"=>"Robert", "lastname"=>"foo", "objectID"=>"1"})
+    objects[1].should eq({"firstname"=>"Robert2", "lastname"=>"bar", "objectID"=>"2"})
+  end
+
   it "should delete the object" do
     @index.clear
     @index.add_object!({:firstname => "Robert"})
