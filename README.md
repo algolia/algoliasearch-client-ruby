@@ -585,7 +585,7 @@ res = index.add_objects([{"objectID" => "1",
                           "lastname" => "Speach"}])
 ```
 
-To add a single object, use the `Add object - `add_object`` method:
+To add a single object, use the `[Add object](#add-object---add_object)` method:
 
 ```ruby
 res = index.add_object({"firstname" => "Jimmie", 
@@ -612,7 +612,7 @@ res = index.save_objects([{"firstname" => "Jimmie",
                            "objectID" => "myID2"}])
 ```
 
-To update a single object, you can use the `Update object - `save_object`` method:
+To update a single object, you can use the `[Update object](#update-object---save_object) method:
 
 ```ruby
 index.save_object({"firstname" => "Jimmie", 
@@ -681,7 +681,7 @@ index.partial_update_object({"price" => {"value" => 42, "_operation" => "Decreme
 Note: Here we are decrementing the value by `42`. To decrement just by one, put
 `value:1`.
 
-To partial update multiple objects using one API call, you can use the `Partial update objects - `partial_update_objects`` method:
+To partial update multiple objects using one API call, you can use the `[Partial update objects](#partial-update-objects---partial_update_objects)` method:
 
 ```ruby
 res = index.partial_update_objects([{"firstname" => "Jimmie", 
@@ -699,7 +699,7 @@ You can delete objects using their `objectID`:
 res = index.delete_objects(["myID1", "myID2"])
 ```
 
-To delete a single object, you can use the `Delete object - `delete_object`` method:
+To delete a single object, you can use the `[Delete object](#delete-object---delete_object)` method:
 
 ```ruby
 index.delete_object("myID")
