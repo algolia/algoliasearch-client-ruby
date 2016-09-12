@@ -48,7 +48,7 @@ Indexing
 
 1. [Add objects](#add-objects---add_objects)
 1. [Update objects](#update-objects---save_objects)
-1. [Partial update](#partial-update---partial_update_objects)
+1. [Partial update objects](#partial-update-objects---partial_update_objects)
 1. [Delete objects](#delete-objects---delete_objects)
 
 Settings
@@ -559,28 +559,39 @@ res = index.get_objects(["myID", "myID2"])
 
 Each entry in an index has a unique identifier called `objectID`. There are two ways to add an entry to the index:
 
- 1. Using automatic `objectID` assignment. You will be able to access it in the answer.
- 2. Supplying your own `objectID`.
+ 1. Supplying your own `objectID`.
+ 2. Using automatic `objectID` assignment. You will be able to access it in the answer.
 
 You don't need to explicitly create an index, it will be automatically created the first time you add an object.
 Objects are schema less so you don't need any configuration to start indexing. If you wish to configure things, the settings section provides details about advanced settings.
 
-Example with automatic `objectID` assignment:
+Example with automatic `objectID` assignments:
 
 ```ruby
-res = index.add_object({"firstname" => "Jimmie", 
-                        "lastname" => "Barninger"})
-puts "ObjectID=" + res["objectID"]
+res = index.add_objects([{"firstname" => "Jimmie", 
+                          "lastname" => "Barninger"},
+                         {"firstname" => "Warren", 
+                          "lastname" => "Speach"}])
 ```
 
-Example with manual `objectID` assignment:
+Example with manual `objectID` assignments:
+
+```ruby
+res = index.add_objects([{"objectID" => "1",
+                          "firstname" => "Jimmie",
+                          "lastname" => "Barninger"},
+                         {"objectID" => "2",
+                          "firstname" => "Warren",
+                          "lastname" => "Speach"}])
+```
+
+To add a single object, use the `Add object - `add_object`` method:
 
 ```ruby
 res = index.add_object({"firstname" => "Jimmie", 
                         "lastname" => "Barninger"}, "myID")
 puts "ObjectID=" + res["objectID"]
 ```
-
 
 ### Update objects - `save_objects`
 
@@ -590,7 +601,18 @@ You have three options when updating an existing object:
  2. Replace only some attributes.
  3. Apply an operation to some attributes.
 
-Example on how to replace all attributes of an existing object:
+Example on how to replace all attributes existing objects:
+
+```ruby
+res = index.save_objects([{"firstname" => "Jimmie", 
+                          "lastname" => "Barninger",
+                           "objectID" => "myID1"},
+                          {"firstname" => "Warren", 
+                          "lastname" => "Speach",
+                           "objectID" => "myID2"}])
+```
+
+To update a single object, you can use the `Update object - `save_object`` method:
 
 ```ruby
 index.save_object({"firstname" => "Jimmie", 
@@ -599,7 +621,8 @@ index.save_object({"firstname" => "Jimmie",
                    "objectID" => "myID"})
 ```
 
-### Partial update - `partial_update_objects`
+
+### Partial update objects - `partial_update_objects`
 
 You have many ways to update an object's attributes:
 
@@ -658,10 +681,25 @@ index.partial_update_object({"price" => {"value" => 42, "_operation" => "Decreme
 Note: Here we are decrementing the value by `42`. To decrement just by one, put
 `value:1`.
 
+To partial update multiple objects using one API call, you can use the `Partial update objects - `partial_update_objects`` method:
+
+```ruby
+res = index.partial_update_objects([{"firstname" => "Jimmie", 
+                                     "objectID" => "SFO"},
+                                    {"firstname" => "Warren", 
+                                     "objectID" => "myID2"}])
+```
+
 
 ### Delete objects - `delete_objects`
 
-You can delete an object using its `objectID`:
+You can delete objects using their `objectID`:
+
+```ruby
+res = index.delete_objects(["myID1", "myID2"])
+```
+
+To delete a single object, you can use the `Delete object - `delete_object`` method:
 
 ```ruby
 index.delete_object("myID")
@@ -2238,47 +2276,6 @@ results = index.search_synonyms('street', {
 ### Custom batch - `batch`
 
 You may want to perform multiple operations with one API call to reduce latency.
-We expose four methods to perform batch operations:
-
-* Add objects - `add_objects`: Add an array of objects using automatic `objectID` assignment.
-* Update objects - `save_objects`: Add or update an array of objects that contains an `objectID` attribute.
-* Delete objects - `delete_objects`: Delete an array of objectIDs.
-* Partial update - `partial_update_objects`: Partially update an array of objects that contain an `objectID` attribute (only specified attributes will be updated).
-
-Example using automatic `objectID` assignment:
-
-```ruby
-res = index.add_objects([{"firstname" => "Jimmie", 
-                          "lastname" => "Barninger"},
-                         {"firstname" => "Warren", 
-                          "lastname" => "Speach"}])
-```
-
-Example with user defined `objectID` (add or update):
-
-```ruby
-res = index.save_objects([{"firstname" => "Jimmie", 
-                          "lastname" => "Barninger",
-                           "objectID" => "myID1"},
-                          {"firstname" => "Warren", 
-                          "lastname" => "Speach",
-                           "objectID" => "myID2"}])
-```
-
-Example that deletes a set of records:
-
-```ruby
-res = index.delete_objects(["myID1", "myID2"])
-```
-
-Example that updates only the `firstname` attribute:
-
-```ruby
-res = index.partial_update_objects([{"firstname" => "Jimmie", 
-                                     "objectID" => "SFO"},
-                                    {"firstname" => "Warren", 
-                                     "objectID" => "myID2"}])
-```
 
 
 
