@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'httpclient', '~> 2.8.2'
+gem 'httpclient', '~> 2.8.2.4'
 gem 'json', '>= 1.5.1'
 gem 'rubysl', '~> 2.0', :platform => :rbx
 
