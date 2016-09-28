@@ -2159,6 +2159,15 @@ even if he shares his `IP` with another user.
 public_key = Algolia.generate_secured_api_key 'YourSearchOnlyApiKey', {'filters'=> '_tags:user_42', 'userToken'=> 'user_42'}
 ```
 
+#### Network restriction
+
+For more protection against API key leaking and reuse you can restrict the key to be valid only from specific IPv4 networks
+
+```ruby
+# generate a public API key that is restricted to '192.168.1.0/24':
+public_key = Algolia.generate_secured_api_key 'YourSearchOnlyApiKey', {'restrictSources'=> '192.168.1.0/24'}
+```
+
 
 
 
