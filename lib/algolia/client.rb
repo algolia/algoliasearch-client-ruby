@@ -349,6 +349,7 @@ module Algolia
         rescue => e
           exceptions << e
         end
+        host[:session].reset_all
       end
       raise AlgoliaProtocolError.new(0, "Cannot reach any host: #{exceptions.map { |e| e.to_s }.join(', ')}")
     end
