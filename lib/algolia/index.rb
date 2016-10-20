@@ -563,6 +563,20 @@ module Algolia
       res
     end
 
+    # Search in facets
+    #
+    # @param facet Name of the facet to search. It must have been declared in the
+    #       index's`attributesForFaceting` setting with the `searchable()` modifier.
+    # @param text Text to search for in the facet's values
+    # @param query An optional query to take extra search parameters into account.
+    #       These parameters apply to index objects like in a regular search query.
+    #       Only facet values contained in the matched objects will be returned.
+    def search_facet(facet, text, query = {})
+      params = query.clone
+      params['facetQuery'] = text
+      client.post(Protocol.search_facet_uri(name, facet), params.to_json)
+    end
+
     # Perform a search with disjunctive facets generating as many queries as number of disjunctive facets
     #
     # @param query the query

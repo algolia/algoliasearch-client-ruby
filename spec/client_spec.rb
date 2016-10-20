@@ -789,6 +789,67 @@ describe 'Client' do
     res['results'][0]['params'].should be_a(String)
   end
 
+  it 'should handle facet search' do
+    objects = {
+      :snoopy => {
+        :objectID => '1',
+        'name' => 'Snoopy',
+        :kind => ['dog', 'animal'],
+        :born => 1950,
+        :series => 'Peanuts'
+      },
+      :woodstock => {
+        :objectID => '2',
+        :name => 'Woodstock',
+        :kind => ['bird', 'animal'],
+        :born => 1960,
+        :series => 'Peanuts'
+      },
+      :charlie => {
+        :objectID => '3',
+        :name => 'Charlie Brown',
+        :kind => ['human'],
+        :born => 1950,
+        :series => 'Peanuts'
+      },
+      :hobbes => {
+        :objectID => '4',
+        :name => 'Hobbes',
+        :kind => ['tiger', 'animal', 'teddy'],
+        :born => 1985,
+        :series => 'Calvin & Hobbes'
+      },
+      :calvin => {
+        :objectID => '5',
+        :name => 'Calvin',
+        :kind => ['human'],
+        :born => 1985,
+        :series => 'Calvin & Hobbes'
+      }
+    }
+
+    index = Algolia::Index.new(safe_index_name('test_facet_search'))
+    index.set_settings({
+      :attributesForFaceting => [
+        'searchable(series)',
+        'kind'
+      ]
+    })
+    index.add_objects! objects.values
+
+    query = {
+      :facetFilters => ['kind:animal'],
+      :numericFilters => ['born >= 1955'],
+      :highlightPreTag => '<span class="highlight">',
+      :highlightPostTag => '</span>'
+    }
+    answer = index.search_facet 'series', 'Peanutz', query
+    expect(answer['facetHits'].size).to eq(1)
+    expect(answer['facetHits'].first['value']).to eq('Peanuts')
+    expect(answer['facetHits'].first['highlighted']).to eq('<span class="highlight">Peanuts</span>')
+    expect(answer['facetHits'].first['count']).to eq(1)
+  end
+
   it 'should handle disjunctive faceting' do
     index = Algolia::Index.new(safe_index_name("test_hotels"))
     index.set_settings :attributesForFacetting => ['city', 'stars', 'facilities']
