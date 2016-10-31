@@ -83,6 +83,10 @@ module Algolia
       "#{index_uri(index)}/browse#{params}"
     end
 
+    def Protocol.search_facet_uri(index, facet)
+      "#{index_uri(index)}/facets/#{facet}/query"
+    end
+
     def Protocol.partial_object_uri(index, object_id, create_if_not_exits = true)
       params = create_if_not_exits ? "" : "?createIfNotExists=false"
       "#{index_uri(index)}/#{CGI.escape(object_id)}/partial#{params}"
