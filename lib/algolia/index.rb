@@ -697,17 +697,17 @@ module Algolia
     # Delete a synonym
     #
     # @param objectID the synonym objectID
-    # @param forward_to_slaves should we forward the delete to slave indices
-    def delete_synonym(objectID, forward_to_slaves = false)
-      client.delete("#{Protocol.synonym_uri(name, objectID)}?forwardToSlaves=#{forward_to_slaves}", :write)
+    # @param forward_to_replicas should we forward the delete to replica indices
+    def delete_synonym(objectID, forward_to_replicas = false)
+      client.delete("#{Protocol.synonym_uri(name, objectID)}?forwardToReplicas=#{forward_to_replicas}", :write)
     end
 
     # Delete a synonym and wait the end of indexing
     #
     # @param objectID the synonym objectID
-    # @param forward_to_slaves should we forward the delete to slave indices
-    def delete_synonym!(objectID, forward_to_slaves = false)
-      res = delete_synonym(objectID, forward_to_slaves)
+    # @param forward_to_replicas should we forward the delete to replica indices
+    def delete_synonym!(objectID, forward_to_replicas = false)
+      res = delete_synonym(objectID, forward_to_replicas)
       wait_task(res["taskID"])
       return res
     end
@@ -716,34 +716,34 @@ module Algolia
     #
     # @param objectID the synonym objectID
     # @param synonym the synonym
-    # @param forward_to_slaves should we forward the delete to slave indices
-    def save_synonym(objectID, synonym, forward_to_slaves = false)
-      client.put("#{Protocol.synonym_uri(name, objectID)}?forwardToSlaves=#{forward_to_slaves}", synonym.to_json, :write)
+    # @param forward_to_replicas should we forward the delete to replica indices
+    def save_synonym(objectID, synonym, forward_to_replicas = false)
+      client.put("#{Protocol.synonym_uri(name, objectID)}?forwardToReplicas=#{forward_to_replicas}", synonym.to_json, :write)
     end
 
     # Save a synonym and wait the end of indexing
     #
     # @param objectID the synonym objectID
     # @param synonym the synonym
-    # @param forward_to_slaves should we forward the delete to slave indices
-    def save_synonym!(objectID, synonym, forward_to_slaves = false)
-      res = save_synonym(objectID, synonym, forward_to_slaves)
+    # @param forward_to_replicas should we forward the delete to replica indices
+    def save_synonym!(objectID, synonym, forward_to_replicas = false)
+      res = save_synonym(objectID, synonym, forward_to_replicas)
       wait_task(res["taskID"])
       return res
     end
 
     # Clear all synonyms
     #
-    # @param forward_to_slaves should we forward the delete to slave indices
-    def clear_synonyms(forward_to_slaves = false)
-      client.post("#{Protocol.clear_synonyms_uri(name)}?forwardToSlaves=#{forward_to_slaves}", :write)
+    # @param forward_to_replicas should we forward the delete to replica indices
+    def clear_synonyms(forward_to_replicas = false)
+      client.post("#{Protocol.clear_synonyms_uri(name)}?forwardToReplicas=#{forward_to_replicas}", :write)
     end
 
     # Clear all synonyms and wait the end of indexing
     #
-    # @param forward_to_slaves should we forward the delete to slave indices
-    def clear_synonyms!(forward_to_slaves = false)
-      res = clear_synonyms(forward_to_slaves)
+    # @param forward_to_replicas should we forward the delete to replica indices
+    def clear_synonyms!(forward_to_replicas = false)
+      res = clear_synonyms(forward_to_replicas)
       wait_task(res["taskID"])
       return res
     end
@@ -751,19 +751,19 @@ module Algolia
     # Add/Update an array of synonyms
     #
     # @param synonyms the array of synonyms to add/update
-    # @param forward_to_slaves should we forward the delete to slave indices
+    # @param forward_to_replicas should we forward the delete to replica indices
     # @param replace_existing_synonyms should we replace the existing synonyms before adding the new ones
-    def batch_synonyms(synonyms, forward_to_slaves = false, replace_existing_synonyms = false)
-      client.post("#{Protocol.batch_synonyms_uri(name)}?forwardToSlaves=#{forward_to_slaves}&replaceExistingSynonyms=#{replace_existing_synonyms}", synonyms.to_json, :batch)
+    def batch_synonyms(synonyms, forward_to_replicas = false, replace_existing_synonyms = false)
+      client.post("#{Protocol.batch_synonyms_uri(name)}?forwardToReplicas=#{forward_to_replicas}&replaceExistingSynonyms=#{replace_existing_synonyms}", synonyms.to_json, :batch)
     end
 
     # Add/Update an array of synonyms and wait the end of indexing
     #
     # @param synonyms the array of synonyms to add/update
-    # @param forward_to_slaves should we forward the delete to slave indices
+    # @param forward_to_replicas should we forward the delete to replica indices
     # @param replace_existing_synonyms should we replace the existing synonyms before adding the new ones
-    def batch_synonyms!(synonyms, forward_to_slaves = false, replace_existing_synonyms = false)
-      res = batch_synonyms(synonyms, forward_to_slaves, replace_existing_synonyms)
+    def batch_synonyms!(synonyms, forward_to_replicas = false, replace_existing_synonyms = false)
+      res = batch_synonyms(synonyms, forward_to_replicas, replace_existing_synonyms)
       wait_task(res["taskID"])
       return res
     end
