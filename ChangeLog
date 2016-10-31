@@ -1,5 +1,8 @@
 CHANGELOG
 
+2016-10-31 1.12.0
+      * Add `search_facet`
+
 2016-08-21 1.11.0
       * Upgraded to httpclient 2.8.1 to avoid reseting the keep-alive while changing timeouts
 
