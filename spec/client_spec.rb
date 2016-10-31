@@ -839,14 +839,11 @@ describe 'Client' do
 
     query = {
       :facetFilters => ['kind:animal'],
-      :numericFilters => ['born >= 1955'],
-      :highlightPreTag => '<span class="highlight">',
-      :highlightPostTag => '</span>'
+      :numericFilters => ['born >= 1955']
     }
     answer = index.search_facet 'series', 'Peanutz', query
     expect(answer['facetHits'].size).to eq(1)
     expect(answer['facetHits'].first['value']).to eq('Peanuts')
-    expect(answer['facetHits'].first['highlighted']).to eq('<span class="highlight">Peanuts</span>')
     expect(answer['facetHits'].first['count']).to eq(1)
   end
 
