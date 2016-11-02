@@ -613,7 +613,7 @@ res = index.save_objects([{"firstname" => "Jimmie",
                            "objectID" => "myID2"}])
 ```
 
-To update a single object, you can use the `[Update object](#update-object---save_object) method:
+To update a single object, you can use the `save_object` method:
 
 ```ruby
 index.save_object({"firstname" => "Jimmie", 
