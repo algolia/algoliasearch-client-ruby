@@ -841,7 +841,7 @@ describe 'Client' do
       :facetFilters => ['kind:animal'],
       :numericFilters => ['born >= 1955']
     }
-    answer = index.search_facet 'series', 'Peanutz', query
+    answer = index.search_for_facet_values 'series', 'Peanutz', query
     expect(answer['facetHits'].size).to eq(1)
     expect(answer['facetHits'].first['value']).to eq('Peanuts')
     expect(answer['facetHits'].first['count']).to eq(1)

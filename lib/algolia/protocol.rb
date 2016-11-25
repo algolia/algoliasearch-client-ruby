@@ -84,7 +84,7 @@ module Algolia
     end
 
     def Protocol.search_facet_uri(index, facet)
-      "#{index_uri(index)}/facets/#{facet}/query"
+      "#{index_uri(index)}/facets/#{CGI.escape(facet)}/query"
     end
 
     def Protocol.partial_object_uri(index, object_id, create_if_not_exits = true)
