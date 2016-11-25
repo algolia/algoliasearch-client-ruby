@@ -1,5 +1,8 @@
 CHANGELOG
 
+2016-11-25 1.12.1
+      * Rename `search_facet` to `search_for_facet_values`
+
 2016-10-31 1.12.0
       * Add `search_facet`
 
