@@ -343,6 +343,10 @@ module Algolia
         send_timeout += 10 if i == 2
         receive_timeout += 10 if i == 2
 
+        thread_index_key = type != :write ? "algolia_search_host_index_#{application_id}" : "algolia_host_index_#{application_id}"
+        Thread.current[thread_index_key] = host[:index]
+        host[:last_call] = Time.now.to_i
+
         host[:session].connect_timeout = connect_timeout
         host[:session].send_timeout = send_timeout
         host[:session].receive_timeout = receive_timeout
@@ -379,16 +383,28 @@ module Algolia
 
     # This method returns a thread-local array of sessions
     def thread_local_hosts(read)
-      thread_key = read ? "algolia_search_hosts_#{application_id}" : "algolia_hosts_#{application_id}"
-      Thread.current[thread_key] ||= (read ? search_hosts : hosts).map do |host|
+      thread_hosts_key = read ? "algolia_search_hosts_#{application_id}" : "algolia_hosts_#{application_id}"
+      Thread.current[thread_hosts_key] ||= (read ? search_hosts : hosts).each_with_index.map do |host, i|
         client = HTTPClient.new
         client.ssl_config.ssl_version = @ssl_version if @ssl && @ssl_version
         client.transparent_gzip_decompression = true
         client.ssl_config.add_trust_ca File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'resources', 'ca-bundle.crt'))
         {
+          :index => i,
           :base_url => "http#{@ssl ? 's' : ''}://#{host}",
-          :session => client
+          :session => client,
+          :last_call => nil
         }
+      end
+      hosts = Thread.current[thread_hosts_key]
+      thread_index_key = read ? "algolia_search_host_index_#{application_id}" : "algolia_host_index_#{application_id}"
+      current_host = Thread.current[thread_index_key].to_i # `to_i` to ensure first call is 0
+      if current_host != 0 && hosts[current_host][:last_call].to_i < Time.now.to_i - 60
+        # the current_host is not the first one and we've been using it for less than a minute; continue doing so
+        first = hosts[current_host]
+        [first] + hosts.reject { |h| h[:index] == 0 || h == first } + hosts.select { |h| h[:index] == 0 }
+      else
+        hosts
       end
     end
 
