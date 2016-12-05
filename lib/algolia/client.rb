@@ -41,6 +41,11 @@ module Algolia
       }
     end
 
+    def destroy
+      Thread.current["algolia_search_hosts_#{application_id}"] = nil
+      Thread.current["algolia_hosts_#{application_id}"] = nil
+    end
+
     #
     # Initialize a new index
     #
@@ -374,7 +379,8 @@ module Algolia
 
     # This method returns a thread-local array of sessions
     def thread_local_hosts(read)
-      Thread.current[read ? :algolia_search_hosts : :algolia_hosts] ||= (read ? search_hosts : hosts).map do |host|
+      thread_key = read ? "algolia_search_hosts_#{application_id}" : "algolia_hosts_#{application_id}"
+      Thread.current[thread_key] ||= (read ? search_hosts : hosts).map do |host|
         client = HTTPClient.new
         client.ssl_config.ssl_version = @ssl_version if @ssl && @ssl_version
         client.transparent_gzip_decompression = true
@@ -649,7 +655,8 @@ module Algolia
 
   # Used mostly for testing. Lets you delete the api key global vars.
   def Algolia.destroy
-    @@client = Thread.current[:algolia_hosts] = Thread.current[:algolia_search_hosts] = nil
+    @@client.destroy unless @@client.nil?
+    @@client = nil
     self
   end
 
