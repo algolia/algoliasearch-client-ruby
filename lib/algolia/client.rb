@@ -72,7 +72,7 @@ module Algolia
     # Disable IP rate limit enabled with enableRateLimitForward() function
     #
     def disable_rate_limit_forward
-      headers[Protocol::HEADER_API_KEY] = Algolia.client.api_key
+      headers[Protocol::HEADER_API_KEY] = api_key
       headers.delete(Protocol::HEADER_FORWARDED_IP)
       headers.delete(Protocol::HEADER_FORWARDED_API_KEY)
     end
@@ -81,7 +81,7 @@ module Algolia
     # Convenience method thats wraps enable_rate_limit_forward/disable_rate_limit_forward
     #
     def with_rate_limits(end_user_ip, rate_limit_api_key, &block)
-      enable_rate_limit_forward(Algolia.client.api_key, end_user_ip, rate_limit_api_key)
+      enable_rate_limit_forward(api_key, end_user_ip, rate_limit_api_key)
       begin
         yield
       ensure
@@ -135,7 +135,7 @@ module Algolia
     # @param dst_index the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
     #
     def move_index!(src_index, dst_index)
-      res = Algolia.move_index(src_index, dst_index)
+      res = move_index(src_index, dst_index)
       init_index(dst_index).wait_task(res['taskID'])
       res
     end
@@ -147,7 +147,7 @@ module Algolia
     #
     def copy_index(src_index, dst_index)
       request = {"operation" => "copy", "destination" => dst_index};
-      Algolia.client.post(Protocol.index_operation_uri(src_index), request.to_json)
+      post(Protocol.index_operation_uri(src_index), request.to_json)
     end
 
     #
@@ -156,7 +156,7 @@ module Algolia
     # @param dst_index the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
     #
     def copy_index!(src_index, dst_index)
-      res = Algolia.copy_index(src_index, dst_index)
+      res = copy_index(src_index, dst_index)
       init_index(dst_index).wait_task(res['taskID'])
       res
     end
