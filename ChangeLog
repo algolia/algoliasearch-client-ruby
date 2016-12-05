@@ -1,5 +1,8 @@
 CHANGELOG
 
+2016-12-05
+      * Fix client scoped methods
+
 2016-11-25 1.12.1
       * Rename `search_facet` to `search_for_facet_values`
 
