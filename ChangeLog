@@ -1,5 +1,8 @@
 CHANGELOG
 
+2016-12-06
+      * Allow for multiple clients on different app ids on the same thread
+
 2016-12-05
       * Fix client scoped methods
 
