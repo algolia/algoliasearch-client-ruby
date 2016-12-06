@@ -997,6 +997,15 @@ describe 'Client' do
         @client.list_indexes # fallback on the second host after 5 sec (connection timeout)
         expect(start_time.to_i + 5).to be <= Time.now.to_i + 1
       end
+
+      it "should re-use the working (2nd) host after the 1st one failed" do
+        start_time = Time.now
+        @client.list_indexes # fallback on the second host after 5 sec (connection timeout)
+        expect(start_time.to_i + 5).to be <= Time.now.to_i + 1
+        start_time = Time.now
+        @client.list_indexes # re-use the 2nd one
+        expect(start_time.to_i).to be <= Time.now.to_i + 1
+      end
     end
   end
 
