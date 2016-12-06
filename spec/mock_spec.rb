@@ -7,7 +7,10 @@ describe 'With a mocked client' do
 
   before(:each) do
     WebMock.enable!
-    Thread.current[:algolia_hosts] = Thread.current[:algolia_search_hosts] = nil # reset session objects
+    # reset session objects
+    app_id = Algolia.client.application_id
+    Thread.current["algolia_hosts_#{app_id}"] = nil
+    Thread.current["algolia_search_hosts_#{app_id}"] = nil
   end
 
   it "should add a simple object" do
