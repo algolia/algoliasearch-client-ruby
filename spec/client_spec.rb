@@ -981,6 +981,11 @@ describe 'Client' do
   if ENV['TRAVIS'].to_s != "true"
     context 'DNS timeout' do
       before(:all) do
+        app_id = ENV['ALGOLIA_APPLICATION_ID']
+        Thread.current["algolia_hosts_#{app_id}"] = nil
+        Thread.current["algolia_search_hosts_#{app_id}"] = nil
+        Thread.current["algolia_host_index_#{app_id}"] = nil
+        Thread.current["algolia_search_host_index_#{app_id}"] = nil
         @client = Algolia::Client.new :application_id => ENV['ALGOLIA_APPLICATION_ID'], :api_key => ENV['ALGOLIA_API_KEY'],
           :hosts => [
             "#{ENV['ALGOLIA_APPLICATION_ID']}.algolia.biz",
