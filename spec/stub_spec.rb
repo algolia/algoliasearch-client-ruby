@@ -10,6 +10,8 @@ describe 'With a rate limited client' do
     app_id = Algolia.client.application_id
     Thread.current["algolia_hosts_#{app_id}"] = nil
     Thread.current["algolia_search_hosts_#{app_id}"] = nil
+    Thread.current["algolia_host_index_#{app_id}"] = nil
+    Thread.current["algolia_search_host_index_#{app_id}"] = nil
   end
 
   it "should pass the right headers" do
