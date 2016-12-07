@@ -1,5 +1,8 @@
 CHANGELOG
 
+2016-12-07
+      * Fix DNS tests
+
 2016-12-06
       * Allow for multiple clients on different app ids on the same thread
 
