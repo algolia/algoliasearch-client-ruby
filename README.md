@@ -231,7 +231,7 @@ function searchCallback(err, content) {
 
 To perform a search, you only need to initialize the index and perform a call to the search function.
 
-The search query allows only to retrieve 1000 hits. If you need to retrieve more than 1000 hits (e.g. for SEO), you can use [Backup / Retrieve all index content](#backup--export-an-index).
+The search query allows only to retrieve 1000 hits. If you need to retrieve more than 1000 hits (e.g. for SEO), you can use [Backup / Export an index](#backup--export-an-index).
 
 ```ruby
 index = Algolia::Index.new("contacts")
@@ -484,7 +484,7 @@ You can specify a `strategy` parameter to optimize your multiple queries:
 
 The resulting JSON contains the following fields:
 
-- `results` (array): The results for each request, in the order they were submitted. The contents are the same as in [Search in an index](/doc/api-client/ruby/search#search-in-an-index).
+- `results` (array): The results for each request, in the order they were submitted. The contents are the same as in [Search in an index](#search-in-an-index).
 
     Each result also includes the following additional fields:
 
@@ -546,7 +546,7 @@ res = index.add_objects([{"objectID" => "1",
                           "lastname" => "Speach"}])
 ```
 
-To add a single object, use the [Add Objects](/doc/api-client/ruby/indexing#add-objects) method:
+To add a single object, use the [Add Objects](#add-objects) method:
 
 ```ruby
 res = index.add_object({"firstname" => "Jimmie",
@@ -641,7 +641,7 @@ index.partial_update_object({"price" => {"value" => 42, "_operation" => "Decreme
 Note: Here we are decrementing the value by `42`. To decrement just by one, put
 `value:1`.
 
-To partial update multiple objects using one API call, you can use the `[Partial update objects](/doc/api-client/ruby/indexing#partial-update-objects)` method:
+To partial update multiple objects using one API call, you can use the `[Partial update objects](#partial-update-objects)` method:
 
 ```ruby
 res = index.partial_update_objects([{"firstname" => "Jimmie",
@@ -658,7 +658,7 @@ You can delete objects using their `objectID`:
 res = index.delete_objects(["myID1", "myID2"])
 ```
 
-To delete a single object, you can use the `[Delete objects](/doc/api-client/ruby/indexing#delete-objects)` method:
+To delete a single object, you can use the `[Delete objects](#delete-objects)` method:
 
 ```ruby
 index.delete_object("myID")
@@ -2026,14 +2026,14 @@ There is one exception for the [replicas](#replicas) parameter which is not impa
 
 For example, if you want to fully update your index `MyIndex` every night, we recommend the following process:
 
- 1. Get settings and synonyms from the old index using [Get settings](/doc/api-client/ruby/settings#get-settings)
-  and [Get synonym](/doc/api-client/ruby/synonyms#get-synonym).
+ 1. Get settings and synonyms from the old index using [Get settings](#get-settings)
+  and [Get synonym](#get-synonym).
  1. Apply settings and synonyms to the temporary index `MyTmpIndex`, (this will create the `MyTmpIndex` index)
-  using [Set settings](/doc/api-client/ruby/settings#set-settings) and [Batch synonyms](/doc/api-client/ruby/synonyms#batch-synonyms)
+  using [Set settings](#set-settings) and [Batch synonyms](#batch-synonyms)
   (make sure to remove the [replicas](#replicas) parameter from the settings if it exists).
- 1. Import your records into a new index using [Add Objects](/doc/api-client/ruby/indexing#add-objects).
+ 1. Import your records into a new index using [Add Objects](#add-objects).
  1. Atomically replace the index `MyIndex` with the content and settings of the index `MyTmpIndex`
- using the [Move index](/doc/api-client/ruby/manage-indices#move-index) method.
+ using the [Move index](#move-index) method.
  This will automatically override the old index without any downtime on the search.
  1. You'll end up with only one index called `MyIndex`, that contains the records and settings pushed to `MyTmpIndex`
  and the replica-indices that were initially attached to `MyIndex` will be in sync with the new data.
@@ -2067,7 +2067,7 @@ To address those use-cases we have two different type of keys:
 
 When you need to restrict the scope of the *Search Key*, we recommend to use *Secured API Key*.
 You can generate them on the fly (without any call to the API)
-from the *Search Only API Key* or any search *User Key* using the [Generate key](/doc/api-client/ruby/api-keys#generate-key) method
+from the *Search Only API Key* or any search *User Key* using the [Generate key](#generate-key) method
 
 - **User API Keys**
 
@@ -2076,11 +2076,11 @@ Managing and especially creating those keys requires a call to the API.
 
 We have several methods to manage them:
 
-- [Add user key](/doc/api-client/ruby/advanced#add-user-key)
-- [Update user key](/doc/api-client/ruby/advanced#update-user-key)
-- [Delete user key](/doc/api-client/ruby/advanced#delete-user-key)
-- [List api keys](/doc/api-client/ruby/advanced#list-api-keys)
-- [Get key permissions](/doc/api-client/ruby/advanced#get-key-permissions)
+- [Add user key](#add-user-key)
+- [Update user key](#update-user-key)
+- [Delete user key](#delete-user-key)
+- [List api keys](#list-api-keys)
+- [Get key permissions](#get-key-permissions)
 
 ## Generate key - `generate_secured_api_key` 
 
@@ -2163,7 +2163,7 @@ public_key = Algolia.generate_secured_api_key 'YourSearchOnlyApiKey', {'restrict
 
 If you want to rate limit a secured API Key, the API key you generate the secured api key from need to be rate-limited.
 You can do that either via the dashboard or via the API using the
-[Add user key](/doc/api-client/ruby/advanced#add-user-key) or [Update user key](/doc/api-client/ruby/advanced#update-user-key) method
+[Add user key](#add-user-key) or [Update user key](#update-user-key) method
 
 ##### User Rate Limiting
 
