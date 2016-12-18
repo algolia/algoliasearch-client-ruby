@@ -912,8 +912,6 @@ They are three scopes:
 
 ## Search
 
-<div class='api-client-parameter'>
-
 ### query
 
 - scope: `search`
@@ -926,8 +924,6 @@ If no query parameter is set, the textual search will match with all the objects
 </div>
 
 ## Attributes
-
-<div class='api-client-parameter'>
 
 ### searchableAttributes
 
@@ -955,8 +951,6 @@ To get a full description of how the ranking works, you can have a look at our [
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### attributesForFaceting
 
 - scope: `settings`
@@ -968,8 +962,6 @@ If set to `null`, no attribute is used for faceting.
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### unretrievableAttributes
 
 - scope: `settings`
@@ -980,8 +972,6 @@ This feature allows you to have attributes that are used for indexing
 and/or ranking but cannot be retrieved.
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### attributesToRetrieve
 
@@ -1000,8 +990,6 @@ You can also use `*` to retrieve all values when an **attributesToRetrieve** set
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### restrictSearchableAttributes
 
 - scope: `search`
@@ -1016,8 +1004,6 @@ You can also use a string array encoding (for example `["name","address"]` ).
 </div>
 
 ## Ranking
-
-<div class='api-client-parameter'>
 
 ### ranking
 
@@ -1045,8 +1031,6 @@ To get a full description of how the Ranking works, you can have a look at our [
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### customRanking
 
 - scope: `settings`
@@ -1064,8 +1048,6 @@ To get a full description of how the Custom Ranking works,
 you can have a look at our [Ranking guide](https://www.algolia.com/doc/guides/relevance/ranking).
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### replicas
 
@@ -1088,8 +1070,6 @@ update replica indices with the same operations.
 
 ## Filtering / Faceting
 
-<div class='api-client-parameter'>
-
 ### filters
 
 - scope: `search`
@@ -1110,8 +1090,6 @@ the filter applies to `_tags`.
 For example: `public OR user_42` will translate to `_tags:public OR _tags:user_42`.
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### facets
 
@@ -1149,8 +1127,6 @@ the attribute `exhaustiveFacetsCount` in the response is true when the count is 
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### maxValuesPerFacet
 
 - scope: `settings` `search`
@@ -1165,8 +1141,6 @@ For example, `maxValuesPerFacet=10` will retrieve a maximum of 10 values per fac
 - The engine has a hard limit on the `maxValuesPerFacet` of `1000`. Any value above that will be interpreted by the engine as being `1000`.
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### facetFilters
 
@@ -1189,8 +1163,6 @@ For example, `[["category:Book","category:Movie"],"author:John%20Doe"]`.
 </div>
 
 ## Highlighting / Snippeting
-
-<div class='api-client-parameter'>
 
 ### attributesToHighlight
 
@@ -1215,8 +1187,6 @@ A matchLevel is returned for each highlighted attribute and can contain:
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### attributesToSnippet
 
 - scope: `settings` `search`
@@ -1226,8 +1196,6 @@ Default list of attributes to snippet alongside the number of words to return (s
 If set to null, no snippet is computed.
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### highlightPreTag
 
@@ -1239,8 +1207,6 @@ Specify the string that is inserted before the highlighted parts in the query re
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### highlightPostTag
 
 - scope: `settings` `search`
@@ -1250,8 +1216,6 @@ Specify the string that is inserted before the highlighted parts in the query re
 Specify the string that is inserted after the highlighted parts in the query result (defaults to `</em>`).
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### snippetEllipsisText
 
@@ -1265,8 +1229,6 @@ Defaults to an empty string for all accounts created before 10/2/2016, and to `â
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### restrictHighlightAndSnippetArrays
 
 - scope: `settings` `search`
@@ -1278,8 +1240,6 @@ If set to true, restrict arrays in highlights and snippets to items that matched
 </div>
 
 ## Pagination
-
-<div class='api-client-parameter'>
 
 ### page
 
@@ -1293,8 +1253,6 @@ Pagination parameter used to select the page to retrieve.
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### hitsPerPage
 
 - scope: `settings` `search`
@@ -1304,8 +1262,6 @@ Pagination parameter used to select the page to retrieve.
 Pagination parameter used to select the number of hits per page.
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### offset
 
@@ -1318,8 +1274,6 @@ Offset of the first hit to return (zero-based).
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### length
 
 - scope: `search`
@@ -1330,8 +1284,6 @@ Offset of the first hit to return (zero-based).
 **Warning:** In most cases, `page`/`hitsPerPage` is the recommended method for pagination; `offset`/`length` is reserved for advanced use.
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### paginationLimitedTo
 
@@ -1349,8 +1301,6 @@ A big value will also make it very easy for anyone to download all your dataset.
 
 ## Typos
 
-<div class='api-client-parameter'>
-
 ### minWordSizefor1Typo
 
 - scope: `settings` `search`
@@ -1361,8 +1311,6 @@ The minimum number of characters needed to accept one typo.
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### minWordSizefor2Typos
 
 - scope: `settings` `search`
@@ -1372,8 +1320,6 @@ The minimum number of characters needed to accept one typo.
 The minimum number of characters needed to accept two typos.
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### typoTolerance
 
@@ -1390,8 +1336,6 @@ This option allows you to control the number of typos allowed in the result set:
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### allowTyposOnNumericTokens
 
 - scope: `settings` `search`
@@ -1401,8 +1345,6 @@ This option allows you to control the number of typos allowed in the result set:
 If set to false, disables typo tolerance on numeric tokens (numbers).
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### ignorePlurals
 
@@ -1432,8 +1374,6 @@ Telugu=`te`, Tagalog=`tl`, Tswana=`tn`, Turkish=`tr`, Tatar=`tt`,
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### disableTypoToleranceOnAttributes
 
 - scope: `settings` `search`
@@ -1447,8 +1387,6 @@ Attributes are separated with a comma such as `"name,address"`.
 You can also use a string array encoding (for example `["name","address"]` ).
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### separatorsToIndex
 
@@ -1494,8 +1432,6 @@ Geo search requires that you provide at least one geo location in each record at
 }
 ```
 
-<div class='api-client-parameter'>
-
 ### aroundLatLng
 
 - scope: `search`
@@ -1513,8 +1449,6 @@ For example, `aroundLatLng=47.316669,5.016670`.
 - For example all distances 0 and 100m will be considered as identical for the "geo" ranking parameter.
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### aroundLatLngViaIP
 
@@ -1536,8 +1470,6 @@ will be considered as identical in the ranking for the "geo" ranking parameter (
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### aroundRadius
 
 - scope: `search`
@@ -1554,8 +1486,6 @@ this option will be faster than specifying a big integer value.
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### aroundPrecision
 
 - scope: `search`
@@ -1569,8 +1499,6 @@ identical in the ranking for the `geo` ranking parameter (same for 100-199, 200-
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### minimumAroundRadius
 
 - scope: `search`
@@ -1581,8 +1509,6 @@ The radius is computed automatically using the density of the area.
 You can retrieve the computed radius in the `automaticRadius` attribute of the answer.
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### insideBoundingBox
 
@@ -1600,8 +1526,6 @@ You can use several bounding boxes (OR) by passing more than 4 values.
 For example: instead of having 4 values you can pass 8 to search inside the UNION of two bounding boxes.
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### insidePolygon
 
@@ -1621,8 +1545,6 @@ Search entries inside a given area defined by a set of points
 
 ## Query Strategy
 
-<div class='api-client-parameter'>
-
 ### queryType
 
 - scope: `settings`
@@ -1638,8 +1560,6 @@ Only the last word is interpreted as a prefix (default behavior).
 No query word is interpreted as a prefix. This option is not recommended.
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### removeWordsIfNoResults
 
@@ -1664,8 +1584,6 @@ No specific processing is done when a query does not return any results (default
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### advancedSyntax
 
 - scope: `settings` `search`
@@ -1683,8 +1601,6 @@ For example, `search -engine` will retrieve records containing `search` but not 
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### optionalWords
 
 - scope: `settings` `search`
@@ -1694,8 +1610,6 @@ For example, `search -engine` will retrieve records containing `search` but not 
 A string that contains the comma separated list of words that should be considered as optional when found in the query.
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### removeStopWords
 
@@ -1725,8 +1639,6 @@ For most use cases, it is better to not use this feature as people search by key
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### disablePrefixOnAttributes
 
 - scope: `seetings`
@@ -1741,8 +1653,6 @@ This setting is useful on attributes that contain string that should not be matc
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### disableExactOnAttributes
 
 - scope: `settings`
@@ -1753,8 +1663,6 @@ List of attributes on which you want to disable the computation of `exact` crite
 (must be a subset of the `searchableAttributes` index setting).
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### exactOnSingleWordQuery
 
@@ -1769,8 +1677,6 @@ This parameter control how the `exact` ranking criterion is computed when the qu
 * `attribute` (default): exact set to 1 if there is an attribute containing a string equals to the query
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### alternativesAsExact
 
@@ -1787,8 +1693,6 @@ Specify the list of approximation that should be considered as an exact match in
 </div>
 
 ## Advanced
-
-<div class='api-client-parameter'>
 
 ### attributeForDistinct
 
@@ -1809,8 +1713,6 @@ you can have a look at our [guide on distinct](https://www.algolia.com/doc/searc
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### analyticsTags
 
 - scope: `search`
@@ -1819,8 +1721,6 @@ you can have a look at our [guide on distinct](https://www.algolia.com/doc/searc
 If set, tag your query with the specified identifiers. Tags can then be used in the Analytics to analyze a subset of searches only.
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### synonyms
 
@@ -1832,8 +1732,6 @@ If set to `false`, the search will not use the synonyms defined for the targeted
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### replaceSynonymsInHighlight
 
 - scope: `settings` `search`
@@ -1843,8 +1741,6 @@ If set to `false`, the search will not use the synonyms defined for the targeted
 If set to `false`, words matched via synonym expansion will not be replaced by the matched synonym in the highlighted result.
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### placeholders
 
@@ -1869,8 +1765,6 @@ For example:
 `"placeholders": { "<streetnumber>" : ["1", "2", "3", "4", "5", ... ], ... }`.
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### altCorrections
 
@@ -1897,8 +1791,6 @@ For example:
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### minProximity
 
 - scope: `settings` `search`
@@ -1915,8 +1807,6 @@ will get the same proximity score, even if the second contains a word between th
 **Note:** the maximum `minProximity` that can be set is 7. Any higher value will disable the `proximity` criterion from the ranking formula.
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### responseFields
 
@@ -1937,8 +1827,6 @@ Some fields cannot be filtered out:
 - fields triggered explicitly via [getRankingInfo](#getrankinginfo)
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### distinct
 
@@ -1961,8 +1849,6 @@ you can have a look at our [guide on distinct](https://www.algolia.com/doc/searc
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### getRankingInfo
 
 - scope: `search`
@@ -1973,8 +1859,6 @@ If set to 1,
 the result hits will contain ranking information in the **_rankingInfo** attribute.
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### numericAttributesForFiltering
 
@@ -1993,8 +1877,6 @@ The other operators will be disabled.
 
 </div>
 
-<div class='api-client-parameter'>
-
 ### allowCompressionOfIntegerArray
 
 - scope: `settings`
@@ -2008,8 +1890,6 @@ we recommended enabling this feature and then storing the list of user IDs or ri
 When enabled, the integer array is reordered to reach a better compression ratio.
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### numericFilters
 
@@ -2037,8 +1917,6 @@ translates to `code=1,(price:0 to 100,price:1000 to 2000)`.
 You can also use a string array encoding (for example `numericFilters: ["price>100","price<1000"]`).
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### tagFilters (deprecated)
 
@@ -2068,8 +1946,6 @@ At indexing, tags should be added in the **_tags** attribute of objects.
 For example `{"_tags":["tag1","tag2"]}`.
 
 </div>
-
-<div class='api-client-parameter'>
 
 ### analytics
 
