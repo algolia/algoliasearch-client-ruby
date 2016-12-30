@@ -804,7 +804,7 @@ puts settings.to_json
 index.set_settings({"customRanking" => ["desc(followers)"]})
 ```
 
-You can find the list of parameters you can set in the [Settings Parameters](#settings-parameters) section
+You can find the list of parameters you can set in the [Settings Parameters](#index-settings-parameters) section
 
 **Warning**
 
