@@ -44,6 +44,8 @@ module Algolia
     def destroy
       Thread.current["algolia_search_hosts_#{application_id}"] = nil
       Thread.current["algolia_hosts_#{application_id}"] = nil
+      Thread.current["algolia_host_index_#{application_id}"] = nil
+      Thread.current["algolia_search_host_index_#{application_id}"] = nil
     end
 
     #
@@ -399,11 +401,14 @@ module Algolia
       hosts = Thread.current[thread_hosts_key]
       thread_index_key = read ? "algolia_search_host_index_#{application_id}" : "algolia_host_index_#{application_id}"
       current_host = Thread.current[thread_index_key].to_i # `to_i` to ensure first call is 0
-      if current_host != 0 && hosts[current_host][:last_call].to_i < Time.now.to_i - 60
-        # the current_host is not the first one and we've been using it for less than a minute; continue doing so
+      # we want to always target host 0 first
+      # if the current host is not 0, then we want to use it first only if (we never used it OR we're using it since less than 1 minute)
+      if current_host != 0 && (hosts[current_host][:last_call].nil? || hosts[current_host][:last_call] > Time.now.to_i - 60)
+        # first host will be `current_host`
         first = hosts[current_host]
         [first] + hosts.reject { |h| h[:index] == 0 || h == first } + hosts.select { |h| h[:index] == 0 }
       else
+        # first host will be `0`
         hosts
       end
     end

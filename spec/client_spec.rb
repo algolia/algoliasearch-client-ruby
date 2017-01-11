@@ -979,21 +979,17 @@ describe 'Client' do
   end
 
   context 'DNS timeout' do
-    before(:all) do
-      app_id = ENV['ALGOLIA_APPLICATION_ID']
-      Thread.current["algolia_hosts_#{app_id}"] = nil
-      Thread.current["algolia_search_hosts_#{app_id}"] = nil
-      Thread.current["algolia_host_index_#{app_id}"] = nil
-      Thread.current["algolia_search_host_index_#{app_id}"] = nil
+    before(:each) do
       @client = Algolia::Client.new :application_id => ENV['ALGOLIA_APPLICATION_ID'], :api_key => ENV['ALGOLIA_API_KEY'],
         :hosts => [
-          "#{ENV['ALGOLIA_APPLICATION_ID']}.algolia.biz",
+          "10.0.0.1", # this will timeout
           "#{ENV['ALGOLIA_APPLICATION_ID']}.algolia.net",
           "#{ENV['ALGOLIA_APPLICATION_ID']}-1.algolianet.com",
           "#{ENV['ALGOLIA_APPLICATION_ID']}-2.algolianet.com",
           "#{ENV['ALGOLIA_APPLICATION_ID']}-3.algolianet.com"
         ],
         :connect_timeout => 5
+      @client.destroy # make sure the thread-local vars are reseted
     end
 
     it "should fallback to the 2nd host after a few seconds" do
