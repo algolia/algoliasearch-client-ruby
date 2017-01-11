@@ -979,7 +979,7 @@ describe 'Client' do
   end
 
   context 'DNS timeout' do
-    before(:all) do
+    before(:each) do
       app_id = ENV['ALGOLIA_APPLICATION_ID']
       Thread.current["algolia_hosts_#{app_id}"] = nil
       Thread.current["algolia_search_hosts_#{app_id}"] = nil
@@ -1008,7 +1008,7 @@ describe 'Client' do
       expect(start_time.to_i + 5).to be <= Time.now.to_i + 1
       start_time = Time.now
       @client.list_indexes # re-use the 2nd one
-      expect(start_time.to_i).to be <= Time.now.to_i + 1
+      expect(start_time.to_i).to be >= Time.now.to_i - 1
     end
   end
 

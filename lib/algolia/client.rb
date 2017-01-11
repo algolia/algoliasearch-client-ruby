@@ -399,7 +399,7 @@ module Algolia
       hosts = Thread.current[thread_hosts_key]
       thread_index_key = read ? "algolia_search_host_index_#{application_id}" : "algolia_host_index_#{application_id}"
       current_host = Thread.current[thread_index_key].to_i # `to_i` to ensure first call is 0
-      if current_host != 0 && hosts[current_host][:last_call].to_i < Time.now.to_i - 60
+      if current_host != 0 && hosts[current_host][:last_call].to_i > Time.now.to_i - 60
         # the current_host is not the first one and we've been using it for less than a minute; continue doing so
         first = hosts[current_host]
         [first] + hosts.reject { |h| h[:index] == 0 || h == first } + hosts.select { |h| h[:index] == 0 }
