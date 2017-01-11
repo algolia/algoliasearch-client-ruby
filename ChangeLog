@@ -1,12 +1,15 @@
 CHANGELOG
 
-2016-12-07
+2016-12-07 1.12.5
+      * Fixed retry strategy not keeping the `current_host` first #163
+
+2016-12-07 1.12.4
       * Fix DNS tests
 
-2016-12-06
+2016-12-06 1.12.3
       * Allow for multiple clients on different app ids on the same thread
 
-2016-12-05
+2016-12-05 1.12.2
       * Fix client scoped methods
 
 2016-11-25 1.12.1
