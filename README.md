@@ -732,7 +732,7 @@ index.partial_update_object({"price" => {"value" => 42, "_operation" => "Decreme
 Note: Here we are decrementing the value by `42`. To decrement just by one, put
 `value:1`.
 
-To partial update multiple objects using one API call, you can use the `[Partial update objects](#partial-update-objects)` method:
+To partial update multiple objects using one API call, you can use the following method:
 
 ```ruby
 res = index.partial_update_objects([{"firstname" => "Jimmie",
@@ -749,7 +749,7 @@ You can delete objects using their `objectID`:
 res = index.delete_objects(["myID1", "myID2"])
 ```
 
-To delete a single object, you can use the `[Delete objects](#delete-objects)` method:
+To delete a single object, you can use the following method:
 
 ```ruby
 index.delete_object("myID")
@@ -900,8 +900,6 @@ Parameters that can be overridden at search time also have the `search` [scope](
 # Parameters
 
 
-
-<section id="api-client-parameters-overview">
 
 ## Overview
 
