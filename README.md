@@ -15,7 +15,7 @@ The **Algolia Search API Client for Ruby** lets you easily use the [Algolia Sear
 **Getting Started**
 
 1. [Install](#install)
-1. [Init index - `init_index`](#init-index---initindex)
+1. [Init index - `init_index`](#init-index---init_index)
 1. [Quick Start](#quick-start)
 
 **Search**
@@ -23,23 +23,23 @@ The **Algolia Search API Client for Ruby** lets you easily use the [Algolia Sear
 1. [Search an index - `search`](#search-an-index---search)
 1. [Search Response Format](#search-response-format)
 1. [Search Parameters](#search-parameters)
-1. [Search multiple indices - `multiple_queries`](#search-multiple-indices---multiplequeries)
-1. [Get Objects - `get_objects`](#get-objects---getobjects)
-1. [Search for facet values - `search_for_facet_values`](#search-for-facet-values---searchforfacetvalues)
+1. [Search multiple indices - `multiple_queries`](#search-multiple-indices---multiple_queries)
+1. [Get Objects - `get_objects`](#get-objects---get_objects)
+1. [Search for facet values - `search_for_facet_values`](#search-for-facet-values---search_for_facet_values)
 
 **Indexing**
 
-1. [Add Objects - `add_objects`](#add-objects---addobjects)
-1. [Update objects - `save_objects`](#update-objects---saveobjects)
-1. [Partial update objects - `partial_update_objects`](#partial-update-objects---partialupdateobjects)
-1. [Delete objects - `delete_objects`](#delete-objects---deleteobjects)
-1. [Delete by query - `delete_by_query`](#delete-by-query---deletebyquery)
-1. [Wait for operations - `wait_task`](#wait-for-operations---waittask)
+1. [Add Objects - `add_objects`](#add-objects---add_objects)
+1. [Update objects - `save_objects`](#update-objects---save_objects)
+1. [Partial update objects - `partial_update_objects`](#partial-update-objects---partial_update_objects)
+1. [Delete objects - `delete_objects`](#delete-objects---delete_objects)
+1. [Delete by query - `delete_by_query`](#delete-by-query---delete_by_query)
+1. [Wait for operations - `wait_task`](#wait-for-operations---wait_task)
 
 **Settings**
 
-1. [Get settings - `get_settings`](#get-settings---getsettings)
-1. [Set settings - `set_settings`](#set-settings---setsettings)
+1. [Get settings - `get_settings`](#get-settings---get_settings)
+1. [Set settings - `set_settings`](#set-settings---set_settings)
 1. [Index settings parameters](#index-settings-parameters)
 
 **Parameters**
@@ -60,37 +60,37 @@ The **Algolia Search API Client for Ruby** lets you easily use the [Algolia Sear
 **Manage Indices**
 
 1. [Create an index](#create-an-index)
-1. [List indices - `list_indexes`](#list-indices---listindexes)
-1. [Delete an index - `delete_index`](#delete-an-index---deleteindex)
-1. [Clear an index - `clear_index`](#clear-an-index---clearindex)
-1. [Copy index - `copy_index`](#copy-index---copyindex)
-1. [Move index - `move_index`](#move-index---moveindex)
+1. [List indices - `list_indexes`](#list-indices---list_indexes)
+1. [Delete an index - `delete_index`](#delete-an-index---delete_index)
+1. [Clear an index - `clear_index`](#clear-an-index---clear_index)
+1. [Copy index - `copy_index`](#copy-index---copy_index)
+1. [Move index - `move_index`](#move-index---move_index)
 
 **Api keys**
 
 1. [Overview](#overview)
-1. [Generate key - `generate_secured_api_key`](#generate-key---generatesecuredapikey)
+1. [Generate key - `generate_secured_api_key`](#generate-key---generate_secured_api_key)
 
 **Synonyms**
 
-1. [Save synonym - `save_synonym`](#save-synonym---savesynonym)
-1. [Batch synonyms - `batch_synonyms`](#batch-synonyms---batchsynonyms)
+1. [Save synonym - `save_synonym`](#save-synonym---save_synonym)
+1. [Batch synonyms - `batch_synonyms`](#batch-synonyms---batch_synonyms)
 1. [Editing Synonyms](#editing-synonyms)
-1. [Delete synonym - `delete_synonym`](#delete-synonym---deletesynonym)
-1. [Clear all synonyms - `clear_synonyms`](#clear-all-synonyms---clearsynonyms)
-1. [Get synonym - `get_synonym`](#get-synonym---getsynonym)
-1. [Search synonyms - `search_synonyms`](#search-synonyms---searchsynonyms)
+1. [Delete synonym - `delete_synonym`](#delete-synonym---delete_synonym)
+1. [Clear all synonyms - `clear_synonyms`](#clear-all-synonyms---clear_synonyms)
+1. [Get synonym - `get_synonym`](#get-synonym---get_synonym)
+1. [Search synonyms - `search_synonyms`](#search-synonyms---search_synonyms)
 
 **Advanced**
 
 1. [Custom batch - `batch`](#custom-batch---batch)
 1. [Backup / Export an index - `browse`](#backup--export-an-index---browse)
-1. [List api keys - `list_api_keys`](#list-api-keys---listapikeys)
-1. [Add user key - `add_user_key`](#add-user-key---adduserkey)
-1. [Update user key - `update_user_key`](#update-user-key---updateuserkey)
-1. [Delete user key - `delete_user_key`](#delete-user-key---deleteuserkey)
-1. [Get key permissions - `get_user_key_acl`](#get-key-permissions---getuserkeyacl)
-1. [Get latest logs - `get_logs`](#get-latest-logs---getlogs)
+1. [List api keys - `list_api_keys`](#list-api-keys---list_api_keys)
+1. [Add user key - `add_user_key`](#add-user-key---add_user_key)
+1. [Update user key - `update_user_key`](#update-user-key---update_user_key)
+1. [Delete user key - `delete_user_key`](#delete-user-key---delete_user_key)
+1. [Get key permissions - `get_user_key_acl`](#get-key-permissions---get_user_key_acl)
+1. [Get latest logs - `get_logs`](#get-latest-logs---get_logs)
 1. [REST API](#rest-api)
 
 **Mocking**
