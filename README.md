@@ -474,6 +474,7 @@ Parameters that can also be used in a setSettings also have the `indexing` [scop
 - [replaceSynonymsInHighlight](#replacesynonymsinhighlight) `settings`, `search`
 - [minProximity](#minproximity) `settings`, `search`
 - [responseFields](#responsefields) `settings`, `search`
+- [maxFacetHits](#maxfacethits) `settings`, `search`
 
 ## Search multiple indices - `multiple_queries` 
 
@@ -526,19 +527,16 @@ res = index.get_objects(["myID", "myID2"])
 
 ## Search for facet values - `search_for_facet_values` 
 
-When a facet can take many different values, it can be useful to search within them. The typical use case is to build
-an autocomplete menu for facet refinements, but of course other use cases may apply as well.
+When there are many facet values for a given facet, it may be useful to search within them. For example, you may have dozens of 'brands' for a given index of 'clothes'. Rather than displaying all of the brands, it is often best to only display the most popular and add a search input to allow the user to search for the brand that they are looking for.
 
-The facet search is different from a regular search in the sense that it retrieves *facet values*, not *objects*.
-In other words, a value will only be returned once, even if it matches many different objects. How many objects it
-matches is indicated by a count.
+Searching on facet values is different than a regular search because you are searching only on *facet values*, not *objects*.
 
-The results are sorted by decreasing count. Maximum 10 results are returned. No pagination is possible.
+The results are sorted by decreasing count. By default, maximum 10 results are returned. This can be adjusted via [maxFacetHits](#maxfacethits). No pagination is possible.
 
-The facet search can optionally be restricted by a regular search query. In that case, it will return only facet values
-that both:
+The facet search can optionally take regular search query parameters.
+In that case, it will return only facet values that both:
 
-1. match the facet query; and
+1. match the facet query
 2. are contained in objects matching the regular search query.
 
 **Warning:** For a facet to be searchable, it must have been declared with the `searchable()` modifier in the [attributesForFaceting](#attributesforfaceting) index setting.
@@ -903,6 +901,7 @@ Parameters that can be overridden at search time also have the `search` [scope](
 - [altCorrections](#altcorrections) `settings`
 - [minProximity](#minproximity) `settings`, `search`
 - [responseFields](#responsefields) `settings`, `search`
+- [maxFacetHits](#maxfacethits) `settings`, `search`
 
 
 # Parameters
@@ -1019,6 +1018,7 @@ There are three scopes:
 - [altCorrections](#altcorrections) `settings`
 - [minProximity](#minproximity) `settings`, `search`
 - [responseFields](#responsefields) `settings`, `search`
+- [maxFacetHits](#maxfacethits) `settings`, `search`
 
 ## Search
 
@@ -2230,6 +2230,19 @@ List of fields that *cannot* be filtered out:
 - `timeoutHits` (deprecated, please use `exhaustiveFacetsCount` instead)
 - `parsedQuery`
 - all fields triggered by [getRankingInfo](#getrankinginfo)
+
+#### maxFacetHits
+
+- scope: `settings` `search`
+- type: integer
+- default: 10
+
+Maximum number of facet hits to return during a search for facet values.
+
+**Warning:** Does not apply to regular search queries.
+
+**Note:** For performance reasons, the maximum allowed number of returned values is 100.
+Any value outside the range [1, 100] will be rejected.
 
 
 # Manage Indices
