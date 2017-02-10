@@ -6,6 +6,9 @@ The **Algolia Search API Client for Ruby** lets you easily use the [Algolia Sear
 [![Build Status](https://travis-ci.org/algolia/algoliasearch-client-ruby.svg?branch=master)](https://travis-ci.org/algolia/algoliasearch-client-ruby) [![Gem Version](https://badge.fury.io/rb/algoliasearch.svg)](http://badge.fury.io/rb/algoliasearch) [![Code Climate](https://codeclimate.com/github/algolia/algoliasearch-client-ruby.svg)](https://codeclimate.com/github/algolia/algoliasearch-client-ruby) [![Coverage Status](https://coveralls.io/repos/algolia/algoliasearch-client-ruby/badge.svg)](https://coveralls.io/r/algolia/algoliasearch-client-ruby)
 
 
+If you are a **Ruby on Rails** user, you are probably looking for the [algoliasearch-rails](https://github.com/algolia/algoliasearch-rails) gem.
+
+
 **Note:** An easier-to-read version of this documentation is available on
 [Algolia's website](https://www.algolia.com/doc/api-client/ruby/).
 
@@ -85,7 +88,7 @@ The **Algolia Search API Client for Ruby** lets you easily use the [Algolia Sear
 
 1. [Custom batch - `batch`](#custom-batch---batch)
 1. [Backup / Export an index - `browse`](#backup--export-an-index---browse)
-1. [List api keys - `list_api_keys`](#list-api-keys---list_api_keys)
+1. [List user keys - `list_user_keys`](#list-user-keys---list_user_keys)
 1. [Add user key - `add_user_key`](#add-user-key---add_user_key)
 1. [Update user key - `update_user_key`](#update-user-key---update_user_key)
 1. [Delete user key - `delete_user_key`](#delete-user-key---delete_user_key)
@@ -691,12 +694,14 @@ index.delete_object("myID")
 
 ## Delete by query - `delete_by_query` 
 
-You can delete all objects matching a single query with the following code. Internally, the API client performs the query, deletes all matching hits, and waits until the deletions have been applied.
+The "delete by query" helper deletes all objects matching a query. Internally, the API client will browse the index (as in [Backup / Export an index](#backup--export-an-index)), delete all matching hits, and wait until all deletion tasks have been applied.
 
-Take your precautions when using this method. Calling it with an empty query will result in cleaning the index of all its records.
+**Warning:** Be careful when using this method. Calling it with an empty query will result in cleaning the index of all its records.
 
 ```ruby
-params = {}
+params = {
+  # any browse-compatible query parameters
+}
 index.delete_by_query("John", params)
 ```
 
@@ -879,7 +884,7 @@ We have several methods to manage them:
 - [Add user key](#add-user-key)
 - [Update user key](#update-user-key)
 - [Delete user key](#delete-user-key)
-- [List api keys](#list-api-keys)
+- [List user keys](#list-user-keys)
 - [Get key permissions](#get-key-permissions)
 
 ## Generate key - `generate_secured_api_key` 
@@ -1191,7 +1196,7 @@ index.browse() do |hit|
 end
 ```
 
-## List api keys - `list_api_keys` 
+## List user keys - `list_user_keys` 
 
 To list existing keys, you can use:
 
