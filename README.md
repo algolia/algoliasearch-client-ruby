@@ -9,6 +9,7 @@ The **Algolia Search API Client for Ruby** lets you easily use the [Algolia Sear
 If you are a **Ruby on Rails** user, you are probably looking for the [algoliasearch-rails](https://github.com/algolia/algoliasearch-rails) gem.
 
 
+
 **Note:** An easier-to-read version of this documentation is available on
 [Algolia's website](https://www.algolia.com/doc/api-client/ruby/).
 
@@ -20,6 +21,7 @@ If you are a **Ruby on Rails** user, you are probably looking for the [algoliase
 1. [Install](#install)
 1. [Init index - `init_index`](#init-index---init_index)
 1. [Quick Start](#quick-start)
+1. [Getting Help](#getting-help)
 
 **Search**
 
@@ -76,6 +78,7 @@ If you are a **Ruby on Rails** user, you are probably looking for the [algoliase
 
 **Synonyms**
 
+1. [Overview](#overview)
 1. [Save synonym - `save_synonym`](#save-synonym---save_synonym)
 1. [Batch synonyms - `batch_synonyms`](#batch-synonyms---batch_synonyms)
 1. [Editing Synonyms](#editing-synonyms)
@@ -226,6 +229,11 @@ function searchCallback(err, content) {
 }
 </script>
 ```
+
+## Getting Help
+
+- **Need help**? Ask a question to the [Algolia Community](https://discourse.algolia.com/) or on [Stack Overflow](http://stackoverflow.com/questions/tagged/algolia).
+- **Found a bug?** You can open a [GitHub issue](https://github.com/algolia/algoliasearch-client-ruby/issues).
 
 
 # Search
@@ -1001,6 +1009,42 @@ public_key = Algolia.generate_secured_api_key 'YourSearchOnlyApiKey', {'restrict
 # Synonyms
 
 
+
+## Overview
+
+Synonyms tell the engine about sets of words and expressions that should be considered equal with regard to textual relevance.
+
+All synonym records have a type attribute. The two most used types are:
+
+- (Regular) Synonyms - `synonym`: Regular synonyms are the most common, all words or expressions are considered equals
+
+  ```json
+  {
+     "objectID": "NAME",
+     "type": "synonym",
+     "synonyms":[
+        "tv",
+        "television",
+        "tv set"
+     ]
+  }
+  ```
+
+- One-way Synonym - `oneWaySynonym`: When the `input` is searched all words or expressions in synonyms are considered equals to the input
+
+  ```json
+  {
+     "objectID": "NAME",
+     "type": "oneWaySynonym",
+     "input": "tablet",
+     "synonyms":[
+        "ipad",
+        "galaxy note"
+     ]
+  }
+  ```
+
+If you're looking for other types of synonyms or want more details you can have a look at our [synonyms guide](https://www.algolia.com/doc/guides/relevance/synonyms)
 
 ## Save synonym - `save_synonym` 
 
