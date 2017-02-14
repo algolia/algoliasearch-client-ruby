@@ -97,7 +97,6 @@ If you are a **Ruby on Rails** user, you are probably looking for the [algoliase
 1. [Delete user key - `delete_user_key`](#delete-user-key---delete_user_key)
 1. [Get key permissions - `get_user_key_acl`](#get-key-permissions---get_user_key_acl)
 1. [Get latest logs - `get_logs`](#get-latest-logs---get_logs)
-1. [REST API](#rest-api)
 
 **Mocking**
 
@@ -119,7 +118,6 @@ Check our [online guides](https://www.algolia.com/doc):
 * [Geo-Search](https://www.algolia.com/doc/geo-search/geo-search-overview)
 * [Security](https://www.algolia.com/doc/security/best-security-practices)
 * [API-Keys](https://www.algolia.com/doc/security/api-keys)
-* [REST API](https://www.algolia.com/doc/rest)
 
 
 # Getting Started
@@ -1426,18 +1424,6 @@ puts Algolia.get_logs(0, 100).to_json
 # Get last 100 errors
 puts Algolia.get_logs(0, 100, true).to_json
 ```
-
-## REST API
-
-We've developed API clients for the most common programming languages and platforms.
-These clients are advanced wrappers on top of our REST API itself and have been made
-in order to help you integrating the service within your apps:
-for both indexing and search.
-
-Everything that can be done using the REST API can be done using those clients.
-
-The REST API lets your interact directly with Algolia platforms from anything that can send an HTTP request
-[Go to the REST API doc](https://algolia.com/doc/rest)
 
 
 # Mocking
