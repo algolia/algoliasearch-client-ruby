@@ -1,5 +1,8 @@
 CHANGELOG
 
+2017-03-01 1.12.7
+      * Renamed all `*_user_key` methods to `*_api_key`
+
 2017-01-25 1.12.6
       * Upgraded `httpclient` to 2.8.3
 
