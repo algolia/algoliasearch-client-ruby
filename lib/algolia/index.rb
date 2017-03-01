@@ -446,12 +446,12 @@ module Algolia
     end
 
     # List all existing user keys with their associated ACLs
-    def list_user_keys
+    def list_api_keys
       client.get(Protocol.index_keys_uri(name), :read)
     end
 
     # Get ACL of a user key
-    def get_user_key(key)
+    def get_api_key(key)
       client.get(Protocol.index_key_uri(name, key), :read)
     end
 
@@ -480,7 +480,7 @@ module Algolia
     #  @param maxQueriesPerIPPerHour the maximum number of API calls allowed from an IP address per hour (0 means unlimited)
     #  @param maxHitsPerQuery  the maximum number of hits this API key can retrieve in one call (0 means unlimited)
     #
-    def add_user_key(obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0)
+    def add_api_key(obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0)
       if obj.instance_of? Array
         params = {
           :acl => obj
@@ -525,7 +525,7 @@ module Algolia
     #  @param maxQueriesPerIPPerHour the maximum number of API calls allowed from an IP address per hour (0 means unlimited)
     #  @param maxHitsPerQuery  the maximum number of hits this API key can retrieve in one call (0 means unlimited)
     #
-    def update_user_key(key, obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0)
+    def update_api_key(key, obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0)
       if obj.instance_of? Array
         params = {
           :acl => obj
@@ -547,7 +547,7 @@ module Algolia
 
 
     # Delete an existing user key
-    def delete_user_key(key)
+    def delete_api_key(key)
       client.delete(Protocol.index_key_uri(name, key))
     end
 
@@ -770,6 +770,13 @@ module Algolia
       wait_task(res["taskID"])
       return res
     end
+
+    # Deprecated
+    alias_method :get_user_key, :get_api_key
+    alias_method :list_user_keys, :list_api_keys
+    alias_method :add_user_key, :add_api_key
+    alias_method :update_user_key, :update_api_key
+    alias_method :delete_user_key, :delete_api_key
 
     private
     def check_array(objs)

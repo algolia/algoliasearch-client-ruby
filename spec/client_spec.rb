@@ -400,7 +400,7 @@ describe 'Client' do
   def wait_key(index, key, &block)
     1.upto(60) do # do not wait too long
       begin
-        k = index.get_user_key(key)
+        k = index.get_api_key(key)
         if block_given?
           return if yield k
           # not found
@@ -418,7 +418,7 @@ describe 'Client' do
   def wait_key_missing(index, key)
     1.upto(60) do # do not wait too long
       begin
-        k = index.get_user_key(key)
+        k = index.get_api_key(key)
         sleep 1
       rescue
         # not found
@@ -430,7 +430,7 @@ describe 'Client' do
   def wait_global_key(key, &block)
     1.upto(60) do # do not wait too long
       begin
-        k = Algolia.get_user_key(key)
+        k = Algolia.get_api_key(key)
         if block_given?
           return if yield k
           # not found
@@ -448,7 +448,7 @@ describe 'Client' do
   def wait_global_key_missing(key)
     1.upto(60) do # do not wait too long
       begin
-        k = Algolia.get_user_key(key)
+        k = Algolia.get_api_key(key)
         sleep 1
       rescue
         # not found
@@ -459,46 +459,46 @@ describe 'Client' do
 
   it "should test index keys" do
     @index.set_settings!({}) # ensure the index exists
-    resIndex = @index.list_user_keys
-    newIndexKey = @index.add_user_key(['search'])
+    resIndex = @index.list_api_keys
+    newIndexKey = @index.add_api_key(['search'])
     newIndexKey['key'].should_not eq("")
     wait_key(@index, newIndexKey['key'])
-    resIndexAfter = @index.list_user_keys
+    resIndexAfter = @index.list_api_keys
     is_include(resIndex['keys'], 'value', newIndexKey['key']).should eq(false)
     is_include(resIndexAfter['keys'], 'value', newIndexKey['key']).should eq(true)
-    indexKey = @index.get_user_key(newIndexKey['key'])
+    indexKey = @index.get_api_key(newIndexKey['key'])
     indexKey['acl'][0].should eq('search')
-    @index.update_user_key(newIndexKey['key'], ['addObject'])
+    @index.update_api_key(newIndexKey['key'], ['addObject'])
     wait_key(@index, newIndexKey['key']) do |key|
       key['acl'] == ['addObject']
     end
-    indexKey = @index.get_user_key(newIndexKey['key'])
+    indexKey = @index.get_api_key(newIndexKey['key'])
     indexKey['acl'][0].should eq('addObject')
-    @index.delete_user_key(newIndexKey['key'])
+    @index.delete_api_key(newIndexKey['key'])
     wait_key_missing(@index, newIndexKey['key'])
-    resIndexEnd = @index.list_user_keys
+    resIndexEnd = @index.list_api_keys
     is_include(resIndexEnd['keys'], 'value', newIndexKey['key']).should eq(false)
   end
 
   it "should test global keys" do
-    res = Algolia.list_user_keys
-    newKey = Algolia.add_user_key(['search'])
+    res = Algolia.list_api_keys
+    newKey = Algolia.add_api_key(['search'])
     newKey['key'].should_not eq("")
     wait_global_key(newKey['key'])
-    resAfter = Algolia.list_user_keys
+    resAfter = Algolia.list_api_keys
     is_include(res['keys'], 'value', newKey['key']).should eq(false)
     is_include(resAfter['keys'], 'value', newKey['key']).should eq(true)
-    key = Algolia.get_user_key(newKey['key'])
+    key = Algolia.get_api_key(newKey['key'])
     key['acl'][0].should eq('search')
-    Algolia.update_user_key(newKey['key'], ['addObject'])
+    Algolia.update_api_key(newKey['key'], ['addObject'])
     wait_global_key(newKey['key']) do |key|
       key['acl'] == ['addObject']
     end
-    key = Algolia.get_user_key(newKey['key'])
+    key = Algolia.get_api_key(newKey['key'])
     key['acl'][0].should eq('addObject')
-    Algolia.delete_user_key(newKey['key'])
+    Algolia.delete_api_key(newKey['key'])
     wait_global_key_missing(newKey['key'])
-    resEnd = Algolia.list_user_keys
+    resEnd = Algolia.list_api_keys
     is_include(resEnd['keys'], 'value', newKey['key']).should eq(false)
   end
 
@@ -692,13 +692,13 @@ describe 'Client' do
   end
 
   it "Check add keys" do
-    newIndexKey = @index.add_user_key(['search'])
+    newIndexKey = @index.add_api_key(['search'])
     newIndexKey.should have_key('key')
     newIndexKey['key'].should be_a(String)
     newIndexKey.should have_key('createdAt')
     newIndexKey['createdAt'].should be_a(String)
     sleep 5 # no task ID here
-    resIndex = @index.list_user_keys
+    resIndex = @index.list_api_keys
     resIndex.should have_key('keys')
     resIndex['keys'].should be_a(Array)
     resIndex['keys'][0].should have_key('value')
@@ -707,14 +707,14 @@ describe 'Client' do
     resIndex['keys'][0]['acl'].should be_a(Array)
     resIndex['keys'][0].should have_key('validity')
     resIndex['keys'][0]['validity'].should be_a(Integer)
-    indexKey = @index.get_user_key(newIndexKey['key'])
+    indexKey = @index.get_api_key(newIndexKey['key'])
     indexKey.should have_key('value')
     indexKey['value'].should be_a(String)
     indexKey.should have_key('acl')
     indexKey['acl'].should be_a(Array)
     indexKey.should have_key('validity')
     indexKey['validity'].should be_a(Integer)
-    task = @index.delete_user_key(newIndexKey['key'])
+    task = @index.delete_api_key(newIndexKey['key'])
     task.should have_key('deletedAt')
     task['deletedAt'].should be_a(String)
   end
