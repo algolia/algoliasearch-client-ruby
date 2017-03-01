@@ -198,12 +198,12 @@ module Algolia
     end
 
     # List all existing user keys with their associated ACLs
-    def list_user_keys
+    def list_api_keys
       get(Protocol.keys_uri, :read)
     end
 
     # Get ACL of a user key
-    def get_user_key(key)
+    def get_api_key(key)
       get(Protocol.key_uri(key), :read)
     end
 
@@ -234,7 +234,7 @@ module Algolia
     #  @param maxHitsPerQuery  the maximum number of hits this API key can retrieve in one call (0 means unlimited)
     #  @param indexes the optional list of targeted indexes
     #
-    def add_user_key(obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
+    def add_api_key(obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
       if obj.instance_of? Array
         params = {
           :acl => obj
@@ -282,7 +282,7 @@ module Algolia
     #  @param maxHitsPerQuery  the maximum number of hits this API key can retrieve in one call (0 means unlimited)
     #  @param indexes the optional list of targeted indexes
     #
-    def update_user_key(key, obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
+    def update_api_key(key, obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
       if obj.instance_of? Array
         params = {
           :acl => obj
@@ -303,9 +303,9 @@ module Algolia
       put(Protocol.key_uri(key), params.to_json)
     end
 
-
+   
     # Delete an existing user key
-    def delete_user_key(key)
+    def delete_api_key(key)
       delete(Protocol.key_uri(key))
     end
 
@@ -430,6 +430,12 @@ module Algolia
       return JSON.parse(response.content)
     end
 
+    # Deprecated
+    alias_method :list_user_keys, :list_api_keys
+    alias_method :get_user_key, :get_api_key
+    alias_method :add_user_key, :add_api_key
+    alias_method :update_user_key, :update_api_key
+    alias_method :delete_user_key, :delete_api_key
   end
 
   # Module methods
@@ -588,11 +594,21 @@ module Algolia
   end
 
   # List all existing user keys with their associated ACLs
+  def Algolia.list_api_keys
+    Algolia.client.list_api_keys
+  end
+
+  # Deprecated
   def Algolia.list_user_keys
-    Algolia.client.list_user_keys
+    Algolia.client.list_api_keys
   end
 
   # Get ACL of a user key
+  def Algolia.get_api_key(key)
+    Algolia.client.get_api_key(key)
+  end
+
+  # Deprecated
   def Algolia.get_user_key(key)
     Algolia.client.get_user_key(key)
   end
@@ -624,8 +640,13 @@ module Algolia
   #  @param maxHitsPerQuery  the maximum number of hits this API key can retrieve in one call (0 means unlimited)
   #  @param indexes the optional list of targeted indexes
   #
+  def Algolia.add_api_key(obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
+    Algolia.client.add_api_key(obj, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
+  end
+
+  # Deprecated
   def Algolia.add_user_key(obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
-    Algolia.client.add_user_key(obj, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
+    Algolia.client.add_api_key(obj, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
   end
 
   #
@@ -655,13 +676,23 @@ module Algolia
   #  @param maxHitsPerQuery  the maximum number of hits this API key can retrieve in one call (0 means unlimited)
   #  @param indexes the optional list of targeted indexes
   #
+  def Algolia.update_api_key(key, obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
+    Algolia.client.update_api_key(key, obj, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
+  end
+
+  # Deprecated
   def Algolia.update_user_key(key, obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
-    Algolia.client.update_user_key(key, obj, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
+    Algolia.client.update_api_key(key, obj, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
   end
 
   # Delete an existing user key
+  def Algolia.delete_api_key(key)
+    Algolia.client.delete_api_key(key)
+  end
+
+  # Deprecated
   def Algolia.delete_user_key(key)
-      Algolia.client.delete_user_key(key)
+    Algolia.client.delete_api_key(key)
   end
 
   # Send a batch request targeting multiple indices
