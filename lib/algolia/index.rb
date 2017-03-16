@@ -235,6 +235,15 @@ module Algolia
       client.post(Protocol.objects_uri, { :requests => requests }.to_json, :read)['results']
     end
 
+    # Check the status of a task on the server.
+    # All server task are asynchronous and you can check the status of a task with this method.
+    #
+    # @param taskID the id of the task returned by server
+    #
+    def get_task_status(taskID)
+      client.get(Protocol.task_uri(name, taskID), :read)["status"]
+    end
+
     # Wait the publication of a task on the server.
     # All server task are asynchronous and you can check with this method that the task is published.
     #
@@ -243,7 +252,7 @@ module Algolia
     #
     def wait_task(taskID, timeBeforeRetry = 100)
       loop do
-        status = client.get(Protocol.task_uri(name, taskID), :read)["status"]
+        status = get_task_status(taskID)
         if status == "published"
           return
         end
