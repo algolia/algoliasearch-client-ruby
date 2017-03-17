@@ -691,6 +691,12 @@ describe 'Client' do
     [true, false].should include(task['pendingTask'])
   end
 
+  it 'Check attributes get_task_status' do
+    task = @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
+    status = @index.get_task_status(task["taskID"])
+    status.should be_a(String)
+  end
+
   it "Check add keys" do
     newIndexKey = @index.add_api_key(['search'])
     newIndexKey.should have_key('key')
