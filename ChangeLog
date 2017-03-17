@@ -1,5 +1,8 @@
 CHANGELOG
 
+2017-03-17 1.13.0
+      * Add a `index.get_task_status(taskID)` method (#199)
+
 2017-03-01 1.12.7
       * Renamed all `*_user_key` methods to `*_api_key`
 
