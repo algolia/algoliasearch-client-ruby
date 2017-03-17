@@ -693,7 +693,7 @@ describe 'Client' do
 
   it 'Check attributes get_task_status' do
     task = @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
-    status = @index.get_task_status(task["objectID"])
+    status = @index.get_task_status(task["taskID"])
     status.should be_a(String)
   end
 
