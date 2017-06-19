@@ -193,6 +193,7 @@ module Algolia
       else
         params[:page] ||= 0
         params[:hitsPerPage] ||= 1000
+        params[:distinct] ||= false
         client.get(Protocol.browse_uri(name, params), :read)
       end
     end
