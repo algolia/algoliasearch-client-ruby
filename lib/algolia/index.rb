@@ -410,6 +410,16 @@ module Algolia
         wait_task res['taskID'] unless async
       end
     end
+    
+    #
+    # Delete all objects matching a query and wait until they're deleted
+    #
+    # @param query the query string
+    # @param params the optional query parameters
+    #
+    def delete_by_query!(query, params = nil)
+      delete_by_query(query, params, false)
+    end
 
     #
     # Delete the index content
