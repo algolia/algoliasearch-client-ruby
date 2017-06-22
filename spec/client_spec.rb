@@ -241,7 +241,7 @@ describe 'Client' do
     @index.add_object({:firstname => "Robert1"})
     @index.add_object!({:firstname => "Robert2"})
     @index.search('')['nbHits'].should eq(2)
-    @index.delete_by_query('rob')
+    @index.delete_by_query!('rob')
     @index.search('')['nbHits'].should eq(0)
   end
 
