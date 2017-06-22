@@ -395,8 +395,9 @@ module Algolia
     #
     # @param query the query string
     # @param params the optional query parameters
+    # @param async a boolean, if true deletion happens asynchronously, otherwise it waits. (default = true)
     #
-    def delete_by_query(query, params = nil)
+    def delete_by_query(query, params = nil, async = true)
       raise ArgumentError.new('query cannot be nil, use the `clear` method to wipe the entire index') if query.nil? && params.nil?
       params = sanitized_delete_by_query_params
 
@@ -406,7 +407,7 @@ module Algolia
         res = search(query, params)
         break if res['hits'].empty?
         res = delete_objects(res['hits'].map { |h| h['objectID'] })
-        wait_task res['taskID']
+        wait_task res['taskID'] unless async
       end
     end
 
