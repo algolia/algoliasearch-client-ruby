@@ -392,30 +392,31 @@ module Algolia
 
     #
     # Delete all objects matching a query
-    #
+    # This method retrieves all objects synchronously but deletes in batch
+    # asynchronously
     # @param query the query string
     # @param params the optional query parameters
     #
     def delete_by_query(query, params = nil)
       raise ArgumentError.new('query cannot be nil, use the `clear` method to wipe the entire index') if query.nil? && params.nil?
-      params ||= {}
-      params.delete(:hitsPerPage)
-      params.delete('hitsPerPage')
-      params.delete(:attributesToRetrieve)
-      params.delete('attributesToRetrieve')
+      params = sanitized_delete_by_query_params(params)
 
+      params[:query] = query
       params[:hitsPerPage] = 1000
       params[:distinct] = false
       params[:attributesToRetrieve] = ['objectID']
-      last_task = nil
-      loop do
-        res = search(query, params)
-        break if res['hits'].empty?
-        last_task = delete_objects(res['hits'].map { |h| h['objectID'] })
-        break if res['hits'].size < 1000
-        wait_task(last_task['taskID'])
+      params[:cursor] = ''
+      ids = []
+
+      while params[:cursor] != nil
+        result = browse(params)
+
+        params[:cursor] = result['cursor']
+        hits = result['hits']
+        ids += hits.map { |h| h['objectID'] }
       end
-      last_task
+
+      delete_objects(ids)
     end
 
     #
