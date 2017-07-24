@@ -838,5 +838,13 @@ module Algolia
       }
     end
 
+    def sanitized_delete_by_query_params(params)
+      params ||= {}
+      params.delete(:hitsPerPage)
+      params.delete('hitsPerPage')
+      params.delete(:attributesToRetrieve)
+      params.delete('attributesToRetrieve')
+      params
+    end
   end
 end
