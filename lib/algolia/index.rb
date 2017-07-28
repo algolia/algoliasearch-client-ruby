@@ -14,17 +14,21 @@ module Algolia
     # Delete an index
     #
     # return an hash of the form { "deletedAt" => "2013-01-18T15:33:13.556Z", "taskID" => "42" }
-    def delete
-      client.delete(Protocol.index_uri(name))
+    #
+    # @param request_options contains extra parameters to send with your query
+    def delete(request_options = {})
+      client.delete(Protocol.index_uri(name), :write, request_options)
     end
     alias_method :delete_index, :delete
 
     # Delete an index and wait until the deletion has been processed
     #
     # return an hash of the form { "deletedAt" => "2013-01-18T15:33:13.556Z", "taskID" => "42" }
-    def delete!
-      res = delete
-      wait_task(res['taskID'])
+    #
+    # @param request_options contains extra parameters to send with your query
+    def delete!(request_options = {})
+      res = delete(request_options)
+      wait_task(res['taskID'], 100, request_options)
       res
     end
     alias_method :delete_index!, :delete!
@@ -35,12 +39,13 @@ module Algolia
     #  The object is represented by an associative array
     # @param objectID (optional) an objectID you want to attribute to this object
     #  (if the attribute already exist the old object will be overridden)
-    def add_object(obj, objectID = nil)
+    # @param request_options contains extra parameters to send with your query
+    def add_object(obj, objectID = nil, request_options = {})
       check_object obj
       if objectID.nil? || objectID.to_s.empty?
-        client.post(Protocol.index_uri(name), obj.to_json)
+        client.post(Protocol.index_uri(name), obj.to_json, :write, request_options)
       else
-        client.put(Protocol.object_uri(name, objectID), obj.to_json)
+        client.put(Protocol.object_uri(name, objectID), obj.to_json, :write, request_options)
       end
     end
 
@@ -50,28 +55,31 @@ module Algolia
     #  The object is represented by an associative array
     # @param objectID (optional) an objectID you want to attribute to this object
     #  (if the attribute already exist the old object will be overridden)
-    def add_object!(obj, objectID = nil)
-      res = add_object(obj, objectID)
-      wait_task(res["taskID"])
-      return res
+    # @param Request options object. Contains extra URL parameters or headers
+    def add_object!(obj, objectID = nil, request_options = {})
+      res = add_object(obj, objectID, request_options)
+      wait_task(res['taskID'], 100, request_options)
+      res
     end
 
     # Add several objects in this index
     #
     # @param objs the array of objects to add inside the index.
     #  Each object is represented by an associative array
-    def add_objects(objs)
-      batch build_batch('addObject', objs, false)
+    # @param request_options contains extra parameters to send with your query
+    def add_objects(objs, request_options = {})
+      batch(build_batch('addObject', objs, false), request_options)
     end
 
     # Add several objects in this index and wait end of indexing
     #
     # @param objs the array of objects to add inside the index.
     #  Each object is represented by an associative array
-    def add_objects!(obj)
-      res = add_objects(obj)
-      wait_task(res["taskID"])
-      return res
+    # @param request_options contains extra parameters to send with your query
+    def add_objects!(objs, request_options = {})
+      res = add_objects(objs, request_options)
+      wait_task(res['taskID'], 100, request_options)
+      res
     end
 
     # Search inside the index
@@ -135,10 +143,11 @@ module Algolia
     #   all hits containing a duplicate value for the attributeForDistinct attribute are removed from results.
     #   For example, if the chosen attribute is show_name and several hits have the same value for show_name, then only the best
     #   one is kept and others are removed.
-    def search(query, params = {})
+    # @param request_options contains extra parameters to send with your query
+    def search(query, params = {}, request_options = {})
       encoded_params = Hash[params.map { |k,v| [k.to_s, v.is_a?(Array) ? v.to_json : v] }]
       encoded_params[:query] = query
-      client.post(Protocol.search_post_uri(name), { :params => Protocol.to_query(encoded_params) }.to_json, :search)
+      client.post(Protocol.search_post_uri(name), { :params => Protocol.to_query(encoded_params) }.to_json, :search, request_options)
     end
 
     class IndexBrowser
@@ -149,9 +158,9 @@ module Algolia
         @cursor = params[:cursor] || params['cursor'] || nil
       end
 
-      def browse(&block)
+      def browse(request_options = {}, &block)
         loop do
-          answer = @client.get(Protocol.browse_uri(@name, @params.merge({ :cursor => @cursor })), :read)
+          answer = @client.get(Protocol.browse_uri(@name, @params.merge({ :cursor => @cursor })), :read, request_options)
           answer['hits'].each do |hit|
             if block.arity == 2
               yield hit, @cursor
@@ -174,8 +183,9 @@ module Algolia
     # @DEPRECATED:
     # @param pageOrQueryParameters Pagination parameter used to select the page to retrieve.
     # @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
+    # @param request_options contains extra parameters to send with your query
     #
-    def browse(pageOrQueryParameters = nil, hitsPerPage = nil, &block)
+    def browse(pageOrQueryParameters = nil, hitsPerPage = nil, request_options = {}, &block)
       params = {}
       if pageOrQueryParameters.is_a?(Hash)
         params.merge!(pageOrQueryParameters)
@@ -189,19 +199,20 @@ module Algolia
       end
 
       if block_given?
-        IndexBrowser.new(client, name, params).browse(&block)
+        IndexBrowser.new(client, name, params).browse(request_options, &block)
       else
         params[:page] ||= 0
         params[:hitsPerPage] ||= 1000
-        client.get(Protocol.browse_uri(name, params), :read)
+        client.get(Protocol.browse_uri(name, params), :read, request_options)
       end
     end
 
     #
     # Browse a single page from a specific cursor
     #
-    def browse_from(cursor, hitsPerPage = 1000)
-      client.get(Protocol.browse_uri(name, { :cursor => cursor, :hitsPerPage => hitsPerPage }), :read)
+    # @param request_options contains extra parameters to send with your query
+    def browse_from(cursor, hitsPerPage = 1000, request_options = {})
+      client.get(Protocol.browse_uri(name, { :cursor => cursor, :hitsPerPage => hitsPerPage }), :read, request_options)
     end
 
     #
@@ -209,13 +220,14 @@ module Algolia
     #
     # @param objectID the unique identifier of the object to retrieve
     # @param attributesToRetrieve (optional) if set, contains the list of attributes to retrieve as an array of strings of a string separated by ","
+    # @param request_options contains extra parameters to send with your query
     #
-    def get_object(objectID, attributesToRetrieve = nil)
+    def get_object(objectID, attributesToRetrieve = nil, request_options = {})
       attributesToRetrieve = attributesToRetrieve.join(',') if attributesToRetrieve.is_a?(Array)
       if attributesToRetrieve.nil?
-        client.get(Protocol.object_uri(name, objectID, nil), :read)
+        client.get(Protocol.object_uri(name, objectID, nil), :read, request_options)
       else
-        client.get(Protocol.object_uri(name, objectID, {:attributes => attributesToRetrieve}), :read)
+        client.get(Protocol.object_uri(name, objectID, {:attributes => attributesToRetrieve}), :read, request_options)
       end
     end
 
@@ -224,24 +236,26 @@ module Algolia
     #
     # @param objectIDs the array of unique identifier of the objects to retrieve
     # @param attributesToRetrieve (optional) if set, contains the list of attributes to retrieve as an array of strings of a string separated by ","
+    # @param request_options contains extra parameters to send with your query
     #
-    def get_objects(objectIDs, attributesToRetrieve = nil)
+    def get_objects(objectIDs, attributesToRetrieve = nil, request_options = {})
       attributesToRetrieve = attributesToRetrieve.join(',') if attributesToRetrieve.is_a?(Array)
       requests = objectIDs.map do |objectID|
         req = {:indexName => name, :objectID => objectID.to_s}
         req[:attributesToRetrieve] = attributesToRetrieve unless attributesToRetrieve.nil?
         req
       end
-      client.post(Protocol.objects_uri, { :requests => requests }.to_json, :read)['results']
+      client.post(Protocol.objects_uri, { :requests => requests }.to_json, :read, request_options)['results']
     end
 
     # Check the status of a task on the server.
     # All server task are asynchronous and you can check the status of a task with this method.
     #
     # @param taskID the id of the task returned by server
+    # @param request_options contains extra parameters to send with your query
     #
-    def get_task_status(taskID)
-      client.get(Protocol.task_uri(name, taskID), :read)["status"]
+    def get_task_status(taskID, request_options = {})
+      client.get(Protocol.task_uri(name, taskID), :read, request_options)['status']
     end
 
     # Wait the publication of a task on the server.
@@ -249,11 +263,12 @@ module Algolia
     #
     # @param taskID the id of the task returned by server
     # @param timeBeforeRetry the time in milliseconds before retry (default = 100ms)
+    # @param request_options contains extra parameters to send with your query
     #
-    def wait_task(taskID, timeBeforeRetry = 100)
+    def wait_task(taskID, timeBeforeRetry = 100, request_options = {})
       loop do
-        status = get_task_status(taskID)
-        if status == "published"
+        status = get_task_status(taskID, request_options)
+        if status == 'published'
           return
         end
         sleep(timeBeforeRetry.to_f / 1000)
@@ -264,38 +279,42 @@ module Algolia
     #
     # @param obj the object to save
     # @param objectID the associated objectID, if nil 'obj' must contain an 'objectID' key
+    # @param request_options contains extra parameters to send with your query
     #
-    def save_object(obj, objectID = nil)
-      client.put(Protocol.object_uri(name, get_objectID(obj, objectID)), obj.to_json)
+    def save_object(obj, objectID = nil, request_options = {})
+      client.put(Protocol.object_uri(name, get_objectID(obj, objectID)), obj.to_json, :write, request_options)
     end
 
     # Override the content of object and wait end of indexing
     #
     # @param obj the object to save
     # @param objectID the associated objectID, if nil 'obj' must contain an 'objectID' key
+    # @param request_options contains extra parameters to send with your query
     #
-    def save_object!(obj, objectID = nil)
-      res = save_object(obj, objectID)
-      wait_task(res["taskID"])
-      return res
+    def save_object!(obj, objectID = nil, request_options = {})
+      res = save_object(obj, objectID, request_options)
+      wait_task(res['taskID'], 100, request_options)
+      res
     end
 
     # Override the content of several objects
     #
     # @param objs the array of objects to save, each object must contain an 'objectID' key
+    # @param request_options contains extra parameters to send with your query
     #
-    def save_objects(objs)
-      batch build_batch('updateObject', objs, true)
+    def save_objects(objs, request_options = {})
+      batch(build_batch('updateObject', objs, true), request_options)
     end
 
     # Override the content of several objects and wait end of indexing
     #
     # @param objs the array of objects to save, each object must contain an objectID attribute
+    # @param request_options contains extra parameters to send with your query
     #
-    def save_objects!(objs)
-      res = save_objects(objs)
-      wait_task(res["taskID"])
-      return res
+    def save_objects!(objs, request_options = {})
+      res = save_objects(objs, request_options)
+      wait_task(res['taskID'], 100, request_options)
+      res
     end
 
     #
@@ -304,9 +323,10 @@ module Algolia
     # @param obj the object attributes to override
     # @param objectID the associated objectID, if nil 'obj' must contain an 'objectID' key
     # @param create_if_not_exits a boolean, if true creates the object if this one doesn't exist
+    # @param request_options contains extra parameters to send with your query
     #
-    def partial_update_object(obj, objectID = nil, create_if_not_exits = true)
-      client.post(Protocol.partial_object_uri(name, get_objectID(obj, objectID), create_if_not_exits), obj.to_json)
+    def partial_update_object(obj, objectID = nil, create_if_not_exits = true, request_options = {})
+      client.post(Protocol.partial_object_uri(name, get_objectID(obj, objectID), create_if_not_exits), obj.to_json, :write, request_options)
     end
 
     #
@@ -314,12 +334,13 @@ module Algolia
     #
     # @param objs an array of objects to update (each object must contains a objectID attribute)
     # @param create_if_not_exits a boolean, if true create the objects if they don't exist
+    # @param request_options contains extra parameters to send with your query
     #
-    def partial_update_objects(objs, create_if_not_exits = true)
+    def partial_update_objects(objs, create_if_not_exits = true, request_options = {})
       if create_if_not_exits
-        batch build_batch('partialUpdateObject', objs, true)
+        batch(build_batch('partialUpdateObject', objs, true), request_options)
       else
-        batch build_batch('partialUpdateObjectNoCreate', objs, true)
+        batch(build_batch('partialUpdateObjectNoCreate', objs, true), request_options)
       end
     end
 
@@ -328,11 +349,12 @@ module Algolia
     #
     # @param objs an array of objects to update (each object must contains a objectID attribute)
     # @param create_if_not_exits a boolean, if true create the objects if they don't exist
+    # @param request_options contains extra parameters to send with your query
     #
-    def partial_update_objects!(objs, create_if_not_exits = true)
-      res = partial_update_objects(objs, create_if_not_exits)
-      wait_task(res["taskID"])
-      return res
+    def partial_update_objects!(objs, create_if_not_exits = true, request_options = {})
+      res = partial_update_objects(objs, create_if_not_exits, request_options)
+      wait_task(res['taskID'], 100, request_options)
+      res
     end
 
     #
@@ -341,53 +363,58 @@ module Algolia
     # @param obj the attributes to override
     # @param objectID the associated objectID, if nil 'obj' must contain an 'objectID' key
     # @param create_if_not_exits a boolean, if true creates the object if this one doesn't exist
+    # @param request_options contains extra parameters to send with your query
     #
-    def partial_update_object!(obj, objectID = nil, create_if_not_exits = true)
-      res = partial_update_object(obj, objectID, create_if_not_exits)
-      wait_task(res["taskID"])
-      return res
+    def partial_update_object!(obj, objectID = nil, create_if_not_exits = true, request_options = {})
+      res = partial_update_object(obj, objectID, create_if_not_exits, request_options)
+      wait_task(res['taskID'], 100, request_options)
+      res
     end
 
     #
     # Delete an object from the index
     #
     # @param objectID the unique identifier of object to delete
+    # @param request_options contains extra parameters to send with your query
     #
-    def delete_object(objectID)
+    def delete_object(objectID, request_options = {})
       raise ArgumentError.new('objectID must not be blank') if objectID.nil? || objectID == ''
-      client.delete(Protocol.object_uri(name, objectID))
+      client.delete(Protocol.object_uri(name, objectID), :write, request_options)
     end
 
     #
     # Delete an object from the index and wait end of indexing
     #
     # @param objectID the unique identifier of object to delete
+    # @param request_options contains extra parameters to send with your query
     #
-    def delete_object!(objectID)
-      res = delete_object(objectID)
-      wait_task(res["taskID"])
-      return res
+    def delete_object!(objectID, request_options = {})
+      res = delete_object(objectID, request_options)
+      wait_task(res['taskID'], 100, request_options)
+      res
     end
 
     #
     # Delete several objects
     #
     # @param objs an array of objectIDs
+    # @param request_options contains extra parameters to send with your query
     #
-    def delete_objects(objs)
+    def delete_objects(objs, request_options = {})
       check_array objs
-      batch build_batch('deleteObject', objs.map { |objectID| { :objectID => objectID } }, false)
+      batch(build_batch('deleteObject', objs.map { |objectID| { :objectID => objectID } }, false), request_options)
     end
 
     #
     # Delete several objects and wait end of indexing
     #
     # @param objs an array of objectIDs
+    # @param request_options contains extra parameters to send with your query
     #
-    def delete_objects!(objs)
-      res = delete_objects(objs)
-      wait_task(res["taskID"])
-      return res
+    def delete_objects!(objs, request_options = {})
+      res = delete_objects(objs, request_options)
+      wait_task(res['taskID'], 100, request_options)
+      res
     end
 
     #
@@ -396,8 +423,9 @@ module Algolia
     # asynchronously
     # @param query the query string
     # @param params the optional query parameters
+    # @param request_options contains extra parameters to send with your query
     #
-    def delete_by_query(query, params = nil)
+    def delete_by_query(query, params = nil, request_options = {})
       raise ArgumentError.new('query cannot be nil, use the `clear` method to wipe the entire index') if query.nil? && params.nil?
       params = sanitized_delete_by_query_params(params)
 
@@ -409,7 +437,7 @@ module Algolia
       ids = []
 
       while params[:cursor] != nil
-        result = browse(params)
+        result = browse(params, nil, request_options)
 
         params[:cursor] = result['cursor']
 
@@ -419,7 +447,7 @@ module Algolia
         ids += hits.map { |h| h['objectID'] }
       end
 
-      delete_objects(ids)
+      delete_objects(ids, request_options)
     end
 
     #
@@ -428,9 +456,9 @@ module Algolia
     # @param query the query string
     # @param params the optional query parameters
     #
-    def delete_by_query!(query, params = nil)
-      res = delete_by_query(query, params)
-      wait_task(res['taskID']) if res
+    def delete_by_query!(query, params = nil, request_options = {})
+      res = delete_by_query(query, params, request_options)
+      wait_task(res['taskID'], request_options) if res
       res
     end
 
@@ -460,51 +488,52 @@ module Algolia
     #
     # Delete the index content
     #
+    # @param request_options contains extra parameters to send with your query
     #
-    def clear
-      client.post(Protocol.clear_uri(name))
+    def clear(request_options = {})
+      client.post(Protocol.clear_uri(name), :write, request_options)
     end
     alias_method :clear_index, :clear
 
     #
     # Delete the index content and wait end of indexing
     #
-    def clear!
-      res = clear
-      wait_task(res["taskID"])
-      return res
+    def clear!(request_options = {})
+      res = clear(request_options)
+      wait_task(res['taskID'], 100, request_options)
+      res
     end
     alias_method :clear_index!, :clear!
 
     #
     # Set settings for this index
     #
-    def set_settings(new_settings, options = {})
-      client.put(Protocol.settings_uri(name, options), new_settings.to_json)
+    def set_settings(new_settings, options = {}, request_options = {})
+      client.put(Protocol.settings_uri(name, options), new_settings.to_json, :write, request_options)
     end
 
     # Set settings for this index and wait end of indexing
     #
-    def set_settings!(new_settings, options = {})
-      res = set_settings(new_settings, options)
-      wait_task(res["taskID"])
-      return res
+    def set_settings!(new_settings, options = {}, request_options = {})
+      res = set_settings(new_settings, options, request_options)
+      wait_task(res['taskID'], 100, request_options)
+      res
     end
 
     # Get settings of this index
-    def get_settings(options = {})
+    def get_settings(options = {}, request_options = {})
       options['getVersion'] = 2 if !options[:getVersion] && !options['getVersion']
-      client.get("#{Protocol.settings_uri(name, options)}", :read)
+      client.get(Protocol.settings_uri(name, options).to_s, :read, request_options)
     end
 
     # List all existing user keys with their associated ACLs
-    def list_api_keys
-      client.get(Protocol.index_keys_uri(name), :read)
+    def list_api_keys(request_options = {})
+      client.get(Protocol.index_keys_uri(name), :read, request_options)
     end
 
     # Get ACL of a user key
-    def get_api_key(key)
-      client.get(Protocol.index_key_uri(name, key), :read)
+    def get_api_key(key, request_options = {})
+      client.get(Protocol.index_key_uri(name, key), :read, request_options)
     end
 
     #
@@ -531,8 +560,9 @@ module Algolia
     #  @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
     #  @param maxQueriesPerIPPerHour the maximum number of API calls allowed from an IP address per hour (0 means unlimited)
     #  @param maxHitsPerQuery  the maximum number of hits this API key can retrieve in one call (0 means unlimited)
+    #  @param request_options contains extra parameters to send with your query
     #
-    def add_api_key(obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0)
+    def add_api_key(obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, request_options = {})
       if obj.instance_of? Array
         params = {
           :acl => obj
@@ -549,7 +579,7 @@ module Algolia
       if maxHitsPerQuery != 0
         params["maxHitsPerQuery"] = maxHitsPerQuery.to_i
       end
-      client.post(Protocol.index_keys_uri(name), params.to_json)
+      client.post(Protocol.index_keys_uri(name), params.to_json, :write, request_options)
     end
 
     #
@@ -576,8 +606,9 @@ module Algolia
     #  @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
     #  @param maxQueriesPerIPPerHour the maximum number of API calls allowed from an IP address per hour (0 means unlimited)
     #  @param maxHitsPerQuery  the maximum number of hits this API key can retrieve in one call (0 means unlimited)
+    #  @param request_options contains extra parameters to send with your query
     #
-    def update_api_key(key, obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0)
+    def update_api_key(key, obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, request_options = {})
       if obj.instance_of? Array
         params = {
           :acl => obj
@@ -594,7 +625,7 @@ module Algolia
       if maxHitsPerQuery != 0
         params["maxHitsPerQuery"] = maxHitsPerQuery.to_i
       end
-      client.put(Protocol.index_key_uri(name, key), params.to_json)
+      client.put(Protocol.index_key_uri(name, key), params.to_json, :write, request_options)
     end
 
 
@@ -604,14 +635,14 @@ module Algolia
     end
 
     # Send a batch request
-    def batch(request)
-      client.post(Protocol.batch_uri(name), request.to_json, :batch)
+    def batch(request, request_options = {})
+      client.post(Protocol.batch_uri(name), request.to_json, :batch, request_options)
     end
 
     # Send a batch request and wait the end of the indexing
-    def batch!(request)
-      res = batch(request)
-      wait_task(res['taskID'])
+    def batch!(request, request_options = {})
+      res = batch(request, request_options)
+      wait_task(res['taskID'], 100, request_options)
       res
     end
 
@@ -623,10 +654,11 @@ module Algolia
     # @param query An optional query to take extra search parameters into account.
     #       These parameters apply to index objects like in a regular search query.
     #       Only facet values contained in the matched objects will be returned.
-    def search_for_facet_values(facet, text, query = {})
+    # @param request_options contains extra parameters to send with your query
+    def search_for_facet_values(facet, text, query = {}, request_options = {})
       params = query.clone
       params['facetQuery'] = text
-      client.post(Protocol.search_facet_uri(name, facet), params.to_json)
+      client.post(Protocol.search_facet_uri(name, facet), params.to_json, :read, request_options)
     end
 
     # deprecated
@@ -639,7 +671,8 @@ module Algolia
     # @param params a hash representing the regular query parameters
     # @param refinements a hash ("string" -> ["array", "of", "refined", "values"]) representing the current refinements
     #                    ex: { "my_facet1" => ["my_value1", ["my_value2"], "my_disjunctive_facet1" => ["my_value1", "my_value2"] }
-    def search_disjunctive_faceting(query, disjunctive_facets, params = {}, refinements = {})
+    # @param request_options contains extra parameters to send with your query
+    def search_disjunctive_faceting(query, disjunctive_facets, params = {}, refinements = {}, request_options = {})
       raise ArgumentError.new('Argument "disjunctive_facets" must be a String or an Array') unless disjunctive_facets.is_a?(String) || disjunctive_facets.is_a?(Array)
       raise ArgumentError.new('Argument "refinements" must be a Hash of Arrays') if !refinements.is_a?(Hash) || !refinements.select { |k, v| !v.is_a?(Array) }.empty?
 
@@ -693,7 +726,7 @@ module Algolia
           :analytics => false
         })
       end
-      answers = client.multiple_queries(queries)
+      answers = client.multiple_queries(queries, :index_name, 'none', request_options)
 
       # aggregate answers
       ## first answer stores the hits + regular facets
@@ -720,15 +753,18 @@ module Algolia
     #
     # Alias of Algolia.list_indexes
     #
-    def Index.all
-      Algolia.list_indexes
+    # @param request_options contains extra parameters to send with your query
+    #
+    def Index.all(request_options = {})
+      Algolia.list_indexes(request_options)
     end
 
     # Search synonyms
     #
     # @param query the query
     # @param params an optional hash of :type, :page, :hitsPerPage
-    def search_synonyms(query, params = {})
+    # @param request_options contains extra parameters to send with your query
+    def search_synonyms(query, params = {}, request_options = {})
       type = params[:type] || params['type']
       type = type.join(',') if type.is_a?(Array)
       page = params[:page] || params['page'] || 0
@@ -739,32 +775,35 @@ module Algolia
         :page => page,
         :hitsPerPage => hits_per_page
       }
-      client.post(Protocol.search_synonyms_uri(name), params.to_json, :read)
+      client.post(Protocol.search_synonyms_uri(name), params.to_json, :read, request_options)
     end
 
     # Get a synonym
     #
     # @param objectID the synonym objectID
-    def get_synonym(objectID)
-      client.get(Protocol.synonym_uri(name, objectID), :read)
+    # @param request_options contains extra parameters to send with your query
+    def get_synonym(objectID, request_options = {})
+      client.get(Protocol.synonym_uri(name, objectID), :read, request_options)
     end
 
     # Delete a synonym
     #
     # @param objectID the synonym objectID
     # @param forward_to_replicas should we forward the delete to replica indices
-    def delete_synonym(objectID, forward_to_replicas = false)
-      client.delete("#{Protocol.synonym_uri(name, objectID)}?forwardToReplicas=#{forward_to_replicas}", :write)
+    # @param request_options contains extra parameters to send with your query
+    def delete_synonym(objectID, forward_to_replicas = false, request_options = {})
+      client.delete("#{Protocol.synonym_uri(name, objectID)}?forwardToReplicas=#{forward_to_replicas}", :write, request_options)
     end
 
     # Delete a synonym and wait the end of indexing
     #
     # @param objectID the synonym objectID
     # @param forward_to_replicas should we forward the delete to replica indices
-    def delete_synonym!(objectID, forward_to_replicas = false)
-      res = delete_synonym(objectID, forward_to_replicas)
-      wait_task(res["taskID"])
-      return res
+    # @param request_options contains extra parameters to send with your query
+    def delete_synonym!(objectID, forward_to_replicas = false, request_options = {})
+      res = delete_synonym(objectID, forward_to_replicas, request_options)
+      wait_task(res['taskID'], 100, request_options)
+      res
     end
 
     # Save a synonym
@@ -772,8 +811,9 @@ module Algolia
     # @param objectID the synonym objectID
     # @param synonym the synonym
     # @param forward_to_replicas should we forward the delete to replica indices
-    def save_synonym(objectID, synonym, forward_to_replicas = false)
-      client.put("#{Protocol.synonym_uri(name, objectID)}?forwardToReplicas=#{forward_to_replicas}", synonym.to_json, :write)
+    # @param request_options contains extra parameters to send with your query
+    def save_synonym(objectID, synonym, forward_to_replicas = false, request_options = {})
+      client.put("#{Protocol.synonym_uri(name, objectID)}?forwardToReplicas=#{forward_to_replicas}", synonym.to_json, :write, request_options)
     end
 
     # Save a synonym and wait the end of indexing
@@ -781,26 +821,29 @@ module Algolia
     # @param objectID the synonym objectID
     # @param synonym the synonym
     # @param forward_to_replicas should we forward the delete to replica indices
-    def save_synonym!(objectID, synonym, forward_to_replicas = false)
-      res = save_synonym(objectID, synonym, forward_to_replicas)
-      wait_task(res["taskID"])
-      return res
+    # @param request_options contains extra parameters to send with your query
+    def save_synonym!(objectID, synonym, forward_to_replicas = false, request_options = {})
+      res = save_synonym(objectID, synonym, forward_to_replicas, request_options)
+      wait_task(res['taskID'], 100, request_options)
+      res
     end
 
     # Clear all synonyms
     #
     # @param forward_to_replicas should we forward the delete to replica indices
-    def clear_synonyms(forward_to_replicas = false)
-      client.post("#{Protocol.clear_synonyms_uri(name)}?forwardToReplicas=#{forward_to_replicas}", :write)
+    # @param request_options contains extra parameters to send with your query
+    def clear_synonyms(forward_to_replicas = false, request_options = {})
+      client.post("#{Protocol.clear_synonyms_uri(name)}?forwardToReplicas=#{forward_to_replicas}", :write, request_options)
     end
 
     # Clear all synonyms and wait the end of indexing
     #
     # @param forward_to_replicas should we forward the delete to replica indices
-    def clear_synonyms!(forward_to_replicas = false)
-      res = clear_synonyms(forward_to_replicas)
-      wait_task(res["taskID"])
-      return res
+    # @param request_options contains extra parameters to send with your query
+    def clear_synonyms!(forward_to_replicas = false, request_options = {})
+      res = clear_synonyms(forward_to_replicas, request_options)
+      wait_task(res['taskID'], 100, request_options)
+      res
     end
 
     # Add/Update an array of synonyms
@@ -808,8 +851,9 @@ module Algolia
     # @param synonyms the array of synonyms to add/update
     # @param forward_to_replicas should we forward the delete to replica indices
     # @param replace_existing_synonyms should we replace the existing synonyms before adding the new ones
-    def batch_synonyms(synonyms, forward_to_replicas = false, replace_existing_synonyms = false)
-      client.post("#{Protocol.batch_synonyms_uri(name)}?forwardToReplicas=#{forward_to_replicas}&replaceExistingSynonyms=#{replace_existing_synonyms}", synonyms.to_json, :batch)
+    # @param request_options contains extra parameters to send with your query
+    def batch_synonyms(synonyms, forward_to_replicas = false, replace_existing_synonyms = false, request_options = {})
+      client.post("#{Protocol.batch_synonyms_uri(name)}?forwardToReplicas=#{forward_to_replicas}&replaceExistingSynonyms=#{replace_existing_synonyms}", synonyms.to_json, :batch, request_options)
     end
 
     # Add/Update an array of synonyms and wait the end of indexing
@@ -817,10 +861,11 @@ module Algolia
     # @param synonyms the array of synonyms to add/update
     # @param forward_to_replicas should we forward the delete to replica indices
     # @param replace_existing_synonyms should we replace the existing synonyms before adding the new ones
-    def batch_synonyms!(synonyms, forward_to_replicas = false, replace_existing_synonyms = false)
-      res = batch_synonyms(synonyms, forward_to_replicas, replace_existing_synonyms)
-      wait_task(res["taskID"])
-      return res
+    # @param request_options contains extra parameters to send with your query
+    def batch_synonyms!(synonyms, forward_to_replicas = false, replace_existing_synonyms = false, request_options = {})
+      res = batch_synonyms(synonyms, forward_to_replicas, replace_existing_synonyms, request_options)
+      wait_task(res['taskID'], 100, request_options)
+      res
     end
 
     # Search rules

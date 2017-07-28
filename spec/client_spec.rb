@@ -1070,6 +1070,12 @@ describe 'Client' do
     @index.search_rules('')['nbHits'].should eq(0)
   end
 
+  it "should use request options" do
+    expect{Algolia.list_indexes}.to_not raise_error
+
+    expect{Algolia.list_indexes('headers' => { 'X-Algolia-API-Key' => 'NotExistentAPIKey' })}.to raise_error
+  end
+
   context 'DNS timeout' do
     before(:each) do
       @client = Algolia::Client.new :application_id => ENV['ALGOLIA_APPLICATION_ID'], :api_key => ENV['ALGOLIA_API_KEY'],
