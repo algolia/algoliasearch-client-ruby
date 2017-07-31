@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 require 'base64'
+require 'webmock/rspec'
 
 # avoid concurrent access to the same index
 def safe_index_name(name)
@@ -1014,4 +1015,28 @@ describe 'Client' do
     end
   end
 
+  context 'Custom User Agent' do
+    before(:all) do
+      WebMock.enable!
+    end
+
+    before(:each) do
+      @client = Algolia::Client.new :application_id => ENV['ALGOLIA_APPLICATION_ID'], :api_key => ENV['ALGOLIA_API_KEY'],
+        :user_agent => 'test agent'
+      @client.destroy # make sure the thread-local vars are reseted
+    end
+
+    it "should use a custom user-agent" do
+      WebMock.stub_request(:get, /.*\.algolia(net\.com|\.net)\/1\/indexes/).
+        to_return(:status => 200, :body => '{}')
+      @client.list_indexes
+      expect(WebMock).to have_requested(:get, /https:\/\/.+-dsn.algolia(net\.com|\.net)\/1\/indexes/).
+        with(:headers => {'User-Agent' => 'test agent'})
+      @client.list_indexes
+    end
+
+    after(:all) do
+      WebMock.disable!
+    end
+  end
 end

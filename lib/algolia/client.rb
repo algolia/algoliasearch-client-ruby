@@ -37,7 +37,7 @@ module Algolia
         Protocol::HEADER_API_KEY => api_key,
         Protocol::HEADER_APP_ID  => application_id,
         'Content-Type'           => 'application/json; charset=utf-8',
-        'User-Agent'             => "Algolia for Ruby #{::Algolia::VERSION}"
+        'User-Agent'             => (data[:user_agent] || "Algolia for Ruby #{::Algolia::VERSION}")
       }
     end
 
