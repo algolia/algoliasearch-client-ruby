@@ -1,7 +1,6 @@
 # encoding: UTF-8
 require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 require 'base64'
-require 'webmock/rspec'
 
 # avoid concurrent access to the same index
 def safe_index_name(name)
