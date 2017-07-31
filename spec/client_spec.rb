@@ -1031,7 +1031,6 @@ describe 'Client' do
       @client.list_indexes
       expect(WebMock).to have_requested(:get, /https:\/\/.+-dsn.algolia(net\.com|\.net)\/1\/indexes/).
         with(:headers => {'User-Agent' => 'test agent'})
-      @client.list_indexes
     end
 
     after(:all) do
