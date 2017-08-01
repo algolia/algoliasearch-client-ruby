@@ -99,13 +99,26 @@ module Algolia
 
     #
     # This method allows to query multiple indexes with one API call
-    # 
-    # @param queries the array of hash representing the query and associated index name
-    # @param index_name_key the name of the key used to fetch the index_name (:index_name by default)
-    # @param strategy define the strategy applied on the sequential searches (none by default)
-    # @param request_options contains extra parameters to send with your query
     #
-    def multiple_queries(queries, index_name_key = :index_name, strategy = "none", request_options = {})
+    # @param queries the array of hash representing the query and associated index name
+    # @param options - accepts those keys:
+    #   - index_name_key the name of the key used to fetch the index_name (:index_name by default)
+    #   - strategy define the strategy applied on the sequential searches (none by default)
+    #   - request_options contains extra parameters to send with your query
+    #
+    def multiple_queries(queries, options = nil, strategy = nil)
+      if options.is_a?(Hash)
+        index_name_key = options.delete(:index_name_key) || options.delete('index_name_key')
+        strategy = options.delete(:strategy) || options.delete('strategy')
+        request_options = options.delete(:request_options) || options.delete('request_options')
+      else
+        # Deprecated def multiple_queries(queries, index_name_key, strategy)
+        index_name_key = options
+      end
+      index_name_key ||= :index_name
+      strategy ||= 'none'
+      request_options ||= {}
+
       requests = {
         :requests => queries.map do |query|
           query = query.dup
@@ -541,14 +554,9 @@ module Algolia
 
   #
   # This method allows to query multiple indexes with one API call
-  # 
-  # @param queries the array of hash representing the query and associated index name
-  # @param index_name_key the name of the key used to fetch the index_name (:index_name by default)
-  # @param strategy define the strategy applied on the sequential searches (none by default)
-  # @param request_options contains extra parameters to send with your query
   #
-  def Algolia.multiple_queries(queries, index_name_key = :index_name, strategy = "none", request_options = {})
-    Algolia.client.multiple_queries(queries, index_name_key, strategy, request_options)
+  def Algolia.multiple_queries(queries, options = nil, strategy = nil)
+    Algolia.client.multiple_queries(queries, options, strategy)
   end
 
   #
