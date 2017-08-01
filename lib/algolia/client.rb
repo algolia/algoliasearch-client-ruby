@@ -207,19 +207,27 @@ module Algolia
     #
     # Return last logs entries.
     #
-    # @param offset Specify the first entry to retrieve (0-based, 0 is the most recent log entry).
-    # @param length Specify the maximum number of entries to retrieve starting at offset. Maximum allowed value: 1000.
-    # @param type Optional type of log entries to retrieve ("all", "query", "build" or "error").
-    # @param request_options contains extra parameters to send with your query
+    # @param options - accepts those keys:
+    #   - offset Specify the first entry to retrieve (0-based, 0 is the most recent log entry) - Default = 0
+    #   - length Specify the maximum number of entries to retrieve starting at offset. Maximum allowed value: 1000 - Default = 10
+    #   - type Type of log entries to retrieve ("all", "query", "build" or "error") - Default = 'all'
+    #   - request_options contains extra parameters to send with your query
     #
-    def get_logs(offset = 0, length = 10, type = "all", request_options = {})
-      if (type.is_a?(true.class))
-        if (type)
-          type = "error"
-        else
-          type = "all"
-        end
+    def get_logs(options = nil, length = nil, type = nil)
+      if options.is_a?(Hash)
+        offset = options.delete('offset') || options.delete(:offset)
+        length = options.delete('length') || options.delete(:length)
+        type = options.delete('type') || options.delete(:type)
+        request_options = options.delete('request_options') || options.delete(:request_options)
+      else
+        # Deprecated def get_logs(offset, length, type)
+        offset = options
       end
+      length ||= 10
+      type = 'all' if type.nil?
+      type = type ? 'error' : 'all' if type.is_a?(true.class)
+      request_options ||= {}
+
       get(Protocol.logs(offset, length, type), :write, request_options)
     end
 
@@ -633,8 +641,8 @@ module Algolia
   # @param type Specify the type of entries you want to retrieve - default: "all"
   # @param request_options contains extra parameters to send with your query
   #
-  def Algolia.get_logs(offset = 0, length = 10, type = "all", request_options = {})
-    Algolia.client.get_logs(offset, length, type, request_options)
+  def Algolia.get_logs(options = nil, length = nil, type = nil)
+    Algolia.client.get_logs(options, length, type)
   end
 
   # List all existing user keys with their associated ACLs
