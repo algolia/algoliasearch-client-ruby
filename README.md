@@ -51,8 +51,6 @@ You can find the full reference on [Algolia's website](https://www.algolia.com/d
 
 
 
-
-
 ## Install
 
 Install AlgoliaSearch using:
