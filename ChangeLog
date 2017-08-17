@@ -1,5 +1,9 @@
 CHANGELOG
 
+2017-08-17 1.15.0
+      * Make delete_by_query not wait_task by default (also, make it mockable)
+      * Add a new delete_by_query! doing the last wait_task
+
 2017-07-31 1.14.0
       * Ability to override the underlying user-agent
 
