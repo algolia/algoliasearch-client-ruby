@@ -413,6 +413,7 @@ module Algolia
         break if res['hits'].empty?
         last_task = delete_objects(res['hits'].map { |h| h['objectID'] })
         break if res['hits'].size < 1000
+        wait_task(last_task['taskID'])
       end
       last_task
     end
