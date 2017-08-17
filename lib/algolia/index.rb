@@ -405,13 +405,28 @@ module Algolia
       params.delete('attributesToRetrieve')
 
       params[:hitsPerPage] = 1000
+      params[:distinct] = false
       params[:attributesToRetrieve] = ['objectID']
+      last_task = nil
       loop do
         res = search(query, params)
         break if res['hits'].empty?
-        res = delete_objects(res['hits'].map { |h| h['objectID'] })
-        wait_task res['taskID']
+        last_task = delete_objects(res['hits'].map { |h| h['objectID'] })
+        break if res['hits'].size < 1000
       end
+      last_task
+    end
+
+    #
+    # Delete all objects matching a query and wait end of indexing
+    #
+    # @param query the query string
+    # @param params the optional query parameters
+    #
+    def delete_by_query!(query, params = nil)
+      res = delete_by_query(query, params)
+      wait_task(res['taskID']) if res
+      res
     end
 
     #

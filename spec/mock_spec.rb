@@ -21,6 +21,7 @@ describe 'With a mocked client' do
     index.browse
     index.clear
     index.delete
+    index.delete_by_query 'test'
   end
 
   after(:all) do
