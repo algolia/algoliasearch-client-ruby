@@ -407,14 +407,17 @@ module Algolia
       params[:hitsPerPage] = 1000
       params[:distinct] = false
       params[:attributesToRetrieve] = ['objectID']
-      last_task = nil
-      loop do
-        res = search(query, params)
-        break if res['hits'].empty?
-        ids = res['hits'].map { |h| h['objectID'] }
-        res = delete_objects(ids)
-        break if ids.size != 1000 # no need to wait_task if we had less than 1000 objects matching; we won't get more after anyway.
-        wait_task res['taskID']
+      params[:cursor] = ''
+      ids = []
+
+      while params[:cursor] != nil
+        result = browse(params)
+
+        params[:cursor] = result['cursor']
+        break unless result.has_key?('hits')
+
+        hits = result['hits']
+        ids += hits.map { |h| h['objectID'] }
       end
       last_task
     end
