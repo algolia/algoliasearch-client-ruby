@@ -76,6 +76,7 @@ require 'algoliasearch'
 
 Algolia.init application_id: 'YourApplicationID',
              api_key:        'YourAPIKey'
+index = Algolia::Index.new("your_index_name")
 ```
 
 ## Push data
@@ -129,10 +130,10 @@ puts index.search('jimmie paint').to_json
 ## Search UI
 
 **Warning:** If you are building a web application, you may be more interested in using one of our
-[frontend search UI librairies](https://www.algolia.com/doc/guides/search-ui/search-libraries/)
+[frontend search UI libraries](https://www.algolia.com/doc/guides/search-ui/search-libraries/)
 
 The following example shows how to build a front-end search quickly using
-[InstanSearch.js](https://community.algolia.com/instantsearch.js/)
+[InstantSearch.js](https://community.algolia.com/instantsearch.js/)
 
 ### index.html
 
