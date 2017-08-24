@@ -414,9 +414,10 @@ module Algolia
         result = browse(params)
 
         params[:cursor] = result['cursor']
-        break unless result.has_key?('hits')
 
         hits = result['hits']
+        break if hits.empty?
+
         ids += hits.map { |h| h['objectID'] }
       end
       last_task
