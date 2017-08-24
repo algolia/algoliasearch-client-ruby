@@ -29,7 +29,7 @@ WebMock.stub_request(:post, /.*\.algolia(net\.com|\.net)\/1\/indexes\/[^\/]+\/ba
 WebMock.stub_request(:get, /.*\.algolia(net\.com|\.net)\/1\/indexes\/[^\/]+\/settings/).to_return(:body => '{}')
 WebMock.stub_request(:put, /.*\.algolia(net\.com|\.net)\/1\/indexes\/[^\/]+\/settings/).to_return(:body => '{ "taskID": 42 }')
 # browse
-WebMock.stub_request(:get, /.*\.algolia(net\.com|\.net)\/1\/indexes\/[^\/]+\/browse/).to_return(:body => '{}')
+WebMock.stub_request(:get, /.*\.algolia(net\.com|\.net)\/1\/indexes\/[^\/]+\/browse/).to_return(:body => '{ "hits": [] }')
 # operations
 WebMock.stub_request(:post, /.*\.algolia(net\.com|\.net)\/1\/indexes\/[^\/]+\/operation/).to_return(:body => '{ "taskID": 42 }')
 # tasks
