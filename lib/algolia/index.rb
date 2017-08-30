@@ -800,6 +800,106 @@ module Algolia
       return res
     end
 
+    # Search rules
+    #
+    # @param query the query
+    # @param params an optional hash of :anchoring, :context, :page, :hitsPerPage
+    def search_rules(query, params = {})
+      anchoring = params[:anchoring]
+      context = params[:context]
+      page = params[:page] || params['page'] || 0
+      hits_per_page = params[:hitsPerPage] || params['hitsPerPage'] || 20
+      params = {
+        :query => query,
+        :page => page,
+        :hitsPerPage => hits_per_page
+      }
+      params[:anchoring] = anchoring unless anchoring.nil?
+      params[:context] = context unless context.nil?
+      client.post(Protocol.search_rules_uri(name), params.to_json, :read)
+    end
+
+    # Get a rule
+    #
+    # @param objectID the rule objectID
+    def get_rule(objectID)
+      client.get(Protocol.rule_uri(name, objectID), :read)
+    end
+
+    # Delete a rule
+    #
+    # @param objectID the rule objectID
+    # @param forward_to_replicas should we forward the delete to replica indices
+    def delete_rule(objectID, forward_to_replicas = false)
+      client.delete("#{Protocol.rule_uri(name, objectID)}?forwardToReplicas=#{forward_to_replicas}", :write)
+    end
+
+    # Delete a rule and wait the end of indexing
+    #
+    # @param objectID the rule objectID
+    # @param forward_to_replicas should we forward the delete to replica indices
+    def delete_rule!(objectID, forward_to_replicas = false)
+      res = delete_rule(objectID, forward_to_replicas)
+      wait_task(res["taskID"])
+      return res
+    end
+
+    # Save a rule
+    #
+    # @param objectID the rule objectID
+    # @param rule the rule
+    # @param forward_to_replicas should we forward the delete to replica indices
+    def save_rule(objectID, rule, forward_to_replicas = false)
+      client.put("#{Protocol.rule_uri(name, objectID)}?forwardToReplicas=#{forward_to_replicas}", rule.to_json, :write)
+    end
+
+    # Save a rule and wait the end of indexing
+    #
+    # @param objectID the rule objectID
+    # @param rule the rule
+    # @param forward_to_replicas should we forward the delete to replica indices
+    def save_rule!(objectID, rule, forward_to_replicas = false)
+      res = save_rule(objectID, rule, forward_to_replicas)
+      wait_task(res["taskID"])
+      return res
+    end
+
+    # Clear all rules
+    #
+    # @param forward_to_replicas should we forward the delete to replica indices
+    def clear_rules(forward_to_replicas = false)
+      client.post("#{Protocol.clear_rules_uri(name)}?forwardToReplicas=#{forward_to_replicas}")
+    end
+
+    # Clear all rules and wait the end of indexing
+    #
+    # @param forward_to_replicas should we forward the delete to replica indices
+    def clear_rules!(forward_to_replicas = false)
+      res = clear_rules(forward_to_replicas)
+      wait_task(res["taskID"])
+      return res
+    end
+
+    # Add/Update an array of rules
+    #
+    # @param rules the array of rules to add/update
+    # @param forward_to_replicas should we forward the delete to replica indices
+    # @param clear_existing_rules should we clear the existing rules before adding the new ones
+    def batch_rules(rules, forward_to_replicas = false, clear_existing_rules = false)
+      client.post("#{Protocol.batch_rules_uri(name)}?forwardToReplicas=#{forward_to_replicas}&clearExistingRules=#{clear_existing_rules}", rules.to_json, :batch)
+    end
+
+    # Add/Update an array of rules and wait the end of indexing
+    #
+    # @param rules the array of rules to add/update
+    # @param forward_to_replicas should we forward the delete to replica indices
+    # @param clear_existing_rules should we clear the existing rules before adding the new ones
+    def batch_rules!(rules, forward_to_replicas = false, clear_existing_rules = false)
+      res = batch_rules(rules, forward_to_replicas, clear_existing_rules)
+      wait_task(res["taskID"])
+      return res
+    end
+
     # Deprecated
     alias_method :get_user_key, :get_api_key
     alias_method :list_user_keys, :list_api_keys
