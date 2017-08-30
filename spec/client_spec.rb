@@ -986,14 +986,14 @@ describe 'Client' do
 
   it 'should test Query Rules' do
     rule_1 = {
-      objectID: '42',
-      condition: { pattern: 'test', anchoring: :contains },
-      consequence: { params: { query: 'this is better' } }
+      :objectID => '42',
+      :condition => { :pattern => 'test', :anchoring => 'contains' },
+      :consequence => { :params => { :query => 'this is better' } }
     }
     rule_2 = {
-      objectID: '2',
-      condition: { pattern: 'Pura', anchoring: :contains },
-      consequence: { params: { query: 'Pura Vida' } }
+      :objectID => '2',
+      :condition => { :pattern => 'Pura', :anchoring => 'contains' },
+      :consequence => { :params => { :query => 'Pura Vida' } }
     }
 
     result = @index.save_rule!(rule_1[:objectID], rule_1)
@@ -1003,7 +1003,7 @@ describe 'Client' do
     @index.get_rule(rule_1[:objectID])['objectID'].should eq(rule_1[:objectID])
 
     @index.search_rules('better')['nbHits'].should eq(1)
-    @index.search_rules('', { anchoring: :contains })['nbHits'].should eq(1)
+    @index.search_rules('', { :anchoring => 'contains' })['nbHits'].should eq(1)
 
     @index.delete_rule!(rule_1[:objectID])
     @index.search_rules('')['nbHits'].should eq(0)
