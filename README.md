@@ -19,17 +19,23 @@ You can find the full reference on [Algolia's website](https://www.algolia.com/d
 ## Table of Contents
 
 
+
 1. **[Install](#install)**
 
     * [Ruby on Rails](#ruby-on-rails)
+
 1. **[Quick Start](#quick-start)**
 
     * [Initialize the client](#initialize-the-client)
+
 1. **[Push data](#push-data)**
+
 
 1. **[Configure](#configure)**
 
+
 1. **[Search](#search)**
+
 
 1. **[Search UI](#search-ui)**
 
@@ -195,6 +201,7 @@ search.start();
 
 
 
+
 ## List of available methods
 
 
@@ -265,6 +272,7 @@ search.start();
   - [Custom batch](https://algolia.com/doc/api-reference/api-methods/batch/?language=ruby)
   - [Browse an index](https://algolia.com/doc/api-reference/api-methods/browse/?language=ruby)
   - [Get latest logs](https://algolia.com/doc/api-reference/api-methods/get-logs/?language=ruby)
+
 
 
 
