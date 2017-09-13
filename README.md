@@ -267,6 +267,17 @@ search.start();
 
 
 
+### Query rules
+
+  - [Save a single rule](https://algolia.com/doc/api-reference/api-methods/rules-save/?language=ruby)
+  - [Batch save multiple rules](https://algolia.com/doc/api-reference/api-methods/rules-save-batch/?language=ruby)
+  - [Read a rule](https://algolia.com/doc/api-reference/api-methods/rules-read/?language=ruby)
+  - [Delete a single rule](https://algolia.com/doc/api-reference/api-methods/rules-delete/?language=ruby)
+  - [Clear all rules](https://algolia.com/doc/api-reference/api-methods/rules-clear/?language=ruby)
+  - [Search for rules](https://algolia.com/doc/api-reference/api-methods/rules-search/?language=ruby)
+
+
+
 ### Advanced
 
   - [Custom batch](https://algolia.com/doc/api-reference/api-methods/batch/?language=ruby)
