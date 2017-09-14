@@ -1,5 +1,8 @@
 CHANGELOG
 
+2017-09-14 1.16.0
+      * New Query Rules API
+
 2017-08-17 1.15.1
       * Fixed regression introduced in 1.15.0
 
@@ -175,11 +178,11 @@ CHANGELOG
 2013-12-16  1.1.15
 
       * Embed ca-bundle.crt
-      
+
 2013-12-11  1.1.14
 
       * Added index.add_user_key(acls, validity, rate_limit, maxApiCalls)
-	
+
 2013-12-10  1.1.13
 
       * WebMock integration
