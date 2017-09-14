@@ -147,5 +147,25 @@ module Algolia
       "#{synonyms_uri(index)}/batch"
     end
 
+    def Protocol.rules_uri(index)
+      "#{index_uri(index)}/rules"
+    end
+
+    def Protocol.rule_uri(index, object_id)
+      "#{rules_uri(index)}/#{CGI.escape(object_id)}"
+    end
+
+    def Protocol.search_rules_uri(index)
+      "#{rules_uri(index)}/search"
+    end
+
+    def Protocol.clear_rules_uri(index)
+      "#{rules_uri(index)}/clear"
+    end
+
+    def Protocol.batch_rules_uri(index)
+      "#{rules_uri(index)}/batch"
+    end
+
   end
 end

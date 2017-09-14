@@ -984,6 +984,37 @@ describe 'Client' do
     @index.search_synonyms('')['nbHits'].should eq(0)
   end
 
+  it 'should test Query Rules' do
+    rule_1 = {
+      :objectID => '42',
+      :condition => { :pattern => 'test', :anchoring => 'contains' },
+      :consequence => { :params => { :query => 'this is better' } }
+    }
+    rule_2 = {
+      :objectID => '2',
+      :condition => { :pattern => 'Pura', :anchoring => 'contains' },
+      :consequence => { :params => { :query => 'Pura Vida' } }
+    }
+
+    result = @index.save_rule!(rule_1[:objectID], rule_1)
+    result.should have_key('taskID')
+    result.should have_key('updatedAt')
+
+    @index.get_rule(rule_1[:objectID])['objectID'].should eq(rule_1[:objectID])
+
+    @index.search_rules('better')['nbHits'].should eq(1)
+    @index.search_rules('', { :anchoring => 'contains' })['nbHits'].should eq(1)
+
+    @index.delete_rule!(rule_1[:objectID])
+    @index.search_rules('')['nbHits'].should eq(0)
+
+    @index.batch_rules!([rule_1, rule_2])
+    @index.search_rules('')['nbHits'].should eq(2)
+
+    @index.clear_rules!
+    @index.search_rules('')['nbHits'].should eq(0)
+  end
+
   context 'DNS timeout' do
     before(:each) do
       @client = Algolia::Client.new :application_id => ENV['ALGOLIA_APPLICATION_ID'], :api_key => ENV['ALGOLIA_API_KEY'],
