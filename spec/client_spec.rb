@@ -249,6 +249,31 @@ describe 'Client' do
     expect { @index.delete_by_query(nil) }.to raise_error(ArgumentError)
   end
 
+  context 'delete_by' do
+    it 'should not wipe the entire index' do
+      expect { @index.delete_by(nil) }.to raise_error(ArgumentError)
+    end
+
+    it 'should fail with query passed' do
+      @index.clear
+      @index.add_object({:firstname => 'Robert1'})
+      @index.add_object!({:firstname => 'Robert2'})
+      @index.search('')['nbHits'].should eq(2)
+      expect { @index.delete_by({ 'query' => 'abc' }) }.to raise_error(Algolia::AlgoliaProtocolError)
+      @index.search('')['nbHits'].should eq(2)
+    end
+
+    it 'should work with filters' do
+      @index.clear
+      @index.set_settings!({:attributesForFaceting => ['firstname']})
+      @index.add_object({:firstname => 'Robert1'})
+      @index.add_object!({:firstname => 'Robert2'})
+      @index.search('')['nbHits'].should eq(2)
+      @index.delete_by!({ 'filters' => 'firstname:Robert1' })
+      @index.search('')['nbHits'].should eq(1)
+    end
+  end
+
   it "should copy the index" do
     index = Algolia::Index.new(safe_index_name("àlgol?à"))
     begin
