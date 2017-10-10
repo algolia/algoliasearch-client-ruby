@@ -167,5 +167,9 @@ module Algolia
       "#{rules_uri(index)}/batch"
     end
 
+    def Protocol.delete_by_uri(index)
+      "#{index_uri(index)}/deleteByQuery"
+    end
+
   end
 end
