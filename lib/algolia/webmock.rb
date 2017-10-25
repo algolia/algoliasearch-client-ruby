@@ -50,3 +50,5 @@ module Algolia
     end
   end
 end
+
+Algolia::WebMock.mock!
