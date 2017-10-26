@@ -833,7 +833,7 @@ module Algolia
     # @param forward_to_replicas should we forward the delete to replica indices
     # @param request_options contains extra parameters to send with your query
     def clear_synonyms(forward_to_replicas = false, request_options = {})
-      client.post("#{Protocol.clear_synonyms_uri(name)}?forwardToReplicas=#{forward_to_replicas}", :write, request_options)
+      client.post("#{Protocol.clear_synonyms_uri(name)}?forwardToReplicas=#{forward_to_replicas}", {}, :write, request_options)
     end
 
     # Clear all synonyms and wait the end of indexing
