@@ -18,6 +18,7 @@ coverage
 rdoc
 pkg
 .rvmrc
+.rubocop.yml
 
 ## PROJECT::SPECIFIC
 Gemfile.lock
