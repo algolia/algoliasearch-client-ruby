@@ -469,21 +469,23 @@ module Algolia
     # This method deletes every record matching the filters provided
     #
     # @param params query parameters
+    # @param request_options contains extra parameters to send with your query
     #
-    def delete_by(params)
+    def delete_by(params, request_options = {})
       raise ArgumentError.new('params cannot be nil, use the `clear` method to wipe the entire index') if params.nil?
       params = sanitized_delete_by_query_params(params)
-      client.post(Protocol.delete_by_uri(name), params.to_json)
+      client.post(Protocol.delete_by_uri(name), params.to_json, :write, request_options)
     end
 
     #
     # Delete all objects matching a query (doesn't work with actual text queries)
     # This method deletes every record matching the filters provided and waits for the end of indexing
     # @param params query parameters
+    # @param request_options contains extra parameters to send with your query
     #
-    def delete_by!(params)
-      res = delete_by(params)
-      wait_task(res['taskID']) if res
+    def delete_by!(params, request_options = {})
+      res = delete_by(params, request_options)
+      wait_task(res['taskID'], request_options) if res
       res
     end
 
