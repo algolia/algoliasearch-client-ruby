@@ -491,7 +491,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     #
     def clear(request_options = {})
-      client.post(Protocol.clear_uri(name), :write, request_options)
+      client.post(Protocol.clear_uri(name), {}, :write, request_options)
     end
     alias_method :clear_index, :clear
 
