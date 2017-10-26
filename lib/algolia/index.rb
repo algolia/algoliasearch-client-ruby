@@ -177,13 +177,14 @@ module Algolia
     #
     # Browse all index content
     #
-    # @param pageOrQueryParameters The hash of query parameters to use to browse
-    #                              To browse from a specific cursor, just add a ":cursor" parameters
+    # @param queryParameters The hash of query parameters to use to browse
+    #                        To browse from a specific cursor, just add a ":cursor" parameters
+    # @param queryParameters An optional second parameters hash here for backward-compatibility (which will be merged with the first)
+    # @param request_options contains extra parameters to send with your query
     #
     # @DEPRECATED:
-    # @param pageOrQueryParameters Pagination parameter used to select the page to retrieve.
+    # @param page Pagination parameter used to select the page to retrieve.
     # @param hitsPerPage: Pagination parameter used to select the number of hits per page. Defaults to 1000.
-    # @param request_options contains extra parameters to send with your query
     #
     def browse(pageOrQueryParameters = nil, hitsPerPage = nil, request_options = {}, &block)
       params = {}
@@ -455,6 +456,7 @@ module Algolia
     #
     # @param query the query string
     # @param params the optional query parameters
+    # @param request_options contains extra parameters to send with your query
     #
     def delete_by_query!(query, params = nil, request_options = {})
       res = delete_by_query(query, params, request_options)
