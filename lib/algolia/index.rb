@@ -876,7 +876,8 @@ module Algolia
     #
     # @param query the query
     # @param params an optional hash of :anchoring, :context, :page, :hitsPerPage
-    def search_rules(query, params = {})
+    # @param request_options contains extra parameters to send with your query
+    def search_rules(query, params = {}, request_options = {})
       anchoring = params[:anchoring]
       context = params[:context]
       page = params[:page] || params['page'] || 0
@@ -888,31 +889,34 @@ module Algolia
       }
       params[:anchoring] = anchoring unless anchoring.nil?
       params[:context] = context unless context.nil?
-      client.post(Protocol.search_rules_uri(name), params.to_json, :read)
+      client.post(Protocol.search_rules_uri(name), params.to_json, :read, request_options)
     end
 
     # Get a rule
     #
     # @param objectID the rule objectID
-    def get_rule(objectID)
-      client.get(Protocol.rule_uri(name, objectID), :read)
+    # @param request_options contains extra parameters to send with your query
+    def get_rule(objectID, request_options = {})
+      client.get(Protocol.rule_uri(name, objectID), :read, request_options)
     end
 
     # Delete a rule
     #
     # @param objectID the rule objectID
     # @param forward_to_replicas should we forward the delete to replica indices
-    def delete_rule(objectID, forward_to_replicas = false)
-      client.delete("#{Protocol.rule_uri(name, objectID)}?forwardToReplicas=#{forward_to_replicas}", :write)
+    # @param request_options contains extra parameters to send with your query
+    def delete_rule(objectID, forward_to_replicas = false, request_options = {})
+      client.delete("#{Protocol.rule_uri(name, objectID)}?forwardToReplicas=#{forward_to_replicas}", :write, request_options)
     end
 
     # Delete a rule and wait the end of indexing
     #
     # @param objectID the rule objectID
     # @param forward_to_replicas should we forward the delete to replica indices
-    def delete_rule!(objectID, forward_to_replicas = false)
-      res = delete_rule(objectID, forward_to_replicas)
-      wait_task(res["taskID"])
+    # @param request_options contains extra parameters to send with your query
+    def delete_rule!(objectID, forward_to_replicas = false, request_options = {})
+      res = delete_rule(objectID, forward_to_replicas, request_options)
+      wait_task(res["taskID"], request_options)
       return res
     end
 
@@ -921,8 +925,9 @@ module Algolia
     # @param objectID the rule objectID
     # @param rule the rule
     # @param forward_to_replicas should we forward the delete to replica indices
-    def save_rule(objectID, rule, forward_to_replicas = false)
-      client.put("#{Protocol.rule_uri(name, objectID)}?forwardToReplicas=#{forward_to_replicas}", rule.to_json, :write)
+    # @param request_options contains extra parameters to send with your query
+    def save_rule(objectID, rule, forward_to_replicas = false, request_options = {})
+      client.put("#{Protocol.rule_uri(name, objectID)}?forwardToReplicas=#{forward_to_replicas}", rule.to_json, :write, request_options)
     end
 
     # Save a rule and wait the end of indexing
@@ -930,25 +935,28 @@ module Algolia
     # @param objectID the rule objectID
     # @param rule the rule
     # @param forward_to_replicas should we forward the delete to replica indices
-    def save_rule!(objectID, rule, forward_to_replicas = false)
-      res = save_rule(objectID, rule, forward_to_replicas)
-      wait_task(res["taskID"])
+    # @param request_options contains extra parameters to send with your query
+    def save_rule!(objectID, rule, forward_to_replicas = false, request_options = {})
+      res = save_rule(objectID, rule, forward_to_replicas, request_options)
+      wait_task(res["taskID"], request_options)
       return res
     end
 
     # Clear all rules
     #
     # @param forward_to_replicas should we forward the delete to replica indices
-    def clear_rules(forward_to_replicas = false)
-      client.post("#{Protocol.clear_rules_uri(name)}?forwardToReplicas=#{forward_to_replicas}")
+    # @param request_options contains extra parameters to send with your query
+    def clear_rules(forward_to_replicas = false, request_options = {})
+      client.post("#{Protocol.clear_rules_uri(name)}?forwardToReplicas=#{forward_to_replicas}", {}, :write, request_options)
     end
 
     # Clear all rules and wait the end of indexing
     #
     # @param forward_to_replicas should we forward the delete to replica indices
-    def clear_rules!(forward_to_replicas = false)
-      res = clear_rules(forward_to_replicas)
-      wait_task(res["taskID"])
+    # @param request_options contains extra parameters to send with your query
+    def clear_rules!(forward_to_replicas = false, request_options = {})
+      res = clear_rules(forward_to_replicas, request_options)
+      wait_task(res["taskID"], request_options)
       return res
     end
 
@@ -957,8 +965,9 @@ module Algolia
     # @param rules the array of rules to add/update
     # @param forward_to_replicas should we forward the delete to replica indices
     # @param clear_existing_rules should we clear the existing rules before adding the new ones
-    def batch_rules(rules, forward_to_replicas = false, clear_existing_rules = false)
-      client.post("#{Protocol.batch_rules_uri(name)}?forwardToReplicas=#{forward_to_replicas}&clearExistingRules=#{clear_existing_rules}", rules.to_json, :batch)
+    # @param request_options contains extra parameters to send with your query
+    def batch_rules(rules, forward_to_replicas = false, clear_existing_rules = false, request_options = {})
+      client.post("#{Protocol.batch_rules_uri(name)}?forwardToReplicas=#{forward_to_replicas}&clearExistingRules=#{clear_existing_rules}", rules.to_json, :batch, request_options)
     end
 
     # Add/Update an array of rules and wait the end of indexing
@@ -966,9 +975,10 @@ module Algolia
     # @param rules the array of rules to add/update
     # @param forward_to_replicas should we forward the delete to replica indices
     # @param clear_existing_rules should we clear the existing rules before adding the new ones
-    def batch_rules!(rules, forward_to_replicas = false, clear_existing_rules = false)
-      res = batch_rules(rules, forward_to_replicas, clear_existing_rules)
-      wait_task(res["taskID"])
+    # @param request_options contains extra parameters to send with your query
+    def batch_rules!(rules, forward_to_replicas = false, clear_existing_rules = false, request_options = {})
+      res = batch_rules(rules, forward_to_replicas, clear_existing_rules, request_options)
+      wait_task(res["taskID"], request_options)
       return res
     end
 
