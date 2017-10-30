@@ -278,6 +278,8 @@ search.start();
 
 
 
+
+
 ### Advanced
 
   - [Custom batch](https://algolia.com/doc/api-reference/api-methods/batch/?language=ruby)
