@@ -4,7 +4,7 @@ describe 'With a mocked client' do
 
   before(:all) do
     WebMock.enable!
-    require 'algolia/webmock'
+    Algolia::WebMock.mock!
     # reset session objects
     app_id = Algolia.client.application_id
     Thread.current["algolia_hosts_#{app_id}"] = nil
