@@ -1,5 +1,8 @@
 CHANGELOG
 
+2017-11-02 1.18.0
+      * Allow to reuse the webmocks using `Algolia::WebMock.mock!` (#256)
+
 2017-10-10 1.17.0
       * New delete_by method
 
