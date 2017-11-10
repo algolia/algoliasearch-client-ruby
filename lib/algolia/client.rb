@@ -24,6 +24,7 @@ module Algolia
 
       @ssl             = data[:ssl].nil? ? true : data[:ssl]
       @ssl_version     = data[:ssl_version].nil? ? nil : data[:ssl_version]
+      @transparent_gzip_decompression = data[:transparent_gzip_decompression].nil? ? true : data[:transparent_gzip_decompression]
       @application_id  = data[:application_id]
       @api_key         = data[:api_key]
       @hosts           = data[:hosts] || (["#{@application_id}.algolia.net"] + 1.upto(3).map { |i| "#{@application_id}-#{i}.algolianet.com" }.shuffle)
@@ -389,7 +390,7 @@ module Algolia
       Thread.current[thread_hosts_key] ||= (read ? search_hosts : hosts).each_with_index.map do |host, i|
         client = HTTPClient.new
         client.ssl_config.ssl_version = @ssl_version if @ssl && @ssl_version
-        client.transparent_gzip_decompression = true
+        client.transparent_gzip_decompression = @transparent_gzip_decompression
         client.ssl_config.add_trust_ca File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'resources', 'ca-bundle.crt'))
         {
           :index => i,
