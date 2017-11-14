@@ -83,7 +83,7 @@ index = Algolia::Index.new("your_index_name")
 
 ## Push data
 
-Without any prior configuration, you can start indexing [500 contacts](https://raw.githubusercontent.com/algolia/datasets-public/master/contacts.json) in the ```contacts``` index using the following code:
+Without any prior configuration, you can start indexing [500 contacts](https://github.com/algolia/datasets/blob/master/contacts/contacts.json) in the ```contacts``` index using the following code:
 ```ruby
 index = Algolia::Index.new('contacts')
 batch = JSON.parse(File.read('contacts.json'))
