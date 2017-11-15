@@ -1,5 +1,9 @@
 CHANGELOG
 
+2017-11-15 1.18.1
+      * Fix get_logs always returning type `all` (#244)
+      * New scopes to copy_index method (#243)
+
 2017-11-02 1.18.0
       * Allow to reuse the webmocks using `Algolia::WebMock.mock!` (#256)
 
