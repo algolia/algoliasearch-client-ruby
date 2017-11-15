@@ -101,8 +101,8 @@ module Algolia
       "#{index_uri(index)}/clear"
     end
 
-    def Protocol.logs(offset, length, only_errors = false)
-      "/#{VERSION}/logs?offset=#{offset}&length=#{length}&onlyErrors=#{only_errors}"
+    def Protocol.logs(offset, length, type)
+      "/#{VERSION}/logs?offset=#{offset}&length=#{length}&type=#{type}"
     end
 
     def Protocol.keys_uri

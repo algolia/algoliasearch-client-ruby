@@ -188,6 +188,7 @@ module Algolia
     #
     # @param offset Specify the first entry to retrieve (0-based, 0 is the most recent log entry).
     # @param length Specify the maximum number of entries to retrieve starting at offset. Maximum allowed value: 1000.
+    # @param type Optional type of log entries to retrieve ("all", "query", "build" or "error").
     #
     def get_logs(offset = 0, length = 10, type = "all")
       if (type.is_a?(true.class))

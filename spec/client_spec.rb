@@ -350,6 +350,7 @@ describe 'Client' do
     res = Algolia.get_logs(0, 20, true)
 
     res['logs'].size.should > 0
+    res['logs'].each { |log| log['answer_code'].should eq("404") }
   end
 
   it "should search on multipleIndex" do
