@@ -293,6 +293,31 @@ describe 'Client' do
     index.delete_index!
   end
 
+  it "should copy parts of the index only" do
+    index = Algolia::Index.new(safe_index_name("àlgol?à"))
+    begin
+      @index.clear_index
+      Algolia.delete_index! index.name
+    rescue
+      # friends_2 does not exist
+    end
+
+    @index.add_object!({:firstname => "Robert"})
+    @index.batch_synonyms! [
+      { :objectID => 'city', :type => 'synonym', :synonyms => ['San Francisco', 'SF'] },
+      { :objectID => 'street', :type => 'altCorrection1', :word => 'street', :corrections => ['st'] }
+    ]
+    @index.search('')['nbHits'].should eq(1)
+    @index.search_synonyms('')['nbHits'].should eq(2)
+
+    res = Algolia.copy_index!(safe_index_name("àlgol?a"), safe_index_name("àlgol?à"), ["synonyms"])
+
+    @index.delete_index!
+
+    index.search_synonyms('')['nbHits'].should eq(2)
+    index.delete_index!
+  end
+
   it "should move the index" do
     @index.clear_index rescue "friends does not exist"
     index = Algolia::Index.new(safe_index_name("àlgol?à"))
