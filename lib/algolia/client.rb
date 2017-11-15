@@ -151,9 +151,11 @@ module Algolia
     # Copy an existing index.
     # @param src_index the name of index to copy.
     # @param dst_index the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+    # @param scope the optional list of scopes to copy (all if not specified).
     #
-    def copy_index(src_index, dst_index)
+    def copy_index(src_index, dst_index, scope = nil)
       request = {"operation" => "copy", "destination" => dst_index};
+      request["scope"] = scope unless scope.nil?
       post(Protocol.index_operation_uri(src_index), request.to_json)
     end
 
@@ -161,9 +163,10 @@ module Algolia
     # Copy an existing index and wait until the copy has been processed.
     # @param src_index the name of index to copy.
     # @param dst_index the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+    # @param scope the optional list of scopes to copy (all if not specified).
     #
-    def copy_index!(src_index, dst_index)
-      res = copy_index(src_index, dst_index)
+    def copy_index!(src_index, dst_index, scope = nil)
+      res = copy_index(src_index, dst_index, scope)
       init_index(dst_index).wait_task(res['taskID'])
       res
     end
@@ -557,18 +560,20 @@ module Algolia
   # Copy an existing index.
   # @param src_index the name of index to copy.
   # @param dst_index the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+  # @param scope the optional list of scopes to copy (all if not specified).
   #
-  def Algolia.copy_index(src_index, dst_index)
-    Algolia.client.copy_index(src_index, dst_index)
+  def Algolia.copy_index(src_index, dst_index, scope = nil)
+    Algolia.client.copy_index(src_index, dst_index, scope)
   end
 
   #
   # Copy an existing index and wait until the copy has been processed.
   # @param src_index the name of index to copy.
   # @param dst_index the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+  # @param scope the optional list of scopes to copy (all if not specified).
   #
-  def Algolia.copy_index!(src_index, dst_index)
-    Algolia.client.copy_index!(src_index, dst_index)
+  def Algolia.copy_index!(src_index, dst_index, scope = nil)
+    Algolia.client.copy_index!(src_index, dst_index, scope)
   end
 
   # Delete an index
