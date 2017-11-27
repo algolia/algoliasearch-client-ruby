@@ -347,7 +347,10 @@ describe 'Client' do
   end
 
   it "should get logs" do
-    Algolia::Index.new(safe_index_name('thisdefinitelyshouldntexist')).get_settings
+
+    expect {
+      Algolia::Index.new(safe_index_name('thisdefinitelyshouldntexist')).get_settings
+    }.to raise_error(Algolia::AlgoliaProtocolError)
     res = Algolia.get_logs(0, 20, true)
 
     res['logs'].size.should > 0
