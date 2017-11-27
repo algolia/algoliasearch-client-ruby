@@ -347,10 +347,11 @@ describe 'Client' do
   end
 
   it "should get logs" do
+    Algolia::Index.new(safe_index_name('thisdefinitelyshouldntexist')).get_settings
     res = Algolia.get_logs(0, 20, true)
 
     res['logs'].size.should > 0
-    res['logs'].each { |log| log['answer_code'].should eq("404") }
+    res['logs'][0]['answer_code'].should eq("404")
   end
 
   it "should search on multipleIndex" do
