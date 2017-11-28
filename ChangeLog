@@ -1,5 +1,8 @@
 CHANGELOG
 
+2017-11-28 1.18.2
+      * Add (undocumented) gzip option to disable gzip (#240)
+
 2017-11-15 1.18.1
       * Fix get_logs always returning type `all` (#244)
       * New scopes to copy_index method (#243)
