@@ -213,6 +213,7 @@ search.start();
   - [Search an index](https://algolia.com/doc/api-reference/api-methods/search/?language=ruby)
   - [Search for facet values](https://algolia.com/doc/api-reference/api-methods/search-for-facet-values/?language=ruby)
   - [Search multiple indexes](https://algolia.com/doc/api-reference/api-methods/multiple-queries/?language=ruby)
+  - [Browse an index](https://algolia.com/doc/api-reference/api-methods/browse/?language=ruby)
 
 
 
@@ -224,6 +225,7 @@ search.start();
   - [Delete objects](https://algolia.com/doc/api-reference/api-methods/delete-objects/?language=ruby)
   - [Delete by query](https://algolia.com/doc/api-reference/api-methods/delete-by-query/?language=ruby)
   - [Get objects](https://algolia.com/doc/api-reference/api-methods/get-objects/?language=ruby)
+  - [Custom batch](https://algolia.com/doc/api-reference/api-methods/batch/?language=ruby)
   - [Wait for operations](https://algolia.com/doc/api-reference/api-methods/wait-task/?language=ruby)
 
 
@@ -282,8 +284,6 @@ search.start();
 
 ### Advanced
 
-  - [Custom batch](https://algolia.com/doc/api-reference/api-methods/batch/?language=ruby)
-  - [Browse an index](https://algolia.com/doc/api-reference/api-methods/browse/?language=ruby)
   - [Get latest logs](https://algolia.com/doc/api-reference/api-methods/get-logs/?language=ruby)
 
 
