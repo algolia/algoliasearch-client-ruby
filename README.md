@@ -73,7 +73,6 @@ To begin, you will need to initialize the client. In order to do this you will n
 You can find both on [your Algolia account](https://www.algolia.com/api-keys).
 
 ```ruby
-require 'rubygems'
 require 'algoliasearch'
 
 Algolia.init application_id: 'YourApplicationID',
