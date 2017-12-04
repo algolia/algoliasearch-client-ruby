@@ -1,5 +1,8 @@
 CHANGELOG
 
+2017-12-04 1.18.3
+      * Remove Bundler and RubyGems requirements (#253)
+
 2017-11-28 1.18.2
       * Add (undocumented) gzip option to disable gzip (#240)
 
