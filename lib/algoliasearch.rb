@@ -4,8 +4,6 @@
 ## A quick library for playing with algolia.com's REST API for object storage.
 ## Thanks to Sylvain Utard for the initial version of the library (sylvain.utard@gmail.com)
 ## ----------------------------------------------------------------------
-require "rubygems"
-require "bundler/setup"
 
 require 'json'
 if !defined?(RUBY_ENGINE) && defined?(RUBY_VERSION) && RUBY_VERSION == '1.8.7'
