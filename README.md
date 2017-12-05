@@ -143,7 +143,7 @@ The following example shows how to build a front-end search quickly using
 <!doctype html>
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/instantsearch.js/1/instantsearch.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/instantsearch.js/2/instantsearch.min.css">
 </head>
 <body>
   <header>
@@ -163,7 +163,7 @@ The following example shows how to build a front-end search quickly using
     
   </script>
 
-  <script src="https://cdn.jsdelivr.net/instantsearch.js/1/instantsearch.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/instantsearch.js/2/instantsearch.min.js"></script>
   <script src="app.js"></script>
 </body>
 ```
@@ -176,7 +176,10 @@ var search = instantsearch({
   appId: 'YourApplicationID',
   apiKey: 'YourSearchOnlyAPIKey', // search only API key, no ADMIN key
   indexName: 'contacts',
-  urlSync: true
+  urlSync: true,
+  searchParameters: {
+    hitsPerPage: 10
+  }
 });
 
 search.addWidget(
@@ -188,7 +191,6 @@ search.addWidget(
 search.addWidget(
   instantsearch.widgets.hits({
     container: '#hits',
-    hitsPerPage: 10,
     templates: {
       item: document.getElementById('hit-template').innerHTML,
       empty: "We didn't find any results for the search <em>\"{{query}}\"</em>"
