@@ -1,7 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'httpclient', '~> 2.8.3'
-gem 'json', '>= 1.5.1'
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
+
+# Load algoliasearch.gemspec dependencies
+gemspec
+
 gem 'rubysl', '~> 2.0', :platform => :rbx
 
 group :development do
