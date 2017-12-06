@@ -1,5 +1,9 @@
 CHANGELOG
 
+2017-12-06 1.18.4
+      * Remove remaining unnecessary requirements (#256)
+      * Remove Gemfile.lock (#257)
+
 2017-12-04 1.18.3
       * Remove Bundler and RubyGems requirements (#253)
 
