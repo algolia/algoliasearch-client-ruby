@@ -9,7 +9,8 @@ if ENV['TRAVIS'] && Object.const_defined?(:RUBY_ENGINE) && RUBY_ENGINE == "ruby"
   Coveralls.wear!
 end
 
-require 'rubygems'
+require 'bundler/setup'
+
 Bundler.setup :test
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))

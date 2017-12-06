@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+require 'date'
 require File.join(File.dirname(__FILE__), 'lib', 'algolia', 'version')
 
 Gem::Specification.new do |s|
@@ -64,4 +65,3 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<json>, [">= 1.5.1"])
   end
 end
-
