@@ -73,6 +73,7 @@ To begin, you will need to initialize the client. In order to do this you will n
 You can find both on [your Algolia account](https://www.algolia.com/api-keys).
 
 ```ruby
+require 'rubygems'
 require 'algoliasearch'
 
 Algolia.init application_id: 'YourApplicationID',
@@ -142,7 +143,9 @@ The following example shows how to build a front-end search quickly using
 <!doctype html>
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/instantsearch.js/2/instantsearch.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.3/dist/instantsearch.min.css">
+  <!-- Always use `2.x` versions in production rather than `2` to mitigate any side effects on your website,
+  Find the latest version on InstantSearch.js website: https://community.algolia.com/instantsearch.js/v2/guides/usage.html -->
 </head>
 <body>
   <header>
@@ -162,7 +165,7 @@ The following example shows how to build a front-end search quickly using
     
   </script>
 
-  <script src="https://cdn.jsdelivr.net/instantsearch.js/2/instantsearch.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.3/dist/instantsearch.min.js"></script>
   <script src="app.js"></script>
 </body>
 ```
