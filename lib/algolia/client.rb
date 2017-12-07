@@ -261,7 +261,7 @@ module Algolia
     #  @param obj The list of parameters for this key.
     #         Defined by a Hash that can contain the following values:
     #          - acl: array of string
-    #          - indices: array of string
+    #          - indexes: array of string
     #          - validity: int
     #          - referers: array of string
     #          - description: string
@@ -311,7 +311,7 @@ module Algolia
     #  @param obj The list of parameters for this key.
     #         Defined by a Hash that can contain the following values:
     #          - acl: array of string
-    #          - indices: array of string
+    #          - indexes: array of string
     #          - validity: int
     #          - referers: array of string
     #          - description: string
@@ -687,7 +687,7 @@ module Algolia
   #        The list of parameters for this key. Defined by a NSDictionary that
   #        can contains the following values:
   #          - acl: array of string
-  #          - indices: array of string
+  #          - indexes: array of string
   #          - validity: int
   #          - referers: array of string
   #          - description: string
@@ -722,7 +722,7 @@ module Algolia
   #  @param obj The list of parameters for this key.
   #         Defined by a Hash that can contain the following values:
   #          - acl: array of string
-  #          - indices: array of string
+  #          - indexes: array of string
   #          - validity: int
   #          - referers: array of string
   #          - description: string
