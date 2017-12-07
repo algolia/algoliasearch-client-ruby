@@ -460,7 +460,7 @@ module Algolia
     #
     def delete_by_query!(query, params = nil, request_options = {})
       res = delete_by_query(query, params, request_options)
-      wait_task(res['taskID'], request_options) if res
+      wait_task(res['taskID'], 100, request_options) if res
       res
     end
 
@@ -485,7 +485,7 @@ module Algolia
     #
     def delete_by!(params, request_options = {})
       res = delete_by(params, request_options)
-      wait_task(res['taskID'], request_options) if res
+      wait_task(res['taskID'], 100, request_options) if res
       res
     end
 
@@ -916,7 +916,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     def delete_rule!(objectID, forward_to_replicas = false, request_options = {})
       res = delete_rule(objectID, forward_to_replicas, request_options)
-      wait_task(res["taskID"], request_options)
+      wait_task(res["taskID"], 100, request_options)
       return res
     end
 
@@ -938,7 +938,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     def save_rule!(objectID, rule, forward_to_replicas = false, request_options = {})
       res = save_rule(objectID, rule, forward_to_replicas, request_options)
-      wait_task(res["taskID"], request_options)
+      wait_task(res["taskID"], 100, request_options)
       return res
     end
 
@@ -956,7 +956,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     def clear_rules!(forward_to_replicas = false, request_options = {})
       res = clear_rules(forward_to_replicas, request_options)
-      wait_task(res["taskID"], request_options)
+      wait_task(res["taskID"], 100, request_options)
       return res
     end
 
@@ -978,7 +978,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     def batch_rules!(rules, forward_to_replicas = false, clear_existing_rules = false, request_options = {})
       res = batch_rules(rules, forward_to_replicas, clear_existing_rules, request_options)
-      wait_task(res["taskID"], request_options)
+      wait_task(res["taskID"], 100, request_options)
       return res
     end
 
