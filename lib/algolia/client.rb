@@ -270,7 +270,7 @@ module Algolia
     #          - maxQueriesPerIPPerHour: integer
     #  @param request_options contains extra parameters to send with your query - Default = {}
     #
-    def add_api_key(obj, request_options = nil, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
+    def add_api_key(obj, request_options = {}, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
       if obj.instance_of? Array
         params = {
           :acl => obj
@@ -279,7 +279,11 @@ module Algolia
         params = obj
       end
 
-      validity = request_options unless request_options.is_a?(Hash)
+      validity = 0
+      unless request_options.is_a?(Hash)
+        validity = request_options
+        request_options = {}
+      end
 
       if validity != 0
         params['validity'] = validity.to_i
@@ -320,7 +324,7 @@ module Algolia
     #          - maxQueriesPerIPPerHour: integer
     #  @param request_options contains extra parameters to send with your query - Default = {}
     #
-    def update_api_key(key, obj, request_options = nil, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
+    def update_api_key(key, obj, request_options = {}, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
       if obj.instance_of? Array
         params = {
           :acl => obj
@@ -329,7 +333,11 @@ module Algolia
         params = obj
       end
 
-      validity = request_options unless request_options.is_a?(Hash)
+      validity = 0
+      unless request_options.is_a?(Hash)
+        validity = request_options
+        request_options = {}
+      end
 
       if validity != 0
         params['validity'] = validity.to_i
@@ -696,12 +704,12 @@ module Algolia
   #          - maxQueriesPerIPPerHour: integer
   #  @param request_options contains extra parameters to send with your query - Default = {}
   #
-  def Algolia.add_api_key(obj, request_options = nil, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
+  def Algolia.add_api_key(obj, request_options = {}, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
     Algolia.client.add_api_key(obj, request_options, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
   end
 
   # Deprecated
-  def Algolia.add_user_key(obj, request_options = nil, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
+  def Algolia.add_user_key(obj, request_options = {}, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
     Algolia.client.add_api_key(obj, request_options, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
   end
 
@@ -731,12 +739,12 @@ module Algolia
   #          - maxQueriesPerIPPerHour: integer
   #  @param request_options contains extra parameters to send with your query - Default = {}
   #
-  def Algolia.update_api_key(key, obj, request_options = nil, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
+  def Algolia.update_api_key(key, obj, request_options = {}, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
     Algolia.client.update_api_key(key, obj, request_options, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
   end
 
   # Deprecated
-  def Algolia.update_user_key(key, obj, request_options = nil, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
+  def Algolia.update_user_key(key, obj, request_options = {}, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
     Algolia.client.update_api_key(key, obj, request_options, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
   end
 
