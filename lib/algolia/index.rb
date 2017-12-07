@@ -28,7 +28,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     def delete!(request_options = {})
       res = delete(request_options)
-      wait_task(res['taskID'], 100, request_options)
+      wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
     alias_method :delete_index!, :delete!
@@ -58,7 +58,7 @@ module Algolia
     # @param Request options object. Contains extra URL parameters or headers
     def add_object!(obj, objectID = nil, request_options = {})
       res = add_object(obj, objectID, request_options)
-      wait_task(res['taskID'], 100, request_options)
+      wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
@@ -78,7 +78,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     def add_objects!(objs, request_options = {})
       res = add_objects(objs, request_options)
-      wait_task(res['taskID'], 100, request_options)
+      wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
@@ -266,7 +266,7 @@ module Algolia
     # @param timeBeforeRetry the time in milliseconds before retry (default = 100ms)
     # @param request_options contains extra parameters to send with your query
     #
-    def wait_task(taskID, timeBeforeRetry = 100, request_options = {})
+    def wait_task(taskID, timeBeforeRetry = WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options = {})
       loop do
         status = get_task_status(taskID, request_options)
         if status == 'published'
@@ -294,7 +294,7 @@ module Algolia
     #
     def save_object!(obj, objectID = nil, request_options = {})
       res = save_object(obj, objectID, request_options)
-      wait_task(res['taskID'], 100, request_options)
+      wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
@@ -314,7 +314,7 @@ module Algolia
     #
     def save_objects!(objs, request_options = {})
       res = save_objects(objs, request_options)
-      wait_task(res['taskID'], 100, request_options)
+      wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
@@ -354,7 +354,7 @@ module Algolia
     #
     def partial_update_objects!(objs, create_if_not_exits = true, request_options = {})
       res = partial_update_objects(objs, create_if_not_exits, request_options)
-      wait_task(res['taskID'], 100, request_options)
+      wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
@@ -368,7 +368,7 @@ module Algolia
     #
     def partial_update_object!(obj, objectID = nil, create_if_not_exits = true, request_options = {})
       res = partial_update_object(obj, objectID, create_if_not_exits, request_options)
-      wait_task(res['taskID'], 100, request_options)
+      wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
@@ -391,7 +391,7 @@ module Algolia
     #
     def delete_object!(objectID, request_options = {})
       res = delete_object(objectID, request_options)
-      wait_task(res['taskID'], 100, request_options)
+      wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
@@ -414,7 +414,7 @@ module Algolia
     #
     def delete_objects!(objs, request_options = {})
       res = delete_objects(objs, request_options)
-      wait_task(res['taskID'], 100, request_options)
+      wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
@@ -460,7 +460,7 @@ module Algolia
     #
     def delete_by_query!(query, params = nil, request_options = {})
       res = delete_by_query(query, params, request_options)
-      wait_task(res['taskID'], 100, request_options) if res
+      wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options) if res
       res
     end
 
@@ -485,7 +485,7 @@ module Algolia
     #
     def delete_by!(params, request_options = {})
       res = delete_by(params, request_options)
-      wait_task(res['taskID'], 100, request_options) if res
+      wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options) if res
       res
     end
 
@@ -504,7 +504,7 @@ module Algolia
     #
     def clear!(request_options = {})
       res = clear(request_options)
-      wait_task(res['taskID'], 100, request_options)
+      wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
     alias_method :clear_index!, :clear!
@@ -520,7 +520,7 @@ module Algolia
     #
     def set_settings!(new_settings, options = {}, request_options = {})
       res = set_settings(new_settings, options, request_options)
-      wait_task(res['taskID'], 100, request_options)
+      wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
@@ -646,7 +646,7 @@ module Algolia
     # Send a batch request and wait the end of the indexing
     def batch!(request, request_options = {})
       res = batch(request, request_options)
-      wait_task(res['taskID'], 100, request_options)
+      wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
@@ -806,7 +806,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     def delete_synonym!(objectID, forward_to_replicas = false, request_options = {})
       res = delete_synonym(objectID, forward_to_replicas, request_options)
-      wait_task(res['taskID'], 100, request_options)
+      wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
@@ -828,7 +828,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     def save_synonym!(objectID, synonym, forward_to_replicas = false, request_options = {})
       res = save_synonym(objectID, synonym, forward_to_replicas, request_options)
-      wait_task(res['taskID'], 100, request_options)
+      wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
@@ -846,7 +846,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     def clear_synonyms!(forward_to_replicas = false, request_options = {})
       res = clear_synonyms(forward_to_replicas, request_options)
-      wait_task(res['taskID'], 100, request_options)
+      wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
@@ -868,7 +868,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     def batch_synonyms!(synonyms, forward_to_replicas = false, replace_existing_synonyms = false, request_options = {})
       res = batch_synonyms(synonyms, forward_to_replicas, replace_existing_synonyms, request_options)
-      wait_task(res['taskID'], 100, request_options)
+      wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
@@ -916,7 +916,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     def delete_rule!(objectID, forward_to_replicas = false, request_options = {})
       res = delete_rule(objectID, forward_to_replicas, request_options)
-      wait_task(res["taskID"], 100, request_options)
+      wait_task(res["taskID"], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       return res
     end
 
@@ -938,7 +938,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     def save_rule!(objectID, rule, forward_to_replicas = false, request_options = {})
       res = save_rule(objectID, rule, forward_to_replicas, request_options)
-      wait_task(res["taskID"], 100, request_options)
+      wait_task(res["taskID"], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       return res
     end
 
@@ -956,7 +956,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     def clear_rules!(forward_to_replicas = false, request_options = {})
       res = clear_rules(forward_to_replicas, request_options)
-      wait_task(res["taskID"], 100, request_options)
+      wait_task(res["taskID"], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       return res
     end
 
@@ -978,7 +978,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     def batch_rules!(rules, forward_to_replicas = false, clear_existing_rules = false, request_options = {})
       res = batch_rules(rules, forward_to_replicas, clear_existing_rules, request_options)
-      wait_task(res["taskID"], 100, request_options)
+      wait_task(res["taskID"], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       return res
     end
 

@@ -7,6 +7,7 @@ require 'openssl'
 require 'base64'
 
 module Algolia
+  WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY = 100
 
   # A class which encapsulates the HTTPS communication with the Algolia
   # API server. Uses the HTTPClient library for low-level HTTP communication.
@@ -162,7 +163,7 @@ module Algolia
     #
     def move_index!(src_index, dst_index, request_options = {})
       res = move_index(src_index, dst_index, request_options)
-      init_index(dst_index).wait_task(res['taskID'], 100, request_options)
+      init_index(dst_index).wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
@@ -188,7 +189,7 @@ module Algolia
     #
     def copy_index!(src_index, dst_index, scope = nil, request_options = {})
       res = copy_index(src_index, dst_index, scope, request_options)
-      init_index(dst_index).wait_task(res['taskID'], 100, request_options)
+      init_index(dst_index).wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
@@ -369,7 +370,7 @@ module Algolia
     def batch!(requests, request_options = {})
       res = batch(requests, request_options)
       res['taskID'].each do |index, taskID|
-        init_index(index).wait_task(taskID, 100, request_options)
+        init_index(index).wait_task(taskID, WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       end
     end
 
