@@ -634,8 +634,8 @@ module Algolia
 
 
     # Delete an existing user key
-    def delete_api_key(key)
-      client.delete(Protocol.index_key_uri(name, key))
+    def delete_api_key(key, request_options = {})
+      client.delete(Protocol.index_key_uri(name, key), :write, request_options)
     end
 
     # Send a batch request
