@@ -730,7 +730,7 @@ module Algolia
           :analytics => false
         })
       end
-      answers = client.multiple_queries(queries, :index_name, 'none', request_options)
+      answers = client.multiple_queries(queries, { :request_options => request_options })
 
       # aggregate answers
       ## first answer stores the hits + regular facets
