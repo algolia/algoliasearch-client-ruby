@@ -7,6 +7,7 @@ require 'openssl'
 require 'base64'
 
 module Algolia
+  WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY = 100
 
   # A class which encapsulates the HTTPS communication with the Algolia
   # API server. Uses the HTTPClient library for low-level HTTP communication.
@@ -99,12 +100,26 @@ module Algolia
 
     #
     # This method allows to query multiple indexes with one API call
-    # 
-    # @param queries the array of hash representing the query and associated index name
-    # @param index_name_key the name of the key used to fetch the index_name (:index_name by default)
-    # @param strategy define the strategy applied on the sequential searches (none by default)
     #
-    def multiple_queries(queries, index_name_key = :index_name, strategy = "none")
+    # @param queries the array of hash representing the query and associated index name
+    # @param options - accepts those keys:
+    #   - index_name_key the name of the key used to fetch the index_name (:index_name by default)
+    #   - strategy define the strategy applied on the sequential searches (none by default)
+    #   - request_options contains extra parameters to send with your query
+    #
+    def multiple_queries(queries, options = nil, strategy = nil)
+      if options.is_a?(Hash)
+        index_name_key = options.delete(:index_name_key) || options.delete('index_name_key')
+        strategy = options.delete(:strategy) || options.delete('strategy')
+        request_options = options.delete(:request_options) || options.delete('request_options')
+      else
+        # Deprecated def multiple_queries(queries, index_name_key, strategy)
+        index_name_key = options
+      end
+      index_name_key ||= :index_name
+      strategy ||= 'none'
+      request_options ||= {}
+
       requests = {
         :requests => queries.map do |query|
           query = query.dup
@@ -114,7 +129,7 @@ module Algolia
           { :indexName => indexName, :params => Protocol.to_query(encoded_params) }
         end
       }
-      post(Protocol.multiple_queries_uri(strategy), requests.to_json, :search)
+      post(Protocol.multiple_queries_uri(strategy), requests.to_json, :search, request_options)
     end
 
     #
@@ -123,28 +138,32 @@ module Algolia
     #     {"items": [{ "name": "contacts", "createdAt": "2013-01-18T15:33:13.556Z"},
     #                {"name": "notes", "createdAt": "2013-01-18T15:33:13.556Z"}]}
     #
-    def list_indexes
-      get(Protocol.indexes_uri, :read)
+    # @param request_options contains extra parameters to send with your query
+    #
+    def list_indexes(request_options = {})
+      get(Protocol.indexes_uri, :read, request_options)
     end
 
     #
     # Move an existing index.
     # @param src_index the name of index to copy.
     # @param dst_index the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+    # @param request_options contains extra parameters to send with your query
     #
-    def move_index(src_index, dst_index)
+    def move_index(src_index, dst_index, request_options = {})
       request = {"operation" => "move", "destination" => dst_index};
-      post(Protocol.index_operation_uri(src_index), request.to_json)
+      post(Protocol.index_operation_uri(src_index), request.to_json, :write, request_options)
     end
 
     #
     # Move an existing index and wait until the move has been processed
     # @param src_index the name of index to copy.
     # @param dst_index the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+    # @param request_options contains extra parameters to send with your query
     #
-    def move_index!(src_index, dst_index)
-      res = move_index(src_index, dst_index)
-      init_index(dst_index).wait_task(res['taskID'])
+    def move_index!(src_index, dst_index, request_options = {})
+      res = move_index(src_index, dst_index, request_options)
+      init_index(dst_index).wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
@@ -153,11 +172,12 @@ module Algolia
     # @param src_index the name of index to copy.
     # @param dst_index the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
     # @param scope the optional list of scopes to copy (all if not specified).
+    # @param request_options contains extra parameters to send with your query
     #
-    def copy_index(src_index, dst_index, scope = nil)
+    def copy_index(src_index, dst_index, scope = nil, request_options = {})
       request = {"operation" => "copy", "destination" => dst_index};
       request["scope"] = scope unless scope.nil?
-      post(Protocol.index_operation_uri(src_index), request.to_json)
+      post(Protocol.index_operation_uri(src_index), request.to_json, :write, request_options)
     end
 
     #
@@ -165,10 +185,11 @@ module Algolia
     # @param src_index the name of index to copy.
     # @param dst_index the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
     # @param scope the optional list of scopes to copy (all if not specified).
+    # @param request_options contains extra parameters to send with your query
     #
-    def copy_index!(src_index, dst_index, scope = nil)
-      res = copy_index(src_index, dst_index, scope)
-      init_index(dst_index).wait_task(res['taskID'])
+    def copy_index!(src_index, dst_index, scope = nil, request_options = {})
+      res = copy_index(src_index, dst_index, scope, request_options)
+      init_index(dst_index).wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
@@ -187,59 +208,70 @@ module Algolia
     #
     # Return last logs entries.
     #
-    # @param offset Specify the first entry to retrieve (0-based, 0 is the most recent log entry).
-    # @param length Specify the maximum number of entries to retrieve starting at offset. Maximum allowed value: 1000.
-    # @param type Optional type of log entries to retrieve ("all", "query", "build" or "error").
+    # @param options - accepts those keys:
+    #   - offset Specify the first entry to retrieve (0-based, 0 is the most recent log entry) - Default = 0
+    #   - length Specify the maximum number of entries to retrieve starting at offset. Maximum allowed value: 1000 - Default = 10
+    #   - type Type of log entries to retrieve ("all", "query", "build" or "error") - Default = 'all'
+    #   - request_options contains extra parameters to send with your query
     #
-    def get_logs(offset = 0, length = 10, type = "all")
-      if (type.is_a?(true.class))
-        if (type)
-          type = "error"
-        else
-          type = "all"
-        end
+    def get_logs(options = nil, length = nil, type = nil)
+      if options.is_a?(Hash)
+        offset = options.delete('offset') || options.delete(:offset)
+        length = options.delete('length') || options.delete(:length)
+        type = options.delete('type') || options.delete(:type)
+        request_options = options.delete('request_options') || options.delete(:request_options)
+      else
+        # Deprecated def get_logs(offset, length, type)
+        offset = options
       end
-      get(Protocol.logs(offset, length, type))
+      length ||= 10
+      type = 'all' if type.nil?
+      type = type ? 'error' : 'all' if type.is_a?(true.class)
+      request_options ||= {}
+
+      get(Protocol.logs(offset, length, type), :write, request_options)
     end
 
     # List all existing user keys with their associated ACLs
-    def list_api_keys
-      get(Protocol.keys_uri, :read)
+    #
+    # @param request_options contains extra parameters to send with your query
+    def list_api_keys(request_options = {})
+      get(Protocol.keys_uri, :read, request_options)
     end
 
     # Get ACL of a user key
-    def get_api_key(key)
-      get(Protocol.key_uri(key), :read)
+    #
+    # @param request_options contains extra parameters to send with your query
+    def get_api_key(key, request_options = {})
+      get(Protocol.key_uri(key), :read, request_options)
     end
 
     #
     #  Create a new user key
     #
-    #  @param obj can be two different parameters:
-    #        The list of parameters for this key. Defined by a NSDictionary that
-    #        can contains the following values:
+    #  Deprecated call was add_api_key(acl, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
+    #
+    #  ACL can contain an array with those strings:
+    #    - search: allow to search (https and http)
+    #    - addObject: allows to add/update an object in the index (https only)
+    #    - deleteObject : allows to delete an existing object (https only)
+    #    - deleteIndex : allows to delete index content (https only)
+    #    - settings : allows to get index settings (https only)
+    #    - editSettings : allows to change index settings (https only)
+    #
+    #  @param obj The list of parameters for this key.
+    #         Defined by a Hash that can contain the following values:
     #          - acl: array of string
-    #          - indices: array of string
+    #          - indexes: array of string
     #          - validity: int
     #          - referers: array of string
     #          - description: string
     #          - maxHitsPerQuery: integer
     #          - queryParameters: string
     #          - maxQueriesPerIPPerHour: integer
-    #        Or the list of ACL for this key. Defined by an array of NSString that
-    #        can contains the following values:
-    #          - search: allow to search (https and http)
-    #          - addObject: allows to add/update an object in the index (https only)
-    #          - deleteObject : allows to delete an existing object (https only)
-    #          - deleteIndex : allows to delete index content (https only)
-    #          - settings : allows to get index settings (https only)
-    #          - editSettings : allows to change index settings (https only)
-    #  @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
-    #  @param maxQueriesPerIPPerHour the maximum number of API calls allowed from an IP address per hour (0 means unlimited)
-    #  @param maxHitsPerQuery  the maximum number of hits this API key can retrieve in one call (0 means unlimited)
-    #  @param indexes the optional list of targeted indexes
+    #  @param request_options contains extra parameters to send with your query - Default = {}
     #
-    def add_api_key(obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
+    def add_api_key(obj, request_options = {}, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
       if obj.instance_of? Array
         params = {
           :acl => obj
@@ -247,47 +279,53 @@ module Algolia
       else
         params = obj
       end
+
+      validity = 0
+      unless request_options.is_a?(Hash)
+        validity = request_options
+        request_options = {}
+      end
+
       if validity != 0
-        params["validity"] = validity.to_i
+        params['validity'] = validity.to_i
       end
       if maxQueriesPerIPPerHour != 0
-        params["maxQueriesPerIPPerHour"] = maxQueriesPerIPPerHour.to_i
+        params['maxQueriesPerIPPerHour'] = maxQueriesPerIPPerHour.to_i
       end
       if maxHitsPerQuery != 0
-        params["maxHitsPerQuery"] = maxHitsPerQuery.to_i
+        params['maxHitsPerQuery'] = maxHitsPerQuery.to_i
       end
       params[:indexes] = indexes if indexes
-      post(Protocol.keys_uri, params.to_json)
+      post(Protocol.keys_uri, params.to_json, :write, request_options)
     end
 
     #
     #  Update a user key
     #
-    #  @param obj can be two different parameters:
-    #        The list of parameters for this key. Defined by a NSDictionary that
-    #        can contains the following values:
+    #  Deprecated call was update_api_key(key, acl, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
+    #
+    #  ACL can contain an array with those strings:
+    #    - search: allow to search (https and http)
+    #    - addObject: allows to add/update an object in the index (https only)
+    #    - deleteObject : allows to delete an existing object (https only)
+    #    - deleteIndex : allows to delete index content (https only)
+    #    - settings : allows to get index settings (https only)
+    #    - editSettings : allows to change index settings (https only)
+    #
+    #  @param key API Key to update
+    #  @param obj The list of parameters for this key.
+    #         Defined by a Hash that can contain the following values:
     #          - acl: array of string
-    #          - indices: array of string
+    #          - indexes: array of string
     #          - validity: int
     #          - referers: array of string
     #          - description: string
     #          - maxHitsPerQuery: integer
     #          - queryParameters: string
     #          - maxQueriesPerIPPerHour: integer
-    #        Or the list of ACL for this key. Defined by an array of NSString that
-    #        can contains the following values:
-    #          - search: allow to search (https and http)
-    #          - addObject: allows to add/update an object in the index (https only)
-    #          - deleteObject : allows to delete an existing object (https only)
-    #          - deleteIndex : allows to delete index content (https only)
-    #          - settings : allows to get index settings (https only)
-    #          - editSettings : allows to change index settings (https only)
-    #  @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
-    #  @param maxQueriesPerIPPerHour the maximum number of API calls allowed from an IP address per hour (0 means unlimited)
-    #  @param maxHitsPerQuery  the maximum number of hits this API key can retrieve in one call (0 means unlimited)
-    #  @param indexes the optional list of targeted indexes
+    #  @param request_options contains extra parameters to send with your query - Default = {}
     #
-    def update_api_key(key, obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
+    def update_api_key(key, obj, request_options = {}, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
       if obj.instance_of? Array
         params = {
           :acl => obj
@@ -295,35 +333,44 @@ module Algolia
       else
         params = obj
       end
+
+      validity = 0
+      unless request_options.is_a?(Hash)
+        validity = request_options
+        request_options = {}
+      end
+
       if validity != 0
-        params["validity"] = validity.to_i
+        params['validity'] = validity.to_i
       end
       if maxQueriesPerIPPerHour != 0
-        params["maxQueriesPerIPPerHour"] = maxQueriesPerIPPerHour.to_i
+        params['maxQueriesPerIPPerHour'] = maxQueriesPerIPPerHour.to_i
       end
       if maxHitsPerQuery != 0
-        params["maxHitsPerQuery"] = maxHitsPerQuery.to_i
+        params['maxHitsPerQuery'] = maxHitsPerQuery.to_i
       end
       params[:indexes] = indexes if indexes
-      put(Protocol.key_uri(key), params.to_json)
+      put(Protocol.key_uri(key), params.to_json, :write, request_options)
     end
 
-   
     # Delete an existing user key
-    def delete_api_key(key)
-      delete(Protocol.key_uri(key))
+    #
+    def delete_api_key(key, request_options = {})
+      delete(Protocol.key_uri(key), :write, request_options)
     end
 
     # Send a batch request targeting multiple indices
-    def batch(requests)
-      post(Protocol.batch_uri, {"requests" => requests}.to_json, :batch)
+    #
+    def batch(requests, request_options = {})
+      post(Protocol.batch_uri, {"requests" => requests}.to_json, :batch, request_options)
     end
 
     # Send a batch request targeting multiple indices and wait the end of the indexing
-    def batch!(requests)
-      res = batch(requests)
+    #
+    def batch!(requests, request_options = {})
+      res = batch(requests, request_options)
       res['taskID'].each do |index, taskID|
-        init_index(index).wait_task(taskID)
+        init_index(index).wait_task(taskID, WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       end
     end
 
@@ -331,7 +378,7 @@ module Algolia
     # with common basic response handling. Will raise a
     # AlgoliaProtocolError if the response has an error status code,
     # and will return the parsed JSON body on success, if there is one.
-    def request(uri, method, data = nil, type = :write)
+    def request(uri, method, data = nil, type = :write, request_options = {})
       exceptions = []
 
       connect_timeout = @connect_timeout
@@ -358,7 +405,7 @@ module Algolia
         host[:session].send_timeout = send_timeout
         host[:session].receive_timeout = receive_timeout
         begin
-          return perform_request(host[:session], host[:base_url] + uri, method, data)
+          return perform_request(host[:session], host[:base_url] + uri, method, data, request_options)
         rescue AlgoliaProtocolError => e
           raise if e.code / 100 == 4
           exceptions << e
@@ -370,20 +417,20 @@ module Algolia
       raise AlgoliaProtocolError.new(0, "Cannot reach any host: #{exceptions.map { |e| e.to_s }.join(', ')}")
     end
 
-    def get(uri, type = :write)
-      request(uri, :GET, nil, type)
+    def get(uri, type = :write, request_options = {})
+      request(uri, :GET, nil, type, request_options)
     end
 
-    def post(uri, body = {}, type = :write)
-      request(uri, :POST, body, type)
+    def post(uri, body = {}, type = :write, request_options = {})
+      request(uri, :POST, body, type, request_options)
     end
 
-    def put(uri, body = {}, type = :write)
-      request(uri, :PUT, body, type)
+    def put(uri, body = {}, type = :write, request_options = {})
+      request(uri, :PUT, body, type, request_options)
     end
 
-    def delete(uri, type = :write)
-      request(uri, :DELETE, nil, type)
+    def delete(uri, type = :write, request_options = {})
+      request(uri, :DELETE, nil, type, request_options)
     end
 
     private
@@ -418,16 +465,20 @@ module Algolia
       end
     end
 
-    def perform_request(session, url, method, data)
+    def perform_request(session, url, method, data, request_options)
+      hs = {}
+      extra_headers = request_options[:headers] || request_options['headers'] || {}
+      @headers.each { |key, val| hs[key.to_s] = val }
+      extra_headers.each { |key, val| hs[key.to_s] = val }
       response = case method
       when :GET
-        session.get(url, { :header => @headers })
+        session.get(url, { :header => hs })
       when :POST
-        session.post(url, { :body => data, :header => @headers })
+        session.post(url, { :body => data, :header => hs })
       when :PUT
-        session.put(url, { :body => data, :header => @headers })
+        session.put(url, { :body => data, :header => hs })
       when :DELETE
-        session.delete(url, { :header => @headers })
+        session.delete(url, { :header => hs })
       end
       if response.code / 100 != 2
         raise AlgoliaProtocolError.new(response.code, "Cannot #{method} to #{url}: #{response.content} (#{response.code})")
@@ -521,13 +572,9 @@ module Algolia
 
   #
   # This method allows to query multiple indexes with one API call
-  # 
-  # @param queries the array of hash representing the query and associated index name
-  # @param index_name_key the name of the key used to fetch the index_name (:index_name by default)
-  # @param strategy define the strategy applied on the sequential searches (none by default)
   #
-  def Algolia.multiple_queries(queries, index_name_key = :index_name, strategy = "none")
-    Algolia.client.multiple_queries(queries, index_name_key, strategy)
+  def Algolia.multiple_queries(queries, options = nil, strategy = nil)
+    Algolia.client.multiple_queries(queries, options, strategy)
   end
 
   #
@@ -536,26 +583,30 @@ module Algolia
   #     {"items": [{ "name": "contacts", "createdAt": "2013-01-18T15:33:13.556Z"},
   #                {"name": "notes", "createdAt": "2013-01-18T15:33:13.556Z"}]}
   #
-  def Algolia.list_indexes
-    Algolia.client.list_indexes
+  # @param request_options contains extra parameters to send with your query
+  #
+  def Algolia.list_indexes(request_options = {})
+    Algolia.client.list_indexes(request_options)
   end
 
   #
   # Move an existing index.
   # @param src_index the name of index to copy.
   # @param dst_index the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+  # @param request_options contains extra parameters to send with your query
   #
-  def Algolia.move_index(src_index, dst_index)
-    Algolia.client.move_index(src_index, dst_index)
+  def Algolia.move_index(src_index, dst_index, request_options = {})
+    Algolia.client.move_index(src_index, dst_index, request_options)
   end
 
   #
   # Move an existing index and wait until the move has been processed
   # @param src_index the name of index to copy.
   # @param dst_index the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
+  # @param request_options contains extra parameters to send with your query
   #
-  def Algolia.move_index!(src_index, dst_index)
-    Algolia.client.move_index!(src_index, dst_index)
+  def Algolia.move_index!(src_index, dst_index, request_options = {})
+    Algolia.client.move_index!(src_index, dst_index, request_options)
   end
 
   #
@@ -563,9 +614,10 @@ module Algolia
   # @param src_index the name of index to copy.
   # @param dst_index the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
   # @param scope the optional list of scopes to copy (all if not specified).
+  # @param request_options contains extra parameters to send with your query
   #
-  def Algolia.copy_index(src_index, dst_index, scope = nil)
-    Algolia.client.copy_index(src_index, dst_index, scope)
+  def Algolia.copy_index(src_index, dst_index, scope = nil, request_options = {})
+    Algolia.client.copy_index(src_index, dst_index, scope, request_options)
   end
 
   #
@@ -573,21 +625,22 @@ module Algolia
   # @param src_index the name of index to copy.
   # @param dst_index the new index name that will contains a copy of srcIndexName (destination will be overriten if it already exist).
   # @param scope the optional list of scopes to copy (all if not specified).
+  # @param request_options contains extra parameters to send with your query
   #
-  def Algolia.copy_index!(src_index, dst_index, scope = nil)
-    Algolia.client.copy_index!(src_index, dst_index, scope)
+  def Algolia.copy_index!(src_index, dst_index, scope = nil, request_options = {})
+    Algolia.client.copy_index!(src_index, dst_index, scope, request_options)
   end
 
   # Delete an index
   #
-  def Algolia.delete_index(name)
-    Algolia.client.delete_index(name)
+  def Algolia.delete_index(name, request_options = {})
+    Algolia.client.delete_index(name, request_options)
   end
 
   # Delete an index and wait until the deletion has been processed.
   #
-  def Algolia.delete_index!(name)
-    Algolia.client.delete_index!(name)
+  def Algolia.delete_index!(name, request_options = {})
+    Algolia.client.delete_index!(name, request_options)
   end
 
   #
@@ -595,121 +648,125 @@ module Algolia
   #
   # @param offset Specify the first entry to retrieve (0-based, 0 is the most recent log entry).
   # @param length Specify the maximum number of entries to retrieve starting at offset. Maximum allowed value: 1000.
+  # @param type Specify the type of entries you want to retrieve - default: "all"
+  # @param request_options contains extra parameters to send with your query
   #
-  def Algolia.get_logs(offset = 0, length = 10, type = "all")
-    Algolia.client.get_logs(offset, length, type)
+  def Algolia.get_logs(options = nil, length = nil, type = nil)
+    Algolia.client.get_logs(options, length, type)
   end
 
   # List all existing user keys with their associated ACLs
-  def Algolia.list_api_keys
-    Algolia.client.list_api_keys
+  #
+  # @param request_options contains extra parameters to send with your query
+  def Algolia.list_api_keys(request_options = {})
+    Algolia.client.list_api_keys(request_options)
   end
 
   # Deprecated
-  def Algolia.list_user_keys
-    Algolia.client.list_api_keys
+  def Algolia.list_user_keys(request_options = {})
+    Algolia.client.list_api_keys(request_options)
   end
 
   # Get ACL of a user key
-  def Algolia.get_api_key(key)
-    Algolia.client.get_api_key(key)
+  #
+  # @param request_options contains extra parameters to send with your query
+  def Algolia.get_api_key(key, request_options = {})
+    Algolia.client.get_api_key(key, request_options)
   end
 
   # Deprecated
-  def Algolia.get_user_key(key)
-    Algolia.client.get_user_key(key)
+  def Algolia.get_user_key(key, request_options = {})
+    Algolia.client.get_user_key(key, request_options)
   end
 
   #
   #  Create a new user key
   #
+  #  Deprecated call was add_api_key(acl, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
+  #
+  #  ACL can contain an array with those strings:
+  #    - search: allow to search (https and http)
+  #    - addObject: allows to add/update an object in the index (https only)
+  #    - deleteObject : allows to delete an existing object (https only)
+  #    - deleteIndex : allows to delete index content (https only)
+  #    - settings : allows to get index settings (https only)
+  #    - editSettings : allows to change index settings (https only)
+  #
   #  @param obj can be two different parameters:
   #        The list of parameters for this key. Defined by a NSDictionary that
   #        can contains the following values:
   #          - acl: array of string
-  #          - indices: array of string
+  #          - indexes: array of string
   #          - validity: int
   #          - referers: array of string
   #          - description: string
   #          - maxHitsPerQuery: integer
   #          - queryParameters: string
   #          - maxQueriesPerIPPerHour: integer
-  #        Or the list of ACL for this key. Defined by an array of NSString that
-  #        can contains the following values:
-  #          - search: allow to search (https and http)
-  #          - addObject: allows to add/update an object in the index (https only)
-  #          - deleteObject : allows to delete an existing object (https only)
-  #          - deleteIndex : allows to delete index content (https only)
-  #          - settings : allows to get index settings (https only)
-  #          - editSettings : allows to change index settings (https only)
-  #  @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
-  #  @param maxQueriesPerIPPerHour the maximum number of API calls allowed from an IP address per hour (0 means unlimited)
-  #  @param maxHitsPerQuery  the maximum number of hits this API key can retrieve in one call (0 means unlimited)
-  #  @param indexes the optional list of targeted indexes
+  #  @param request_options contains extra parameters to send with your query - Default = {}
   #
-  def Algolia.add_api_key(obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
-    Algolia.client.add_api_key(obj, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
+  def Algolia.add_api_key(obj, request_options = {}, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
+    Algolia.client.add_api_key(obj, request_options, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
   end
 
   # Deprecated
-  def Algolia.add_user_key(obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
-    Algolia.client.add_api_key(obj, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
+  def Algolia.add_user_key(obj, request_options = {}, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
+    Algolia.client.add_api_key(obj, request_options, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
   end
 
   #
   #  Update a user key
   #
-  #  @param obj can be two different parameters:
-  #        The list of parameters for this key. Defined by a NSDictionary that
-  #        can contains the following values:
+  #  Deprecated call was update_api_key(key, acl, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
+  #
+  #  ACL can contain an array with those strings:
+  #    - search: allow to search (https and http)
+  #    - addObject: allows to add/update an object in the index (https only)
+  #    - deleteObject : allows to delete an existing object (https only)
+  #    - deleteIndex : allows to delete index content (https only)
+  #    - settings : allows to get index settings (https only)
+  #    - editSettings : allows to change index settings (https only)
+  #
+  #  @param key API Key to update
+  #  @param obj The list of parameters for this key.
+  #         Defined by a Hash that can contain the following values:
   #          - acl: array of string
-  #          - indices: array of string
+  #          - indexes: array of string
   #          - validity: int
   #          - referers: array of string
   #          - description: string
   #          - maxHitsPerQuery: integer
   #          - queryParameters: string
   #          - maxQueriesPerIPPerHour: integer
-  #        Or the list of ACL for this key. Defined by an array of NSString that
-  #        can contains the following values:
-  #          - search: allow to search (https and http)
-  #          - addObject: allows to add/update an object in the index (https only)
-  #          - deleteObject : allows to delete an existing object (https only)
-  #          - deleteIndex : allows to delete index content (https only)
-  #          - settings : allows to get index settings (https only)
-  #          - editSettings : allows to change index settings (https only)
-  #  @param validity the number of seconds after which the key will be automatically removed (0 means no time limit for this key)
-  #  @param maxQueriesPerIPPerHour the maximum number of API calls allowed from an IP address per hour (0 means unlimited)
-  #  @param maxHitsPerQuery  the maximum number of hits this API key can retrieve in one call (0 means unlimited)
-  #  @param indexes the optional list of targeted indexes
+  #  @param request_options contains extra parameters to send with your query - Default = {}
   #
-  def Algolia.update_api_key(key, obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
-    Algolia.client.update_api_key(key, obj, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
+  def Algolia.update_api_key(key, obj, request_options = {}, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
+    Algolia.client.update_api_key(key, obj, request_options, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
   end
 
   # Deprecated
-  def Algolia.update_user_key(key, obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
-    Algolia.client.update_api_key(key, obj, validity, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
+  def Algolia.update_user_key(key, obj, request_options = {}, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
+    Algolia.client.update_api_key(key, obj, request_options, maxQueriesPerIPPerHour, maxHitsPerQuery, indexes)
   end
 
   # Delete an existing user key
-  def Algolia.delete_api_key(key)
-    Algolia.client.delete_api_key(key)
+  def Algolia.delete_api_key(key, request_options = {})
+    Algolia.client.delete_api_key(key, request_options)
   end
 
   # Deprecated
-  def Algolia.delete_user_key(key)
-    Algolia.client.delete_api_key(key)
+  def Algolia.delete_user_key(key, request_options = {})
+    Algolia.client.delete_api_key(key, request_options)
   end
 
   # Send a batch request targeting multiple indices
-  def Algolia.batch(requests)
-    Algolia.client.batch(requests)
+  def Algolia.batch(requests, request_options = {})
+    Algolia.client.batch(requests, request_options)
   end
 
   # Send a batch request targeting multiple indices and wait the end of the indexing
-  def Algolia.batch!(requests)
-    Algolia.client.batch!(requests)
+  def Algolia.batch!(requests, request_options = {})
+    Algolia.client.batch!(requests, request_options)
   end
 
   # Used mostly for testing. Lets you delete the api key global vars.
