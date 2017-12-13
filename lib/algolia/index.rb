@@ -982,6 +982,27 @@ module Algolia
       return res
     end
 
+    # Export the full list of rules
+    #   Accepts an optional block to which it will pass each rule
+    #   Also returns an array with all the rules
+    #
+    # @param hits_per_page Amount of rules to retrieve on each internal request - Optional - Default: 100
+    # @param request_options contains extra parameters to send with your query - Optional
+    def export_rules(hits_per_page = 100, request_options = {}, &_block)
+      res = []
+      page = 0
+      loop do
+        curr = search_rules('', { :hits_per_page => hits_per_page, :page => page }, request_options)['hits']
+        curr.each do |rule|
+          res << rule
+          yield rule if block_given?
+        end
+        break if curr.size < hits_per_page
+        page += 1
+      end
+      res
+    end
+
     # Deprecated
     alias_method :get_user_key, :get_api_key
     alias_method :list_user_keys, :list_api_keys
