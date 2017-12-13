@@ -1023,14 +1023,27 @@ describe 'Client' do
       { :objectID => 'city', :type => 'synonym', :synonyms => ['San Francisco', 'SF'] },
       { :objectID => 'street', :type => 'altCorrection1', :word => 'street', :corrections => ['st'] }
     ]
-    @index.search_synonyms('')['nbHits'].should eq(2)
+    synonyms_search = @index.search_synonyms('')['hits']
+    synonyms_search.size.should eq(2)
     @index.search('Howard St SF')['nbHits'].should eq(1)
 
-    s = @index.get_synonym('city')
-    s['objectID'].should eq('city')
-    s['type'].should eq('synonym')
+    synonym = @index.get_synonym('city')
+    synonym['objectID'].should eq('city')
+    synonym['type'].should eq('synonym')
 
     @index.search('Howard Street')['nbHits'].should eq(1)
+
+    synonyms_block = []
+    synonyms_ret = @index.export_synonyms(1) do |s|
+      synonyms_block << s
+    end
+
+    s0 = synonyms_search.map { |s| s['objectID'] }.sort
+    s1 = synonyms_block.map { |s| s['objectID'] }.sort
+    s2 = synonyms_ret.map { |s| s['objectID'] }.sort
+
+    s0.should eq(s1)
+    s1.should eq(s2)
 
     @index.delete_synonym! 'city'
     @index.search('Howard Street SF')['nbHits'].should eq(0)
