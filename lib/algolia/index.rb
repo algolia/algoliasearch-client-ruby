@@ -872,6 +872,27 @@ module Algolia
       res
     end
 
+    # Export the full list of synonyms
+    #   Accepts an optional block to which it will pass each synonym
+    #   Also returns an array with all the synonyms
+    #
+    # @param hits_per_page Amount of synonyms to retrieve on each internal request - Optional - Default: 100
+    # @param request_options contains extra parameters to send with your query - Optional
+    def export_synonyms(hits_per_page = 100, request_options = {}, &_block)
+      res = []
+      page = 0
+      loop do
+        curr = search_synonyms('', { :hits_per_page => hits_per_page, :page => page }, request_options)['hits']
+        curr.each do |synonym|
+          res << synonym
+          yield synonym if block_given?
+        end
+        break if curr.size < hits_per_page
+        page += 1
+      end
+      res
+    end
+
     # Search rules
     #
     # @param query the query
