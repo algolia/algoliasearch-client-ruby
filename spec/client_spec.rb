@@ -1077,7 +1077,20 @@ describe 'Client' do
     @index.search_rules('')['nbHits'].should eq(0)
 
     @index.batch_rules!([rule_1, rule_2])
-    @index.search_rules('')['nbHits'].should eq(2)
+    rules_search = @index.search_rules('')['hits']
+    rules_search.size.should eq(2)
+
+    rules_block = []
+    rules_ret = @index.export_rules(1) do |r|
+      rules_block << r
+    end
+
+    r0 = rules_search.map { |r| r['objectID'] }.sort
+    r1 = rules_block.map { |r| r['objectID'] }.sort
+    r2 = rules_ret.map { |r| r['objectID'] }.sort
+
+    r0.should eq(r1)
+    r1.should eq(r2)
 
     @index.clear_rules!
     @index.search_rules('')['nbHits'].should eq(0)
