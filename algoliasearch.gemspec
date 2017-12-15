@@ -13,11 +13,18 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.summary = "A simple Ruby client for the algolia.com REST API"
   s.description = "A simple Ruby client for the algolia.com REST API"
-  s.homepage = "http://github.com/algolia/algoliasearch-client-ruby"
+  s.homepage = "https://github.com/algolia/algoliasearch-client-ruby"
 
-  s.rubygems_version = "2.2.1"
-  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
+  s.metadata = {
+    "bug_tracker_uri"   => "https://github.com/algolia/algoliasearch-client-ruby/issues",
+    "changelog_uri"     => "https://github.com/algolia/algoliasearch-client-ruby/blob/master/ChangeLog",
+    "documentation_uri" => "http://www.rubydoc.info/gems/algoliasearch",
+    "homepage_uri"      => "https://www.algolia.com/doc/api-client/ruby/getting-started/",
+    "source_code_uri"   => "https://github.com/algolia/algoliasearch-client-ruby"
+  }
+
   s.require_paths = ["lib"]
+  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
 
   s.extra_rdoc_files = [
     "ChangeLog",
