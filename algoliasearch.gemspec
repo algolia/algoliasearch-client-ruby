@@ -4,16 +4,16 @@ require 'date'
 require File.join(File.dirname(__FILE__), 'lib', 'algolia', 'version')
 
 Gem::Specification.new do |s|
-  s.name = "algoliasearch"
-  s.version = Algolia::VERSION
-  s.authors = ["Algolia"]
-  s.email = "contact@algolia.com"
+  s.name        = "algoliasearch"
+  s.version     = Algolia::VERSION
+  s.authors     = ["Algolia"]
+  s.email       = "contact@algolia.com"
 
-  s.date = Date.today
-  s.licenses = ["MIT"]
-  s.summary = "A simple Ruby client for the algolia.com REST API"
+  s.date        = Date.today
+  s.licenses    = ["MIT"]
+  s.summary     = "A simple Ruby client for the algolia.com REST API"
   s.description = "A simple Ruby client for the algolia.com REST API"
-  s.homepage = "https://github.com/algolia/algoliasearch-client-ruby"
+  s.homepage    = "https://github.com/algolia/algoliasearch-client-ruby"
 
   s.metadata = {
     "bug_tracker_uri"   => "https://github.com/algolia/algoliasearch-client-ruby/issues",
