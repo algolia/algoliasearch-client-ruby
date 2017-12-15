@@ -6,13 +6,19 @@ require File.join(File.dirname(__FILE__), 'lib', 'algolia', 'version')
 Gem::Specification.new do |s|
   s.name = "algoliasearch"
   s.version = Algolia::VERSION
+  s.authors = ["Algolia"]
+  s.email = "contact@algolia.com"
 
+  s.date = Date.today
+  s.licenses = ["MIT"]
+  s.summary = "A simple Ruby client for the algolia.com REST API"
+  s.description = "A simple Ruby client for the algolia.com REST API"
+  s.homepage = "http://github.com/algolia/algoliasearch-client-ruby"
+
+  s.rubygems_version = "2.2.1"
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
-  s.authors = ["Algolia"]
-  s.date = Date.today
-  s.description = "A simple Ruby client for the algolia.com REST API"
-  s.email = "contact@algolia.com"
+
   s.extra_rdoc_files = [
     "ChangeLog",
     "LICENSE.txt",
@@ -42,10 +48,6 @@ Gem::Specification.new do |s|
     "spec/spec_helper.rb",
     "spec/stub_spec.rb"
   ]
-  s.homepage = "http://github.com/algolia/algoliasearch-client-ruby"
-  s.licenses = ["MIT"]
-  s.rubygems_version = "2.2.1"
-  s.summary = "A simple Ruby client for the algolia.com REST API"
 
   if s.respond_to? :specification_version then
     s.specification_version = 4
