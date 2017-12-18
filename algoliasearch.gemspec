@@ -4,15 +4,28 @@ require 'date'
 require File.join(File.dirname(__FILE__), 'lib', 'algolia', 'version')
 
 Gem::Specification.new do |s|
-  s.name = "algoliasearch"
-  s.version = Algolia::VERSION
+  s.name        = "algoliasearch"
+  s.version     = Algolia::VERSION
+  s.authors     = ["Algolia"]
+  s.email       = "contact@algolia.com"
 
-  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.require_paths = ["lib"]
-  s.authors = ["Algolia"]
-  s.date = Date.today
+  s.date        = Date.today
+  s.licenses    = ["MIT"]
+  s.summary     = "A simple Ruby client for the algolia.com REST API"
   s.description = "A simple Ruby client for the algolia.com REST API"
-  s.email = "contact@algolia.com"
+  s.homepage    = "https://github.com/algolia/algoliasearch-client-ruby"
+
+  s.metadata = {
+    "bug_tracker_uri"   => "https://github.com/algolia/algoliasearch-client-ruby/issues",
+    "changelog_uri"     => "https://github.com/algolia/algoliasearch-client-ruby/blob/master/ChangeLog",
+    "documentation_uri" => "http://www.rubydoc.info/gems/algoliasearch",
+    "homepage_uri"      => "https://www.algolia.com/doc/api-client/ruby/getting-started/",
+    "source_code_uri"   => "https://github.com/algolia/algoliasearch-client-ruby"
+  }
+
+  s.require_paths = ["lib"]
+  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
+
   s.extra_rdoc_files = [
     "ChangeLog",
     "LICENSE.txt",
@@ -42,26 +55,22 @@ Gem::Specification.new do |s|
     "spec/spec_helper.rb",
     "spec/stub_spec.rb"
   ]
-  s.homepage = "http://github.com/algolia/algoliasearch-client-ruby"
-  s.licenses = ["MIT"]
-  s.rubygems_version = "2.2.1"
-  s.summary = "A simple Ruby client for the algolia.com REST API"
 
   if s.respond_to? :specification_version then
     s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<httpclient>, ["~> 2.8.3"])
-      s.add_runtime_dependency(%q<json>, [">= 1.5.1"])
-      s.add_development_dependency "travis"
-      s.add_development_dependency "rake"
-      s.add_development_dependency "rdoc"
+      s.add_runtime_dependency     'httpclient', '~> 2.8', '>= 2.8.3'
+      s.add_runtime_dependency     'json',       '>= 1.5.1'
+      s.add_development_dependency 'travis',     '~> 0'
+      s.add_development_dependency 'rake',       '~> 0'
+      s.add_development_dependency 'rdoc',       '~> 0'
     else
-      s.add_dependency(%q<httpclient>, ["~> 2.8.3"])
-      s.add_dependency(%q<json>, [">= 1.5.1"])
+      s.add_dependency             'httpclient', '~> 2.8', '>= 2.8.3'
+      s.add_dependency             'json',       '>= 1.5.1'
     end
   else
-    s.add_dependency(%q<httpclient>, ["~> 2.8.3"])
-    s.add_dependency(%q<json>, [">= 1.5.1"])
+    s.add_dependency               'httpclient', '~> 2.8', '>= 2.8.3'
+    s.add_dependency               'json',       '>= 1.5.1'
   end
 end
