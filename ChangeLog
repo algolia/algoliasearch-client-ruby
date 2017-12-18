@@ -1,5 +1,8 @@
 CHANGELOG
 
+2017-12-18 1.19.1
+      * Fix hard dependency on `hashdiff` (#262)
+
 2017-12-15 1.19.0
       * Add request options to any method using API calls (#213)
       * Add export_synonyms index method (#260)

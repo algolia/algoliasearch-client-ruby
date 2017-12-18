@@ -33,3 +33,22 @@ require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec
+
+desc 'Bump gem version'
+task :semver, [:version] do |t, args|
+  File.open(File.expand_path('../lib/algolia/version.rb', __FILE__), 'w') do |file|
+    file.write <<~SEMVER
+      module Algolia
+        VERSION = "#{args[:version]}"
+      end
+    SEMVER
+  end
+end
+
+module Bundler
+  class GemHelper
+    def version_tag
+      "#{version}"
+    end
+  end
+end
