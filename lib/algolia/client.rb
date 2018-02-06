@@ -330,7 +330,7 @@ module Algolia
     #  @param request_options contains extra parameters to send with your query - Default = {}
     #
     def update_api_key(key, obj, request_options = {}, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, indexes = nil)
-      if obj.instance_of? Array
+      if obj.instance_of?(Array)
         params = {
           :acl => obj
         }
@@ -365,14 +365,14 @@ module Algolia
 
     # Send a batch request targeting multiple indices
     #
-    def batch(requests, request_options = {})
-      post(Protocol.batch_uri, {"requests" => requests}.to_json, :batch, request_options)
+    def batch(operations, request_options = {})
+      post(Protocol.batch_uri, {"requests" => operations}.to_json, :batch, request_options)
     end
 
     # Send a batch request targeting multiple indices and wait the end of the indexing
     #
-    def batch!(requests, request_options = {})
-      res = batch(requests, request_options)
+    def batch!(operations, request_options = {})
+      res = batch(operations, request_options)
       res['taskID'].each do |index, taskID|
         init_index(index).wait_task(taskID, WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       end

@@ -35,49 +35,49 @@ module Algolia
 
     # Add an object in this index
     #
-    # @param obj the object to add to the index.
+    # @param object the object to add to the index.
     #  The object is represented by an associative array
     # @param objectID (optional) an objectID you want to attribute to this object
     #  (if the attribute already exist the old object will be overridden)
     # @param request_options contains extra parameters to send with your query
-    def add_object(obj, objectID = nil, request_options = {})
-      check_object obj
+    def add_object(object, objectID = nil, request_options = {})
+      check_object(object)
       if objectID.nil? || objectID.to_s.empty?
-        client.post(Protocol.index_uri(name), obj.to_json, :write, request_options)
+        client.post(Protocol.index_uri(name), object.to_json, :write, request_options)
       else
-        client.put(Protocol.object_uri(name, objectID), obj.to_json, :write, request_options)
+        client.put(Protocol.object_uri(name, objectID), object.to_json, :write, request_options)
       end
     end
 
     # Add an object in this index and wait end of indexing
     #
-    # @param obj the object to add to the index.
+    # @param object the object to add to the index.
     #  The object is represented by an associative array
     # @param objectID (optional) an objectID you want to attribute to this object
     #  (if the attribute already exist the old object will be overridden)
     # @param Request options object. Contains extra URL parameters or headers
-    def add_object!(obj, objectID = nil, request_options = {})
-      res = add_object(obj, objectID, request_options)
+    def add_object!(object, objectID = nil, request_options = {})
+      res = add_object(object, objectID, request_options)
       wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
     # Add several objects in this index
     #
-    # @param objs the array of objects to add inside the index.
+    # @param objects the array of objects to add inside the index.
     #  Each object is represented by an associative array
     # @param request_options contains extra parameters to send with your query
-    def add_objects(objs, request_options = {})
-      batch(build_batch('addObject', objs, false), request_options)
+    def add_objects(objects, request_options = {})
+      batch(build_batch('addObject', objects, false), request_options)
     end
 
     # Add several objects in this index and wait end of indexing
     #
-    # @param objs the array of objects to add inside the index.
+    # @param objects the array of objects to add inside the index.
     #  Each object is represented by an associative array
     # @param request_options contains extra parameters to send with your query
-    def add_objects!(objs, request_options = {})
-      res = add_objects(objs, request_options)
+    def add_objects!(objects, request_options = {})
+      res = add_objects(objects, request_options)
       wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
@@ -220,15 +220,15 @@ module Algolia
     # Get an object from this index
     #
     # @param objectID the unique identifier of the object to retrieve
-    # @param attributesToRetrieve (optional) if set, contains the list of attributes to retrieve as an array of strings of a string separated by ","
+    # @param attributes_to_retrieve (optional) if set, contains the list of attributes to retrieve as an array of strings of a string separated by ","
     # @param request_options contains extra parameters to send with your query
     #
-    def get_object(objectID, attributesToRetrieve = nil, request_options = {})
-      attributesToRetrieve = attributesToRetrieve.join(',') if attributesToRetrieve.is_a?(Array)
-      if attributesToRetrieve.nil?
+    def get_object(objectID, attributes_to_retrieve = nil, request_options = {})
+      attributes_to_retrieve = attributes_to_retrieve.join(',') if attributes_to_retrieve.is_a?(Array)
+      if attributes_to_retrieve.nil?
         client.get(Protocol.object_uri(name, objectID, nil), :read, request_options)
       else
-        client.get(Protocol.object_uri(name, objectID, {:attributes => attributesToRetrieve}), :read, request_options)
+        client.get(Protocol.object_uri(name, objectID, {:attributes => attributes_to_retrieve}), :read, request_options)
       end
     end
 
@@ -236,14 +236,14 @@ module Algolia
     # Get a list of objects from this index
     #
     # @param objectIDs the array of unique identifier of the objects to retrieve
-    # @param attributesToRetrieve (optional) if set, contains the list of attributes to retrieve as an array of strings of a string separated by ","
+    # @param attributes_to_retrieve (optional) if set, contains the list of attributes to retrieve as an array of strings of a string separated by ","
     # @param request_options contains extra parameters to send with your query
     #
-    def get_objects(objectIDs, attributesToRetrieve = nil, request_options = {})
-      attributesToRetrieve = attributesToRetrieve.join(',') if attributesToRetrieve.is_a?(Array)
+    def get_objects(objectIDs, attributes_to_retrieve = nil, request_options = {})
+      attributes_to_retrieve = attributes_to_retrieve.join(',') if attributes_to_retrieve.is_a?(Array)
       requests = objectIDs.map do |objectID|
         req = {:indexName => name, :objectID => objectID.to_s}
-        req[:attributesToRetrieve] = attributesToRetrieve unless attributesToRetrieve.nil?
+        req[:attributesToRetrieve] = attributes_to_retrieve unless attributes_to_retrieve.nil?
         req
       end
       client.post(Protocol.objects_uri, { :requests => requests }.to_json, :read, request_options)['results']
@@ -300,20 +300,20 @@ module Algolia
 
     # Override the content of several objects
     #
-    # @param objs the array of objects to save, each object must contain an 'objectID' key
+    # @param objects the array of objects to save, each object must contain an 'objectID' key
     # @param request_options contains extra parameters to send with your query
     #
-    def save_objects(objs, request_options = {})
-      batch(build_batch('updateObject', objs, true), request_options)
+    def save_objects(objects, request_options = {})
+      batch(build_batch('updateObject', objects, true), request_options)
     end
 
     # Override the content of several objects and wait end of indexing
     #
-    # @param objs the array of objects to save, each object must contain an objectID attribute
+    # @param objects the array of objects to save, each object must contain an objectID attribute
     # @param request_options contains extra parameters to send with your query
     #
-    def save_objects!(objs, request_options = {})
-      res = save_objects(objs, request_options)
+    def save_objects!(objects, request_options = {})
+      res = save_objects(objects, request_options)
       wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
@@ -321,39 +321,39 @@ module Algolia
     #
     # Update partially an object (only update attributes passed in argument)
     #
-    # @param obj the object attributes to override
-    # @param objectID the associated objectID, if nil 'obj' must contain an 'objectID' key
+    # @param object the object attributes to override
+    # @param objectID the associated objectID, if nil 'object' must contain an 'objectID' key
     # @param create_if_not_exits a boolean, if true creates the object if this one doesn't exist
     # @param request_options contains extra parameters to send with your query
     #
-    def partial_update_object(obj, objectID = nil, create_if_not_exits = true, request_options = {})
-      client.post(Protocol.partial_object_uri(name, get_objectID(obj, objectID), create_if_not_exits), obj.to_json, :write, request_options)
+    def partial_update_object(object, objectID = nil, create_if_not_exits = true, request_options = {})
+      client.post(Protocol.partial_object_uri(name, get_objectID(object, objectID), create_if_not_exits), object.to_json, :write, request_options)
     end
 
     #
     # Partially Override the content of several objects
     #
-    # @param objs an array of objects to update (each object must contains a objectID attribute)
+    # @param objects an array of objects to update (each object must contains a objectID attribute)
     # @param create_if_not_exits a boolean, if true create the objects if they don't exist
     # @param request_options contains extra parameters to send with your query
     #
-    def partial_update_objects(objs, create_if_not_exits = true, request_options = {})
+    def partial_update_objects(objects, create_if_not_exits = true, request_options = {})
       if create_if_not_exits
-        batch(build_batch('partialUpdateObject', objs, true), request_options)
+        batch(build_batch('partialUpdateObject', objects, true), request_options)
       else
-        batch(build_batch('partialUpdateObjectNoCreate', objs, true), request_options)
+        batch(build_batch('partialUpdateObjectNoCreate', objects, true), request_options)
       end
     end
 
     #
     # Partially Override the content of several objects and wait end of indexing
     #
-    # @param objs an array of objects to update (each object must contains a objectID attribute)
+    # @param objects an array of objects to update (each object must contains a objectID attribute)
     # @param create_if_not_exits a boolean, if true create the objects if they don't exist
     # @param request_options contains extra parameters to send with your query
     #
-    def partial_update_objects!(objs, create_if_not_exits = true, request_options = {})
-      res = partial_update_objects(objs, create_if_not_exits, request_options)
+    def partial_update_objects!(objects, create_if_not_exits = true, request_options = {})
+      res = partial_update_objects(objects, create_if_not_exits, request_options)
       wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
@@ -398,22 +398,22 @@ module Algolia
     #
     # Delete several objects
     #
-    # @param objs an array of objectIDs
+    # @param objects an array of objectIDs
     # @param request_options contains extra parameters to send with your query
     #
-    def delete_objects(objs, request_options = {})
-      check_array objs
-      batch(build_batch('deleteObject', objs.map { |objectID| { :objectID => objectID } }, false), request_options)
+    def delete_objects(objects, request_options = {})
+      check_array(objects)
+      batch(build_batch('deleteObject', objects.map { |objectID| { :objectID => objectID } }, false), request_options)
     end
 
     #
     # Delete several objects and wait end of indexing
     #
-    # @param objs an array of objectIDs
+    # @param objects an array of objectIDs
     # @param request_options contains extra parameters to send with your query
     #
-    def delete_objects!(objs, request_options = {})
-      res = delete_objects(objs, request_options)
+    def delete_objects!(objects, request_options = {})
+      res = delete_objects(objects, request_options)
       wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
@@ -525,6 +525,7 @@ module Algolia
     end
 
     # Get settings of this index
+    #
     def get_settings(options = {}, request_options = {})
       options['getVersion'] = 2 if !options[:getVersion] && !options['getVersion']
       client.get(Protocol.settings_uri(name, options).to_s, :read, request_options)
@@ -660,17 +661,17 @@ module Algolia
 
     # Search for facet values
     #
-    # @param facet Name of the facet to search. It must have been declared in the
+    # @param facet_name Name of the facet to search. It must have been declared in the
     #       index's`attributesForFaceting` setting with the `searchable()` modifier.
-    # @param text Text to search for in the facet's values
-    # @param query An optional query to take extra search parameters into account.
+    # @param facet_query Text to search for in the facet's values
+    # @param search_parameters An optional query to take extra search parameters into account.
     #       These parameters apply to index objects like in a regular search query.
     #       Only facet values contained in the matched objects will be returned.
     # @param request_options contains extra parameters to send with your query
-    def search_for_facet_values(facet, text, query = {}, request_options = {})
-      params = query.clone
-      params['facetQuery'] = text
-      client.post(Protocol.search_facet_uri(name, facet), params.to_json, :read, request_options)
+    def search_for_facet_values(facet_name, facet_query, search_parameters = {}, request_options = {})
+      params = search_parameters.clone
+      params['facetQuery'] = facet_query
+      client.post(Protocol.search_facet_uri(name, facet_name), params.to_json, :read, request_options)
     end
 
     # deprecated
@@ -1057,17 +1058,17 @@ module Algolia
     end
 
     def get_objectID(obj, objectID = nil)
-      check_object obj
+      check_object(obj)
       objectID ||= obj[:objectID] || obj["objectID"]
       raise ArgumentError.new("Missing 'objectID'") if objectID.nil?
       return objectID
     end
 
     def build_batch(action, objs, with_object_id = false)
-      check_array objs
+      check_array(objs)
       {
         :requests => objs.map { |obj|
-          check_object obj, true
+          check_object(obj, true)
           h = { :action => action, :body => obj }
           h[:objectID] = get_objectID(obj).to_s if with_object_id
           h
