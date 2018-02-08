@@ -263,16 +263,16 @@ module Algolia
     # All server task are asynchronous and you can check with this method that the task is published.
     #
     # @param taskID the id of the task returned by server
-    # @param timeBeforeRetry the time in milliseconds before retry (default = 100ms)
+    # @param time_before_retry the time in milliseconds before retry (default = 100ms)
     # @param request_options contains extra parameters to send with your query
     #
-    def wait_task(taskID, timeBeforeRetry = WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options = {})
+    def wait_task(taskID, time_before_retry = WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options = {})
       loop do
         status = get_task_status(taskID, request_options)
         if status == 'published'
           return
         end
-        sleep(timeBeforeRetry.to_f / 1000)
+        sleep(time_before_retry.to_f / 1000)
       end
     end
 
