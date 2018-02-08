@@ -7,21 +7,17 @@ module Algolia
     # Basics
 
     # The version of the REST API implemented by this module.
-    VERSION         = 1
+    VERSION = 1
 
     # HTTP Headers
     # ----------------------------------------
 
-    # The HTTP header used for passing your application ID to the
-    # Algolia API.
-    HEADER_APP_ID   = "X-Algolia-Application-Id"
+    # The HTTP header used for passing your application ID to the Algolia API.
+    HEADER_APP_ID            = "X-Algolia-Application-Id"
 
-    # The HTTP header used for passing your API key to the
-    # Algolia API.
-    HEADER_API_KEY  = "X-Algolia-API-Key"
-
-    HEADER_FORWARDED_IP = "X-Forwarded-For"
-
+    # The HTTP header used for passing your API key to the Algolia API.
+    HEADER_API_KEY           = "X-Algolia-API-Key"
+    HEADER_FORWARDED_IP      = "X-Forwarded-For"
     HEADER_FORWARDED_API_KEY = "X-Forwarded-API-Key"
 
     # HTTP ERROR CODES
@@ -39,7 +35,7 @@ module Algolia
       "/#{VERSION}/indexes"
     end
 
-    def Protocol.multiple_queries_uri(strategy = "none")
+    def Protocol.multiple_queries_uri(strategy = 'none')
       "/#{VERSION}/indexes/*/queries?strategy=#{strategy}"
     end
 
@@ -65,12 +61,12 @@ module Algolia
     end
 
     def Protocol.object_uri(index, object_id, params = {})
-      params = params.nil? || params.size == 0 ? "" : "?#{to_query(params)}"
+      params = params.nil? || params.size == 0 ? '' : "?#{to_query(params)}"
       "#{index_uri(index)}/#{CGI.escape(object_id.to_s)}#{params}"
     end
 
     def Protocol.search_uri(index, query, params = {})
-      params = params.nil? || params.size == 0 ? "" : "&#{to_query(params)}"
+      params = params.nil? || params.size == 0 ? '' : "&#{to_query(params)}"
       "#{index_uri(index)}?query=#{CGI.escape(query)}&#{params}"
     end
 
@@ -79,7 +75,7 @@ module Algolia
     end
 
     def Protocol.browse_uri(index, params = {})
-      params = params.nil? || params.size == 0 ? "" : "?#{to_query(params)}"
+      params = params.nil? || params.size == 0 ? '' : "?#{to_query(params)}"
       "#{index_uri(index)}/browse#{params}"
     end
 
@@ -88,12 +84,12 @@ module Algolia
     end
 
     def Protocol.partial_object_uri(index, object_id, create_if_not_exits = true)
-      params = create_if_not_exits ? "" : "?createIfNotExists=false"
+      params = create_if_not_exits ? '' : '?createIfNotExists=false'
       "#{index_uri(index)}/#{CGI.escape(object_id)}/partial#{params}"
     end
 
     def Protocol.settings_uri(index, params = {})
-      params = params.nil? || params.size == 0 ? "" : "?#{to_query(params)}"
+      params = params.nil? || params.size == 0 ? '' : "?#{to_query(params)}"
       "#{index_uri(index)}/settings#{params}"
     end
 
