@@ -6,7 +6,7 @@ require 'base64'
 def safe_index_name(name)
   return name if ENV['TRAVIS'].to_s != "true"
   id = ENV['TRAVIS_JOB_NUMBER']
-  "#{name}_travis-#{id}"
+  "TRAVIS_RUBY_#{name}-#{id}"
 end
 
 def is_include(array, attr, value)
