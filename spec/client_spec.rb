@@ -18,6 +18,122 @@ def is_include(array, attr, value)
   return false
 end
 
+describe 'API keys', :maintainers_only => true do
+  before(:all) do
+    @index = Algolia::Index.new(safe_index_name("àlgol?a"))
+    @index.delete_index rescue "not fatal"
+  end
+
+  after(:all) do
+    @index.delete_index rescue "not fatal"
+  end
+
+  def wait_key(index, key, &block)
+    1.upto(60) do # do not wait too long
+      begin
+        k = index.get_api_key(key)
+        if block_given?
+          return if yield k
+          # not found
+          sleep 1
+          next
+        end
+        return
+      rescue
+        # not found
+        sleep 1
+      end
+    end
+  end
+
+  def wait_key_missing(index, key)
+    1.upto(60) do # do not wait too long
+      begin
+        k = index.get_api_key(key)
+        sleep 1
+      rescue
+        # not found
+        return
+      end
+    end
+  end
+
+  def wait_global_key(key, &block)
+    1.upto(60) do # do not wait too long
+      begin
+        k = Algolia.get_api_key(key)
+        if block_given?
+          return if yield k
+          # not found
+          sleep 1
+          next
+        end
+        return
+      rescue
+        # not found
+        sleep 1
+      end
+    end
+  end
+
+  def wait_global_key_missing(key)
+    1.upto(60) do # do not wait too long
+      begin
+        k = Algolia.get_api_key(key)
+        sleep 1
+      rescue
+        # not found
+        return
+      end
+    end
+  end
+
+  it "should test index keys" do
+    @index.set_settings!({}) # ensure the index exists
+    resIndex = @index.list_api_keys
+    newIndexKey = @index.add_api_key(['search'])
+    newIndexKey['key'].should_not eq("")
+    wait_key(@index, newIndexKey['key'])
+    resIndexAfter = @index.list_api_keys
+    is_include(resIndex['keys'], 'value', newIndexKey['key']).should eq(false)
+    is_include(resIndexAfter['keys'], 'value', newIndexKey['key']).should eq(true)
+    indexKey = @index.get_api_key(newIndexKey['key'])
+    indexKey['acl'][0].should eq('search')
+    @index.update_api_key(newIndexKey['key'], ['addObject'])
+    wait_key(@index, newIndexKey['key']) do |key|
+      key['acl'] == ['addObject']
+    end
+    indexKey = @index.get_api_key(newIndexKey['key'])
+    indexKey['acl'][0].should eq('addObject')
+    @index.delete_api_key(newIndexKey['key'])
+    wait_key_missing(@index, newIndexKey['key'])
+    resIndexEnd = @index.list_api_keys
+    is_include(resIndexEnd['keys'], 'value', newIndexKey['key']).should eq(false)
+  end
+
+  it "should test global keys" do
+    res = Algolia.list_api_keys
+    newKey = Algolia.add_api_key(['search'])
+    newKey['key'].should_not eq("")
+    wait_global_key(newKey['key'])
+    resAfter = Algolia.list_api_keys
+    is_include(res['keys'], 'value', newKey['key']).should eq(false)
+    is_include(resAfter['keys'], 'value', newKey['key']).should eq(true)
+    key = Algolia.get_api_key(newKey['key'])
+    key['acl'][0].should eq('search')
+    Algolia.update_api_key(newKey['key'], ['addObject'])
+    wait_global_key(newKey['key']) do |key|
+      key['acl'] == ['addObject']
+    end
+    key = Algolia.get_api_key(newKey['key'])
+    key['acl'][0].should eq('addObject')
+    Algolia.delete_api_key(newKey['key'])
+    wait_global_key_missing(newKey['key'])
+    resEnd = Algolia.list_api_keys
+    is_include(resEnd['keys'], 'value', newKey['key']).should eq(false)
+  end
+end
+
 describe 'Client' do
   before(:all) do
     @index = Algolia::Index.new(safe_index_name("àlgol?a"))
@@ -450,111 +566,6 @@ describe 'Client' do
     res['facets']['f']['f3'].should be_nil
     res['facets']['g']['g1'].should eq(1)
     res['facets']['g']['g2'].should be_nil
-  end
-
-  def wait_key(index, key, &block)
-    1.upto(60) do # do not wait too long
-      begin
-        k = index.get_api_key(key)
-        if block_given?
-          return if yield k
-          # not found
-          sleep 1
-          next
-        end
-        return
-      rescue
-        # not found
-        sleep 1
-      end
-    end
-  end
-
-  def wait_key_missing(index, key)
-    1.upto(60) do # do not wait too long
-      begin
-        k = index.get_api_key(key)
-        sleep 1
-      rescue
-        # not found
-        return
-      end
-    end
-  end
-
-  def wait_global_key(key, &block)
-    1.upto(60) do # do not wait too long
-      begin
-        k = Algolia.get_api_key(key)
-        if block_given?
-          return if yield k
-          # not found
-          sleep 1
-          next
-        end
-        return
-      rescue
-        # not found
-        sleep 1
-      end
-    end
-  end
-
-  def wait_global_key_missing(key)
-    1.upto(60) do # do not wait too long
-      begin
-        k = Algolia.get_api_key(key)
-        sleep 1
-      rescue
-        # not found
-        return
-      end
-    end
-  end
-
-  it "should test index keys" do
-    @index.set_settings!({}) # ensure the index exists
-    resIndex = @index.list_api_keys
-    newIndexKey = @index.add_api_key(['search'])
-    newIndexKey['key'].should_not eq("")
-    wait_key(@index, newIndexKey['key'])
-    resIndexAfter = @index.list_api_keys
-    is_include(resIndex['keys'], 'value', newIndexKey['key']).should eq(false)
-    is_include(resIndexAfter['keys'], 'value', newIndexKey['key']).should eq(true)
-    indexKey = @index.get_api_key(newIndexKey['key'])
-    indexKey['acl'][0].should eq('search')
-    @index.update_api_key(newIndexKey['key'], ['addObject'])
-    wait_key(@index, newIndexKey['key']) do |key|
-      key['acl'] == ['addObject']
-    end
-    indexKey = @index.get_api_key(newIndexKey['key'])
-    indexKey['acl'][0].should eq('addObject')
-    @index.delete_api_key(newIndexKey['key'])
-    wait_key_missing(@index, newIndexKey['key'])
-    resIndexEnd = @index.list_api_keys
-    is_include(resIndexEnd['keys'], 'value', newIndexKey['key']).should eq(false)
-  end
-
-  it "should test global keys" do
-    res = Algolia.list_api_keys
-    newKey = Algolia.add_api_key(['search'])
-    newKey['key'].should_not eq("")
-    wait_global_key(newKey['key'])
-    resAfter = Algolia.list_api_keys
-    is_include(res['keys'], 'value', newKey['key']).should eq(false)
-    is_include(resAfter['keys'], 'value', newKey['key']).should eq(true)
-    key = Algolia.get_api_key(newKey['key'])
-    key['acl'][0].should eq('search')
-    Algolia.update_api_key(newKey['key'], ['addObject'])
-    wait_global_key(newKey['key']) do |key|
-      key['acl'] == ['addObject']
-    end
-    key = Algolia.get_api_key(newKey['key'])
-    key['acl'][0].should eq('addObject')
-    Algolia.delete_api_key(newKey['key'])
-    wait_global_key_missing(newKey['key'])
-    resEnd = Algolia.list_api_keys
-    is_include(resEnd['keys'], 'value', newKey['key']).should eq(false)
   end
 
   it "should handle slash in objectId" do
