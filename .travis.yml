@@ -27,4 +27,4 @@ before_script:
   - wget https://alg.li/algolia-keys && chmod +x algolia-keys
 
 script:
- - if [ "$TRAVIS_PULL_REQUEST" != "false" ] && [[ ! "$TRAVIS_PULL_REQUEST_SLUG" =~ ^algolia\/ ]]; then eval $(./algolia-keys export) && bundle exec rspec; else bundle exec rspec --tag ~maintainers_only; fi
+ - if [ "$TRAVIS_PULL_REQUEST" != "false" ] && [[ ! "$TRAVIS_PULL_REQUEST_SLUG" =~ ^algolia\/ ]]; then eval $(./algolia-keys export) && bundle exec rspec --tag ~maintainers_only; else bundle exec rspec; fi
