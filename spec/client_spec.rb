@@ -132,6 +132,34 @@ describe 'API keys', :maintainers_only => true do
     resEnd = Algolia.list_api_keys
     is_include(resEnd['keys'], 'value', newKey['key']).should eq(false)
   end
+
+  it "Check add keys" do
+    newIndexKey = @index.add_api_key(['search'])
+    newIndexKey.should have_key('key')
+    newIndexKey['key'].should be_a(String)
+    newIndexKey.should have_key('createdAt')
+    newIndexKey['createdAt'].should be_a(String)
+    sleep 5 # no task ID here
+    resIndex = @index.list_api_keys
+    resIndex.should have_key('keys')
+    resIndex['keys'].should be_a(Array)
+    resIndex['keys'][0].should have_key('value')
+    resIndex['keys'][0]['value'].should be_a(String)
+    resIndex['keys'][0].should have_key('acl')
+    resIndex['keys'][0]['acl'].should be_a(Array)
+    resIndex['keys'][0].should have_key('validity')
+    resIndex['keys'][0]['validity'].should be_a(Integer)
+    indexKey = @index.get_api_key(newIndexKey['key'])
+    indexKey.should have_key('value')
+    indexKey['value'].should be_a(String)
+    indexKey.should have_key('acl')
+    indexKey['acl'].should be_a(Array)
+    indexKey.should have_key('validity')
+    indexKey['validity'].should be_a(Integer)
+    task = @index.delete_api_key(newIndexKey['key'])
+    task.should have_key('deletedAt')
+    task['deletedAt'].should be_a(String)
+  end
 end
 
 describe 'Client' do
@@ -761,34 +789,6 @@ describe 'Client' do
     task = @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
     status = @index.get_task_status(task["taskID"])
     status.should be_a(String)
-  end
-
-  it "Check add keys" do
-    newIndexKey = @index.add_api_key(['search'])
-    newIndexKey.should have_key('key')
-    newIndexKey['key'].should be_a(String)
-    newIndexKey.should have_key('createdAt')
-    newIndexKey['createdAt'].should be_a(String)
-    sleep 5 # no task ID here
-    resIndex = @index.list_api_keys
-    resIndex.should have_key('keys')
-    resIndex['keys'].should be_a(Array)
-    resIndex['keys'][0].should have_key('value')
-    resIndex['keys'][0]['value'].should be_a(String)
-    resIndex['keys'][0].should have_key('acl')
-    resIndex['keys'][0]['acl'].should be_a(Array)
-    resIndex['keys'][0].should have_key('validity')
-    resIndex['keys'][0]['validity'].should be_a(Integer)
-    indexKey = @index.get_api_key(newIndexKey['key'])
-    indexKey.should have_key('value')
-    indexKey['value'].should be_a(String)
-    indexKey.should have_key('acl')
-    indexKey['acl'].should be_a(Array)
-    indexKey.should have_key('validity')
-    indexKey['validity'].should be_a(Integer)
-    task = @index.delete_api_key(newIndexKey['key'])
-    task.should have_key('deletedAt')
-    task['deletedAt'].should be_a(String)
   end
 
   it 'Check attributes log : ' do
