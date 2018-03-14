@@ -112,6 +112,8 @@ index.set_settings searchableAttributes: %w(
 )
 ```
 
+**Note:** If you are behind a proxy, set `HTTP_PROXY` environment variable.
+
 ## Search
 
 You can now search for contacts using `firstname`, `lastname`, `company`, etc. (even with typos):
