@@ -1,7 +1,9 @@
 language: ruby
+
 branches:
   only:
-  - master
+    - master
+
 rvm:
 - 1.8.7
 - 1.9.3
@@ -13,14 +15,16 @@ rvm:
 - 2.5.0
 - jruby
 - rbx-2
+
 matrix:
   allow_failures:
-  - rvm: rbx-2
-  - rvm: jruby
+    - rvm: rbx-2
+    - rvm: jruby
+
 cache: bundler
-env:
-  global:
-  # ALGOLIA_APPLICATION_ID
-  - secure: D+xCYUPyCXiuznMX0VYaihUQ+OO/qItazlAqJRT70fQfl5UlqAMOSaeN6ybE32dm3K1meWucINeDRecvFxB8XQy0a3oxUz6GTlEUOAXtKtn7XtdzwXmNaKdQMmAxYyomiCnlLB7LX14MldPl5S95Tf4tRs4d0nPHQmzsNPshzTM=
-  # ALGOLIA_API_KEY
-  - secure: dc5+Ulb1siqrWEydpyeccxfaZ/V6sFKmq+Xc8BLv6rwR/saBsXP1M5zVRXAkF6u6jnpLAxYBBIA9rbdFUAaYPY/16PKQY1lux1QYLW4pxc0Kk9s+JOSNyxLNoIeDJp8zOTwS/heDYj6WabL4n3mr5hsy645EC1VIbpfCe4IpMnw=
+
+before_script:
+  - wget https://alg.li/algolia-keys && chmod +x algolia-keys
+
+script:
+ - if [ "$TRAVIS_PULL_REQUEST" != "false" ] && [[ ! "$TRAVIS_PULL_REQUEST_SLUG" =~ ^algolia\/ ]]; then eval $(./algolia-keys export) && bundle exec rspec --tag ~maintainers_only; else bundle exec rspec; fi
