@@ -439,7 +439,7 @@ module Algolia
     def thread_local_hosts(read)
       thread_hosts_key = read ? "algolia_search_hosts_#{application_id}" : "algolia_hosts_#{application_id}"
       Thread.current[thread_hosts_key] ||= (read ? search_hosts : hosts).each_with_index.map do |host, i|
-        client = HTTPClient.new
+        client = HTTPClient.new(ENV["HTTP_PROXY"])
         client.ssl_config.ssl_version = @ssl_version if @ssl && @ssl_version
         client.transparent_gzip_decompression = @gzip
         client.ssl_config.add_trust_ca File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'resources', 'ca-bundle.crt'))
