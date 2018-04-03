@@ -134,7 +134,7 @@ module Algolia
 
     #
     # List all existing indexes
-    # return an Answer object with answer in the form 
+    # return an Answer object with answer in the form
     #     {"items": [{ "name": "contacts", "createdAt": "2013-01-18T15:33:13.556Z"},
     #                {"name": "notes", "createdAt": "2013-01-18T15:33:13.556Z"}]}
     #
@@ -194,15 +194,19 @@ module Algolia
     end
 
     # Delete an index
+    # @param name the name of the index to delete
+    # @param request_options contains extra parameters to send with your query
     #
-    def delete_index(name)
-      init_index(name).delete
+    def delete_index(name, request_options = {})
+      init_index(name).delete(request_options)
     end
 
     # Delete an index and wait until the deletion has been processed.
+    # @param name the name of the index to delete
+    # @param request_options contains extra parameters to send with your query
     #
-    def delete_index!(name)
-      init_index(name).delete!
+    def delete_index!(name, request_options = {})
+      init_index(name).delete!(request_options)
     end
 
     #
@@ -579,7 +583,7 @@ module Algolia
 
   #
   # List all existing indexes
-  # return an Answer object with answer in the form 
+  # return an Answer object with answer in the form
   #     {"items": [{ "name": "contacts", "createdAt": "2013-01-18T15:33:13.556Z"},
   #                {"name": "notes", "createdAt": "2013-01-18T15:33:13.556Z"}]}
   #
