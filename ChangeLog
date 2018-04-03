@@ -1,5 +1,8 @@
 CHANGELOG
 
+2018-04-03 1.19.2
+      * Fix Algolia.delete_index wrong number of arguments (#277)
+
 2017-12-18 1.19.1
       * Fix hard dependency on `hashdiff` (#262)
 
