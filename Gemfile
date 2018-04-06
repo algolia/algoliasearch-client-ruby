@@ -15,7 +15,7 @@ gem 'rubysl', '~> 2.0', :platform => :rbx
 group :development do
   gem 'highline', '< 1.7.0'
   gem 'coveralls'
-  gem 'safe_yaml', '~> 1.0.4'
+  gem 'safe_yaml'
   gem 'travis'
   gem 'rake'
   gem 'rdoc'
@@ -26,5 +26,5 @@ group :test do
   gem 'redgreen'
   gem 'webmock'
   gem 'simplecov'
-  gem 'mime-types', '< 2.0'
+  gem 'mime-types'
 end
