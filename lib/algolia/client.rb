@@ -41,7 +41,7 @@ module Algolia
         Protocol::HEADER_API_KEY => api_key,
         Protocol::HEADER_APP_ID  => application_id,
         'Content-Type'           => 'application/json; charset=utf-8',
-        'User-Agent'             => (data[:user_agent] || "Algolia for Ruby #{::Algolia::VERSION}")
+        'User-Agent'             => format_user_agent(data[:user_agent])
       }
     end
 
@@ -547,6 +547,12 @@ module Algolia
 
       request_options['headers'].merge!(headers_to_add)
       request_options
+    end
+
+    def format_user_agent(custom)
+      ua = "Ruby (#{RUBY_VERSION}); Algolia for Ruby (#{::Algolia::VERSION})"
+      ua.concat("; "  + custom.to_s) if custom
+      ua
     end
 
     # Deprecated
