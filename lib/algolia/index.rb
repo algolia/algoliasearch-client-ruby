@@ -948,6 +948,7 @@ module Algolia
     # @param forward_to_replicas should we forward the delete to replica indices
     # @param request_options contains extra parameters to send with your query
     def save_rule(objectID, rule, forward_to_replicas = false, request_options = {})
+      raise ArgumentError.new('objectID must not be blank') if objectID.nil? || objectID == ''
       client.put("#{Protocol.rule_uri(name, objectID)}?forwardToReplicas=#{forward_to_replicas}", rule.to_json, :write, request_options)
     end
 
