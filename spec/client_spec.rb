@@ -1107,6 +1107,17 @@ describe 'Client' do
     @index.search_rules('')['nbHits'].should eq(0)
   end
 
+  it 'should not save a query rule with an empty objectID' do
+    rule = {
+      :objectID => '',
+      :condition => { :pattern => 'test', :anchoring => 'contains' },
+      :consequence => { :params => { :query => 'this is better' } }
+    }
+
+    expect { @index.save_rule!(nil, rule) }.to raise_error(ArgumentError)
+    expect { @index.save_rule!(rule[:objectID], rule) }.to raise_error(ArgumentError)
+  end
+
   it "should use request options" do
     expect{Algolia.list_indexes}.to_not raise_error
 
