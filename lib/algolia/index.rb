@@ -566,6 +566,7 @@ module Algolia
     #  @param maxHitsPerQuery  the maximum number of hits this API key can retrieve in one call (0 means unlimited)
     #  @param request_options contains extra parameters to send with your query
     #
+    # Deprecated: use `add_api_key` on the client instead
     def add_api_key(obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, request_options = {})
       if obj.instance_of? Array
         params = {
