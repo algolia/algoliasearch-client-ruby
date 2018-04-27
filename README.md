@@ -20,9 +20,6 @@ If you are a **Ruby on Rails** user, you are probably looking for the [algoliase
 You can find the full reference on [Algolia's website](https://www.algolia.com/doc/api-client/ruby/).
 
 
-## Table of Contents
-
-
 
 1. **[Install](#install)**
 
@@ -74,9 +71,9 @@ You can find both on [your Algolia account](https://www.algolia.com/api-keys).
 require 'rubygems'
 require 'algoliasearch'
 
-Algolia.init application_id: 'YourApplicationID',
-             api_key:        'YourAPIKey'
-index = Algolia::Index.new("your_index_name")
+Algolia.init(application_id: 'YourApplicationID',
+             api_key:        'YourAPIKey')
+index = Algolia::Index.new('your_index_name')
 ```
 
 ## Push data
@@ -210,8 +207,6 @@ search.start();
 
 
 
-
-
 ### Search
 
 - [Search an index](https://algolia.com/doc/api-reference/api-methods/search/?language=ruby)
@@ -222,18 +217,15 @@ search.start();
 
 
 
-
 ### Indexing
 
 - [Add objects](https://algolia.com/doc/api-reference/api-methods/add-objects/?language=ruby)
 - [Update objects](https://algolia.com/doc/api-reference/api-methods/update-objects/?language=ruby)
 - [Partial update objects](https://algolia.com/doc/api-reference/api-methods/partial-update-objects/?language=ruby)
 - [Delete objects](https://algolia.com/doc/api-reference/api-methods/delete-objects/?language=ruby)
-- [Delete by query](https://algolia.com/doc/api-reference/api-methods/delete-by-query/?language=ruby)
+- [Delete by](https://algolia.com/doc/api-reference/api-methods/delete-by/?language=ruby)
 - [Get objects](https://algolia.com/doc/api-reference/api-methods/get-objects/?language=ruby)
 - [Custom batch](https://algolia.com/doc/api-reference/api-methods/batch/?language=ruby)
-- [Wait for operations](https://algolia.com/doc/api-reference/api-methods/wait-task/?language=ruby)
-
 
 
 
@@ -242,7 +234,6 @@ search.start();
 
 - [Get settings](https://algolia.com/doc/api-reference/api-methods/get-settings/?language=ruby)
 - [Set settings](https://algolia.com/doc/api-reference/api-methods/set-settings/?language=ruby)
-
 
 
 
@@ -258,7 +249,6 @@ search.start();
 
 
 
-
 ### API Keys
 
 - [Create secured API Key](https://algolia.com/doc/api-reference/api-methods/generate-secured-api-key/?language=ruby)
@@ -267,7 +257,6 @@ search.start();
 - [Delete API Key](https://algolia.com/doc/api-reference/api-methods/delete-api-key/?language=ruby)
 - [Get API Key permissions](https://algolia.com/doc/api-reference/api-methods/get-api-key/?language=ruby)
 - [List API Keys](https://algolia.com/doc/api-reference/api-methods/list-api-keys/?language=ruby)
-
 
 
 
@@ -285,12 +274,11 @@ search.start();
 
 
 
-
 ### Query rules
 
 - [Save a single rule](https://algolia.com/doc/api-reference/api-methods/rules-save/?language=ruby)
 - [Batch save multiple rules](https://algolia.com/doc/api-reference/api-methods/rules-save-batch/?language=ruby)
-- [Read a rule](https://algolia.com/doc/api-reference/api-methods/rules-read/?language=ruby)
+- [Get a rule](https://algolia.com/doc/api-reference/api-methods/rules-get/?language=ruby)
 - [Delete a single rule](https://algolia.com/doc/api-reference/api-methods/rules-delete/?language=ruby)
 - [Clear all rules](https://algolia.com/doc/api-reference/api-methods/rules-clear/?language=ruby)
 - [Search for rules](https://algolia.com/doc/api-reference/api-methods/rules-search/?language=ruby)
@@ -299,13 +287,25 @@ search.start();
 
 
 
+### MultiClusters
+
+- [Assign or Move userID](https://algolia.com/doc/api-reference/api-methods/assign-user-id/?language=ruby)
+- [Get top userID](https://algolia.com/doc/api-reference/api-methods/get-top-user-id/?language=ruby)
+- [Get userID](https://algolia.com/doc/api-reference/api-methods/get-user-id/?language=ruby)
+- [List clusters](https://algolia.com/doc/api-reference/api-methods/list-clusters/?language=ruby)
+- [List userIDs](https://algolia.com/doc/api-reference/api-methods/list-user-id/?language=ruby)
+- [Remove userID](https://algolia.com/doc/api-reference/api-methods/remove-user-id/?language=ruby)
+- [Search userID](https://algolia.com/doc/api-reference/api-methods/search-user-id/?language=ruby)
 
 
 
 
 ### Advanced
 
-- [Get latest logs](https://algolia.com/doc/api-reference/api-methods/get-logs/?language=ruby)
+- [Get logs](https://algolia.com/doc/api-reference/api-methods/get-logs/?language=ruby)
+- [Configuring timeouts](https://algolia.com/doc/api-reference/api-methods/configuring-timeouts/?language=ruby)
+- [Set extra header](https://algolia.com/doc/api-reference/api-methods/set-extra-header/?language=ruby)
+- [Wait for operations](https://algolia.com/doc/api-reference/api-methods/wait-task/?language=ruby)
 
 
 
