@@ -167,5 +167,27 @@ module Algolia
       "#{index_uri(index)}/deleteByQuery"
     end
 
+    def Protocol.clusters_uri
+      "/#{VERSION}/clusters"
+    end
+
+    def Protocol.cluster_mapping_uri(user_id = nil)
+      user_id = "/#{CGI.escape(user_id)}" if user_id
+
+      "/#{VERSION}/clusters/mapping" + user_id.to_s
+    end
+
+    def Protocol.list_ids_uri(page, hits_per_page)
+      Protocol.cluster_mapping_uri+"?page=#{CGI.escape(page.to_s)}&hitsPerPage=#{CGI.escape(hits_per_page.to_s)}"
+    end
+
+    def Protocol.cluster_top_user_uri
+      "/#{VERSION}/clusters/mapping/top"
+    end
+
+    def Protocol.search_user_id_uri
+      "/#{VERSION}/clusters/mapping/search"
+    end
+
   end
 end
