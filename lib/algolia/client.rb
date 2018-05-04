@@ -505,11 +505,12 @@ module Algolia
   # Always use Algolia.client to retrieve the client object.
   @@client = nil
 
-  # Initialize the singleton instance of Client which is used
-  # by all API methods.
+  #
+  # Initialize the singleton instance of Client which is used by all API methods
+  #
   def Algolia.init(options = {})
-    application_id = ENV["ALGOLIA_API_ID"] || ENV["ALGOLIA_APPLICATION_ID"]
-    api_key = ENV["ALGOLIA_REST_API_KEY"] || ENV['ALGOLIA_API_KEY']
+    application_id = ENV['ALGOLIA_APP_ID'] || ENV['ALGOLIA_API_ID'] || ENV['ALGOLIA_APPLICATION_ID']
+    api_key = ENV['ALGOLIA_REST_API_KEY'] || ENV['ALGOLIA_API_KEY']
 
     defaulted = { :application_id => application_id, :api_key => api_key }
     defaulted.merge!(options)
