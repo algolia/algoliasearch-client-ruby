@@ -1,281 +1,324 @@
-2018-05-07 1.20.0
-			* Feat: deprecate api keys methods on index in favor of client ones (#286)
-			* Chore(gemfile): remove useless dependencies (#280)
-			* Fix(env): adding default env var (#279)
-			* Chore(travis): test against rubinius 3 (#281)
-			* Fix: prevent saving a rule with an empty objectid (#283)
+## [1.20.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.20.0) (2018-05-07)
 
-2018-04-03 1.19.2
-      * Fix Algolia.delete_index wrong number of arguments (#277)
+* Feat: deprecate api keys methods on index in favor of client ones (#286)
+* Chore(gemfile): remove useless dependencies (#280)
+* Fix(env): adding default env var (#279)
+* Chore(travis): test against Rubinius 3 (#281)
+* Fix: prevent saving a rule with an empty `objectID` (#283)
 
-2017-12-18 1.19.1
-      * Fix hard dependency on `hashdiff` (#262)
+## [1.19.2](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.19.2) (2018-04-03)
 
-2017-12-15 1.19.0
-      * Add request options to any method using API calls (#213)
-      * Add export_synonyms index method (#260)
-      * Add export_rules index method (#261)
+* Fix `Algolia.delete_index` wrong number of arguments (#277)
 
-2017-12-07 1.18.5
-      * Fix missing requirement
+## [1.19.1](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.19.1) (2017-12-18)
 
-2017-12-06 1.18.4
-      * Remove remaining unnecessary requirements (#256)
-      * Remove Gemfile.lock (#257)
+* Fix hard dependency on `hashdiff` (#262)
 
-2017-12-04 1.18.3
-      * Remove Bundler and RubyGems requirements (#253)
+## [1.19.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.19.0) (2017-12-15)
 
-2017-11-28 1.18.2
-      * Add (undocumented) gzip option to disable gzip (#240)
+* Add request options to any method using API calls (#213)
+* Add `export_synonyms` index method (#260)
+* Add `export_rules` index method (#261)
 
-2017-11-15 1.18.1
-      * Fix get_logs always returning type `all` (#244)
-      * New scopes to copy_index method (#243)
+## [1.18.5](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.18.5) (2017-12-07)
 
-2017-11-02 1.18.0
-      * Allow to reuse the webmocks using `Algolia::WebMock.mock!` (#256)
+* Fix missing requirement
 
-2017-10-10 1.17.0
-      * New delete_by method
+## [1.18.4](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.18.4) (2017-12-06)
 
-2017-09-14 1.16.0
-      * New Query Rules API
+* Remove remaining unnecessary requirements (#256)
+* Remove Gemfile.lock (#257)
 
-2017-08-17 1.15.1
-      * Fixed regression introduced in 1.15.0
+## [1.18.3](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.18.3) (2017-12-04)
 
-2017-08-17 1.15.0
-      * Make delete_by_query not wait_task by default (also, make it mockable)
-      * Add a new delete_by_query! doing the last wait_task
+* Remove Bundler and RubyGems requirements (#253)
 
-2017-07-31 1.14.0
-      * Ability to override the underlying user-agent
+## [1.18.2](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.18.2) (2017-11-28)
 
-2017-03-17 1.13.0
-      * Add a `index.get_task_status(taskID)` method (#199)
+* Add (undocumented) gzip option to disable gzip (#240)
 
-2017-03-01 1.12.7
-      * Renamed all `*_user_key` methods to `*_api_key`
+## [1.18.1](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.18.1) (2017-11-15)
 
-2017-01-25 1.12.6
-      * Upgraded `httpclient` to 2.8.3
+* Fix `get_logs` always returning type `all` (#244)
+* New scopes to `copy_index` method (#243)
 
-2016-12-07 1.12.5
-      * Fixed retry strategy not keeping the `current_host` first #163
+## [1.18.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.18.0) (2017-11-02)
 
-2016-12-07 1.12.4
-      * Fix DNS tests
+* Allow to reuse the webmocks using `Algolia::WebMock.mock!` (#256)
 
-2016-12-06 1.12.3
-      * Allow for multiple clients on different app ids on the same thread
+## [1.17.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.17.0) (2017-10-10)
 
-2016-12-05 1.12.2
-      * Fix client scoped methods
+* New `delete_by` method
 
-2016-11-25 1.12.1
-      * Rename `search_facet` to `search_for_facet_values`
+## [1.16.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.16.0) (2017-09-14)
 
-2016-10-31 1.12.0
-      * Add `search_facet`
+* New Query Rules API
 
-2016-08-21 1.11.0
-      * Upgraded to httpclient 2.8.1 to avoid reseting the keep-alive while changing timeouts
+## [1.15.1](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.15.1) (2017-08-17)
 
-2016-07-11 1.10.0
-      * `{get,set}_settings` now take optional custom query parameters
+* Fixed regression introduced in 1.15.0
 
-2016-06-17 1.9.0
-      * New synonyms API
+## [1.15.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.15.0) (2017-08-17)
 
-2016-04-14 1.8.1
-      * Ensure we're using an absolute path for the `ca-bundle.crt` file (could fix some `OpenSSL::X509::StoreError: system lib` errors)
+* Make `delete_by_query` not `wait_task` by default (also, make it mockable)
+* Add a new `delete_by_query!` doing the last `wait_task`
 
-2016-04-06 1.8.0
-      * Upgraded to httpclient 2.7.1 (includes ruby 2.3.0 deprecation fixes)
-      * Upgraded WebMock URLs
+## [1.14.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.14.0) (2017-07-31)
 
-2016-01-09 1.7.0
-      * New generate_secured_api_key embedding the filters in the resulting key
+* Ability to override the underlying user-agent
 
-2015-08-01 1.6.1
-      * Search queries are now using POST requests
+## [1.13.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.13.0) (2017-03-17)
 
-2015-07-19 1.6.0
-      * Ability to instantiate multiple API clients in the same process (was using a class variable before).
+* Add a `index.get_task_status(taskID)` method (#199)
 
-2015-07-14 1.5.1
-      * Ability to retrieve a single page from a cursor with `browse_from`
+## [1.12.7](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.12.7) (2017-03-01)
 
-2015-06-05 1.5.0
-      * New cursor-based browse() implementation taking query parameters
+* Renamed all `*_user_key` methods to `*_api_key`
 
-2015-05-27 1.4.3
-      * Do not call `WebMock.disable!` in the helper
+## [1.12.6](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.12.6) (2017-01-25)
 
-2015-05-04 1.4.2
-      * Add new methods to add/update api key
-      * Add batch method to target multiple indices
-      * Add strategy parameter for the multipleQueries
-      * Add new method to generate secured api key from query parameters
+* Upgraded `httpclient` to 2.8.3
 
-2015-04-10  1.4.1
-      * Force the default connect/read/write/search/batch timeouts to Algolia-specific values
+## [1.12.5](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.12.5) (2016-12-07)
 
-2015-03-17  1.4.0
-      * High-available DNS: search queries are now targeting "APPID-DSN.algolia.net" first, then the main cluster using NSOne, then the main cluster using Route53.
-        Indexing queries are targeting "APPID.algolia.net" first, then the main cluster using NSOne, then the main cluster using Route53.
+* Fixed retry strategy not keeping the `current_host` first (#163)
 
-2014-11-29  1.3.1
-      * Fixed wrong deployed version (1.3.0 was based on 1.2.13 instead of 1.2.14)
+## [1.12.4](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.12.4) (2016-12-07)
 
-2014-11-29  1.3.0
-      * Use algolia.net domain instead of algolia.io
+* Fix DNS tests
 
-2014-11-10 1.2.14
-      * Force the underlying httpclient dependency to be >= 2.4 in the gemspec as well
-      * Ability to force the SSL version
+## [1.12.3](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.12.3) (2016-12-06)
 
-2014-10-22 1.2.13
-      * Fix the loop on hosts to retry when the http code is different than 200, 201, 400, 403, 404
+* Allow for multiple clients on different app ids on the same thread
 
-2014-10-08  1.2.12
+## [1.12.2](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.12.2) (2016-12-05)
 
-      * Upgrade to httpclient 2.4
-      * Do not reset the timeout on each requests
+* Fix client scoped methods
 
-2014-09-14  1.2.11
+## [1.12.1](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.12.1) (2016-11-25)
 
-      * Ability to update API keys
+* Rename `search_facet` to `search_for_facet_values`
 
-2014-08-22  1.2.10
+## [1.12.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.12.0) (2016-10-31)
 
-      * Using Digest to remove "Digest::Digest is deprecated; Use Digest" warning (author: @dglancy)
+* Add `search_facet`
 
-2014-07-10  1.2.9
+## [1.11.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.11.0) (2016-08-21)
 
-      * Expose connect_timeout, receive_timeout and send_timeout
-      * Add new 'delete_by_query' method to delete all objects matching a specific query
-      * Add new 'get_objects' method to retrieve a list of objects from a single API call
-      * Add a helper to perform disjunctive faceting
+* Upgraded to httpclient 2.8.1 to avoid reseting the keep-alive while changing timeouts
 
-2014-03-27  1.2.8
+## [1.10.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.10.0) (2016-07-11)
 
-      * Catch all exceptions before retrying with another host
+* `{get,set}_settings` now take optional custom query parameters
 
-2014-03-24  1.2.7
+## [1.9.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.9.0) (2016-06-17)
 
-      * Ruby 1.8 compatibility
+* New synonyms API
 
-2014-03-19  1.2.6
+## [1.8.1](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.8.1) (2016-04-14)
 
-      * Raise an exception if no APPLICATION_ID is provided
-      * Ability to get last API call errors
-      * Ability to send multiple queries using a single API call
-      * Secured API keys generation is now based on secured HMAC-SHA256
+* Ensure we're using an absolute path for the `ca-bundle.crt` file (could fix some `OpenSSL::X509::StoreError: system lib` errors)
 
-2014-02-24  1.2.5
+## [1.8.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.8.0) (2016-04-06)
 
-      * Ability to generate secured API key from a list of tags + optional user_token
-      * Ability to specify a list of indexes targeted by the user key
+* Upgraded to `httpclient` 2.7.1 (includes ruby 2.3.0 deprecation fixes)
+* Upgraded WebMock URLs
 
-2014-02-21  1.2.4
+## [1.7.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.7.0) (2016-01-09)
 
-      * Added delete_objects
+* New `generate_secured_api_key` embedding the filters in the resulting key
 
-2014-02-10  1.2.3
+## [1.6.1](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.6.1) (2015-08-01)
 
-      * add_object: POST request if objectID is nil OR empty
+* Search queries are now using POST requests
 
-2014-01-11  1.2.2
+## [1.6.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.6.0) (2015-07-19)
 
-      * Expose batch requests
+* Ability to instantiate multiple API clients in the same process (was using a class variable before).
 
-2014-01-07  1.2.1
+## [1.5.1](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.5.1) (2015-07-14)
 
-      * Removed 'jeweler' since it doesn't support platform specific deps (see https://github.com/technicalpickles/jeweler/issues/170)
+* Ability to retrieve a single page from a cursor with `browse_from`
 
-2014-01-07  1.2.0
+## [1.5.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.5.0) (2015-06-05)
 
-      * Removed 'curb' dependency and switched on 'httpclient' to avoid fork-safety issue (see issue #5)
+* New cursor-based `browse()` implementation taking query parameters
 
-2014-01-06  1.1.18
+## [1.4.3](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.4.3) (2015-05-27)
 
-      * Fixed batch request builder (broken since last refactoring)
+* Do not call `WebMock.disable!` in the helper
 
-2014-01-02  1.1.17
+## [1.4.2](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.4,2) (2015-05-04)
 
-      * Ability to use IP rate limit behind a proxy forwarding the end-user's IP
-      * Add documentation for the new 'attributeForDistinct' setting and 'distinct' search parameter
+* Add new methods to add/update api key
+* Add batch method to target multiple indices
+* Add strategy parameter for the multipleQueries
+* Add new method to generate secured api key from query parameters
 
-2013-12-16  1.1.16
+## [1.4.1](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.4.1) (2015-04-10)
 
-      * Add arguments type-checking
-      * Normalize save_object/partial_update/add_object signatures
-      * Force dependencies versions
+* Force the default connect/read/write/search/batch timeouts to Algolia-specific values
 
-2013-12-16  1.1.15
+## [1.4.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.4.0) (2015-03-17)
 
-      * Embed ca-bundle.crt
+* High-available DNS: search queries are now targeting `APPID-DSN.algolia.net` first, then the main cluster using NSOne, then the main cluster using Route53.
+* High-available DNS: Indexing queries are targeting `APPID.algolia.net` first, then the main cluster using NSOne, then the main cluster using Route53.
 
-2013-12-11  1.1.14
+## [1.3.1](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.3.1) (2014-11-29)
 
-      * Added index.add_user_key(acls, validity, rate_limit, maxApiCalls)
+* Fixed wrong deployed version (1.3.0 was based on 1.2.13 instead of 1.2.14)
 
-2013-12-10  1.1.13
+## [1.3.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.3.0) (2014-11-29)
 
-      * WebMock integration
+* Use `algolia.net` domain instead of `algolia.io`
 
-2013-12-05  1.1.12
+## [1.2.14](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.2.14) (2014-11-10)
 
-      * Add browse command
+* Force the underlying `httpclient` dependency to be >= 2.4 in the gemspec as well
+* Ability to force the SSL version
 
-2013-11-29  1.1.11
+## [1.2.13](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.2.13) (2014-10-22)
 
-      * Remove rubysl (rbx required dependencies)
+* Fix the loop on hosts to retry when the http code is different than 200, 201, 400, 403, 404
 
-2013-11-29  1.1.10
+## [1.2.12](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.2.12) (2014-10-08)
 
-      * Fixed gzip handling bug
+* Upgrade to `httpclient` 2.4
+* Do not reset the timeout on each requests
 
-2013-11-28  1.1.9
+## [1.2.11](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.2.11) (2014-09-14)
 
-      * Added gzip support
+* Ability to update API keys
 
-2013-11-26  1.1.8
+## [1.2.10](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.2.10) (2014-08-22)
 
-      * Add partial_update_objects method
+* Using Digest to remove "Digest::Digest is deprecated; Use Digest" warning (author: @dglancy)
 
-2013-11-08  1.1.7
+## [1.2.9](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.2.9) (2014-07-10)
 
-      * Search params: encode array-based parameters (tagFilters, facetFilters, ...)
+* Expose `connect_timeout`, `receive_timeout` and `send_timeout`
+* Add new `delete_by_query` method to delete all objects matching a specific query
+* Add new `get_objects` method to retrieve a list of objects from a single API call
+* Add a helper to perform disjunctive faceting
 
-2013-11-07  1.1.6
+## [1.2.8](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.2.8) (2014-03-27)
 
-      * Index: clear and clear! methods can now be used the delete the whole content of an index
-      * User keys: plug new maxQueriesPerIPPerHour and maxHitsPerQuery parameters
+* Catch all exceptions before retrying with another host
 
-2013-10-17  1.1.5
+## [1.2.7](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.2.7) (2014-03-24)
 
-      * Version is now part of the user-agent
+* Ruby 1.8 compatibility
 
-2013-10-17  1.1.4
+## [1.2.6](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.2.6) (2014-03-19)
 
-      * Fixed wait_task not sleeping at all
+* Raise an exception if no `APPLICATION_ID` is provided
+* Ability to get last API call errors
+* Ability to send multiple queries using a single API call
+* Secured API keys generation is now based on secured HMAC-SHA256
 
-2013-10-15  1.1.3
+## [1.2.5](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.2.5) (2014-02-24)
 
-      * Fixed thread-safety issues.  - Curl sessions are now thread-local
+* Ability to generate secured API key from a list of tags + optional `user_token`
+* Ability to specify a list of indexes targeted by the user key
 
-2013-10-02  1.1.2
+## [1.2.4](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.2.4) (2014-02-21)
 
-      * Fixed instance/class method conflict
+* Add `delete_objects`
 
-2013-10-01  1.1.1
+## [1.2.3](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.2.3) (2014-02-10)
 
-      * Updated documentation
-      * Plug copy/move index
+* `add_object`: POST request if `objectID` is `nil` OR `empty`
 
-2013-09-17  1.1.0
+## [1.2.2](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.2.2) (2014-01-11)
 
-      * Initial import
+* Expose `batch` requests
+
+## [1.2.1](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.2.1) (2014-01-07)
+
+* Removed `jeweler` since it doesn't support platform specific deps (see https://github.com/technicalpickles/jeweler/issues/170)
+
+## [1.2.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.2.0) (2014-01-07)
+
+* Removed `curb` dependency and switched on `httpclient` to avoid fork-safety issue (see issue #5)
+
+## [1.1.18](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.1.18) (2014-01-06)
+
+* Fixed batch request builder (broken since last refactoring)
+
+## [1.1.17](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.1.17) (2014-01-02)
+
+* Ability to use IP rate limit behind a proxy forwarding the end-user's IP
+* Add documentation for the new `attributeForDistinct` setting and `distinct` search parameter
+
+## [1.1.16](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.1.16) (2013-12-16)
+
+* Add arguments type-checking
+* Normalize save_object/partial_update/add_object signatures
+* Force dependencies versions
+
+## [1.1.15](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.1.15) (2013-12-16)
+
+* Embed ca-bundle.crt
+
+## [1.1.14](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.1.14) (2013-12-11)
+
+* Added `index.add_user_key(acls, validity, rate_limit, maxApiCalls)``
+
+## [1.1.13](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.1.13) (2013-12-10)
+
+* WebMock integration
+
+## [1.1.12](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.1.12) (2013-12-05)
+
+* Add `browse` command
+
+## [1.1.11](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.1.11) (2013-11-29)
+
+* Remove rubysl (rbx required dependencies)
+
+## [1.1.10](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.1.10) (2013-11-29)
+
+* Fixed gzip handling bug
+
+## [1.1.9](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.1.9) (2013-11-28)
+
+* Added gzip support
+
+## [1.1.8](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.1.8) (2013-11-26)
+
+* Add `partial_update_objects` method
+
+## [1.1.7](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.1.7) (2013-11-08)
+
+* Search params: encode array-based parameters (`tagFilters`, `facetFilters`, ...)
+
+## [1.1.6](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.1.6) (2013-11-07)
+
+* Index: `clear` and `clear!` methods can now be used the delete the whole content of an index
+* User keys: plug new `maxQueriesPerIPPerHour` and `maxHitsPerQuery` parameters
+
+## [1.1.5](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.1.5) (2013-10-17)
+
+* Version is now part of the user-agent
+
+## [1.1.4](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.1.4) (2013-10-17)
+
+* Fixed `wait_task` not sleeping at all
+
+## [1.1.3](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.1.3) (2013-10-15)
+
+* Fixed thread-safety issues
+* Curl sessions are now thread-local
+
+## [1.1.2](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.1.2) (2013-10-02)
+
+* Fixed instance/class method conflict
+
+## [1.1.1](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.1.1) (2013-10-01)
+
+* Updated documentation
+* Plug copy/move index
+
+## [1.1.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.1.0) (2013-09-17)
+
+* Initial import
