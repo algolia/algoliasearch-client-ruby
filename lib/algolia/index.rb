@@ -228,7 +228,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     #
     def browse_from(cursor, hits_per_page = 1000, request_options = {})
-      client.get(Protocol.browse_uri(name, { :cursor => cursor, :hitsPerPage => hits_per_page }), :read, request_options)
+      client.post(Protocol.browse_uri(name), { :cursor => cursor, :hitsPerPage => hits_per_page }.to_json, :read, request_options)
     end
 
     #
