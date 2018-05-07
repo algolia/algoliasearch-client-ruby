@@ -531,11 +531,15 @@ module Algolia
     end
 
     # List all existing user keys with their associated ACLs
+    #
+    # Deprecated: Please us `client.list_api_keys` instead.
     def list_api_keys(request_options = {})
       client.get(Protocol.index_keys_uri(name), :read, request_options)
     end
 
     # Get ACL of a user key
+    #
+    # Deprecated: Please us `client.get_api_key` instead.
     def get_api_key(key, request_options = {})
       client.get(Protocol.index_key_uri(name, key), :read, request_options)
     end
@@ -566,6 +570,7 @@ module Algolia
     #  @param maxHitsPerQuery  the maximum number of hits this API key can retrieve in one call (0 means unlimited)
     #  @param request_options contains extra parameters to send with your query
     #
+    # Deprecated: Please us `client.add_api_key` instead.
     def add_api_key(obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, request_options = {})
       if obj.instance_of? Array
         params = {
@@ -612,6 +617,7 @@ module Algolia
     #  @param maxHitsPerQuery  the maximum number of hits this API key can retrieve in one call (0 means unlimited)
     #  @param request_options contains extra parameters to send with your query
     #
+    # Deprecated: Please us `client.update_api_key` instead.
     def update_api_key(key, obj, validity = 0, maxQueriesPerIPPerHour = 0, maxHitsPerQuery = 0, request_options = {})
       if obj.instance_of? Array
         params = {
@@ -634,6 +640,8 @@ module Algolia
 
 
     # Delete an existing user key
+    #
+    # Deprecated: Please us `client.delete_api_key` instead.
     def delete_api_key(key, request_options = {})
       client.delete(Protocol.index_key_uri(name, key), :write, request_options)
     end
