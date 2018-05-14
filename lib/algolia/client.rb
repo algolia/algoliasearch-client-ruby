@@ -396,16 +396,8 @@ module Algolia
     end
 
     def assign_user_id(user_id, cluster_name, request_options = {})
-      if !request_options['headers'].is_a?(Hash)
-        if request_options[:headers].is_a?(Hash)
-          request_options['headers'] = request_options[:headers]
-          request_options.delete(:headers)
-        else
-          request_options['headers'] = {}
-        end
-      end
+      request_options = add_header_to_request_options(request_options, { :'X-Algolia-User-ID' => user_id})
 
-      request_options['headers']['X-Algolia-User-ID'] = user_id
       body = { :cluster => cluster_name }
       post(Protocol.cluster_mapping_uri, body.to_json, :write, request_options)
     end
@@ -415,16 +407,8 @@ module Algolia
     end
 
     def remove_user_id(user_id, request_options = {})
-      if !request_options['headers'].is_a?(Hash)
-        if request_options[:headers].is_a?(Hash)
-          request_options['headers'] = request_options[:headers]
-          request_options.delete(:headers)
-        else
-          request_options['headers'] = {}
-        end
-      end
+      request_options = add_header_to_request_options(request_options, { :'X-Algolia-User-ID' => user_id})
 
-      request_options['headers']['X-Algolia-User-ID'] = user_id
       delete(Protocol.cluster_mapping_uri, :write, request_options)
     end
 
@@ -549,6 +533,20 @@ module Algolia
         raise AlgoliaProtocolError.new(response.code, "Cannot #{method} to #{url}: #{response.content} (#{response.code})")
       end
       return JSON.parse(response.content)
+    end
+
+    def add_header_to_request_options(request_options, headers_to_add)
+      if !request_options['headers'].is_a?(Hash)
+        if request_options[:headers].is_a?(Hash)
+          request_options['headers'] = request_options[:headers]
+          request_options.delete(:headers)
+        else
+          request_options['headers'] = {}
+        end
+      end
+
+      request_options['headers'].merge!(headers_to_add)
+      request_options
     end
 
     # Deprecated
