@@ -35,6 +35,8 @@ RSpec::Core::RakeTask.new(:spec)
 task :default => :spec
 
 namespace :algolia do
+  GIT_TAG_URL = 'https://github.com/algolia/algoliasearch-client-ruby/releases/tag/'
+
   def last_commit_date
     `git log -1 --date=short --format=%cd`.chomp
   end
@@ -51,9 +53,10 @@ namespace :algolia do
   task :changelog, [:version] do |t, args|
     # Filters-out commits containing some keywords and adds header
     exceptions_regexp = Regexp.union(['README'])
+    title = "## [%s](%s%s) (%s)\n\n" % [args[:version], GIT_TAG_URL, args[:version], last_commit_date]
     changes = changelog.each_line
                        .map { |line| (exceptions_regexp === line) ? nil : "* #{line.capitalize}" }
-                       .prepend("## [#{args[:version]}]() (#{last_commit_date})\n\n")
+                       .prepend(title)
                        .append("\n\n")
                        .join
 
