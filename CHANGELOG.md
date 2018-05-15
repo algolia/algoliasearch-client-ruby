@@ -1,3 +1,8 @@
+## [1.20.1](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.20.1) (2018-05-15)
+
+* Fix changelog link in gemspec (#290)
+* Utils: move to changelog.md and add rake task for release (#289)
+
 ## [1.20.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.20.0) (2018-05-07)
 
 * Feat: deprecate api keys methods on index in favor of client ones (#286)
