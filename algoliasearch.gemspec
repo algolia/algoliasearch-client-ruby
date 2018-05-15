@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
 
   s.metadata = {
     "bug_tracker_uri"   => "https://github.com/algolia/algoliasearch-client-ruby/issues",
-    "changelog_uri"     => "https://github.com/algolia/algoliasearch-client-ruby/blob/master/ChangeLog",
+    "changelog_uri"     => "https://github.com/algolia/algoliasearch-client-ruby/blob/master/CHANGELOG.md",
     "documentation_uri" => "http://www.rubydoc.info/gems/algoliasearch",
     "homepage_uri"      => "https://www.algolia.com/doc/api-client/ruby/getting-started/",
     "source_code_uri"   => "https://github.com/algolia/algoliasearch-client-ruby"
@@ -27,14 +27,14 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
 
   s.extra_rdoc_files = [
-    "ChangeLog",
+    "CHANGELOG.md",
     "LICENSE.txt",
     "README.md"
   ]
   s.files = [
     ".rspec",
     ".travis.yml",
-    "ChangeLog",
+    "CHANGELOG.md",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
