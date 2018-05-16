@@ -1,8 +1,6 @@
 # encoding: UTF-8
 require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 
-Algolia.init :application_id => ENV['ALGOLIA_APP_ID_MCM'], :api_key => ENV['ALGOLIA_API_KEY_MCM']
-
 # avoid concurrent access to the same index
 def safe_user_id(name)
   return name if ENV['TRAVIS'].to_s != "true"
@@ -12,7 +10,10 @@ end
 describe 'Multi Cluster Management', :mcm => true do
 
   before(:all) do
-    @client = Algolia.client
+    @client = Algolia::Client.new({
+      :application_id => ENV['ALGOLIA_APP_ID_MCM'],
+      :api_key => ENV['ALGOLIA_API_KEY_MCM']
+    })
     @user_id = safe_user_id('ruby-client-2')
     clusters = @client.list_clusters
     @cluster_name = clusters['clusters'][0]["clusterName"]
