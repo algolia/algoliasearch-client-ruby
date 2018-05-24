@@ -1121,7 +1121,7 @@ describe 'Client' do
   it "should use request options" do
     expect{Algolia.list_indexes}.to_not raise_error
 
-    expect{Algolia.list_indexes('headers' => { 'X-Algolia-API-Key' => 'NotExistentAPIKey' })}.to raise_error
+    expect{Algolia.list_indexes('headers' => { 'X-Algolia-API-Key' => 'NotExistentAPIKey' })}.to raise_error(Algolia::AlgoliaProtocolError)
   end
 
   context 'DNS timeout' do
