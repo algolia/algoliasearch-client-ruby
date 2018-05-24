@@ -1,12 +1,5 @@
 ## [1.21.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.21.0) (2018-05-24)
 
-* Bump to version 1.21.0
-* Fix(tests): fix warning for unspecified exception (#287)
-* Fix release task missing github link (#291)
-* Api review (#292)
-
-## [1.21.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.21.0) (2018-05-24)
-
 * Fix(tests): fix warning for unspecified exception (#287)
 * Fix release task missing github link (#291)
 * Api review (#292)
