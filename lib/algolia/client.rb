@@ -21,6 +21,7 @@ module Algolia
     DEFAULT_SEND_TIMEOUT    = 30
     DEFAULT_BATCH_TIMEOUT   = 120
     DEFAULT_SEARCH_TIMEOUT  = 5
+    DEFAULT_USER_AGENT      = ["Ruby (#{RUBY_VERSION})", "Algolia for Ruby (#{::Algolia::VERSION})"]
 
     def initialize(data = {})
       raise ArgumentError.new('No APPLICATION_ID provided, please set :application_id') if data[:application_id].nil?
@@ -41,7 +42,7 @@ module Algolia
         Protocol::HEADER_API_KEY => api_key,
         Protocol::HEADER_APP_ID  => application_id,
         'Content-Type'           => 'application/json; charset=utf-8',
-        'User-Agent'             => format_user_agent(data[:user_agent])
+        'User-Agent'             => DEFAULT_USER_AGENT.push(data[:user_agent]).compact.join('; ')
       }
     end
 
@@ -547,12 +548,6 @@ module Algolia
 
       request_options['headers'].merge!(headers_to_add)
       request_options
-    end
-
-    def format_user_agent(custom)
-      ua = "Ruby (#{RUBY_VERSION}); Algolia for Ruby (#{::Algolia::VERSION})"
-      ua.concat("; "  + custom.to_s) if custom
-      ua
     end
 
     # Deprecated
