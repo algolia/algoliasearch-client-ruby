@@ -1160,8 +1160,11 @@ describe 'Client' do
     end
 
     before(:each) do
-      @client = Algolia::Client.new :application_id => ENV['ALGOLIA_APPLICATION_ID'], :api_key => ENV['ALGOLIA_API_KEY'],
+      @client = Algolia::Client.new(
+        :application_id => ENV['ALGOLIA_APPLICATION_ID'],
+        :api_key => ENV['ALGOLIA_API_KEY'],
         :user_agent => 'test agent'
+      )
       @client.destroy # make sure the thread-local vars are reseted
     end
 
@@ -1170,7 +1173,7 @@ describe 'Client' do
         to_return(:status => 200, :body => '{}')
       @client.list_indexes
       expect(WebMock).to have_requested(:get, /https:\/\/.+-dsn.algolia(net\.com|\.net)\/1\/indexes/).
-        with(:headers => {'User-Agent' => 'test agent'})
+        with(:headers => { 'User-Agent' => "Ruby (#{RUBY_VERSION}); Algolia for Ruby (#{::Algolia::VERSION}); test agent" })
     end
 
     after(:all) do
