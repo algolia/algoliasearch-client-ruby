@@ -147,17 +147,17 @@ The following example shows how to build a front-end search quickly using
     <div>
        <input id="search-input" placeholder="Search for products">
        <!-- We use a specific placeholder in the input to guides users in their search. -->
-    
+
   </header>
   <main>
-      
-      
+
+
   </main>
 
   <script type="text/html" id="hit-template">
-    
+
       <p class="hit-name">{{{_highlightResult.firstname.value}}} {{{_highlightResult.lastname.value}}}</p>
-    
+
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.3/dist/instantsearch.min.js"></script>
@@ -315,4 +315,3 @@ search.start();
 
 - **Need help**? Ask a question to the [Algolia Community](https://discourse.algolia.com/) or on [Stack Overflow](http://stackoverflow.com/questions/tagged/algolia).
 - **Found a bug?** You can open a [GitHub issue](https://github.com/algolia/algoliasearch-client-ruby/issues).
-

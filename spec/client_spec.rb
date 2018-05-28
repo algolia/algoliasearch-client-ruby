@@ -311,7 +311,7 @@ describe 'Client' do
     res = Algolia.list_indexes
     is_include(res['items'], 'name', safe_index_name('àlgol?a')).should eq(false)
     index.add_object!({ :name => "Robert" })
-    resAfter = Algolia.list_indexes;
+    resAfter = Algolia.list_indexes
     is_include(resAfter['items'], 'name', safe_index_name('àlgol?a')).should eq(true)
   end
 
