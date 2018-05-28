@@ -155,7 +155,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     #
     def move_index(src_index, dst_index, request_options = {})
-      request = { 'operation' => 'move', 'destination' => dst_index };
+      request = { 'operation' => 'move', 'destination' => dst_index }
       post(Protocol.index_operation_uri(src_index), request.to_json, :write, request_options)
     end
 
@@ -181,7 +181,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     #
     def copy_index(src_index, dst_index, scope = nil, request_options = {})
-      request = { 'operation' => 'copy', 'destination' => dst_index };
+      request = { 'operation' => 'copy', 'destination' => dst_index }
       request['scope'] = scope unless scope.nil?
       post(Protocol.index_operation_uri(src_index), request.to_json, :write, request_options)
     end
