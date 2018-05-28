@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
 
   s.extra_rdoc_files = [
     "CHANGELOG.md",
-    "LICENSE.txt",
+    "LICENSE",
     "README.md"
   ]
   s.files = [
@@ -37,7 +37,7 @@ Gem::Specification.new do |s|
     "CHANGELOG.md",
     "Gemfile",
     "Gemfile.lock",
-    "LICENSE.txt",
+    "LICENSE",
     "README.md",
     "Rakefile",
     "algoliasearch.gemspec",
