@@ -381,6 +381,45 @@ module Algolia
     end
 
     #
+    # Multicluster management
+	#
+    def list_clusters(request_options = {})
+      get(Protocol.clusters_uri, :read, request_options)
+    end
+
+    def list_user_ids(page = 0, hits_per_page = 20, request_options = {})
+      get(Protocol.list_ids_uri(page, hits_per_page), :read, request_options)
+    end
+
+    def get_top_user_ids(request_options = {})
+      get(Protocol.cluster_top_user_uri, :read, request_options)
+    end
+
+    def assign_user_id(user_id, cluster_name, request_options = {})
+      request_options = add_header_to_request_options(request_options, { :'X-Algolia-User-ID' => user_id})
+
+      body = { :cluster => cluster_name }
+      post(Protocol.cluster_mapping_uri, body.to_json, :write, request_options)
+    end
+
+    def get_user_id(user_id, request_options = {})
+      get(Protocol.cluster_mapping_uri(user_id), :read, request_options)
+    end
+
+    def remove_user_id(user_id, request_options = {})
+      request_options = add_header_to_request_options(request_options, { :'X-Algolia-User-ID' => user_id})
+
+      delete(Protocol.cluster_mapping_uri, :write, request_options)
+    end
+
+    def search_user_id(query, cluster_name = nil, page = nil, hits_per_page = nil, request_options = {})
+      body = { :query => query }
+      body[:clusterName] = cluster_name unless cluster_name.nil?
+      body[:page] = page unless page.nil?
+      body[:hitsPerPage] = hits_per_page unless hits_per_page.nil?
+      post(Protocol.search_user_id_uri, body.to_json, :read, request_options)
+    end
+
     # Perform an HTTP request for the given uri and method
     # with common basic response handling. Will raise a
     # AlgoliaProtocolError if the response has an error status code,
@@ -494,6 +533,20 @@ module Algolia
         raise AlgoliaProtocolError.new(response.code, "Cannot #{method} to #{url}: #{response.content} (#{response.code})")
       end
       return JSON.parse(response.content)
+    end
+
+    def add_header_to_request_options(request_options, headers_to_add)
+      if !request_options['headers'].is_a?(Hash)
+        if request_options[:headers].is_a?(Hash)
+          request_options['headers'] = request_options[:headers]
+          request_options.delete(:headers)
+        else
+          request_options['headers'] = {}
+        end
+      end
+
+      request_options['headers'].merge!(headers_to_add)
+      request_options
     end
 
     # Deprecated
