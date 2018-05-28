@@ -35,7 +35,8 @@ RSpec::Core::RakeTask.new(:spec)
 task :default => :spec
 
 namespace :algolia do
-  GIT_TAG_URL = 'https://github.com/algolia/algoliasearch-client-ruby/releases/tag/'
+  GEM_VERSION_FILE = File.expand_path('../lib/algolia/version.rb', __FILE__)
+  GIT_TAG_URL      = 'https://github.com/algolia/algoliasearch-client-ruby/releases/tag/'
 
   def last_commit_date
     `git log -1 --date=short --format=%cd`.chomp
@@ -73,13 +74,18 @@ namespace :algolia do
 
   desc 'Bump gem version'
   task :semver, [:version] do |t, args|
-    File.open(File.expand_path('../lib/algolia/version.rb', __FILE__), 'w') do |file|
+
+    File.open(GEM_VERSION_FILE, 'w') do |file|
       file.write <<~SEMVER
         module Algolia
           VERSION = "#{args[:version]}"
         end
       SEMVER
     end
+
+    # This force to reload the file with the newest version.
+    # Hence, `gemspec.version` invoked by Bundler later on will be correct.
+    load GEM_VERSION_FILE
 
     puts "Bumped gem version from #{latest_tag} to #{args[:version]}"
   end
