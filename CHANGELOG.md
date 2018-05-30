@@ -1,3 +1,11 @@
+## [1.22.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.22.0) (2018-05-30)
+
+* Rename license file (#297)
+* Fix release task (#294)
+* Introduce multi cluster management (#285)
+* Fix(browse): ensure cursor is passed in the body (#288)
+* Chore(md): update contribution-related files (#293)
+
 ## [1.21.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.21.0) (2018-05-24)
 
 * Fix(tests): fix warning for unspecified exception (#287)
