@@ -57,7 +57,7 @@ namespace :algolia do
     title = "## [%s](%s%s) (%s)\n\n" % [args[:version], GIT_TAG_URL, args[:version], last_commit_date]
     changes = changelog.each_line
                        .map { |line| (exceptions_regexp === line) ? nil : "* #{line.capitalize}" }
-                       .prepend(title)
+                       .unshift(title)
                        .append("\n\n")
                        .join
 
