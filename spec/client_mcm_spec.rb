@@ -1,10 +1,14 @@
 # encoding: UTF-8
 require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
+require 'securerandom'
 
 # avoid concurrent access to the same index
 def safe_user_id(name)
-  return name if ENV['TRAVIS'].to_s != "true"
-  "#{name}-#{ENV['TRAVIS_JOB_NUMBER']}"
+  name << '-' + SecureRandom.hex(4)
+  if ENV['TRAVIS'].to_s == 'true'
+    name << '-' + ENV['TRAVIS_JOB_NUMBER'].to_s
+  end
+  name
 end
 
 describe 'Multi Cluster Management', :mcm => true do
