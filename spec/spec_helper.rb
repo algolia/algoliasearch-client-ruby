@@ -35,3 +35,23 @@ RSpec.configure do |config|
     WebMock.disable!
   end
 end
+
+def auto_retry(options = {})
+  return if !block_given?
+
+  max_retry = options[:max_retry] || 10
+  retry_count = 0
+
+  loop do
+    begin
+      return yield
+    rescue => e
+      retry_count += 1
+      if retry_count >= max_retry
+        raise e
+      else
+        sleep retry_count
+      end
+    end
+  end
+end

@@ -46,11 +46,13 @@ describe 'Multi Cluster Management', :mcm => true do
 
   it 'should assign a user to a cluster' do
     @client.assign_user_id(@user_id, @cluster_name)
-    sleep(2)
   end
 
   it 'should get the created user id' do
-    id = @client.get_user_id(@user_id)
+    id = auto_retry do
+      @client.get_user_id(@user_id)
+    end
+
     id["userID"].should eq(@user_id)
     id["clusterName"].should eq(@cluster_name)
     id.has_key?("nbRecords").should eq(true)
@@ -66,13 +68,10 @@ describe 'Multi Cluster Management', :mcm => true do
   end
 
   it "should remove a user_id" do
-    res = @client.remove_user_id(@user_id)
-    sleep(2)
-    search = @client.search_user_id(@user_id)
-    if search["nbHits"] > 0
-      item = search["hits"][0]
-      item["userID"].should_not eq(@user_id)
+    res = auto_retry do
+      @client.remove_user_id(@user_id)
     end
+    res["deletedAt"].should_not eq(nil)
   end
 
 end
