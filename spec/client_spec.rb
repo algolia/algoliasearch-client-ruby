@@ -1173,7 +1173,7 @@ describe 'Client' do
         to_return(:status => 200, :body => '{}')
       @client.list_indexes
       expect(WebMock).to have_requested(:get, /https:\/\/.+-dsn.algolia(net\.com|\.net)\/1\/indexes/).
-        with(:headers => { 'User-Agent' => "Ruby (#{RUBY_VERSION}); Algolia for Ruby (#{::Algolia::VERSION}); test agent" })
+        with(:headers => { 'User-Agent' => "Algolia for Ruby (#{::Algolia::VERSION}); Ruby (#{RUBY_VERSION}); test agent" })
     end
 
     after(:all) do
