@@ -21,7 +21,7 @@ module Algolia
     DEFAULT_SEND_TIMEOUT    = 30
     DEFAULT_BATCH_TIMEOUT   = 120
     DEFAULT_SEARCH_TIMEOUT  = 5
-    DEFAULT_USER_AGENT      = ["Ruby (#{RUBY_VERSION})", "Algolia for Ruby (#{::Algolia::VERSION})"]
+    DEFAULT_USER_AGENT      = ["Algolia for Ruby (#{::Algolia::VERSION})", "Ruby (#{RUBY_VERSION})"]
 
     def initialize(data = {})
       raise ArgumentError.new('No APPLICATION_ID provided, please set :application_id') if data[:application_id].nil?
