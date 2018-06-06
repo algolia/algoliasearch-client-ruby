@@ -90,7 +90,7 @@ index.add_objects(batch)
 Settings can be customized to fine tune the search behavior. For example, you can add a custom sort by number of followers to further enhance the built-in relevance:
 
 ```ruby
-index.set_settings customRanking: ['desc(followers)']
+index.set_settings(customRanking: ['desc(followers)'])
 ```
 
 You can also configure the list of attributes you want to index by order of importance (most important first).
