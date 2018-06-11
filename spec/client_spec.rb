@@ -2,13 +2,6 @@
 require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 require 'base64'
 
-# avoid concurrent access to the same index
-def safe_index_name(name)
-  return name if ENV['TRAVIS'].to_s != "true"
-  id = ENV['TRAVIS_JOB_NUMBER']
-  "TRAVIS_RUBY_#{name}-#{id}"
-end
-
 def is_include(array, attr, value)
   array.each do |elt|
     if elt[attr] == value
