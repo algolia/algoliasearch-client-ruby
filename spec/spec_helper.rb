@@ -20,6 +20,7 @@ require 'algoliasearch'
 require 'rspec'
 require 'webmock/rspec'
 require 'algolia/webmock'
+require 'time'
 
 raise 'missing ALGOLIA_APPLICATION_ID or ALGOLIA_API_KEY environment variables' if ENV['ALGOLIA_APPLICATION_ID'].nil? || ENV['ALGOLIA_API_KEY'].nil?
 Algolia.init :application_id => ENV['ALGOLIA_APPLICATION_ID'], :api_key => ENV['ALGOLIA_API_KEY']
@@ -34,6 +35,13 @@ RSpec.configure do |config|
   config.after(:suite) do
     WebMock.disable!
   end
+end
+
+# avoid concurrent access to the same index
+def safe_index_name(name)
+  return name if ENV['TRAVIS'].to_s != "true"
+  id = ENV['TRAVIS_JOB_NUMBER']
+  "TRAVIS_RUBY_#{name}-#{id}"
 end
 
 def auto_retry(options = {})

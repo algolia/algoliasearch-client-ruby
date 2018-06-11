@@ -189,5 +189,15 @@ module Algolia
       "/#{VERSION}/clusters/mapping/search"
     end
 
+    def Protocol.ab_tests_uri(ab_test = nil)
+      ab_test = "/#{ab_test}" if ab_test
+
+      "/2/abtests" + ab_test.to_s
+    end
+
+    def Protocol.ab_tests_stop_uri(ab_test)
+      "/2/abtests/#{ab_test}/stop"
+    end
+
   end
 end

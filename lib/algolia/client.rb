@@ -61,6 +61,13 @@ module Algolia
     end
 
     #
+    # Initialize analytics helper
+    #
+    def init_analytics()
+      Analytics.new(self, { :headers => @headers })
+    end
+
+    #
     # Allow to set custom headers
     #
     def set_extra_header(key, value)
