@@ -168,7 +168,7 @@ module Algolia
     #
     def move_index!(src_index, dst_index, request_options = {})
       res = move_index(src_index, dst_index, request_options)
-      init_index(dst_index).wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+      wait_task(dst_index, res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
@@ -196,7 +196,7 @@ module Algolia
     #
     def copy_index!(src_index, dst_index, scope = nil, request_options = {})
       res = copy_index(src_index, dst_index, scope, request_options)
-      init_index(dst_index).wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+      wait_task(dst_index, res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       res
     end
 
@@ -376,7 +376,38 @@ module Algolia
     def batch!(operations, request_options = {})
       res = batch(operations, request_options)
       res['taskID'].each do |index, taskID|
-        init_index(index).wait_task(taskID, WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+        wait_task(index, taskID, WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+      end
+    end
+
+    #
+    # Check the status of a task on the server.
+    # All server task are asynchronous and you can check the status of a task with this method.
+    #
+    # @param index_name the index name owning the taskID
+    # @param taskID the id of the task returned by server
+    # @param request_options contains extra parameters to send with your query
+    #
+    def get_task_status(index_name, taskID, request_options = {})
+      get(Protocol.task_uri(index_name, taskID), :read, request_options)['status']
+    end
+
+    #
+    # Wait the publication of a task on the server.
+    # All server task are asynchronous and you can check with this method that the task is published.
+    #
+    # @param index_name the index name owning the taskID
+    # @param taskID the id of the task returned by server
+    # @param time_before_retry the time in milliseconds before retry (default = 100ms)
+    # @param request_options contains extra parameters to send with your query
+    #
+    def wait_task(index_name, taskID, time_before_retry = WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options = {})
+      loop do
+        status = get_task_status(index_name, taskID, request_options)
+        if status == 'published'
+          return
+        end
+        sleep(time_before_retry.to_f / 1000)
       end
     end
 
@@ -861,6 +892,16 @@ module Algolia
     Algolia.client.batch!(requests, request_options)
   end
 
+  #
+  # Wait until task is completed by the engine
+  #
+  def Algolia.wait_task(index_name, taskID, time_before_retry = WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options = {})
+    Algolia.client.wait_task(index_name, taskID, time_before_retry, request_options)
+  end
+
+  def Algolia.get_task_status(index_name, taskID, request_options = {})
+    Algolia.client.get_task_status(index_name, taskID, request_options = {})
+  end
   #
   # Used mostly for testing. Lets you delete the api key global vars.
   #
