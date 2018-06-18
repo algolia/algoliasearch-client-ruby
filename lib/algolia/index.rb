@@ -272,7 +272,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     #
     def get_task_status(taskID, request_options = {})
-      client.get(Protocol.task_uri(name, taskID), :read, request_options)['status']
+      client.get_task_status(name, taskID, request_options)
     end
 
     #
@@ -284,13 +284,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     #
     def wait_task(taskID, time_before_retry = WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options = {})
-      loop do
-        status = get_task_status(taskID, request_options)
-        if status == 'published'
-          return
-        end
-        sleep(time_before_retry.to_f / 1000)
-      end
+      client.wait_task(name, taskID, time_before_retry, request_options)
     end
 
     #
