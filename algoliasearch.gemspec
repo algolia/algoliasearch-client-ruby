@@ -42,6 +42,7 @@ Gem::Specification.new do |s|
     "Rakefile",
     "algoliasearch.gemspec",
     "contacts.json",
+    "lib/algolia/analytics.rb",
     "lib/algolia/client.rb",
     "lib/algolia/error.rb",
     "lib/algolia/index.rb",
