@@ -1,3 +1,17 @@
+## [1.23.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.23.0) (2018-06-19)
+
+* Feat(analytics): introduce new analytics class
+* Chore(rake): use unshift to keep compat with older ruby versions
+* Ruby version must be after client version in ua
+* Fix ua tests with new format
+* Rewrite ua
+* Feat(ua): add ruby version
+* Fix(syntax): this isn't php
+* Tests(mcm): use unique userid everytime
+* Tests(mcm): introduce auto_retry for more stable tests
+* Feat(client): expose waittask in the client (#302)
+* Fix(travis): always test on the latest patches (#295)
+
 ## [1.22.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.22.0) (2018-05-30)
 
 * Rename license file (#297)
