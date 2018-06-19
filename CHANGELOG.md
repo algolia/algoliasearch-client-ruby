@@ -1,3 +1,7 @@
+## [1.23.1](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.23.1) (2018-06-19)
+
+* Fix(analytics): gem without new analytics class
+
 ## [1.23.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.23.0) (2018-06-19)
 
 * Feat(analytics): introduce new analytics class
