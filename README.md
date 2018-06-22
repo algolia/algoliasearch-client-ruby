@@ -209,10 +209,10 @@ search.start();
 
 ### Search
 
-- [Search an index](https://algolia.com/doc/api-reference/api-methods/search/?language=ruby)
+- [Search index](https://algolia.com/doc/api-reference/api-methods/search/?language=ruby)
 - [Search for facet values](https://algolia.com/doc/api-reference/api-methods/search-for-facet-values/?language=ruby)
 - [Search multiple indexes](https://algolia.com/doc/api-reference/api-methods/multiple-queries/?language=ruby)
-- [Browse an index](https://algolia.com/doc/api-reference/api-methods/browse/?language=ruby)
+- [Browse index](https://algolia.com/doc/api-reference/api-methods/browse/?language=ruby)
 
 
 
@@ -276,12 +276,12 @@ search.start();
 
 ### Query rules
 
-- [Save a single rule](https://algolia.com/doc/api-reference/api-methods/rules-save/?language=ruby)
-- [Batch save multiple rules](https://algolia.com/doc/api-reference/api-methods/rules-save-batch/?language=ruby)
-- [Get a rule](https://algolia.com/doc/api-reference/api-methods/rules-get/?language=ruby)
-- [Delete a single rule](https://algolia.com/doc/api-reference/api-methods/rules-delete/?language=ruby)
-- [Clear all rules](https://algolia.com/doc/api-reference/api-methods/rules-clear/?language=ruby)
-- [Search for rules](https://algolia.com/doc/api-reference/api-methods/rules-search/?language=ruby)
+- [Save rule](https://algolia.com/doc/api-reference/api-methods/rules-save/?language=ruby)
+- [Batch rules](https://algolia.com/doc/api-reference/api-methods/rules-save-batch/?language=ruby)
+- [Get rule](https://algolia.com/doc/api-reference/api-methods/rules-get/?language=ruby)
+- [Delete rule](https://algolia.com/doc/api-reference/api-methods/rules-delete/?language=ruby)
+- [Clear rules](https://algolia.com/doc/api-reference/api-methods/rules-clear/?language=ruby)
+- [Search rules](https://algolia.com/doc/api-reference/api-methods/rules-search/?language=ruby)
 - [Export rules](https://algolia.com/doc/api-reference/api-methods/rules-export/?language=ruby)
 
 
@@ -289,11 +289,11 @@ search.start();
 
 ### A/B Test
 
-- [Add an A/B test](https://algolia.com/doc/api-reference/api-methods/add-ab-test/?language=ruby)
-- [Get an A/B test](https://algolia.com/doc/api-reference/api-methods/get-ab-test/?language=ruby)
+- [Add A/B test](https://algolia.com/doc/api-reference/api-methods/add-ab-test/?language=ruby)
+- [Get A/B test](https://algolia.com/doc/api-reference/api-methods/get-ab-test/?language=ruby)
 - [List A/B tests](https://algolia.com/doc/api-reference/api-methods/get-ab-tests/?language=ruby)
-- [Stop an A/B test](https://algolia.com/doc/api-reference/api-methods/stop-ab-test/?language=ruby)
-- [Delete an A/B test](https://algolia.com/doc/api-reference/api-methods/delete-ab-test/?language=ruby)
+- [Stop A/B test](https://algolia.com/doc/api-reference/api-methods/stop-ab-test/?language=ruby)
+- [Delete A/B test](https://algolia.com/doc/api-reference/api-methods/delete-ab-test/?language=ruby)
 
 
 
