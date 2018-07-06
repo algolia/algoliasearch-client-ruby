@@ -42,7 +42,7 @@ module Algolia
         Protocol::HEADER_API_KEY => api_key,
         Protocol::HEADER_APP_ID  => application_id,
         'Content-Type'           => 'application/json; charset=utf-8',
-        'User-Agent'             => DEFAULT_USER_AGENT.prepend(data[:user_agent]).compact.join('; ')
+        'User-Agent'             => DEFAULT_USER_AGENT.unshift(data[:user_agent]).compact.join('; ')
       }
     end
 
