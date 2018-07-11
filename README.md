@@ -291,7 +291,7 @@ search.start();
 
 - [Add A/B test](https://algolia.com/doc/api-reference/api-methods/add-ab-test/?language=ruby)
 - [Get A/B test](https://algolia.com/doc/api-reference/api-methods/get-ab-test/?language=ruby)
-- [List A/B tests](https://algolia.com/doc/api-reference/api-methods/get-ab-tests/?language=ruby)
+- [List A/B tests](https://algolia.com/doc/api-reference/api-methods/list-ab-tests/?language=ruby)
 - [Stop A/B test](https://algolia.com/doc/api-reference/api-methods/stop-ab-test/?language=ruby)
 - [Delete A/B test](https://algolia.com/doc/api-reference/api-methods/delete-ab-test/?language=ruby)
 
