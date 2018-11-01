@@ -1020,7 +1020,7 @@ module Algolia
       res = []
       page = 0
       loop do
-        curr = search_synonyms('', { :hits_per_page => hits_per_page, :page => page }, request_options)['hits']
+        curr = search_synonyms('', { :hitsPerPage => hits_per_page, :page => page }, request_options)['hits']
         curr.each do |synonym|
           res << synonym
           yield synonym if block_given?
