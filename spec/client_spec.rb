@@ -1147,6 +1147,20 @@ describe 'Client' do
     synonyms_search.size.should eq(2)
   end
 
+  it 'should test synonyms Export Query' do
+    @index.batch_synonyms! [
+      { :objectID => 'city', :type => 'synonym', :synonyms => ['San Francisco', 'SF'] },
+      { :objectID => 'us', :type => 'synonym', :synonyms => ['US', 'USA', 'Untied States of America'] },
+      { :objectID => 'ie', :type => 'synonym', :synonyms => ['IE', 'IRL', 'Ireland'] },
+      { :objectID => 'street', :type => 'altCorrection1', :word => 'street', :corrections => ['st'] }
+    ]
+
+    expect(@index).to receive(:search_synonyms).and_call_original.at_least(4)
+    @index.export_synonyms(1)
+
+    @index.clear_synonyms!
+  end
+
   it 'should test Query Rules' do
     rule_1 = {
       :objectID => '42',
