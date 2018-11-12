@@ -20,4 +20,16 @@ module Algolia
     end
   end
 
+  # An exception class which extends AlgoliaProtocolError by providing
+  # the raw api message as attribute.
+  class AlgoliaBadRequestError < AlgoliaProtocolError
+    attr_accessor :raw_api_response
+
+    def initialize(code, message, raw_api_response)
+      self.raw_api_response = raw_api_response
+
+      super(code, message)
+    end
+  end
+
 end

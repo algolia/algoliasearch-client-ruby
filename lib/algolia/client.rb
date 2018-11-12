@@ -568,6 +568,9 @@ module Algolia
       when :DELETE
         session.delete(url, { :header => hs })
       end
+      if response.code / 100 == 4
+        raise AlgoliaBadRequestError.new(response.code, "Cannot #{method} to #{url}: #{response.content} (#{response.code})", response.content)
+      end
       if response.code / 100 != 2
         raise AlgoliaProtocolError.new(response.code, "Cannot #{method} to #{url}: #{response.content} (#{response.code})")
       end

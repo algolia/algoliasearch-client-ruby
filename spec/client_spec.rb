@@ -3,12 +3,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 require 'base64'
 
 def is_include(array, attr, value)
-  array.each do |elt|
-    if elt[attr] == value
-      return true
-    end
-  end
-  return false
+  array.any? { |elt| elt[attr] == value }
 end
 
 describe 'API keys', :maintainers_only => true do
@@ -215,13 +210,41 @@ describe 'Client' do
     res["hits"].length.should eq(0)
   end
 
-  it "should add a set of objects" do
-    @index.add_objects!([
-      { :name => "Another", :email => "another1@example.org" },
-      { :name => "Another", :email => "another2@example.org" }
-    ])
-    res = @index.search("another")
-    res["hits"].length.should eq(2)
+  context 'multiple objects', :multiple_objects do
+    it "should add a set of objects" do
+      @index.add_objects!([
+        { :name => "Another", :email => "another1@example.org" },
+        { :name => "Another", :email => "another2@example.org" }
+      ])
+      res = @index.search("another")
+      res["hits"].length.should eq(2)
+    end
+    
+    it "should throw a proper error when one object exceeds payload limit size and objectIDs are given"  do
+      objects= [
+        { :objectID => 'ID1', :name => "small 1", :content => "small content 1" },
+        { :objectID => 'ID2', :name => "small 2", :content => "small content 2" },
+        { :objectID => 'ID3', :name => "too big", :content => "0" * 300_000 }
+      ]
+      expect {@index.add_objects!(objects)}.to raise_error { |error|
+        expect(error).to be_a(Algolia::AlgoliaBadRequestError)
+        expect(error).to have_attributes(
+          :raw_api_response => '{"message":"Record at the position 2 objectID=ID3 is too big size=300048 bytes. Contact us if you need an extended quota","position":2,"objectID":"ID3","status":400}')
+      }
+    end
+
+    it "should throw a proper error when one object exceeds payload limit size and objectIDs are not given"  do
+      objects= [
+        { :name => "small 1", :content => "small content 1" },
+        { :name => "small 2", :content => "small content 2" },
+        { :name => "too big", :content => "0" * 300_000 }
+      ]
+      expect {@index.add_objects!(objects)}.to raise_error { |error|
+        expect(error).to be_a(Algolia::AlgoliaBadRequestError)
+        expect(error).to have_attributes(
+          :raw_api_response => '{"message":"Record at the position 2 is too big size=300031 bytes. Contact us if you need an extended quota","position":2,"status":400}')
+      }
+    end
   end
 
   it "should partial update a simple object" do
@@ -487,7 +510,7 @@ describe 'Client' do
 
     expect {
       Algolia::Index.new(safe_index_name('thisdefinitelyshouldntexist')).get_settings
-    }.to raise_error(Algolia::AlgoliaProtocolError)
+    }.to raise_error(Algolia::AlgoliaBadRequestError)
     res = Algolia.get_logs(0, 20, true)
 
     res['logs'].size.should > 0
