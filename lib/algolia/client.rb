@@ -209,6 +209,78 @@ module Algolia
     end
 
     #
+    # Copy an existing index settings.
+    #
+    # @param src_index the name of index to copy.
+    # @param dst_index the new index name that will contains a copy of srcIndexName's settings (destination's settings will be overriten if it already exist).
+    # @param request_options contains extra parameters to send with your query
+    #
+    def copy_settings(src_index, dst_index, request_options = {})
+      copy_index(src_index, dst_index, ['settings'], request_options)
+    end
+
+    #
+    # Copy an existing index settings and wait until the copy has been processed.
+    #
+    # @param src_index the name of index to copy.
+    # @param dst_index the new index name that will contains a copy of srcIndexName settings (destination settings will be overriten if it already exist).
+    # @param request_options contains extra parameters to send with your query
+    #
+    def copy_settings!(src_index, dst_index, request_options = {})
+      res = copy_settings(src_index, dst_index, request_options)
+      wait_task(dst_index, res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+      res
+    end
+
+    #
+    # Copy an existing index synonyms.
+    #
+    # @param src_index the name of index to copy.
+    # @param dst_index the new index name that will contains a copy of srcIndexName's synonyms (destination's synonyms will be overriten if it already exist).
+    # @param request_options contains extra parameters to send with your query
+    #
+    def copy_synonyms(src_index, dst_index, request_options = {})
+      copy_index(src_index, dst_index, ['synonyms'], request_options)
+    end
+
+    #
+    # Copy an existing index synonyms and wait until the copy has been processed.
+    #
+    # @param src_index the name of index to copy.
+    # @param dst_index the new index name that will contains a copy of srcIndexName synonyms (destination synonyms will be overriten if it already exist).
+    # @param request_options contains extra parameters to send with your query
+    #
+    def copy_synonyms!(src_index, dst_index, request_options = {})
+      res = copy_synonyms(src_index, dst_index, request_options)
+      wait_task(dst_index, res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+      res
+    end
+
+    #
+    # Copy an existing index rules.
+    #
+    # @param src_index the name of index to copy.
+    # @param dst_index the new index name that will contains a copy of srcIndexName's rules (destination's rules will be overriten if it already exist).
+    # @param request_options contains extra parameters to send with your query
+    #
+    def copy_rules(src_index, dst_index, request_options = {})
+      copy_index(src_index, dst_index, ['rules'], request_options)
+    end
+
+    #
+    # Copy an existing index rules and wait until the copy has been processed.
+    #
+    # @param src_index the name of index to copy.
+    # @param dst_index the new index name that will contains a copy of srcIndexName rules (destination rules will be overriten if it already exist).
+    # @param request_options contains extra parameters to send with your query
+    #
+    def copy_rules!(src_index, dst_index, request_options = {})
+      res = copy_rules(src_index, dst_index, request_options)
+      wait_task(dst_index, res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+      res
+    end
+
+    #
     # Delete an index
     # @param name the name of the index to delete
     # @param request_options contains extra parameters to send with your query
@@ -738,6 +810,72 @@ module Algolia
   #
   def Algolia.copy_index!(src_index, dst_index, scope = nil, request_options = {})
     Algolia.client.copy_index!(src_index, dst_index, scope, request_options)
+  end
+
+  #
+  # Copy an existing index settings.
+  #
+  # @param src_index the name of index to copy.
+  # @param dst_index the new index name that will contains a copy of src_index_name settings (destination settings will be overriten if it already exist).
+  # @param request_options contains extra parameters to send with your query
+  #
+  def Algolia.copy_settings(src_index, dst_index, request_options = {})
+    Algolia.client.copy_settings(src_index, dst_index, request_options)
+  end
+
+  #
+  # Copy an existing index settings and wait until the copy has been processed.
+  #
+  # @param src_index the name of index to copy.
+  # @param dst_index the new index name that will contains a copy of src_index_name settings (destination settings will be overriten if it already exist).
+  # @param request_options contains extra parameters to send with your query
+  #
+  def Algolia.copy_settings!(src_index, dst_index, request_options = {})
+    Algolia.client.copy_settings!(src_index, dst_index,request_options)
+  end
+
+  #
+  # Copy an existing index synonyms.
+  #
+  # @param src_index the name of index to copy.
+  # @param dst_index the new index name that will contains a copy of src_index_name synonyms (destination synonyms will be overriten if it already exist).
+  # @param request_options contains extra parameters to send with your query
+  #
+  def Algolia.copy_synonyms(src_index, dst_index, request_options = {})
+    Algolia.client.copy_synonyms(src_index, dst_index, request_options)
+  end
+
+  #
+  # Copy an existing index synonyms and wait until the copy has been processed.
+  #
+  # @param src_index the name of index to copy.
+  # @param dst_index the new index name that will contains a copy of src_index_name synonyms (destination synonyms will be overriten if it already exist).
+  # @param request_options contains extra parameters to send with your query
+  #
+  def Algolia.copy_synonyms!(src_index, dst_index, request_options = {})
+    Algolia.client.copy_synonyms!(src_index, dst_index,request_options)
+  end
+
+  #
+  # Copy an existing index rules.
+  #
+  # @param src_index the name of index to copy.
+  # @param dst_index the new index name that will contains a copy of src_index_name rules (destination rules will be overriten if it already exist).
+  # @param request_options contains extra parameters to send with your query
+  #
+  def Algolia.copy_rules(src_index, dst_index, request_options = {})
+    Algolia.client.copy_rules(src_index, dst_index, request_options)
+  end
+
+  #
+  # Copy an existing index rules and wait until the copy has been processed.
+  #
+  # @param src_index the name of index to copy.
+  # @param dst_index the new index name that will contains a copy of src_index_name rules (destination rules will be overriten if it already exist).
+  # @param request_options contains extra parameters to send with your query
+  #
+  def Algolia.copy_rules!(src_index, dst_index, request_options = {})
+    Algolia.client.copy_rules!(src_index, dst_index,request_options)
   end
 
   #

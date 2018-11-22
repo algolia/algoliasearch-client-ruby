@@ -430,6 +430,66 @@ describe 'Client' do
     index.delete_index!
   end
 
+  it "should copy only settings" do
+    index = Algolia::Index.new(safe_index_name("àlgol?à"))
+    begin
+      @index.clear_index
+      Algolia.delete_index index.name
+    rescue
+    end
+
+    res = @index.set_settings!({
+      'searchableAttributes' => ['one'],
+    })
+
+    @index.wait_task(res['taskID'])
+    Algolia.copy_settings!(@index.name, index.name)
+    @index.delete_index!
+
+    index.get_settings['searchableAttributes'].should eq(['one'])
+    index.delete_index!
+  end
+
+  it "should copy only synonyms" do
+    index = Algolia::Index.new(safe_index_name("àlgol?à"))
+    begin
+      @index.clear_index
+      Algolia.delete_index index.name
+    rescue
+    end
+
+    @index.save_synonym!('foo', {
+      :objectID => 'foo', :synonyms => ['car', 'vehicle', 'auto'], :type => 'synonym',
+    })
+
+    Algolia.copy_synonyms!(@index.name, index.name)
+    @index.delete_index!
+
+    index.get_synonym('foo')['objectID'].should eq('foo')
+    index.delete_index!
+  end
+
+  it "should copy only rules" do
+    index = Algolia::Index.new(safe_index_name("àlgol?à"))
+    begin
+      @index.clear_index
+      Algolia.delete_index index.name
+    rescue
+    end
+
+    @index.save_rule!('bar', {
+      :objectID => 'bar',
+      :condition => { :pattern => 'test', :anchoring => 'contains' },
+      :consequence => { :params => { :query => 'this is better' } }
+    })
+
+    Algolia.copy_rules!(@index.name, index.name)
+    @index.delete_index!
+
+    index.get_rule('bar')['objectID'].should eq('bar')
+    index.delete_index!
+  end
+
   it "should copy parts of the index only" do
     index = Algolia::Index.new(safe_index_name("àlgol?à"))
     begin
