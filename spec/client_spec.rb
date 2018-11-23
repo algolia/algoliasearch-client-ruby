@@ -249,6 +249,16 @@ describe 'Client' do
     res["hits"].length.should eq(2)
   end
 
+  it "should replace all objects" do
+    @index.save_objects!([{:objectID => '1'}, {:objectID => '2'}])
+    @index.replace_all_objects!([{:objectID => '3'}, {:objectID => '4'}])
+
+    res = @index.search('')
+    res["hits"][0]['objectID'].should eq('4')
+    res["hits"][1]['objectID'].should eq('3')
+    res["hits"].length.should eq(2)
+  end
+
   it "should throw an exception if invalid argument" do
     expect { @index.add_object!([ {:name => "test"} ]) }.to raise_error(ArgumentError)
     expect { @index.add_objects!([ [ {:name => "test"} ] ]) }.to raise_error(ArgumentError)
@@ -1116,6 +1126,22 @@ describe 'Client' do
     @index.search_synonyms('')['nbHits'].should eq(0)
   end
 
+  it "should replace all synonyms" do
+    @index.batch_synonyms! ([
+        {:objectID => '1', :type => 'synonym', :synonyms => ['San Francisco', 'SF']},
+        {:objectID => '2', :type => 'altCorrection1', :word => 'foo', :corrections => ['st']}
+    ])
+
+    @index.replace_all_synonyms! ([
+        {:objectID => '3', :type => 'synonym', :synonyms => ['San Francisco', 'SF']},
+        {:objectID => '4', :type => 'altCorrection1', :word => 'bar', :corrections => ['st']}
+    ])
+
+    synonym = @index.get_synonym('4')['objectID'].should eq('4')
+    synonyms_search = @index.search_synonyms('')['hits']
+    synonyms_search.size.should eq(2)
+  end
+
   it 'should test Query Rules' do
     rule_1 = {
       :objectID => '42',
@@ -1158,6 +1184,29 @@ describe 'Client' do
 
     @index.clear_rules!
     @index.search_rules('')['nbHits'].should eq(0)
+  end
+
+  it "should replace all rules" do
+    rule_1 = {
+        :objectID => '1',
+        :condition => {:pattern => 'test', :anchoring => 'contains'},
+        :consequence => {:params => {:query => 'this is better'}}
+    }
+    rule_2 = {
+        :objectID => '2',
+        :condition => {:pattern => 'Pura', :anchoring => 'contains'},
+        :consequence => {:params => {:query => 'Pura Vida'}}
+    }
+
+    @index.batch_rules! [rule_1, rule_2]
+
+    rule_1[:objectID] = '3'
+    rule_2[:objectID] = '4'
+    @index.replace_all_rules!([rule_1, rule_2])
+
+    @index.get_rule('4')['objectID'].should eq('4')
+    rules_search = @index.search_rules('')['hits']
+    rules_search.size.should eq(2)
   end
 
   it 'should not save a query rule with an empty objectID' do

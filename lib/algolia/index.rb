@@ -334,6 +334,76 @@ module Algolia
     end
 
     #
+    # Override the current objects by the given array of objects and wait end of indexing. Settings,
+    # synonyms and query rules are untouched. The objects are replaced without any downtime.
+    #
+    # @param objects the array of objects to save, each object must contain an objectID attribute
+    # @param request_options contains extra parameters to send with your query
+    #
+    def replace_all_objects(objects, request_options = {})
+      safe = request_options[:safe] || request_options['safe'] || false
+      request_options.delete(:safe)
+      request_options.delete('safe')
+
+      tmp_index = @client.init_index(@name + '_tmp_' + rand(10000000).to_s)
+
+      responses = []
+
+      scope = ['settings', 'synonyms', 'rules']
+      res = @client.copy_index(@name, tmp_index.name, scope, request_options)
+      responses << res
+
+      if safe
+        wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+      end
+
+      batch = []
+      batch_size = 1000
+      count = 0
+
+      objects.each do |object|
+        batch << object
+        count += 1
+        if count == batch_size
+          res = tmp_index.save_objects(batch, request_options)
+          responses << res
+          batch = []
+          count = 0
+        end
+      end
+
+      if batch.any?
+        res = tmp_index.save_objects(batch, request_options)
+        responses << res
+      end
+
+      res = @client.move_index(tmp_index.name, @name, request_options)
+      responses << res
+
+      if safe
+        wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+      end
+
+      responses
+    end
+
+    #
+    # Override the current objects by the given array of objects and wait end of indexing
+    #
+    # @param objects the array of objects to save, each object must contain an objectID attribute
+    # @param request_options contains extra parameters to send with your query
+    #
+    def replace_all_objects!(objects, request_options = {})
+      responses = replace_all_objects(objects, request_options)
+
+      responses.each {|res|
+        wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+      }
+
+      responses
+    end
+
+    #
     # Update partially an object (only update attributes passed in argument)
     #
     # @param object the object attributes to override
@@ -916,6 +986,29 @@ module Algolia
     end
 
     #
+    # Replace synonyms in the index by the given array of synonyms
+    #
+    # @param synonyms the array of synonyms to add
+    # @param request_options contains extra parameters to send with your query
+    #
+    def replace_all_synonyms(synonyms, request_options = {})
+      forward_to_replicas = request_options[:forwardToReplicas] || request_options['forwardToReplicas'] || false
+      batch_synonyms(synonyms, forward_to_replicas, true, request_options)
+    end
+
+    #
+    # Replace synonyms in the index by the given array of synonyms and wait the end of indexing
+    #
+    # @param synonyms the array of synonyms to add
+    # @param request_options contains extra parameters to send with your query
+    #
+    def replace_all_synonyms!(synonyms, request_options = {})
+      res = replace_all_synonyms(synonyms, request_options)
+      wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+      res
+    end
+
+    #
     # Export the full list of synonyms
     # Accepts an optional block to which it will pass each synonym
     # Also returns an array with all the synonyms
@@ -1067,6 +1160,29 @@ module Algolia
       res = batch_rules(rules, forward_to_replicas, clear_existing_rules, request_options)
       wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
       return res
+    end
+
+    #
+    # Replace rules in the index by the given array of rules
+    #
+    # @param rules the array of rules to add
+    # @param request_options contains extra parameters to send with your query
+    #
+    def replace_all_rules(rules, request_options = {})
+      forward_to_replicas = request_options[:forwardToReplicas] || request_options['forwardToReplicas'] || false
+      batch_rules(rules, forward_to_replicas, true, request_options)
+    end
+
+    #
+    # Replace rules in the index by the given array of rules and wait the end of indexing
+    #
+    # @param rules the array of rules to add
+    # @param request_options contains extra parameters to send with your query
+    #
+    def replace_all_rules!(rules, request_options = {})
+      res = replace_all_rules(rules, request_options)
+      wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+      res
     end
 
     #
