@@ -439,8 +439,8 @@ describe 'Client' do
     end
 
     res = @index.set_settings!({
-      'searchableAttributes' => ['one'],
-    })
+                                   'searchableAttributes' => ['one'],
+                               })
 
     @index.wait_task(res['taskID'])
     Algolia.copy_settings!(@index.name, index.name)
@@ -459,7 +459,7 @@ describe 'Client' do
     end
 
     @index.save_synonym!('foo', {
-      :objectID => 'foo', :synonyms => ['car', 'vehicle', 'auto'], :type => 'synonym',
+        :objectID => 'foo', :synonyms => ['car', 'vehicle', 'auto'], :type => 'synonym',
     })
 
     Algolia.copy_synonyms!(@index.name, index.name)
@@ -478,9 +478,9 @@ describe 'Client' do
     end
 
     @index.save_rule!('bar', {
-      :objectID => 'bar',
-      :condition => { :pattern => 'test', :anchoring => 'contains' },
-      :consequence => { :params => { :query => 'this is better' } }
+        :objectID => 'bar',
+        :condition => {:pattern => 'test', :anchoring => 'contains'},
+        :consequence => {:params => {:query => 'this is better'}}
     })
 
     Algolia.copy_rules!(@index.name, index.name)

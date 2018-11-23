@@ -831,7 +831,7 @@ module Algolia
   # @param request_options contains extra parameters to send with your query
   #
   def Algolia.copy_settings!(src_index, dst_index, request_options = {})
-    Algolia.client.copy_settings!(src_index, dst_index,request_options)
+    Algolia.client.copy_settings!(src_index, dst_index, request_options)
   end
 
   #
@@ -853,7 +853,7 @@ module Algolia
   # @param request_options contains extra parameters to send with your query
   #
   def Algolia.copy_synonyms!(src_index, dst_index, request_options = {})
-    Algolia.client.copy_synonyms!(src_index, dst_index,request_options)
+    Algolia.client.copy_synonyms!(src_index, dst_index, request_options)
   end
 
   #
@@ -875,7 +875,7 @@ module Algolia
   # @param request_options contains extra parameters to send with your query
   #
   def Algolia.copy_rules!(src_index, dst_index, request_options = {})
-    Algolia.client.copy_rules!(src_index, dst_index,request_options)
+    Algolia.client.copy_rules!(src_index, dst_index, request_options)
   end
 
   #
