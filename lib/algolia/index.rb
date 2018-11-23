@@ -377,6 +377,12 @@ module Algolia
         responses << res
       end
 
+      if safe
+        responses.each {|res|
+          tmp_index.wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+        }
+      end
+
       res = @client.move_index(tmp_index.name, @name, request_options)
       responses << res
 
@@ -394,13 +400,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     #
     def replace_all_objects!(objects, request_options = {})
-      responses = replace_all_objects(objects, request_options)
-
-      responses.each {|res|
-        wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
-      }
-
-      responses
+      replace_all_objects(objects, {'safe' => true})
     end
 
     #
