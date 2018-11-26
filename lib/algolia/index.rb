@@ -400,7 +400,7 @@ module Algolia
     # @param request_options contains extra parameters to send with your query
     #
     def replace_all_objects!(objects, request_options = {})
-      replace_all_objects(objects, {'safe' => true})
+      replace_all_objects(objects, request_options.merge(:safe => true))
     end
 
     #
