@@ -39,9 +39,11 @@ end
 
 # avoid concurrent access to the same index
 def safe_index_name(name)
-  return name if ENV['TRAVIS'].to_s != "true"
-  id = ENV['TRAVIS_JOB_NUMBER']
-  "TRAVIS_RUBY_#{name}-#{id}"
+  date = DateTime.now.strftime('%Y-%m-%d_%H:%M:%S')
+
+  instance = ENV['TRAVIS'].to_s == 'true' ? ENV['TRAVIS_JOB_NUMBER'] : 'unknown'
+
+  'ruby_%s_%s_%s' % [date, instance, name]
 end
 
 def auto_retry(options = {})
