@@ -272,6 +272,10 @@ describe 'Client' do
   end
 
   it "should be thread safe" do
+    @index.clear!
+    @index.add_object!({ :name => "John Doe", :email => "john@doe.org" })
+    @index.add_object!({ :name => "John Doe", :email => "john@doe.org" })
+
     threads = []
     64.times do
       t = Thread.new do
