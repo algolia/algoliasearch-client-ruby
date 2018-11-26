@@ -6,14 +6,18 @@ module Algolia
   # API server for cross-app operations.
   #
   class AccountClient
-    #
-    # Copies settings, synonyms, rules and objects from the source index to the
-    # destination index. The replicas of the source index should not be copied.
-    #
-    # Throw an exception if the destination index already exists
-    # Throw an exception if the indices are on the same application
-    #
     class << self
+      #
+      # Copies settings, synonyms, rules and objects from the source index to the
+      # destination index. The replicas of the source index should not be copied.
+      #
+      # Throw an exception if the destination index already exists
+      # Throw an exception if the indices are on the same application
+      #
+      # @param source_index the source index object
+      # @param destination_index the destination index object
+      # @param request_options contains extra parameters to send with your query
+      #
       def copy_index(source_index, destination_index, request_options = {})
         raise AlgoliaError.new('The indexes are in the same application. Use Algolia::Client.copy_index instead.') if source_index.client.application_id == destination_index.client.application_id
 
@@ -76,6 +80,10 @@ module Algolia
       #
       # Throw an exception if the destination index already exists
       # Throw an exception if the indices are on the same application
+      #
+      # @param source_index the source index object
+      # @param destination_index the destination index object
+      # @param request_options contains extra parameters to send with your query
       #
       def copy_index!(source_index, destination_index, request_options = {})
         responses = self.copy_index(source_index, destination_index, request_options)
