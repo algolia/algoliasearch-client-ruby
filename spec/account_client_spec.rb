@@ -9,21 +9,21 @@ describe 'Account client' do
                                        :api_key => ENV['ALGOLIA_ADMIN_KEY_1']
                                    })
 
-    @index_1 = client_1.init_index(safe_index_name('account_client_1'))
+    @index_1 = client_1.init_index(index_name('account_client_1'))
 
     client_2 = Algolia::Client.new({
                                        :application_id => ENV['ALGOLIA_APPLICATION_ID_1'],
                                        :api_key => ENV['ALGOLIA_ADMIN_KEY_1']
                                    })
 
-    @index_2 = client_2.init_index(safe_index_name('account_client_2'))
+    @index_2 = client_2.init_index(index_name('account_client_2'))
 
     client_3 = Algolia::Client.new({
                                        :application_id => ENV['ALGOLIA_APPLICATION_ID_2'],
                                        :api_key => ENV['ALGOLIA_ADMIN_KEY_2']
                                    })
 
-    @index_3 = client_3.init_index(safe_index_name('account_client_3'))
+    @index_3 = client_3.init_index(index_name('account_client_3'))
 
     @index_1.delete_index rescue 'not fatal'
     @index_2.delete_index rescue 'not fatal'

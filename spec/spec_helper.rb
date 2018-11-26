@@ -39,6 +39,13 @@ end
 
 # avoid concurrent access to the same index
 def safe_index_name(name)
+  return name if ENV['TRAVIS'].to_s != "true"
+  id = ENV['TRAVIS_JOB_NUMBER']
+  "TRAVIS_RUBY_#{name}-#{id}"
+end
+
+# avoid concurrent access to the same index and follows the CTS standards.
+def index_name(name)
   date = DateTime.now.strftime('%Y-%m-%d_%H:%M:%S')
 
   instance = ENV['TRAVIS'].to_s == 'true' ? ENV['TRAVIS_JOB_NUMBER'] : 'unknown'
