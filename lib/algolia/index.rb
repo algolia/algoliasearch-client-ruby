@@ -365,7 +365,7 @@ module Algolia
         batch << object
         count += 1
         if count == batch_size
-          res = tmp_index.save_objects(batch, request_options)
+          res = tmp_index.add_objects(batch, request_options)
           responses << res
           batch = []
           count = 0
@@ -373,7 +373,7 @@ module Algolia
       end
 
       if batch.any?
-        res = tmp_index.save_objects(batch, request_options)
+        res = tmp_index.add_objects(batch, request_options)
         responses << res
       end
 

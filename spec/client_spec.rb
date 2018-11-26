@@ -251,11 +251,11 @@ describe 'Client' do
 
   it "should replace all objects" do
     @index.save_objects!([{:objectID => '1'}, {:objectID => '2'}])
-    @index.replace_all_objects!([{:objectID => '3'}, {:objectID => '4'}])
+    @index.replace_all_objects!([{'color' => 'black'}, {:objectID => '4'}])
 
     res = @index.search('')
     res["hits"][0]['objectID'].should eq('4')
-    res["hits"][1]['objectID'].should eq('3')
+    res["hits"][1]['color'].should eq('black')
     res["hits"].length.should eq(2)
   end
 
