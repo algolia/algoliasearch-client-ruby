@@ -337,7 +337,7 @@ module Algolia
     # Override the current objects by the given array of objects and wait end of indexing. Settings,
     # synonyms and query rules are untouched. The objects are replaced without any downtime.
     #
-    # @param objects the array of objects to save, each object must contain an objectID attribute
+    # @param objects the array of objects to save
     # @param request_options contains extra parameters to send with your query
     #
     def replace_all_objects(objects, request_options = {})
@@ -396,7 +396,7 @@ module Algolia
     #
     # Override the current objects by the given array of objects and wait end of indexing
     #
-    # @param objects the array of objects to save, each object must contain an objectID attribute
+    # @param objects the array of objects to save
     # @param request_options contains extra parameters to send with your query
     #
     def replace_all_objects!(objects, request_options = {})
