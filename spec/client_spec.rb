@@ -251,12 +251,13 @@ describe 'Client' do
 
   it "should replace all objects" do
     @index.save_objects!([{:objectID => '1'}, {:objectID => '2'}])
-    @index.replace_all_objects!([{'color' => 'black'}, {:objectID => '4'}])
+    @index.replace_all_objects!([{'color' => 'black'}, {:objectID => '4', 'color' => 'green'}])
 
     res = @index.search('')
-    res["hits"][0]['objectID'].should eq('4')
-    res["hits"][1]['color'].should eq('black')
     res["hits"].length.should eq(2)
+    res = @index.search('black')
+    res["hits"][0]['color'].should eq('black')
+    @index.get_object('4')['color'].should eq('green')
   end
 
   it "should throw an exception if invalid argument" do
