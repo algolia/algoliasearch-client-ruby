@@ -378,9 +378,9 @@ module Algolia
       end
 
       if safe
-        responses.each {|res|
+        responses.each do |res|
           tmp_index.wait_task(res['taskID'], WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
-        }
+        end
       end
 
       res = @client.move_index(tmp_index.name, @name, request_options)
