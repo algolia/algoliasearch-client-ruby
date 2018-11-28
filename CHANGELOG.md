@@ -1,3 +1,9 @@
+## [1.24.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.24.0) (2018-11-28)
+
+* Feat(adds-account-client-copy-index): adds `copy_index` to account client ([#324](https://github.com/algolia/algoliasearch-client-ruby/pull/324))
+* Feat(replace-all-methods): adds `replace_all_rules`, `replace_all_objects` and `replace_all_synonyms` to search index ([#323](https://github.com/algolia/algoliasearch-client-ruby/pull/323))
+* Feat(scoped-copy-methods): adds `copy_settings`, `copy_synonyms` and `copy_rules` to search client ([#322](https://github.com/algolia/algoliasearch-client-ruby/pull/322))
+
 ## [1.23.2](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.23.2) (2018-06-19)
 
 * Fix(analytics): gem without new analytics class (#306)
