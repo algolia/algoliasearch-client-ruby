@@ -48,7 +48,7 @@ You can find the full reference on [Algolia's website](https://www.algolia.com/d
 
 ## Install
 
-Install AlgoliaSearch using:
+Install the Ruby client using [RubyGems](https://rubygems.org/):
 
 ```bash
 gem install algoliasearch
@@ -99,13 +99,15 @@ You can also configure the list of attributes you want to index by order of impo
 In this case, the order of attributes is very important to decide which hit is the best:
 
 ```ruby
-index.set_settings searchableAttributes: %w(
-  lastname
-  firstname
-  company
-  email
-  city
-  address
+index.set_settings({
+  searchableAttributes: [
+    'lastname',
+    'firstname',
+    'company',
+    'email',
+    'city',
+    'address'
+  ]}
 )
 ```
 
@@ -114,13 +116,13 @@ index.set_settings searchableAttributes: %w(
 You can now search for contacts using `firstname`, `lastname`, `company`, etc. (even with typos):
 
 ```ruby
-# search by firstname
+# Search for a first name
 puts index.search('jimmie').to_json
-# search a firstname with typo
+# Search for a first name with typo
 puts index.search('jimie').to_json
-# search for a company
+# Search for a company
 puts index.search('california paint').to_json
-# search for a firstname & company
+# Search for a first name and a company
 puts index.search('jimmie paint').to_json
 ```
 
@@ -207,11 +209,17 @@ search.start();
 
 
 
+### Personalization
+
+
+
+
+
 ### Search
 
 - [Search index](https://algolia.com/doc/api-reference/api-methods/search/?language=ruby)
 - [Search for facet values](https://algolia.com/doc/api-reference/api-methods/search-for-facet-values/?language=ruby)
-- [Search multiple indexes](https://algolia.com/doc/api-reference/api-methods/multiple-queries/?language=ruby)
+- [Search multiple indices](https://algolia.com/doc/api-reference/api-methods/multiple-queries/?language=ruby)
 - [Browse index](https://algolia.com/doc/api-reference/api-methods/browse/?language=ruby)
 
 
@@ -220,10 +228,12 @@ search.start();
 ### Indexing
 
 - [Add objects](https://algolia.com/doc/api-reference/api-methods/add-objects/?language=ruby)
-- [Update objects](https://algolia.com/doc/api-reference/api-methods/update-objects/?language=ruby)
+- [Save objects](https://algolia.com/doc/api-reference/api-methods/save-objects/?language=ruby)
 - [Partial update objects](https://algolia.com/doc/api-reference/api-methods/partial-update-objects/?language=ruby)
 - [Delete objects](https://algolia.com/doc/api-reference/api-methods/delete-objects/?language=ruby)
+- [Replace all objects](https://algolia.com/doc/api-reference/api-methods/replace-all-objects/?language=ruby)
 - [Delete by](https://algolia.com/doc/api-reference/api-methods/delete-by/?language=ruby)
+- [Clear objects](https://algolia.com/doc/api-reference/api-methods/clear-objects/?language=ruby)
 - [Get objects](https://algolia.com/doc/api-reference/api-methods/get-objects/?language=ruby)
 - [Custom batch](https://algolia.com/doc/api-reference/api-methods/batch/?language=ruby)
 
@@ -234,17 +244,17 @@ search.start();
 
 - [Get settings](https://algolia.com/doc/api-reference/api-methods/get-settings/?language=ruby)
 - [Set settings](https://algolia.com/doc/api-reference/api-methods/set-settings/?language=ruby)
+- [Copy settings](https://algolia.com/doc/api-reference/api-methods/copy-settings/?language=ruby)
 
 
 
 
 ### Manage indices
 
-- [List indexes](https://algolia.com/doc/api-reference/api-methods/list-indices/?language=ruby)
+- [List indices](https://algolia.com/doc/api-reference/api-methods/list-indices/?language=ruby)
 - [Delete index](https://algolia.com/doc/api-reference/api-methods/delete-index/?language=ruby)
 - [Copy index](https://algolia.com/doc/api-reference/api-methods/copy-index/?language=ruby)
 - [Move index](https://algolia.com/doc/api-reference/api-methods/move-index/?language=ruby)
-- [Clear index](https://algolia.com/doc/api-reference/api-methods/clear-index/?language=ruby)
 
 
 
@@ -269,6 +279,8 @@ search.start();
 - [Clear all synonyms](https://algolia.com/doc/api-reference/api-methods/clear-synonyms/?language=ruby)
 - [Get synonym](https://algolia.com/doc/api-reference/api-methods/get-synonym/?language=ruby)
 - [Search synonyms](https://algolia.com/doc/api-reference/api-methods/search-synonyms/?language=ruby)
+- [Replace all synonyms](https://algolia.com/doc/api-reference/api-methods/replace-all-synonyms/?language=ruby)
+- [Copy synonyms](https://algolia.com/doc/api-reference/api-methods/copy-synonyms/?language=ruby)
 - [Export Synonyms](https://algolia.com/doc/api-reference/api-methods/export-synonyms/?language=ruby)
 
 
@@ -276,13 +288,15 @@ search.start();
 
 ### Query rules
 
-- [Save rule](https://algolia.com/doc/api-reference/api-methods/rules-save/?language=ruby)
-- [Batch rules](https://algolia.com/doc/api-reference/api-methods/rules-save-batch/?language=ruby)
-- [Get rule](https://algolia.com/doc/api-reference/api-methods/rules-get/?language=ruby)
-- [Delete rule](https://algolia.com/doc/api-reference/api-methods/rules-delete/?language=ruby)
-- [Clear rules](https://algolia.com/doc/api-reference/api-methods/rules-clear/?language=ruby)
-- [Search rules](https://algolia.com/doc/api-reference/api-methods/rules-search/?language=ruby)
-- [Export rules](https://algolia.com/doc/api-reference/api-methods/rules-export/?language=ruby)
+- [Save rule](https://algolia.com/doc/api-reference/api-methods/save-rule/?language=ruby)
+- [Batch rules](https://algolia.com/doc/api-reference/api-methods/batch-rules/?language=ruby)
+- [Get rule](https://algolia.com/doc/api-reference/api-methods/get-rule/?language=ruby)
+- [Delete rule](https://algolia.com/doc/api-reference/api-methods/delete-rule/?language=ruby)
+- [Clear rules](https://algolia.com/doc/api-reference/api-methods/clear-rules/?language=ruby)
+- [Search rules](https://algolia.com/doc/api-reference/api-methods/search-rules/?language=ruby)
+- [Replace all rules](https://algolia.com/doc/api-reference/api-methods/replace-all-rules/?language=ruby)
+- [Copy rules](https://algolia.com/doc/api-reference/api-methods/copy-rules/?language=ruby)
+- [Export rules](https://algolia.com/doc/api-reference/api-methods/export-rules/?language=ruby)
 
 
 
