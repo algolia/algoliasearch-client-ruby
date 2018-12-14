@@ -491,9 +491,17 @@ module Algolia
       end
     end
 
+    def get_personalization_strategy(request_options = {})
+      get(Protocol.personalization_strategy_uri, :read, request_options)
+    end
+
+    def set_personalization_strategy(strategy, request_options = {})
+      post(Protocol.personalization_strategy_uri, strategy.to_json, :write, request_options)
+    end
+
     #
     # Multicluster management
-	#
+    #
     def list_clusters(request_options = {})
       get(Protocol.clusters_uri, :read, request_options)
     end

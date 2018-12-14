@@ -167,6 +167,10 @@ module Algolia
       "#{index_uri(index)}/deleteByQuery"
     end
 
+    def Protocol.personalization_strategy_uri
+      "/1/recommendation/personalization/strategy"
+    end
+
     def Protocol.clusters_uri
       "/#{VERSION}/clusters"
     end
