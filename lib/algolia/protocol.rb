@@ -199,5 +199,9 @@ module Algolia
       "/2/abtests/#{ab_test}/stop"
     end
 
+    def Protocol.add_events_uri
+      "/1/events"
+    end
+
   end
 end
