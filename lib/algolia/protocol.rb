@@ -85,7 +85,7 @@ module Algolia
 
     def Protocol.partial_object_uri(index, object_id, create_if_not_exits = true)
       params = create_if_not_exits ? '' : '?createIfNotExists=false'
-      "#{index_uri(index)}/#{CGI.escape(object_id)}/partial#{params}"
+      "#{index_uri(index)}/#{CGI.escape(object_id.to_s)}/partial#{params}"
     end
 
     def Protocol.settings_uri(index, params = {})
@@ -128,7 +128,7 @@ module Algolia
     end
 
     def Protocol.synonym_uri(index, object_id)
-      "#{synonyms_uri(index)}/#{CGI.escape(object_id)}"
+      "#{synonyms_uri(index)}/#{CGI.escape(object_id.to_s)}"
     end
 
     def Protocol.search_synonyms_uri(index)
@@ -148,7 +148,7 @@ module Algolia
     end
 
     def Protocol.rule_uri(index, object_id)
-      "#{rules_uri(index)}/#{CGI.escape(object_id)}"
+      "#{rules_uri(index)}/#{CGI.escape(object_id.to_s)}"
     end
 
     def Protocol.search_rules_uri(index)
