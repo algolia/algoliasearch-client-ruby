@@ -1,7 +1,7 @@
 module Algolia
 
   class Insights
-    def initialize(app_id, api_key, region, params = {})
+    def initialize(app_id, api_key, region = 'us', params = {})
       headers = params[:headers] || {}
       @app_id   = app_id
       @api_key  = api_key
@@ -23,7 +23,7 @@ module Algolia
     end
 
     def send_events(events)
-      perform_request(:POST, '/1/events', {}, { 'events' => events })
+      perform_request(:POST, '/1/events', {}, { 'events' => events }.to_json)
     end
 
     private
@@ -63,7 +63,7 @@ module Algolia
       clicked({
                   'objectIDs' => object_ids,
                   'positions' => positions,
-                  'queryId' => query_id,
+                  'queryID' => query_id,
               }, event_name, index_name, request_options)
     end
 
@@ -72,13 +72,13 @@ module Algolia
     end
 
     def converted_object_ids(event_name, index_name, object_ids, request_options = {})
-      converted({ 'objectIds' => object_ids }, event_name, index_name, request_options)
+      converted({ 'objectIDs' => object_ids }, event_name, index_name, request_options)
     end
 
     def converted_object_ids_after_search(event_name, index_name, object_ids, query_id, request_options = {})
       converted({
                   'objectIDs' => object_ids,
-                  'queryId' => query_id,
+                  'queryID' => query_id,
               }, event_name, index_name, request_options)
     end
 
@@ -87,7 +87,7 @@ module Algolia
     end
 
     def viewed_object_ids(event_name, index_name, object_ids, request_options = {})
-      viewed({ 'objectIds' => object_ids }, event_name, index_name, request_options)
+      viewed({ 'objectIDs' => object_ids }, event_name, index_name, request_options)
     end
 
     def viewed_filters(event_name, index_name, filters, request_options = {})
