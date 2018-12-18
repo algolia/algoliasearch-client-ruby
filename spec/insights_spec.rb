@@ -48,7 +48,7 @@ describe 'Insights client' do
   end
 
   it 'should allow send clicked object ids' do
-    response = @insights.user('userToken').clicked_filters('eventName', 'indexName', ['brand:apple'])
+    response = @insights.user('userToken').clicked_object_ids('eventName', @index.name, ['obj1', 'obj2'])
 
     response['status'].should eq(200)
     response['message'].should eq('OK')
@@ -56,7 +56,7 @@ describe 'Insights client' do
 
   it 'should allow send clicked object ids after search' do
     @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
-    query_id = @index.search("john", { 'clickAnalytics' => true})['queryID']
+    query_id = @index.search("john", { 'clickAnalytics' => true })['queryID']
     response = @insights.user('userToken').clicked_object_ids_after_search('eventName', @index.name, ['obj1', 'obj2'], [1, 2], query_id)
 
     response['status'].should eq(200)
