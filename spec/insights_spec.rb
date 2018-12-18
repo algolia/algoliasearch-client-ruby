@@ -4,7 +4,7 @@ require 'securerandom'
 
 describe 'Insights client' do
   before(:all) do
-    @insights = Algolia::Insights.new(ENV['ALGOLIA_APPLICATION_ID_1'], ENV['ALGOLIA_ADMIN_KEY_1'], 'us')
+    @insights = Algolia::Insights.new(ENV['ALGOLIA_APPLICATION_ID_1'], ENV['ALGOLIA_ADMIN_KEY_1'])
 
     client = Algolia::Client.new({
          :application_id => ENV['ALGOLIA_APPLICATION_ID_1'],
