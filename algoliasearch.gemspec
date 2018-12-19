@@ -47,6 +47,7 @@ Gem::Specification.new do |s|
     "lib/algolia/client.rb",
     "lib/algolia/error.rb",
     "lib/algolia/index.rb",
+    "lib/algolia/insights.rb",
     "lib/algolia/protocol.rb",
     "lib/algolia/version.rb",
     "lib/algolia/webmock.rb",
