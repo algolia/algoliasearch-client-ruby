@@ -55,9 +55,7 @@ describe 'Insights client' do
   end
 
   it 'should allow send clicked object ids after search', :skip => RUBY_VERSION < Algolia::Insights::MIN_RUBY_VERSION do
-    @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
-    query_id = @index.search("john", { 'clickAnalytics' => true })['queryID']
-    response = @insights.user('userToken').clicked_object_ids_after_search('eventName', @index.name, ['obj1', 'obj2'], [1, 2], query_id)
+    response = @insights.user('userToken').clicked_object_ids_after_search('eventName', @index.name, ['obj1', 'obj2'], [1, 2], "30d69d863dde81562ce277fbc0a3cf18")
 
     response['status'].should eq(200)
     response['message'].should eq('OK')
@@ -78,9 +76,7 @@ describe 'Insights client' do
   end
 
   it 'should allow send converted objects ids after search', :skip => RUBY_VERSION < Algolia::Insights::MIN_RUBY_VERSION do
-    @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
-    query_id = @index.search("john", { 'clickAnalytics' => true})['queryID']
-    response = @insights.user('userToken').converted_object_ids_after_search('eventName', @index.name, ['obj1', 'obj2'], query_id)
+    response = @insights.user('userToken').converted_object_ids_after_search('eventName', @index.name, ['obj1', 'obj2'], "30d69d863dde81562ce277fbc0a3cf18")
 
     response['status'].should eq(200)
     response['message'].should eq('OK')
