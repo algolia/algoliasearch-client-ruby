@@ -211,6 +211,8 @@ search.start();
 
 ### Personalization
 
+- [Add strategy](https://algolia.com/doc/api-reference/api-methods/add-strategy/?language=ruby)
+- [Get strategy](https://algolia.com/doc/api-reference/api-methods/get-strategy/?language=ruby)
 
 
 
@@ -308,6 +310,20 @@ search.start();
 - [List A/B tests](https://algolia.com/doc/api-reference/api-methods/list-ab-tests/?language=ruby)
 - [Stop A/B test](https://algolia.com/doc/api-reference/api-methods/stop-ab-test/?language=ruby)
 - [Delete A/B test](https://algolia.com/doc/api-reference/api-methods/delete-ab-test/?language=ruby)
+
+
+
+
+### Insights
+
+- [Clicked Object IDs After Search](https://algolia.com/doc/api-reference/api-methods/clicked-object-ids-after-search/?language=ruby)
+- [Clicked Object IDs](https://algolia.com/doc/api-reference/api-methods/clicked-object-ids/?language=ruby)
+- [Clicked Filters](https://algolia.com/doc/api-reference/api-methods/clicked-filters/?language=ruby)
+- [Converted Objects IDs After Search](https://algolia.com/doc/api-reference/api-methods/converted-object-ids-after-search/?language=ruby)
+- [Converted Object IDs](https://algolia.com/doc/api-reference/api-methods/converted-object-ids/?language=ruby)
+- [Converted Filters](https://algolia.com/doc/api-reference/api-methods/converted-filters/?language=ruby)
+- [Viewed Object IDs](https://algolia.com/doc/api-reference/api-methods/viewed-object-ids/?language=ruby)
+- [Viewed Filters](https://algolia.com/doc/api-reference/api-methods/viewed-filters/?language=ruby)
 
 
 
