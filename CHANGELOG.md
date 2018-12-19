@@ -1,3 +1,15 @@
+## [1.25.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.25.0) (2018-12-19)
+
+**Added**
+
+* Introduce Insights client to send events to Algolia Insights API - [326](https://github.com/algolia/algoliasearch-client-ruby/issues/326)
+
+* Add `multiple_get_objects` to retrieve objects by objectID across multiple indices - [329](https://github.com/algolia/algoliasearch-client-ruby/issues/329)
+
+**Modified**
+
+* Use the correct `hitsPerPage` key when exporting index resources - [319](https://github.com/algolia/algoliasearch-client-ruby/issues/319)
+
 ## [1.24.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.24.0) (2018-11-28)
 
 * Feat(adds-account-client-copy-index): adds `copy_index` to account client ([#324](https://github.com/algolia/algoliasearch-client-ruby/pull/324))
