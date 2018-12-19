@@ -579,6 +579,28 @@ describe 'Client' do
     res["results"][0]["hits"].length.should eq(1)
   end
 
+  it "should get multiple objectIDs" do
+    index_name_1 = safe_index_name("àlgol?a-multi")
+    index_1 = Algolia::Index.new(index_name_1)
+    index_1.save_object!({:objectID => "obj1-multi-get", :name => 'test'})
+
+    index_name_2 = safe_index_name("àlgol?a-multi")
+    index_2 = Algolia::Index.new(index_name_2)
+    index_2.save_object!({:objectID => "obj2-multi-get", :name => 'another index'})
+
+    requests = [
+        { "indexName" => index_name_1, "objectID" => "obj1-multi-get" },
+        { "indexName" => index_name_2, "objectID" => "obj2-multi-get" }
+    ]
+
+    response = Algolia.multiple_get_objects(requests)
+
+    response['results'].count.should eq(2)
+
+    index_1.delete_index rescue "not fatal"
+    index_2.delete_index rescue "not fatal"
+  end
+
   it "should throw if the index_name is missing in multiple_queries" do
     expect { Algolia.multiple_queries([{"query" => ""}]) }.to raise_error(ArgumentError)
   end

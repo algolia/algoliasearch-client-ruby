@@ -144,6 +144,18 @@ module Algolia
     end
 
     #
+    # Get objects by objectID across multiple indexes
+    #
+    # @param requests [
+    #         { "indexName" => index_name_1, "objectID" => "obj1" },
+    #         { "indexName" => index_name_2, "objectID" => "obj2" }
+    #     ]
+    #
+    def multiple_get_objects(requests, request_options = {})
+      post(Protocol.objects_uri, {:requests => requests}.to_json, :search, request_options)
+    end
+
+    #
     # List all existing indexes
     # return an Answer object with answer in the form
     #     {"items": [{ "name": "contacts", "createdAt": "2013-01-18T15:33:13.556Z"},
@@ -752,6 +764,14 @@ module Algolia
   #
   def Algolia.multiple_queries(queries, options = nil, strategy = nil)
     Algolia.client.multiple_queries(queries, options, strategy)
+  end
+
+  #
+  # This method allows to get objects (records) via objectID across
+  # multiple indexes with one API call
+  #
+  def Algolia.multiple_get_objects(requests, request_options = {})
+    Algolia.client.multiple_get_objects(requests, request_options)
   end
 
   #
