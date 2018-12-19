@@ -1,6 +1,8 @@
 module Algolia
 
   class Insights
+    MIN_RUBY_VERSION = '1.9.0'
+
     def initialize(app_id, api_key, region = 'us', params = {})
       headers = params[:headers] || {}
       @app_id   = app_id

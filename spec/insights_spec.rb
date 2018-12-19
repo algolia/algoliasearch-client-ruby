@@ -4,11 +4,11 @@ require 'securerandom'
 
 describe 'Insights client' do
   before(:all) do
-    @insights = Algolia::Insights.new(ENV['ALGOLIA_APPLICATION_ID_1'], ENV['ALGOLIA_ADMIN_KEY_1'])
+    @insights = Algolia::Insights.new(ENV['ALGOLIA_APPLICATION_ID'], ENV['ALGOLIA_API_KEY'])
 
     client = Algolia::Client.new({
-         :application_id => ENV['ALGOLIA_APPLICATION_ID_1'],
-         :api_key => ENV['ALGOLIA_ADMIN_KEY_1']
+         :application_id => ENV['ALGOLIA_APPLICATION_ID'],
+         :api_key => ENV['ALGOLIA_API_KEY']
      })
 
     @index = client.init_index(index_name('insights_client_1'))
@@ -19,7 +19,7 @@ describe 'Insights client' do
     @index.delete_index rescue 'not fatal'
   end
 
-  it 'should allow send event' do
+  it 'should allow send event', :skip => RUBY_VERSION < Algolia::Insights::MIN_RUBY_VERSION do
     event = {
         'eventType' => 'click',
         'eventName' => 'foo',
@@ -33,7 +33,7 @@ describe 'Insights client' do
     response['message'].should eq('OK')
   end
 
-  it 'should allow send events' do
+  it 'should allow send events', :skip => RUBY_VERSION < Algolia::Insights::MIN_RUBY_VERSION do
     event = {
         'eventType' => 'conversion',
         'eventName' => 'foo',
@@ -47,14 +47,14 @@ describe 'Insights client' do
     response['message'].should eq('OK')
   end
 
-  it 'should allow send clicked object ids' do
+  it 'should allow send clicked object ids', :skip => RUBY_VERSION < Algolia::Insights::MIN_RUBY_VERSION do
     response = @insights.user('userToken').clicked_object_ids('eventName', @index.name, ['obj1', 'obj2'])
 
     response['status'].should eq(200)
     response['message'].should eq('OK')
   end
 
-  it 'should allow send clicked object ids after search' do
+  it 'should allow send clicked object ids after search', :skip => RUBY_VERSION < Algolia::Insights::MIN_RUBY_VERSION do
     @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
     query_id = @index.search("john", { 'clickAnalytics' => true })['queryID']
     response = @insights.user('userToken').clicked_object_ids_after_search('eventName', @index.name, ['obj1', 'obj2'], [1, 2], query_id)
@@ -63,21 +63,21 @@ describe 'Insights client' do
     response['message'].should eq('OK')
   end
 
-  it 'should allow send clicked filters' do
+  it 'should allow send clicked filters', :skip => RUBY_VERSION < Algolia::Insights::MIN_RUBY_VERSION do
     response = @insights.user('userToken').clicked_filters('eventName', @index.name, ['filter:foo', 'filter:bar'])
 
     response['status'].should eq(200)
     response['message'].should eq('OK')
   end
 
-  it 'should allow send converted objects ids' do
+  it 'should allow send converted objects ids', :skip => RUBY_VERSION < Algolia::Insights::MIN_RUBY_VERSION do
     response = @insights.user('userToken').converted_object_ids('eventName', @index.name, ['obj1', 'obj2'])
 
     response['status'].should eq(200)
     response['message'].should eq('OK')
   end
 
-  it 'should allow send converted objects ids after search' do
+  it 'should allow send converted objects ids after search', :skip => RUBY_VERSION < Algolia::Insights::MIN_RUBY_VERSION do
     @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
     query_id = @index.search("john", { 'clickAnalytics' => true})['queryID']
     response = @insights.user('userToken').converted_object_ids_after_search('eventName', @index.name, ['obj1', 'obj2'], query_id)
@@ -86,21 +86,21 @@ describe 'Insights client' do
     response['message'].should eq('OK')
   end
 
-  it 'should allow send converted filters' do
+  it 'should allow send converted filters', :skip => RUBY_VERSION < Algolia::Insights::MIN_RUBY_VERSION do
     response = @insights.user('userToken').converted_filters('eventName', @index.name, ['filter:foo', 'filter:bar'])
 
     response['status'].should eq(200)
     response['message'].should eq('OK')
   end
 
-  it 'should allow send viewed object ids' do
+  it 'should allow send viewed object ids', :skip => RUBY_VERSION < Algolia::Insights::MIN_RUBY_VERSION do
     response = @insights.user('userToken').viewed_object_ids('eventName', @index.name, ['obj1', 'obj2'])
 
     response['status'].should eq(200)
     response['message'].should eq('OK')
   end
 
-  it 'should allow send viewed filters' do
+  it 'should allow send viewed filters', :skip => RUBY_VERSION < Algolia::Insights::MIN_RUBY_VERSION do
     response = @insights.user('userToken').viewed_filters('eventName', @index.name, ['filter:foo', 'filter:bar'])
 
     response['status'].should eq(200)
