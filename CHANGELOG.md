@@ -1,3 +1,5 @@
+## [1.25.2](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.25.2) (2018-12-19)
+
 ## [1.25.1](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.25.1) (2018-12-19)
 
 **Fixed**
