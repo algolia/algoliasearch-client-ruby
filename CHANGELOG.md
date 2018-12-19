@@ -1,3 +1,9 @@
+## [1.25.1](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.25.1) (2018-12-19)
+
+**Fixed**
+
+* Missing `insights.rb` in gemspec - [7d2f3ab](https://github.com/algolia/algoliasearch-client-ruby/commit/7d2f3abe6e4338f0f7364f6f52ac1d371f066464)
+
 ## [1.25.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.25.0) (2018-12-19)
 
 **Added**
