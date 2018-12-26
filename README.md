@@ -129,7 +129,7 @@ puts index.search('jimmie paint').to_json
 ## Search UI
 
 **Warning:** If you're building a web application, you may be interested in using one of our
-[front-end search UI libraries](https://www.algolia.com/doc/guides/search-ui/search-libraries/).
+[front-end search UI libraries](https://www.algolia.com/doc/guides/building-search-ui/what-is-instantsearch/js/).
 
 The following example shows how to quickly build a front-end search using
 [InstantSearch.js](https://www.algolia.com/doc/guides/building-search-ui/what-is-instantsearch/js/)
