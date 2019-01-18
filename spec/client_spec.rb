@@ -83,6 +83,7 @@ describe 'API keys', :maintainers_only => true do
 
   it "should test index keys" do
     @index.set_settings!({}) # ensure the index exists
+
     resIndex = @index.list_api_keys
     newIndexKey = @index.add_api_key(['search'])
     newIndexKey['key'].should_not eq("")
@@ -124,6 +125,15 @@ describe 'API keys', :maintainers_only => true do
     wait_global_key_missing(newKey['key'])
     resEnd = Algolia.list_api_keys
     is_include(resEnd['keys'], 'value', newKey['key']).should eq(false)
+
+    # Restore the deleted key
+    Algolia.restore_api_key(newKey['key'])
+    wait_global_key(newKey['key'])
+    key_end = Algolia.list_api_keys
+    is_include(key_end['keys'], 'value', newKey['key']).should eq(true)
+
+    # Re-delete the key
+    Algolia.delete_api_key(newKey['key'])
   end
 
   it "Check add keys" do
