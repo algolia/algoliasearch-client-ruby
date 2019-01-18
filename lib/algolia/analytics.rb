@@ -2,11 +2,13 @@ module Algolia
 
   class Analytics
     attr_reader :ssl, :ssl_version, :headers
-    API_URL='https://analytics.algolia.com'
 
     def initialize(client, params)
       @client   = client
       @headers  = params[:headers]
+
+      region   = params[:region] || 'us'
+      @api_url  = "https://analytics.#{region}.algolia.com"
     end
 
     def get_ab_tests(params = {})
@@ -49,7 +51,7 @@ module Algolia
     def perform_request(method, url, params = {}, data = {})
       http = HTTPClient.new
 
-      url = API_URL + url
+      url = @api_url + url
 
       encoded_params = Hash[params.map { |k, v| [k.to_s, v.is_a?(Array) ? v.to_json : v] }]
       url << "?" + Protocol.to_query(encoded_params)
