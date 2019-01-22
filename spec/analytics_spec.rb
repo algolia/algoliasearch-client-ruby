@@ -1,6 +1,37 @@
 # encoding: UTF-8
 require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 
+def wait_abtest_operation(analytics, id, &block)
+  1.upto(60) do # do not wait too long
+    begin
+      ab = analytics.get_ab_test(id)
+      if block_given?
+        return if yield ab
+        # not found
+        sleep 1
+        next
+      end
+      return
+    rescue
+      # not found
+      sleep 1
+    end
+  end
+end
+
+
+def wait_abtest_deleted(analytics, id)
+  1.upto(60) do # do not wait too long
+    begin
+      ab = analytics.get_ab_test(id)
+      sleep 1
+      next
+    rescue
+      return
+    end
+  end
+end
+
 describe 'Analytics' do
   let(:abtest_id) { nil }
 
@@ -60,6 +91,9 @@ describe 'Analytics' do
     # it "should stop the AB test" do
       res = @analytics.stop_ab_test(abtest_id)
       @analytics.wait_task(res['index'], res['taskID'])
+      wait_abtest_operation(@analytics, abtest_id) do |ab|
+        ab['status'] == "stopped"
+      end
 
       abtest = @analytics.get_ab_test(abtest_id)
       abtest['status'].should eq("stopped")
@@ -68,6 +102,7 @@ describe 'Analytics' do
     # it "should delete the AB test" do
       res = @analytics.delete_ab_test(abtest_id)
       @analytics.wait_task(res['index'], res['taskID'])
+      wait_abtest_deleted(@analytics, abtest_id)
 
       abtest = @analytics.get_ab_test(abtest_id) rescue "it's deleted"
       abtest.should eq("it's deleted")
