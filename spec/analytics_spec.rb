@@ -49,7 +49,7 @@ describe 'Analytics' do
       abtest_id = res['abTestID']
 
 
-    # it "should get the newly added AB test" do
+      # it "should get the newly added AB test" do
       abtest = @analytics.get_ab_test(abtest_id)
 
       abtest['abTestID'].should eq(abtest_id)
@@ -57,7 +57,7 @@ describe 'Analytics' do
       abtest.has_key?("variants").should eq(true)
 
 
-    # it "should stop the AB test" do
+      # it "should stop the AB test" do
       res = @analytics.stop_ab_test(abtest_id)
       @analytics.wait_task(res['index'], res['taskID'])
 
@@ -65,12 +65,46 @@ describe 'Analytics' do
       abtest['status'].should eq("stopped")
 
 
-    # it "should delete the AB test" do
+      # it "should delete the AB test" do
       res = @analytics.delete_ab_test(abtest_id)
       @analytics.wait_task(res['index'], res['taskID'])
 
       abtest = @analytics.get_ab_test(abtest_id) rescue "it's deleted"
       abtest.should eq("it's deleted")
+    end
+
+    it "should manage AA tests" do
+      tomorrow = Time.now + 24*60*60
+      aatest_to_add = {
+          :name => "The AA Test for integration tests",
+          :variants => [
+              { :index => @index_name, :trafficPercentage => 50, :customSearchParameters =>  {
+                  :ignorePlurals => true
+              }},
+              { :index => @index_name, :trafficPercentage => 50 },
+          ],
+          :endAt => tomorrow.strftime("%Y-%m-%dT%H:%M:%SZ"),
+      }
+      res = @analytics.add_ab_test(aatest_to_add)
+      @analytics.wait_task(res['index'], res['taskID'])
+      aatest_id = res['abTestID']
+
+
+      # it "should get the newly added AB test" do
+      aatest = @analytics.get_ab_test(aatest_id)
+
+      aatest['abTestID'].should eq(aatest_id)
+      aatest.has_key?("status").should eq(true)
+      aatest.has_key?("variants").should eq(true)
+
+
+
+      # it "should delete the AB test" do
+      res = @analytics.delete_ab_test(aatest_id)
+      @analytics.wait_task(res['index'], res['taskID'])
+
+      aatest = @analytics.get_ab_test(aatest_id) rescue "it's deleted"
+      aatest.should eq("it's deleted")
     end
   end
 
