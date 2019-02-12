@@ -1,3 +1,14 @@
+[1.26.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.26.0) (2019-02-12)
+
+**Added**
+
+* Introduce `Algolia.restore_api_key` method.
+    
+    If you delete your API key by mistake, you can now restore it via
+    this new method. This especially useful if this key is used in a
+    mobile app or somewhere you can't update easily.
+    
+
 ## [1.25.2](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.25.2) (2018-12-19)
 
 ## [1.25.1](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.25.1) (2018-12-19)
