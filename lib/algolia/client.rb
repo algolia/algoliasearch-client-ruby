@@ -456,6 +456,13 @@ module Algolia
     end
 
     #
+    # Restore a deleted api key
+    #
+    def restore_api_key(key, request_options = {})
+      post(Protocol.restore_key_uri(key), :write, request_options)
+    end
+
+    #
     # Send a batch request targeting multiple indices
     #
     def batch(operations, request_options = {})
@@ -1043,6 +1050,13 @@ module Algolia
   #
   def Algolia.delete_api_key(key, request_options = {})
     Algolia.client.delete_api_key(key, request_options)
+  end
+
+  #
+  # Restore an existing api key
+  #
+  def Algolia.restore_api_key(key, request_options = {})
+    Algolia.client.restore_api_key(key, request_options)
   end
 
   #
