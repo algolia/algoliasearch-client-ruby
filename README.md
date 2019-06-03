@@ -46,7 +46,7 @@ index.save_objects([objectID:  1, name: 'Foo'])
 
 Finally, you may begin searching a object using the `search` method:
 ```ruby
-objects = $index.search('Fo')
+objects = index.search('Fo')
 ```
 
 For full documentation, visit the **[Algolia Ruby API Client](https://www.algolia.com/doc/api-client/getting-started/install/ruby/)**.
