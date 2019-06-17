@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.algolia.com">
-    <img alt="Algolia for Ruby" src="https://raw.githubusercontent.com/algolia/algoliasearch-client-common/master/readme-banner.png" >
+    <img alt="Algolia for Ruby" src="https://raw.githubusercontent.com/algolia/algoliasearch-client-common/master/banners/ruby.png" >
   </a>
 
   <h4 align="center">The perfect starting point to integrate <a href="https://algolia.com" target="_blank">Algolia</a> within your Ruby project</h4>
