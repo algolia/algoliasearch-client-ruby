@@ -4,11 +4,6 @@ if ENV['COVERAGE']
   SimpleCov.start
 end
 
-if ENV['TRAVIS'] && Object.const_defined?(:RUBY_ENGINE) && RUBY_ENGINE == 'ruby'
-  require 'coveralls'
-  Coveralls.wear!
-end
-
 require 'bundler/setup'
 
 Bundler.setup :test
