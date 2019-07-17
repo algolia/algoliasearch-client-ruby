@@ -16,7 +16,6 @@ else
 end
 
 group :development do
-  gem 'coveralls'
   gem 'rake'
   gem 'rdoc'
   gem 'travis'
