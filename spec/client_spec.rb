@@ -175,6 +175,16 @@ describe 'Client' do
     @index.delete_index rescue "not fatal"
   end
 
+  it "should tell if index exists" do
+    @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
+    expect(@index.exists).to be true
+  end
+
+  it "should tell if index does not exist" do
+    index = Algolia::Index.new('test')
+    expect(index.exists).to be false
+  end
+
   it "should add a simple object" do
     @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
     res = @index.search("john")

@@ -1208,6 +1208,15 @@ module Algolia
       res
     end
 
+    def exists
+      begin
+        get_settings
+      rescue
+        return false
+      end
+      return true
+    end
+
     # Deprecated
     alias_method :get_user_key, :get_api_key
     alias_method :list_user_keys, :list_api_keys
