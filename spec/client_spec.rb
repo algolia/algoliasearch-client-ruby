@@ -181,7 +181,7 @@ describe 'Client' do
   end
 
   it "should tell if index does not exist" do
-    index = Algolia::Index.new('test')
+    index = Algolia::Index.new('nonexistent_index')
     expect(index.exists).to be false
   end
 

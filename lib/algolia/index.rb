@@ -1208,11 +1208,20 @@ module Algolia
       res
     end
 
+    #
+    # Check whether an index exists or not
+    #
+    # @return [Boolean]
+    #
     def exists
       begin
         get_settings
-      rescue
-        return false
+      rescue AlgoliaProtocolError => e
+        if e.code === 404
+          return false
+        end
+
+        raise e
       end
       return true
     end
