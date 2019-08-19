@@ -455,6 +455,11 @@ describe 'Client' do
       {:company => 'Yahoo', :name => 'Marissa Mayer', :objectID => '162590950'},
     ])
 
+    res = index.search('algolia')
+    Algolia::get_object_id_position(res, 'nicolas-dessaigne').should eq(0)
+    Algolia::get_object_id_position(res, 'julien-lemoine').should eq(1)
+    Algolia::get_object_id_position(res, '').should eq(-1)
+
     filter_func = lambda { |obj| return false }
     expect {
       index.find_first_object(filter_func, "", false)
