@@ -264,6 +264,33 @@ module Algolia
       client.post(Protocol.objects_uri, { :requests => requests }.to_json, :read, request_options)['results']
     end
 
+    def find_first_object(filter_func, query = '', do_not_paginate = false, request_options = {})
+      res = search(query, request_options)
+
+      hits = res['hits']
+      page = res['page']
+      nb_pages = res['nbPages']
+
+      res['hits'].each_with_index do |hit, i|
+        if filter_func.call(hit)
+          return {
+              'object' => hit,
+              'position' => i,
+              'page' => page,
+          }
+        end
+      end
+
+      has_next_page = page + 1 < nb_pages
+      if do_not_paginate or not has_next_page
+        raise AlgoliaError.new('object not found')
+      end
+
+      opts = request_options
+      opts['page'] = page + 1
+      return find_first_object(filter_func, query, do_not_paginate, opts)
+    end
+
     #
     # Check the status of a task on the server.
     # All server task are asynchronous and you can check the status of a task with this method.

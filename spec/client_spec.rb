@@ -436,6 +436,59 @@ describe 'Client' do
     end
   end
 
+  it 'should find objects when needed' do
+    index = Algolia::Index.new(safe_index_name("àlgol?à"))
+
+    index.save_objects!([
+      {:company => 'Algolia', :name => 'Julien Lemoine', :objectID => 'julien-lemoine'},
+      {:company => 'Algolia', :name => 'Nicolas Dessaigne', :objectID => 'nicolas-dessaigne'},
+      {:company => 'Amazon', :name =>' "Jeff Bezos', :objectID => '162590850'},
+      {:company => 'Apple', :name => 'Steve Jobs', :objectID => '162590860'},
+      {:company => 'Apple', :name => 'Steve Wozniak', :objectID => '162590870'},
+      {:company => 'Arista Networks', :name => 'Jayshree Ullal', :objectID => '162590880'},
+      {:company => 'Google', :name => 'Larry Page', :objectID => '162590890'},
+      {:company => 'Google', :name => 'Rob Pike', :objectID => '162590900'},
+      {:company => 'Google', :name => 'Sergueï Brin', :objectID => '162590910'},
+      {:company => 'Microsoft', :name => 'Bill Gates', :objectID => '162590920'},
+      {:company => 'SpaceX', :name => 'Elon Musk', :objectID => '162590930'},
+      {:company => 'Tesla', :name => 'Elon Musk', :objectID => '162590940'},
+      {:company => 'Yahoo', :name => 'Marissa Mayer', :objectID => '162590950'},
+    ])
+
+    filter_func = lambda { |obj| return false }
+    expect {
+      index.find_first_object(filter_func, "", false)
+    }.to raise_exception(
+      Algolia::AlgoliaError,
+      'object not found'
+    )
+
+    filter_func = lambda { |obj| return true }
+    obj = index.find_first_object(filter_func, "", false)
+    obj['position'].should eq(0)
+    obj['page'].should eq(0)
+
+    filter_func = lambda { |obj| obj.key?('company') and obj['company'] == 'Apple' }
+
+    expect {
+      index.find_first_object(filter_func, "algolia", false)
+    }.to raise_exception(
+      Algolia::AlgoliaError,
+      'object not found'
+    )
+
+    expect {
+      index.find_first_object(filter_func, "", true, {'hitsPerPage' => 5})
+    }.to raise_exception(
+      Algolia::AlgoliaError,
+      'object not found'
+    )
+
+    obj = index.find_first_object(filter_func, "", false, {'hitsPerPage' => 5})
+    obj['position'].should eq(0)
+    obj['page'].should eq(2)
+  end
+
   it "should copy the index" do
     index = Algolia::Index.new(safe_index_name("àlgol?à"))
     begin
