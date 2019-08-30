@@ -264,31 +264,54 @@ module Algolia
       client.post(Protocol.objects_uri, { :requests => requests }.to_json, :read, request_options)['results']
     end
 
-    def find_first_object(filter_func, query = '', do_not_paginate = false, request_options = {})
-      res = search(query, request_options)
+    #
+    # find_object search iteratively through the search response `hits`
+    # field to find the first response hit that would match against the given
+    # `filter_func` function.
+    #
+    # If no object has been found within the first result set, the function
+    # will perform a new search operation on the next page of results, if any,
+    # until a matching object is found or the end of results, whichever
+    # happens first.
+    #
+    # To prevent the iteration through pages of results, `paginate`
+    # parameter can be set to false. This will stop the function at the end of
+    # the first page of search results even if no object does match.
+    #
+    def find_object(filter_func, request_options = {})
+      query = ''
+      paginate = true
+      page = 0
 
-      hits = res['hits']
-      page = res['page']
-      nb_pages = res['nbPages']
+      query = request_options[:query] || request_options['query']
+      request_options.delete(:query)
+      request_options.delete('query')
 
-      res['hits'].each_with_index do |hit, i|
-        if filter_func.call(hit)
-          return {
-              'object' => hit,
-              'position' => i,
-              'page' => page,
-          }
+      paginate = request_options[:paginate] || request_options['paginate']
+      request_options.delete(:paginate)
+      request_options.delete('paginate')
+
+      while true
+        request_options['page'] = page
+        res = search(query, request_options)
+
+        res['hits'].each_with_index do |hit, i|
+          if filter_func.call(hit)
+            return {
+                'object' => hit,
+                'position' => i,
+                'page' => page,
+            }
+          end
         end
-      end
 
-      has_next_page = page + 1 < nb_pages
-      if do_not_paginate or not has_next_page
-        raise AlgoliaError.new('object not found')
-      end
+        has_next_page = page + 1 < res['nbPages']
+        if not paginate or not has_next_page
+          raise AlgoliaError.new('object not found')
+        end
 
-      opts = request_options
-      opts['page'] = page + 1
-      return find_first_object(filter_func, query, do_not_paginate, opts)
+        page += 1
+      end
     end
 
     #
