@@ -20,4 +20,18 @@ module Algolia
     end
   end
 
+  # An exception class raised when the validUntil parameter is not found
+  # The error code and message will be parsed out of the HTTP response,
+  # which is also included in the response attribute.
+  class ValidUntilNotFoundError < AlgoliaError
+    attr_accessor :code
+    attr_accessor :message
+
+    def initialize(code, message)
+      self.code = code
+      self.message = message
+      super("#{self.code}: #{self.message}")
+    end
+  end
+
 end
