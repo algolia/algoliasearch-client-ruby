@@ -21,7 +21,6 @@ cwd = Pathname(__FILE__).dirname
 $:.unshift(cwd.to_s) unless $:.include?(cwd.to_s) || $:.include?(cwd.expand_path.to_s)
 
 require 'algolia/index'
-require 'algolia/index_helpers'
 require 'algolia/analytics'
 require 'algolia/insights'
 require 'algolia/account_client'

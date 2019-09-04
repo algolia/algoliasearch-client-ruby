@@ -265,20 +265,16 @@ module Algolia
     end
 
     #
-    # find_object search iteratively through the search response `hits`
-    # field to find the first response hit that would match against the given
-    # `filter_func` function.
+    # Find object by the given callback.
+    # Options can be passed in request_options body:
+    #  - query (string): pass a query
+    #  - paginate (bool): choose if you want to iterate through all the
+    # documents (true) or only the first page (false). Default is true.
     #
-    # If no object has been found within the first result set, the function
-    # will perform a new search operation on the next page of results, if any,
-    # until a matching object is found or the end of results, whichever
-    # happens first.
+    # @param callback callback used to find the object
+    # @param request_options contains extra parameters to send with your query
     #
-    # To prevent the iteration through pages of results, `paginate`
-    # parameter can be set to false. This will stop the function at the end of
-    # the first page of search results even if no object does match.
-    #
-    def find_object(filter_func, request_options = {})
+    def find_object(callback, request_options = {})
       query = ''
       paginate = true
       page = 0
@@ -296,7 +292,7 @@ module Algolia
         res = search(query, request_options)
 
         res['hits'].each_with_index do |hit, i|
-          if filter_func.call(hit)
+          if callback.call(hit)
             return {
                 'object' => hit,
                 'position' => i,
@@ -307,11 +303,28 @@ module Algolia
 
         has_next_page = page + 1 < res['nbPages']
         if not paginate or not has_next_page
-          raise AlgoliaError.new('object not found')
+          raise AlgoliaObjectNotFoundError.new('Object not found')
         end
 
         page += 1
       end
+    end
+
+    #
+    # Retrieve the given object position in a set of results.
+    #
+    # @param [Array] res the result set to browse
+    # @param [String] object_id the object to look for
+    #
+    # @return [Integer] position of the object, or -1 if it's not in the array
+    #
+    def self.get_object_position(res, object_id)
+      res['hits'].each_with_index do |hit, i|
+        if hit['objectID'] == object_id
+          return i
+        end
+      end
+      -1
     end
 
     #

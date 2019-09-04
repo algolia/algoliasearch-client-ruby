@@ -456,16 +456,16 @@ describe 'Client' do
     ])
 
     res = index.search('algolia')
-    Algolia::get_object_position(res, 'nicolas-dessaigne').should eq(0)
-    Algolia::get_object_position(res, 'julien-lemoine').should eq(1)
-    Algolia::get_object_position(res, '').should eq(-1)
+    Algolia::Index.get_object_position(res, 'nicolas-dessaigne').should eq(0)
+    Algolia::Index.get_object_position(res, 'julien-lemoine').should eq(1)
+    Algolia::Index.get_object_position(res, '').should eq(-1)
 
     filter_func = lambda { |obj| return false }
     expect {
       index.find_object(filter_func, {'query' => "", 'paginate' => true})
     }.to raise_exception(
-      Algolia::AlgoliaError,
-      'object not found'
+      Algolia::AlgoliaObjectNotFoundError,
+      'Object not found'
     )
 
     filter_func = lambda { |obj| return true }
@@ -478,15 +478,15 @@ describe 'Client' do
     expect {
       index.find_object(filter_func, {'query' => "algolia", 'paginate' => true})
     }.to raise_exception(
-      Algolia::AlgoliaError,
-      'object not found'
+      Algolia::AlgoliaObjectNotFoundError,
+      'Object not found'
     )
 
     expect {
       index.find_object(filter_func, {'query' => "", 'paginate' => false, 'hitsPerPage' => 5})
     }.to raise_exception(
-      Algolia::AlgoliaError,
-      'object not found'
+      Algolia::AlgoliaObjectNotFoundError,
+      'Object not found'
     )
 
     obj = index.find_object(filter_func, {'query' => "", 'paginate' => true, 'hitsPerPage' => 5})

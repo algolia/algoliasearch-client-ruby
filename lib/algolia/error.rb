@@ -20,4 +20,8 @@ module Algolia
     end
   end
 
+  # An exception class raised when the given object was not found.
+  class AlgoliaObjectNotFoundError < AlgoliaError
+  end
+
 end
