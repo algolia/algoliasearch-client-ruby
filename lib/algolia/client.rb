@@ -777,9 +777,9 @@ module Algolia
   #
   # Returns the remaining validity time for the given API key in seconds
   #
-  # @param private_api_key your private API Key
-  # @param tag_filters the list of tags applied to the query (used as security)
-  # @param user_token an optional token identifying the current user
+  # @param [String] secured_api_key the secured API key to check
+  #
+  # @return [Integer] remaining validity in seconds
   #
   def Algolia.get_secured_api_key_remaining_validity(secured_api_key)
     now = Time.now.to_i
@@ -788,7 +788,7 @@ module Algolia
     matches = decoded_key.match(regex)
 
     if matches === nil
-      raise ValidUntilNotFoundError.new(400, 'The SecuredAPIKey doesn\'t have a validUntil parameter.')
+      raise ValidUntilNotFoundError.new('The SecuredAPIKey doesn\'t have a validUntil parameter.')
     end
 
     valid_until = matches[1].to_i
