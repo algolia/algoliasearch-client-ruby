@@ -1,3 +1,12 @@
+# ChangeLog
+
+## [1.26.1](https://github.com/algolia/algoliasearch-client-ruby/compare/1.26.0...1.26.1) (2019-07-31)
+
+### Chore
+
+- stop using coveralls because of a GPL-licensed transitive dep ([d2fbe8c](https://github.com/algolia/algoliasearch-client-ruby/commit/d2fbe8c))
+
+
 [1.26.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.26.0) (2019-02-12)
 
 **Added**
