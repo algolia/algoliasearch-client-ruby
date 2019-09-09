@@ -33,9 +33,14 @@ describe 'Multi Cluster Management', :mcm => true do
     entry.count.should eq(4)
   end
 
+  it 'should assign a user to a cluster' do
+    @client.assign_user_id(@user_id, @cluster_name)
+  end
+
   it 'should list user ids' do
     ids = @client.list_user_ids
-    ids['userIDs'].count.should eq(20)
+
+    ids['userIDs'].count.should be > 0
 
     entry = ids['userIDs'][0]
     entry.has_key?("userID").should eq(true)
@@ -44,12 +49,8 @@ describe 'Multi Cluster Management', :mcm => true do
     entry.has_key?("dataSize").should eq(true)
     entry.count.should eq(4)
 
-    less_ids = @client.list_user_ids(0, 3)
-    less_ids['userIDs'].count.should eq(3)
-  end
-
-  it 'should assign a user to a cluster' do
-    @client.assign_user_id(@user_id, @cluster_name)
+    less_ids = @client.list_user_ids(0, 1)
+    less_ids['userIDs'].count.should eq(1)
   end
 
   it 'should get the created user id' do
