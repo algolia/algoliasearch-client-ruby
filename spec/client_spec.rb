@@ -175,6 +175,16 @@ describe 'Client' do
     @index.delete_index rescue "not fatal"
   end
 
+  it "should tell if index exists" do
+    @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
+    expect(@index.exists).to be true
+  end
+
+  it "should tell if index does not exist" do
+    index = Algolia::Index.new('nonexistent_index')
+    expect(index.exists).to be false
+  end
+
   it "should add a simple object" do
     @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
     res = @index.search("john")
@@ -1333,6 +1343,19 @@ describe 'Client' do
     expect{Algolia.list_indexes}.to_not raise_error
 
     expect{Algolia.list_indexes('headers' => { 'X-Algolia-API-Key' => 'NotExistentAPIKey' })}.to raise_error(Algolia::AlgoliaProtocolError)
+  end
+
+  it 'should retrieve the remaining validity time in seconds' do
+    now = Time.now.to_i
+
+    key = Algolia.generate_secured_api_key('foo', :validUntil => now - (10 * 60))
+    expect(Algolia.get_secured_api_key_remaining_validity(key)).to be < 0
+
+    key = Algolia.generate_secured_api_key('foo', :validUntil => now + (10 * 60))
+    expect(Algolia.get_secured_api_key_remaining_validity(key)).to be > 0
+
+    key = Algolia.generate_secured_api_key('foo', [])
+    expect { Algolia.get_secured_api_key_remaining_validity(key) }.to raise_error(Algolia::ValidUntilNotFoundError)
   end
 
   context 'DNS timeout' do

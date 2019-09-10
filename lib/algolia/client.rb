@@ -775,6 +775,28 @@ module Algolia
   end
 
   #
+  # Returns the remaining validity time for the given API key in seconds
+  #
+  # @param [String] secured_api_key the secured API key to check
+  #
+  # @return [Integer] remaining validity in seconds
+  #
+  def Algolia.get_secured_api_key_remaining_validity(secured_api_key)
+    now = Time.now.to_i
+    decoded_key = Base64.decode64(secured_api_key)
+    regex = 'validUntil=(\d+)'
+    matches = decoded_key.match(regex)
+
+    if matches === nil
+      raise ValidUntilNotFoundError.new('The SecuredAPIKey doesn\'t have a validUntil parameter.')
+    end
+
+    valid_until = matches[1].to_i
+
+    valid_until - now
+  end
+
+  #
   # This method allows to query multiple indexes with one API call
   #
   def Algolia.multiple_queries(queries, options = nil, strategy = nil)
