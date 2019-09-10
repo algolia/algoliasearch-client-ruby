@@ -1208,6 +1208,24 @@ module Algolia
       res
     end
 
+    #
+    # Check whether an index exists or not
+    #
+    # @return [Boolean]
+    #
+    def exists
+      begin
+        get_settings
+      rescue AlgoliaProtocolError => e
+        if e.code === 404
+          return false
+        end
+
+        raise e
+      end
+      return true
+    end
+
     # Deprecated
     alias_method :get_user_key, :get_api_key
     alias_method :list_user_keys, :list_api_keys
