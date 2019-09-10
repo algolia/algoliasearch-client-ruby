@@ -1287,6 +1287,19 @@ describe 'Client' do
     expect{Algolia.list_indexes('headers' => { 'X-Algolia-API-Key' => 'NotExistentAPIKey' })}.to raise_error(Algolia::AlgoliaProtocolError)
   end
 
+  it 'should retrieve the remaining validity time in seconds' do
+    now = Time.now.to_i
+
+    key = Algolia.generate_secured_api_key('foo', :validUntil => now - (10 * 60))
+    expect(Algolia.get_secured_api_key_remaining_validity(key)).to be < 0
+
+    key = Algolia.generate_secured_api_key('foo', :validUntil => now + (10 * 60))
+    expect(Algolia.get_secured_api_key_remaining_validity(key)).to be > 0
+
+    key = Algolia.generate_secured_api_key('foo', [])
+    expect { Algolia.get_secured_api_key_remaining_validity(key) }.to raise_error(Algolia::ValidUntilNotFoundError)
+  end
+
   context 'DNS timeout' do
     before(:each) do
       @client = Algolia::Client.new :application_id => ENV['ALGOLIA_APPLICATION_ID'], :api_key => ENV['ALGOLIA_API_KEY'],

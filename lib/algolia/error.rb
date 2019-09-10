@@ -20,4 +20,8 @@ module Algolia
     end
   end
 
+  # An exception class raised when the validUntil parameter is not found
+  class ValidUntilNotFoundError < AlgoliaError
+  end
+
 end
