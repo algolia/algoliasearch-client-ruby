@@ -470,36 +470,45 @@ describe 'Client' do
     Algolia::Index.get_object_position(res, 'julien-lemoine').should eq(1)
     Algolia::Index.get_object_position(res, '').should eq(-1)
 
-    filter_func = lambda { |obj| return false }
     expect {
-      index.find_object(filter_func, {'query' => "", 'paginate' => true})
+      index.find_object({'query' => '', 'paginate' => true})
     }.to raise_exception(
       Algolia::AlgoliaObjectNotFoundError,
       'Object not found'
     )
 
-    filter_func = lambda { |obj| return true }
-    obj = index.find_object(filter_func, {'query' => "", 'paginate' => true})
+    expect {
+      index.find_object({'query' => '', 'paginate' => true}) { false }
+    }.to raise_exception(
+      Algolia::AlgoliaObjectNotFoundError,
+      'Object not found'
+    )
+
+    obj = index.find_object({'query' => '', 'paginate' => true}) { true }
     obj['position'].should eq(0)
     obj['page'].should eq(0)
 
-    filter_func = lambda { |obj| obj.key?('company') and obj['company'] == 'Apple' }
+    # we use a lambda and convert it to a block with `&`
+    # so as not to repeat the condition
+    condition = lambda do |obj|
+      obj.key?('company') and obj['company'] == 'Apple'
+    end
 
     expect {
-      index.find_object(filter_func, {'query' => "algolia", 'paginate' => true})
+      index.find_object({'query' => 'algolia', 'paginate' => true}, &condition)
     }.to raise_exception(
       Algolia::AlgoliaObjectNotFoundError,
       'Object not found'
     )
 
     expect {
-      index.find_object(filter_func, {'query' => "", 'paginate' => false, 'hitsPerPage' => 5})
+      index.find_object({'query' => '', 'paginate' => false, 'hitsPerPage' => 5}, &condition)
     }.to raise_exception(
       Algolia::AlgoliaObjectNotFoundError,
       'Object not found'
     )
 
-    obj = index.find_object(filter_func, {'query' => "", 'paginate' => true, 'hitsPerPage' => 5})
+    obj = index.find_object({'query' => '', 'paginate' => true, 'hitsPerPage' => 5}, &condition)
     obj['position'].should eq(0)
     obj['page'].should eq(2)
   end
@@ -683,7 +692,7 @@ describe 'Client' do
     expect { Algolia.multiple_queries([{"query" => ""}]) }.to raise_error(ArgumentError)
   end
 
-  it "shoud accept custom batch" do
+  it "should accept custom batch" do
     @index.clear_index! rescue "Not fatal"
     request = { "requests" => [
       {
