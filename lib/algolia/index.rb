@@ -277,6 +277,8 @@ module Algolia
     #
     # @param request_options contains extra parameters to send with your query
     #
+    # @return [Hash] the matching object and its position in the result set
+    #
     def find_object(request_options = {})
       paginate = true
       page = 0
