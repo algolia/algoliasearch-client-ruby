@@ -265,6 +265,75 @@ module Algolia
     end
 
     #
+    # Find object by the given condition.
+    #
+    # Options can be passed in request_options body:
+    #  - query (string): pass a query
+    #  - paginate (bool): choose if you want to iterate through all the
+    # documents (true) or only the first page (false). Default is true.
+    # The function takes a block to filter the results from search query
+    # Usage example:
+    #  index.find_object({'query' => '', 'paginate' => true}) {|obj| obj.key?('company') and obj['company'] == 'Apple'}
+    #
+    # @param request_options contains extra parameters to send with your query
+    #
+    # @return [Hash] the matching object and its position in the result set
+    #
+    def find_object(request_options = {})
+      paginate = true
+      page = 0
+
+      query = request_options[:query] || request_options['query'] || ''
+      request_options.delete(:query)
+      request_options.delete('query')
+
+      if request_options.has_key? :paginate
+        paginate = request_options[:paginate]
+      end
+
+      if request_options.has_key? 'paginate'
+        paginate = request_options['paginate']
+      end
+
+      request_options.delete(:paginate)
+      request_options.delete('paginate')
+
+      while true
+        request_options['page'] = page
+        res = search(query, request_options)
+
+        res['hits'].each_with_index do |hit, i|
+          if yield(hit)
+            return {
+                'object' => hit,
+                'position' => i,
+                'page' => page,
+            }
+          end
+        end if block_given?
+
+        has_next_page = page + 1 < res['nbPages']
+        if !paginate || !has_next_page
+          raise AlgoliaObjectNotFoundError.new('Object not found')
+        end
+
+        page += 1
+      end
+    end
+
+    #
+    # Retrieve the given object position in a set of results.
+    #
+    # @param [Array] objects the result set to browse
+    # @param [String] object_id the object to look for
+    #
+    # @return [Integer] position of the object, or -1 if it's not in the array
+    #
+    def self.get_object_position(objects, object_id)
+      objects['hits'].find_index { |hit| hit['objectID'] == object_id } || -1
+    end
+
+    #
     # Check the status of a task on the server.
     # All server task are asynchronous and you can check the status of a task with this method.
     #

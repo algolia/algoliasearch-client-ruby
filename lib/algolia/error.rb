@@ -20,6 +20,10 @@ module Algolia
     end
   end
 
+  # An exception class raised when the given object was not found.
+  class AlgoliaObjectNotFoundError < AlgoliaError
+  end
+
   # An exception class raised when the validUntil parameter is not found
   class ValidUntilNotFoundError < AlgoliaError
   end
