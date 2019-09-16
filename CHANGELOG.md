@@ -1,5 +1,26 @@
 # ChangeLog
 
+## [1.27.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.27.0) (2019-09-16)
+
+**Added**
+
+* Introduce `Algolia::Index.exists` method. [358](https://github.com/algolia/algoliasearch-client-ruby/issues/358)
+
+    Check whether an index exists or not.
+
+* Introduce `Algolia::Index.find_object` method. [359](https://github.com/algolia/algoliasearch-client-ruby/issues/359)
+
+    Find object by the given condition.
+
+* Introduce `Algolia::Index.get_object_position` method. [359](https://github.com/algolia/algoliasearch-client-ruby/issues/359)
+
+    Retrieve the given object position in a set of results.
+
+* Introduce `Algolia.get_secured_api_key_remaining_validity` method. [361](https://github.com/algolia/algoliasearch-client-ruby/issues/361)
+
+    Returns the remaining validity time for the given API key in seconds.
+
+
 ## [1.26.1](https://github.com/algolia/algoliasearch-client-ruby/compare/1.26.0...1.26.1) (2019-07-31)
 
 ### Chore
