@@ -1295,6 +1295,11 @@ module Algolia
       return true
     end
 
+    #
+    # Aliases the exists method
+    #
+    alias :exists? :exists
+
     # Deprecated
     alias_method :get_user_key, :get_api_key
     alias_method :list_user_keys, :list_api_keys
