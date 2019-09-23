@@ -207,5 +207,9 @@ module Algolia
       "/2/abtests/#{ab_test}/stop"
     end
 
+    def Protocol.searches_uri
+      "/2/searches"
+    end
+
   end
 end

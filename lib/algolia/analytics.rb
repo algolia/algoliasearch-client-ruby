@@ -44,6 +44,10 @@ module Algolia
       @client.wait_task(index_name, taskID, time_before_retry, request_options)
     end
 
+    def top_searches(index)
+      perform_request(:GET, Protocol.searches_uri, index: index)
+    end
+
     private
 
     def perform_request(method, url, params = {}, data = {})
