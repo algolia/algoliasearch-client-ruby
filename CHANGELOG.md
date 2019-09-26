@@ -1,5 +1,11 @@
 # ChangeLog
 
+## [1.27.1](https://github.com/algolia/algoliasearch-client-ruby/compare/1.27.0...1.27.1) (2019-09-26)
+
+**Fixed**
+
+* Update `Algolia::Index.exists` method to `Algolia::Index.exists?`. [364](https://github.com/algolia/algoliasearch-client-ruby/issues/364)
+
 ## [1.27.0](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/1.27.0) (2019-09-16)
 
 **Added**
