@@ -7,8 +7,8 @@
 
   <p align="center">
     <a href="https://travis-ci.org/algolia/algoliasearch-client-ruby"><img src="https://img.shields.io/travis/algolia/algoliasearch-client-ruby/master.svg" alt="Build Status"></a>
-    <a href="https://rubygems.org/gems/algoliasearch/versions/1.26.0"><img src="https://badge.fury.io/rb/algoliasearch.svg" alt="Gem Version"></a>
-    <a href="https://rubygems.org/gems/algoliasearch/versions/1.26.0"><img src="https://img.shields.io/badge/licence-MIT-blue.svg" alt="License"></a>
+    <a href="https://rubygems.org/gems/algoliasearch"><img src="https://badge.fury.io/rb/algoliasearch.svg" alt="Gem Version"></a>
+    <a href="https://rubygems.org/gems/algoliasearch"><img src="https://img.shields.io/badge/licence-MIT-blue.svg" alt="License"></a>
   </p>
 </p>
 
