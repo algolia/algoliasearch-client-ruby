@@ -177,12 +177,12 @@ describe 'Client' do
 
   it "should tell if index exists" do
     @index.add_object!({ :name => "John Doe", :email => "john@doe.org" }, "1")
-    expect(@index.exists).to be true
+    expect(@index.exists?).to be true
   end
 
   it "should tell if index does not exist" do
     index = Algolia::Index.new('nonexistent_index')
-    expect(index.exists).to be false
+    expect(index.exists?).to be false
   end
 
   it "should add a simple object" do
