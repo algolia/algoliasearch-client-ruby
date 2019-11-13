@@ -197,6 +197,10 @@ module Algolia
       "/#{VERSION}/clusters/mapping/search"
     end
 
+    def Protocol.pending_mappings_uri(retrieve_mappings)
+      "/#{VERSION}/clusters/mapping/pending?getClusters=#{CGI.escape(retrieve_mappings.to_s)}"
+    end
+
     def Protocol.ab_tests_uri(ab_test = nil)
       ab_test = "/#{ab_test}" if ab_test
 

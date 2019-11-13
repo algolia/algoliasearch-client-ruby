@@ -558,6 +558,14 @@ module Algolia
       post(Protocol.search_user_id_uri, body.to_json, :read, request_options)
     end
 
+    #
+    # @param retrieve_mappings the admin API Key you can find in your dashboard
+    # @param request_options contains extra parameters to send with your query
+    #
+    def has_pending_mappings(retrieve_mappings, request_options = {})
+      get(Protocol.pending_mappings_uri(retrieve_mappings), :read, request_options)
+    end
+
     # Perform an HTTP request for the given uri and method
     # with common basic response handling. Will raise a
     # AlgoliaProtocolError if the response has an error status code,

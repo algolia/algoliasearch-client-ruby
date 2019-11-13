@@ -79,4 +79,20 @@ describe 'Multi Cluster Management', :mcm => true do
     res["deletedAt"].should_not eq(nil)
   end
 
+  it "should tell if pending mappings exist and retrieve their mappings" do
+    res = auto_retry do
+      @client.has_pending_mappings(true)
+    end
+    expect(res["pending"]).to be true
+    expect(res.has_key?("clusters")).to be true
+  end
+
+  it "should tell if pending mappings exist" do
+    res = auto_retry do
+      @client.has_pending_mappings(false)
+    end
+    expect(res["pending"]).to be true
+    expect(res.has_key?("clusters")).to be false
+  end
+
 end
