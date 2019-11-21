@@ -83,6 +83,7 @@ describe 'Multi Cluster Management', :mcm => true do
     res = auto_retry do
       @client.has_pending_mappings(true)
     end
+    expect(res).not_to be nil
     expect(res["pending"]).to be true
     expect(res.has_key?("clusters")).to be true
   end
