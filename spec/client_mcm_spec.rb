@@ -90,7 +90,7 @@ describe 'Multi Cluster Management', :mcm => true do
 
   it "should tell if pending mappings exist" do
     res = auto_retry do
-      @client.has_pending_mappings(false)
+      @client.has_pending_mappings
     end
     expect(res["pending"]).to be true
     expect(res.has_key?("clusters")).to be false

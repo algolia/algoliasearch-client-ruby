@@ -562,7 +562,7 @@ module Algolia
     # @param retrieve_mappings the admin API Key you can find in your dashboard
     # @param request_options contains extra parameters to send with your query
     #
-    def has_pending_mappings(retrieve_mappings, request_options = {})
+    def has_pending_mappings(retrieve_mappings = false, request_options = {})
       get(Protocol.pending_mappings_uri(retrieve_mappings), :read, request_options)
     end
 
