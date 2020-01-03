@@ -1,5 +1,5 @@
 module RetryOutcomeType
-  SUCCESS = 'SUCCESS'
-  RETRY = 'RETRY'
-  FAILURE = 'FAILURE'
+  SUCCESS = 'SUCCESS'.freeze
+  RETRY = 'RETRY'.freeze
+  FAILURE = 'FAILURE'.freeze
 end

@@ -1,4 +1,5 @@
 module Algoliasearch
+  # Class StatefulHost
   class StatefulHost
     include CallType
 
@@ -7,6 +8,13 @@ module Algoliasearch
 
     TTL = 300
 
+    #
+    # @param url [String] host url
+    # @option options [binary] :accept accept type flag
+    # @option options [DateTime] :last_use last usage date
+    # @option options [Integer] :retry_count number of retries
+    # @option options [Boolean] :up host status
+    #
     def initialize(url, options = {})
       @url = url
       @accept = options[:accept] || (READ | WRITE)

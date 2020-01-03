@@ -4,9 +4,16 @@ require 'json'
 module Algoliasearch
   # Class AlgoliaConfig
   class AlgoliaConfig
-    include CallType
     attr_accessor :app_id, :api_key, :default_hosts, :custom_hosts, :default_headers, :batch_size, :read_timeout, :write_timeout, :connect_timeout, :compression_type
 
+    #
+    # @option options [String] :app_id
+    # @option options [String] :api_key
+    # @option options [Integer] :batch_size
+    # @option options [Integer] :read_timeout
+    # @option options [Integer] :write_timeout
+    # @option options [Integer] :connect_timeout
+    #
     def initialize(options = {})
       @app_id = options[:app_id] || ENV['ALGOLIA_APP_ID']
       @api_key = options[:api_key] || ENV['ALGOLIA_API_KEY']
