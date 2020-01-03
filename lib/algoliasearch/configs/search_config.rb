@@ -1,6 +1,8 @@
 require 'faraday'
 require 'json'
 
+require 'algoliasearch/enums/call_type'
+
 module Algoliasearch
   # Class Client
   class SearchConfig < AlgoliaConfig
