@@ -1,9 +1,9 @@
-module Algolia
-
+module Algoliasearch
   # Base exception class for errors thrown by the Algolia
   # client library. AlgoliaError will be raised by any
   # network operation if Algolia.init() has not been called.
-  class AlgoliaError < StandardError #Exception ... why? A:http://www.skorks.com/2009/09/ruby-exceptions-and-exception-handling/
+  # Exception ... why? A:http://www.skorks.com/2009/09/ruby-exceptions-and-exception-handling/
+  class AlgoliaError < StandardError
   end
 
   # An exception class raised when the REST API returns an error.
@@ -27,5 +27,4 @@ module Algolia
   # An exception class raised when the validUntil parameter is not found
   class ValidUntilNotFoundError < AlgoliaError
   end
-
 end

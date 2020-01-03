@@ -1,84 +1,45 @@
-# -*- encoding: utf-8 -*-
-
 require 'date'
-require File.join(File.dirname(__FILE__), 'lib', 'algolia', 'version')
 
-Gem::Specification.new do |s|
-  s.name        = "algoliasearch"
-  s.version     = Algolia::VERSION
-  s.authors     = ["Algolia"]
-  s.email       = "contact@algolia.com"
+lib = File.expand_path('lib', __dir__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'algoliasearch/version'
 
-  s.date        = Date.today
-  s.licenses    = ["MIT"]
-  s.summary     = "A simple Ruby client for the algolia.com REST API"
-  s.description = "A simple Ruby client for the algolia.com REST API"
-  s.homepage    = "https://github.com/algolia/algoliasearch-client-ruby"
+Gem::Specification.new do |spec|
+  spec.name          = 'algoliasearch'
+  spec.version       = Algoliasearch::VERSION
+  spec.authors       = ['Chloe Liban']
+  spec.email         = ['chloe.liban@gmail.com']
 
-  s.metadata = {
-    "bug_tracker_uri"   => "https://github.com/algolia/algoliasearch-client-ruby/issues",
-    "changelog_uri"     => "https://github.com/algolia/algoliasearch-client-ruby/blob/master/CHANGELOG.md",
-    "documentation_uri" => "http://www.rubydoc.info/gems/algoliasearch",
-    "homepage_uri"      => "https://www.algolia.com/doc/api-client/ruby/getting-started/",
-    "source_code_uri"   => "https://github.com/algolia/algoliasearch-client-ruby"
-  }
+  spec.date        = Date.today
+  spec.licenses    = ['MIT']
+  spec.summary     = 'A simple Ruby client for the algolia.com REST API'
+  spec.description = 'A simple Ruby client for the algolia.com REST API'
 
-  s.require_paths = ["lib"]
-  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-
-  s.extra_rdoc_files = [
-    "CHANGELOG.md",
-    "LICENSE",
-    "README.md"
+  # Specify which files should be added to the gem when it is released.
+  # The `git ls-files -z` loads the files in the RubyGem
+  # that have been added into git.
+  spec.files = [
+    '.rspec',
+    '.travis.yml',
+    'Gemfile',
+    'Gemfile.lock',
+    'README.md',
+    'Rakefile',
+    'algoliasearch.gemspec',
+    'lib/algoliasearch/client.rb',
+    'lib/algoliasearch/search_config.rb',
+    'lib/algoliasearch/error.rb',
+    'lib/algoliasearch/index.rb',
+    'lib/algoliasearch/version.rb',
+    'spec/algoliasearch_spec.rb'
   ]
-  s.files = [
-    ".rspec",
-    ".travis.yml",
-    "CHANGELOG.md",
-    "Gemfile",
-    "Gemfile.lock",
-    "LICENSE",
-    "README.md",
-    "Rakefile",
-    "algoliasearch.gemspec",
-    "contacts.json",
-    "lib/algolia/analytics.rb",
-    "lib/algolia/account_client.rb",
-    "lib/algolia/client.rb",
-    "lib/algolia/error.rb",
-    "lib/algolia/index.rb",
-    "lib/algolia/insights.rb",
-    "lib/algolia/protocol.rb",
-    "lib/algolia/version.rb",
-    "lib/algolia/webmock.rb",
-    "lib/algoliasearch.rb",
-    "resources/ca-bundle.crt",
-    "spec/account_client_spec.rb",
-    "spec/client_spec.rb",
-    "spec/mock_spec.rb",
-    "spec/spec_helper.rb",
-    "spec/stub_spec.rb"
-  ]
+  spec.bindir        = 'exe'
+  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.require_paths = ['lib']
+  spec.add_runtime_dependency     'faraday', '~> 0.15'
+  spec.add_runtime_dependency     'json', '~> 1.5'
 
-  if s.respond_to? :specification_version then
-    s.specification_version = 4
-
-    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      if defined?(RUBY_VERSION) && RUBY_VERSION < '2.0'
-        s.add_runtime_dependency     'json',       '>= 1.5.1', '< 2.3'
-      else
-        s.add_runtime_dependency     'json',       '>= 1.5.1'
-      end
-      s.add_runtime_dependency     'httpclient', '~> 2.8', '>= 2.8.3'
-      s.add_development_dependency 'travis',     '~> 0'
-      s.add_development_dependency 'rake',       '~> 0'
-      s.add_development_dependency 'rdoc',       '~> 0'
-    else
-      s.add_dependency             'httpclient', '~> 2.8', '>= 2.8.3'
-      s.add_dependency             'json',       '>= 1.5.1', '< 2.3'
-    end
-  else
-    s.add_dependency               'httpclient', '~> 2.8', '>= 2.8.3'
-    s.add_dependency               'json',       '>= 1.5.1', '< 2.3'
-  end
+  spec.add_development_dependency 'bundler', '~> 2.0'
+  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rspec', '~> 3.0'
 end
