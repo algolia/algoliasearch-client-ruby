@@ -1,5 +1,9 @@
+# rspec failure tracking
+.rspec_status
+
 ## MAC OS
 .DS_Store
+.idea/
 
 ## TEXTMATE
 *.tmproj
@@ -19,6 +23,14 @@ rdoc
 pkg
 .rvmrc
 .rubocop.yml
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
 
 ## PROJECT::SPECIFIC
 Gemfile.lock
