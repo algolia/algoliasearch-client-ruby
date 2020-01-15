@@ -1,7 +1,7 @@
 require 'algoliasearch'
 
 include CallType, RetryOutcomeType
-RSpec.describe Algoliasearch::RetryStrategy do
+RSpec.describe Algoliasearch::Transport::RetryStrategy do
   shared_examples 'Reset' do |call_type, timeout|
     context 'when it resets expired hosts' do
       let(:app_id) { ENV['ALGOLIA_APPLICATION_ID'] }
@@ -10,9 +10,9 @@ RSpec.describe Algoliasearch::RetryStrategy do
 
       it 'resets expired hosts according to call_type' do
         stateful_hosts = []
-        stateful_hosts << Algoliasearch::StatefulHost.new("#{app_id}-4.algolianet.com", accept: READ | WRITE, up: true, last_use: Time.new)
-        stateful_hosts << Algoliasearch::StatefulHost.new("#{app_id}-5.algolianet.com", accept: READ | WRITE, up: false, last_use: Time.new)
-        stateful_hosts << Algoliasearch::StatefulHost.new("#{app_id}-6.algolianet.com", accept: READ | WRITE, up: true, last_use: Time.new)
+        stateful_hosts << Algoliasearch::Transport::StatefulHost.new("#{app_id}-4.algolianet.com", accept: READ | WRITE, up: true, last_use: Time.new)
+        stateful_hosts << Algoliasearch::Transport::StatefulHost.new("#{app_id}-5.algolianet.com", accept: READ | WRITE, up: false, last_use: Time.new)
+        stateful_hosts << Algoliasearch::Transport::StatefulHost.new("#{app_id}-6.algolianet.com", accept: READ | WRITE, up: true, last_use: Time.new)
 
         config.custom_hosts = stateful_hosts
         retry_strategy = described_class.new(config)
@@ -23,9 +23,9 @@ RSpec.describe Algoliasearch::RetryStrategy do
 
       it 'resets expired hosts according to call_type and timeout' do
         stateful_hosts = []
-        stateful_hosts << Algoliasearch::StatefulHost.new("#{app_id}-4.algolianet.com", accept: READ | WRITE, up: true, last_use: Time.new)
-        stateful_hosts << Algoliasearch::StatefulHost.new("#{app_id}-5.algolianet.com", accept: READ | WRITE, up: false, last_use: Time.new - timeout)
-        stateful_hosts << Algoliasearch::StatefulHost.new("#{app_id}-6.algolianet.com", accept: READ | WRITE, up: true, last_use: Time.new)
+        stateful_hosts << Algoliasearch::Transport::StatefulHost.new("#{app_id}-4.algolianet.com", accept: READ | WRITE, up: true, last_use: Time.new)
+        stateful_hosts << Algoliasearch::Transport::StatefulHost.new("#{app_id}-5.algolianet.com", accept: READ | WRITE, up: false, last_use: Time.new - timeout)
+        stateful_hosts << Algoliasearch::Transport::StatefulHost.new("#{app_id}-6.algolianet.com", accept: READ | WRITE, up: true, last_use: Time.new)
 
         config.custom_hosts = stateful_hosts
         retry_strategy = described_class.new(config)
