@@ -1,5 +1,6 @@
 require 'bundler/setup'
 require 'algoliasearch'
+require 'webmock/rspec'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -10,5 +11,13 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  config.before(:example, type: :request) do
+    WebMock.disable!
+  end
+
+  config.before(:example, type: :unit) do
+    WebMock.enable!
   end
 end
