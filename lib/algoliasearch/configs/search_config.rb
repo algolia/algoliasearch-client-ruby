@@ -9,7 +9,7 @@ module Algoliasearch
   # Class Client
   class SearchConfig < AlgoliaConfig
     include CallType
-    attr_accessor :app_id, :api_key, :headers, :default_hosts, :custom_hosts
+    attr_accessor :app_id, :api_key, :default_hosts, :custom_hosts
 
     # Initialize a config
     #
@@ -17,6 +17,7 @@ module Algoliasearch
     # @param api_key [String] API key
     #
     def initialize(app_id, api_key, opts = {})
+      super(opts)
       @app_id = app_id
       @api_key = api_key
 
@@ -31,13 +32,7 @@ module Algoliasearch
       stateful_hosts.shuffle!
 
       @default_hosts = hosts + stateful_hosts
-
-      @headers = {
-        Http::Protocol::HEADER_API_KEY => @api_key,
-        Http::Protocol::HEADER_APP_ID  => @app_id,
-        'Content-Type'           => 'application/json; charset=utf-8',
-        'User-Agent'             => DEFAULT_USER_AGENT.push(opts[:user_agent]).uniq.compact.join('; ')
-      }
+      @custom_hosts = opts[:custom_hosts] || nil
     end
   end
 end

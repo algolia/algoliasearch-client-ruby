@@ -48,6 +48,9 @@ module Algoliasearch
           tryable_host.last_use = Time.now
           RETRY
         elsif is_timed_out
+          tryable_host.up = true
+          tryable_host.last_use = Time.now
+          tryable_host.retry_count += 1
           RETRY
         else
           FAILURE

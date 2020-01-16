@@ -1,7 +1,7 @@
 require 'algoliasearch'
 
 include CallType, RetryOutcomeType
-RSpec.describe Algoliasearch::Transport::RetryStrategy do
+RSpec.describe Algoliasearch::Transport::RetryStrategy, type: :unit do
   shared_examples 'Reset' do |call_type, timeout|
     context 'when it resets expired hosts' do
       let(:app_id) { ENV['ALGOLIA_APPLICATION_ID'] }

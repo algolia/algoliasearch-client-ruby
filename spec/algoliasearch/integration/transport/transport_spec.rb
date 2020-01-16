@@ -1,7 +1,7 @@
 require 'algoliasearch'
 
 include CallType, RetryOutcomeType
-RSpec.describe Algoliasearch::Transport::Transport do
+RSpec.describe Algoliasearch::Transport::Transport, type: :request do
   context 'when using the transport layer' do
     let(:app_id) { ENV['ALGOLIA_APPLICATION_ID'] }
     let(:api_key) { ENV['ALGOLIA_API_KEY'] }
@@ -10,6 +10,7 @@ RSpec.describe Algoliasearch::Transport::Transport do
 
     it 'request succeeds' do
       response = transport.request(READ, :GET, Algoliasearch::Http::Protocol.indexes_uri)
+
       expect(response.body['items']).not_to be nil
     end
 
@@ -18,8 +19,10 @@ RSpec.describe Algoliasearch::Transport::Transport do
         Algoliasearch::Http::Protocol::HEADER_API_KEY => 'xxxxxxx',
         Algoliasearch::Http::Protocol::HEADER_APP_ID  => 'XXXX'
       }
-      response = transport.request(READ, :GET, Algoliasearch::Http::Protocol.indexes_uri, {}, {}, headers: custom_headers, test: 'test')
-      expect(response.body['items']).to be nil
+      response = transport.request(READ, :GET, Algoliasearch::Http::Protocol.indexes_uri, {}, {}, headers: custom_headers)
+
+      expect(response.error['message']).to eq('Invalid Application-ID or API key')
+      expect(response.status).to eq(403)
     end
   end
 end

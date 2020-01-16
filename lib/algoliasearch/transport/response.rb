@@ -1,17 +1,21 @@
 module Algoliasearch
   module Transport
     class Response
-      attr_reader :status, :body, :headers
+      attr_reader :status, :body, :error, :headers, :timed_out
 
       #
-      # @param status  [Integer] Response status code
-      # @param body    [String]  Response body
-      # @param headers [Hash]    Response headers
+      # @option status    [String]  Response status
+      # @option body    [String]  Response body
+      # @option error    [String]  Response error or caught error
+      # @option headers    [String]  Response headers
+      # @option timed_out    [String]  If the request has timed out
       #
-      def initialize(status, body, headers = {})
-        @status = status
-        @body = body
-        @headers = headers
+      def initialize(opts = {})
+        @status = opts[:status] || nil
+        @body = opts[:body] || nil
+        @error = opts[:error] || nil
+        @headers = opts[:headers] || nil
+        @timed_out = opts[:timed_out] || false
       end
     end
   end
