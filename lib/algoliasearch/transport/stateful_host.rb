@@ -7,8 +7,6 @@ module Algoliasearch
       attr_reader :url, :protocol, :accept
       attr_accessor :last_use, :retry_count, :up
 
-      TTL = 300
-
       #
       # @param url [String] host url
       # @option options [binary] :accept accept type flag
@@ -20,7 +18,7 @@ module Algoliasearch
         @url = url
         @protocol = options[:protocol] || 'https://'
         @accept = options[:accept] || (READ | WRITE)
-        @last_use = options[:last_use] || Time.now
+        @last_use = options[:last_use] || Time.now.utc
         @retry_count = options[:retry_count] || 0
         @up = options.has_key?(:up) ? options[:up] : true
       end

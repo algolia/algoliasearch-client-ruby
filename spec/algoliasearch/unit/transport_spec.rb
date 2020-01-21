@@ -8,8 +8,8 @@ RSpec.describe Algoliasearch::Transport::Transport, type: :unit do
     let(:config) do
       Algoliasearch::SearchConfig.new(app_id, api_key, custom_hosts:
         [
-          Algoliasearch::Transport::StatefulHost.new("#{app_id}-4.algolianet.com", accept: READ | WRITE, up: true, last_use: Time.new),
-          Algoliasearch::Transport::StatefulHost.new("#{app_id}-5.algolianet.com", accept: READ | WRITE, up: true, last_use: Time.new)
+          Algoliasearch::Transport::StatefulHost.new("#{app_id}-4.algolianet.com"),
+          Algoliasearch::Transport::StatefulHost.new("#{app_id}-5.algolianet.com")
         ])
     end
     let(:transport) { described_class.new(config) }
@@ -18,9 +18,9 @@ RSpec.describe Algoliasearch::Transport::Transport, type: :unit do
       stub_request(:any, "https://#{app_id}-4.algolianet.com" + Algoliasearch::Http::Protocol.indexes_uri)
         .to_return(body: '{}', status: 400, headers: {'Content-Length' => 3})
 
-      response = transport.request(READ, :GET, Algoliasearch::Http::Protocol.indexes_uri)
-      expect(response.error).not_to be nil
-      expect(config.custom_hosts.first.retry_count).to eq(0)
+      expect do
+        transport.request(READ, :GET, Algoliasearch::Http::Protocol.indexes_uri)
+      end.to raise_error(Algoliasearch::AlgoliaApiError)
     end
 
     it 'receives 500 and tries next host' do

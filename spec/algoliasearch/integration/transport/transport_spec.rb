@@ -16,13 +16,13 @@ RSpec.describe Algoliasearch::Transport::Transport, type: :request do
 
     it 'request fails with wrong credentials' do
       custom_headers = {
-        Algoliasearch::Http::Protocol::HEADER_API_KEY => 'xxxxxxx',
-        Algoliasearch::Http::Protocol::HEADER_APP_ID  => 'XXXX'
+        Defaults::HEADER_API_KEY => 'xxxxxxx',
+        Defaults::HEADER_APP_ID  => 'XXXX'
       }
-      response = transport.request(READ, :GET, Algoliasearch::Http::Protocol.indexes_uri, {}, {}, headers: custom_headers)
 
-      expect(response.error['message']).to eq('Invalid Application-ID or API key')
-      expect(response.status).to eq(403)
+      expect do
+        transport.request(READ, :GET, Algoliasearch::Http::Protocol.indexes_uri, {}, headers: custom_headers)
+      end.to raise_error(Algoliasearch::AlgoliaApiError)
     end
   end
 end
