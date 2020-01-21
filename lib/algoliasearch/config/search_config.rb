@@ -4,8 +4,6 @@ require 'json'
 require 'algoliasearch/enums/call_type'
 
 module Algoliasearch
-  DEFAULT_USER_AGENT = ["Algolia for Ruby (#{::Algoliasearch::VERSION})", "Ruby (#{RUBY_VERSION})"]
-
   # Class Client
   class SearchConfig < AlgoliaConfig
     include CallType
@@ -17,9 +15,9 @@ module Algoliasearch
     # @param api_key [String] API key
     #
     def initialize(app_id, api_key, opts = {})
+      opts[:app_id] = app_id
+      opts[:api_key] = api_key
       super(opts)
-      @app_id = app_id
-      @api_key = api_key
 
       hosts = []
       hosts << Transport::StatefulHost.new("#{app_id}-dsn.algolia.net", accept: READ, up: true, last_use: Time.new)

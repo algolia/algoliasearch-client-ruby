@@ -6,8 +6,6 @@ module Algoliasearch
       include RetryOutcomeType
       include CallType
 
-      DEFAULT_TRANSPORT_CLASS = Algoliasearch::Http::HttpRequester
-
       #
       # @param config [SearchConfig] config used for search
       # @param http_requester [Object] requester used for sending requests. Uses Algoliasearch::Http::HttpRequester by default
@@ -18,7 +16,8 @@ module Algoliasearch
         end
 
         @config = config
-        @http_requester = http_requester || DEFAULT_TRANSPORT_CLASS
+        requester_class = http_requester || Defaults::TRANSPORT_CLASS
+        @http_requester = requester_class.new
         @retry_strategy = RetryStrategy.new(config)
       end
 
@@ -26,30 +25,28 @@ module Algoliasearch
       # @param call_type [Binary] READ or WRITE operation
       # @param method [Symbol] method used for request
       # @param path [String] path of the request
-      # @param params [Hash] request parameters
       # @param body [Hash] request body
       # @param opts [Hash] optional request parameters
       #
       # @return [Response] response of the request
       #
-      def request(call_type, method, path, params = {}, body = {}, opts = {})
+      def request(call_type, method, path, body = {}, opts = {})
         @retry_strategy.get_tryable_hosts(call_type).each do |host|
-          requester = @http_requester.new
           opts[:timeout] ||= get_timeout(call_type).to_f * (host.retry_count + 1).to_f
           headers = generate_headers(opts)
-          opts.delete(:headers)
-          url = build_url(host, path)
 
-          response = requester.send_request(
+          response = @http_requester.send_request(
+            host,
             method.downcase,
-            url,
-            params,
+            path,
             Helpers.convert_to_json(body),
-            headers,
-            opts
+            headers
           )
           outcome = @retry_strategy.decide(host, response.status, response.timed_out)
 
+          if outcome == FAILURE
+            raise AlgoliaApiError.new(response.status, response.error)
+          end
           return response unless outcome == RETRY
         end
       end
@@ -70,17 +67,12 @@ module Algoliasearch
         headers
       end
 
-      # Build url from host, path and parameters
+      # Retrieves a timeout according to call_type
       #
-      # @param host [StatefulHost]
-      # @param path [String]
+      # @param call_type [Binary] requested call type
       #
-      # @return [String]
+      # @return [Integer]
       #
-      def build_url(host, path)
-        host.protocol + host.url + path
-      end
-
       def get_timeout(call_type)
         case call_type
         when READ

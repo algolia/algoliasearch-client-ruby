@@ -9,6 +9,7 @@ module Algoliasearch
       #
       def initialize(config)
         @hosts = config.custom_hosts || config.default_hosts
+        @lock = Mutex.new
       end
 
       # Retrieves the tryable hosts
@@ -18,15 +19,17 @@ module Algoliasearch
       # @return [Array] list of StatefulHost
       #
       def get_tryable_hosts(call_type)
-        reset_expired_hosts
+        @lock.synchronize do
+          reset_expired_hosts
 
-        if @hosts.any? { |host| host.up && has_flag(host.accept, call_type) }
-          @hosts.select { |host| host.up && has_flag(host.accept, call_type) }
-        else
-          @hosts.each do |host|
-            reset(host) if has_flag(host.accept, call_type)
+          if @hosts.any? { |host| host.up && flag?(host.accept, call_type) }
+            @hosts.select { |host| host.up && flag?(host.accept, call_type) }
+          else
+            @hosts.each do |host|
+              reset(host) if flag?(host.accept, call_type)
+            end
+            @hosts
           end
-          @hosts
         end
       end
 
@@ -39,32 +42,36 @@ module Algoliasearch
       # @return [Binary] retry outcome code
       #
       def decide(tryable_host, http_response_code, is_timed_out = false)
-        if !is_timed_out && is_success(http_response_code)
-          tryable_host.up = true
-          tryable_host.last_use = Time.now
-          SUCCESS
-        elsif !is_timed_out && is_retryable(http_response_code)
-          tryable_host.up = false
-          tryable_host.last_use = Time.now
-          RETRY
-        elsif is_timed_out
-          tryable_host.up = true
-          tryable_host.last_use = Time.now
-          tryable_host.retry_count += 1
-          RETRY
-        else
-          FAILURE
+        @lock.synchronize do
+          if !is_timed_out && success?(http_response_code)
+            tryable_host.up = true
+            tryable_host.last_use = Time.now.utc
+            SUCCESS
+          elsif !is_timed_out && retryable?(http_response_code)
+            tryable_host.up = false
+            tryable_host.last_use = Time.now.utc
+            RETRY
+          elsif is_timed_out
+            tryable_host.up = true
+            tryable_host.last_use = Time.now.utc
+            tryable_host.retry_count += 1
+            RETRY
+          else
+            FAILURE
+          end
         end
       end
 
       private
+
+      # add the mutex
 
       #
       # @param http_response_code [Integer]
       #
       # @return [Boolean]
       #
-      def is_success(http_response_code)
+      def success?(http_response_code)
         (http_response_code.to_i / 100).floor == 2
       end
 
@@ -73,7 +80,7 @@ module Algoliasearch
       #
       # @return [Boolean]
       #
-      def is_retryable(http_response_code)
+      def retryable?(http_response_code)
         (http_response_code.to_i / 100).floor != 2 && (http_response_code.to_i / 100).floor != 4
       end
 
@@ -82,8 +89,8 @@ module Algoliasearch
       #
       def reset_expired_hosts
         @hosts.each do |host|
-          host_last_usage = Time.now - host.last_use
-          reset(host) if !host.up && host_last_usage.to_i > StatefulHost::TTL
+          host_last_usage = Time.now.utc - host.last_use
+          reset(host) if !host.up && host_last_usage.to_i > Defaults::TTL
         end
       end
 
@@ -95,7 +102,7 @@ module Algoliasearch
       def reset(host)
         host.up = true
         host.retry_count = 0
-        host.last_use = Time.now
+        host.last_use = Time.now.utc
       end
 
       #
@@ -106,7 +113,7 @@ module Algoliasearch
       #
       # @return [Boolean]
       #
-      def has_flag(item, flag)
+      def flag?(item, flag)
         (item & (1 << (flag - 1))) > 0
       end
     end
