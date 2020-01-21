@@ -86,38 +86,4 @@ RSpec.describe Algoliasearch::Transport::RetryStrategy, type: :unit do
     include_examples 'Decide', READ, 200, false, SUCCESS, 4
     include_examples 'Decide', READ, 200, false, SUCCESS, 4
   end
-
-  describe 'use threads' do
-    let(:app_id) { ENV['ALGOLIA_APPLICATION_ID'] }
-    let(:api_key) { ENV['ALGOLIA_ADMIN_KEY'] }
-    let(:config) { Algoliasearch::SearchConfig.new(app_id, api_key) }
-    let(:hosts) do
-      7.times.collect do |i|
-        if i.even?
-          Algoliasearch::Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", up: false, last_use: Time.new.utc - 1000)
-        else
-          Algoliasearch::Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com")
-        end
-      end
-    end
-
-    # TODO
-    it 'uses threads de ouf' do
-      config.custom_hosts = hosts
-      retry_strategy = described_class.new(config)
-
-      expect(10.times.collect do
-        threads = []
-        20.times do
-          thr = Thread.new do
-            Thread.current[:hosts] = retry_strategy.get_tryable_hosts(READ)
-          end
-          threads << thr
-        end
-        threads.map(&:join)
-        res = threads.map { |t| t.value.length }
-        res.uniq
-      end).to eq([[7], [7], [7], [7], [7], [7], [7], [7], [7], [7]])
-    end
-  end
 end

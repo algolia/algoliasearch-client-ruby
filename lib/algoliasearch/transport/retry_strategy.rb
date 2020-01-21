@@ -64,8 +64,6 @@ module Algoliasearch
 
       private
 
-      # add the mutex
-
       #
       # @param http_response_code [Integer]
       #

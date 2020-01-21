@@ -8,9 +8,13 @@ module Algoliasearch
       #
       # @param http_client [Object] client used to make requests. Defaults to Faraday
       #
-      def initialize(http_client = nil)
+      def initialize(config, http_client = nil)
+        @hosts = config.custom_hosts || config.default_hosts
         @http_client = http_client || Faraday
         @connections = {}
+        @hosts.each do |host|
+          @connections[host.url] = Faraday.new(build_url(host))
+        end
       end
 
       # Sends request to the engine
@@ -36,18 +40,14 @@ module Algoliasearch
           Transport::Response.new(error: e.response, timed_out: true)
       end
 
+      # Retrieve the connection from the @connections
+      #
+      # @param host [StatefulHost]
+      #
+      # @return [Faraday::Connection]
+      #
       def get_connection(host)
-        build_connection(host) unless @connections.has_key?(host.url)
-      end
-
-      # Build the actual connection
-      #
-      # @param host [String]
-      #
-      # @return [Faraday::Connection] new connection
-      #
-      def build_connection(host)
-        @connections[host.url] = Faraday.new(build_url(host))
+        @connections[host.url]
       end
 
       # Build url from host, path and parameters
