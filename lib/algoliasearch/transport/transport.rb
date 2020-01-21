@@ -17,7 +17,7 @@ module Algoliasearch
 
         @config = config
         requester_class = http_requester || Defaults::TRANSPORT_CLASS
-        @http_requester = requester_class.new
+        @http_requester = requester_class.new(config)
         @retry_strategy = RetryStrategy.new(config)
       end
 
