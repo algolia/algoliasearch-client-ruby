@@ -1,5 +1,5 @@
 module Defaults
-  TRANSPORT_CLASS = Algoliasearch::Http::HttpRequester
+  REQUESTER_CLASS = Algoliasearch::Http::HttpRequester
   TTL = 300
   # The version of the REST API implemented by this module.
   VERSION = 1

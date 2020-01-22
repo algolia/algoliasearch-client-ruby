@@ -16,7 +16,7 @@ module Algoliasearch
         end
 
         @config = config
-        requester_class = http_requester || Defaults::TRANSPORT_CLASS
+        requester_class = http_requester || Defaults::REQUESTER_CLASS
         @http_requester = requester_class.new(config)
         @retry_strategy = RetryStrategy.new(config)
       end
@@ -33,14 +33,14 @@ module Algoliasearch
       def request(call_type, method, path, body = {}, opts = {})
         @retry_strategy.get_tryable_hosts(call_type).each do |host|
           opts[:timeout] ||= get_timeout(call_type).to_f * (host.retry_count + 1).to_f
-          headers = generate_headers(opts)
+          request = build_request(method, path, body, opts)
 
           response = @http_requester.send_request(
             host,
-            method.downcase,
-            path,
-            Helpers.convert_to_json(body),
-            headers
+            request[:method],
+            request[:path],
+            request[:body],
+            request[:headers]
           )
           outcome = @retry_strategy.decide(host, response.status, response.timed_out)
 
@@ -52,6 +52,15 @@ module Algoliasearch
       end
 
       private
+
+      def build_request(method, path, body, opts)
+        request = {}
+        request[:method] = method.downcase
+        request[:path] = path
+        request[:body] = Helpers.convert_to_json(body)
+        request[:headers] = generate_headers(opts)
+        request
+      end
 
       # Generates headers from config headers and optional parameters
       #
