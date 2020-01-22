@@ -22,7 +22,7 @@ module Algoliasearch
 
       # Construct a uri referencing a given Algolia index
       def self.index_uri(index)
-        "/#{Defaults::VERSION}/indexes/#{Defaults::CGI.escape(index)}"
+        "/#{Defaults::VERSION}/indexes/#{CGI.escape(index)}"
       end
 
       def self.batch_uri(index = nil)
@@ -39,12 +39,12 @@ module Algoliasearch
 
       def self.object_uri(index, object_id, params = {})
         params = params.nil? || params.empty? ? '' : "?#{to_query(params)}"
-        "#{index_uri(index)}/#{Defaults::CGI.escape(object_id.to_s)}#{params}"
+        "#{index_uri(index)}/#{CGI.escape(object_id.to_s)}#{params}"
       end
 
       def self.search_uri(index, query, params = {})
         params = params.nil? || params.empty? ? '' : "&#{to_query(params)}"
-        "#{index_uri(index)}?query=#{Defaults::CGI.escape(query)}&#{params}"
+        "#{index_uri(index)}?query=#{CGI.escape(query)}&#{params}"
       end
 
       def self.search_post_uri(index)
@@ -57,12 +57,12 @@ module Algoliasearch
       end
 
       def self.search_facet_uri(index, facet)
-        "#{index_uri(index)}/facets/#{Defaults::CGI.escape(facet)}/query"
+        "#{index_uri(index)}/facets/#{CGI.escape(facet)}/query"
       end
 
       def self.partial_object_uri(index, object_id, create_if_not_exits = true)
         params = create_if_not_exits ? '' : '?createIfNotExists=false'
-        "#{index_uri(index)}/#{Defaults::CGI.escape(object_id.to_s)}/partial#{params}"
+        "#{index_uri(index)}/#{CGI.escape(object_id.to_s)}/partial#{params}"
       end
 
       def self.settings_uri(index, params = {})
@@ -100,7 +100,7 @@ module Algoliasearch
 
       def self.to_query(params)
         params.map do |k, v|
-          "#{Defaults::CGI.escape(k.to_s)}=#{Defaults::CGI.escape(v.to_s)}"
+          "#{CGI.escape(k.to_s)}=#{CGI.escape(v.to_s)}"
         end.join('&')
       end
 
@@ -109,7 +109,7 @@ module Algoliasearch
       end
 
       def self.synonym_uri(index, object_id)
-        "#{synonyms_uri(index)}/#{Defaults::CGI.escape(object_id.to_s)}"
+        "#{synonyms_uri(index)}/#{CGI.escape(object_id.to_s)}"
       end
 
       def self.search_synonyms_uri(index)
@@ -129,7 +129,7 @@ module Algoliasearch
       end
 
       def self.rule_uri(index, object_id)
-        "#{rules_uri(index)}/#{Defaults::CGI.escape(object_id.to_s)}"
+        "#{rules_uri(index)}/#{CGI.escape(object_id.to_s)}"
       end
 
       def self.search_rules_uri(index)
@@ -157,13 +157,13 @@ module Algoliasearch
       end
 
       def self.cluster_mapping_uri(user_id = nil)
-        user_id = "/#{Defaults::CGI.escape(user_id)}" if user_id
+        user_id = "/#{CGI.escape(user_id)}" if user_id
 
         "/#{Defaults::VERSION}/clusters/mapping" + user_id.to_s
       end
 
       def self.list_ids_uri(page, hits_per_page)
-        Protocol.cluster_mapping_uri + "?page=#{Defaults::CGI.escape(page.to_s)}&hitsPerPage=#{Defaults::CGI.escape(hits_per_page.to_s)}"
+        Protocol.cluster_mapping_uri + "?page=#{CGI.escape(page.to_s)}&hitsPerPage=#{CGI.escape(hits_per_page.to_s)}"
       end
 
       def self.cluster_top_user_uri

@@ -3,8 +3,6 @@ module Algoliasearch
     class HttpRequester
       attr_accessor :http_client, :connections
 
-      # type object not perfect
-      #
       #
       # @param http_client [Object] client used to make requests. Defaults to Faraday
       #
@@ -47,6 +45,9 @@ module Algoliasearch
       # @return [Faraday::Connection]
       #
       def get_connection(host)
+        if @connections[host.url].nil?
+          raise AlgoliaError, 'Unknown host provided'
+        end
         @connections[host.url]
       end
 
