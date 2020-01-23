@@ -11,10 +11,10 @@ module Algoliasearch
       # @option timed_out    [String]  If the request has timed out
       #
       def initialize(opts = {})
-        @status = opts[:status] || nil
-        @body = opts[:body] || nil
-        @error = opts[:error] || nil
-        @headers = opts[:headers] || nil
+        @status    = opts[:status] || nil
+        @body      = opts[:body] || nil
+        @error     = opts[:error] || nil
+        @headers   = opts[:headers] || nil
         @timed_out = opts[:timed_out] || false
       end
     end

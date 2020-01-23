@@ -6,7 +6,7 @@ RSpec.describe Algoliasearch::Transport::RetryStrategy, type: :unit do
     context 'when it resets expired hosts' do
       let(:app_id) { ENV['ALGOLIA_APPLICATION_ID'] }
       let(:api_key) { ENV['ALGOLIA_ADMIN_KEY'] }
-      let(:config) { Algoliasearch::SearchConfig.new(app_id, api_key) }
+      let(:config) { Algoliasearch::SearchConfig.new(app_id: app_id, api_key: api_key) }
 
       it 'resets expired hosts according to call_type' do
         stateful_hosts = []
@@ -15,7 +15,7 @@ RSpec.describe Algoliasearch::Transport::RetryStrategy, type: :unit do
         stateful_hosts << Algoliasearch::Transport::StatefulHost.new("#{app_id}-6.algolianet.com")
 
         config.custom_hosts = stateful_hosts
-        retry_strategy = described_class.new(config)
+        retry_strategy      = described_class.new(config)
 
         hosts = retry_strategy.get_tryable_hosts(call_type)
         expect(hosts.length).to be 2
@@ -28,7 +28,7 @@ RSpec.describe Algoliasearch::Transport::RetryStrategy, type: :unit do
         stateful_hosts << Algoliasearch::Transport::StatefulHost.new("#{app_id}-6.algolianet.com")
 
         config.custom_hosts = stateful_hosts
-        retry_strategy = described_class.new(config)
+        retry_strategy      = described_class.new(config)
 
         hosts = retry_strategy.get_tryable_hosts(call_type)
         expect(hosts.length).to be 3
@@ -45,7 +45,7 @@ RSpec.describe Algoliasearch::Transport::RetryStrategy, type: :unit do
   end
 
   shared_examples 'Decide' do |call_type, http_response_code, is_timed_out, retry_outcome_code, hosts_length|
-    let(:config) { Algoliasearch::SearchConfig.new('app_id', 'api_key') }
+    let(:config) { Algoliasearch::SearchConfig.new(app_id: 'app_id', api_key: 'api_key') }
 
     it "tests response for call type #{call_type} and HTTP code #{http_response_code}" do
       retry_strategy = described_class.new(config)

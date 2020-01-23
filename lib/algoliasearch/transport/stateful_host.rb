@@ -15,12 +15,12 @@ module Algoliasearch
       # @option options [Boolean] :up host status
       #
       def initialize(url, options = {})
-        @url = url
-        @protocol = options[:protocol] || 'https://'
-        @accept = options[:accept] || (READ | WRITE)
-        @last_use = options[:last_use] || Time.now.utc
+        @url         = url
+        @protocol    = options[:protocol] || 'https://'
+        @accept      = options[:accept] || (READ | WRITE)
+        @last_use    = options[:last_use] || Time.now.utc
         @retry_count = options[:retry_count] || 0
-        @up = options.has_key?(:up) ? options[:up] : true
+        @up          = options.has_key?(:up) ? options[:up] : true
       end
     end
   end

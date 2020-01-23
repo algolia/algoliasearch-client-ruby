@@ -9,7 +9,7 @@ module Algoliasearch
       #
       def initialize(config)
         @hosts = config.custom_hosts || config.default_hosts
-        @lock = Mutex.new
+        @lock  = Mutex.new
       end
 
       # Retrieves the tryable hosts
@@ -44,16 +44,16 @@ module Algoliasearch
       def decide(tryable_host, http_response_code, is_timed_out = false)
         @lock.synchronize do
           if !is_timed_out && success?(http_response_code)
-            tryable_host.up = true
+            tryable_host.up       = true
             tryable_host.last_use = Time.now.utc
             SUCCESS
           elsif !is_timed_out && retryable?(http_response_code)
-            tryable_host.up = false
+            tryable_host.up       = false
             tryable_host.last_use = Time.now.utc
             RETRY
           elsif is_timed_out
-            tryable_host.up = true
-            tryable_host.last_use = Time.now.utc
+            tryable_host.up           = true
+            tryable_host.last_use     = Time.now.utc
             tryable_host.retry_count += 1
             RETRY
           else
@@ -98,9 +98,9 @@ module Algoliasearch
       # @param host [StatefulHost]
       #
       def reset(host)
-        host.up = true
+        host.up          = true
         host.retry_count = 0
-        host.last_use = Time.now.utc
+        host.last_use    = Time.now.utc
       end
 
       #
