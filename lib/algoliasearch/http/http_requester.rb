@@ -4,14 +4,18 @@ module Algoliasearch
       attr_accessor :http_client, :connections
 
       #
-      # @param http_client [Object] client used to make requests. Defaults to Faraday
+      # @param config [SearchConfig]
+      # @option adapter [String] adapter used to make requests. Defaults to Net::Http
       #
-      def initialize(config, http_client = nil)
-        @hosts = config.custom_hosts || config.default_hosts
-        @http_client = http_client || Faraday
+      def initialize(config, opts)
+        @hosts  = config.custom_hosts || config.default_hosts
+        adapter = opts[:adapter] || Faraday.default_adapter
+
         @connections = {}
         @hosts.each do |host|
-          @connections[host.url] = Faraday.new(build_url(host))
+          @connections[host.url] = Faraday.new(build_url(host), request: {open_timeout: config.connect_timeout}) do |f|
+            f.adapter adapter.to_sym
+          end
         end
       end
 
@@ -25,9 +29,10 @@ module Algoliasearch
       #
       # @return [Transport::Response]
       #
-      def send_request(host, method, path, body, headers)
-        connection = get_connection(host)
-        response = connection.run_request(method, path, body, headers)
+      def send_request(host, method, path, body, headers, timeout)
+        connection                 = get_connection(host)
+        connection.options.timeout = timeout
+        response                   = connection.run_request(method, path, body, headers)
 
         if response.success?
           return Transport::Response.new(status: response.status, body: MultiJson.load(response.body), headers: response.headers)

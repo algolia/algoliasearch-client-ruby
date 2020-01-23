@@ -5,7 +5,6 @@ module Algoliasearch
 
     attr_reader :index_name, :transporter, :config
 
-
     # Initialize an index
     #
     # @param index_name [String] name of the index
@@ -13,9 +12,9 @@ module Algoliasearch
     # @param config [nil, Config] a Config object which contains your APP_ID and API_KEY
     #
     def initialize(index_name, transporter, config)
-      @index_name = index_name
+      @index_name  = index_name
       @transporter = transporter
-      @config = config
+      @config      = config
     end
 
     # Perform a search on the index
@@ -25,13 +24,13 @@ module Algoliasearch
     # @return res
     #
     def search(query, params = {}, opts = {})
-      encoded_params = Hash[params.map { |k, v| [k.to_s, v.is_a?(Array) ? v.to_json : v] }]
+      encoded_params         = Hash[params.map { |k, v| [k.to_s, v.is_a?(Array) ? MultiJson.load(v) : v] }]
       encoded_params[:query] = query
       @transporter.request(
         READ,
         :POST,
         Http::Protocol.search_post_uri(@index_name),
-        { params: Http::Protocol.to_query(encoded_params) }.to_json,
+        {params: Http::Protocol.to_query(encoded_params)}.to_json,
         opts
       )
     end
@@ -58,14 +57,13 @@ module Algoliasearch
     end
 
     private
+
     def check_object(object, in_array = false)
       case object
       when Array
-        raise ArgumentError.new(in_array ? 'argument must be an array of objects' : 'argument must not be an array')
+        raise ArgumentError, in_array ? 'argument must be an array of objects' : 'argument must not be an array'
       when String, Integer, Float, TrueClass, FalseClass, NilClass
-        raise ArgumentError.new("argument must be an #{'array of' if in_array} object, got: #{object.inspect}")
-      else
-        # ok
+        raise ArgumentError, "argument must be an #{'array of' if in_array} object, got: #{object.inspect}"
       end
     end
   end

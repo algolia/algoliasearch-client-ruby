@@ -6,7 +6,7 @@ RSpec.describe Algoliasearch::Transport::Transport, type: :unit do
     let(:app_id) { 'app_id' }
     let(:api_key) { 'api_key' }
     let(:config) do
-      Algoliasearch::SearchConfig.new(app_id, api_key, custom_hosts:
+      Algoliasearch::SearchConfig.new(app_id: app_id, api_key: api_key, custom_hosts:
         [
           Algoliasearch::Transport::StatefulHost.new("#{app_id}-4.algolianet.com"),
           Algoliasearch::Transport::StatefulHost.new("#{app_id}-5.algolianet.com")

@@ -8,16 +8,17 @@ module Algoliasearch
 
       #
       # @param config [SearchConfig] config used for search
-      # @param http_requester [Object] requester used for sending requests. Uses Algoliasearch::Http::HttpRequester by default
+      # @param http_requester [String] requester used for sending requests. Uses Algoliasearch::Http::HttpRequester by default
+      # @option adapter [String] adapter used for sending requests, if needed. Uses Faraday.default_adapter by default
       #
-      def initialize(config, http_requester = nil)
+      def initialize(config, http_requester = nil, opts = {})
         if config.nil?
           raise ArgumentError, 'Please provide a search config'
         end
 
-        @config = config
+        @config         = config
         requester_class = http_requester || Defaults::REQUESTER_CLASS
-        @http_requester = requester_class.new(config)
+        @http_requester = requester_class.new(config, opts)
         @retry_strategy = RetryStrategy.new(config)
       end
 
@@ -32,7 +33,7 @@ module Algoliasearch
       #
       def request(call_type, method, path, body = {}, opts = {})
         @retry_strategy.get_tryable_hosts(call_type).each do |host|
-          opts[:timeout] ||= get_timeout(call_type).to_f * (host.retry_count + 1).to_f
+          timeout = opts[:timeout] ||= get_timeout(call_type).to_f * (host.retry_count + 1).to_f
           request = build_request(method, path, body, opts)
 
           response = @http_requester.send_request(
@@ -40,9 +41,10 @@ module Algoliasearch
             request[:method],
             request[:path],
             request[:body],
-            request[:headers]
+            request[:headers],
+            timeout
           )
-          outcome = @retry_strategy.decide(host, response.status, response.timed_out)
+          outcome  = @retry_strategy.decide(host, response.status, response.timed_out)
 
           if outcome == FAILURE
             raise AlgoliaApiError.new(response.status, response.error)
@@ -54,10 +56,10 @@ module Algoliasearch
       private
 
       def build_request(method, path, body, opts)
-        request = {}
-        request[:method] = method.downcase
-        request[:path] = path
-        request[:body] = Helpers.convert_to_json(body)
+        request           = {}
+        request[:method]  = method.downcase
+        request[:path]    = path
+        request[:body]    = Helpers.convert_to_json(body)
         request[:headers] = generate_headers(opts)
         request
       end
@@ -69,10 +71,10 @@ module Algoliasearch
       # @return [Array] merged headers
       #
       def generate_headers(opts = {})
-        headers = {}
-        extra_headers = opts[:headers] || opts['headers'] || {}
+        headers                                                     = {}
+        extra_headers                                               = opts[:headers] || opts['headers'] || {}
         @config.default_headers.each { |key, val| headers[key.to_s] = val }
-        extra_headers.each { |key, val| headers[key.to_s] = val }
+        extra_headers.each { |key, val| headers[key.to_s]           = val }
         headers
       end
 

@@ -14,7 +14,7 @@ module Algoliasearch
     attr_accessor :message
 
     def initialize(code, message)
-      self.code = code
+      self.code    = code
       self.message = message
       super("#{self.code}: #{self.message}")
     end
