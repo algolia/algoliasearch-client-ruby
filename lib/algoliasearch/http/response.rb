@@ -1,5 +1,5 @@
 module Algoliasearch
-  module Transport
+  module Http
     class Response
       attr_reader :status, :body, :error, :headers, :timed_out
 

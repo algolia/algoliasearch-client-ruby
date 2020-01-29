@@ -29,4 +29,21 @@ module Defaults
   USER_AGENT      = ["Algolia for Ruby (#{::Algoliasearch::VERSION})", "Ruby (#{RUBY_VERSION})"]
 
   TIMED_OUT_STATUS = 408
+
+  VALID_HEADERS = %w(
+    Content-type
+    User-Agent
+    X-Algolia-USER-ID
+    X-Forwarded-For
+  )
+
+  VALID_QUERY_PARAMS = %w(
+    forwardToReplicas
+    replaceExistingSynonyms
+    getVersion
+    createIfNotExists
+    clearExistingRules
+  )
+
+  WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY = 100
 end

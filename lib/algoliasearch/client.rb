@@ -1,5 +1,4 @@
 require 'faraday'
-require 'json'
 
 module Algoliasearch
   # Class Client
@@ -26,11 +25,11 @@ module Algoliasearch
     # @return [Index] new Index instance
     #
     def init_index(index_name)
-      name = index_name.gsub(/\s+/, '')
-      if name.nil?
+      index_name.strip!
+      if index_name.nil?
         raise ArgumentError, 'Please provide a valid index name'
       end
-      Index.new(name, @transporter, @config)
+      Index.new(index_name, @transporter, @config)
     end
   end
 end
