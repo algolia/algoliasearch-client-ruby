@@ -31,7 +31,7 @@ RSpec.describe Algoliasearch::Transport::Transport, type: :unit do
         .to_return(body: '{"items": "abc"}', status: 200, headers: {'Content-Length' => 3})
 
       response = transport.request(READ, :GET, Algoliasearch::Http::Protocol.indexes_uri)
-      expect(response.body['items']).to eq('abc')
+      expect(response['items']).to eq('abc')
       expect(config.custom_hosts.first.retry_count).to eq(0)
     end
 
@@ -43,7 +43,7 @@ RSpec.describe Algoliasearch::Transport::Transport, type: :unit do
         .to_return(body: '{"items": "abc"}', status: 200, headers: {'Content-Length' => 3})
 
       response = transport.request(READ, :GET, Algoliasearch::Http::Protocol.indexes_uri)
-      expect(response.body['items']).to eq('abc')
+      expect(response['items']).to eq('abc')
       expect(config.custom_hosts.first.retry_count).to eq(1)
     end
 
@@ -55,7 +55,7 @@ RSpec.describe Algoliasearch::Transport::Transport, type: :unit do
         .to_return(body: '{"items": "abc"}', status: 200, headers: {'Content-Length' => 3})
 
       response = transport.request(READ, :GET, Algoliasearch::Http::Protocol.indexes_uri)
-      expect(response.body['items']).to eq('def')
+      expect(response['items']).to eq('def')
       expect(config.custom_hosts.first.retry_count).to eq(0)
     end
   end

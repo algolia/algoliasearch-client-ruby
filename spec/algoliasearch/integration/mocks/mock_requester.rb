@@ -21,7 +21,7 @@ class MockRequester
       success: true
     }
 
-    Algoliasearch::Transport::Response.new(
+    Algoliasearch::Http::Response.new(
       status: response[:status],
       body: response[:body],
       headers: response[:headers]

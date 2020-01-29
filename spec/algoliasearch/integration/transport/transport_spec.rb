@@ -11,7 +11,7 @@ RSpec.describe Algoliasearch::Transport::Transport, type: :request do
     it 'request succeeds' do
       response = transport.request(READ, :GET, Algoliasearch::Http::Protocol.indexes_uri)
 
-      expect(response.body['items']).not_to be nil
+      expect(response['items']).not_to be nil
     end
 
     it 'request fails with wrong credentials' do
@@ -21,7 +21,7 @@ RSpec.describe Algoliasearch::Transport::Transport, type: :request do
       }
 
       expect do
-        transport.request(READ, :GET, Algoliasearch::Http::Protocol.indexes_uri, {}, headers: custom_headers)
+        transport.read(:GET, Algoliasearch::Http::Protocol.indexes_uri, {}, custom_headers)
       end.to raise_error(Algoliasearch::AlgoliaApiError)
     end
   end

@@ -27,7 +27,7 @@ module Algoliasearch
       # @param body [JSON]
       # @param headers [Hash]
       #
-      # @return [Transport::Response]
+      # @return [Http::Response]
       #
       def send_request(host, method, path, body, headers, timeout)
         connection                 = get_connection(host)
@@ -35,12 +35,12 @@ module Algoliasearch
         response                   = connection.run_request(method, path, body, headers)
 
         if response.success?
-          return Transport::Response.new(status: response.status, body: MultiJson.load(response.body), headers: response.headers)
+          return Http::Response.new(status: response.status, body: MultiJson.load(response.body), headers: response.headers)
         end
 
-        Transport::Response.new(status: response.status, error: MultiJson.load(response.body), headers: response.headers)
+        Http::Response.new(status: response.status, error: MultiJson.load(response.body), headers: response.headers)
         rescue Faraday::TimeoutError => e
-          Transport::Response.new(error: e.response, timed_out: true)
+          Http::Response.new(error: e.response, timed_out: true)
       end
 
       # Retrieve the connection from the @connections
