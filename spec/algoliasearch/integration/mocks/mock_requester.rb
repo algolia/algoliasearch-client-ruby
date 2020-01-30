@@ -35,9 +35,6 @@ class MockRequester
   # @return [Faraday::Connection]
   #
   def get_connection(host)
-    if @connections[host.url].nil?
-      raise AlgoliaError, 'Unknown host provided'
-    end
     @connections[host.url]
   end
 

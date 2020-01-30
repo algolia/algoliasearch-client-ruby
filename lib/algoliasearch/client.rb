@@ -10,9 +10,6 @@ module Algoliasearch
     # @option adapter [Object] adapter object used for the connection
     #
     def initialize(search_config, opts = {})
-      if search_config.nil?
-        raise ArgumentError, 'Please provide a search config'
-      end
       @config         = search_config
       requester_class = opts[:http_requester] || Defaults::REQUESTER_CLASS
       @transporter    = Transport::Transport.new(@config, requester_class, opts)
@@ -26,7 +23,7 @@ module Algoliasearch
     #
     def init_index(index_name)
       index_name.strip!
-      if index_name.nil?
+      if index_name.empty?
         raise ArgumentError, 'Please provide a valid index name'
       end
       Index.new(index_name, @transporter, @config)

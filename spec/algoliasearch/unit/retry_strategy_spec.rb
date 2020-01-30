@@ -33,6 +33,19 @@ RSpec.describe Algoliasearch::Transport::RetryStrategy, type: :unit do
         hosts = retry_strategy.get_tryable_hosts(call_type)
         expect(hosts.length).to be 3
       end
+
+      it 'resets all hosts when they\'re all expired' do
+        stateful_hosts = []
+        stateful_hosts << Algoliasearch::Transport::StatefulHost.new("#{app_id}-4.algolianet.com", up: false)
+        stateful_hosts << Algoliasearch::Transport::StatefulHost.new("#{app_id}-5.algolianet.com", up: false)
+        stateful_hosts << Algoliasearch::Transport::StatefulHost.new("#{app_id}-6.algolianet.com", up: false)
+
+        config.custom_hosts = stateful_hosts
+        retry_strategy      = described_class.new(config)
+
+        hosts = retry_strategy.get_tryable_hosts(call_type)
+        expect(hosts.length).to be 3
+      end
     end
   end
 

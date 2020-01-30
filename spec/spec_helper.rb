@@ -1,3 +1,7 @@
+require 'simplecov'
+
+SimpleCov.start
+
 require 'bundler/setup'
 require 'algoliasearch'
 require 'webmock/rspec'

@@ -35,10 +35,10 @@ module Algoliasearch
         response                   = connection.run_request(method, path, body, headers)
 
         if response.success?
-          return Http::Response.new(status: response.status, body: MultiJson.load(response.body), headers: response.headers)
+          return Http::Response.new(status: response.status, body: Helpers.json_to_hash(response.body), headers: response.headers)
         end
 
-        Http::Response.new(status: response.status, error: MultiJson.load(response.body), headers: response.headers)
+        Http::Response.new(status: response.status, error: Helpers.json_to_hash(response.body), headers: response.headers)
         rescue Faraday::TimeoutError => e
           Http::Response.new(error: e.response, timed_out: true)
       end
@@ -50,9 +50,6 @@ module Algoliasearch
       # @return [Faraday::Connection]
       #
       def get_connection(host)
-        if @connections[host.url].nil?
-          raise AlgoliaError, 'Unknown host provided'
-        end
         @connections[host.url]
       end
 
