@@ -25,7 +25,7 @@ module Algoliasearch
     # @return res
     #
     def search(query, search_params = {}, opts = {})
-      encoded_params         = Helpers.to_hash(search_params)
+      encoded_params         = Helpers.params_to_hash(search_params)
       encoded_params[:query] = query
       @transporter.read(:POST, "#{@index_uri}/query", encoded_params, opts)
     end

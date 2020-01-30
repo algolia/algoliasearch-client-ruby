@@ -23,9 +23,13 @@ module Helpers
     end.join('&')
   end
 
-  # Format params to Hash
+  # Format to Hash
   #
-  def self.to_hash(params)
+  def self.params_to_hash(params)
     Hash[params.map { |key, value| [key.to_s, value.is_a?(Array) ? MultiJson.load(value) : value] }]
+  end
+
+  def self.json_to_hash(json)
+    MultiJson.load(json)
   end
 end

@@ -12,10 +12,6 @@ module Algoliasearch
       # @option adapter [String] adapter used for sending requests, if needed. Uses Faraday.default_adapter by default
       #
       def initialize(config, http_requester = nil, opts = {})
-        if config.nil?
-          raise ArgumentError, 'Please provide a search config'
-        end
-
         @config         = config
         requester_class = http_requester || Defaults::REQUESTER_CLASS
         @http_requester = requester_class.new(config, opts)
@@ -71,9 +67,8 @@ module Algoliasearch
           )
 
           outcome  = @retry_strategy.decide(host, response.status, response.timed_out)
-
           if outcome == FAILURE
-            raise AlgoliaApiError.new(response.status, response.error)
+            raise AlgoliaApiError.new(response.status, response.error['message'])
           end
           return response.body unless outcome == RETRY
         end
@@ -144,8 +139,6 @@ module Algoliasearch
         case call_type
         when READ
           @config.read_timeout
-        when WRITE
-          @config.write_timeout
         else
           @config.write_timeout
         end

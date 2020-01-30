@@ -22,7 +22,7 @@ RSpec.describe Algoliasearch::Transport::Transport, type: :request do
 
       expect do
         transport.read(:GET, Algoliasearch::Http::Protocol.indexes_uri, {}, custom_headers)
-      end.to raise_error(Algoliasearch::AlgoliaApiError)
+      end.to raise_error(Algoliasearch::AlgoliaApiError, 'Invalid Application-ID or API key')
     end
   end
 end
