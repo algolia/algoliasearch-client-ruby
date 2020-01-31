@@ -12,7 +12,8 @@ module Algoliasearch
     def initialize(search_config, opts = {})
       @config         = search_config
       requester_class = opts[:http_requester] || Defaults::REQUESTER_CLASS
-      @transporter    = Transport::Transport.new(@config, requester_class, opts)
+      logger_class    = opts[:logger] || nil
+      @transporter    = Transport::Transport.new(@config, logger_class, requester_class, opts)
     end
 
     # Initialize an index with a given name

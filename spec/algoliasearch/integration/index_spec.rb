@@ -21,7 +21,7 @@ RSpec.describe Algoliasearch::Index, type: :request do
     end
 
     it 'save an object' do
-      object = {name: 'test two', data: 20, objectID: '222'}
+      object   = {name: 'test two', data: 20, objectID: '222'}
       response = index.save_object(object)
 
       expect(response['objectIDs']).to eq(['222'])
@@ -29,7 +29,7 @@ RSpec.describe Algoliasearch::Index, type: :request do
     end
 
     it 'save an object without object ID' do
-      object = {name: 'test two', data: 20}
+      object   = {name: 'test two', data: 20}
       response = index.save_object(object, true)
 
       expect(response['objectIDs']).not_to be_empty
@@ -52,7 +52,7 @@ RSpec.describe Algoliasearch::Index, type: :request do
     end
 
     it 'save an object with request options' do
-      object = {name: 'test two', data: 20, objectID: '222'}
+      object   = {name: 'test two', data: 20, objectID: '222'}
       response = index.save_object(object, false, 'X-Forwarded-For': '0.0.0.0')
 
       expect(response['objectIDs']).to eq(['222'])

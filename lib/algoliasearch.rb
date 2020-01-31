@@ -1,3 +1,4 @@
+require 'logger'
 require 'multi_json'
 
 require 'algoliasearch/config/algolia_config'
@@ -15,6 +16,7 @@ require 'algoliasearch/client'
 require 'algoliasearch/defaults'
 require 'algoliasearch/error'
 require 'algoliasearch/index'
+require 'algoliasearch/logger_helper'
 require 'algoliasearch/helpers'
 require 'algoliasearch/version'
 

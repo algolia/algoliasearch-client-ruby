@@ -11,10 +11,10 @@ module Algoliasearch
       # @param http_requester [String] requester used for sending requests. Uses Algoliasearch::Http::HttpRequester by default
       # @option adapter [String] adapter used for sending requests, if needed. Uses Faraday.default_adapter by default
       #
-      def initialize(config, http_requester = nil, opts = {})
+      def initialize(config, logger_class = nil, requester_class = nil, opts = {})
         @config         = config
-        requester_class = http_requester || Defaults::REQUESTER_CLASS
-        @http_requester = requester_class.new(config, opts)
+        requester_class ||= Defaults::REQUESTER_CLASS
+        @http_requester = requester_class.new(config, logger_class, opts)
         @retry_strategy = RetryStrategy.new(config)
       end
 

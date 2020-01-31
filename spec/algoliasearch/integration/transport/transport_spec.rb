@@ -7,9 +7,10 @@ RSpec.describe Algoliasearch::Transport::Transport, type: :request do
     let(:api_key) { ENV['ALGOLIA_API_KEY'] }
     let(:config) { Algoliasearch::SearchConfig.new(app_id: app_id, api_key: api_key, user_agent: 'test-ruby') }
     let(:transport) { described_class.new(config) }
+    let(:indexes_uri) { "/#{Defaults::VERSION}/indexes" }
 
     it 'request succeeds' do
-      response = transport.request(READ, :GET, Algoliasearch::Http::Protocol.indexes_uri)
+      response = transport.read(:GET, indexes_uri)
 
       expect(response['items']).not_to be nil
     end
@@ -21,7 +22,7 @@ RSpec.describe Algoliasearch::Transport::Transport, type: :request do
       }
 
       expect do
-        transport.read(:GET, Algoliasearch::Http::Protocol.indexes_uri, {}, custom_headers)
+        transport.read(:GET, indexes_uri, {}, custom_headers)
       end.to raise_error(Algoliasearch::AlgoliaApiError, 'Invalid Application-ID or API key')
     end
   end
