@@ -1,15 +1,17 @@
 module Algoliasearch
   module Http
     class HttpRequester
-      attr_accessor :http_client, :connections
+      attr_accessor :http_client, :logger, :connections
 
       #
       # @param config [SearchConfig]
       # @option adapter [String] adapter used to make requests. Defaults to Net::Http
       #
-      def initialize(config, opts)
-        @hosts  = config.custom_hosts || config.default_hosts
-        adapter = opts[:adapter] || Faraday.default_adapter
+      def initialize(config, logger = nil, opts = {})
+        @hosts   = config.custom_hosts || config.default_hosts
+        adapter  = opts[:adapter] || Faraday.default_adapter
+        logger ||= LoggerHelper
+        @logger  = logger.create 'debug.log'
 
         @connections = {}
         @hosts.each do |host|
@@ -32,15 +34,29 @@ module Algoliasearch
       def send_request(host, method, path, body, headers, timeout)
         connection                 = get_connection(host)
         connection.options.timeout = timeout
-        response                   = connection.run_request(method, path, body, headers)
+
+        if ENV['ALGOLIA_DEBUG']
+          @logger.info("Sending #{method.upcase!} request to #{path} with body #{body}")
+        end
+
+        response = connection.run_request(method, path, body, headers)
 
         if response.success?
+          if ENV['ALGOLIA_DEBUG']
+            @logger.info("Request succeeded. Response status: #{response.status}, body: #{response.body}")
+          end
           return Http::Response.new(status: response.status, body: Helpers.json_to_hash(response.body), headers: response.headers)
         end
 
+        if ENV['ALGOLIA_DEBUG']
+          @logger.info("Request failed. Response status: #{response.status}, error: #{response.body}")
+        end
         Http::Response.new(status: response.status, error: Helpers.json_to_hash(response.body), headers: response.headers)
-        rescue Faraday::TimeoutError => e
-          Http::Response.new(error: e.response, timed_out: true)
+      rescue Faraday::TimeoutError => e
+        if ENV['ALGOLIA_DEBUG']
+          @logger.info("Request timed out. Error: #{e.response}")
+        end
+        Http::Response.new(error: e.response, timed_out: true)
       end
 
       # Retrieve the connection from the @connections

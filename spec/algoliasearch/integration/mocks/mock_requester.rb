@@ -1,5 +1,5 @@
 class MockRequester
-  def initialize(config, _opts)
+  def initialize(config, _logger, _opts)
     @hosts = config.custom_hosts || config.default_hosts
 
     @connections = {}
