@@ -1,14 +1,14 @@
-module Algoliasearch
+module Algolia
   module Http
     class HttpRequester
       attr_accessor :http_client, :logger, :connections
 
       #
-      # @param config [SearchConfig]
+      # @param config [Search::Config]
       # @option adapter [String] adapter used to make requests. Defaults to Net::Http
       #
       def initialize(config, logger = nil, opts = {})
-        @hosts   = config.custom_hosts || config.default_hosts
+        @hosts   = config.default_hosts
         adapter  = opts[:adapter] || Faraday.default_adapter
         logger ||= LoggerHelper
         @logger  = logger.create 'debug.log'
@@ -36,7 +36,7 @@ module Algoliasearch
         connection.options.timeout = timeout
 
         if ENV['ALGOLIA_DEBUG']
-          @logger.info("Sending #{method.upcase!} request to #{path} with body #{body}")
+          @logger.info("Sending #{method.to_s.upcase!} request to #{path} with body #{body}")
         end
 
         response = connection.run_request(method, path, body, headers)
@@ -54,9 +54,14 @@ module Algoliasearch
         Http::Response.new(status: response.status, error: Helpers.json_to_hash(response.body), headers: response.headers)
       rescue Faraday::TimeoutError => e
         if ENV['ALGOLIA_DEBUG']
-          @logger.info("Request timed out. Error: #{e.response}")
+          @logger.info("Request timed out. Error: #{e.message}")
         end
-        Http::Response.new(error: e.response, timed_out: true)
+        Http::Response.new(error: e.message, has_timed_out: true)
+      rescue ::StandardError => e
+        if ENV['ALGOLIA_DEBUG']
+          @logger.info("Request failed. Error: #{e.message}")
+        end
+        Http::Response.new(error: e.message, has_timed_out: true)
       end
 
       # Retrieve the connection from the @connections

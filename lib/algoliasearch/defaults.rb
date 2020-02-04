@@ -1,5 +1,5 @@
 module Defaults
-  REQUESTER_CLASS = Algoliasearch::Http::HttpRequester
+  REQUESTER_CLASS = Algolia::Http::HttpRequester
   TTL             = 300
   # The version of the REST API implemented by this module.
   VERSION         = 1
@@ -12,8 +12,6 @@ module Defaults
 
   # The HTTP header used for passing your API key to the Algolia API.
   HEADER_API_KEY           = 'X-Algolia-API-Key'.freeze
-  HEADER_FORWARDED_IP      = 'X-Forwarded-For'.freeze
-  HEADER_FORWARDED_API_KEY = 'X-Forwarded-API-Key'.freeze
 
   # HTTP ERROR CODES
   # ----------------------------------------
@@ -21,14 +19,13 @@ module Defaults
   ERROR_BAD_REQUEST = 400
   ERROR_FORBIDDEN   = 403
   ERROR_NOT_FOUND   = 404
+  ERROR_TIMED_OUT   = 408
 
   BATCH_SIZE      = 1000
   CONNECT_TIMEOUT = 2
   READ_TIMEOUT    = 30
   WRITE_TIMEOUT   = 5
-  USER_AGENT      = ["Algolia for Ruby (#{::Algoliasearch::VERSION})", "Ruby (#{RUBY_VERSION})"]
-
-  TIMED_OUT_STATUS = 408
+  USER_AGENT      = ["Algolia for Ruby (#{::Algolia::VERSION})", "Ruby (#{RUBY_VERSION})"]
 
   VALID_HEADERS = %w(
     Content-type
@@ -46,4 +43,7 @@ module Defaults
   )
 
   WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY = 100
+
+  GZIP_ENCODING = 'gzip'
+  NONE_ENCODING = 'none'
 end

@@ -1,6 +1,6 @@
 require 'faraday'
 
-module Algoliasearch
+module Algolia
   # Class AlgoliaConfig
   class AlgoliaConfig
     attr_accessor :app_id, :api_key, :default_headers, :batch_size, :read_timeout, :write_timeout, :connect_timeout, :compression_type
@@ -27,10 +27,11 @@ module Algoliasearch
         'User-Agent' => Defaults::USER_AGENT.push(opts[:user_agent]).uniq.compact.join('; ')
       }
 
-      @batch_size      = opts[:batch_size] || Defaults::BATCH_SIZE
-      @read_timeout    = opts[:read_timeout] || Defaults::READ_TIMEOUT
-      @write_timeout   = opts[:write_timeout] || Defaults::WRITE_TIMEOUT
-      @connect_timeout = opts[:connect_timeout] || Defaults::CONNECT_TIMEOUT
+      @batch_size       = opts[:batch_size] || Defaults::BATCH_SIZE
+      @read_timeout     = opts[:read_timeout] || Defaults::READ_TIMEOUT
+      @write_timeout    = opts[:write_timeout] || Defaults::WRITE_TIMEOUT
+      @connect_timeout  = opts[:connect_timeout] || Defaults::CONNECT_TIMEOUT
+      @compression_type = opts[:compression_type] || Defaults::NONE_ENCODING
     end
   end
 end

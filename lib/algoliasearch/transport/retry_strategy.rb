@@ -1,14 +1,14 @@
-module Algoliasearch
+module Algolia
   module Transport
     # Class RetryStatregy
     class RetryStrategy
       include RetryOutcomeType
 
       #
-      # @param config [SearchConfig] config which contains the hosts
+      # @param config [Search::Config] config which contains the hosts
       #
       def initialize(config)
-        @hosts = config.custom_hosts || config.default_hosts
+        @hosts = config.default_hosts
         @lock  = Mutex.new
       end
 

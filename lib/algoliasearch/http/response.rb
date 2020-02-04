@@ -1,21 +1,21 @@
-module Algoliasearch
+module Algolia
   module Http
     class Response
-      attr_reader :status, :body, :error, :headers, :timed_out
+      attr_reader :status, :body, :error, :headers, :has_timed_out
 
       #
       # @option status    [String]  Response status
       # @option body    [String]  Response body
       # @option error    [String]  Response error or caught error
       # @option headers    [String]  Response headers
-      # @option timed_out    [String]  If the request has timed out
+      # @option has_timed_out    [String]  If the request has timed out
       #
       def initialize(opts = {})
-        @status    = opts[:status] || nil
-        @body      = opts[:body] || nil
-        @error     = opts[:error] || nil
-        @headers   = opts[:headers] || nil
-        @timed_out = opts[:timed_out] || false
+        @status        = opts[:status]
+        @body          = opts[:body]
+        @error         = opts[:error]
+        @headers       = opts[:headers]
+        @has_timed_out = opts[:has_timed_out] || false
       end
     end
   end

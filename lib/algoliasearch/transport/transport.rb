@@ -1,21 +1,22 @@
 require 'faraday'
 
-module Algoliasearch
+module Algolia
   module Transport
     class Transport
       include RetryOutcomeType
       include CallType
 
       #
-      # @param config [SearchConfig] config used for search
-      # @param http_requester [String] requester used for sending requests. Uses Algoliasearch::Http::HttpRequester by default
+      # @param config [Search::Config] config used for search
+      # @param logger_class [Object] logger used for debug
+      # @param requester_class [Object] requester used for sending requests. Uses Algolia::Http::HttpRequester by default
       # @option adapter [String] adapter used for sending requests, if needed. Uses Faraday.default_adapter by default
       #
       def initialize(config, logger_class = nil, requester_class = nil, opts = {})
-        @config         = config
+        @config           = config
         requester_class ||= Defaults::REQUESTER_CLASS
-        @http_requester = requester_class.new(config, logger_class, opts)
-        @retry_strategy = RetryStrategy.new(config)
+        @http_requester   = requester_class.new(config, logger_class, opts)
+        @retry_strategy   = RetryStrategy.new(config)
       end
 
       # Build a request with call type READ
@@ -25,7 +26,7 @@ module Algoliasearch
       # @param body [Hash] request body
       # @param opts [Hash] optional request parameters
       #
-      def read(method, path, body = {}, opts = {})
+      def read(method, path, body: {}, opts: {})
         request(READ, method, path, body, opts)
       end
 
@@ -36,7 +37,7 @@ module Algoliasearch
       # @param body [Hash] request body
       # @param opts [Hash] optional request parameters
       #
-      def write(method, path, body = {}, opts = {})
+      def write(method, path, body: {}, opts: {})
         request(WRITE, method, path, body, opts)
       end
 
@@ -51,10 +52,11 @@ module Algoliasearch
       #
       def request(call_type, method, path, body = {}, opts = {})
         @retry_strategy.get_tryable_hosts(call_type).each do |host|
-          timeout         = opts[:request_timeout] || get_timeout(call_type).to_f * (host.retry_count + 1).to_f
-          request_options = Http::RequestOptions.new(@config)
+          opts[:timeout] ||= get_timeout(call_type) * (host.retry_count + 1)
 
+          request_options = Http::RequestOptions.new(@config)
           request_options.create(opts)
+
           request = build_request(method, path, body, request_options)
 
           response = @http_requester.send_request(
@@ -63,10 +65,10 @@ module Algoliasearch
             request[:path],
             request[:body],
             request[:headers],
-            timeout
+            request[:timeout]
           )
 
-          outcome  = @retry_strategy.decide(host, response.status, response.timed_out)
+          outcome  = @retry_strategy.decide(host, response.status, response.has_timed_out)
           if outcome == FAILURE
             raise AlgoliaApiError.new(response.status, response.error['message'])
           end
@@ -81,7 +83,7 @@ module Algoliasearch
       # @param [Symbol] method
       # @param [String] path
       # @param [Hash] body
-      # @param [Hash] request_options
+      # @param [RequestOptions] request_options
       #
       # @return [Hash]
       #
@@ -90,7 +92,7 @@ module Algoliasearch
         request[:method]  = method.downcase
         request[:path]    = build_uri_path(path, request_options.params)
         request[:body]    = build_body(body)
-        request[:headers] = generate_headers(request_options.headers)
+        request[:headers] = generate_headers(request_options)
         request
       end
 
@@ -109,7 +111,7 @@ module Algoliasearch
       #
       # @param [Hash] body
       #
-      # @return [String]
+      # @return [Hash]
       #
       def build_body(body)
         Helpers.to_json(body)
@@ -119,13 +121,16 @@ module Algoliasearch
       #
       # @option options [String] :headers
       #
-      # @return [Array] merged headers
+      # @return [Hash] merged headers
       #
-      def generate_headers(opts = {})
+      def generate_headers(request_options = {})
         headers                                                     = {}
-        extra_headers                                               = opts[:headers] || opts['headers'] || {}
+        extra_headers                                               = request_options.headers || {}
         @config.default_headers.each { |key, val| headers[key.to_s] = val }
         extra_headers.each { |key, val| headers[key.to_s]           = val }
+        if request_options.compression_type == Defaults::GZIP_ENCODING
+          headers['Accept-Encoding']  = Defaults::GZIP_ENCODING
+        end
         headers
       end
 
