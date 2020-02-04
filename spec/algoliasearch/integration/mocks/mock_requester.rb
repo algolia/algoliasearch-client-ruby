@@ -1,6 +1,6 @@
 class MockRequester
   def initialize(config, _logger, _opts)
-    @hosts = config.custom_hosts || config.default_hosts
+    @hosts = config.default_hosts
 
     @connections = {}
     @hosts.each do |host|
@@ -17,11 +17,14 @@ class MockRequester
       headers: headers,
       method: method,
       status: 200,
-      body: {'hits' => [], 'nbHits' => 0, 'page' => 0, 'nbPages' => 0, 'hitsPerPage' => 20, 'exhaustiveNbHits' => true, 'query' => 'query', 'params' => 'query=query', 'processingTimeMS' => 1},
+      body: {
+        'hits' => [], 'nbHits' => 0, 'page' => 0, 'nbPages' => 0, 'hitsPerPage' => 20, 'exhaustiveNbHits' => true,
+        'query' => 'query', 'params' => 'query=query', 'processingTimeMS' => 1
+      },
       success: true
     }
 
-    Algoliasearch::Http::Response.new(
+    Algolia::Http::Response.new(
       status: response[:status],
       body: response[:body],
       headers: response[:headers]

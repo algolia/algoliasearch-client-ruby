@@ -1,15 +1,15 @@
 require 'algoliasearch'
 
 include CallType, RetryOutcomeType
-RSpec.describe Algoliasearch::Transport::Transport, type: :unit do
+RSpec.describe Algolia::Transport::Transport, type: :unit do
   context 'when sending requests through the transport layer' do
     let(:app_id) { 'app_id' }
     let(:api_key) { 'api_key' }
     let(:config) do
-      Algoliasearch::SearchConfig.new(app_id: app_id, api_key: api_key, custom_hosts:
+      Algolia::Search::Config.new(app_id: app_id, api_key: api_key, custom_hosts:
         [
-          Algoliasearch::Transport::StatefulHost.new("#{app_id}-4.algolianet.com"),
-          Algoliasearch::Transport::StatefulHost.new("#{app_id}-5.algolianet.com")
+          Algolia::Transport::StatefulHost.new("#{app_id}-4.algolianet.com"),
+          Algolia::Transport::StatefulHost.new("#{app_id}-5.algolianet.com")
         ])
     end
     let(:transport) { described_class.new(config) }
@@ -21,7 +21,7 @@ RSpec.describe Algoliasearch::Transport::Transport, type: :unit do
 
       expect do
         transport.read(:GET, indexes_uri)
-      end.to raise_error(Algoliasearch::AlgoliaApiError)
+      end.to raise_error(Algolia::AlgoliaApiError)
     end
 
     it 'receives 500 and tries next host' do
@@ -33,7 +33,7 @@ RSpec.describe Algoliasearch::Transport::Transport, type: :unit do
 
       response = transport.read(:GET, indexes_uri)
       expect(response['items']).to eq('abc')
-      expect(config.custom_hosts.first.retry_count).to eq(0)
+      expect(config.default_hosts.first.retry_count).to eq(0)
     end
 
     it 'times out and tries next host' do
@@ -45,7 +45,7 @@ RSpec.describe Algoliasearch::Transport::Transport, type: :unit do
 
       response = transport.read(:GET, indexes_uri)
       expect(response['items']).to eq('abc')
-      expect(config.custom_hosts.first.retry_count).to eq(1)
+      expect(config.default_hosts.first.retry_count).to eq(1)
     end
 
     it 'succeeds and stops' do
@@ -57,7 +57,7 @@ RSpec.describe Algoliasearch::Transport::Transport, type: :unit do
 
       response = transport.read(:GET, indexes_uri)
       expect(response['items']).to eq('def')
-      expect(config.custom_hosts.first.retry_count).to eq(0)
+      expect(config.default_hosts.first.retry_count).to eq(0)
     end
   end
 end

@@ -1,4 +1,4 @@
-module Algoliasearch
+module Algolia
   module Transport
     # Class StatefulHost
     class StatefulHost

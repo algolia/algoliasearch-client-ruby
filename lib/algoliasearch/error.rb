@@ -1,4 +1,4 @@
-module Algoliasearch
+module Algolia
   # Base exception class for errors thrown by the Algolia
   # client library. AlgoliaError will be raised by any
   # network operation if Algolia.init() has not been called.

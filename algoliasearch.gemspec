@@ -6,7 +6,7 @@ require 'algoliasearch/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'algoliasearch'
-  spec.version       = Algoliasearch::VERSION
+  spec.version       = Algolia::VERSION
   spec.authors       = ['Chloe Liban']
   spec.email         = ['chloe.liban@gmail.com']
 
@@ -26,10 +26,10 @@ Gem::Specification.new do |spec|
     'README.md',
     'Rakefile',
     'algoliasearch.gemspec',
-    'lib/algoliasearch/client.rb',
+    'lib/algoliasearch/search_client.rb',
     'lib/algoliasearch/search_config.rb',
     'lib/algoliasearch/error.rb',
-    'lib/algoliasearch/index.rb',
+    'lib/algoliasearch/search_index.rb',
     'lib/algoliasearch/version.rb',
     'spec/algoliasearch_spec.rb'
   ]
@@ -39,6 +39,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'faraday', '~> 0.15'
   spec.add_dependency 'multi_json', '~> 1.0'
 
-  spec.add_development_dependency 'bundler', '~> 2.0'
-  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'bundler'
+  spec.add_development_dependency 'rake'
 end

@@ -2,11 +2,11 @@ require 'algoliasearch'
 require 'httpx/adapters/faraday'
 
 include CallType, RetryOutcomeType
-RSpec.describe Algoliasearch::Index, type: :request do
+RSpec.describe Algolia::Search::Index, type: :request do
   let(:app_id) { ENV['ALGOLIA_APPLICATION_ID'] }
   let(:api_key) { ENV['ALGOLIA_API_KEY'] }
-  let(:config) { Algoliasearch::SearchConfig.new(app_id: app_id, api_key: api_key, user_agent: 'test-ruby') }
-  let(:client) { Algoliasearch::Client.new(config) }
+  let(:config) { Algolia::Search::Config.new(app_id: app_id, api_key: api_key, user_agent: 'test-ruby') }
+  let(:client) { Algolia::Search::Client.new(config) }
   let(:index) { client.init_index('test_ruby') }
 
   context 'with save_object(s)' do
@@ -30,7 +30,7 @@ RSpec.describe Algoliasearch::Index, type: :request do
 
     it 'save an object without object ID' do
       object   = {name: 'test two', data: 20}
-      response = index.save_object(object, true)
+      response = index.save_object(object, auto_generate_object_id_if_not_exist: true)
 
       expect(response['objectIDs']).not_to be_empty
       expect(response['taskID']).not_to be nil
@@ -53,7 +53,7 @@ RSpec.describe Algoliasearch::Index, type: :request do
 
     it 'save an object with request options' do
       object   = {name: 'test two', data: 20, objectID: '222'}
-      response = index.save_object(object, false, 'X-Forwarded-For': '0.0.0.0')
+      response = index.save_object(object, auto_generate_object_id_if_not_exist: false, opts: {headers: {'X-Forwarded-For': '0.0.0.0'}})
 
       expect(response['objectIDs']).to eq(['222'])
       expect(response['taskID']).not_to be nil
@@ -93,7 +93,7 @@ RSpec.describe Algoliasearch::Index, type: :request do
         {name: 'test four', data: 40, objectID: '4444'}
       ]
 
-      index.save_objects!(objects)
+      index.save_objects!(objects, auto_generate_object_id_if_not_exist: true, opts: {headers: {'Test': 'test'}})
 
       response = index.search('four')
       expect(response['hits']).not_to be_empty
@@ -106,7 +106,7 @@ RSpec.describe Algoliasearch::Index, type: :request do
     end
 
     before do
-      index.save_object!({name: 'test', data: 10}, true)
+      index.save_object!({name: 'test', data: 10}, auto_generate_object_id_if_not_exist: true)
     end
 
     it 'make a search' do
@@ -117,26 +117,20 @@ RSpec.describe Algoliasearch::Index, type: :request do
       expect(response['hits'][0]['data']).to eq(10)
     end
 
-    it 'make a search with search params passed as array' do
-      expect do
-        index.search('test', ['name', 20])
-      end.to raise_error(Algoliasearch::AlgoliaApiError, 'Unknown parameter: 20')
-    end
-
     it 'make a search with unknown search parameters' do
       expect do
-        index.search('test', myCustomParam: 20)
-      end.to raise_error(Algoliasearch::AlgoliaApiError, 'Unknown parameter: myCustomParam')
+        index.search('test', search_params: {myCustomParam: 20})
+      end.to raise_error(Algolia::AlgoliaApiError, 'Unknown parameter: myCustomParam')
     end
 
     it 'make a search with unknown request options' do
-      response = index.search('test', {hitsPerPage: 20}, 'Custom-Header': 'XX-XX')
+      response = index.search('test', search_params: {hitsPerPage: 20}, opts: {headers: {'Custom-Header': 'XX-XX'}})
 
       expect(response['hits']).not_to be_empty
     end
 
     it 'make a search with search params' do
-      response = index.search('test', attributesToRetrieve: 'name', hitsPerPage: 20)
+      response = index.search('test', search_params: {attributesToRetrieve: 'name', hitsPerPage: 20})
 
       expect(response['hits']).not_to be_empty
       expect(response['hits'][0]['name']).to eq('test')
@@ -144,7 +138,7 @@ RSpec.describe Algoliasearch::Index, type: :request do
     end
 
     it 'make a search with search params and request options' do
-      response = index.search('test', {attributesToRetrieve: 'name', hitsPerPage: 20}, 'X-Forwarded-For': '0.0.0.0')
+      response = index.search('test', search_params: {attributesToRetrieve: 'name', hitsPerPage: 20}, opts: {headers: {'X-Forwarded-For': '0.0.0.0'}})
 
       expect(response['hits']).not_to be_empty
       expect(response['hits'][0]['name']).to eq('test')
@@ -154,7 +148,7 @@ RSpec.describe Algoliasearch::Index, type: :request do
 
   context 'with clear_objects' do
     it 'clears all objects and wait for the engine' do
-      index.save_object!({name: 'test', data: 10}, true)
+      index.save_object!({name: 'test', data: 10}, auto_generate_object_id_if_not_exist: true)
 
       response = index.search('test')
       expect(response['nbHits']).to eq(1)
@@ -169,12 +163,12 @@ RSpec.describe Algoliasearch::Index, type: :request do
   context 'when using a custom adapter' do
     let(:app_id) { ENV['ALGOLIA_APPLICATION_ID'] }
     let(:api_key) { ENV['ALGOLIA_API_KEY'] }
-    let(:config) { Algoliasearch::SearchConfig.new(app_id: app_id, api_key: api_key, user_agent: 'test-ruby') }
-    let(:client) { Algoliasearch::Client.new(config, http_requester: Algoliasearch::Http::HttpRequester, adapter: 'httpx') }
+    let(:config) { Algolia::Search::Config.new(app_id: app_id, api_key: api_key, user_agent: 'test-ruby') }
+    let(:client) { Algolia::Search::Client.new(config, http_requester: Algolia::Http::HttpRequester, adapter: 'httpx') }
     let(:index) { client.init_index('test_ruby') }
 
     it 'make a search' do
-      index.save_object!({name: 'test', data: 10}, true)
+      index.save_object!({name: 'test', data: 10}, auto_generate_object_id_if_not_exist: true)
       response = index.search('test')
 
       expect(response['hits']).not_to be_empty
@@ -187,8 +181,8 @@ RSpec.describe Algoliasearch::Index, type: :request do
   context 'when using a mock requester' do
     let(:app_id) { ENV['ALGOLIA_APPLICATION_ID'] }
     let(:api_key) { ENV['ALGOLIA_API_KEY'] }
-    let(:config) { Algoliasearch::SearchConfig.new(app_id: app_id, api_key: api_key, user_agent: 'test-ruby') }
-    let(:client) { Algoliasearch::Client.new(config, http_requester: MockRequester) }
+    let(:config) { Algolia::Search::Config.new(app_id: app_id, api_key: api_key, user_agent: 'test-ruby') }
+    let(:client) { Algolia::Search::Client.new(config, http_requester: MockRequester) }
     let(:index) { client.init_index('test_ruby') }
 
     it 'make a search' do
