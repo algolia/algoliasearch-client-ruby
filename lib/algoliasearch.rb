@@ -23,4 +23,5 @@ $:.unshift(cwd.to_s) unless $:.include?(cwd.to_s) || $:.include?(cwd.expand_path
 require 'algolia/index'
 require 'algolia/analytics'
 require 'algolia/insights'
+require 'algolia/recommendation'
 require 'algolia/account_client'

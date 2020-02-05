@@ -510,10 +510,16 @@ module Algolia
       end
     end
 
+    #
+    # @deprecated use Recommendation client get_personalization_strategy instead
+    #
     def get_personalization_strategy(request_options = {})
       get(Protocol.personalization_strategy_uri, :read, request_options)
     end
 
+    #
+    # @deprecated use Recommendation client set_personalization_strategy instead
+    #
     def set_personalization_strategy(strategy, request_options = {})
       post(Protocol.personalization_strategy_uri, strategy.to_json, :write, request_options)
     end
