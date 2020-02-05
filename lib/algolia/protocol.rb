@@ -197,6 +197,10 @@ module Algolia
       "/#{VERSION}/clusters/mapping/search"
     end
 
+    def Protocol.cluster_batch_uri
+      "/#{VERSION}/clusters/mapping/batch"
+    end
+
     def Protocol.ab_tests_uri(ab_test = nil)
       ab_test = "/#{ab_test}" if ab_test
 

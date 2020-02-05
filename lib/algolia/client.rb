@@ -540,6 +540,11 @@ module Algolia
       post(Protocol.cluster_mapping_uri, body.to_json, :write, request_options)
     end
 
+    def assign_user_ids(user_ids, cluster_name, request_options = {})
+      body = { :cluster => cluster_name, :users => user_ids }
+      post(Protocol.cluster_batch_uri, body.to_json, :write, request_options)
+    end
+
     def get_user_id(user_id, request_options = {})
       get(Protocol.cluster_mapping_uri(user_id), :read, request_options)
     end

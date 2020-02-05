@@ -19,6 +19,8 @@ describe 'Multi Cluster Management', :mcm => true do
       :api_key => ENV['ALGOLIA_API_KEY_MCM']
     })
     @user_id = safe_user_id('ruby-client-2')
+    @user_id_0 = safe_user_id('ruby-client-0')
+    @user_id_1 = safe_user_id('ruby-client-1')
     clusters = @client.list_clusters
     @cluster_name = clusters['clusters'][0]["clusterName"]
   end
@@ -37,6 +39,10 @@ describe 'Multi Cluster Management', :mcm => true do
     @client.assign_user_id(@user_id, @cluster_name)
   end
 
+  it 'should assign multiple user ids to a cluster' do
+    @client.assign_user_ids([@user_id_0, @user_id_1], @cluster_name)
+  end
+
   it 'should list user ids' do
     ids = @client.list_user_ids
 
@@ -53,12 +59,30 @@ describe 'Multi Cluster Management', :mcm => true do
     less_ids['userIDs'].count.should eq(1)
   end
 
-  it 'should get the created user id' do
+  it 'should get the created user ids' do
     id = auto_retry do
       @client.get_user_id(@user_id)
     end
 
     id["userID"].should eq(@user_id)
+    id["clusterName"].should eq(@cluster_name)
+    id.has_key?("nbRecords").should eq(true)
+    id.has_key?("dataSize").should eq(true)
+
+    id = auto_retry do
+      @client.get_user_id(@user_id_0)
+    end
+
+    id["userID"].should eq(@user_id_0)
+    id["clusterName"].should eq(@cluster_name)
+    id.has_key?("nbRecords").should eq(true)
+    id.has_key?("dataSize").should eq(true)
+
+    id = auto_retry do
+      @client.get_user_id(@user_id_1)
+    end
+
+    id["userID"].should eq(@user_id_1)
     id["clusterName"].should eq(@cluster_name)
     id.has_key?("nbRecords").should eq(true)
     id.has_key?("dataSize").should eq(true)
