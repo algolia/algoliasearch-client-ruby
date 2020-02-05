@@ -47,6 +47,38 @@ describe 'Insights client' do
     response['message'].should eq('OK')
   end
 
+  it 'should allow send event with a timestamp in ms', :skip => RUBY_VERSION < Algolia::Insights::MIN_RUBY_VERSION do
+    two_days_ago = Date.today - 2
+    event = {
+        'eventType' => 'click',
+        'eventName' => 'foo',
+        'index' => @index.name,
+        'userToken' => 'bar',
+        'objectIds' => ['obj1', 'obj2'],
+        'timestamp' => two_days_ago.to_time.to_i * 1000
+    }
+
+    response = @insights.send_event(event)
+    response['status'].should eq(200)
+    response['message'].should eq('OK')
+  end
+
+  it 'should allow send events with a timestamp in ms', :skip => RUBY_VERSION < Algolia::Insights::MIN_RUBY_VERSION do
+    two_days_ago = Date.today - 2
+    event = {
+        'eventType' => 'conversion',
+        'eventName' => 'foo',
+        'index' => @index.name,
+        'userToken' => 'bar',
+        'objectIDs' => ['obj1', 'obj2'],
+        'timestamp' => two_days_ago.to_time.to_i * 1000
+    }
+
+    response = @insights.send_events([event])
+    response['status'].should eq(200)
+    response['message'].should eq('OK')
+  end
+
   it 'should allow send clicked object ids', :skip => RUBY_VERSION < Algolia::Insights::MIN_RUBY_VERSION do
     response = @insights.user('userToken').clicked_object_ids('eventName', @index.name, ['obj1', 'obj2'])
 
