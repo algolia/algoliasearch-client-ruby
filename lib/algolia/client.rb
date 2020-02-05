@@ -552,7 +552,7 @@ module Algolia
 
     def search_user_id(query, cluster_name = nil, page = nil, hits_per_page = nil, request_options = {})
       body = { :query => query }
-      body[:clusterName] = cluster_name unless cluster_name.nil?
+      body[:cluster] = cluster_name unless cluster_name.nil?
       body[:page] = page unless page.nil?
       body[:hitsPerPage] = hits_per_page unless hits_per_page.nil?
       post(Protocol.search_user_id_uri, body.to_json, :read, request_options)
