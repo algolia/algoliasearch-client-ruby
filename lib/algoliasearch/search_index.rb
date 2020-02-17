@@ -19,18 +19,9 @@ module Algolia
         @config      = config
       end
 
-      # Perform a search on the index
-      #
-      # @param query the full text query
-      # @param search_params (optional)
-      # @param opts contains extra parameters to send with your query
-      #
-      # @return Algolia::Response
-      #
-      def search(query, search_params: {}, opts: {})
-        search_params[:query] = query
-        @transporter.read(:POST, "#{@index_uri}/query", body: search_params, opts: opts)
-      end
+      # # # # # # # # # # # # # # # # # # # # #
+      # MISC
+      # # # # # # # # # # # # # # # # # # # # #
 
       def method_missing(method, *args, &block)
         if method.to_s.end_with?('!')
@@ -50,39 +41,6 @@ module Algolia
 
       def respond_to_missing?(method_name, include_private = false)
         method_name.to_s.end_with?('!') || super
-      end
-
-      # Override the content of an object
-      #
-      # @param object [Hash] the object to save
-      # @param auto_generate_object_id_if_not_exist [Boolean] the associated objectID, if nil 'object' must contain an 'objectID' key
-      # @param opts [Hash] contains extra parameters to send with your query
-      #
-      def save_object(object, auto_generate_object_id_if_not_exist: false, opts: {})
-        save_objects([object], auto_generate_object_id_if_not_exist: auto_generate_object_id_if_not_exist, opts: opts)
-      end
-
-      #
-      # Override the content of several objects
-      #
-      # @param objects the array of objects to save
-      # @param auto_generate_object_id_if_not_exist [Boolean] if set to true, an objectID will be automatically set on your objects
-      # @param opts contains extra parameters to send with your query
-      #
-      def save_objects(objects, auto_generate_object_id_if_not_exist: false, opts: {})
-        if auto_generate_object_id_if_not_exist
-          batch(build_batch('addObject', objects), opts: opts)
-        else
-          batch(build_batch('updateObject', objects, true), opts: opts)
-        end
-      end
-
-      # Delete the index content
-      #
-      # @param opts contains extra parameters to send with your query
-      #
-      def clear_objects(opts: {})
-        @transporter.write(:POST, "#{@index_uri}/clear", opts: opts)
       end
 
       # Wait the publication of a task on the server.
@@ -112,6 +70,147 @@ module Algolia
         @transporter.read(:GET, "#{@index_uri}/task/#{task_id}", opts: opts)['status']
       end
 
+      # Delete the index content
+      #
+      # @param opts contains extra parameters to send with your query
+      #
+      def clear_objects(opts: {})
+        @transporter.write(:POST, "#{@index_uri}/clear", opts: opts)
+      end
+
+      def delete(opts: {})
+        # TODO
+      end
+
+      def delete_replica(replica_name, opts: {})
+        # TODO
+      end
+
+      # Find object by the given condition.
+      #
+      # Options can be passed in request_options body:
+      #  - query (string): pass a query
+      #  - paginate (bool): choose if you want to iterate through all the
+      # documents (true) or only the first page (false). Default is true.
+      # The function takes a block to filter the results from search query
+      # Usage example:
+      #  index.find_object({'query' => '', 'paginate' => true}) {|obj| obj.key?('company') and obj['company'] == 'Apple'}
+      #
+      # @param opts contains extra parameters to send with your query
+      #
+      # @return [Hash|AlgoliaApiError] the matching object and its position in the result set
+      #
+      def find_object(opts: {})
+        paginate = true
+        page     = 0
+
+        query = opts[:query] || ''
+        opts.delete(:query)
+
+        if opts.has_key? :paginate
+          paginate = opts[:paginate]
+        end
+
+        opts.delete(:paginate)
+
+        loop do
+          opts[:page] = page
+          res         = search(query, search_params: opts)
+
+          if block_given?
+            res['hits'].each_with_index do |hit, i|
+              if yield(hit)
+                return {
+                  object: hit,
+                  position: i,
+                  page: page
+                }
+              end
+            end
+          end
+
+          has_next_page = page + 1 < res['nbPages']
+          if !paginate || !has_next_page
+            raise AlgoliaApiError.new(404, 'Object not found')
+          end
+
+          page += 1
+        end
+      end
+
+      #
+      # Retrieve the given object position in a set of results.
+      #
+      # @param [Array] objects the result set to browse
+      # @param [String] object_id the object to look for
+      #
+      # @return [Integer] position of the object, or -1 if it's not in the array
+      #
+      def self.get_object_position(objects, object_id)
+        objects['hits'].find_index { |hit| hit['objectID'] == object_id } || -1
+      end
+
+      # # # # # # # # # # # # # # # # # # # # #
+      # INDEXING
+      # # # # # # # # # # # # # # # # # # # # #
+
+      def get_object(object_id, opts: {})
+        # TODO
+      end
+
+      def get_objects(object_ids, opts: {})
+        # TODO
+      end
+
+      def find_objects
+        # TODO
+      end
+
+      # Override the content of an object
+      #
+      # @param object [Hash] the object to save
+      # @param auto_generate_object_id_if_not_exist [Boolean] the associated objectID, if nil 'object' must contain an 'objectID' key
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      def save_object(object, auto_generate_object_id_if_not_exist: false, opts: {})
+        save_objects([object], auto_generate_object_id_if_not_exist: auto_generate_object_id_if_not_exist, opts: opts)
+      end
+
+      #
+      # Override the content of several objects
+      #
+      # @param objects the array of objects to save
+      # @param auto_generate_object_id_if_not_exist [Boolean] if set to true, an objectID will be automatically set on your objects
+      # @param opts contains extra parameters to send with your query
+      #
+      def save_objects(objects, auto_generate_object_id_if_not_exist: false, opts: {})
+        if auto_generate_object_id_if_not_exist
+          batch(build_batch('addObject', objects), opts: opts)
+        else
+          batch(build_batch('updateObject', objects, true), opts: opts)
+        end
+      end
+
+      def partial_update_object(object, opts: {})
+        # TODO
+      end
+
+      def partial_update_objects(objects, opts: {})
+        # TODO
+      end
+
+      def delete_object(object_id, opts: {})
+        # TODO
+      end
+
+      def delete_objects(object_ids, opts: {})
+        # TODO
+      end
+
+      def delete_by(opts: {})
+        # TODO
+      end
+
       # Send a batch request
       #
       # @param request [Hash] hash containing the requests to batch
@@ -120,6 +219,146 @@ module Algolia
       def batch(request, opts: {})
         @transporter.write(:POST, "#{@index_uri}/batch", body: request, opts: opts)
       end
+
+      # # # # # # # # # # # # # # # # # # # # #
+      # QUERY RULES
+      # # # # # # # # # # # # # # # # # # # # #
+
+      def get_rule(object_id, opts: {})
+        # TODO
+      end
+
+      def save_rule(rule, forward_to_replicas: false, opts: {})
+        # TODO
+      end
+
+      def save_rules(rules, forward_to_replicas: false, opts: {})
+        # TODO
+      end
+
+      def clear_rules(forward_to_replicas: false, opts: {})
+        # TODO
+      end
+
+      def delete_rule(object_id, forward_to_replicas: false, opts: {})
+        # TODO
+      end
+
+      # # # # # # # # # # # # # # # # # # # # #
+      # SYNONYMS
+      # # # # # # # # # # # # # # # # # # # # #
+
+      def get_synonym(object_id, opts: {})
+        # TODO
+      end
+
+      def save_synonym(synonym, forward_to_replicas: false, opts: {})
+        # TODO
+      end
+
+      def save_synonyms(synonyms, forward_to_replicas: false, opts: {})
+        # TODO
+      end
+
+      def clear_synonyms(forward_to_replicas: false, opts: {})
+        # TODO
+      end
+
+      def delete_synonym(object_id, forward_to_replicas: false, opts: {})
+        # TODO
+      end
+
+      # # # # # # # # # # # # # # # # # # # # #
+      # BROWSING
+      # # # # # # # # # # # # # # # # # # # # #
+
+      def browse(query, params: {}, opts: {})
+        # TODO
+      end
+
+      def browse_objects(params: {}, opts: {})
+        # TODO
+      end
+
+      def browse_rules(opts: {})
+        # TODO
+      end
+
+      def browse_synonyms(opts: {})
+        # TODO
+      end
+
+      # # # # # # # # # # # # # # # # # # # # #
+      # REPLACING
+      # # # # # # # # # # # # # # # # # # # # #
+
+      def replace_all_objects(objects, opts: {})
+        # TODO
+      end
+
+      def replace_all_rules(rules, opts: {})
+        # TODO
+      end
+
+      def replace_all_synonyms(synonyms, opts: {})
+        # TODO
+      end
+
+      # # # # # # # # # # # # # # # # # # # # #
+      # SEARCHING
+      # # # # # # # # # # # # # # # # # # # # #
+
+      # Perform a search on the index
+      #
+      # @param query the full text query
+      # @param search_params (optional)
+      # @param opts contains extra parameters to send with your query
+      #
+      # @return Algolia::Response
+      #
+      def search(query, search_params: {}, opts: {})
+        search_params[:query] = query
+        @transporter.read(:POST, "#{@index_uri}/query", body: search_params, opts: opts)
+      end
+
+      def search_for_facet_values(facet_name, facet_query, params: {}, opts: {})
+        params[:facetQuery] = facet_query
+        @transporter.read(:POST, "#{@index_uri}/facets/#{facet_name}/query", body: params, opts: opts)
+      end
+
+      def search_rules(query, params: {}, opts: {})
+        # TODO
+      end
+
+      def search_synonyms(query, params: {}, opts: {})
+        # TODO
+      end
+
+      # # # # # # # # # # # # # # # # # # # # #
+      # SETTINGS
+      # # # # # # # # # # # # # # # # # # # # #
+
+      def get_settings(opts: {})
+        opts[:getVersion] = '2'
+
+        @transporter.read(:GET, "#{@index_uri}/settings", opts: opts)
+      end
+
+      def set_settings(settings, opts: {})
+        @transporter.write(:PUT, "#{@index_uri}/settings", body: settings, opts: opts)
+      end
+
+      # # # # # # # # # # # # # # # # # # # # #
+      # EXISTS
+      # # # # # # # # # # # # # # # # # # # # #
+
+      def exists(opts: {})
+        # TODO
+      end
+
+      # # # # # # # # # # # # # # # # # # # # #
+      # PRIVATE
+      # # # # # # # # # # # # # # # # # # # # #
 
       private
 

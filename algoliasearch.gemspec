@@ -41,12 +41,13 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'rake'
 
-  spec.add_dependency 'multi_json', '~> 1.0'
   spec.add_dependency 'faraday', '~> 0.15'
+  spec.add_dependency 'multi_json', '~> 1.0'
 
-  spec.add_development_dependency "mocha"
-  spec.add_development_dependency "minitest"
-  spec.add_development_dependency "minitest-hooks"
   spec.add_development_dependency 'httpx'
   spec.add_development_dependency 'm'
+  spec.add_development_dependency 'minitest'
+  spec.add_development_dependency 'minitest-hooks'
+  spec.add_development_dependency 'minitest-proveit'
+  spec.add_development_dependency 'mocha'
 end
