@@ -64,8 +64,13 @@ Gem::Specification.new do |s|
     s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      if Gem::Version.new(RUBY_VERSION) <= Gem::Version.new('1.9.3')
+        s.add_runtime_dependency     'json',       '>= 1.5.1', '< 2.3'
+      else
+        s.add_runtime_dependency     'json',       '>= 1.5.1'
+      end
+
       s.add_runtime_dependency     'httpclient', '~> 2.8', '>= 2.8.3'
-      s.add_runtime_dependency     'json',       '>= 1.5.1', '< 2.3'
       s.add_development_dependency 'travis',     '~> 0'
       s.add_development_dependency 'rake',       '~> 0'
       s.add_development_dependency 'rdoc',       '~> 0'
