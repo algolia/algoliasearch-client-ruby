@@ -68,7 +68,7 @@ module Algolia
             request[:timeout]
           )
 
-          outcome  = @retry_strategy.decide(host, response.status, response.has_timed_out)
+          outcome  = @retry_strategy.decide(host, http_response_code: response.status, is_timed_out: response.has_timed_out)
           if outcome == FAILURE
             raise AlgoliaApiError.new(response.status, response.error['message'])
           end

@@ -1,8 +1,32 @@
-require 'minitest/autorun'
 require 'test_helper'
+require 'httpx/adapters/faraday'
 require_relative 'base_test'
 
 class SearchIndexTest < BaseTest
+  describe 'customize search client' do
+    def test_with_a_custom_adapter_for_faraday
+      client = Algolia::Search::Client.new(@@search_config, http_requester: Algolia::Http::HttpRequester, adapter: 'httpx')
+      index = client.init_index('test_custom_adapter')
+
+      index.save_object!({name: 'test', data: 10}, auto_generate_object_id_if_not_exist: true)
+      response = index.search('test')
+
+      refute_empty response['hits']
+      assert_equal 'test', response['hits'][0]['name']
+      assert_equal 10, response['hits'][0]['data']
+      index.clear_objects!
+    end
+
+    def test_with_custom_requester
+      client = Algolia::Search::Client.new(@@search_config, http_requester: MockRequester)
+      index = client.init_index('test_custom_requester')
+
+      response = index.search('test')
+
+      refute_nil response['hits']
+    end
+  end
+
   describe 'save objects' do
     def before_all
       super
