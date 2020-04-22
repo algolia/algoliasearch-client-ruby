@@ -8,7 +8,7 @@ require 'bundler/setup'
 require 'algoliasearch'
 require 'minitest/autorun'
 require 'minitest/hooks'
-require 'minitest/hell'
+require 'algoliasearch/integration/mocks/mock_requester'
 
 APPLICATION_ID_1   = ENV['ALGOLIA_APPLICATION_ID_1']
 ADMIN_KEY_1        = ENV['ALGOLIA_ADMIN_KEY_1']
@@ -17,36 +17,14 @@ APPLICATION_ID_2   = ENV['ALGOLIA_APPLICATION_ID_2']
 ADMIN_KEY_2        = ENV['ALGOLIA_ADMIN_KEY_2']
 MCM_APPLICATION_ID = ENV['ALGOLIA_APPLICATION_ID_MCM']
 MCM_ADMIN_KEY      = ENV['ALGOLIA_ADMIN_KEY_MCM']
+USER_AGENT         = 'test-ruby'
 
 class Minitest::Test
-  parallelize_me!
-
   attr_reader :search_client
 
   include Minitest::Hooks
-  @search_config  = Algolia::Search::Config.new(app_id: APPLICATION_ID_1, api_key: ADMIN_KEY_1, user_agent: 'test-ruby')
-  @@search_client = Algolia::Search::Client.new(@search_config)
-
-  @cleanup = begin
-            indexes_list = @@search_client.list_indexes
-
-            unless indexes_list.empty?
-              yesterday         = Date.today.prev_day
-              indexes_to_delete = indexes_list['items'].select do |index|
-                index['name'].include?('ruby') && Date.parse(index['createdAt']) <= yesterday
-              end
-
-              operations = []
-
-              unless indexes_to_delete.empty?
-                indexes_to_delete.each do |index|
-                  operations << {action: 'delete', indexName: index['name']}
-                end
-
-                @@search_client.multiple_batch(operations)
-              end
-            end
-          end
+  @@search_config = Algolia::Search::Config.new(app_id: APPLICATION_ID_1, api_key: ADMIN_KEY_1, user_agent: USER_AGENT)
+  @@search_client = Algolia::Search::Client.new(@@search_config)
 end
 
 def check_environment_variables

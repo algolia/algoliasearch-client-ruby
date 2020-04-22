@@ -41,7 +41,7 @@ module Algolia
       #
       # @return [Binary] retry outcome code
       #
-      def decide(tryable_host, http_response_code, is_timed_out = false)
+      def decide(tryable_host, http_response_code: nil, is_timed_out: false)
         @lock.synchronize do
           if !is_timed_out && success?(http_response_code)
             tryable_host.up       = true
