@@ -1,7 +1,6 @@
 require 'bundler/gem_tasks'
 require 'rubocop/rake_task'
 require 'rake/testtask'
-require 'rspec/core/rake_task'
 
 task(:default) { system "rake --tasks" }
 task  :test    => 'test:unit'
