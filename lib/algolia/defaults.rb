@@ -27,21 +27,6 @@ module Defaults
   WRITE_TIMEOUT   = 5
   USER_AGENT      = ["Algolia for Ruby (#{::Algolia::VERSION})", "Ruby (#{RUBY_VERSION})"]
 
-  VALID_HEADERS = %w(
-    Content-type
-    User-Agent
-    X-Algolia-USER-ID
-    X-Forwarded-For
-  )
-
-  VALID_QUERY_PARAMS = %w(
-    forwardToReplicas
-    replaceExistingSynonyms
-    getVersion
-    createIfNotExists
-    clearExistingRules
-  )
-
   WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY = 100
 
   GZIP_ENCODING = 'gzip'
