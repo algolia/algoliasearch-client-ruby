@@ -18,21 +18,8 @@ Gem::Specification.new do |spec|
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem
   # that have been added into git.
-  spec.files         = [
-    '.rspec',
-    '.travis.yml',
-    'Gemfile',
-    'Gemfile.lock',
-    'README.md',
-    'Rakefile',
-    'algolia.gemspec',
-    'lib/algolia/search_client.rb',
-    'lib/algolia/search_config.rb',
-    'lib/algolia/error.rb',
-    'lib/algolia/search_index.rb',
-    'lib/algolia/version.rb',
-    'spec/algoliasearch_spec.rb'
-  ]
+  spec.files         = `git ls-files`.split($/)
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
