@@ -1,14 +1,13 @@
-require 'test_helper'
 require 'httpx/adapters/faraday'
 require_relative 'base_test'
 
 class SearchIndexTest < BaseTest
   describe 'customize search client' do
-    def test_with_a_custom_adapter_for_faraday
+    def todo_test_with_a_custom_adapter_for_faraday
       client = Algolia::Search::Client.new(@@search_config, http_requester: Algolia::Http::HttpRequester, adapter: 'httpx')
       index = client.init_index('test_custom_adapter')
 
-      index.save_object!({name: 'test', data: 10}, auto_generate_object_id_if_not_exist: true)
+      index.save_object!({name: 'test', data: 10}, opts: {auto_generate_object_id_if_not_exist: true})
       response = index.search('test')
 
       refute_empty response['hits']
@@ -49,7 +48,7 @@ class SearchIndexTest < BaseTest
     end
 
     def test_save_object_with_object_id_and_auto_generate_object_id_if_not_exist
-      response = @index.save_object(generate_object('111'), auto_generate_object_id_if_not_exist: true)
+      response = @index.save_object(generate_object('111'), opts: {auto_generate_object_id_if_not_exist: true})
 
       assert_equal response['objectIDs'], ['111']
       refute_nil response['taskID']
@@ -63,7 +62,7 @@ class SearchIndexTest < BaseTest
     end
 
     def test_save_object_without_object_id
-      response = @index.save_object(generate_object, auto_generate_object_id_if_not_exist: true)
+      response = @index.save_object(generate_object, opts: {auto_generate_object_id_if_not_exist: true})
 
       refute_empty response['objectIDs']
       refute_nil response['taskID']
@@ -105,7 +104,7 @@ class SearchIndexTest < BaseTest
       response = @index.save_objects([
                                        generate_object,
                                        generate_object
-                                     ], auto_generate_object_id_if_not_exist: true)
+                                     ], opts: {auto_generate_object_id_if_not_exist: true})
 
       refute_empty response['objectIDs']
       refute_nil response['taskID']
@@ -129,7 +128,7 @@ class SearchIndexTest < BaseTest
     def before_all
       super
       @index = @@search_client.init_index(get_test_index_name('search'))
-      @index.save_objects!(create_employee_records, auto_generate_object_id_if_not_exist: true)
+      @index.save_objects!(create_employee_records, opts: {auto_generate_object_id_if_not_exist: true})
       @index.set_settings!(attributesForFaceting: ['searchable(company)'])
     end
 
@@ -183,19 +182,19 @@ class SearchIndexTest < BaseTest
     end
 
     def test_search_with_click_analytics
-      response = @index.search('elon', search_params: {clickAnalytics: true})
+      response = @index.search('elon', opts: {clickAnalytics: true})
 
       refute_nil response['queryID']
     end
 
     def test_search_with_fact_filters
-      response = @index.search('elon', search_params: {facets: '*', facetFilters: ['company:tesla']})
+      response = @index.search('elon', opts: {facets: '*', facetFilters: ['company:tesla']})
 
       assert_equal response['nbHits'], 1
     end
 
     def test_search_with_filter
-      response = @index.search('elon', search_params: {facets: '*', filters: '(company:tesla OR company:spacex)'})
+      response = @index.search('elon', opts: {facets: '*', filters: '(company:tesla OR company:spacex)'})
 
       assert_equal response['nbHits'], 2
     end

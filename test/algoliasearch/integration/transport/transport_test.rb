@@ -1,4 +1,3 @@
-require 'test_helper'
 require_relative '../base_test'
 
 class TransportTest < BaseTest
