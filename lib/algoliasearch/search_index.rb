@@ -169,22 +169,22 @@ module Algolia
       # Override the content of an object
       #
       # @param object [Hash] the object to save
-      # @param auto_generate_object_id_if_not_exist [Boolean] the associated objectID, if nil 'object' must contain an 'objectID' key
       # @param opts [Hash] contains extra parameters to send with your query
       #
-      def save_object(object, auto_generate_object_id_if_not_exist: false, opts: {})
-        save_objects([object], auto_generate_object_id_if_not_exist: auto_generate_object_id_if_not_exist, opts: opts)
+      def save_object(object, opts: {})
+        save_objects([object], opts: opts)
       end
 
       #
       # Override the content of several objects
       #
       # @param objects the array of objects to save
-      # @param auto_generate_object_id_if_not_exist [Boolean] if set to true, an objectID will be automatically set on your objects
       # @param opts contains extra parameters to send with your query
       #
-      def save_objects(objects, auto_generate_object_id_if_not_exist: false, opts: {})
-        if auto_generate_object_id_if_not_exist
+      def save_objects(objects, opts: {})
+        generate_object_id = opts[:auto_generate_object_id_if_not_exist] || false
+        opts.delete(:auto_generate_object_id_if_not_exist)
+        if generate_object_id
           batch(build_batch('addObject', objects), opts: opts)
         else
           batch(build_batch('updateObject', objects, true), opts: opts)
@@ -311,19 +311,17 @@ module Algolia
       # Perform a search on the index
       #
       # @param query the full text query
-      # @param search_params (optional)
       # @param opts contains extra parameters to send with your query
       #
       # @return Algolia::Response
       #
-      def search(query, search_params: {}, opts: {})
-        search_params[:query] = query
-        @transporter.read(:POST, "#{@index_uri}/query", body: search_params, opts: opts)
+      def search(query, opts: {})
+        @transporter.read(:POST, "#{@index_uri}/query", body: {'query': query}, opts: opts)
       end
 
-      def search_for_facet_values(facet_name, facet_query, params: {}, opts: {})
-        params[:facetQuery] = facet_query
-        @transporter.read(:POST, "#{@index_uri}/facets/#{facet_name}/query", body: params, opts: opts)
+      def search_for_facet_values(facet_name, facet_query, opts: {})
+        @transporter.read(:POST, "#{@index_uri}/facets/#{facet_name}/query",
+          body: {'facetQuery': facet_query}, opts: opts)
       end
 
       def search_rules(query, params: {}, opts: {})
@@ -407,9 +405,9 @@ module Algolia
         {
           requests: objects.map do |object|
             check_object(object, true)
-            h            = {action: action, body: object}
-            h[:objectID] = get_object_id(object).to_s if with_object_id
-            h
+            request            = {action: action, body: object}
+            request[:objectID] = get_object_id(object).to_s if with_object_id
+            request
           end
         }
       end

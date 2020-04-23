@@ -1,4 +1,3 @@
-require 'algoliasearch'
 require 'test_helper'
 require 'minitest/hell'
 
