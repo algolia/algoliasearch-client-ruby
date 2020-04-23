@@ -1,7 +1,7 @@
 require 'faraday'
 require 'json'
 
-require 'algoliasearch/enums/call_type'
+require 'algolia/enums/call_type'
 
 module Algolia
   module Search

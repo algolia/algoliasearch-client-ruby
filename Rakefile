@@ -10,13 +10,13 @@ namespace :test do
   Rake::TestTask.new(:unit) do |t|
     t.libs << 'test'
     t.libs << 'lib'
-    t.test_files = FileList['test/algoliasearch/unit/**/*_test.rb']
+    t.test_files = FileList['test/algolia/unit/**/*_test.rb']
   end
 
   Rake::TestTask.new(:integration) do |t|
     t.libs << 'test'
     t.libs << 'lib'
-    t.test_files = FileList['test/algoliasearch/integration/**/*_test.rb']
+    t.test_files = FileList['test/algolia/integration/**/*_test.rb']
   end
 
   desc "Run unit and integration tests"

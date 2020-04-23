@@ -2,10 +2,10 @@ require 'date'
 
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'algoliasearch/version'
+require 'algolia/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'algoliasearch'
+  spec.name          = 'algolia'
   spec.version       = Algolia::VERSION
   spec.authors       = ['Chloe Liban']
   spec.email         = ['chloe.liban@gmail.com']
@@ -25,12 +25,12 @@ Gem::Specification.new do |spec|
     'Gemfile.lock',
     'README.md',
     'Rakefile',
-    'algoliasearch.gemspec',
-    'lib/algoliasearch/search_client.rb',
-    'lib/algoliasearch/search_config.rb',
-    'lib/algoliasearch/error.rb',
-    'lib/algoliasearch/search_index.rb',
-    'lib/algoliasearch/version.rb',
+    'algolia.gemspec',
+    'lib/algolia/search_client.rb',
+    'lib/algolia/search_config.rb',
+    'lib/algolia/error.rb',
+    'lib/algolia/search_index.rb',
+    'lib/algolia/version.rb',
     'spec/algoliasearch_spec.rb'
   ]
   spec.bindir        = 'exe'

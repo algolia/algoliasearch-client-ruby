@@ -1,4 +1,4 @@
-require 'algoliasearch'
+require 'algolia'
 require 'webmock/minitest'
 require 'test_helper'
 
