@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in algoliasearch.gemspec
+# Specify your gem's dependencies in algolia.gemspec
 gemspec
 
 group :development do

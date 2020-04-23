@@ -5,10 +5,10 @@ if ENV['COVERAGE']
 end
 
 require 'bundler/setup'
-require 'algoliasearch'
+require 'algolia'
 require 'minitest/autorun'
 require 'minitest/hooks'
-require 'algoliasearch/integration/mocks/mock_requester'
+require 'algolia/integration/mocks/mock_requester'
 
 APPLICATION_ID_1   = ENV['ALGOLIA_APPLICATION_ID_1']
 ADMIN_KEY_1        = ENV['ALGOLIA_ADMIN_KEY_1']

@@ -1,4 +1,4 @@
-require 'algoliasearch'
+require 'algolia'
 require 'test_helper'
 
 class RetryStrategyTest
