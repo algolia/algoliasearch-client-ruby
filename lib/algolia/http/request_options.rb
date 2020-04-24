@@ -30,10 +30,12 @@ module Algolia
       # @param opts [Hash]
       #
       def add_headers(opts = {})
-        opts[:headers]&.each do |opt, value|
-          @headers[opt.to_sym] = value
+        unless opts[:headers].nil?
+          opts[:headers].each do |opt, value|
+            @params[opt.to_sym] = value
+          end
+          opts.delete(:headers)
         end
-        opts.delete(:headers)
       end
 
       # Add or update query parameters
@@ -41,10 +43,12 @@ module Algolia
       # @param opts [Hash]
       #
       def add_params(opts = {})
-        opts[:params]&.each do |opt, value|
-          @params[opt.to_sym] = value
+        unless opts[:params].nil?
+          opts[:params].each do |opt, value|
+            @params[opt.to_sym] = value
+          end
+          opts.delete(:params)
         end
-        opts.delete(:params)
       end
 
       # Add or update timeout

@@ -41,7 +41,7 @@ def get_test_index_name(name)
   date = DateTime.now.strftime('%Y-%m-%d_%H:%M:%S')
   user = ENV['USER'] || 'unknown'
 
-  instance = ENV['TRAVIS'].to_s == 'true' ? ENV['TRAVIS_JOB_NUMBER'] : user
+  instance = ENV['CI'].to_s == 'true' ? ENV['CIRCLE_BUILD_NUM'] : user
 
   format('ruby_%<date>s_%<instance>s_%<name>s', date: date, instance: instance, name: name)
 end
@@ -50,7 +50,7 @@ def get_mcm_user_name
   date = DateTime.now.strftime('%Y-%m-%d_%H:%M:%S')
   user = ENV['USER'] || 'unknown'
 
-  instance = ENV['TRAVIS'].to_s == 'true' ? ENV['TRAVIS_JOB_NUMBER'] : user
+  instance = ENV['CI'].to_s == 'true' ? ENV['CIRCLE_BUILD_NUM'] : user
 
   format('ruby_%<date>s_%<instance>s', date: date, instance: instance)
 end

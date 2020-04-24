@@ -5,8 +5,10 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in algolia.gemspec
 gemspec
 
+gem 'minitest-ci'
+
 group :development do
-  gem 'rubocop', require: false
+  gem 'rubocop'
   gem 'yard'
 end
 

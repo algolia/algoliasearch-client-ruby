@@ -1,3 +1,5 @@
+require 'multi_json'
+
 module Helpers
   class << self
     # Convert an Hash to json

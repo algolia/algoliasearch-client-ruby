@@ -1,0 +1,99 @@
+aliases:
+  - &check_bundler
+    name: Which bundler?
+    command: bundle -v
+
+  - &restore_cache
+    name: Restore Bundler cache
+    keys:
+      - ruby-cache-<< parameters.version >>-{{ checksum "Gemfile" }}
+      - ruby-cache-<< parameters.version >>-
+
+  - &install_bundler
+    name: Bundle Install
+    command: bundle check || bundle install
+
+  - &save_cache
+    name: Save Bundler cache
+    key: ruby-cache-<< parameters.version >>-{{ checksum "Gemfile" }}
+    paths:
+      - vendor/bundle
+
+  - &run_tests
+    name: Run unit and integration tests
+    command: |
+      mkdir /tmp/test-results
+      bundle exec rake test:all
+
+  - &store_test_results
+    path: /tmp/test-results
+
+  - &store_artifacts
+    path: /tmp/test-results
+    destination: test-results
+
+references:
+  default_docker_ruby_executor: &default_docker_ruby_executor
+    image: circleci/ruby:<< parameters.version >>
+    environment:
+      BUNDLE_JOBS: 3
+      BUNDLE_RETRY: 3
+      BUNDLE_PATH: vendor/bundle
+
+  default_docker_jruby_executor: &default_docker_jruby_executor
+    image: circleci/jruby:<< parameters.version >>
+    environment:
+      BUNDLE_JOBS: 3
+      BUNDLE_RETRY: 3
+      BUNDLE_PATH: vendor/bundle
+
+version: 2.1
+
+jobs:
+  test_ruby:
+    description: Build, unit and integration tests for Ruby
+    parameters:
+      version:
+        type: string
+    parallelism: 3
+    docker:
+      - *default_docker_ruby_executor
+    steps:
+      - checkout
+      - run: *check_bundler
+      - restore_cache: *restore_cache
+      - run: *install_bundler
+      - save_cache: *save_cache
+      - run: *run_tests
+      - store_test_results: *store_test_results
+      - store_artifacts: *store_artifacts
+
+  test_jruby:
+    description: Build, unit and integration tests for JRuby
+    parameters:
+      version:
+        type: string
+    docker:
+      - *default_docker_jruby_executor
+    steps:
+      - checkout
+      - run: *check_bundler
+      - restore_cache: *restore_cache
+      - run: *install_bundler
+      - save_cache: *save_cache
+      - run: *run_tests
+      - store_test_results: *store_test_results
+      - store_artifacts: *store_artifacts
+
+workflows:
+  version: 2
+  ci:
+    jobs:
+      - test_ruby:
+          matrix:
+            parameters:
+              version: ['2.2', '2.3', '2.4', '2.5', '2.6', 'latest']
+      - test_jruby:
+          matrix:
+            parameters:
+              version: ['9', '9.1', '9.2', 'latest']
