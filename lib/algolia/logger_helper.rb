@@ -1,3 +1,5 @@
+require 'logger'
+
 module Algolia
   class LoggerHelper
     def self.create(debug_file = nil)

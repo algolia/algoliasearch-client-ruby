@@ -1,6 +1,3 @@
-require 'logger'
-require 'multi_json'
-
 require 'algolia/config/algolia_config'
 require 'algolia/config/search_config'
 require 'algolia/enums/call_type'

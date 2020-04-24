@@ -43,21 +43,21 @@ class SearchIndexTest < BaseTest
     def test_save_object_with_object_id
       response = @index.save_object(generate_object('111'))
 
-      assert_equal response['objectIDs'], ['111']
+      assert_equal ['111'], response['objectIDs']
       refute_nil response['taskID']
     end
 
     def test_save_object_with_object_id_and_auto_generate_object_id_if_not_exist
       response = @index.save_object(generate_object('111'), opts: {auto_generate_object_id_if_not_exist: true})
 
-      assert_equal response['objectIDs'], ['111']
+      assert_equal ['111'], response['objectIDs']
       refute_nil response['taskID']
     end
 
     def test_save_object_with_object_id_and_request_options
       response = @index.save_object(generate_object('111'), opts: {headers: {'X-Forwarded-For': '0.0.0.0'}})
 
-      assert_equal response['objectIDs'], ['111']
+      assert_equal ['111'], response['objectIDs']
       refute_nil response['taskID']
     end
 
@@ -96,7 +96,7 @@ class SearchIndexTest < BaseTest
                                        generate_object('222')
                                      ])
 
-      assert_equal(response['objectIDs'], %w(111 222))
+      assert_equal %w(111 222), response['objectIDs']
       refute_nil response['taskID']
     end
 
@@ -135,10 +135,10 @@ class SearchIndexTest < BaseTest
     def test_search_objects
       response = @index.search('algolia')
 
-      assert_equal response['nbHits'], 2
-      assert_equal Algolia::Search::Index.get_object_position(response, 'nicolas-dessaigne'), 0
-      assert_equal Algolia::Search::Index.get_object_position(response, 'julien-lemoine'), 1
-      assert_equal Algolia::Search::Index.get_object_position(response, ''), -1
+      assert_equal 2, response['nbHits']
+      assert_equal 0, Algolia::Search::Index.get_object_position(response, 'nicolas-dessaigne')
+      assert_equal 1, Algolia::Search::Index.get_object_position(response, 'julien-lemoine')
+      assert_equal -1, Algolia::Search::Index.get_object_position(response, '')
     end
 
     def find_objects
@@ -155,8 +155,8 @@ class SearchIndexTest < BaseTest
       assert_equal 'Object not found', exception.message
 
       response = @index.find_object(opts: {query: '', paginate: false}) { true }
-      assert_equal response[:position], 0
-      assert_equal response[:page], 0
+      assert_equal 0, response[:position]
+      assert_equal 0, response[:page]
 
       # we use a lambda and convert it to a block with `&`
       # so as not to repeat the condition
@@ -177,8 +177,8 @@ class SearchIndexTest < BaseTest
       assert_equal 'Object not found', exception.message
 
       response = @index.find_object(opts: {query: '', paginate: true, hitsPerPage: 5}, &condition)
-      assert_equal response[:position], 0
-      assert_equal response[:page], 2
+      assert_equal 0, response[:position]
+      assert_equal 2, response[:page]
     end
 
     def test_search_with_click_analytics
@@ -187,16 +187,16 @@ class SearchIndexTest < BaseTest
       refute_nil response['queryID']
     end
 
-    def test_search_with_fact_filters
+    def test_search_with_facet_filters
       response = @index.search('elon', opts: {facets: '*', facetFilters: ['company:tesla']})
 
-      assert_equal response['nbHits'], 1
+      assert_equal 1, response['nbHits']
     end
 
     def test_search_with_filter
       response = @index.search('elon', opts: {facets: '*', filters: '(company:tesla OR company:spacex)'})
 
-      assert_equal response['nbHits'], 2
+      assert_equal 2, response['nbHits']
     end
 
     def test_search_for_facet_values

@@ -1,5 +1,4 @@
 require 'bundler/gem_tasks'
-require 'rubocop/rake_task'
 require 'rake/testtask'
 
 task(:default) { system "rake --tasks" }
@@ -23,9 +22,4 @@ namespace :test do
     Rake::Task['test:unit'].invoke
     Rake::Task['test:integration'].invoke
   end
-end
-
-desc 'Run RuboCop on the entire project'
-RuboCop::RakeTask.new('rubocop') do |task|
-  task.fail_on_error = true
 end

@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler'
 
-  spec.add_development_dependency 'rake', '< 12'
+  spec.add_development_dependency 'rake'
 
   spec.add_dependency 'faraday', '~> 0.15'
   spec.add_dependency 'multi_json', '~> 1.0'
