@@ -61,7 +61,7 @@ module Algolia
         if ENV['ALGOLIA_DEBUG']
           @logger.info("Request failed. Error: #{e.message}")
         end
-        Http::Response.new(error: e.message, has_timed_out: true)
+        Http::Response.new(error: e.message)
       end
 
       # Retrieve the connection from the @connections
