@@ -1,5 +1,11 @@
 # ChangeLog
 
+## Unreleased
+
+**Fixed**
+
+* In `search_user_id`, retrieve param `cluster` instead of `clusterName`. [368](https://github.com/algolia/algoliasearch-client-ruby/issues/368)
+
 ## [1.27.1](https://github.com/algolia/algoliasearch-client-ruby/compare/1.27.0...1.27.1) (2019-09-26)
 
 **Fixed**

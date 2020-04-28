@@ -72,6 +72,14 @@ describe 'Multi Cluster Management', :mcm => true do
     item["clusterName"].should eq(@cluster_name)
   end
 
+  it "should find a user_id in a specific cluster" do
+    res = @client.search_user_id(@user_id, @cluster_name, 0, 22)
+    res["hitsPerPage"].should eq(22)
+    item = res["hits"][0]
+    item["userID"].should eq(@user_id)
+    item["clusterName"].should eq(@cluster_name)
+  end
+
   it "should remove a user_id" do
     res = auto_retry do
       @client.remove_user_id(@user_id)
