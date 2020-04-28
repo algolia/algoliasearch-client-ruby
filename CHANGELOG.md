@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+
+## [1.27.2](https://github.com/algolia/algoliasearch-client-ruby/compare/1.27.1...1.27.2) (2020-04-28)
+
 **Fixed**
 
 * In `search_user_id`, retrieve param `cluster` instead of `clusterName`. [368](https://github.com/algolia/algoliasearch-client-ruby/issues/368)
