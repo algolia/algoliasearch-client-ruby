@@ -70,7 +70,7 @@ module Algolia
       # @return [Boolean]
       #
       def success?(http_response_code)
-        (http_response_code.to_i / 100).floor == 2
+        !http_response_code.nil? && (http_response_code.to_i / 100).floor == 2
       end
 
       #
@@ -79,7 +79,7 @@ module Algolia
       # @return [Boolean]
       #
       def retryable?(http_response_code)
-        (http_response_code.to_i / 100).floor != 2 && (http_response_code.to_i / 100).floor != 4
+        !http_response_code.nil? && (http_response_code.to_i / 100).floor != 2 && (http_response_code.to_i / 100).floor != 4
       end
 
       #

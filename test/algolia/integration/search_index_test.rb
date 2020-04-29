@@ -1,10 +1,10 @@
-require 'httpx/adapters/faraday'
+require 'patron'
 require_relative 'base_test'
 
 class SearchIndexTest < BaseTest
   describe 'customize search client' do
-    def todo_test_with_a_custom_adapter_for_faraday
-      client = Algolia::Search::Client.new(@@search_config, http_requester: Algolia::Http::HttpRequester, adapter: 'httpx')
+    def test_with_custom_adapter
+      client = Algolia::Search::Client.new(@@search_config, http_requester: Algolia::Http::HttpRequester, adapter: 'patron')
       index = client.init_index('test_custom_adapter')
 
       index.save_object!({name: 'test', data: 10}, opts: {auto_generate_object_id_if_not_exist: true})

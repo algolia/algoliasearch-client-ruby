@@ -51,7 +51,8 @@ module Algolia
         if ENV['ALGOLIA_DEBUG']
           @logger.info("Request failed. Response status: #{response.status}, error: #{response.body}")
         end
-        Http::Response.new(status: response.status, error: Helpers.json_to_hash(response.body), headers: response.headers)
+        response_body = Helpers.json_to_hash(response.body)
+        Http::Response.new(status: response.status, error: response_body['message'], headers: response.headers)
       rescue Faraday::TimeoutError => e
         if ENV['ALGOLIA_DEBUG']
           @logger.info("Request timed out. Error: #{e.message}")
