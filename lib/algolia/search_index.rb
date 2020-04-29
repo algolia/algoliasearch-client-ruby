@@ -115,7 +115,7 @@ module Algolia
 
         loop do
           opts[:page] = page
-          res         = search(query, search_params: opts)
+          res         = search(query, opts)
 
           if block_given?
             res['hits'].each_with_index do |hit, i|
