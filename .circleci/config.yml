@@ -19,11 +19,19 @@ aliases:
     paths:
       - vendor/bundle
 
-  - &run_tests
-    name: Run unit and integration tests
+  - &run_lint
+    name: Run linting tool
     command: |
-      mkdir /tmp/test-results
-      bundle exec rake test:all
+      if [ << parameters.version >> -eq '2.6' || 'latest' ]
+      then
+        bundle exec rake rubocop
+      fi
+
+  - &run_tests
+     name: Run unit and integration tests
+     command: |
+       mkdir /tmp/test-results
+       bundle exec rake test:all
 
   - &store_test_results
     path: /tmp/test-results
@@ -64,6 +72,7 @@ jobs:
       - restore_cache: *restore_cache
       - run: *install_bundler
       - save_cache: *save_cache
+      - run: *run_lint
       - run: *run_tests
       - store_test_results: *store_test_results
       - store_artifacts: *store_artifacts
@@ -81,6 +90,7 @@ jobs:
       - restore_cache: *restore_cache
       - run: *install_bundler
       - save_cache: *save_cache
+      - run: *run_lint
       - run: *run_tests
       - store_test_results: *store_test_results
       - store_artifacts: *store_artifacts

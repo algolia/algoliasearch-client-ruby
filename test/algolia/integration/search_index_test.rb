@@ -5,7 +5,7 @@ class SearchIndexTest < BaseTest
   describe 'customize search client' do
     def test_with_custom_adapter
       client = Algolia::Search::Client.new(@@search_config, http_requester: Algolia::Http::HttpRequester, adapter: 'httpclient')
-      index  = client.init_index('test_custom_adapter')
+      index  = client.init_index(get_test_index_name('test_custom_adapter'))
 
       index.save_object!({name: 'test', data: 10}, opts: {auto_generate_object_id_if_not_exist: true})
       response = index.search('test')
@@ -18,7 +18,7 @@ class SearchIndexTest < BaseTest
 
     def test_with_custom_requester
       client = Algolia::Search::Client.new(@@search_config, http_requester: MockRequester)
-      index  = client.init_index('test_custom_requester')
+      index  = client.init_index(get_test_index_name('test_custom_requester'))
 
       response = index.search('test')
 

@@ -17,6 +17,12 @@ namespace :test do
     t.libs << 'lib'
     t.test_files = FileList['test/algolia/integration/**/*_test.rb']
   end
+
+  desc 'Run unit and integration tests'
+  task :all do
+    Rake::Task['test:unit'].invoke
+    Rake::Task['test:integration'].invoke
+  end
 end
 
 RuboCop::RakeTask.new
