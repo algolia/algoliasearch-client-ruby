@@ -43,9 +43,17 @@ aliases:
 references:
   default_docker_ruby_executor: &default_docker_ruby_executor
     image: circleci/ruby:<< parameters.version >>
+    environment:
+      BUNDLE_JOBS: 3
+      BUNDLE_RETRY: 3
+      BUNDLE_PATH: vendor/bundle
 
   default_docker_jruby_executor: &default_docker_jruby_executor
     image: circleci/jruby:<< parameters.version >>
+    environment:
+      BUNDLE_JOBS: 3
+      BUNDLE_RETRY: 3
+      BUNDLE_PATH: vendor/bundle
 
 version: 2.1
 
@@ -55,7 +63,6 @@ jobs:
     parameters:
       version:
         type: string
-    parallelism: 3
     docker:
       - *default_docker_ruby_executor
     steps:
