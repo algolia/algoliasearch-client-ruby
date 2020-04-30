@@ -55,10 +55,10 @@ module Algolia
           opts[:timeout] ||= get_timeout(call_type) * (host.retry_count + 1)
 
           request_options = Http::RequestOptions.new(@config)
-          opts = request_options.create(opts)
+          opts            = request_options.create(opts)
           body.merge!(opts)
 
-          request = build_request(method, path, body, request_options)
+          request  = build_request(method, path, body, request_options)
           response = @http_requester.send_request(
             host,
             request[:method],

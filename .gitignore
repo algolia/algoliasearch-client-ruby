@@ -22,7 +22,6 @@ coverage
 rdoc
 pkg
 .rvmrc
-.rubocop.yml
 /.bundle/
 /.yardoc
 /_yardoc/
