@@ -38,7 +38,7 @@ def check_environment_variables
 end
 
 def get_test_index_name(name)
-  date = DateTime.now.strftime('%Y-%m-%d_%H_%M_%S_%L')
+  date = DateTime.now.strftime('%Y-%m-%d_%H_%M_%S')
   user = ENV['USER'] || 'unknown'
 
   instance = ENV['CI'].to_s == 'true' ? ENV['CIRCLE_BUILD_NUM'] : user
@@ -47,7 +47,7 @@ def get_test_index_name(name)
 end
 
 def get_mcm_user_name
-  date = DateTime.now.strftime('%Y-%m-%d_%H_%M_%S_%L')
+  date = DateTime.now.strftime('%Y-%m-%d_%H_%M_%S')
   user = ENV['USER'] || 'unknown'
 
   instance = ENV['CI'].to_s == 'true' ? ENV['CIRCLE_BUILD_NUM'] : user
