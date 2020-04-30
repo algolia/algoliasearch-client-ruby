@@ -1,11 +1,11 @@
-require 'patron'
+require 'httpclient'
 require_relative 'base_test'
 
 class SearchIndexTest < BaseTest
   describe 'customize search client' do
     def test_with_custom_adapter
-      client = Algolia::Search::Client.new(@@search_config, http_requester: Algolia::Http::HttpRequester, adapter: 'patron')
-      index = client.init_index('test_custom_adapter')
+      client = Algolia::Search::Client.new(@@search_config, http_requester: Algolia::Http::HttpRequester, adapter: 'httpclient')
+      index  = client.init_index('test_custom_adapter')
 
       index.save_object!({name: 'test', data: 10}, opts: {auto_generate_object_id_if_not_exist: true})
       response = index.search('test')
@@ -18,7 +18,7 @@ class SearchIndexTest < BaseTest
 
     def test_with_custom_requester
       client = Algolia::Search::Client.new(@@search_config, http_requester: MockRequester)
-      index = client.init_index('test_custom_requester')
+      index  = client.init_index('test_custom_requester')
 
       response = index.search('test')
 
@@ -138,7 +138,7 @@ class SearchIndexTest < BaseTest
       assert_equal 2, response['nbHits']
       assert_equal 0, Algolia::Search::Index.get_object_position(response, 'nicolas-dessaigne')
       assert_equal 1, Algolia::Search::Index.get_object_position(response, 'julien-lemoine')
-      assert_equal (-1), Algolia::Search::Index.get_object_position(response, '')
+      assert_equal(-1, Algolia::Search::Index.get_object_position(response, ''))
     end
 
     def find_objects

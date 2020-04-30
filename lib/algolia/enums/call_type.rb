@@ -1,4 +1,4 @@
 module CallType
-  READ  = 1.freeze
-  WRITE = 2.freeze
+  READ  = 1
+  WRITE = 2
 end

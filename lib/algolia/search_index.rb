@@ -321,7 +321,7 @@ module Algolia
 
       def search_for_facet_values(facet_name, facet_query, opts: {})
         @transporter.read(:POST, "#{@index_uri}/facets/#{facet_name}/query",
-          body: {'facetQuery': facet_query}, opts: opts)
+                          body: {'facetQuery': facet_query}, opts: opts)
       end
 
       def search_rules(query, params: {}, opts: {})
