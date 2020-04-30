@@ -1,5 +1,8 @@
 inherit_from: .rubocop_todo.yml
 
+AllCops:
+  NewCops: enable
+
 # Metrics
 Metrics/BlockLength:
   Enabled: false
@@ -101,9 +104,6 @@ Layout/ExtraSpacing:
   # When true, forces the alignment of `=` in assignments on consecutive lines.
   ForceEqualSignAlignment: true
 
-Layout/SpaceAroundMethodCallOperator:
-  Enabled: true
-
 # Style
 Style/Documentation:
   Enabled: false
@@ -181,9 +181,6 @@ Style/HashTransformKeys:
 
 Style/HashTransformValues:
   Enabled: false
-
-Style/ExponentialNotation:
-  Enabled: true
 
 Style/HashEachMethods:
   Enabled: true

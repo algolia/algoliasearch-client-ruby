@@ -8,7 +8,6 @@ gemspec
 gem 'minitest-ci'
 
 group :development do
-  gem 'rubocop'
   gem 'yard'
 end
 
