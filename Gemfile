@@ -8,6 +8,7 @@ gemspec
 gem 'minitest-ci'
 
 group :development do
+  gem 'git-precommit'
   gem 'yard'
 end
 
