@@ -6,7 +6,7 @@
   <h4 align="center">The perfect starting point to integrate <a href="https://algolia.com" target="_blank">Algolia</a> within your Ruby project</h4>
 
   <p align="center">
-    <a href="https://travis-ci.org/algolia/algoliasearch-client-ruby"><img src="https://img.shields.io/travis/algolia/algoliasearch-client-ruby/master.svg" alt="Build Status"></a>
+    <a href="https://circleci.com/gh/algolia/algoliasearch-client-ruby/tree/release%2Fv2"><img src="https://circleci.com/gh/algolia/algoliasearch-client-ruby/tree/release%2Fv2.svg?style=shield" alt="CircleCI" /></a>
     <a href="https://rubygems.org/gems/algoliasearch"><img src="https://badge.fury.io/rb/algoliasearch.svg" alt="Gem Version"></a>
     <a href="https://rubygems.org/gems/algoliasearch"><img src="https://img.shields.io/badge/licence-MIT-blue.svg" alt="License"></a>
   </p>
