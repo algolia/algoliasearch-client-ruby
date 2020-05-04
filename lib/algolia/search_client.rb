@@ -17,6 +17,11 @@ module Algolia
         @transporter    = Transport::Transport.new(@config, logger_class, requester_class, opts)
       end
 
+      def self.create(app_id, api_key)
+        config = Search::Config.new(app_id: app_id, api_key: api_key)
+        new(config)
+      end
+
       # Initialize an index with a given name
       #
       # @param index_name [String] name of the index to init

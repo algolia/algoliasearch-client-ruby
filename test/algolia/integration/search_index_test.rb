@@ -13,7 +13,6 @@ class SearchIndexTest < BaseTest
       refute_empty response['hits']
       assert_equal 'test', response['hits'][0]['name']
       assert_equal 10, response['hits'][0]['data']
-      index.clear_objects!
     end
 
     def test_with_custom_requester
@@ -23,6 +22,17 @@ class SearchIndexTest < BaseTest
       response = index.search('test')
 
       refute_nil response['hits']
+    end
+
+    def test_without_providing_config
+      client   = Algolia::Search::Client.create(APPLICATION_ID_1, ADMIN_KEY_1)
+      index    = client.init_index(get_test_index_name('test_no_config'))
+      index.save_object!({name: 'test', data: 10}, opts: {auto_generate_object_id_if_not_exist: true})
+      response = index.search('test')
+
+      refute_empty response['hits']
+      assert_equal 'test', response['hits'][0]['name']
+      assert_equal 10, response['hits'][0]['data']
     end
   end
 
