@@ -1,3 +1,4 @@
+require 'algolia/version'
 require 'algolia/config/algolia_config'
 require 'algolia/config/search_config'
 require 'algolia/enums/call_type'
@@ -14,7 +15,6 @@ require 'algolia/error'
 require 'algolia/search_index'
 require 'algolia/logger_helper'
 require 'algolia/helpers'
-require 'algolia/version'
 
 # Algolia module
 module Algolia
