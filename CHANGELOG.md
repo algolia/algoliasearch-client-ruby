@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## [1.27.3](https://github.com/algolia/algoliasearch-client-ruby/compare/1.27.2...1.27.3) (2020-06-03)
+
+**Fixed**
+
+* Replace expired certificate within embedded certificate chain ([9087dd1](https://github.com/algolia/algoliasearch-client-ruby/commit/9087dd14a97bf77c9391a3360c4803edf686086d))
 
 ## [1.27.2](https://github.com/algolia/algoliasearch-client-ruby/compare/1.27.1...1.27.2) (2020-04-28)
 
