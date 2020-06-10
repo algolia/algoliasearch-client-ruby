@@ -8,6 +8,7 @@ module Algolia
       # @option adapter [String] adapter used to make requests. Defaults to Net::Http
       #
       def initialize(config, logger = nil, opts = {})
+        @config  = config
         @hosts   = config.default_hosts
         adapter  = opts[:adapter] || Faraday.default_adapter
         logger ||= LoggerHelper

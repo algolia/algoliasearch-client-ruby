@@ -7,6 +7,7 @@ module Algolia
       # @param [Search::Config] config
       #
       def initialize(config)
+        @config           = config
         @headers          = {}
         @params           = {}
         @timeout          = nil
