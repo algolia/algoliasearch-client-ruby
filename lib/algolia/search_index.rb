@@ -23,26 +23,6 @@ module Algolia
       # MISC
       # # # # # # # # # # # # # # # # # # # # #
 
-      def method_missing(method, *args, &block)
-        if method.to_s.end_with?('!')
-          string_method = method.to_s
-          string_method.slice!('!')
-          if respond_to?(string_method.to_sym)
-            opts                   = {}
-            args.each { |arg| opts = arg[:opts] if arg.is_a?(Hash) && arg.has_key?(:opts) }
-            res                    = send(string_method.to_sym, *args)
-            wait_task(res['taskID'], time_before_retry: Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts: opts)
-            res
-          else
-            super
-          end
-        end
-      end
-
-      def respond_to_missing?(method_name, include_private = false)
-        method_name.to_s.end_with?('!') || super
-      end
-
       # Wait the publication of a task on the server.
       # All server task are asynchronous and you can check with this method that the task is published.
       #
@@ -76,6 +56,16 @@ module Algolia
       #
       def clear_objects(opts: {})
         @transporter.write(:POST, "#{@index_uri}/clear", opts: opts)
+      end
+
+      # Delete the index content and wait for operation to finish
+      #
+      # @param opts contains extra parameters to send with your query
+      #
+      def clear_objects!(opts: {})
+        res = @transporter.write(:POST, "#{@index_uri}/clear", opts: opts)
+        wait_task(res['taskID'], time_before_retry: Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts: opts)
+        res
       end
 
       def delete(opts: {})
@@ -175,7 +165,17 @@ module Algolia
         save_objects([object], opts: opts)
       end
 
+      # Override the content of an object and wait for operation to finish
       #
+      # @param object [Hash] the object to save
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      def save_object!(object, opts: {})
+        res = save_objects([object], opts: opts)
+        wait_task(res['taskID'], time_before_retry: Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts: opts)
+        res
+      end
+
       # Override the content of several objects
       #
       # @param objects the array of objects to save
@@ -189,6 +189,23 @@ module Algolia
         else
           batch(build_batch('updateObject', objects, true), opts: opts)
         end
+      end
+
+      # Override the content of several objects and wait for operation to finish
+      #
+      # @param objects the array of objects to save
+      # @param opts contains extra parameters to send with your query
+      #
+      def save_objects!(objects, opts: {})
+        generate_object_id = opts[:auto_generate_object_id_if_not_exist] || false
+        opts.delete(:auto_generate_object_id_if_not_exist)
+        res                = if generate_object_id
+          batch(build_batch('addObject', objects), opts: opts)
+        else
+          batch(build_batch('updateObject', objects, true), opts: opts)
+        end
+        wait_task(res['taskID'], time_before_retry: Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts: opts)
+        res
       end
 
       def partial_update_object(object, opts: {})
@@ -218,6 +235,17 @@ module Algolia
       #
       def batch(request, opts: {})
         @transporter.write(:POST, "#{@index_uri}/batch", body: request, opts: opts)
+      end
+
+      # Send a batch request and wait for operation to finish
+      #
+      # @param request [Hash] hash containing the requests to batch
+      # @param opts contains extra parameters to send with your query
+      #
+      def batch!(request, opts: {})
+        res = @transporter.write(:POST, "#{@index_uri}/batch", body: request, opts: opts)
+        wait_task(res['taskID'], time_before_retry: Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts: opts)
+        res
       end
 
       # # # # # # # # # # # # # # # # # # # # #
@@ -344,6 +372,12 @@ module Algolia
 
       def set_settings(settings, opts: {})
         @transporter.write(:PUT, "#{@index_uri}/settings", body: settings, opts: opts)
+      end
+
+      def set_settings!(settings, opts: {})
+        res = @transporter.write(:PUT, "#{@index_uri}/settings", body: settings, opts: opts)
+        wait_task(res['taskID'], time_before_retry: Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts: opts)
+        res
       end
 
       # # # # # # # # # # # # # # # # # # # # #
