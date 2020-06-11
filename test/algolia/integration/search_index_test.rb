@@ -7,7 +7,7 @@ class SearchIndexTest < BaseTest
       client = Algolia::Search::Client.new(@@search_config, http_requester: Algolia::Http::HttpRequester, adapter: 'httpclient')
       index  = client.init_index(get_test_index_name('test_custom_adapter'))
 
-      index.save_object!({name: 'test', data: 10}, opts: {auto_generate_object_id_if_not_exist: true})
+      index.save_object!({name: 'test', data: 10}, {auto_generate_object_id_if_not_exist: true})
       response = index.search('test')
 
       refute_empty response['hits']
@@ -27,7 +27,7 @@ class SearchIndexTest < BaseTest
     def test_without_providing_config
       client   = Algolia::Search::Client.create(APPLICATION_ID_1, ADMIN_KEY_1)
       index    = client.init_index(get_test_index_name('test_no_config'))
-      index.save_object!({name: 'test', data: 10}, opts: {auto_generate_object_id_if_not_exist: true})
+      index.save_object!({name: 'test', data: 10}, {auto_generate_object_id_if_not_exist: true})
       response = index.search('test')
 
       refute_empty response['hits']
@@ -58,21 +58,21 @@ class SearchIndexTest < BaseTest
     end
 
     def test_save_object_with_object_id_and_auto_generate_object_id_if_not_exist
-      response = @index.save_object(generate_object('111'), opts: {auto_generate_object_id_if_not_exist: true})
+      response = @index.save_object(generate_object('111'), {auto_generate_object_id_if_not_exist: true})
 
       assert_equal ['111'], response['objectIDs']
       refute_nil response['taskID']
     end
 
     def test_save_object_with_object_id_and_request_options
-      response = @index.save_object(generate_object('111'), opts: {headers: {'X-Forwarded-For': '0.0.0.0'}})
+      response = @index.save_object(generate_object('111'), {headers: {'X-Forwarded-For': '0.0.0.0'}})
 
       assert_equal ['111'], response['objectIDs']
       refute_nil response['taskID']
     end
 
     def test_save_object_without_object_id
-      response = @index.save_object(generate_object, opts: {auto_generate_object_id_if_not_exist: true})
+      response = @index.save_object(generate_object, {auto_generate_object_id_if_not_exist: true})
 
       refute_empty response['objectIDs']
       refute_nil response['taskID']
@@ -114,7 +114,7 @@ class SearchIndexTest < BaseTest
       response = @index.save_objects([
                                        generate_object,
                                        generate_object
-                                     ], opts: {auto_generate_object_id_if_not_exist: true})
+                                     ], {auto_generate_object_id_if_not_exist: true})
 
       refute_empty response['objectIDs']
       refute_nil response['taskID']
@@ -138,7 +138,7 @@ class SearchIndexTest < BaseTest
     def before_all
       super
       @index = @@search_client.init_index(get_test_index_name('search'))
-      @index.save_objects!(create_employee_records, opts: {auto_generate_object_id_if_not_exist: true})
+      @index.save_objects!(create_employee_records, {auto_generate_object_id_if_not_exist: true})
       @index.set_settings!(attributesForFaceting: ['searchable(company)'])
     end
 
@@ -153,18 +153,18 @@ class SearchIndexTest < BaseTest
 
     def find_objects
       exception = assert_raises Algolia::AlgoliaHttpError do
-        @index.find_object(opts: {query: '', paginate: false})
+        @index.find_object({query: '', paginate: false})
       end
 
       assert_equal 'Object not found', exception.message
 
       exception = assert_raises Algolia::AlgoliaHttpError do
-        @index.find_object(opts: {query: '', paginate: false}) { false }
+        @index.find_object({query: '', paginate: false}) { false }
       end
 
       assert_equal 'Object not found', exception.message
 
-      response = @index.find_object(opts: {query: '', paginate: false}) { true }
+      response = @index.find_object({query: '', paginate: false}) { true }
       assert_equal 0, response[:position]
       assert_equal 0, response[:page]
 
@@ -175,36 +175,36 @@ class SearchIndexTest < BaseTest
       end
 
       exception = assert_raises Algolia::AlgoliaHttpError do
-        @index.find_object(opts: {query: 'algolia', paginate: false}, &condition)
+        @index.find_object({query: 'algolia', paginate: false}, &condition)
       end
 
       assert_equal 'Object not found', exception.message
 
       exception = assert_raises Algolia::AlgoliaHttpError do
-        @index.find_object(opts: {query: '', paginate: false, hitsPerPage: 5}, &condition)
+        @index.find_object({query: '', paginate: false, hitsPerPage: 5}, &condition)
       end
 
       assert_equal 'Object not found', exception.message
 
-      response = @index.find_object(opts: {query: '', paginate: true, hitsPerPage: 5}, &condition)
+      response = @index.find_object({query: '', paginate: true, hitsPerPage: 5}, &condition)
       assert_equal 0, response[:position]
       assert_equal 2, response[:page]
     end
 
     def test_search_with_click_analytics
-      response = @index.search('elon', opts: {clickAnalytics: true})
+      response = @index.search('elon', {clickAnalytics: true})
 
       refute_nil response['queryID']
     end
 
     def test_search_with_facet_filters
-      response = @index.search('elon', opts: {facets: '*', facetFilters: ['company:tesla']})
+      response = @index.search('elon', {facets: '*', facetFilters: ['company:tesla']})
 
       assert_equal 1, response['nbHits']
     end
 
     def test_search_with_filter
-      response = @index.search('elon', opts: {facets: '*', filters: '(company:tesla OR company:spacex)'})
+      response = @index.search('elon', {facets: '*', filters: '(company:tesla OR company:spacex)'})
 
       assert_equal 2, response['nbHits']
     end

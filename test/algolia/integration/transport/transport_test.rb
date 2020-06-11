@@ -15,7 +15,7 @@ class TransportTest < BaseTest
       }
 
       exception = assert_raises Algolia::AlgoliaHttpError do
-        @transport.read(:GET, @indexes_uri, opts: {headers: custom_headers})
+        @transport.read(:GET, @indexes_uri, {}, {headers: custom_headers})
       end
 
       assert_equal 'Invalid Application-ID or API key', exception.message

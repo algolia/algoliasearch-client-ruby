@@ -26,7 +26,7 @@ module Algolia
       # @param body [Hash] request body
       # @param opts [Hash] optional request parameters
       #
-      def read(method, path, body: {}, opts: {})
+      def read(method, path, body = {}, opts = {})
         request(READ, method, path, body, opts)
       end
 
@@ -37,7 +37,7 @@ module Algolia
       # @param body [Hash] request body
       # @param opts [Hash] optional request parameters
       #
-      def write(method, path, body: {}, opts: {})
+      def write(method, path, body = {}, opts = {})
         request(WRITE, method, path, body, opts)
       end
 

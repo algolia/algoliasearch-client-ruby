@@ -30,9 +30,9 @@ module Algolia
       # @param time_before_retry the time in milliseconds before retry (default = 100ms)
       # @param opts contains extra parameters to send with your query
       #
-      def wait_task(task_id, time_before_retry: Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts: {})
+      def wait_task(task_id, time_before_retry = Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts = {})
         loop do
-          status = get_task_status(task_id, opts: opts)
+          status = get_task_status(task_id, opts)
           if status == 'published'
             return
           end
@@ -46,33 +46,33 @@ module Algolia
       # @param task_id the id of the task returned by server
       # @param opts contains extra parameters to send with your query
       #
-      def get_task_status(task_id, opts: {})
-        @transporter.read(:GET, "#{@index_uri}/task/#{task_id}", opts: opts)['status']
+      def get_task_status(task_id, opts = {})
+        @transporter.read(:GET, "#{@index_uri}/task/#{task_id}", opts)['status']
       end
 
       # Delete the index content
       #
       # @param opts contains extra parameters to send with your query
       #
-      def clear_objects(opts: {})
-        @transporter.write(:POST, "#{@index_uri}/clear", opts: opts)
+      def clear_objects(opts = {})
+        @transporter.write(:POST, "#{@index_uri}/clear", opts)
       end
 
       # Delete the index content and wait for operation to finish
       #
       # @param opts contains extra parameters to send with your query
       #
-      def clear_objects!(opts: {})
-        res = @transporter.write(:POST, "#{@index_uri}/clear", opts: opts)
-        wait_task(res['taskID'], time_before_retry: Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts: opts)
+      def clear_objects!(opts = {})
+        res = @transporter.write(:POST, "#{@index_uri}/clear", opts)
+        wait_task(res['taskID'], Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
         res
       end
 
-      def delete(opts: {})
+      def delete(opts = {})
         # TODO
       end
 
-      def delete_replica(replica_name, opts: {})
+      def delete_replica(replica_name, opts = {})
         # TODO
       end
 
@@ -90,7 +90,7 @@ module Algolia
       #
       # @return [Hash|AlgoliaHttpError] the matching object and its position in the result set
       #
-      def find_object(opts: {})
+      def find_object(opts = {})
         paginate = true
         page     = 0
 
@@ -144,11 +144,11 @@ module Algolia
       # INDEXING
       # # # # # # # # # # # # # # # # # # # # #
 
-      def get_object(object_id, opts: {})
+      def get_object(object_id, opts = {})
         # TODO
       end
 
-      def get_objects(object_ids, opts: {})
+      def get_objects(object_ids, opts = {})
         # TODO
       end
 
@@ -161,8 +161,8 @@ module Algolia
       # @param object [Hash] the object to save
       # @param opts [Hash] contains extra parameters to send with your query
       #
-      def save_object(object, opts: {})
-        save_objects([object], opts: opts)
+      def save_object(object, opts = {})
+        save_objects([object], opts)
       end
 
       # Override the content of an object and wait for operation to finish
@@ -170,9 +170,9 @@ module Algolia
       # @param object [Hash] the object to save
       # @param opts [Hash] contains extra parameters to send with your query
       #
-      def save_object!(object, opts: {})
-        res = save_objects([object], opts: opts)
-        wait_task(res['taskID'], time_before_retry: Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts: opts)
+      def save_object!(object, opts = {})
+        res = save_objects([object], opts)
+        wait_task(res['taskID'], Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
         res
       end
 
@@ -181,13 +181,13 @@ module Algolia
       # @param objects the array of objects to save
       # @param opts contains extra parameters to send with your query
       #
-      def save_objects(objects, opts: {})
+      def save_objects(objects, opts = {})
         generate_object_id = opts[:auto_generate_object_id_if_not_exist] || false
         opts.delete(:auto_generate_object_id_if_not_exist)
         if generate_object_id
-          batch(build_batch('addObject', objects), opts: opts)
+          batch(build_batch('addObject', objects), opts)
         else
-          batch(build_batch('updateObject', objects, true), opts: opts)
+          batch(build_batch('updateObject', objects, true), opts)
         end
       end
 
@@ -196,35 +196,35 @@ module Algolia
       # @param objects the array of objects to save
       # @param opts contains extra parameters to send with your query
       #
-      def save_objects!(objects, opts: {})
+      def save_objects!(objects, opts = {})
         generate_object_id = opts[:auto_generate_object_id_if_not_exist] || false
         opts.delete(:auto_generate_object_id_if_not_exist)
         res                = if generate_object_id
-          batch(build_batch('addObject', objects), opts: opts)
+          batch(build_batch('addObject', objects), opts)
         else
-          batch(build_batch('updateObject', objects, true), opts: opts)
+          batch(build_batch('updateObject', objects, true), opts)
         end
-        wait_task(res['taskID'], time_before_retry: Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts: opts)
+        wait_task(res['taskID'], Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
         res
       end
 
-      def partial_update_object(object, opts: {})
+      def partial_update_object(object, opts = {})
         # TODO
       end
 
-      def partial_update_objects(objects, opts: {})
+      def partial_update_objects(objects, opts = {})
         # TODO
       end
 
-      def delete_object(object_id, opts: {})
+      def delete_object(object_id, opts = {})
         # TODO
       end
 
-      def delete_objects(object_ids, opts: {})
+      def delete_objects(object_ids, opts = {})
         # TODO
       end
 
-      def delete_by(opts: {})
+      def delete_by(opts = {})
         # TODO
       end
 
@@ -233,8 +233,8 @@ module Algolia
       # @param request [Hash] hash containing the requests to batch
       # @param opts contains extra parameters to send with your query
       #
-      def batch(request, opts: {})
-        @transporter.write(:POST, "#{@index_uri}/batch", body: request, opts: opts)
+      def batch(request, opts = {})
+        @transporter.write(:POST, "#{@index_uri}/batch", request, opts)
       end
 
       # Send a batch request and wait for operation to finish
@@ -242,9 +242,9 @@ module Algolia
       # @param request [Hash] hash containing the requests to batch
       # @param opts contains extra parameters to send with your query
       #
-      def batch!(request, opts: {})
-        res = @transporter.write(:POST, "#{@index_uri}/batch", body: request, opts: opts)
-        wait_task(res['taskID'], time_before_retry: Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts: opts)
+      def batch!(request, opts = {})
+        res = @transporter.write(:POST, "#{@index_uri}/batch", request, opts)
+        wait_task(res['taskID'], Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
         res
       end
 
@@ -252,23 +252,23 @@ module Algolia
       # QUERY RULES
       # # # # # # # # # # # # # # # # # # # # #
 
-      def get_rule(object_id, opts: {})
+      def get_rule(object_id, opts = {})
         # TODO
       end
 
-      def save_rule(rule, forward_to_replicas: false, opts: {})
+      def save_rule(rule, opts = {})
         # TODO
       end
 
-      def save_rules(rules, forward_to_replicas: false, opts: {})
+      def save_rules(rules, opts = {})
         # TODO
       end
 
-      def clear_rules(forward_to_replicas: false, opts: {})
+      def clear_rules(opts = {})
         # TODO
       end
 
-      def delete_rule(object_id, forward_to_replicas: false, opts: {})
+      def delete_rule(object_id, opts = {})
         # TODO
       end
 
@@ -276,23 +276,23 @@ module Algolia
       # SYNONYMS
       # # # # # # # # # # # # # # # # # # # # #
 
-      def get_synonym(object_id, opts: {})
+      def get_synonym(object_id, opts = {})
         # TODO
       end
 
-      def save_synonym(synonym, forward_to_replicas: false, opts: {})
+      def save_synonym(synonym, opts = {})
         # TODO
       end
 
-      def save_synonyms(synonyms, forward_to_replicas: false, opts: {})
+      def save_synonyms(synonyms, opts = {})
         # TODO
       end
 
-      def clear_synonyms(forward_to_replicas: false, opts: {})
+      def clear_synonyms(opts = {})
         # TODO
       end
 
-      def delete_synonym(object_id, forward_to_replicas: false, opts: {})
+      def delete_synonym(object_id, opts = {})
         # TODO
       end
 
@@ -300,19 +300,19 @@ module Algolia
       # BROWSING
       # # # # # # # # # # # # # # # # # # # # #
 
-      def browse(query, params: {}, opts: {})
+      def browse(query, opts = {})
         # TODO
       end
 
-      def browse_objects(params: {}, opts: {})
+      def browse_objects(opts = {})
         # TODO
       end
 
-      def browse_rules(opts: {})
+      def browse_rules(opts = {})
         # TODO
       end
 
-      def browse_synonyms(opts: {})
+      def browse_synonyms(opts = {})
         # TODO
       end
 
@@ -320,15 +320,15 @@ module Algolia
       # REPLACING
       # # # # # # # # # # # # # # # # # # # # #
 
-      def replace_all_objects(objects, opts: {})
+      def replace_all_objects(objects, opts = {})
         # TODO
       end
 
-      def replace_all_rules(rules, opts: {})
+      def replace_all_rules(rules, opts = {})
         # TODO
       end
 
-      def replace_all_synonyms(synonyms, opts: {})
+      def replace_all_synonyms(synonyms, opts = {})
         # TODO
       end
 
@@ -343,20 +343,20 @@ module Algolia
       #
       # @return Algolia::Response
       #
-      def search(query, opts: {})
-        @transporter.read(:POST, "#{@index_uri}/query", body: {'query': query}, opts: opts)
+      def search(query, opts = {})
+        @transporter.read(:POST, "#{@index_uri}/query", {'query': query}, opts)
       end
 
-      def search_for_facet_values(facet_name, facet_query, opts: {})
+      def search_for_facet_values(facet_name, facet_query, opts = {})
         @transporter.read(:POST, "#{@index_uri}/facets/#{facet_name}/query",
-                          body: {'facetQuery': facet_query}, opts: opts)
+                          {'facetQuery': facet_query}, opts)
       end
 
-      def search_rules(query, params: {}, opts: {})
+      def search_rules(query, opts = {})
         # TODO
       end
 
-      def search_synonyms(query, params: {}, opts: {})
+      def search_synonyms(query, opts = {})
         # TODO
       end
 
@@ -364,19 +364,19 @@ module Algolia
       # SETTINGS
       # # # # # # # # # # # # # # # # # # # # #
 
-      def get_settings(opts: {})
+      def get_settings(opts = {})
         opts[:getVersion] = '2'
 
-        @transporter.read(:GET, "#{@index_uri}/settings", opts: opts)
+        @transporter.read(:GET, "#{@index_uri}/settings", opts)
       end
 
-      def set_settings(settings, opts: {})
-        @transporter.write(:PUT, "#{@index_uri}/settings", body: settings, opts: opts)
+      def set_settings(settings, opts = {})
+        @transporter.write(:PUT, "#{@index_uri}/settings", settings, opts)
       end
 
-      def set_settings!(settings, opts: {})
-        res = @transporter.write(:PUT, "#{@index_uri}/settings", body: settings, opts: opts)
-        wait_task(res['taskID'], time_before_retry: Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts: opts)
+      def set_settings!(settings, opts = {})
+        res = @transporter.write(:PUT, "#{@index_uri}/settings", settings, opts)
+        wait_task(res['taskID'], Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
         res
       end
 
@@ -384,7 +384,7 @@ module Algolia
       # EXISTS
       # # # # # # # # # # # # # # # # # # # # #
 
-      def exists(opts: {})
+      def exists(opts = {})
         # TODO
       end
 
