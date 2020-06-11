@@ -70,7 +70,7 @@ module Algolia
 
           outcome  = @retry_strategy.decide(host, http_response_code: response.status, is_timed_out: response.has_timed_out)
           if outcome == FAILURE
-            raise AlgoliaApiError.new(response.status, response.error)
+            raise AlgoliaHttpError.new(response.status, response.error)
           end
           return response.body unless outcome == RETRY
         end

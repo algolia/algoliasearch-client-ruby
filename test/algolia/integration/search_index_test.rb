@@ -152,13 +152,13 @@ class SearchIndexTest < BaseTest
     end
 
     def find_objects
-      exception = assert_raises Algolia::AlgoliaApiError do
+      exception = assert_raises Algolia::AlgoliaHttpError do
         @index.find_object(opts: {query: '', paginate: false})
       end
 
       assert_equal 'Object not found', exception.message
 
-      exception = assert_raises Algolia::AlgoliaApiError do
+      exception = assert_raises Algolia::AlgoliaHttpError do
         @index.find_object(opts: {query: '', paginate: false}) { false }
       end
 
@@ -174,13 +174,13 @@ class SearchIndexTest < BaseTest
         obj.has_key?('company') && obj['company'] == 'Apple'
       end
 
-      exception = assert_raises Algolia::AlgoliaApiError do
+      exception = assert_raises Algolia::AlgoliaHttpError do
         @index.find_object(opts: {query: 'algolia', paginate: false}, &condition)
       end
 
       assert_equal 'Object not found', exception.message
 
-      exception = assert_raises Algolia::AlgoliaApiError do
+      exception = assert_raises Algolia::AlgoliaHttpError do
         @index.find_object(opts: {query: '', paginate: false, hitsPerPage: 5}, &condition)
       end
 

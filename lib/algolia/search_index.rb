@@ -88,7 +88,7 @@ module Algolia
       #
       # @param opts contains extra parameters to send with your query
       #
-      # @return [Hash|AlgoliaApiError] the matching object and its position in the result set
+      # @return [Hash|AlgoliaHttpError] the matching object and its position in the result set
       #
       def find_object(opts: {})
         paginate = true
@@ -121,7 +121,7 @@ module Algolia
 
           has_next_page = page + 1 < res['nbPages']
           if !paginate || !has_next_page
-            raise AlgoliaApiError.new(404, 'Object not found')
+            raise AlgoliaHttpError.new(404, 'Object not found')
           end
 
           page += 1
