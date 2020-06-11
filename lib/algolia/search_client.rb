@@ -36,12 +36,12 @@ module Algolia
         Index.new(index_name, @transporter, @config)
       end
 
-      def list_indexes(opts: {})
-        @transporter.read(:GET, "#{Defaults::VERSION}/indexes", opts: opts)
+      def list_indexes(opts = {})
+        @transporter.read(:GET, "#{Defaults::VERSION}/indexes", opts)
       end
 
-      def multiple_batch(operations, opts: {})
-        @transporter.write(:POST, "#{Defaults::VERSION}/indexes/*/batch", body: {requests: operations}, opts: opts)
+      def multiple_batch(operations, opts = {})
+        @transporter.write(:POST, "#{Defaults::VERSION}/indexes/*/batch", {requests: operations}, opts)
       end
     end
   end
