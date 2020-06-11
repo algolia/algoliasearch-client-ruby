@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'faraday', '~> 0.15'
   spec.add_dependency 'multi_json', '~> 1.0'
+  spec.add_dependency 'net-http-persistent'
 
   spec.add_development_dependency 'httpclient'
   spec.add_development_dependency 'm'

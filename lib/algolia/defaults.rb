@@ -1,5 +1,6 @@
 module Defaults
   REQUESTER_CLASS = Algolia::Http::HttpRequester
+  ADAPTER         = 'net_http_persistent'
   TTL             = 300
   # The version of the REST API implemented by this module.
   VERSION         = 1
