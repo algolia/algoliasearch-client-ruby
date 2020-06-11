@@ -14,7 +14,7 @@ class TransportTest < BaseTest
         Defaults::HEADER_APP_ID => 'XXXX'
       }
 
-      exception = assert_raises Algolia::AlgoliaApiError do
+      exception = assert_raises Algolia::AlgoliaHttpError do
         @transport.read(:GET, @indexes_uri, opts: {headers: custom_headers})
       end
 
