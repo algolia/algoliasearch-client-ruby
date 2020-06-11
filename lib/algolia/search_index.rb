@@ -3,8 +3,11 @@ module Algolia
     # Class Index
     class Index
       include CallType
+      extend Forwardable
 
       attr_reader :index_name, :transporter, :config
+
+      def_delegators :@transporter, :read, :write
 
       # Initialize an index
       #
@@ -47,7 +50,7 @@ module Algolia
       # @param opts contains extra parameters to send with your query
       #
       def get_task_status(task_id, opts = {})
-        @transporter.read(:GET, "#{@index_uri}/task/#{task_id}", opts)['status']
+        read(:GET, "#{@index_uri}/task/#{task_id}", opts)['status']
       end
 
       # Delete the index content
@@ -55,7 +58,7 @@ module Algolia
       # @param opts contains extra parameters to send with your query
       #
       def clear_objects(opts = {})
-        @transporter.write(:POST, "#{@index_uri}/clear", opts)
+        write(:POST, "#{@index_uri}/clear", opts)
       end
 
       # Delete the index content and wait for operation to finish
@@ -63,7 +66,7 @@ module Algolia
       # @param opts contains extra parameters to send with your query
       #
       def clear_objects!(opts = {})
-        res = @transporter.write(:POST, "#{@index_uri}/clear", opts)
+        res = write(:POST, "#{@index_uri}/clear", opts)
         wait_task(res['taskID'], Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
         res
       end
@@ -234,7 +237,7 @@ module Algolia
       # @param opts contains extra parameters to send with your query
       #
       def batch(request, opts = {})
-        @transporter.write(:POST, "#{@index_uri}/batch", request, opts)
+        write(:POST, "#{@index_uri}/batch", request, opts)
       end
 
       # Send a batch request and wait for operation to finish
@@ -243,7 +246,7 @@ module Algolia
       # @param opts contains extra parameters to send with your query
       #
       def batch!(request, opts = {})
-        res = @transporter.write(:POST, "#{@index_uri}/batch", request, opts)
+        res = write(:POST, "#{@index_uri}/batch", request, opts)
         wait_task(res['taskID'], Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
         res
       end
@@ -344,12 +347,12 @@ module Algolia
       # @return Algolia::Response
       #
       def search(query, opts = {})
-        @transporter.read(:POST, "#{@index_uri}/query", {'query': query}, opts)
+        read(:POST, "#{@index_uri}/query", {'query': query}, opts)
       end
 
       def search_for_facet_values(facet_name, facet_query, opts = {})
-        @transporter.read(:POST, "#{@index_uri}/facets/#{facet_name}/query",
-                          {'facetQuery': facet_query}, opts)
+        read(:POST, "#{@index_uri}/facets/#{facet_name}/query",
+             {'facetQuery': facet_query}, opts)
       end
 
       def search_rules(query, opts = {})
@@ -367,15 +370,15 @@ module Algolia
       def get_settings(opts = {})
         opts[:getVersion] = '2'
 
-        @transporter.read(:GET, "#{@index_uri}/settings", opts)
+        read(:GET, "#{@index_uri}/settings", opts)
       end
 
       def set_settings(settings, opts = {})
-        @transporter.write(:PUT, "#{@index_uri}/settings", settings, opts)
+        write(:PUT, "#{@index_uri}/settings", settings, opts)
       end
 
       def set_settings!(settings, opts = {})
-        res = @transporter.write(:PUT, "#{@index_uri}/settings", settings, opts)
+        res = write(:PUT, "#{@index_uri}/settings", settings, opts)
         wait_task(res['taskID'], Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
         res
       end

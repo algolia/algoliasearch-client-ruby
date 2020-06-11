@@ -4,6 +4,10 @@ module Algolia
   module Search
     # Class Client
     class Client
+      extend Forwardable
+
+      def_delegators :@transporter, :read, :write
+
       # Initialize a client to connect to Algolia
       #
       # @param search_config [Search::Config] a Search::Config object which contains your APP_ID and API_KEY
@@ -37,11 +41,11 @@ module Algolia
       end
 
       def list_indexes(opts = {})
-        @transporter.read(:GET, "#{Defaults::VERSION}/indexes", opts)
+        read(:GET, "#{Defaults::VERSION}/indexes", opts)
       end
 
       def multiple_batch(operations, opts = {})
-        @transporter.write(:POST, "#{Defaults::VERSION}/indexes/*/batch", {requests: operations}, opts)
+        write(:POST, "#{Defaults::VERSION}/indexes/*/batch", {requests: operations}, opts)
       end
     end
   end
