@@ -8,18 +8,12 @@ module Algolia
       # @option adapter [String] adapter used to make requests. Defaults to Net::Http
       #
       def initialize(config, logger = nil, opts = {})
-        @config  = config
-        @hosts   = config.default_hosts
-        adapter  = opts[:adapter] || Faraday.default_adapter
-        logger ||= LoggerHelper
-        @logger  = logger.create 'debug.log'
-
-        @connections = {}
-        @hosts.each do |host|
-          @connections[host.url] = Faraday.new(build_url(host), request: {open_timeout: config.connect_timeout}) do |f|
-            f.adapter adapter.to_sym
-          end
-        end
+        @config     = config
+        @hosts      = @config.default_hosts
+        @adapter    = opts[:adapter] || Defaults::ADAPTER
+        logger    ||= LoggerHelper
+        @logger     = logger.create 'debug.log'
+        @connection = nil
       end
 
       # Sends request to the engine
@@ -33,7 +27,7 @@ module Algolia
       # @return [Http::Response]
       #
       def send_request(host, method, path, body, headers, timeout)
-        connection                 = get_connection(host)
+        connection                 = connection(host)
         connection.options.timeout = timeout
 
         if ENV['ALGOLIA_DEBUG']
@@ -72,8 +66,10 @@ module Algolia
       #
       # @return [Faraday::Connection]
       #
-      def get_connection(host)
-        @connections[host.url]
+      def connection(host)
+        @connection ||= Faraday.new(build_url(host), request: {open_timeout: @config.connect_timeout}) do |f|
+          f.adapter @adapter.to_sym
+        end
       end
 
       # Build url from host, path and parameters
