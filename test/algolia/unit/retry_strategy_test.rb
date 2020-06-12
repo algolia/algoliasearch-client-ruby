@@ -7,70 +7,53 @@ class RetryStrategyTest
   describe 'get tryable hosts' do
     def before_all
       super
-      @app_id  = 'app_id'
-      @api_key = 'api_key'
-      @config  = Algolia::Search::Config.new(app_id: @app_id, api_key: @api_key)
+      @app_id        = 'app_id'
+      @api_key       = 'api_key'
+      stateful_hosts = []
+      stateful_hosts << "#{@app_id}-4.algolianet.com"
+      stateful_hosts << "#{@app_id}-5.algolianet.com"
+      stateful_hosts << "#{@app_id}-6.algolianet.com"
+      @config        = Algolia::Search::Config.new(app_id: @app_id, api_key: @api_key, custom_hosts: stateful_hosts)
     end
 
     def test_resets_expired_hosts_according_to_read_type
-      stateful_hosts = []
-      stateful_hosts << Algolia::Transport::StatefulHost.new("#{@app_id}-4.algolianet.com")
-      stateful_hosts << Algolia::Transport::StatefulHost.new("#{@app_id}-5.algolianet.com", up: false)
-      stateful_hosts << Algolia::Transport::StatefulHost.new("#{@app_id}-6.algolianet.com")
-
-      @config.default_hosts = stateful_hosts
-      retry_strategy        = Algolia::Transport::RetryStrategy.new(@config)
+      @config.default_hosts[1].up = false
+      retry_strategy              = Algolia::Transport::RetryStrategy.new(@config)
 
       hosts = retry_strategy.get_tryable_hosts(READ)
       assert_equal 2, hosts.length
     end
 
     def test_resets_expired_hosts_according_to_write_type
-      stateful_hosts = []
-      stateful_hosts << Algolia::Transport::StatefulHost.new("#{@app_id}-4.algolianet.com")
-      stateful_hosts << Algolia::Transport::StatefulHost.new("#{@app_id}-5.algolianet.com", up: false)
-      stateful_hosts << Algolia::Transport::StatefulHost.new("#{@app_id}-6.algolianet.com")
-
-      @config.default_hosts = stateful_hosts
-      retry_strategy        = Algolia::Transport::RetryStrategy.new(@config)
+      @config.default_hosts[1].up = false
+      retry_strategy              = Algolia::Transport::RetryStrategy.new(@config)
 
       hosts = retry_strategy.get_tryable_hosts(WRITE)
       assert_equal 2, hosts.length
     end
 
     def test_resets_expired_hosts_according_to_read_type_with_timeout
-      stateful_hosts = []
-      stateful_hosts << Algolia::Transport::StatefulHost.new("#{@app_id}-4.algolianet.com")
-      stateful_hosts << Algolia::Transport::StatefulHost.new("#{@app_id}-5.algolianet.com", up: false, last_use: Time.new.utc - 1000)
-      stateful_hosts << Algolia::Transport::StatefulHost.new("#{@app_id}-6.algolianet.com")
-
-      @config.default_hosts = stateful_hosts
-      retry_strategy        = Algolia::Transport::RetryStrategy.new(@config)
+      @config.default_hosts[1].up       = false
+      @config.default_hosts[1].last_use = Time.new.utc - 1000
+      retry_strategy                    = Algolia::Transport::RetryStrategy.new(@config)
 
       hosts = retry_strategy.get_tryable_hosts(READ)
       assert_equal 3, hosts.length
     end
 
     def test_resets_expired_hosts_according_to_write_type_with_timeout
-      stateful_hosts = []
-      stateful_hosts << Algolia::Transport::StatefulHost.new("#{@app_id}-4.algolianet.com")
-      stateful_hosts << Algolia::Transport::StatefulHost.new("#{@app_id}-5.algolianet.com", up: false, last_use: Time.new.utc - 1000)
-      stateful_hosts << Algolia::Transport::StatefulHost.new("#{@app_id}-6.algolianet.com")
-
-      @config.default_hosts = stateful_hosts
-      retry_strategy        = Algolia::Transport::RetryStrategy.new(@config)
+      @config.default_hosts[1].up       = false
+      @config.default_hosts[1].last_use = Time.new.utc - 1000
+      retry_strategy                    = Algolia::Transport::RetryStrategy.new(@config)
 
       hosts = retry_strategy.get_tryable_hosts(WRITE)
       assert_equal 3, hosts.length
     end
 
     def test_resets_all_hosts_when_expired_according_to_read_type
-      stateful_hosts = []
-      stateful_hosts << Algolia::Transport::StatefulHost.new("#{@app_id}-4.algolianet.com", up: false)
-      stateful_hosts << Algolia::Transport::StatefulHost.new("#{@app_id}-5.algolianet.com", up: false)
-      stateful_hosts << Algolia::Transport::StatefulHost.new("#{@app_id}-6.algolianet.com", up: false)
-
-      @config.default_hosts = stateful_hosts
+      0.upto(2).map do |i|
+        @config.default_hosts[i].up = false
+      end
       retry_strategy        = Algolia::Transport::RetryStrategy.new(@config)
 
       hosts = retry_strategy.get_tryable_hosts(READ)
@@ -78,12 +61,9 @@ class RetryStrategyTest
     end
 
     def test_resets_all_hosts_when_expired_according_to_write_type
-      stateful_hosts = []
-      stateful_hosts << Algolia::Transport::StatefulHost.new("#{@app_id}-4.algolianet.com", up: false)
-      stateful_hosts << Algolia::Transport::StatefulHost.new("#{@app_id}-5.algolianet.com", up: false)
-      stateful_hosts << Algolia::Transport::StatefulHost.new("#{@app_id}-6.algolianet.com", up: false)
-
-      @config.default_hosts = stateful_hosts
+      0.upto(2).map do |i|
+        @config.default_hosts[i].up = false
+      end
       retry_strategy        = Algolia::Transport::RetryStrategy.new(@config)
 
       hosts = retry_strategy.get_tryable_hosts(WRITE)

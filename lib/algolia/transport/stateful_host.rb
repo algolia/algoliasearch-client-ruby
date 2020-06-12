@@ -14,13 +14,13 @@ module Algolia
       # @option options [Integer] :retry_count number of retries
       # @option options [Boolean] :up host status
       #
-      def initialize(url, options = {})
+      def initialize(url, opts = {})
         @url         = url
-        @protocol    = options[:protocol] || 'https://'
-        @accept      = options[:accept] || (READ | WRITE)
-        @last_use    = options[:last_use] || Time.now.utc
-        @retry_count = options[:retry_count] || 0
-        @up          = options.has_key?(:up) ? options[:up] : true
+        @protocol    = opts[:protocol] || 'https://'
+        @accept      = opts[:accept] || (READ | WRITE)
+        @last_use    = opts[:last_use] || Time.now.utc
+        @retry_count = opts[:retry_count] || 0
+        @up          = opts.has_key?(:up) ? opts[:up] : true
       end
     end
   end
