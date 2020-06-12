@@ -5,6 +5,7 @@ module Algolia
     class Transport
       include RetryOutcomeType
       include CallType
+      include Helpers
 
       #
       # @param config [Search::Config] config used for search
@@ -104,7 +105,7 @@ module Algolia
       # @return [String]
       #
       def build_uri_path(path, params)
-        path + Helpers.handle_params(params)
+        path + handle_params(params)
       end
 
       # Build the body of the request
@@ -114,7 +115,7 @@ module Algolia
       # @return [Hash]
       #
       def build_body(body)
-        Helpers.to_json(body)
+        to_json(body)
       end
 
       # Generates headers from config headers and optional parameters
