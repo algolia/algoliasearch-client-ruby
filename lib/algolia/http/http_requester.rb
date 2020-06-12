@@ -1,6 +1,7 @@
 module Algolia
   module Http
     class HttpRequester
+      include Helpers
       attr_accessor :http_client, :logger, :connections
 
       #
@@ -40,13 +41,13 @@ module Algolia
           if ENV['ALGOLIA_DEBUG']
             @logger.info("Request succeeded. Response status: #{response.status}, body: #{response.body}")
           end
-          return Http::Response.new(status: response.status, body: Helpers.json_to_hash(response.body), headers: response.headers)
+          return Http::Response.new(status: response.status, body: json_to_hash(response.body), headers: response.headers)
         end
 
         if ENV['ALGOLIA_DEBUG']
           @logger.info("Request failed. Response status: #{response.status}, error: #{response.body}")
         end
-        response_body = Helpers.json_to_hash(response.body)
+        response_body = json_to_hash(response.body)
         Http::Response.new(status: response.status, error: response_body['message'], headers: response.headers)
       rescue Faraday::TimeoutError => e
         if ENV['ALGOLIA_DEBUG']

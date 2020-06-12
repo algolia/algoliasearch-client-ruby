@@ -41,11 +41,11 @@ module Algolia
       end
 
       def list_indexes(opts = {})
-        read(:GET, "#{Defaults::VERSION}/indexes", opts)
+        read(:GET, '1/indexes', opts)
       end
 
       def multiple_batch(operations, opts = {})
-        write(:POST, "#{Defaults::VERSION}/indexes/*/batch", {requests: operations}, opts)
+        write(:POST, '1/indexes/*/batch', {requests: operations}, opts)
       end
     end
   end
