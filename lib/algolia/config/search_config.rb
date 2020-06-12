@@ -17,8 +17,8 @@ module Algolia
       #
       def initialize(opts = {})
         super(opts)
-
-        hosts = []
+        @default_hosts = []
+        hosts          = []
         hosts << Transport::StatefulHost.new("#{app_id}-dsn.algolia.net", accept: READ, up: true, last_use: Time.new)
         hosts << Transport::StatefulHost.new("#{app_id}.algolia.net", accept: WRITE, up: true, last_use: Time.new)
 
@@ -26,7 +26,14 @@ module Algolia
           Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", accept: READ | WRITE, up: true, last_use: Time.new)
         end.shuffle
 
-        @default_hosts = opts[:custom_hosts] || hosts + stateful_hosts
+        if opts.has_key?(:custom_hosts)
+          opts[:custom_hosts].each do |host|
+            host = Transport::StatefulHost.new(host)
+            @default_hosts.push(host)
+          end
+        else
+          @default_hosts = hosts + stateful_hosts
+        end
       end
     end
   end
