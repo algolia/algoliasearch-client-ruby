@@ -24,7 +24,7 @@ module Algolia
         Defaults::HEADER_API_KEY => @api_key,
         Defaults::HEADER_APP_ID => @app_id,
         'Content-Type' => 'application/json; charset=utf-8',
-        'User-Agent' => Defaults::USER_AGENT.push(opts[:user_agent]).uniq.compact.join('; ')
+        'User-Agent' => UserAgent.value
       }
 
       @batch_size       = opts[:batch_size] || Defaults::BATCH_SIZE
