@@ -26,7 +26,7 @@ module Defaults
   CONNECT_TIMEOUT = 2
   READ_TIMEOUT    = 30
   WRITE_TIMEOUT   = 5
-  USER_AGENT      = ["Algolia for Ruby (#{Algolia::VERSION})", "Ruby (#{RUBY_VERSION})"]
+  USER_AGENT      = "Algolia for Ruby (#{Algolia::VERSION}), Ruby (#{RUBY_VERSION})"
 
   WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY = 100
 
