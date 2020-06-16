@@ -24,7 +24,7 @@ class TransportTest < BaseTest
     def test_request_succeeds
       response = @transport.read(:GET, @indexes_uri)
 
-      refute_nil response['items']
+      refute_nil response[:items]
     end
   end
 end

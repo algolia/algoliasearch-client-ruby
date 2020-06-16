@@ -23,6 +23,7 @@ class Minitest::Test
   attr_reader :search_client
 
   include Minitest::Hooks
+  include Helpers
   @@search_config = Algolia::Search::Config.new(app_id: APPLICATION_ID_1, api_key: ADMIN_KEY_1, user_agent: USER_AGENT)
   @@search_client = Algolia::Search::Client.new(@@search_config)
 end

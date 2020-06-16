@@ -25,12 +25,12 @@ module Helpers
     end.join('&')
   end
 
-  def json_to_hash(json)
-    MultiJson.load(json)
+  def json_to_hash(json, symbolize_keys)
+    MultiJson.load(json, symbolize_keys: symbolize_keys)
   end
 
   def get_option(hash, key)
-    hash[key.to_sym] || {}
+    hash[key.to_sym] || hash[key] || {}
   end
 
   def path_encode(path, *args)

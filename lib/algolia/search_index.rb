@@ -50,7 +50,9 @@ module Algolia
       # @param opts contains extra parameters to send with your query
       #
       def get_task_status(task_id, opts = {})
-        read(:GET, path_encode('/1/indexes/%s/task/%s', @index_name, task_id), opts)['status']
+        res    = read(:GET, path_encode('/1/indexes/%s/task/%s', @index_name, task_id), opts)
+        status = get_option(res, 'status')
+        status
       end
 
       # Delete the index content
@@ -66,8 +68,9 @@ module Algolia
       # @param opts contains extra parameters to send with your query
       #
       def clear_objects!(opts = {})
-        res = write(:POST, path_encode('/1/indexes/%s/clear', @index_name), opts)
-        wait_task(res['taskID'], Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        res     = write(:POST, path_encode('/1/indexes/%s/clear', @index_name), opts)
+        task_id = get_option(res, 'taskID')
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
         res
       end
 
@@ -139,8 +142,9 @@ module Algolia
       #
       # @return [Integer] position of the object, or -1 if it's not in the array
       #
-      def self.get_object_position(objects, object_id)
-        objects['hits'].find_index { |hit| hit['objectID'] == object_id } || -1
+      def get_object_position(objects, object_id)
+        hits = get_option(objects, 'hits')
+        hits.find_index { |hit| get_option(hit, 'objectID') == object_id } || -1
       end
 
       # # # # # # # # # # # # # # # # # # # # #
@@ -174,8 +178,9 @@ module Algolia
       # @param opts [Hash] contains extra parameters to send with your query
       #
       def save_object!(object, opts = {})
-        res = save_objects([object], opts)
-        wait_task(res['taskID'], Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        res     = save_objects([object], opts)
+        task_id = get_option(res, 'taskID')
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
         res
       end
 
@@ -207,7 +212,8 @@ module Algolia
         else
           batch(build_batch('updateObject', objects, true), opts)
         end
-        wait_task(res['taskID'], Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        task_id            = get_option(res, 'taskID')
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
         res
       end
 
@@ -246,8 +252,9 @@ module Algolia
       # @param opts contains extra parameters to send with your query
       #
       def batch!(request, opts = {})
-        res = write(:POST, path_encode('/1/indexes/%s/batch', @index_name), request, opts)
-        wait_task(res['taskID'], Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        res     = write(:POST, path_encode('/1/indexes/%s/batch', @index_name), request, opts)
+        task_id = get_option(res, 'taskID')
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
         res
       end
 
@@ -378,8 +385,9 @@ module Algolia
       end
 
       def set_settings!(settings, opts = {})
-        res = write(:PUT, path_encode('/1/indexes/%s/settings', @index_name), settings, opts)
-        wait_task(res['taskID'], Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        res     = write(:PUT, path_encode('/1/indexes/%s/settings', @index_name), settings, opts)
+        task_id = get_option(res, 'taskID')
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
         res
       end
 
