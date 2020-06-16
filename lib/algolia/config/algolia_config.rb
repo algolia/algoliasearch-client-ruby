@@ -3,7 +3,8 @@ require 'faraday'
 module Algolia
   # Class AlgoliaConfig
   class AlgoliaConfig
-    attr_accessor :app_id, :api_key, :default_headers, :batch_size, :read_timeout, :write_timeout, :connect_timeout, :compression_type
+    attr_accessor :app_id, :api_key, :default_headers, :batch_size, :read_timeout, :write_timeout, :connect_timeout, :compression_type,
+                  :symbolize_key
 
     #
     # @option options [String] :app_id
@@ -12,6 +13,7 @@ module Algolia
     # @option options [Integer] :read_timeout
     # @option options [Integer] :write_timeout
     # @option options [Integer] :connect_timeout
+    # @option options [Boolean] :symbolize_key
     #
     def initialize(opts = {})
       raise ArgumentError, 'No Application ID provided, please set :app_id' unless opts.has_key?(:app_id)
@@ -32,6 +34,7 @@ module Algolia
       @write_timeout    = opts[:write_timeout] || Defaults::WRITE_TIMEOUT
       @connect_timeout  = opts[:connect_timeout] || Defaults::CONNECT_TIMEOUT
       @compression_type = opts[:compression_type] || Defaults::NONE_ENCODING
+      @symbolize_key    = opts[:symbolize_key] || true
     end
   end
 end

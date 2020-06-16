@@ -10,9 +10,9 @@ class SearchIndexTest < BaseTest
       index.save_object!({name: 'test', data: 10}, {auto_generate_object_id_if_not_exist: true})
       response = index.search('test')
 
-      refute_empty response['hits']
-      assert_equal 'test', response['hits'][0]['name']
-      assert_equal 10, response['hits'][0]['data']
+      refute_empty response[:hits]
+      assert_equal 'test', response[:hits][0][:name]
+      assert_equal 10, response[:hits][0][:data]
     end
 
     def test_with_custom_requester
@@ -30,9 +30,9 @@ class SearchIndexTest < BaseTest
       index.save_object!({name: 'test', data: 10}, {auto_generate_object_id_if_not_exist: true})
       response = index.search('test')
 
-      refute_empty response['hits']
-      assert_equal 'test', response['hits'][0]['name']
-      assert_equal 10, response['hits'][0]['data']
+      refute_empty response[:hits]
+      assert_equal 'test', response[:hits][0][:name]
+      assert_equal 10, response[:hits][0][:data]
     end
   end
 
@@ -53,29 +53,29 @@ class SearchIndexTest < BaseTest
     def test_save_object_with_object_id
       response = @index.save_object(generate_object('111'))
 
-      assert_equal ['111'], response['objectIDs']
-      refute_nil response['taskID']
+      assert_equal ['111'], response[:objectIDs]
+      refute_nil response[:taskID]
     end
 
     def test_save_object_with_object_id_and_auto_generate_object_id_if_not_exist
       response = @index.save_object(generate_object('111'), {auto_generate_object_id_if_not_exist: true})
 
-      assert_equal ['111'], response['objectIDs']
-      refute_nil response['taskID']
+      assert_equal ['111'], response[:objectIDs]
+      refute_nil response[:taskID]
     end
 
     def test_save_object_with_object_id_and_request_options
       response = @index.save_object(generate_object('111'), {headers: {'X-Forwarded-For': '0.0.0.0'}})
 
-      assert_equal ['111'], response['objectIDs']
-      refute_nil response['taskID']
+      assert_equal ['111'], response[:objectIDs]
+      refute_nil response[:taskID]
     end
 
     def test_save_object_without_object_id
       response = @index.save_object(generate_object, {auto_generate_object_id_if_not_exist: true})
 
-      refute_empty response['objectIDs']
-      refute_nil response['taskID']
+      refute_empty response[:objectIDs]
+      refute_nil response[:taskID]
     end
 
     def test_save_objects_with_single_object_and_fail
@@ -97,7 +97,7 @@ class SearchIndexTest < BaseTest
     def test_save_objects_with_empty_array
       response = @index.save_objects([])
 
-      refute_nil response['taskID']
+      refute_nil response[:taskID]
     end
 
     def test_save_objects_with_object_id
@@ -106,8 +106,8 @@ class SearchIndexTest < BaseTest
                                        generate_object('222')
                                      ])
 
-      assert_equal %w(111 222), response['objectIDs']
-      refute_nil response['taskID']
+      assert_equal %w(111 222), response[:objectIDs]
+      refute_nil response[:taskID]
     end
 
     def test_save_objects_without_object_id
@@ -116,8 +116,8 @@ class SearchIndexTest < BaseTest
                                        generate_object
                                      ], {auto_generate_object_id_if_not_exist: true})
 
-      refute_empty response['objectIDs']
-      refute_nil response['taskID']
+      refute_empty response[:objectIDs]
+      refute_nil response[:taskID]
     end
 
     def test_batch_save_objects
@@ -130,7 +130,7 @@ class SearchIndexTest < BaseTest
       end
 
       batch = @index.save_objects(objects)
-      @index.wait_task(batch['taskID'])
+      @index.wait_task(batch[:taskID])
     end
   end
 
@@ -145,10 +145,10 @@ class SearchIndexTest < BaseTest
     def test_search_objects
       response = @index.search('algolia')
 
-      assert_equal 2, response['nbHits']
-      assert_equal 0, Algolia::Search::Index.get_object_position(response, 'nicolas-dessaigne')
-      assert_equal 1, Algolia::Search::Index.get_object_position(response, 'julien-lemoine')
-      assert_equal(-1, Algolia::Search::Index.get_object_position(response, ''))
+      assert_equal 2, response[:nbHits]
+      assert_equal 0, @index.get_object_position(response, 'nicolas-dessaigne')
+      assert_equal 1, @index.get_object_position(response, 'julien-lemoine')
+      assert_equal(-1, @index.get_object_position(response, ''))
     end
 
     def find_objects
@@ -194,28 +194,28 @@ class SearchIndexTest < BaseTest
     def test_search_with_click_analytics
       response = @index.search('elon', {clickAnalytics: true})
 
-      refute_nil response['queryID']
+      refute_nil response[:queryID]
     end
 
     def test_search_with_facet_filters
       response = @index.search('elon', {facets: '*', facetFilters: ['company:tesla']})
 
-      assert_equal 1, response['nbHits']
+      assert_equal 1, response[:nbHits]
     end
 
     def test_search_with_filter
       response = @index.search('elon', {facets: '*', filters: '(company:tesla OR company:spacex)'})
 
-      assert_equal 2, response['nbHits']
+      assert_equal 2, response[:nbHits]
     end
 
     def test_search_for_facet_values
       response = @index.search_for_facet_values('company', 'a')
 
-      assert(response['facetHits'].any? { |hit| hit['value'] == 'Algolia' })
-      assert(response['facetHits'].any? { |hit| hit['value'] == 'Amazon' })
-      assert(response['facetHits'].any? { |hit| hit['value'] == 'Apple' })
-      assert(response['facetHits'].any? { |hit| hit['value'] == 'Arista Networks' })
+      assert(response[:facetHits].any? { |hit| hit[:value] == 'Algolia' })
+      assert(response[:facetHits].any? { |hit| hit[:value] == 'Amazon' })
+      assert(response[:facetHits].any? { |hit| hit[:value] == 'Apple' })
+      assert(response[:facetHits].any? { |hit| hit[:value] == 'Arista Networks' })
     end
   end
 end
