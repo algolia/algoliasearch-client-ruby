@@ -142,7 +142,7 @@ module Algolia
       #
       # @return [Integer] position of the object, or -1 if it's not in the array
       #
-      def get_object_position(objects, object_id)
+      def self.get_object_position(objects, object_id)
         hits = get_option(objects, 'hits')
         hits.find_index { |hit| get_option(hit, 'objectID') == object_id } || -1
       end
