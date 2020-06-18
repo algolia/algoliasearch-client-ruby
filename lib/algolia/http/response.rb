@@ -12,9 +12,9 @@ module Algolia
       #
       def initialize(opts = {})
         @status        = opts[:status]
-        @body          = opts[:body]
-        @error         = opts[:error]
-        @headers       = opts[:headers]
+        @body          = opts[:body] || ''
+        @error         = opts[:error] || ''
+        @headers       = opts[:headers] || ''
         @has_timed_out = opts[:has_timed_out] || false
       end
     end
