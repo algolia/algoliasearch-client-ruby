@@ -146,9 +146,9 @@ class SearchIndexTest < BaseTest
       response = @index.search('algolia')
 
       assert_equal 2, response[:nbHits]
-      assert_equal 0, @index.get_object_position(response, 'nicolas-dessaigne')
-      assert_equal 1, @index.get_object_position(response, 'julien-lemoine')
-      assert_equal(-1, @index.get_object_position(response, ''))
+      assert_equal 0, Algolia::Search::Index.get_object_position(response, 'nicolas-dessaigne')
+      assert_equal 1, Algolia::Search::Index.get_object_position(response, 'julien-lemoine')
+      assert_equal(-1, Algolia::Search::Index.get_object_position(response, ''))
     end
 
     def find_objects

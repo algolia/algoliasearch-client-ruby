@@ -41,4 +41,8 @@ module Helpers
 
     format(path, *arguments)
   end
+
+  def self.included(base)
+    base.extend(Helpers)
+  end
 end
