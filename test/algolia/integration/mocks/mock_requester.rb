@@ -1,11 +1,6 @@
 class MockRequester
-  def initialize(config, _logger, _opts)
-    @hosts = config.default_hosts
-
-    @connections = {}
-    @hosts.each do |host|
-      @connections[host.url] = {url: build_url(host), request: {open_timeout: config.connect_timeout}, options: {}}
-    end
+  def initialize
+    @connection = nil
   end
 
   def send_request(host, method, path, _body, headers, _timeout)
@@ -17,10 +12,7 @@ class MockRequester
       headers: headers,
       method: method,
       status: 200,
-      body: {
-        'hits' => [], 'nbHits' => 0, 'page' => 0, 'nbPages' => 0, 'hitsPerPage' => 20, 'exhaustiveNbHits' => true,
-        'query' => 'query', 'params' => 'query=query', 'processingTimeMS' => 1
-      },
+      body: '{"hits":[],"nbHits":0,"page":0,"nbPages":1,"hitsPerPage":20,"exhaustiveNbHits":true,"query":"test","params":"query=test","processingTimeMS":1}',
       success: true
     }
 
@@ -38,7 +30,7 @@ class MockRequester
   # @return [Faraday::Connection]
   #
   def get_connection(host)
-    @connections[host.url]
+    @connection = host
   end
 
   # Build url from host, path and parameters
