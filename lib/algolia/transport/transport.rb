@@ -13,10 +13,9 @@ module Algolia
       # @param requester_class [Object] requester used for sending requests. Uses Algolia::Http::HttpRequester by default
       # @option adapter [String] adapter used for sending requests, if needed. Uses Faraday.default_adapter by default
       #
-      def initialize(config, logger_class = nil, requester_class = nil, opts = {})
+      def initialize(config, requester)
         @config           = config
-        requester_class ||= Defaults::REQUESTER_CLASS
-        @http_requester   = requester_class.new(config, logger_class, opts)
+        @http_requester   = requester
         @retry_strategy   = RetryStrategy.new(config)
       end
 
@@ -71,9 +70,10 @@ module Algolia
 
           outcome  = @retry_strategy.decide(host, http_response_code: response.status, is_timed_out: response.has_timed_out)
           if outcome == FAILURE
-            raise AlgoliaHttpError.new(response.status, response.error)
+            decoded_error = json_to_hash(response.error, @config.symbolize_keys)
+            raise AlgoliaHttpError.new(get_option(decoded_error, 'error'), get_option(decoded_error, 'message'))
           end
-          return response.body unless outcome == RETRY
+          return json_to_hash(response.body, @config.symbolize_keys) unless outcome == RETRY
         end
       end
 

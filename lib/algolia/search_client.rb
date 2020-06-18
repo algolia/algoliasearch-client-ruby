@@ -15,10 +15,11 @@ module Algolia
       # @option adapter [Object] adapter object used for the connection
       #
       def initialize(search_config, opts = {})
-        @config         = search_config
-        requester_class = opts[:http_requester] || Defaults::REQUESTER_CLASS
-        logger_class    = opts[:logger]
-        @transporter    = Transport::Transport.new(@config, logger_class, requester_class, opts)
+        @config      = search_config
+        adapter      = opts[:adapter] || Defaults::ADAPTER
+        logger       = opts[:logger] || LoggerHelper.create('debug.log')
+        requester    = opts[:http_requester] || Defaults::REQUESTER_CLASS.new(@config, adapter, logger)
+        @transporter = Transport::Transport.new(@config, requester)
       end
 
       def self.create(app_id, api_key)

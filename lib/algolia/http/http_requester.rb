@@ -8,12 +8,10 @@ module Algolia
       # @param config [Search::Config]
       # @option adapter [String] adapter used to make requests. Defaults to Net::Http
       #
-      def initialize(config, logger = nil, opts = {})
+      def initialize(config, adapter, logger)
         @config     = config
-        @hosts      = @config.default_hosts
-        @adapter    = opts[:adapter] || Defaults::ADAPTER
-        logger    ||= LoggerHelper
-        @logger     = logger.create 'debug.log'
+        @adapter    = adapter
+        @logger     = logger
         @connection = nil
       end
 
@@ -41,14 +39,13 @@ module Algolia
           if ENV['ALGOLIA_DEBUG']
             @logger.info("Request succeeded. Response status: #{response.status}, body: #{response.body}")
           end
-          return Http::Response.new(status: response.status, body: json_to_hash(response.body, @config.symbolize_key), headers: response.headers)
+          return Http::Response.new(status: response.status, body: response.body, headers: response.headers)
         end
 
         if ENV['ALGOLIA_DEBUG']
           @logger.info("Request failed. Response status: #{response.status}, error: #{response.body}")
         end
-        response_body = json_to_hash(response.body, @config.symbolize_key)
-        Http::Response.new(status: response.status, error: response_body[:message], headers: response.headers)
+        Http::Response.new(status: response.status, error: response.body, headers: response.headers)
       rescue Faraday::TimeoutError => e
         if ENV['ALGOLIA_DEBUG']
           @logger.info("Request timed out. Error: #{e.message}")
