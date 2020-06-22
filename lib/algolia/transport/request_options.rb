@@ -7,7 +7,6 @@ module Algolia
       # @param [Search::Config] config
       #
       def initialize(config)
-        @config           = config
         @headers          = {}
         @params           = {}
         @timeout          = nil
@@ -33,7 +32,7 @@ module Algolia
       def add_headers(opts = {})
         unless opts[:headers].nil?
           opts[:headers].each do |opt, value|
-            @params[opt.to_sym] = value
+            @headers[opt.to_sym] = value
           end
           opts.delete(:headers)
         end
