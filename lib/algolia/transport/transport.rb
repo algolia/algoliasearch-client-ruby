@@ -52,7 +52,8 @@ module Algolia
       #
       def request(call_type, method, path, body = {}, opts = {})
         @retry_strategy.get_tryable_hosts(call_type).each do |host|
-          opts[:timeout] ||= get_timeout(call_type) * (host.retry_count + 1)
+          opts[:timeout]         ||= get_timeout(call_type) * (host.retry_count + 1)
+          opts[:connect_timeout] ||= @config.connect_timeout * (host.retry_count + 1)
 
           request_options = Http::RequestOptions.new(@config)
           opts            = request_options.create(opts)
@@ -65,7 +66,8 @@ module Algolia
             request[:path],
             request[:body],
             request[:headers],
-            request[:timeout]
+            request[:timeout],
+            request[:connect_timeout]
           )
 
           outcome  = @retry_strategy.decide(host, http_response_code: response.status, is_timed_out: response.has_timed_out)

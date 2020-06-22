@@ -2,14 +2,13 @@ module Algolia
   module Http
     class HttpRequester
       include Helpers
-      attr_accessor :http_client, :logger, :connections
+      attr_accessor :adapter, :logger
 
       #
-      # @param config [Search::Config]
-      # @option adapter [String] adapter used to make requests. Defaults to Net::Http
+      # @param adapter [Object] adapter used to make requests. Defaults to Net::Http
+      # @param logger [Object] logger used to log requests. Defaults to Algolia::LoggerHelper
       #
-      def initialize(config, adapter, logger)
-        @config     = config
+      def initialize(adapter, logger)
         @adapter    = adapter
         @logger     = logger
         @connection = nil
@@ -25,9 +24,10 @@ module Algolia
       #
       # @return [Http::Response]
       #
-      def send_request(host, method, path, body, headers, timeout)
-        connection                 = connection(host)
-        connection.options.timeout = timeout
+      def send_request(host, method, path, body, headers, timeout, connect_timeout)
+        connection                      = connection(host)
+        connection.options.timeout      = timeout
+        connection.options.open_timeout = connect_timeout
 
         if ENV['ALGOLIA_DEBUG']
           @logger.info("Sending #{method.to_s.upcase!} request to #{path} with body #{body}")
@@ -65,7 +65,7 @@ module Algolia
       # @return [Faraday::Connection]
       #
       def connection(host)
-        @connection ||= Faraday.new(build_url(host), request: {open_timeout: @config.connect_timeout}) do |f|
+        @connection ||= Faraday.new(build_url(host)) do |f|
           f.adapter @adapter.to_sym
         end
       end
