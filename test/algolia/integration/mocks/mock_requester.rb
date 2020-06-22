@@ -3,7 +3,7 @@ class MockRequester
     @connection = nil
   end
 
-  def send_request(host, method, path, _body, headers, _timeout)
+  def send_request(host, method, path, _body, headers, _timeout, _connect_timeout)
     connection = get_connection(host)
     response   = {
       connection: connection,

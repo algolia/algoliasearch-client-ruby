@@ -10,6 +10,7 @@ module Algolia
         @headers          = {}
         @params           = {}
         @timeout          = nil
+        @connect_timeout  = nil
         @compression_type = config.compression_type
       end
 
@@ -21,6 +22,7 @@ module Algolia
         add_headers(opts)
         add_params(opts)
         add_timeout(opts)
+        add_connect_timeout(opts)
         add_compression_type(opts)
         opts
       end
@@ -58,6 +60,15 @@ module Algolia
       def add_timeout(opts = {})
         @timeout = opts[:timeout] || @timeout
         opts.delete(:timeout)
+      end
+
+      # Add or update connect timeout
+      #
+      # @param opts [Hash]
+      #
+      def add_connect_timeout(opts = {})
+        @connect_timeout = opts[:connect_timeout] || @connect_timeout
+        opts.delete(:connect_timeout)
       end
 
       # Add or update compression_type

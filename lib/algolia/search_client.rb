@@ -18,7 +18,7 @@ module Algolia
         @config      = search_config
         adapter      = opts[:adapter] || Defaults::ADAPTER
         logger       = opts[:logger] || LoggerHelper.create('debug.log')
-        requester    = opts[:http_requester] || Defaults::REQUESTER_CLASS.new(@config, adapter, logger)
+        requester    = opts[:http_requester] || Defaults::REQUESTER_CLASS.new(adapter, logger)
         @transporter = Transport::Transport.new(@config, requester)
       end
 
