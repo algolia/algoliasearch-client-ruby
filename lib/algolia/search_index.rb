@@ -190,12 +190,13 @@ module Algolia
       # @param opts contains extra parameters to send with your query
       #
       def save_objects(objects, opts = {})
-        generate_object_id = opts[:auto_generate_object_id_if_not_exist] || false
-        opts.delete(:auto_generate_object_id_if_not_exist)
+        request_options    = opts
+        generate_object_id = request_options[:auto_generate_object_id_if_not_exist] || false
+        request_options.delete(:auto_generate_object_id_if_not_exist)
         if generate_object_id
-          batch(build_batch('addObject', objects), opts)
+          batch(build_batch('addObject', objects), request_options)
         else
-          batch(build_batch('updateObject', objects, true), opts)
+          batch(build_batch('updateObject', objects, true), request_options)
         end
       end
 
@@ -205,15 +206,16 @@ module Algolia
       # @param opts contains extra parameters to send with your query
       #
       def save_objects!(objects, opts = {})
-        generate_object_id = opts[:auto_generate_object_id_if_not_exist] || false
-        opts.delete(:auto_generate_object_id_if_not_exist)
+        request_options    = opts
+        generate_object_id = request_options[:auto_generate_object_id_if_not_exist] || false
+        request_options.delete(:auto_generate_object_id_if_not_exist)
         res                = if generate_object_id
-          batch(build_batch('addObject', objects), opts)
+          batch(build_batch('addObject', objects), request_options)
         else
-          batch(build_batch('updateObject', objects, true), opts)
+          batch(build_batch('updateObject', objects, true), request_options)
         end
         task_id            = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
         res
       end
 
