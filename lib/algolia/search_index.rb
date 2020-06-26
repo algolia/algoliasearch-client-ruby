@@ -50,7 +50,7 @@ module Algolia
       # @param opts contains extra parameters to send with your query
       #
       def get_task_status(task_id, opts = {})
-        res    = read(:GET, path_encode('/1/indexes/%s/task/%s', @index_name, task_id), opts)
+        res    = read(:GET, path_encode('/1/indexes/%s/task/%s', @index_name, task_id), {}, opts)
         status = get_option(res, 'status')
         status
       end
@@ -60,7 +60,7 @@ module Algolia
       # @param opts contains extra parameters to send with your query
       #
       def clear_objects(opts = {})
-        write(:POST, path_encode('/1/indexes/%s/clear', @index_name), opts)
+        write(:POST, path_encode('/1/indexes/%s/clear', @index_name), {}, opts)
       end
 
       # Delete the index content and wait for operation to finish
@@ -75,7 +75,14 @@ module Algolia
       end
 
       def delete(opts = {})
-        # TODO
+        write(:DELETE, path_encode('/1/indexes/%s', @index_name), opts)
+      end
+
+      def delete!(opts = {})
+        res     = write(:DELETE, path_encode('/1/indexes/%s', @index_name), opts)
+        task_id = get_option(res, 'taskID')
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        res
       end
 
       def delete_replica(replica_name, opts = {})
@@ -152,11 +159,26 @@ module Algolia
       # # # # # # # # # # # # # # # # # # # # #
 
       def get_object(object_id, opts = {})
-        # TODO
+        read(:GET, path_encode('/1/indexes/%s/%s', @index_name, object_id), {}, opts)
       end
 
       def get_objects(object_ids, opts = {})
-        # TODO
+        request_options        = opts
+        attributes_to_retrieve = get_option(request_options, 'attributesToRetrieve')
+        request_options.delete(:attributesToRetrieve)
+
+        requests = []
+        object_ids.each do |object_id|
+          request = {indexName: @index_name, objectID: object_id.to_s}
+
+          if attributes_to_retrieve
+            request[:attributesToRetrieve] = attributes_to_retrieve
+          end
+
+          requests.push(request)
+        end
+
+        read(:POST, '/1/indexes/*/objects', {'requests': requests}, opts)
       end
 
       def find_objects
@@ -317,7 +339,7 @@ module Algolia
       end
 
       def browse_objects(opts = {})
-        # TODO
+        ObjectIterator.new(@transporter, @index_name, opts)
       end
 
       def browse_rules(opts = {})
@@ -379,7 +401,7 @@ module Algolia
       def get_settings(opts = {})
         opts[:getVersion] = '2'
 
-        read(:GET, path_encode('/1/indexes/%s/settings', @index_name), opts)
+        read(:GET, path_encode('/1/indexes/%s/settings', @index_name), {}, opts)
       end
 
       def set_settings(settings, opts = {})

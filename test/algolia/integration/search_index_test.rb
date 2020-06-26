@@ -28,40 +28,77 @@ class SearchIndexTest < BaseTest
       @index = @@search_client.init_index(get_test_index_name('indexing'))
     end
 
+    def retrieve_last_object_ids(responses)
+      responses[-1][:objectIDs]
+    end
+
+    def test_save_objects
+      responses  = []
+      object_ids = []
+
+      obj1    = generate_object('obj1')
+      responses.push(@index.save_object(obj1))
+      object_ids.push(retrieve_last_object_ids(responses))
+      obj2    = generate_object
+      responses.push(@index.save_object(obj2, {auto_generate_object_id_if_not_exist: true}))
+      object_ids.push(retrieve_last_object_ids(responses))
+      responses.push(@index.save_objects([]))
+      object_ids.push(retrieve_last_object_ids(responses))
+      obj3    = generate_object('obj3')
+      obj4    = generate_object('obj4')
+      responses.push(@index.save_objects([obj3, obj4]))
+      object_ids.push(retrieve_last_object_ids(responses))
+      obj5    = generate_object
+      obj6    = generate_object
+      responses.push(@index.save_objects([obj5, obj6], {auto_generate_object_id_if_not_exist: true}))
+      object_ids.push(retrieve_last_object_ids(responses))
+      object_ids.flatten!
+      objects = 1.upto(1000).map do |i|
+        generate_object(i.to_s)
+      end
+
+      @index.config.batch_size = 100
+      responses.push(@index.save_objects(objects))
+      responses.each do |response|
+        task_id = get_option(response, 'taskID')
+        @index.wait_task(task_id)
+      end
+
+      assert_equal obj1[:property], @index.get_object(object_ids[0])[:property]
+      assert_equal obj2[:property], @index.get_object(object_ids[1])[:property]
+      assert_equal obj3[:property], @index.get_object(object_ids[2])[:property]
+      assert_equal obj4[:property], @index.get_object(object_ids[3])[:property]
+      assert_equal obj5[:property], @index.get_object(object_ids[4])[:property]
+      assert_equal obj6[:property], @index.get_object(object_ids[5])[:property]
+
+      results = @index.get_objects((1..1000).to_a)[:results]
+
+      results.each do |obj|
+        assert_includes(objects, obj)
+      end
+
+      assert_equal objects.length, results.length
+      browsed_objects = []
+      @index.browse_objects.each do |hit|
+        browsed_objects.push(hit)
+      end
+
+      assert_equal 1006, browsed_objects.length
+      objects.each do |obj|
+        assert_includes(browsed_objects, obj)
+      end
+
+      [obj1, obj3, obj4].each do |obj|
+        assert_includes(browsed_objects, obj)
+      end
+    end
+
     def test_save_object_without_object_id_and_fail
       exception = assert_raises ArgumentError do
         @index.save_object(generate_object)
       end
 
       assert_equal "Missing 'objectID'", exception.message
-    end
-
-    def test_save_object_with_object_id
-      response = @index.save_object(generate_object('111'))
-
-      assert_equal ['111'], response[:objectIDs]
-      refute_nil response[:taskID]
-    end
-
-    def test_save_object_with_object_id_and_auto_generate_object_id_if_not_exist
-      response = @index.save_object(generate_object('111'), {auto_generate_object_id_if_not_exist: true})
-
-      assert_equal ['111'], response[:objectIDs]
-      refute_nil response[:taskID]
-    end
-
-    def test_save_object_with_object_id_and_request_options
-      response = @index.save_object(generate_object('111'), {headers: {'X-Forwarded-For': '0.0.0.0'}})
-
-      assert_equal ['111'], response[:objectIDs]
-      refute_nil response[:taskID]
-    end
-
-    def test_save_object_without_object_id
-      response = @index.save_object(generate_object, {auto_generate_object_id_if_not_exist: true})
-
-      refute_empty response[:objectIDs]
-      refute_nil response[:taskID]
     end
 
     def test_save_objects_with_single_object_and_fail
@@ -83,26 +120,6 @@ class SearchIndexTest < BaseTest
     def test_save_objects_with_empty_array
       response = @index.save_objects([])
 
-      refute_nil response[:taskID]
-    end
-
-    def test_save_objects_with_object_id
-      response = @index.save_objects([
-                                       generate_object('111'),
-                                       generate_object('222')
-                                     ])
-
-      assert_equal %w(111 222), response[:objectIDs]
-      refute_nil response[:taskID]
-    end
-
-    def test_save_objects_without_object_id
-      response = @index.save_objects([
-                                       generate_object,
-                                       generate_object
-                                     ], {auto_generate_object_id_if_not_exist: true})
-
-      refute_empty response[:objectIDs]
       refute_nil response[:taskID]
     end
 
