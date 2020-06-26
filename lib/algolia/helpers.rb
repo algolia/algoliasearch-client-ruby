@@ -30,7 +30,7 @@ module Helpers
   end
 
   def get_option(hash, key)
-    hash[key.to_sym] || hash[key] || {}
+    hash[key.to_sym] || hash[key] || nil
   end
 
   def path_encode(path, *args)
