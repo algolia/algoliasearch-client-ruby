@@ -242,11 +242,47 @@ module Algolia
       end
 
       def partial_update_object(object, opts = {})
-        # TODO
+        partial_update_objects([object], opts)
+      end
+
+      def partial_update_object!(object, opts = {})
+        res     = partial_update_objects([object], opts)
+        task_id = get_option(res, 'taskID')
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        res
       end
 
       def partial_update_objects(objects, opts = {})
-        # TODO
+        generate_object_id = false
+        request_options    = opts
+        if get_option(request_options, 'createIfNotExists')
+          generate_object_id = true
+          request_options.delete(:createIfNotExists)
+        end
+
+        if generate_object_id
+          batch(build_batch('partialUpdateObject', objects), request_options)
+        else
+          batch(build_batch('partialUpdateObjectNoCreate', objects), request_options)
+        end
+      end
+
+      def partial_update_objects!(objects, opts = {})
+        generate_object_id = false
+        request_options    = opts
+        if get_option(request_options, 'createIfNotExists')
+          generate_object_id = true
+          request_options.delete(:createIfNotExists)
+        end
+
+        res     = if generate_object_id
+          batch(build_batch('partialUpdateObject', objects), request_options)
+        else
+          batch(build_batch('partialUpdateObjectNoCreate', objects), request_options)
+        end
+        task_id = get_option(res, 'taskID')
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+        res
       end
 
       def delete_object(object_id, opts = {})
