@@ -36,7 +36,8 @@ class SearchIndexTest < BaseTest
       responses  = []
       object_ids = []
 
-      obj1    = generate_object('obj1')
+      id1     = 'obj1'
+      obj1    = generate_object(id1)
       responses.push(@index.save_object(obj1))
       object_ids.push(retrieve_last_object_ids(responses))
       obj2    = generate_object
@@ -44,8 +45,10 @@ class SearchIndexTest < BaseTest
       object_ids.push(retrieve_last_object_ids(responses))
       responses.push(@index.save_objects([]))
       object_ids.push(retrieve_last_object_ids(responses))
-      obj3    = generate_object('obj3')
-      obj4    = generate_object('obj4')
+      id3     = 'obj3'
+      id4     = 'obj4'
+      obj3    = generate_object(id3)
+      obj4    = generate_object(id4)
       responses.push(@index.save_objects([obj3, obj4]))
       object_ids.push(retrieve_last_object_ids(responses))
       obj5    = generate_object
@@ -91,6 +94,24 @@ class SearchIndexTest < BaseTest
       [obj1, obj3, obj4].each do |obj|
         assert_includes(browsed_objects, obj)
       end
+
+      responses = []
+
+      obj1[:property] = 'new property'
+      responses.push(@index.partial_update_object(obj1))
+
+      obj3[:property] = 'new property 3'
+      obj4[:property] = 'new property 4'
+      responses.push(@index.partial_update_objects([obj3, obj4]))
+
+      responses.each do |response|
+        task_id = get_option(response, 'taskID')
+        @index.wait_task(task_id)
+      end
+
+      assert_equal obj1[:property], @index.get_object(id1)[:property]
+      assert_equal obj3[:property], @index.get_object(id3)[:property]
+      assert_equal obj4[:property], @index.get_object(id4)[:property]
     end
 
     def test_save_object_without_object_id_and_fail
