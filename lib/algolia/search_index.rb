@@ -286,15 +286,35 @@ module Algolia
       end
 
       def delete_object(object_id, opts = {})
-        # TODO
+        delete_objects([object_id], opts)
+      end
+
+      def delete_object!(object_id, opts = {})
+        res     = delete_objects([object_id], opts)
+        task_id = get_option(res, 'taskID')
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+        res
       end
 
       def delete_objects(object_ids, opts = {})
-        # TODO
+        objects = object_ids.map do |object_id|
+          {objectID: object_id}
+        end
+        batch(build_batch('deleteObject', objects), opts)
       end
 
-      def delete_by(opts = {})
-        # TODO
+      def delete_objects!(object_ids, opts = {})
+        objects = object_ids.map do |object_id|
+          {objectID: object_id}
+        end
+        res     = batch(build_batch('deleteObject', objects), opts)
+        task_id = get_option(res, 'taskID')
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+        res
+      end
+
+      def delete_by(filters, opts = {})
+        write(:POST, path_encode('/1/indexes/%s/deleteByQuery', @index_name), filters, opts)
       end
 
       # Send a batch request

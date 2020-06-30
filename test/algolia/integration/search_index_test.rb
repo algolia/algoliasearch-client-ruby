@@ -36,34 +36,32 @@ class SearchIndexTest < BaseTest
       responses  = []
       object_ids = []
 
-      id1     = 'obj1'
-      obj1    = generate_object(id1)
+      obj1     = generate_object('obj1')
       responses.push(@index.save_object(obj1))
       object_ids.push(retrieve_last_object_ids(responses))
-      obj2    = generate_object
-      responses.push(@index.save_object(obj2, {auto_generate_object_id_if_not_exist: true}))
+      obj2     = generate_object
+      response = @index.save_object(obj2, {auto_generate_object_id_if_not_exist: true})
+      responses.push(response)
       object_ids.push(retrieve_last_object_ids(responses))
       responses.push(@index.save_objects([]))
       object_ids.push(retrieve_last_object_ids(responses))
-      id3     = 'obj3'
-      id4     = 'obj4'
-      obj3    = generate_object(id3)
-      obj4    = generate_object(id4)
+      obj3     = generate_object('obj3')
+      obj4     = generate_object('obj4')
       responses.push(@index.save_objects([obj3, obj4]))
       object_ids.push(retrieve_last_object_ids(responses))
-      obj5    = generate_object
-      obj6    = generate_object
+      obj5     = generate_object
+      obj6     = generate_object
       responses.push(@index.save_objects([obj5, obj6], {auto_generate_object_id_if_not_exist: true}))
       object_ids.push(retrieve_last_object_ids(responses))
       object_ids.flatten!
-      objects = 1.upto(1000).map do |i|
+      objects  = 1.upto(1000).map do |i|
         generate_object(i.to_s)
       end
 
       @index.config.batch_size = 100
       responses.push(@index.save_objects(objects))
-      responses.each do |response|
-        task_id = get_option(response, 'taskID')
+      responses.each do |res|
+        task_id = get_option(res, 'taskID')
         @index.wait_task(task_id)
       end
 
@@ -104,14 +102,36 @@ class SearchIndexTest < BaseTest
       obj4[:property] = 'new property 4'
       responses.push(@index.partial_update_objects([obj3, obj4]))
 
-      responses.each do |response|
-        task_id = get_option(response, 'taskID')
+      responses.each do |res|
+        task_id = get_option(res, 'taskID')
         @index.wait_task(task_id)
       end
 
-      assert_equal obj1[:property], @index.get_object(id1)[:property]
-      assert_equal obj3[:property], @index.get_object(id3)[:property]
-      assert_equal obj4[:property], @index.get_object(id4)[:property]
+      assert_equal obj1[:property], @index.get_object(object_ids[0])[:property]
+      assert_equal obj3[:property], @index.get_object(object_ids[2])[:property]
+      assert_equal obj4[:property], @index.get_object(object_ids[3])[:property]
+
+      delete_by_obj = {objectID: 'obj_del_by', _tags: 'algolia', property: 'property'}
+      @index.save_object!(delete_by_obj)
+
+      responses = []
+
+      responses.push(@index.delete_object(object_ids.shift))
+      responses.push(@index.delete_by({tagFilters: ['algolia']}))
+      responses.push(@index.delete_objects(object_ids))
+      responses.push(@index.clear_objects)
+
+      responses.each do |res|
+        task_id = get_option(res, 'taskID')
+        @index.wait_task(task_id)
+      end
+
+      browsed_objects = []
+      @index.browse_objects.each do |hit|
+        browsed_objects.push(hit)
+      end
+
+      assert_equal 0, browsed_objects.length
     end
 
     def test_save_object_without_object_id_and_fail
