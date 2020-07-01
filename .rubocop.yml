@@ -74,9 +74,6 @@ Layout/IndentationConsistency:
   Exclude:
     - 'app/helpers/demos_helper.rb'
 
-Layout/SpaceInsideHashLiteralBraces:
-  EnforcedStyle: no_space
-
 Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
 

@@ -40,7 +40,7 @@ class SearchIndexTest < BaseTest
       responses.push(@index.save_object(obj1))
       object_ids.push(retrieve_last_object_ids(responses))
       obj2     = generate_object
-      response = @index.save_object(obj2, {auto_generate_object_id_if_not_exist: true})
+      response = @index.save_object(obj2, { auto_generate_object_id_if_not_exist: true })
       responses.push(response)
       object_ids.push(retrieve_last_object_ids(responses))
       responses.push(@index.save_objects([]))
@@ -51,7 +51,7 @@ class SearchIndexTest < BaseTest
       object_ids.push(retrieve_last_object_ids(responses))
       obj5     = generate_object
       obj6     = generate_object
-      responses.push(@index.save_objects([obj5, obj6], {auto_generate_object_id_if_not_exist: true}))
+      responses.push(@index.save_objects([obj5, obj6], { auto_generate_object_id_if_not_exist: true }))
       object_ids.push(retrieve_last_object_ids(responses))
       object_ids.flatten!
       objects  = 1.upto(1000).map do |i|
@@ -111,13 +111,13 @@ class SearchIndexTest < BaseTest
       assert_equal obj3[:property], @index.get_object(object_ids[2])[:property]
       assert_equal obj4[:property], @index.get_object(object_ids[3])[:property]
 
-      delete_by_obj = {objectID: 'obj_del_by', _tags: 'algolia', property: 'property'}
+      delete_by_obj = { objectID: 'obj_del_by', _tags: 'algolia', property: 'property' }
       @index.save_object!(delete_by_obj)
 
       responses = []
 
       responses.push(@index.delete_object(object_ids.shift))
-      responses.push(@index.delete_by({tagFilters: ['algolia']}))
+      responses.push(@index.delete_by({ tagFilters: ['algolia'] }))
       responses.push(@index.delete_objects(object_ids))
       responses.push(@index.clear_objects)
 
@@ -296,7 +296,7 @@ class SearchIndexTest < BaseTest
     def before_all
       super
       @index = @@search_client.init_index(get_test_index_name('search'))
-      @index.save_objects!(create_employee_records, {auto_generate_object_id_if_not_exist: true})
+      @index.save_objects!(create_employee_records, { auto_generate_object_id_if_not_exist: true })
       @index.set_settings!(attributesForFaceting: ['searchable(company)'])
     end
 
@@ -311,18 +311,18 @@ class SearchIndexTest < BaseTest
 
     def find_objects
       exception = assert_raises Algolia::AlgoliaHttpError do
-        @index.find_object({query: '', paginate: false})
+        @index.find_object({ query: '', paginate: false })
       end
 
       assert_equal 'Object not found', exception.message
 
       exception = assert_raises Algolia::AlgoliaHttpError do
-        @index.find_object({query: '', paginate: false}) { false }
+        @index.find_object({ query: '', paginate: false }) { false }
       end
 
       assert_equal 'Object not found', exception.message
 
-      response = @index.find_object({query: '', paginate: false}) { true }
+      response = @index.find_object({ query: '', paginate: false }) { true }
       assert_equal 0, response[:position]
       assert_equal 0, response[:page]
 
@@ -333,36 +333,36 @@ class SearchIndexTest < BaseTest
       end
 
       exception = assert_raises Algolia::AlgoliaHttpError do
-        @index.find_object({query: 'algolia', paginate: false}, &condition)
+        @index.find_object({ query: 'algolia', paginate: false }, &condition)
       end
 
       assert_equal 'Object not found', exception.message
 
       exception = assert_raises Algolia::AlgoliaHttpError do
-        @index.find_object({query: '', paginate: false, hitsPerPage: 5}, &condition)
+        @index.find_object({ query: '', paginate: false, hitsPerPage: 5 }, &condition)
       end
 
       assert_equal 'Object not found', exception.message
 
-      response = @index.find_object({query: '', paginate: true, hitsPerPage: 5}, &condition)
+      response = @index.find_object({ query: '', paginate: true, hitsPerPage: 5 }, &condition)
       assert_equal 0, response[:position]
       assert_equal 2, response[:page]
     end
 
     def test_search_with_click_analytics
-      response = @index.search('elon', {clickAnalytics: true})
+      response = @index.search('elon', { clickAnalytics: true })
 
       refute_nil response[:queryID]
     end
 
     def test_search_with_facet_filters
-      response = @index.search('elon', {facets: '*', facetFilters: ['company:tesla']})
+      response = @index.search('elon', { facets: '*', facetFilters: ['company:tesla'] })
 
       assert_equal 1, response[:nbHits]
     end
 
     def test_search_with_filter
-      response = @index.search('elon', {facets: '*', filters: '(company:tesla OR company:spacex)'})
+      response = @index.search('elon', { facets: '*', filters: '(company:tesla OR company:spacex)' })
 
       assert_equal 2, response[:nbHits]
     end

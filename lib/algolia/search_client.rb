@@ -46,7 +46,7 @@ module Algolia
       end
 
       def multiple_batch(operations, opts = {})
-        write(:POST, '1/indexes/*/batch', {requests: operations}, opts)
+        write(:POST, '1/indexes/*/batch', { requests: operations }, opts)
       end
 
       def set_extra_header(key, value)
