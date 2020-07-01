@@ -455,7 +455,7 @@ module Algolia
       # # # # # # # # # # # # # # # # # # # # #
 
       def get_settings(opts = {})
-        opts[:getVersion] = '2'
+        opts[:params] = {getVersion: 2}
 
         read(:GET, path_encode('/1/indexes/%s/settings', @index_name), {}, opts)
       end
