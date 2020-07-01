@@ -6,7 +6,7 @@ class SearchClientTest < BaseTest
       client = Algolia::Search::Client.new(@@search_config, adapter: 'httpclient')
       index  = client.init_index(get_test_index_name('test_custom_adapter'))
 
-      index.save_object!({name: 'test', data: 10}, {auto_generate_object_id_if_not_exist: true})
+      index.save_object!({ name: 'test', data: 10 }, { auto_generate_object_id_if_not_exist: true })
       response = index.search('test')
 
       refute_empty response[:hits]
@@ -26,7 +26,7 @@ class SearchClientTest < BaseTest
     def test_without_providing_config
       client   = Algolia::Search::Client.create(APPLICATION_ID_1, ADMIN_KEY_1)
       index    = client.init_index(get_test_index_name('test_no_config'))
-      index.save_object!({name: 'test', data: 10}, {auto_generate_object_id_if_not_exist: true})
+      index.save_object!({ name: 'test', data: 10 }, { auto_generate_object_id_if_not_exist: true })
       response = index.search('test')
 
       refute_empty response[:hits]

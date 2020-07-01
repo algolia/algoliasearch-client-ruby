@@ -169,7 +169,7 @@ module Algolia
 
         requests = []
         object_ids.each do |object_id|
-          request = {indexName: @index_name, objectID: object_id.to_s}
+          request = { indexName: @index_name, objectID: object_id.to_s }
 
           if attributes_to_retrieve
             request[:attributesToRetrieve] = attributes_to_retrieve
@@ -178,7 +178,7 @@ module Algolia
           requests.push(request)
         end
 
-        read(:POST, '/1/indexes/*/objects', {'requests': requests}, opts)
+        read(:POST, '/1/indexes/*/objects', { 'requests': requests }, opts)
       end
 
       def find_objects
@@ -298,14 +298,14 @@ module Algolia
 
       def delete_objects(object_ids, opts = {})
         objects = object_ids.map do |object_id|
-          {objectID: object_id}
+          { objectID: object_id }
         end
         batch(build_batch('deleteObject', objects), opts)
       end
 
       def delete_objects!(object_ids, opts = {})
         objects = object_ids.map do |object_id|
-          {objectID: object_id}
+          { objectID: object_id }
         end
         res     = batch(build_batch('deleteObject', objects), opts)
         task_id = get_option(res, 'taskID')
@@ -434,12 +434,12 @@ module Algolia
       # @return Algolia::Response
       #
       def search(query, opts = {})
-        read(:POST, path_encode('/1/indexes/%s/query', @index_name), {'query': query}, opts)
+        read(:POST, path_encode('/1/indexes/%s/query', @index_name), { 'query': query }, opts)
       end
 
       def search_for_facet_values(facet_name, facet_query, opts = {})
         read(:POST, path_encode('/1/indexes/%s/facets/%s/query', @index_name, facet_name),
-             {'facetQuery': facet_query}, opts)
+             { 'facetQuery': facet_query }, opts)
       end
 
       def search_rules(query, opts = {})
@@ -455,7 +455,7 @@ module Algolia
       # # # # # # # # # # # # # # # # # # # # #
 
       def get_settings(opts = {})
-        opts[:params] = {getVersion: 2}
+        opts[:params] = { getVersion: 2 }
 
         read(:GET, path_encode('/1/indexes/%s/settings', @index_name), {}, opts)
       end
@@ -530,7 +530,7 @@ module Algolia
         {
           requests: objects.map do |object|
             check_object(object, true)
-            request            = {action: action, body: object}
+            request            = { action: action, body: object }
             request[:objectID] = get_object_id(object).to_s if with_object_id
             request
           end
