@@ -163,18 +163,132 @@ class SearchIndexTest < BaseTest
 
       refute_nil response[:taskID]
     end
+  end
 
-    def test_batch_save_objects
-      ids     = []
-      objects = []
-      1.upto(8).map do |i|
-        id = (i + 1).to_s
-        objects << generate_object(id)
-        ids << id
-      end
+  describe 'settings' do
+    def before_all
+      super
+      @index_name = get_test_index_name('settings')
+      @index      = @@search_client.init_index(@index_name)
+    end
 
-      batch = @index.save_objects(objects)
-      @index.wait_task(batch[:taskID])
+    def test_settings
+      @index.save_object!(generate_object('obj1'))
+
+      settings = {
+        searchableAttributes: %w(attribute1 attribute2 attribute3 ordered(attribute4) unordered(attribute5)),
+        attributesForFaceting: %w(attribute1 filterOnly(attribute2) searchable(attribute3)),
+        unretrievableAttributes: %w(
+          attribute1
+          attribute2
+        ),
+        attributesToRetrieve: %w(
+          attribute3
+          attribute4
+        ),
+        ranking: %w(asc(attribute1) desc(attribute2) attribute custom exact filters geo proximity typo words),
+        customRanking: %w(asc(attribute1) desc(attribute1)),
+        replicas: [
+          @index_name + '_replica1',
+          @index_name + '_replica2'
+        ],
+        maxValuesPerFacet: 100,
+        sortFacetValuesBy: 'count',
+        attributesToHighlight: %w(
+          attribute1
+          attribute2
+        ),
+        attributesToSnippet: %w(attribute1:10 attribute2:8),
+        highlightPreTag: '<strong>',
+        highlightPostTag: '</strong>',
+        snippetEllipsisText: ' and so on.',
+        restrictHighlightAndSnippetArrays: true,
+        hitsPerPage: 42,
+        paginationLimitedTo: 43,
+        minWordSizefor1Typo: 2,
+        minWordSizefor2Typos: 6,
+        typoTolerance: 'false',
+        allowTyposOnNumericTokens: false,
+        ignorePlurals: true,
+        disableTypoToleranceOnAttributes: %w(
+          attribute1
+          attribute2
+        ),
+        disableTypoToleranceOnWords: %w(
+          word1
+          word2
+        ),
+        separatorsToIndex: '()[]',
+        queryType: 'prefixNone',
+        removeWordsIfNoResults: 'allOptional',
+        advancedSyntax: true,
+        optionalWords: %w(
+          word1
+          word2
+        ),
+        removeStopWords: true,
+        disablePrefixOnAttributes: %w(
+          attribute1
+          attribute2
+        ),
+        disableExactOnAttributes: %w(
+          attribute1
+          attribute2
+        ),
+        exactOnSingleWordQuery: 'word',
+        enableRules: false,
+        numericAttributesForFiltering: %w(
+          attribute1
+          attribute2
+        ),
+        allowCompressionOfIntegerArray: true,
+        attributeForDistinct: 'attribute1',
+        distinct: 2,
+        replaceSynonymsInHighlight: false,
+        minProximity: 7,
+        responseFields: %w(
+          hits
+          hitsPerPage
+        ),
+        maxFacetHits: 100,
+        camelCaseAttributes: %w(
+          attribute1
+          attribute2
+        ),
+        decompoundedAttributes: {
+          de: %w(attribute1 attribute2),
+          fi: ['attribute3']
+        },
+        keepDiacriticsOnCharacters: 'øé',
+        queryLanguages: %w(
+          en
+          fr
+        ),
+        alternativesAsExact: ['ignorePlurals'],
+        advancedSyntaxFeatures: ['exactPhrase'],
+        userData: {
+          customUserData: 42.0
+        },
+        indexLanguages: ['ja']
+      }
+
+      @index.set_settings!(settings)
+
+      # Because the response settings dict contains the extra version key, we
+      # also add it to the expected settings dict to prevent the test to fail
+      # for a missing key.
+      settings[:version] = 2
+
+      assert_equal @index.get_settings, settings
+
+      settings[:typoTolerance]   = 'min'
+      settings[:ignorePlurals]   = %w(en fr)
+      settings[:removeStopWords] = %w(en fr)
+      settings[:distinct]        = true
+
+      @index.set_settings!(settings)
+
+      assert_equal @index.get_settings, settings
     end
   end
 
