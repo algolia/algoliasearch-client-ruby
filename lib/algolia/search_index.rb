@@ -104,24 +104,25 @@ module Algolia
       # @return [Hash|AlgoliaHttpError] the matching object and its position in the result set
       #
       def find_object(opts = {})
-        paginate = true
-        page     = 0
+        request_options = opts
+        paginate        = true
+        page            = 0
 
-        query = opts[:query] || ''
-        opts.delete(:query)
+        query = request_options[:query] || ''
+        request_options.delete(:query)
 
-        if opts.has_key? :paginate
-          paginate = opts[:paginate]
+        if request_options.has_key? :paginate
+          paginate = request_options[:paginate]
         end
 
-        opts.delete(:paginate)
+        request_options.delete(:paginate)
 
         loop do
-          opts[:page] = page
-          res         = search(query, opts)
+          request_options[:page] = page
+          res                    = search(query, request_options)
 
           if block_given?
-            res['hits'].each_with_index do |hit, i|
+            res[:hits].each_with_index do |hit, i|
               if yield(hit)
                 return {
                   object: hit,
@@ -132,7 +133,7 @@ module Algolia
             end
           end
 
-          has_next_page = page + 1 < res['nbPages']
+          has_next_page = page + 1 < res[:nbPages]
           if !paginate || !has_next_page
             raise AlgoliaHttpError.new(404, 'Object not found')
           end
