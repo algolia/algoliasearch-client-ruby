@@ -36,7 +36,7 @@ module Algolia
       def init_index(index_name)
         index_name.strip!
         if index_name.empty?
-          raise ArgumentError, 'Please provide a valid index name'
+          raise AlgoliaError, 'Please provide a valid index name'
         end
         Index.new(index_name, @transporter, @config)
       end

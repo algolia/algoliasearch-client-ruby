@@ -16,8 +16,8 @@ module Algolia
     # @option options [Boolean] :symbolize_keys
     #
     def initialize(opts = {})
-      raise ArgumentError, 'No Application ID provided, please set :app_id' unless opts.has_key?(:app_id)
-      raise ArgumentError, 'No API key provided, please set :api_key' unless opts.has_key?(:api_key)
+      raise AlgoliaError, 'No Application ID provided, please set :app_id' unless opts.has_key?(:app_id)
+      raise AlgoliaError, 'No API key provided, please set :api_key' unless opts.has_key?(:api_key)
 
       @app_id  = opts[:app_id]
       @api_key = opts[:api_key]
