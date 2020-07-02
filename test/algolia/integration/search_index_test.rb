@@ -309,7 +309,7 @@ class SearchIndexTest < BaseTest
       assert_equal(-1, Algolia::Search::Index.get_object_position(response, ''))
     end
 
-    def find_objects
+    def test_find_objects
       exception = assert_raises Algolia::AlgoliaHttpError do
         @index.find_object({ query: '', paginate: false })
       end
@@ -329,7 +329,7 @@ class SearchIndexTest < BaseTest
       # we use a lambda and convert it to a block with `&`
       # so as not to repeat the condition
       condition = -> (obj) do
-        obj.has_key?('company') && obj['company'] == 'Apple'
+        obj.has_key?(:company) && obj[:company] == 'Apple'
       end
 
       exception = assert_raises Algolia::AlgoliaHttpError do
@@ -347,27 +347,19 @@ class SearchIndexTest < BaseTest
       response = @index.find_object({ query: '', paginate: true, hitsPerPage: 5 }, &condition)
       assert_equal 0, response[:position]
       assert_equal 2, response[:page]
-    end
 
-    def test_search_with_click_analytics
       response = @index.search('elon', { clickAnalytics: true })
 
       refute_nil response[:queryID]
-    end
 
-    def test_search_with_facet_filters
       response = @index.search('elon', { facets: '*', facetFilters: ['company:tesla'] })
 
       assert_equal 1, response[:nbHits]
-    end
 
-    def test_search_with_filter
       response = @index.search('elon', { facets: '*', filters: '(company:tesla OR company:spacex)' })
 
       assert_equal 2, response[:nbHits]
-    end
 
-    def test_search_for_facet_values
       response = @index.search_for_facet_values('company', 'a')
 
       assert(response[:facetHits].any? { |hit| hit[:value] == 'Algolia' })
