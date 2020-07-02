@@ -394,8 +394,12 @@ module Algolia
         # TODO
       end
 
-      def browse_objects(opts = {})
-        ObjectIterator.new(@transporter, @index_name, opts)
+      def browse_objects(opts = {}, &block)
+        if block_given?
+          ObjectIterator.new(@transporter, @index_name, opts).each(&block)
+        else
+          ObjectIterator.new(@transporter, @index_name, opts)
+        end
       end
 
       def browse_rules(opts = {})
