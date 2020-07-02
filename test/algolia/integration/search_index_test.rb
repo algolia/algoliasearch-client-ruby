@@ -80,7 +80,7 @@ class SearchIndexTest < BaseTest
 
       assert_equal objects.length, results.length
       browsed_objects = []
-      @index.browse_objects.each do |hit|
+      @index.browse_objects do |hit|
         browsed_objects.push(hit)
       end
 
@@ -127,7 +127,7 @@ class SearchIndexTest < BaseTest
       end
 
       browsed_objects = []
-      @index.browse_objects.each do |hit|
+      @index.browse_objects do |hit|
         browsed_objects.push(hit)
       end
 
