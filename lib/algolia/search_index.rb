@@ -494,7 +494,7 @@ module Algolia
       # @param object [Object]
       #
       def check_array(object)
-        raise ArgumentError, 'argument must be an array of objects' unless object.is_a?(Array)
+        raise AlgoliaError, 'argument must be an array of objects' unless object.is_a?(Array)
       end
 
       # Check the passed object
@@ -505,9 +505,9 @@ module Algolia
       def check_object(object, in_array = false)
         case object
         when Array
-          raise ArgumentError, in_array ? 'argument must be an array of objects' : 'argument must not be an array'
+          raise AlgoliaError, in_array ? 'argument must be an array of objects' : 'argument must not be an array'
         when String, Integer, Float, TrueClass, FalseClass, NilClass
-          raise ArgumentError, "argument must be an #{'array of' if in_array} object, got: #{object.inspect}"
+          raise AlgoliaError, "argument must be an #{'array of' if in_array} object, got: #{object.inspect}"
         end
       end
 
@@ -519,7 +519,7 @@ module Algolia
       def get_object_id(object, object_id = nil)
         check_object(object)
         object_id ||= object[:objectID] || object['objectID']
-        raise ArgumentError, "Missing 'objectID'" if object_id.nil?
+        raise AlgoliaError, "Missing 'objectID'" if object_id.nil?
         object_id
       end
 

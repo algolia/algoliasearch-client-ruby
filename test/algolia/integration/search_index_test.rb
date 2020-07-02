@@ -135,7 +135,7 @@ class SearchIndexTest < BaseTest
     end
 
     def test_save_object_without_object_id_and_fail
-      exception = assert_raises ArgumentError do
+      exception = assert_raises Algolia::AlgoliaError do
         @index.save_object(generate_object)
       end
 
@@ -143,7 +143,7 @@ class SearchIndexTest < BaseTest
     end
 
     def test_save_objects_with_single_object_and_fail
-      exception = assert_raises ArgumentError do
+      exception = assert_raises Algolia::AlgoliaError do
         @index.save_objects(generate_object)
       end
 
@@ -151,7 +151,7 @@ class SearchIndexTest < BaseTest
     end
 
     def test_save_objects_with_array_of_integers_and_fail
-      exception = assert_raises ArgumentError do
+      exception = assert_raises Algolia::AlgoliaError do
         @index.save_objects([2222, 3333])
       end
 
