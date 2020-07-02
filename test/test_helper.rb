@@ -29,13 +29,13 @@ class Minitest::Test
 end
 
 def check_environment_variables
-  raise ArgumentError, 'ALGOLIA_APPLICATION_ID_1 must be defined' if ENV['ALGOLIA_APPLICATION_ID_1'].to_s.strip.empty?
-  raise ArgumentError, 'ALGOLIA_ADMIN_KEY_1 must be defined' if ENV['ALGOLIA_ADMIN_KEY_1'].to_s.strip.empty?
-  raise ArgumentError, 'ALGOLIA_SEARCH_KEY_1 must be defined' if ENV['ALGOLIA_SEARCH_KEY_1'].to_s.strip.empty?
-  raise ArgumentError, 'ALGOLIA_APPLICATION_ID_2 must be defined' if ENV['ALGOLIA_APPLICATION_ID_2'].to_s.strip.empty?
-  raise ArgumentError, 'ALGOLIA_ADMIN_KEY_2 must be defined' if ENV['ALGOLIA_ADMIN_KEY_2'].to_s.strip.empty?
-  raise ArgumentError, 'ALGOLIA_APPLICATION_ID_MCM must be defined' if ENV['ALGOLIA_APPLICATION_ID_MCM'].to_s.strip.empty?
-  raise ArgumentError, 'ALGOLIA_ADMIN_KEY_MCM must be defined' if ENV['ALGOLIA_ADMIN_KEY_MCM'].to_s.strip.empty?
+  raise Algolia::AlgoliaError, 'ALGOLIA_APPLICATION_ID_1 must be defined' if ENV['ALGOLIA_APPLICATION_ID_1'].to_s.strip.empty?
+  raise Algolia::AlgoliaError, 'ALGOLIA_ADMIN_KEY_1 must be defined' if ENV['ALGOLIA_ADMIN_KEY_1'].to_s.strip.empty?
+  raise Algolia::AlgoliaError, 'ALGOLIA_SEARCH_KEY_1 must be defined' if ENV['ALGOLIA_SEARCH_KEY_1'].to_s.strip.empty?
+  raise Algolia::AlgoliaError, 'ALGOLIA_APPLICATION_ID_2 must be defined' if ENV['ALGOLIA_APPLICATION_ID_2'].to_s.strip.empty?
+  raise Algolia::AlgoliaError, 'ALGOLIA_ADMIN_KEY_2 must be defined' if ENV['ALGOLIA_ADMIN_KEY_2'].to_s.strip.empty?
+  raise Algolia::AlgoliaError, 'ALGOLIA_APPLICATION_ID_MCM must be defined' if ENV['ALGOLIA_APPLICATION_ID_MCM'].to_s.strip.empty?
+  raise Algolia::AlgoliaError, 'ALGOLIA_ADMIN_KEY_MCM must be defined' if ENV['ALGOLIA_ADMIN_KEY_MCM'].to_s.strip.empty?
 end
 
 def get_test_index_name(name)
