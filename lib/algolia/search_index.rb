@@ -344,23 +344,67 @@ module Algolia
       # # # # # # # # # # # # # # # # # # # # #
 
       def get_rule(object_id, opts = {})
-        # TODO
+        read(:GET, path_encode('/1/indexes/%s/rules/%s', @index_name, object_id), {}, opts)
       end
 
       def save_rule(rule, opts = {})
-        # TODO
+        save_rules([rule], opts)
+      end
+
+      def save_rule!(rule, opts = {})
+        res     = save_rules([rule], opts)
+        task_id = get_option(res, 'taskID')
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        res
       end
 
       def save_rules(rules, opts = {})
-        # TODO
+        if rules.empty?
+          return []
+        end
+
+        rules.map do |synonym|
+          get_object_id(synonym)
+        end
+
+        write(:POST, path_encode('/1/indexes/%s/rules/batch', @index_name), rules, opts)
+      end
+
+      def save_rules!(rules, opts = {})
+        if rules.empty?
+          return []
+        end
+
+        rules.map do |synonym|
+          get_object_id(synonym)
+        end
+
+        res     = write(:POST, path_encode('/1/indexes/%s/rules/batch', @index_name), rules, opts)
+        task_id = get_option(res, 'taskID')
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        res
       end
 
       def clear_rules(opts = {})
-        # TODO
+        write(:POST, path_encode('1/indexes/%s/rules/clear', @index_name), '', opts)
+      end
+
+      def clear_rules!(opts = {})
+        res     = write(:POST, path_encode('1/indexes/%s/rules/clear', @index_name), '', opts)
+        task_id = get_option(res, 'taskID')
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        res
       end
 
       def delete_rule(object_id, opts = {})
-        # TODO
+        write(:DELETE, path_encode('1/indexes/%s/rules/%s', @index_name, object_id), '', opts)
+      end
+
+      def delete_rule!(object_id, opts = {})
+        res     = write(:DELETE, path_encode('1/indexes/%s/rules/%s', @index_name, object_id), '', opts)
+        task_id = get_option(res, 'taskID')
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        res
       end
 
       # # # # # # # # # # # # # # # # # # # # #
@@ -442,22 +486,22 @@ module Algolia
       end
 
       def clear_synonyms(opts = {})
-        write(:POST, path_encode('1/indexes/%s/synonyms/clear', @index_name), {}, opts)
+        write(:POST, path_encode('1/indexes/%s/synonyms/clear', @index_name), '', opts)
       end
 
       def clear_synonyms!(opts = {})
-        res     = write(:POST, path_encode('1/indexes/%s/synonyms/clear', @index_name), {}, opts)
+        res     = write(:POST, path_encode('1/indexes/%s/synonyms/clear', @index_name), '', opts)
         task_id = get_option(res, 'taskID')
         wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
         res
       end
 
       def delete_synonym(object_id, opts = {})
-        write(:DELETE, path_encode('1/indexes/%s/synonyms/%s', @index_name, object_id), {}, opts)
+        write(:DELETE, path_encode('1/indexes/%s/synonyms/%s', @index_name, object_id), '', opts)
       end
 
       def delete_synonym!(object_id, opts = {})
-        res     = write(:DELETE, path_encode('1/indexes/%s/synonyms/%s', @index_name, object_id), {}, opts)
+        res     = write(:DELETE, path_encode('1/indexes/%s/synonyms/%s', @index_name, object_id), '', opts)
         task_id = get_option(res, 'taskID')
         wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
         res
@@ -523,7 +567,7 @@ module Algolia
       # @return Algolia::Response
       #
       def search(query, opts = {})
-        read(:POST, path_encode('/1/indexes/%s/query', @index_name), { 'query': query }, opts)
+        read(:POST, path_encode('/1/indexes/%s/query', @index_name), { 'query': query.to_s }, opts)
       end
 
       def search_for_facet_values(facet_name, facet_query, opts = {})
@@ -536,7 +580,7 @@ module Algolia
       end
 
       def search_rules(query, opts = {})
-        # TODO
+        read(:POST, path_encode('/1/indexes/%s/rules/search', @index_name), { query: query.to_s }, opts)
       end
 
       # # # # # # # # # # # # # # # # # # # # #
