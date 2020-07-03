@@ -368,4 +368,106 @@ class SearchIndexTest < BaseTest
       assert(response[:facetHits].any? { |hit| hit[:value] == 'Arista Networks' })
     end
   end
+
+  describe 'synonyms' do
+    def before_all
+      super
+      @index = @@search_client.init_index(get_test_index_name('synonyms'))
+    end
+
+    def test_synonyms
+      responses = []
+      responses.push(@index.save_objects([
+        { console: 'Sony PlayStation <PLAYSTATIONVERSION>' },
+        { console: 'Nintendo Switch' },
+        { console: 'Nintendo Wii U' },
+        { console: 'Nintendo Game Boy Advance' },
+        { console: 'Microsoft Xbox' },
+        { console: 'Microsoft Xbox 360' },
+        { console: 'Microsoft Xbox One' }
+      ], { auto_generate_object_id_if_not_exist: true }))
+
+      synonym1 = {
+        objectID: 'gba',
+        type: 'synonym',
+        synonyms: ['gba', 'gameboy advance', 'game boy advance']
+      }
+
+      responses.push(@index.save_synonym(synonym1))
+
+      synonym2 = {
+        objectID: 'wii_to_wii_u',
+        type: 'onewaysynonym',
+        input: 'wii',
+        synonyms: ['wii U']
+      }
+
+      synonym3 = {
+        objectID: 'playstation_version_placeholder',
+        type: 'placeholder',
+        placeholder: '<PLAYSTATIONVERSION>',
+        replacements: ['1', 'One', '2', '3', '4', '4 Pro']
+      }
+
+      synonym4 = {
+        objectID: 'ps4',
+        type: 'altcorrection1',
+        word: 'ps4',
+        corrections: ['playstation4']
+      }
+
+      synonym5 = {
+        objectID: 'psone',
+        type: 'altcorrection2',
+        word: 'psone',
+        corrections: ['playstationone']
+      }
+
+      responses.push(@index.save_synonyms([synonym2, synonym3, synonym4, synonym5]))
+
+      responses.each do |res|
+        task_id = get_option(res, 'taskID')
+        @index.wait_task(task_id)
+      end
+
+      assert_equal synonym1, @index.get_synonym(synonym1[:objectID])
+      assert_equal synonym2, @index.get_synonym(synonym2[:objectID])
+      assert_equal synonym3, @index.get_synonym(synonym3[:objectID])
+      assert_equal synonym4, @index.get_synonym(synonym4[:objectID])
+      assert_equal synonym5, @index.get_synonym(synonym5[:objectID])
+
+      res = @index.search_synonyms('')
+      assert_equal 5, res[:hits].length
+
+      results = []
+      @index.browse_synonyms do |synonym|
+        results.push(synonym)
+      end
+
+      synonyms = [
+        synonym1,
+        synonym2,
+        synonym3,
+        synonym4,
+        synonym5
+      ]
+
+      synonyms.each do |synonym|
+        assert_includes results, synonym
+      end
+
+      @index.delete_synonym!('gba')
+
+      exception = assert_raises Algolia::AlgoliaHttpError do
+        @index.get_synonym('gba')
+      end
+
+      assert_equal 'Synonym set does not exist', exception.message
+
+      @index.clear_synonyms!
+
+      res = @index.search_synonyms('')
+      assert_equal 0, res[:nbHits]
+    end
+  end
 end
