@@ -82,3 +82,8 @@ def create_employee_records
     { company: 'Yahoo', name: 'Marissa Mayer' }
   ]
 end
+
+def rule_without_metadata(rule)
+  rule.delete(:_metadata)
+  rule
+end

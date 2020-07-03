@@ -57,7 +57,7 @@ module Algolia
 
           request_options = Http::RequestOptions.new(@config)
           request_options.create(opts)
-          body.merge!(request_options.data) unless body.is_a?(Array)
+          body.merge!(request_options.data) if body.is_a?(Hash)
 
           request  = build_request(method, path, body, request_options)
           response = @http_requester.send_request(

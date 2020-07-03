@@ -469,5 +469,135 @@ class SearchIndexTest < BaseTest
       res = @index.search_synonyms('')
       assert_equal 0, res[:nbHits]
     end
+
+    describe 'query rules' do
+      def before_all
+        super
+        @index = @@search_client.init_index(get_test_index_name('rules'))
+      end
+
+      def test_rules
+        responses = []
+        responses.push(@index.save_objects([
+          { objectID: 'iphone_7', brand: 'Apple', model: '7' },
+          { objectID: 'iphone_8', brand: 'Apple', model: '8' },
+          { objectID: 'iphone_x', brand: 'Apple', model: 'X' },
+          { objectID: 'one_plus_one', brand: 'OnePlus',
+            model: 'One' },
+          { objectID: 'one_plus_two', brand: 'OnePlus',
+            model: 'Two' }
+        ], { auto_generate_object_id_if_not_exist: true }))
+
+        responses.push(@index.set_settings({ attributesForFaceting: %w(brand model) }))
+
+        rule1 = {
+          objectID: 'brand_automatic_faceting',
+          enabled: false,
+          condition: { anchoring: 'is', pattern: '{facet:brand}' },
+          consequence: {
+            params: {
+              automaticFacetFilters: [
+                { facet: 'brand', disjunctive: true, score: 42 }
+              ]
+            }
+          },
+          validity: [
+            {
+              from: 1532439300, # 07/24/2018 13:35:00 UTC
+              until: 1532525700 # 07/25/2018 13:35:00 UTC
+            },
+            {
+              from: 1532612100, # 07/26/2018 13:35:00 UTC
+              until: 1532698500 # 07/27/2018 13:35:00 UTC
+            }
+          ],
+          description: 'Automatic apply the faceting on `brand` if a brand value is found in the query'
+        }
+
+        responses.push(@index.save_rule(rule1))
+
+        rule2 = {
+          objectID: 'query_edits',
+          condition: { anchoring: 'is', pattern: 'mobile phone', alternatives: true },
+          consequence: {
+            filterPromotes: false,
+            params: {
+              query: {
+                edits: [
+                  { type: 'remove', delete: 'mobile' },
+                  { type: 'replace', delete: 'phone', insert: 'iphone' }
+                ]
+              }
+            }
+          }
+        }
+
+        rule3 = {
+          objectID: 'query_promo',
+          consequence: {
+            params: {
+              filters: 'brand:OnePlus'
+            }
+          }
+        }
+
+        rule4 = {
+          objectID: 'query_promo_summer',
+          condition: {
+            context: 'summer'
+          },
+          consequence: {
+            params: {
+              filters: 'model:One'
+            }
+          }
+        }
+
+        responses.push(@index.save_rules([rule2, rule3, rule4]))
+
+        responses.each do |res|
+          task_id = get_option(res, 'taskID')
+          @index.wait_task(task_id)
+        end
+
+        assert_equal 1, @index.search('', { ruleContexts: ['summer'] })[:nbHits]
+
+        assert_equal rule1, rule_without_metadata(@index.get_rule(rule1[:objectID]))
+        assert_equal rule2, rule_without_metadata(@index.get_rule(rule2[:objectID]))
+        assert_equal rule3, rule_without_metadata(@index.get_rule(rule3[:objectID]))
+        assert_equal rule4, rule_without_metadata(@index.get_rule(rule4[:objectID]))
+
+        assert_equal 4, @index.search_rules('')[:nbHits]
+
+        results = []
+        @index.browse_rules do |rule|
+          results.push(rule)
+        end
+
+        rules = [
+          rule1,
+          rule2,
+          rule3,
+          rule4
+        ]
+
+        results.each do |rule|
+          assert_includes rules, rule_without_metadata(rule)
+        end
+
+        @index.delete_rule!(rule1[:objectID])
+
+        exception = assert_raises Algolia::AlgoliaHttpError do
+          @index.get_rule(rule1[:objectID])
+        end
+
+        assert_equal 'ObjectID does not exist', exception.message
+
+        @index.clear_rules!
+
+        res = @index.search_rules('')
+        assert_equal 0, res[:nbHits]
+      end
+    end
   end
 end
