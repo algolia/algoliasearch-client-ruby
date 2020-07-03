@@ -56,8 +56,8 @@ module Algolia
           opts[:connect_timeout] ||= @config.connect_timeout * (host.retry_count + 1)
 
           request_options = Http::RequestOptions.new(@config)
-          opts            = request_options.create(opts)
-          body.merge!(opts)
+          request_options.create(opts)
+          body.merge!(request_options.data) unless body.is_a?(Array)
 
           request  = build_request(method, path, body, request_options)
           response = @http_requester.send_request(

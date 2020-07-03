@@ -104,7 +104,7 @@ module Algolia
       # @return [Hash|AlgoliaHttpError] the matching object and its position in the result set
       #
       def find_object(opts = {})
-        request_options = opts
+        request_options = symbolize_hash(opts)
         paginate        = true
         page            = 0
 
@@ -164,7 +164,7 @@ module Algolia
       end
 
       def get_objects(object_ids, opts = {})
-        request_options        = opts
+        request_options        = symbolize_hash(opts)
         attributes_to_retrieve = get_option(request_options, 'attributesToRetrieve')
         request_options.delete(:attributesToRetrieve)
 
@@ -213,7 +213,7 @@ module Algolia
       # @param opts contains extra parameters to send with your query
       #
       def save_objects(objects, opts = {})
-        request_options    = opts
+        request_options    = symbolize_hash(opts)
         generate_object_id = request_options[:auto_generate_object_id_if_not_exist] || false
         request_options.delete(:auto_generate_object_id_if_not_exist)
         if generate_object_id
@@ -229,7 +229,7 @@ module Algolia
       # @param opts contains extra parameters to send with your query
       #
       def save_objects!(objects, opts = {})
-        request_options    = opts
+        request_options    = symbolize_hash(opts)
         generate_object_id = request_options[:auto_generate_object_id_if_not_exist] || false
         request_options.delete(:auto_generate_object_id_if_not_exist)
         res                = if generate_object_id
@@ -255,7 +255,7 @@ module Algolia
 
       def partial_update_objects(objects, opts = {})
         generate_object_id = false
-        request_options    = opts
+        request_options    = symbolize_hash(opts)
         if get_option(request_options, 'createIfNotExists')
           generate_object_id = true
           request_options.delete(:createIfNotExists)
@@ -270,7 +270,7 @@ module Algolia
 
       def partial_update_objects!(objects, opts = {})
         generate_object_id = false
-        request_options    = opts
+        request_options    = symbolize_hash(opts)
         if get_option(request_options, 'createIfNotExists')
           generate_object_id = true
           request_options.delete(:createIfNotExists)
@@ -368,23 +368,99 @@ module Algolia
       # # # # # # # # # # # # # # # # # # # # #
 
       def get_synonym(object_id, opts = {})
-        # TODO
+        read(:GET, path_encode('/1/indexes/%s/synonyms/%s', @index_name, object_id), {}, opts)
       end
 
       def save_synonym(synonym, opts = {})
-        # TODO
+        save_synonyms([synonym], opts)
+      end
+
+      def save_synonym!(synonym, opts = {})
+        res     = save_synonyms([synonym], opts)
+        task_id = get_option(res, 'taskID')
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        res
       end
 
       def save_synonyms(synonyms, opts = {})
-        # TODO
+        if synonyms.empty?
+          return []
+        end
+
+        synonyms.map do |synonym|
+          get_object_id(synonym)
+        end
+
+        request_options           = symbolize_hash(opts)
+        forward_to_replicas       = false
+        replace_existing_synonyms = false
+
+        if request_options[:forwardToReplicas]
+          forward_to_replicas = true
+          request_options.delete(:forwardToReplicas)
+        end
+
+        if request_options[:replaceExistingSynonyms]
+          replace_existing_synonyms = true
+          request_options.delete(:replaceExistingSynonyms)
+        end
+        write(:POST, path_encode('/1/indexes/%s/synonyms/batch?', @index_name) + to_query_string({
+          forwardToReplicas: forward_to_replicas,
+          replaceExistingSynonyms: replace_existing_synonyms
+        }), synonyms, request_options)
+      end
+
+      def save_synonyms!(synonyms, opts = {})
+        if synonyms.empty?
+          return []
+        end
+
+        synonyms.map do |synonym|
+          get_object_id(synonym)
+        end
+
+        request_options           = symbolize_hash(opts)
+        forward_to_replicas       = false
+        replace_existing_synonyms = false
+
+        if request_options[:forwardToReplicas]
+          forward_to_replicas = true
+          request_options.delete(:forwardToReplicas)
+        end
+
+        if request_options[:replaceExistingSynonyms]
+          replace_existing_synonyms = true
+          request_options.delete(:replaceExistingSynonyms)
+        end
+        res     = write(:POST, path_encode('/1/indexes/%s/synonyms/batch?', @index_name) + to_query_string({
+          forwardToReplicas: forward_to_replicas,
+          replaceExistingSynonyms: replace_existing_synonyms
+        }), synonyms, request_options)
+        task_id = get_option(res, 'taskID')
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+        res
       end
 
       def clear_synonyms(opts = {})
-        # TODO
+        write(:POST, path_encode('1/indexes/%s/synonyms/clear', @index_name), {}, opts)
+      end
+
+      def clear_synonyms!(opts = {})
+        res     = write(:POST, path_encode('1/indexes/%s/synonyms/clear', @index_name), {}, opts)
+        task_id = get_option(res, 'taskID')
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        res
       end
 
       def delete_synonym(object_id, opts = {})
-        # TODO
+        write(:DELETE, path_encode('1/indexes/%s/synonyms/%s', @index_name, object_id), {}, opts)
+      end
+
+      def delete_synonym!(object_id, opts = {})
+        res     = write(:DELETE, path_encode('1/indexes/%s/synonyms/%s', @index_name, object_id), {}, opts)
+        task_id = get_option(res, 'taskID')
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        res
       end
 
       # # # # # # # # # # # # # # # # # # # # #
@@ -403,12 +479,20 @@ module Algolia
         end
       end
 
-      def browse_rules(opts = {})
-        # TODO
+      def browse_rules(opts = {}, &block)
+        if block_given?
+          RuleIterator.new(@transporter, @index_name, opts).each(&block)
+        else
+          RuleIterator.new(@transporter, @index_name, opts)
+        end
       end
 
-      def browse_synonyms(opts = {})
-        # TODO
+      def browse_synonyms(opts = {}, &block)
+        if block_given?
+          SynonymIterator.new(@transporter, @index_name, opts).each(&block)
+        else
+          SynonymIterator.new(@transporter, @index_name, opts)
+        end
       end
 
       # # # # # # # # # # # # # # # # # # # # #
@@ -447,11 +531,11 @@ module Algolia
              { 'facetQuery': facet_query }, opts)
       end
 
-      def search_rules(query, opts = {})
-        # TODO
+      def search_synonyms(query, opts = {})
+        read(:POST, path_encode('/1/indexes/%s/synonyms/search', @index_name), { query: query.to_s }, opts)
       end
 
-      def search_synonyms(query, opts = {})
+      def search_rules(query, opts = {})
         # TODO
       end
 
@@ -460,9 +544,7 @@ module Algolia
       # # # # # # # # # # # # # # # # # # # # #
 
       def get_settings(opts = {})
-        opts[:params] = { getVersion: 2 }
-
-        read(:GET, path_encode('/1/indexes/%s/settings', @index_name), {}, opts)
+        read(:GET, path_encode('/1/indexes/%s/settings?', @index_name) + to_query_string({ getVersion: 2 }), {}, opts)
       end
 
       def set_settings(settings, opts = {})
