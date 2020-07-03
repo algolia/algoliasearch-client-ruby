@@ -11,6 +11,11 @@ module Helpers
     opt.is_a?(String) ? opt : opt.to_s
   end
 
+  def symbolize_hash(hash)
+    symbolized_hash = hash.each_with_object({}) { |(k, v), h| h[k.to_sym] = v }
+    symbolized_hash
+  end
+
   # Convert params to a full query string
   #
   def handle_params(params)
