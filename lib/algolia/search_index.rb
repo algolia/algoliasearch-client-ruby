@@ -363,11 +363,19 @@ module Algolia
           return []
         end
 
+        request_options          = symbolize_hash(opts)
+        request_options[:params] = { forwardToReplicas: false }
+
+        if request_options[:forwardToReplicas]
+          request_options[:params][:forwardToReplicas] = true
+          request_options.delete(:forwardToReplicas)
+        end
+
         rules.map do |synonym|
           get_object_id(synonym)
         end
 
-        write(:POST, path_encode('/1/indexes/%s/rules/batch', @index_name), rules, opts)
+        write(:POST, path_encode('/1/indexes/%s/rules/batch', @index_name), rules, request_options)
       end
 
       def save_rules!(rules, opts = {})
@@ -375,35 +383,71 @@ module Algolia
           return []
         end
 
+        request_options          = symbolize_hash(opts)
+        request_options[:params] = { forwardToReplicas: false }
+
+        if request_options[:forwardToReplicas]
+          request_options[:params][:forwardToReplicas] = true
+          request_options.delete(:forwardToReplicas)
+        end
+
         rules.map do |synonym|
           get_object_id(synonym)
         end
 
-        res     = write(:POST, path_encode('/1/indexes/%s/rules/batch', @index_name), rules, opts)
+        res     = write(:POST, path_encode('/1/indexes/%s/rules/batch', @index_name), rules, request_options)
         task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
         res
       end
 
       def clear_rules(opts = {})
-        write(:POST, path_encode('1/indexes/%s/rules/clear', @index_name), '', opts)
+        request_options          = symbolize_hash(opts)
+        request_options[:params] = { forwardToReplicas: false }
+
+        if request_options[:forwardToReplicas]
+          request_options[:params][:forwardToReplicas] = true
+          request_options.delete(:forwardToReplicas)
+        end
+        write(:POST, path_encode('1/indexes/%s/rules/clear', @index_name), '', request_options)
       end
 
       def clear_rules!(opts = {})
-        res     = write(:POST, path_encode('1/indexes/%s/rules/clear', @index_name), '', opts)
+        request_options          = symbolize_hash(opts)
+        request_options[:params] = { forwardToReplicas: false }
+
+        if request_options[:forwardToReplicas]
+          request_options[:params][:forwardToReplicas] = true
+          request_options.delete(:forwardToReplicas)
+        end
+        res     = write(:POST, path_encode('1/indexes/%s/rules/clear', @index_name), '', request_options)
         task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
         res
       end
 
       def delete_rule(object_id, opts = {})
-        write(:DELETE, path_encode('1/indexes/%s/rules/%s', @index_name, object_id), '', opts)
+        request_options          = symbolize_hash(opts)
+        request_options[:params] = { forwardToReplicas: false }
+
+        if request_options[:forwardToReplicas]
+          request_options[:params][:forwardToReplicas] = true
+          request_options.delete(:forwardToReplicas)
+        end
+        write(:DELETE, path_encode('1/indexes/%s/rules/%s', @index_name, object_id), '', request_options)
       end
 
       def delete_rule!(object_id, opts = {})
-        res     = write(:DELETE, path_encode('1/indexes/%s/rules/%s', @index_name, object_id), '', opts)
+        request_options          = symbolize_hash(opts)
+        request_options[:params] = { forwardToReplicas: false }
+
+        if request_options[:forwardToReplicas]
+          request_options[:params][:forwardToReplicas] = true
+          request_options.delete(:forwardToReplicas)
+        end
+        res     = write(:DELETE, path_encode('1/indexes/%s/rules/%s', @index_name, object_id), '', request_options)
         task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
         res
       end
 
@@ -435,23 +479,19 @@ module Algolia
           get_object_id(synonym)
         end
 
-        request_options           = symbolize_hash(opts)
-        forward_to_replicas       = false
-        replace_existing_synonyms = false
+        request_options          = symbolize_hash(opts)
+        request_options[:params] = { forwardToReplicas: false, replaceExistingSynonyms: false }
 
         if request_options[:forwardToReplicas]
-          forward_to_replicas = true
+          request_options[:params][:forwardToReplicas] = true
           request_options.delete(:forwardToReplicas)
         end
 
         if request_options[:replaceExistingSynonyms]
-          replace_existing_synonyms = true
+          request_options[:params][:replaceExistingSynonyms] = true
           request_options.delete(:replaceExistingSynonyms)
         end
-        write(:POST, path_encode('/1/indexes/%s/synonyms/batch?', @index_name) + to_query_string({
-          forwardToReplicas: forward_to_replicas,
-          replaceExistingSynonyms: replace_existing_synonyms
-        }), synonyms, request_options)
+        write(:POST, path_encode('/1/indexes/%s/synonyms/batch', @index_name), synonyms, request_options)
       end
 
       def save_synonyms!(synonyms, opts = {})
@@ -463,33 +503,43 @@ module Algolia
           get_object_id(synonym)
         end
 
-        request_options           = symbolize_hash(opts)
-        forward_to_replicas       = false
-        replace_existing_synonyms = false
+        request_options          = symbolize_hash(opts)
+        request_options[:params] = { forwardToReplicas: false, replaceExistingSynonyms: false }
 
         if request_options[:forwardToReplicas]
-          forward_to_replicas = true
+          request_options[:params][:forwardToReplicas] = true
           request_options.delete(:forwardToReplicas)
         end
 
         if request_options[:replaceExistingSynonyms]
-          replace_existing_synonyms = true
+          request_options[:params][:replaceExistingSynonyms] = true
           request_options.delete(:replaceExistingSynonyms)
         end
-        res     = write(:POST, path_encode('/1/indexes/%s/synonyms/batch?', @index_name) + to_query_string({
-          forwardToReplicas: forward_to_replicas,
-          replaceExistingSynonyms: replace_existing_synonyms
-        }), synonyms, request_options)
+        res     = write(:POST, path_encode('/1/indexes/%s/synonyms/batch', @index_name), synonyms, request_options)
         task_id = get_option(res, 'taskID')
         wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
         res
       end
 
       def clear_synonyms(opts = {})
-        write(:POST, path_encode('1/indexes/%s/synonyms/clear', @index_name), '', opts)
+        request_options          = symbolize_hash(opts)
+        request_options[:params] = { forwardToReplicas: false }
+
+        if request_options[:forwardToReplicas]
+          request_options[:params][:forwardToReplicas] = true
+          request_options.delete(:forwardToReplicas)
+        end
+        write(:POST, path_encode('1/indexes/%s/synonyms/clear', @index_name), '', request_options)
       end
 
       def clear_synonyms!(opts = {})
+        request_options          = symbolize_hash(opts)
+        request_options[:params] = { forwardToReplicas: false }
+
+        if request_options[:forwardToReplicas]
+          request_options[:params][:forwardToReplicas] = true
+          request_options.delete(:forwardToReplicas)
+        end
         res     = write(:POST, path_encode('1/indexes/%s/synonyms/clear', @index_name), '', opts)
         task_id = get_option(res, 'taskID')
         wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
@@ -497,13 +547,27 @@ module Algolia
       end
 
       def delete_synonym(object_id, opts = {})
-        write(:DELETE, path_encode('1/indexes/%s/synonyms/%s', @index_name, object_id), '', opts)
+        request_options          = symbolize_hash(opts)
+        request_options[:params] = { forwardToReplicas: false }
+
+        if request_options[:forwardToReplicas]
+          request_options[:params][:forwardToReplicas] = true
+          request_options.delete(:forwardToReplicas)
+        end
+        write(:DELETE, path_encode('1/indexes/%s/synonyms/%s', @index_name, object_id), '', request_options)
       end
 
       def delete_synonym!(object_id, opts = {})
-        res     = write(:DELETE, path_encode('1/indexes/%s/synonyms/%s', @index_name, object_id), '', opts)
+        request_options          = symbolize_hash(opts)
+        request_options[:params] = { forwardToReplicas: false }
+
+        if request_options[:forwardToReplicas]
+          request_options[:params][:forwardToReplicas] = true
+          request_options.delete(:forwardToReplicas)
+        end
+        res     = write(:DELETE, path_encode('1/indexes/%s/synonyms/%s', @index_name, object_id), '', request_options)
         task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
         res
       end
 
@@ -588,7 +652,9 @@ module Algolia
       # # # # # # # # # # # # # # # # # # # # #
 
       def get_settings(opts = {})
-        read(:GET, path_encode('/1/indexes/%s/settings?', @index_name) + to_query_string({ getVersion: 2 }), {}, opts)
+        request_options          = symbolize_hash(opts)
+        request_options[:params] = { getVersion: 2 }
+        read(:GET, path_encode('/1/indexes/%s/settings', @index_name), {}, request_options)
       end
 
       def set_settings(settings, opts = {})
