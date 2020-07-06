@@ -599,5 +599,44 @@ class SearchIndexTest < BaseTest
         assert_equal 0, res[:nbHits]
       end
     end
+
+    describe 'batching' do
+      def before_all
+        super
+        @index = @@search_client.init_index(get_test_index_name('index_batching'))
+      end
+
+      def test_index_batching
+        @index.save_objects!([
+          { objectID: 'one', key: 'value' },
+          { objectID: 'two', key: 'value' },
+          { objectID: 'three', key: 'value' },
+          { objectID: 'four', key: 'value' },
+          { objectID: 'five', key: 'value' }
+        ])
+
+        @index.batch!([
+          { action: 'addObject', body: { objectID: 'zero', key: 'value' } },
+          { action: 'updateObject', body: { objectID: 'one', k: 'v' } },
+          { action: 'partialUpdateObject', body: { objectID: 'two', k: 'v' } },
+          { action: 'partialUpdateObject', body: { objectID: 'two_bis', key: 'value' } },
+          { action: 'partialUpdateObjectNoCreate', body: { objectID: 'three', k: 'v' } },
+          { action: 'deleteObject', body: { objectID: 'four' } }
+        ])
+
+        objects = [
+          { objectID: 'zero', key: 'value' },
+          { objectID: 'one', k: 'v' },
+          { objectID: 'two', key: 'value', k: 'v' },
+          { objectID: 'two_bis', key: 'value' },
+          { objectID: 'three', key: 'value', k: 'v' },
+          { objectID: 'five', key: 'value' }
+        ]
+
+        @index.browse_objects do |object|
+          assert_includes objects, object
+        end
+      end
+    end
   end
 end

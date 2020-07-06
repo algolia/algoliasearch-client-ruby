@@ -217,9 +217,9 @@ module Algolia
         generate_object_id = request_options[:auto_generate_object_id_if_not_exist] || false
         request_options.delete(:auto_generate_object_id_if_not_exist)
         if generate_object_id
-          batch(build_batch('addObject', objects), request_options)
+          raw_batch(chunk('addObject', objects), request_options)
         else
-          batch(build_batch('updateObject', objects, true), request_options)
+          raw_batch(chunk('updateObject', objects, true), request_options)
         end
       end
 
@@ -233,9 +233,9 @@ module Algolia
         generate_object_id = request_options[:auto_generate_object_id_if_not_exist] || false
         request_options.delete(:auto_generate_object_id_if_not_exist)
         res                = if generate_object_id
-          batch(build_batch('addObject', objects), request_options)
+          raw_batch(chunk('addObject', objects), request_options)
         else
-          batch(build_batch('updateObject', objects, true), request_options)
+          raw_batch(chunk('updateObject', objects, true), request_options)
         end
         task_id            = get_option(res, 'taskID')
         wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
@@ -262,9 +262,9 @@ module Algolia
         end
 
         if generate_object_id
-          batch(build_batch('partialUpdateObject', objects), request_options)
+          raw_batch(chunk('partialUpdateObject', objects), request_options)
         else
-          batch(build_batch('partialUpdateObjectNoCreate', objects), request_options)
+          raw_batch(chunk('partialUpdateObjectNoCreate', objects), request_options)
         end
       end
 
@@ -277,9 +277,9 @@ module Algolia
         end
 
         res     = if generate_object_id
-          batch(build_batch('partialUpdateObject', objects), request_options)
+          raw_batch(chunk('partialUpdateObject', objects), request_options)
         else
-          batch(build_batch('partialUpdateObjectNoCreate', objects), request_options)
+          raw_batch(chunk('partialUpdateObjectNoCreate', objects), request_options)
         end
         task_id = get_option(res, 'taskID')
         wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
@@ -293,7 +293,7 @@ module Algolia
       def delete_object!(object_id, opts = {})
         res     = delete_objects([object_id], opts)
         task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
         res
       end
 
@@ -301,16 +301,16 @@ module Algolia
         objects = object_ids.map do |object_id|
           { objectID: object_id }
         end
-        batch(build_batch('deleteObject', objects), opts)
+        raw_batch(chunk('deleteObject', objects), opts)
       end
 
       def delete_objects!(object_ids, opts = {})
         objects = object_ids.map do |object_id|
           { objectID: object_id }
         end
-        res     = batch(build_batch('deleteObject', objects), opts)
+        res     = raw_batch(chunk('deleteObject', objects), opts)
         task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
         res
       end
 
@@ -320,11 +320,11 @@ module Algolia
 
       # Send a batch request
       #
-      # @param request [Hash] hash containing the requests to batch
+      # @param requests [Hash] hash containing the requests to batch
       # @param opts contains extra parameters to send with your query
       #
-      def batch(request, opts = {})
-        write(:POST, path_encode('/1/indexes/%s/batch', @index_name), request, opts)
+      def batch(requests, opts = {})
+        raw_batch(requests, opts)
       end
 
       # Send a batch request and wait for operation to finish
@@ -332,8 +332,8 @@ module Algolia
       # @param request [Hash] hash containing the requests to batch
       # @param opts contains extra parameters to send with your query
       #
-      def batch!(request, opts = {})
-        res     = write(:POST, path_encode('/1/indexes/%s/batch', @index_name), request, opts)
+      def batch!(requests, opts = {})
+        res     = raw_batch(requests, opts)
         task_id = get_option(res, 'taskID')
         wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
         res
@@ -722,16 +722,18 @@ module Algolia
       # @param objects [Array] objects on which build the action
       # @param with_object_id [Boolean] if set to true, check if each object has an objectID set
       #
-      def build_batch(action, objects, with_object_id = false)
+      def chunk(action, objects, with_object_id = false)
         check_array(objects)
-        {
-          requests: objects.map do |object|
+        objects.map do |object|
             check_object(object, true)
             request            = { action: action, body: object }
             request[:objectID] = get_object_id(object).to_s if with_object_id
             request
-          end
-        }
+        end
+      end
+
+      def raw_batch(requests, opts)
+        write(:POST, path_encode('/1/indexes/%s/batch', @index_name), { requests: requests }, opts)
       end
     end
   end
