@@ -1,5 +1,5 @@
 module Algolia
-  module Http
+  module Transport
     class RequestOptions
       attr_accessor :headers, :params, :data, :timeout, :connect_timeout, :compression_type
 

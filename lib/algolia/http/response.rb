@@ -18,11 +18,5 @@ module Algolia
         @has_timed_out = opts[:has_timed_out] || false
       end
     end
-
-    class IndexingResponse < Response
-      def initialize(opts = {})
-        super
-      end
-    end
   end
 end

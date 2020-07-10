@@ -638,5 +638,81 @@ class SearchIndexTest < BaseTest
         end
       end
     end
+
+    describe 'replacing' do
+      def before_all
+        super
+        @index = @@search_client.init_index(get_test_index_name('replacing'))
+      end
+
+      def test_replacing
+        responses = []
+        responses.push(@index.save_object({ objectID: 'one' }))
+        responses.push(@index.save_rule({
+          objectID: 'one',
+          condition: { anchoring: 'is', pattern: 'pattern' },
+          consequence: {
+            params: {
+              query: {
+                edits: [
+                  { type: 'remove', delete: 'pattern' }
+                ]
+              }
+            }
+          }
+        }))
+        responses.push(@index.save_synonym({ objectID: 'one', type: 'synonym', synonyms: %w(one two) }))
+        responses.each do |res|
+          task_id = get_option(res, 'taskID')
+          @index.wait_task(task_id)
+        end
+
+        @index.replace_all_objects!([{ objectID: 'two' }])
+        responses.push(@index.replace_all_rules([{
+          objectID: 'two',
+          condition: { anchoring: 'is', pattern: 'pattern' },
+          consequence: {
+            params: {
+              query: {
+                edits: [
+                  { type: 'remove', delete: 'pattern' }
+                ]
+              }
+            }
+          }
+        }]))
+
+        responses.push(@index.replace_all_synonyms([{ objectID: 'two', type: 'synonym', synonyms: %w(one two) }]))
+
+        responses.each do |res|
+          task_id = get_option(res, 'taskID')
+          @index.wait_task(task_id)
+        end
+
+        exception = assert_raises Algolia::AlgoliaHttpError do
+          @index.get_object('one')
+        end
+
+        assert_equal 'ObjectID does not exist', exception.message
+
+        assert_equal 'two', @index.get_object('two')[:objectID]
+
+        exception = assert_raises Algolia::AlgoliaHttpError do
+          @index.get_rule('one')
+        end
+
+        assert_equal 'ObjectID does not exist', exception.message
+
+        assert_equal 'two', @index.get_rule('two')[:objectID]
+
+        exception = assert_raises Algolia::AlgoliaHttpError do
+          @index.get_synonym('one')
+        end
+
+        assert_equal 'Synonym set does not exist', exception.message
+
+        assert_equal 'two', @index.get_synonym('two')[:objectID]
+      end
+    end
   end
 end
