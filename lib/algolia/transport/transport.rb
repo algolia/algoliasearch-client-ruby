@@ -73,7 +73,7 @@ module Algolia
           outcome  = @retry_strategy.decide(host, http_response_code: response.status, is_timed_out: response.has_timed_out)
           if outcome == FAILURE
             decoded_error = json_to_hash(response.error, @config.symbolize_keys)
-            raise AlgoliaHttpError.new(get_option(decoded_error, 'error'), get_option(decoded_error, 'message'))
+            raise AlgoliaHttpError.new(get_option(decoded_error, 'status'), get_option(decoded_error, 'message'))
           end
           return json_to_hash(response.body, @config.symbolize_keys) unless outcome == RETRY
         end
