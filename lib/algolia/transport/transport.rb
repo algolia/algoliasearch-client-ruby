@@ -55,7 +55,7 @@ module Algolia
           opts[:timeout]         ||= get_timeout(call_type) * (host.retry_count + 1)
           opts[:connect_timeout] ||= @config.connect_timeout * (host.retry_count + 1)
 
-          request_options = Http::RequestOptions.new(@config)
+          request_options = RequestOptions.new(@config)
           request_options.create(opts)
           body.merge!(request_options.data) if body.is_a?(Hash)
 
