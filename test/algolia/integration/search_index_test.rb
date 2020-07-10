@@ -714,5 +714,20 @@ class SearchIndexTest < BaseTest
         assert_equal 'two', @index.get_synonym('two')[:objectID]
       end
     end
+
+    describe 'exists' do
+      def before_all
+        super
+        @index = @@search_client.init_index(get_test_index_name('replacing'))
+      end
+
+      def test_exists
+        refute @index.exists?
+        @index.save_object!(generate_object('111'))
+        assert @index.exists?
+        @index.delete!
+        refute @index.exists?
+      end
+    end
   end
 end
