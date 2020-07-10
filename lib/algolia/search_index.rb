@@ -790,9 +790,23 @@ module Algolia
       # EXISTS
       # # # # # # # # # # # # # # # # # # # # #
 
-      def exists(opts = {})
-        # TODO
+      def exists
+        begin
+          get_settings
+        rescue AlgoliaHttpError => e
+          if e.code == 404
+            return false
+          end
+
+          raise e
+        end
+        true
       end
+
+      #
+      # Aliases the exists method
+      #
+      alias_method :exists?, :exists
 
       # # # # # # # # # # # # # # # # # # # # #
       # PRIVATE
