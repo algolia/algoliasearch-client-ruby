@@ -518,7 +518,7 @@ class SearchIndexTest < BaseTest
 
         rule2 = {
           objectID: 'query_edits',
-          condition: { anchoring: 'is', pattern: 'mobile phone', alternatives: true },
+          conditions: [{ anchoring: 'is', pattern: 'mobile phone', alternatives: true }],
           consequence: {
             filterPromotes: false,
             params: {
