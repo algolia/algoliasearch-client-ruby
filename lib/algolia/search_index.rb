@@ -51,8 +51,7 @@ module Algolia
       #
       def get_task_status(task_id, opts = {})
         res    = read(:GET, path_encode('/1/indexes/%s/task/%s', @index_name, task_id), {}, opts)
-        status = get_option(res, 'status')
-        status
+        get_option(res, 'status')
       end
 
       # Delete the index content
