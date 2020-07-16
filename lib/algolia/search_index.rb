@@ -85,10 +85,6 @@ module Algolia
         res
       end
 
-      def delete_replica(replica_name, opts = {})
-        # TODO
-      end
-
       # Find object by the given condition.
       #
       # Options can be passed in request_options body:
@@ -103,6 +99,7 @@ module Algolia
       #
       # @return [Hash|AlgoliaHttpError] the matching object and its position in the result set
       #
+      # TODO: use lambda
       def find_object(opts = {})
         request_options = symbolize_hash(opts)
         paginate        = true
@@ -188,10 +185,6 @@ module Algolia
         end
 
         read(:POST, '/1/indexes/*/objects', { 'requests': requests }, opts)
-      end
-
-      def find_objects
-        # TODO
       end
 
       # Override the content of an object
@@ -546,10 +539,6 @@ module Algolia
       # # # # # # # # # # # # # # # # # # # # #
       # BROWSING
       # # # # # # # # # # # # # # # # # # # # #
-
-      def browse(query, opts = {})
-        # TODO
-      end
 
       def browse_objects(opts = {}, &block)
         if block_given?
