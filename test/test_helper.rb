@@ -47,13 +47,13 @@ def get_test_index_name(name)
   format('ruby_%<date>s_%<instance>s_%<name>s', date: date, instance: instance, name: name)
 end
 
-def get_mcm_user_name
-  date = DateTime.now.strftime('%Y-%m-%d_%H_%M_%S')
+def get_mcm_user_name(user_id)
+  date = DateTime.now.strftime('%Y-%m-%d')
   user = ENV['USER'] || 'unknown'
 
   instance = ENV['CI'].to_s == 'true' ? ENV['CIRCLE_BUILD_NUM'] : user
 
-  format('ruby_%<date>s_%<instance>s', date: date, instance: instance)
+  format('ruby-%<date>s-%<instance>s-%<user_id>s', date: date, instance: instance, user_id: user_id)
 end
 
 def generate_object(object_id = nil)
