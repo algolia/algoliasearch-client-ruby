@@ -96,4 +96,93 @@ class SearchClientTest < BaseTest
       assert_equal @index.get_synonym(synonym[:objectID]), copy_full_copy_index.get_synonym(synonym[:objectID])
     end
   end
+
+  describe 'MCM' do
+    def before_all
+      super
+      @mcm_client = Algolia::Search::Client.create(MCM_APPLICATION_ID, MCM_ADMIN_KEY)
+    end
+
+    def test_mcm
+      clusters = @mcm_client.list_clusters
+      assert_equal 2, clusters[:clusters].length
+
+      cluster_name = clusters[:clusters][0][:clusterName]
+
+      mcm_user_id0 = get_mcm_user_name(0)
+      mcm_user_id1 = get_mcm_user_name(1)
+      mcm_user_id2 = get_mcm_user_name(2)
+
+      @mcm_client.assign_user_id(mcm_user_id0, cluster_name)
+      @mcm_client.assign_user_ids([mcm_user_id1, mcm_user_id2], cluster_name)
+
+      0.upto(2) do |i|
+        retrieved_user = retrieve_user_id(i)
+        assert_equal(retrieved_user, {
+          userID: get_mcm_user_name(i),
+          clusterName: cluster_name,
+          nbRecords: 0,
+          dataSize: 0
+        })
+      end
+
+      refute_equal 0, @mcm_client.list_user_ids[:userIDs].length
+      refute_equal 0, @mcm_client.get_top_user_ids[:topUsers].length
+
+      0.upto(2) do |i|
+        remove_user_id(i)
+      end
+
+      0.upto(2) do |i|
+        assert_removed(i)
+      end
+
+      has_pending_mappings = @mcm_client.pending_mappings?({ retrieveMappings: true })
+      refute_nil has_pending_mappings
+      assert has_pending_mappings[:pending]
+      assert has_pending_mappings[:clusters]
+      assert_instance_of Hash, has_pending_mappings[:clusters]
+
+      has_pending_mappings = @mcm_client.pending_mappings?({ retrieveMappings: false })
+      refute_nil has_pending_mappings
+      assert has_pending_mappings[:pending]
+      refute has_pending_mappings[:clusters]
+    end
+
+    def retrieve_user_id(number)
+      loop do
+        begin
+          return @mcm_client.get_user_id(get_mcm_user_name(number))
+        rescue Algolia::AlgoliaHttpError => e
+          if e.code != 404
+            raise StandardError
+          end
+        end
+      end
+    end
+
+    def remove_user_id(number)
+      loop do
+        begin
+          return @mcm_client.remove_user_id(get_mcm_user_name(number))
+        rescue Algolia::AlgoliaHttpError => e
+          if e.code != 400
+            raise StandardError
+          end
+        end
+      end
+    end
+
+    def assert_removed(number)
+      loop do
+        begin
+          return @mcm_client.get_user_id(get_mcm_user_name(number))
+        rescue Algolia::AlgoliaHttpError => e
+          if e.code == 404
+            return true
+          end
+        end
+      end
+    end
+  end
 end

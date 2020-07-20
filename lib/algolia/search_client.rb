@@ -202,39 +202,53 @@ module Algolia
       # # # # # # # # # # # # # # # # # # # # #
 
       def assign_user_id(user_id, cluster_name, opts = {})
-        # TODO
+        request_options           = symbolize_hash(opts)
+        request_options[:headers] = { 'X-Algolia-User-ID': user_id }
+
+        write(:POST, '1/clusters/mapping', { cluster: cluster_name }, request_options)
       end
 
       def assign_user_ids(user_ids, cluster_name, opts = {})
-        # TODO
+        write(:POST, '1/clusters/mapping/batch', { cluster: cluster_name, users: user_ids }, opts)
       end
 
-      def get_top_user_id(opts)
-        # TODO
+      def get_top_user_ids(opts = {})
+        read(:GET, '1/clusters/mapping/top', {}, opts)
       end
 
       def get_user_id(user_id, opts = {})
-        # TODO
+        read(:GET, path_encode('1/clusters/mapping/%s', user_id), {}, opts)
       end
 
-      def list_clusters(opts)
-        # TODO
+      def list_clusters(opts = {})
+        read(:GET, '1/clusters', {}, opts)
       end
 
-      def list_user_ids(page = 0, hits_per_page = 20, opts = {})
-        # TODO
+      def list_user_ids(opts = {})
+        read(:GET, '1/clusters/mapping', {}, opts)
       end
 
       def remove_user_id(user_id, opts = {})
-        # TODO
+        request_options           = symbolize_hash(opts)
+        request_options[:headers] = { 'X-Algolia-User-ID': user_id }
+
+        write(:DELETE, '1/clusters/mapping', {}, request_options)
       end
 
-      def search_user_ids(query, cluster_name, page = 0, hits_per_page = 20, opts = {})
-        # TODO
+      def search_user_ids(query, opts = {})
+        read(:POST, '1/clusters/mapping/search', { query: query }, opts)
       end
 
-      def pending_mappings?(retrieve_mappings = false, opts = {})
-        # TODO
+      def pending_mappings?(opts = {})
+        retrieve_mappings = false
+
+        request_options = symbolize_hash(opts)
+        if request_options.has_key?(:retrieveMappings)
+          retrieve_mappings = request_options[:retrieveMappings]
+          request_options.delete(:retrieveMappings)
+        end
+
+        read(:GET, '1/clusters/mapping/pending?' + to_query_string({ getClusters: retrieve_mappings }), {}, request_options)
       end
 
       #
