@@ -43,7 +43,7 @@ class SearchClientTest < BaseTest
     end
 
     def test_copy_index
-      responses = []
+      responses = Algolia::MultipleResponse.new
 
       objects = [
         { objectID: 'one', company: 'apple' },
@@ -74,10 +74,7 @@ class SearchClientTest < BaseTest
       }
       responses.push(@index.save_rule(rule))
 
-      responses.each do |res|
-        task_id = get_option(res, 'taskID')
-        @index.wait_task(task_id)
-      end
+      responses.wait
 
       copy_settings_index  = @@search_client.init_index(get_test_index_name('copy_index_settings'))
       copy_rules_index     = @@search_client.init_index(get_test_index_name('copy_index_rules'))
@@ -183,6 +180,53 @@ class SearchClientTest < BaseTest
           end
         end
       end
+    end
+  end
+
+  describe 'API keys' do
+    def before_all
+      super
+      response = @@search_client.add_api_key!(['search'], {
+        description: 'A description',
+        indexes: ['index'],
+        maxHitsPerQuery: 1000,
+        maxQueriesPerIPPerHour: 1000,
+        queryParameters: 'typoTolerance=strict',
+        referers: ['referer'],
+        validity: 600
+      })
+      @api_key = @@search_client.get_api_key(response.raw_response[:key])
+    end
+
+    def teardown
+      @@search_client.delete_api_key!(@api_key[:value])
+    end
+
+    def test_api_keys
+      assert_equal ['search'], @api_key[:acl]
+
+      api_keys = @@search_client.list_api_keys[:keys].map do |key|
+        key[:value]
+      end
+      assert_includes api_keys, @api_key[:value]
+
+      @@search_client.update_api_key!(@api_key[:value], { maxHitsPerQuery: 42 })
+      updated_api_key = @@search_client.get_api_key(@api_key[:value])
+      assert_equal 42, updated_api_key[:maxHitsPerQuery]
+
+      @@search_client.delete_api_key!(@api_key[:value])
+
+      exception = assert_raises Algolia::AlgoliaHttpError do
+        @@search_client.get_api_key(@api_key[:value])
+      end
+
+      assert_equal 'Key does not exist', exception.message
+
+      @@search_client.restore_api_key!(@api_key[:value])
+
+      restored_key = @@search_client.get_api_key(@api_key[:value])
+
+      refute_nil restored_key
     end
   end
 end
