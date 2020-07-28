@@ -29,11 +29,11 @@ class SearchIndexTest < BaseTest
     end
 
     def retrieve_last_object_ids(responses)
-      responses[-1][:objectIDs]
+      responses.last.raw_response[:objectIDs]
     end
 
     def test_save_objects
-      responses  = []
+      responses  = Algolia::MultipleResponse.new
       object_ids = []
 
       obj1     = generate_object('obj1')
@@ -60,10 +60,7 @@ class SearchIndexTest < BaseTest
 
       @index.config.batch_size = 100
       responses.push(@index.save_objects(objects))
-      responses.each do |res|
-        task_id = get_option(res, 'taskID')
-        @index.wait_task(task_id)
-      end
+      responses.wait
 
       assert_equal obj1[:property], @index.get_object(object_ids[0])[:property]
       assert_equal obj2[:property], @index.get_object(object_ids[1])[:property]
@@ -93,7 +90,7 @@ class SearchIndexTest < BaseTest
         assert_includes(browsed_objects, obj)
       end
 
-      responses = []
+      responses = Algolia::MultipleResponse.new
 
       obj1[:property] = 'new property'
       responses.push(@index.partial_update_object(obj1))
@@ -102,10 +99,7 @@ class SearchIndexTest < BaseTest
       obj4[:property] = 'new property 4'
       responses.push(@index.partial_update_objects([obj3, obj4]))
 
-      responses.each do |res|
-        task_id = get_option(res, 'taskID')
-        @index.wait_task(task_id)
-      end
+      responses.wait
 
       assert_equal obj1[:property], @index.get_object(object_ids[0])[:property]
       assert_equal obj3[:property], @index.get_object(object_ids[2])[:property]
@@ -114,17 +108,14 @@ class SearchIndexTest < BaseTest
       delete_by_obj = { objectID: 'obj_del_by', _tags: 'algolia', property: 'property' }
       @index.save_object!(delete_by_obj)
 
-      responses = []
+      responses = Algolia::MultipleResponse.new
 
       responses.push(@index.delete_object(object_ids.shift))
       responses.push(@index.delete_by({ tagFilters: ['algolia'] }))
       responses.push(@index.delete_objects(object_ids))
       responses.push(@index.clear_objects)
 
-      responses.each do |res|
-        task_id = get_option(res, 'taskID')
-        @index.wait_task(task_id)
-      end
+      responses.wait
 
       browsed_objects = []
       @index.browse_objects do |hit|
@@ -156,12 +147,6 @@ class SearchIndexTest < BaseTest
       end
 
       assert_equal 'argument must be an array of object, got: 2222', exception.message
-    end
-
-    def test_save_objects_with_empty_array
-      response = @index.save_objects([])
-
-      refute_nil response[:taskID]
     end
   end
 
@@ -376,7 +361,7 @@ class SearchIndexTest < BaseTest
     end
 
     def test_synonyms
-      responses = []
+      responses = Algolia::MultipleResponse.new
       responses.push(@index.save_objects([
         { console: 'Sony PlayStation <PLAYSTATIONVERSION>' },
         { console: 'Nintendo Switch' },
@@ -425,10 +410,7 @@ class SearchIndexTest < BaseTest
 
       responses.push(@index.save_synonyms([synonym2, synonym3, synonym4, synonym5]))
 
-      responses.each do |res|
-        task_id = get_option(res, 'taskID')
-        @index.wait_task(task_id)
-      end
+      responses.wait
 
       assert_equal synonym1, @index.get_synonym(synonym1[:objectID])
       assert_equal synonym2, @index.get_synonym(synonym2[:objectID])
@@ -477,7 +459,7 @@ class SearchIndexTest < BaseTest
       end
 
       def test_rules
-        responses = []
+        responses = Algolia::MultipleResponse.new
         responses.push(@index.save_objects([
           { objectID: 'iphone_7', brand: 'Apple', model: '7' },
           { objectID: 'iphone_8', brand: 'Apple', model: '8' },
@@ -555,10 +537,7 @@ class SearchIndexTest < BaseTest
 
         responses.push(@index.save_rules([rule2, rule3, rule4]))
 
-        responses.each do |res|
-          task_id = get_option(res, 'taskID')
-          @index.wait_task(task_id)
-        end
+        responses.wait
 
         assert_equal 1, @index.search('', { ruleContexts: ['summer'] })[:nbHits]
 
@@ -646,7 +625,7 @@ class SearchIndexTest < BaseTest
       end
 
       def test_replacing
-        responses = []
+        responses = Algolia::MultipleResponse.new
         responses.push(@index.save_object({ objectID: 'one' }))
         responses.push(@index.save_rule({
           objectID: 'one',
@@ -662,10 +641,7 @@ class SearchIndexTest < BaseTest
           }
         }))
         responses.push(@index.save_synonym({ objectID: 'one', type: 'synonym', synonyms: %w(one two) }))
-        responses.each do |res|
-          task_id = get_option(res, 'taskID')
-          @index.wait_task(task_id)
-        end
+        responses.wait
 
         @index.replace_all_objects!([{ objectID: 'two' }])
         responses.push(@index.replace_all_rules([{
@@ -684,10 +660,7 @@ class SearchIndexTest < BaseTest
 
         responses.push(@index.replace_all_synonyms([{ objectID: 'two', type: 'synonym', synonyms: %w(one two) }]))
 
-        responses.each do |res|
-          task_id = get_option(res, 'taskID')
-          @index.wait_task(task_id)
-        end
+        responses.wait
 
         exception = assert_raises Algolia::AlgoliaHttpError do
           @index.get_object('one')
@@ -718,7 +691,7 @@ class SearchIndexTest < BaseTest
     describe 'exists' do
       def before_all
         super
-        @index = @@search_client.init_index(get_test_index_name('replacing'))
+        @index = @@search_client.init_index(get_test_index_name('exists'))
       end
 
       def test_exists

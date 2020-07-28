@@ -129,18 +129,6 @@ module Algolia
       # MOVE OPERATIONS
       # # # # # # # # # # # # # # # # # # # # #
 
-      def move_rules(src_index, dest_index, opts = {})
-        # TODO
-      end
-
-      def move_settings(src_index, dest_index, opts = {})
-        # TODO
-      end
-
-      def move_synonyms(src_index, dest_index, opts = {})
-        # TODO
-      end
-
       def move_index(src_index, dest_index, opts = {})
         # TODO
       end
@@ -150,27 +138,61 @@ module Algolia
       # # # # # # # # # # # # # # # # # # # # #
 
       def get_api_key(key_id, opts = {})
-        # TODO
+        read(:GET, path_encode('1/keys/%s', key_id), {}, opts)
       end
 
-      def add_api_key(key, opts = {})
-        # TODO
+      def add_api_key(acl, opts = {})
+        response = write(:POST, '1/keys', { acl: acl }, opts)
+
+        AddApiKeyResponse.new(self, response)
+      end
+
+      def add_api_key!(acl, opts = {})
+        response = add_api_key(acl)
+
+        response.wait(opts)
       end
 
       def update_api_key(key, opts = {})
-        # TODO
+        request_options = symbolize_hash(opts)
+
+        response = write(:PUT, path_encode('1/keys/%s', key), {}, request_options)
+
+        UpdateApiKeyResponse.new(self, response, request_options)
+      end
+
+      def update_api_key!(key, opts = {})
+        response = update_api_key(key, opts)
+
+        response.wait(opts)
       end
 
       def delete_api_key(key, opts = {})
-        # TODO
+        response = write(:DELETE, path_encode('1/keys/%s', key), {}, opts)
+
+        DeleteApiKeyResponse.new(self, response, key)
       end
 
-      def restore_api_key(key_id, opts = {})
-        # TODO
+      def delete_api_key!(key, opts = {})
+        response = delete_api_key(key, opts)
+
+        response.wait(opts)
       end
 
-      def list_api_keys(opts)
-        # TODO
+      def restore_api_key(key, opts = {})
+        write(:POST, path_encode('1/keys/%s/restore', key), {}, opts)
+
+        RestoreApiKeyResponse.new(self, key)
+      end
+
+      def restore_api_key!(key, opts = {})
+        response = restore_api_key(key, opts)
+
+        response.wait(opts)
+      end
+
+      def list_api_keys(opts = {})
+        read(:GET, '1/keys', {}, opts)
       end
 
       def generate_secured_api_key(parent_key, restrictions, opts = {})

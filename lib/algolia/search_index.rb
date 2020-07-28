@@ -59,7 +59,9 @@ module Algolia
       # @param opts contains extra parameters to send with your query
       #
       def clear_objects(opts = {})
-        write(:POST, path_encode('/1/indexes/%s/clear', @index_name), {}, opts)
+        response = write(:POST, path_encode('/1/indexes/%s/clear', @index_name), {}, opts)
+
+        IndexingResponse.new(self, response)
       end
 
       # Delete the index content and wait for operation to finish
@@ -67,21 +69,19 @@ module Algolia
       # @param opts contains extra parameters to send with your query
       #
       def clear_objects!(opts = {})
-        res     = write(:POST, path_encode('/1/indexes/%s/clear', @index_name), opts)
-        task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
-        res
+        response = clear_objects(opts)
+        response.wait(opts)
       end
 
       def delete(opts = {})
-        write(:DELETE, path_encode('/1/indexes/%s', @index_name), opts)
+        response = write(:DELETE, path_encode('/1/indexes/%s', @index_name), opts)
+
+        IndexingResponse.new(self, response)
       end
 
       def delete!(opts = {})
-        res     = write(:DELETE, path_encode('/1/indexes/%s', @index_name), opts)
-        task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
-        res
+        response = delete(opts)
+        response.wait(opts)
       end
 
       # Find object by the given condition.
@@ -152,11 +152,15 @@ module Algolia
       end
 
       def copy_to(name, opts = {})
-        write(:POST, path_encode('/1/indexes/%s/operation', @index_name), { operation: 'copy', destination: name }, opts)
+        response = write(:POST, path_encode('/1/indexes/%s/operation', @index_name), { operation: 'copy', destination: name }, opts)
+
+        IndexingResponse.new(self, response)
       end
 
       def move_to(name, opts = {})
-        write(:POST, path_encode('/1/indexes/%s/operation', @index_name), { operation: 'move', destination: name }, opts)
+        response = write(:POST, path_encode('/1/indexes/%s/operation', @index_name), { operation: 'move', destination: name }, opts)
+
+        IndexingResponse.new(self, response)
       end
 
       # # # # # # # # # # # # # # # # # # # # #
@@ -201,10 +205,8 @@ module Algolia
       # @param opts [Hash] contains extra parameters to send with your query
       #
       def save_object!(object, opts = {})
-        res     = save_objects([object], opts)
-        task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
-        res
+        response = save_objects([object], opts)
+        response.wait(opts)
       end
 
       # Override the content of several objects
@@ -217,9 +219,9 @@ module Algolia
         generate_object_id = request_options[:auto_generate_object_id_if_not_exist] || false
         request_options.delete(:auto_generate_object_id_if_not_exist)
         if generate_object_id
-          raw_batch(chunk('addObject', objects), request_options)
+          IndexingResponse.new(self, raw_batch(chunk('addObject', objects), request_options))
         else
-          raw_batch(chunk('updateObject', objects, true), request_options)
+          IndexingResponse.new(self, raw_batch(chunk('updateObject', objects, true), request_options))
         end
       end
 
@@ -229,17 +231,8 @@ module Algolia
       # @param opts contains extra parameters to send with your query
       #
       def save_objects!(objects, opts = {})
-        request_options    = symbolize_hash(opts)
-        generate_object_id = request_options[:auto_generate_object_id_if_not_exist] || false
-        request_options.delete(:auto_generate_object_id_if_not_exist)
-        res                = if generate_object_id
-          raw_batch(chunk('addObject', objects), request_options)
-        else
-          raw_batch(chunk('updateObject', objects, true), request_options)
-        end
-        task_id            = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
-        res
+        response = save_objects(objects, opts)
+        response.wait(opts)
       end
 
       def partial_update_object(object, opts = {})
@@ -247,10 +240,8 @@ module Algolia
       end
 
       def partial_update_object!(object, opts = {})
-        res     = partial_update_objects([object], opts)
-        task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
-        res
+        response     = partial_update_objects([object], opts)
+        response.wait(opts)
       end
 
       def partial_update_objects(objects, opts = {})
@@ -262,28 +253,15 @@ module Algolia
         end
 
         if generate_object_id
-          raw_batch(chunk('partialUpdateObject', objects), request_options)
+          IndexingResponse.new(self, raw_batch(chunk('partialUpdateObject', objects), request_options))
         else
-          raw_batch(chunk('partialUpdateObjectNoCreate', objects), request_options)
+          IndexingResponse.new(self, raw_batch(chunk('partialUpdateObjectNoCreate', objects), request_options))
         end
       end
 
       def partial_update_objects!(objects, opts = {})
-        generate_object_id = false
-        request_options    = symbolize_hash(opts)
-        if get_option(request_options, 'createIfNotExists')
-          generate_object_id = true
-          request_options.delete(:createIfNotExists)
-        end
-
-        res     = if generate_object_id
-          raw_batch(chunk('partialUpdateObject', objects), request_options)
-        else
-          raw_batch(chunk('partialUpdateObjectNoCreate', objects), request_options)
-        end
-        task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
-        res
+        response = partial_update_objects(objects, opts)
+        response.wait(opts)
       end
 
       def delete_object(object_id, opts = {})
@@ -291,31 +269,33 @@ module Algolia
       end
 
       def delete_object!(object_id, opts = {})
-        res     = delete_objects([object_id], opts)
-        task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
-        res
+        response = delete_objects([object_id], opts)
+        response.wait(opts)
       end
 
       def delete_objects(object_ids, opts = {})
         objects = object_ids.map do |object_id|
           { objectID: object_id }
         end
-        raw_batch(chunk('deleteObject', objects), opts)
+
+        IndexingResponse.new(self, raw_batch(chunk('deleteObject', objects), opts))
       end
 
       def delete_objects!(object_ids, opts = {})
-        objects = object_ids.map do |object_id|
-          { objectID: object_id }
-        end
-        res     = raw_batch(chunk('deleteObject', objects), opts)
-        task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
-        res
+        response     = delete_objects(object_ids, opts)
+        response.wait(opts)
       end
 
       def delete_by(filters, opts = {})
-        write(:POST, path_encode('/1/indexes/%s/deleteByQuery', @index_name), filters, opts)
+        response = write(:POST, path_encode('/1/indexes/%s/deleteByQuery', @index_name), filters, opts)
+
+        IndexingResponse.new(self, response)
+      end
+
+      def delete_by!(filters, opts = {})
+        response = delete_by(filters, opts)
+
+        response.wait(opts)
       end
 
       # Send a batch request
@@ -324,19 +304,19 @@ module Algolia
       # @param opts contains extra parameters to send with your query
       #
       def batch(requests, opts = {})
-        raw_batch(requests, opts)
+        response = raw_batch(requests, opts)
+
+        IndexingResponse.new(self, response)
       end
 
       # Send a batch request and wait for operation to finish
       #
-      # @param request [Hash] hash containing the requests to batch
+      # @param requests [Hash] hash containing the requests to batch
       # @param opts contains extra parameters to send with your query
       #
       def batch!(requests, opts = {})
-        res     = raw_batch(requests, opts)
-        task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
-        res
+        response     = batch(requests, opts)
+        response.wait(opts)
       end
 
       # # # # # # # # # # # # # # # # # # # # #
@@ -352,10 +332,8 @@ module Algolia
       end
 
       def save_rule!(rule, opts = {})
-        res     = save_rules([rule], opts)
-        task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
-        res
+        response = save_rules([rule], opts)
+        response.wait(opts)
       end
 
       def save_rules(rules, opts = {})
@@ -381,14 +359,14 @@ module Algolia
           get_object_id(rule)
         end
 
-        write(:POST, path_encode('/1/indexes/%s/rules/batch?', @index_name) + to_query_string({ forwardToReplicas: forward_to_replicas, clearExistingRules: clear_existing_rules }), rules, request_options)
+        response = write(:POST, path_encode('/1/indexes/%s/rules/batch?', @index_name) + to_query_string({ forwardToReplicas: forward_to_replicas, clearExistingRules: clear_existing_rules }), rules, request_options)
+
+        IndexingResponse.new(self, response)
       end
 
       def save_rules!(rules, opts = {})
-        res     = save_rules(rules, opts)
-        task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
-        res
+        response = save_rules(rules, opts)
+        response.wait(opts)
       end
 
       def clear_rules(opts = {})
@@ -399,14 +377,15 @@ module Algolia
           forward_to_replicas = true
           request_options.delete(:forwardToReplicas)
         end
-        write(:POST, path_encode('1/indexes/%s/rules/clear?', @index_name) + to_query_string({ forwardToReplicas: forward_to_replicas }), '', request_options)
+
+        response = write(:POST, path_encode('1/indexes/%s/rules/clear?', @index_name) + to_query_string({ forwardToReplicas: forward_to_replicas }), '', request_options)
+
+        IndexingResponse.new(self, response)
       end
 
       def clear_rules!(opts = {})
-        res     = clear_rules(opts)
-        task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
-        res
+        response     = clear_rules(opts)
+        response.wait(opts)
       end
 
       def delete_rule(object_id, opts = {})
@@ -417,19 +396,20 @@ module Algolia
           forward_to_replicas = true
           request_options.delete(:forwardToReplicas)
         end
-        write(
+
+        response = write(
           :DELETE,
           path_encode('1/indexes/%s/rules/%s?', @index_name, object_id) + to_query_string({ forwardToReplicas: forward_to_replicas }),
           '',
           request_options
         )
+
+        IndexingResponse.new(self, response)
       end
 
       def delete_rule!(object_id, opts = {})
-        res     = delete_rule(object_id, opts)
-        task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
-        res
+        response = delete_rule(object_id, opts)
+        response.wait(opts)
       end
 
       # # # # # # # # # # # # # # # # # # # # #
@@ -445,10 +425,8 @@ module Algolia
       end
 
       def save_synonym!(synonym, opts = {})
-        res     = save_synonyms([synonym], opts)
-        task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
-        res
+        response     = save_synonyms([synonym], opts)
+        response.wait(opts)
       end
 
       def save_synonyms(synonyms, opts = {})
@@ -474,19 +452,19 @@ module Algolia
           replace_existing_synonyms = true
           request_options.delete(:replaceExistingSynonyms)
         end
-        write(
+        response = write(
           :POST,
           path_encode('/1/indexes/%s/synonyms/batch?', @index_name) + to_query_string({ forwardToReplicas: forward_to_replicas, replaceExistingSynonyms: replace_existing_synonyms }),
           synonyms,
           request_options
         )
+
+        IndexingResponse.new(self, response)
       end
 
       def save_synonyms!(synonyms, opts = {})
-        res     = save_synonyms(synonyms, opts)
-        task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
-        res
+        response = save_synonyms(synonyms, opts)
+        response.wait(opts)
       end
 
       def clear_synonyms(opts = {})
@@ -497,19 +475,19 @@ module Algolia
           forward_to_replicas = true
           request_options.delete(:forwardToReplicas)
         end
-        write(
+        response = write(
           :POST,
           path_encode('1/indexes/%s/synonyms/clear?', @index_name) + to_query_string({ forwardToReplicas: forward_to_replicas }),
           '',
           request_options
         )
+
+        IndexingResponse.new(self, response)
       end
 
       def clear_synonyms!(opts = {})
-        res     = clear_synonyms(opts)
-        task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
-        res
+        response     = clear_synonyms(opts)
+        response.wait(opts)
       end
 
       def delete_synonym(object_id, opts = {})
@@ -520,19 +498,19 @@ module Algolia
           forward_to_replicas = true
           request_options.delete(:forwardToReplicas)
         end
-        write(
+        response = write(
           :DELETE,
           path_encode('1/indexes/%s/synonyms/%s?', @index_name, object_id) + to_query_string({ forwardToReplicas: forward_to_replicas }),
           '',
           request_options
         )
+
+        IndexingResponse.new(self, response)
       end
 
       def delete_synonym!(object_id, opts = {})
-        res     = delete_synonym(object_id, opts)
-        task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
-        res
+        response     = delete_synonym(object_id, opts)
+        response.wait(opts)
       end
 
       # # # # # # # # # # # # # # # # # # # # #
@@ -579,8 +557,7 @@ module Algolia
         copy_to_response = copy_to(tmp_index_name, request_options.merge({ scope: %w(settings synonyms rules) }))
 
         if safe
-          task_id = get_option(copy_to_response, 'taskID')
-          wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+          copy_to_response.wait
         end
 
         # TODO: consider create a new client with state of retry is shared
@@ -590,17 +567,13 @@ module Algolia
         save_objects_response = tmp_index.save_objects(objects, request_options)
 
         if safe
-          task_id = get_option(save_objects_response, 'taskID')
-          tmp_index.wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+          save_objects_response.wait
         end
 
         move_to_response = tmp_index.move_to(@index_name)
         if safe
-          task_id = get_option(move_to_response, 'taskID')
-          wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, request_options)
+          move_to_response.wait
         end
-
-        # TODO: return ResponseObject if needed
       end
 
       def replace_all_objects!(objects, opts = {})
@@ -672,14 +645,14 @@ module Algolia
       end
 
       def set_settings(settings, opts = {})
-        write(:PUT, path_encode('/1/indexes/%s/settings', @index_name), settings, opts)
+        response = write(:PUT, path_encode('/1/indexes/%s/settings', @index_name), settings, opts)
+
+        IndexingResponse.new(self, response)
       end
 
       def set_settings!(settings, opts = {})
-        res     = write(:PUT, path_encode('/1/indexes/%s/settings', @index_name), settings, opts)
-        task_id = get_option(res, 'taskID')
-        wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
-        res
+        response = set_settings(settings, opts)
+        response.wait(opts)
       end
 
       # # # # # # # # # # # # # # # # # # # # #
