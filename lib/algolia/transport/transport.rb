@@ -57,7 +57,7 @@ module Algolia
 
           request_options = RequestOptions.new(@config)
           request_options.create(opts)
-          body.merge!(request_options.data) if body.is_a?(Hash)
+          request_options.params.merge!(request_options.data) if method == :GET
 
           request  = build_request(method, path, body, request_options)
           response = @http_requester.send_request(
@@ -94,7 +94,7 @@ module Algolia
         request           = {}
         request[:method]  = method.downcase
         request[:path]    = build_uri_path(path, request_options.params)
-        request[:body]    = build_body(body)
+        request[:body]    = build_body(body, request_options, method)
         request[:headers] = generate_headers(request_options)
         request
       end
@@ -116,7 +116,8 @@ module Algolia
       #
       # @return [Hash]
       #
-      def build_body(body)
+      def build_body(body, request_options, method)
+        body.merge!(request_options.data) if body.is_a?(Hash) && method != :GET
         to_json(body)
       end
 

@@ -229,4 +229,17 @@ class SearchClientTest < BaseTest
       refute_nil restored_key
     end
   end
+
+  describe 'Get logs' do
+    def test_logs
+      @@search_client.list_indexes
+      @@search_client.list_indexes
+
+      assert_equal 2, @@search_client.get_logs({
+        length: 2,
+        offset: 0,
+        type: 'all'
+      })[:logs].length
+    end
+  end
 end
