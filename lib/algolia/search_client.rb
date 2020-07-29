@@ -67,11 +67,11 @@ module Algolia
       end
 
       def list_indexes(opts = {})
-        read(:GET, '1/indexes', opts)
+        read(:GET, '1/indexes', {}, opts)
       end
 
-      def get_logs
-        # TODO
+      def get_logs(opts = {})
+        read(:GET, '1/logs', {}, opts)
       end
 
       # # # # # # # # # # # # # # # # # # # # #
