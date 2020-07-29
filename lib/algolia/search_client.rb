@@ -208,15 +208,23 @@ module Algolia
       # # # # # # # # # # # # # # # # # # # # #
 
       def multiple_batch(operations, opts = {})
-        write(:POST, '1/indexes/*/batch', { requests: operations }, opts)
+        response = write(:POST, '1/indexes/*/batch', { requests: operations }, opts)
+
+        MultipleIndexBatchIndexingResponse.new(self, response)
+      end
+
+      def multiple_batch!(operations, opts = {})
+        response = multiple_batch(operations, opts)
+
+        response.wait(opts)
       end
 
       def multiple_get_objects(requests, opts = {})
-        # TODO
+        read(:POST, '1/indexes/*/objects', { requests: requests }, opts)
       end
 
       def multiple_queries(queries, opts = {})
-        # TODO
+        read(:POST, '1/indexes/*/queries', { requests: queries }, opts)
       end
 
       # # # # # # # # # # # # # # # # # # # # #

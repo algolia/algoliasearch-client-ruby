@@ -242,4 +242,58 @@ class SearchClientTest < BaseTest
       })[:logs].length
     end
   end
+
+  describe 'Multiple Operations' do
+    def before_all
+      @index1 = @@search_client.init_index(get_test_index_name('multiple_operations'))
+      @index2 = @@search_client.init_index(get_test_index_name('multiple_operations_dev'))
+    end
+
+    def test_multiple_operations
+      index_name1 = @index1.index_name
+      index_name2 = @index2.index_name
+
+      response = @@search_client.multiple_batch!([
+        { indexName: index_name1, action: 'addObject', body: { firstname: 'Jimmie' } },
+        { indexName: index_name1, action: 'addObject', body: { firstname: 'Jimmie' } },
+        { indexName: index_name2, action: 'addObject', body: { firstname: 'Jimmie' } },
+        { indexName: index_name2, action: 'addObject', body: { firstname: 'Jimmie' } }
+      ])
+
+      object_ids = response.raw_response[:objectIDs]
+      objects    = @@search_client.multiple_get_objects([
+        { indexName: index_name1, objectID: object_ids[0] },
+        { indexName: index_name1, objectID: object_ids[1] },
+        { indexName: index_name2, objectID: object_ids[2] },
+        { indexName: index_name2, objectID: object_ids[3] }
+      ])[:results]
+
+      assert_equal object_ids[0], objects[0][:objectID]
+      assert_equal object_ids[1], objects[1][:objectID]
+      assert_equal object_ids[2], objects[2][:objectID]
+      assert_equal object_ids[3], objects[3][:objectID]
+
+      results = @@search_client.multiple_queries([
+        { indexName: index_name1, params: to_query_string({ query: '', hitsPerPage: 2 }) },
+        { indexName: index_name2, params: to_query_string({ query: '', hitsPerPage: 2 }) }
+      ], { strategy: 'none' })[:results]
+
+      assert_equal 2, results.length
+      assert_equal 2, results[0][:hits].length
+      assert_equal 2, results[0][:nbHits]
+      assert_equal 2, results[1][:hits].length
+      assert_equal 2, results[1][:nbHits]
+
+      results = @@search_client.multiple_queries([
+        { indexName: index_name1, params: to_query_string({ query: '', hitsPerPage: 2 }) },
+        { indexName: index_name2, params: to_query_string({ query: '', hitsPerPage: 2 }) }
+      ], { strategy: 'stopIfEnoughMatches' })[:results]
+
+      assert_equal 2, results.length
+      assert_equal 2, results[0][:hits].length
+      assert_equal 2, results[0][:nbHits]
+      assert_equal 0, results[1][:hits].length
+      assert_equal 0, results[1][:nbHits]
+    end
+  end
 end
