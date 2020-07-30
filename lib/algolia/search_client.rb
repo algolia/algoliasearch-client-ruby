@@ -1,4 +1,6 @@
 require 'faraday'
+require 'openssl'
+require 'base64'
 
 module Algolia
   module Search
@@ -195,12 +197,25 @@ module Algolia
         read(:GET, '1/keys', {}, opts)
       end
 
-      def generate_secured_api_key(parent_key, restrictions, opts = {})
-        # TODO
+      def self.generate_secured_api_key(parent_key, restrictions)
+        url_encoded_restrictions = to_query_string(symbolize_hash(restrictions))
+        hmac                     = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), parent_key, url_encoded_restrictions)
+        Base64.encode64("#{hmac}#{url_encoded_restrictions}").gsub("\n", '')
       end
 
-      def get_secured_api_key_remaining_validity(secured_api_key)
-        # TODO
+      def self.get_secured_api_key_remaining_validity(secured_api_key)
+        now         = Time.now.to_i
+        decoded_key = Base64.decode64(secured_api_key)
+        regex       = 'validUntil=(\d+)'
+        matches     = decoded_key.match(regex)
+
+        if matches.nil?
+          raise AlgoliaError, 'The SecuredAPIKey doesn\'t have a validUntil parameter.'
+        end
+
+        valid_until = matches[1].to_i
+
+        valid_until - now
       end
 
       # # # # # # # # # # # # # # # # # # # # #

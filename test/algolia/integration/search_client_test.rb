@@ -295,5 +295,56 @@ class SearchClientTest < BaseTest
       assert_equal 0, results[1][:hits].length
       assert_equal 0, results[1][:nbHits]
     end
+
+    describe 'Secured API keys' do
+      def test_secured_api_keys
+        @index1 = @@search_client.init_index(get_test_index_name('secured_api_keys'))
+        @index2 = @@search_client.init_index(get_test_index_name('secured_api_keys_dev'))
+        @index1.save_object!({ objectID: 'one' })
+        @index2.save_object!({ objectID: 'one' })
+
+        now             = Time.now.to_i
+        secured_api_key = Algolia::Search::Client.generate_secured_api_key(SEARCH_KEY_1, {
+          validUntil: now + (10 * 60),
+          restrictIndices: @index1.index_name
+        })
+
+        secured_client = Algolia::Search::Client.create(APPLICATION_ID_1, secured_api_key)
+        secured_index1 = secured_client.init_index(@index1.index_name)
+        secured_index2 = secured_client.init_index(@index2.index_name)
+
+        secured_index1.search('')
+        exception = assert_raises Algolia::AlgoliaHttpError do
+          secured_index2.search('')
+        end
+
+        assert_equal 403, exception.code
+        assert_equal 'Index not allowed with this API key', exception.message
+      end
+    end
+
+    describe 'Expired Secured API keys' do
+      def test_expired_secured_api_keys
+        now             = Time.now.to_i
+        secured_api_key = Algolia::Search::Client.generate_secured_api_key('foo', {
+          validUntil: now - (10 * 60)
+        })
+        remaining       = Algolia::Search::Client.get_secured_api_key_remaining_validity(secured_api_key)
+        assert remaining < 0
+
+        secured_api_key = Algolia::Search::Client.generate_secured_api_key('foo', {
+          validUntil: now + (10 * 60)
+        })
+        remaining       = Algolia::Search::Client.get_secured_api_key_remaining_validity(secured_api_key)
+        assert remaining > 0
+
+        secured_api_key = Algolia::Search::Client.generate_secured_api_key('foo', {})
+        exception       = assert_raises Algolia::AlgoliaError do
+          Algolia::Search::Client.get_secured_api_key_remaining_validity(secured_api_key)
+        end
+
+        assert_equal 'The SecuredAPIKey doesn\'t have a validUntil parameter.', exception.message
+      end
+    end
   end
 end
