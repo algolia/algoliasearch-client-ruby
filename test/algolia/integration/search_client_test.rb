@@ -35,14 +35,14 @@ class SearchClientTest < BaseTest
     end
   end
 
-  describe 'copy index' do
+  describe 'copy and move index' do
     def before_all
       super
       @index_name = get_test_index_name('copy_index')
       @index      = @@search_client.init_index(@index_name)
     end
 
-    def test_copy_index
+    def test_copy_and_move_index
       responses = Algolia::MultipleResponse.new
 
       objects = [
@@ -87,10 +87,21 @@ class SearchClientTest < BaseTest
 
       assert_equal @index.get_settings, copy_settings_index.get_settings
       assert_equal @index.get_rule(rule[:objectID]), copy_rules_index.get_rule(rule[:objectID])
-      assert_equal @index.get_synonym(synonym[:objectID]), copy_settings_index.get_synonym(synonym[:objectID])
+      assert_equal @index.get_synonym(synonym[:objectID]), copy_synonyms_index.get_synonym(synonym[:objectID])
       assert_equal @index.get_settings, copy_full_copy_index.get_settings
       assert_equal @index.get_rule(rule[:objectID]), copy_full_copy_index.get_rule(rule[:objectID])
       assert_equal @index.get_synonym(synonym[:objectID]), copy_full_copy_index.get_synonym(synonym[:objectID])
+
+      moved_index = @@search_client.init_index(get_test_index_name('move_index'))
+      @@search_client.move_index!(@index_name, moved_index.index_name)
+
+      moved_index.get_synonym('google_placeholder')
+      moved_index.get_rule('company_auto_faceting')
+      assert_equal moved_index.get_settings[:attributesForFaceting], ['company']
+
+      moved_index.browse_objects.each do |obj|
+        assert_includes objects, obj
+      end
     end
   end
 

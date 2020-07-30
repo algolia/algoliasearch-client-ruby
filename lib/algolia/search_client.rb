@@ -82,57 +82,66 @@ module Algolia
 
       def copy_rules(src_index_name, dest_index_name, opts = {})
         request_options         = symbolize_hash(opts)
-        request_options[:scope] = 'rules'
+        request_options[:scope] = ['rules']
         copy_index(src_index_name, dest_index_name, request_options)
       end
 
       def copy_rules!(src_index_name, dest_index_name, opts = {})
         request_options         = symbolize_hash(opts)
-        request_options[:scope] = 'rules'
+        request_options[:scope] = ['rules']
         copy_index!(src_index_name, dest_index_name, request_options)
       end
 
       def copy_settings(src_index_name, dest_index_name, opts = {})
         request_options         = symbolize_hash(opts)
-        request_options[:scope] = 'settings'
+        request_options[:scope] = ['settings']
         copy_index(src_index_name, dest_index_name, request_options)
       end
 
       def copy_settings!(src_index_name, dest_index_name, opts = {})
         request_options         = symbolize_hash(opts)
-        request_options[:scope] = 'settings'
+        request_options[:scope] = ['settings']
         copy_index!(src_index_name, dest_index_name, request_options)
       end
 
       def copy_synonyms(src_index_name, dest_index_name, opts = {})
         request_options         = symbolize_hash(opts)
-        request_options[:scope] = 'synonyms'
+        request_options[:scope] = ['synonyms']
         copy_index(src_index_name, dest_index_name, request_options)
       end
 
       def copy_synonyms!(src_index_name, dest_index_name, opts = {})
         request_options         = symbolize_hash(opts)
-        request_options[:scope] = 'synonyms'
+        request_options[:scope] = ['synonyms']
         copy_index!(src_index_name, dest_index_name, request_options)
       end
 
       def copy_index(src_index_name, dest_index_name, opts = {})
-        write(:POST, path_encode('1/indexes/%s/operation', src_index_name), { operation: 'copy', destination: dest_index_name }, opts)
+        response = write(:POST, path_encode('1/indexes/%s/operation', src_index_name), { operation: 'copy', destination: dest_index_name }, opts)
+
+        IndexingResponse.new(init_index(src_index_name), response)
       end
 
       def copy_index!(src_index_name, dest_index_name, opts = {})
-        res     = copy_index(src_index_name, dest_index_name)
-        task_id = get_option(res, 'taskID')
-        wait_task(dest_index_name, task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
-        res
+        response     = copy_index(src_index_name, dest_index_name, opts)
+
+        response.wait(opts)
       end
 
       # # # # # # # # # # # # # # # # # # # # #
       # MOVE OPERATIONS
       # # # # # # # # # # # # # # # # # # # # #
 
-      def move_index(src_index, dest_index, opts = {})
-        # TODO
+      def move_index(src_index_name, dest_index_name, opts = {})
+        response = write(:POST, path_encode('1/indexes/%s/operation', src_index_name), { operation: 'move', destination: dest_index_name }, opts)
+
+        IndexingResponse.new(init_index(src_index_name), response)
+      end
+
+      def move_index!(src_index_name, dest_index_name, opts = {})
+        response = move_index(src_index_name, dest_index_name, opts)
+
+        response.wait(opts)
       end
 
       # # # # # # # # # # # # # # # # # # # # #
