@@ -13,8 +13,8 @@ module Algolia
       # Initialize an index
       #
       # @param index_name [String] name of the index
-      # @param transporter [nil, Object] transport object used for the connection
-      # @param config [nil, Config] a Config object which contains your APP_ID and API_KEY
+      # @param transporter [Object] transport object used for the connection
+      # @param config [Config] a Config object which contains your APP_ID and API_KEY
       #
       def initialize(index_name, transporter, config)
         @index_name  = index_name
@@ -31,7 +31,7 @@ module Algolia
       #
       # @param task_id the id of the task returned by server
       # @param time_before_retry the time in milliseconds before retry (default = 100ms)
-      # @param opts contains extra parameters to send with your query
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       def wait_task(task_id, time_before_retry = Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts = {})
         loop do
@@ -46,8 +46,8 @@ module Algolia
       # Check the status of a task on the server.
       # All server task are asynchronous and you can check the status of a task with this method.
       #
-      # @param task_id the id of the task returned by server
-      # @param opts contains extra parameters to send with your query
+      # @param task_id [Integer] the id of the task returned by server
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       def get_task_status(task_id, opts = {})
         res    = read(:GET, path_encode('/1/indexes/%s/task/%s', @index_name, task_id), {}, opts)
@@ -56,7 +56,7 @@ module Algolia
 
       # Delete the index content
       #
-      # @param opts contains extra parameters to send with your query
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       def clear_objects(opts = {})
         response = write(:POST, path_encode('/1/indexes/%s/clear', @index_name), {}, opts)
@@ -64,21 +64,29 @@ module Algolia
         IndexingResponse.new(self, response)
       end
 
-      # Delete the index content and wait for operation to finish
+      # Delete the index content and wait for operation to complete
       #
-      # @param opts contains extra parameters to send with your query
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       def clear_objects!(opts = {})
         response = clear_objects(opts)
         response.wait(opts)
       end
 
+      # Delete an existing index
+      #
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
       def delete(opts = {})
         response = write(:DELETE, path_encode('/1/indexes/%s', @index_name), opts)
 
         IndexingResponse.new(self, response)
       end
 
+      # Delete an existing index and wait for operation to complete
+      #
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
       def delete!(opts = {})
         response = delete(opts)
         response.wait(opts)
@@ -94,7 +102,7 @@ module Algolia
       # Usage example:
       #  index.find_object({'query' => '', 'paginate' => true}) {|obj| obj.key?('company') and obj['company'] == 'Apple'}
       #
-      # @param opts contains extra parameters to send with your query
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [Hash|AlgoliaHttpError] the matching object and its position in the result set
       #
@@ -138,7 +146,6 @@ module Algolia
         end
       end
 
-      #
       # Retrieve the given object position in a set of results.
       #
       # @param [Array] objects the result set to browse
@@ -151,12 +158,26 @@ module Algolia
         hits.find_index { |hit| get_option(hit, 'objectID') == object_id } || -1
       end
 
+      # Copy the current index to the given destination name
+      #
+      # @param name [String] destination index name
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def copy_to(name, opts = {})
         response = write(:POST, path_encode('/1/indexes/%s/operation', @index_name), { operation: 'copy', destination: name }, opts)
 
         IndexingResponse.new(self, response)
       end
 
+      # Move the current index to the given destination name
+      #
+      # @param name [String] destination index name
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def move_to(name, opts = {})
         response = write(:POST, path_encode('/1/indexes/%s/operation', @index_name), { operation: 'move', destination: name }, opts)
 
@@ -167,10 +188,24 @@ module Algolia
       # INDEXING
       # # # # # # # # # # # # # # # # # # # # #
 
+      # Retrieve one object from the index
+      #
+      # @param object_id [String]
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Hash]
+      #
       def get_object(object_id, opts = {})
         read(:GET, path_encode('/1/indexes/%s/%s', @index_name, object_id), {}, opts)
       end
 
+      # Retrieve one or more objects in a single API call
+      #
+      # @param object_ids [Array]
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Hash]
+      #
       def get_objects(object_ids, opts = {})
         request_options        = symbolize_hash(opts)
         attributes_to_retrieve = get_option(request_options, 'attributesToRetrieve')
@@ -190,29 +225,35 @@ module Algolia
         read(:POST, '/1/indexes/*/objects', { 'requests': requests }, opts)
       end
 
-      # Override the content of an object
+      # Add an object to the index
       #
       # @param object [Hash] the object to save
       # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
       #
       def save_object(object, opts = {})
         save_objects([object], opts)
       end
 
-      # Override the content of an object and wait for operation to finish
+      # Add an object to the index and wait for operation to complete
       #
       # @param object [Hash] the object to save
       # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
       #
       def save_object!(object, opts = {})
         response = save_objects([object], opts)
         response.wait(opts)
       end
 
-      # Override the content of several objects
+      # Add several objects to the index
       #
-      # @param objects the array of objects to save
-      # @param opts contains extra parameters to send with your query
+      # @param objects [Array] the objects to save
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
       #
       def save_objects(objects, opts = {})
         request_options    = symbolize_hash(opts)
@@ -225,25 +266,48 @@ module Algolia
         end
       end
 
-      # Override the content of several objects and wait for operation to finish
+      # Add several objects to the index and wait for operation to complete
       #
-      # @param objects the array of objects to save
-      # @param opts contains extra parameters to send with your query
+      # @param objects [Array] the objects to save
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
       #
       def save_objects!(objects, opts = {})
         response = save_objects(objects, opts)
         response.wait(opts)
       end
 
+      # Partially update an object
+      #
+      # @param object [String] object ID to partially update
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def partial_update_object(object, opts = {})
         partial_update_objects([object], opts)
       end
 
+      # Partially update an object and wait for operation to complete
+      #
+      # @param object [String] object ID to partially update
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def partial_update_object!(object, opts = {})
         response     = partial_update_objects([object], opts)
         response.wait(opts)
       end
 
+      # Partially update several objects
+      #
+      # @param objects [Array] array of objectIDs to partially update
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def partial_update_objects(objects, opts = {})
         generate_object_id = false
         request_options    = symbolize_hash(opts)
@@ -259,20 +323,48 @@ module Algolia
         end
       end
 
+      # Partially update several objects and wait for operation to complete
+      #
+      # @param objects [Array] array of objectIDs to partially update
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def partial_update_objects!(objects, opts = {})
         response = partial_update_objects(objects, opts)
         response.wait(opts)
       end
 
+      # Delete an existing object from an index
+      #
+      # @param object_id [String]
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def delete_object(object_id, opts = {})
         delete_objects([object_id], opts)
       end
 
+      # Delete an existing object from an index and wait for operation to complete
+      #
+      # @param object_id [String]
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def delete_object!(object_id, opts = {})
         response = delete_objects([object_id], opts)
         response.wait(opts)
       end
 
+      # Delete several existing objects from an index
+      #
+      # @param object_ids [Array]
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def delete_objects(object_ids, opts = {})
         objects = object_ids.map do |object_id|
           { objectID: object_id }
@@ -281,17 +373,38 @@ module Algolia
         IndexingResponse.new(self, raw_batch(chunk('deleteObject', objects), opts))
       end
 
+      # Delete several existing objects from an index and wait for operation to complete
+      #
+      # @param object_ids [Array]
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def delete_objects!(object_ids, opts = {})
         response     = delete_objects(object_ids, opts)
         response.wait(opts)
       end
 
+      # Delete all records matching the query
+      #
+      # @param filters [Hash]
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def delete_by(filters, opts = {})
         response = write(:POST, path_encode('/1/indexes/%s/deleteByQuery', @index_name), filters, opts)
 
         IndexingResponse.new(self, response)
       end
 
+      # Delete all records matching the query and wait for operation to complete
+      #
+      # @param filters [Hash]
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def delete_by!(filters, opts = {})
         response = delete_by(filters, opts)
 
@@ -301,7 +414,9 @@ module Algolia
       # Send a batch request
       #
       # @param requests [Hash] hash containing the requests to batch
-      # @param opts contains extra parameters to send with your query
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
       #
       def batch(requests, opts = {})
         response = raw_batch(requests, opts)
@@ -309,10 +424,12 @@ module Algolia
         IndexingResponse.new(self, response)
       end
 
-      # Send a batch request and wait for operation to finish
+      # Send a batch request and wait for operation to complete
       #
       # @param requests [Hash] hash containing the requests to batch
-      # @param opts contains extra parameters to send with your query
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
       #
       def batch!(requests, opts = {})
         response     = batch(requests, opts)
@@ -323,19 +440,47 @@ module Algolia
       # QUERY RULES
       # # # # # # # # # # # # # # # # # # # # #
 
+      # Retrieve the Rule with the specified objectID
+      #
+      # @param object_id [String]
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Hash]
+      #
       def get_rule(object_id, opts = {})
         read(:GET, path_encode('/1/indexes/%s/rules/%s', @index_name, object_id), {}, opts)
       end
 
+      # Create or update a rule
+      #
+      # @param rule [Hash] a hash containing a rule objectID and different conditions/consequences
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Array, IndexingResponse]
+      #
       def save_rule(rule, opts = {})
         save_rules([rule], opts)
       end
 
+      # Create or update a rule and wait for operation to complete
+      #
+      # @param rule [Hash] a hash containing a rule objectID and different conditions/consequences
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Array, IndexingResponse]
+      #
       def save_rule!(rule, opts = {})
         response = save_rules([rule], opts)
         response.wait(opts)
       end
 
+      # Create or update rules
+      #
+      # @param rules [Array] an array of hashes containing a rule objectID and different conditions/consequences
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Array, IndexingResponse]
+      #
       def save_rules(rules, opts = {})
         if rules.empty?
           return []
@@ -359,16 +504,29 @@ module Algolia
           get_object_id(rule)
         end
 
-        response = write(:POST, path_encode('/1/indexes/%s/rules/batch?', @index_name) + to_query_string({ forwardToReplicas: forward_to_replicas, clearExistingRules: clear_existing_rules }), rules, request_options)
+        response = write(:POST, path_encode('/1/indexes/%s/rules/batch', @index_name) + handle_params({ forwardToReplicas: forward_to_replicas, clearExistingRules: clear_existing_rules }), rules, request_options)
 
         IndexingResponse.new(self, response)
       end
 
+      # Create or update rules and wait for operation to complete
+      #
+      # @param rules [Array] an array of hashes containing a rule objectID and different conditions/consequences
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Array, IndexingResponse]
+      #
       def save_rules!(rules, opts = {})
         response = save_rules(rules, opts)
         response.wait(opts)
       end
 
+      # Delete all Rules in the index
+      #
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def clear_rules(opts = {})
         forward_to_replicas = false
         request_options     = symbolize_hash(opts)
@@ -378,16 +536,29 @@ module Algolia
           request_options.delete(:forwardToReplicas)
         end
 
-        response = write(:POST, path_encode('1/indexes/%s/rules/clear?', @index_name) + to_query_string({ forwardToReplicas: forward_to_replicas }), '', request_options)
+        response = write(:POST, path_encode('1/indexes/%s/rules/clear', @index_name) + handle_params({ forwardToReplicas: forward_to_replicas }), '', request_options)
 
         IndexingResponse.new(self, response)
       end
 
+      # Delete all Rules in the index and wait for operation to complete
+      #
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def clear_rules!(opts = {})
         response     = clear_rules(opts)
         response.wait(opts)
       end
 
+      # Delete the Rule with the specified objectID
+      #
+      # @param object_id [String]
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def delete_rule(object_id, opts = {})
         forward_to_replicas = false
         request_options     = symbolize_hash(opts)
@@ -399,7 +570,7 @@ module Algolia
 
         response = write(
           :DELETE,
-          path_encode('1/indexes/%s/rules/%s?', @index_name, object_id) + to_query_string({ forwardToReplicas: forward_to_replicas }),
+          path_encode('1/indexes/%s/rules/%s', @index_name, object_id) + handle_params({ forwardToReplicas: forward_to_replicas }),
           '',
           request_options
         )
@@ -407,6 +578,13 @@ module Algolia
         IndexingResponse.new(self, response)
       end
 
+      # Delete the Rule with the specified objectID and wait for operation to complete
+      #
+      # @param object_id [String]
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def delete_rule!(object_id, opts = {})
         response = delete_rule(object_id, opts)
         response.wait(opts)
@@ -416,19 +594,49 @@ module Algolia
       # SYNONYMS
       # # # # # # # # # # # # # # # # # # # # #
 
+      # Fetch a synonym object identified by its objectID
+      #
+      # @param object_id [String]
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Hash]
+      #
       def get_synonym(object_id, opts = {})
         read(:GET, path_encode('/1/indexes/%s/synonyms/%s', @index_name, object_id), {}, opts)
       end
 
+      # Create a new synonym object or update the existing synonym object with the given object ID
+      #
+      # @param synonym [Hash] Synonym object
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Array, IndexingResponse]
+      #
       def save_synonym(synonym, opts = {})
         save_synonyms([synonym], opts)
       end
 
+      # Create a new synonym object or update the existing synonym object with the given object ID
+      # and wait for operation to finish
+      #
+      # @param synonym [Hash] Synonym object
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Array, IndexingResponse]
+      #
       def save_synonym!(synonym, opts = {})
         response     = save_synonyms([synonym], opts)
         response.wait(opts)
       end
 
+      # Create/update multiple synonym objects at once, potentially replacing the entire list of synonyms if
+      # replaceExistingSynonyms is true
+      #
+      # @param synonyms [Array] Array of Synonym objects
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Array, IndexingResponse]
+      #
       def save_synonyms(synonyms, opts = {})
         if synonyms.empty?
           return []
@@ -454,7 +662,7 @@ module Algolia
         end
         response = write(
           :POST,
-          path_encode('/1/indexes/%s/synonyms/batch?', @index_name) + to_query_string({ forwardToReplicas: forward_to_replicas, replaceExistingSynonyms: replace_existing_synonyms }),
+          path_encode('/1/indexes/%s/synonyms/batch', @index_name) + handle_params({ forwardToReplicas: forward_to_replicas, replaceExistingSynonyms: replace_existing_synonyms }),
           synonyms,
           request_options
         )
@@ -462,11 +670,25 @@ module Algolia
         IndexingResponse.new(self, response)
       end
 
+      # Create/update multiple synonym objects at once, potentially replacing the entire list of synonyms if
+      # replaceExistingSynonyms is true and wait for operation to complete
+      #
+      # @param synonyms [Array] Array of Synonym objects
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Array, IndexingResponse]
+      #
       def save_synonyms!(synonyms, opts = {})
         response = save_synonyms(synonyms, opts)
         response.wait(opts)
       end
 
+      # Delete all synonyms from the index
+      #
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def clear_synonyms(opts = {})
         forward_to_replicas = false
         request_options     = symbolize_hash(opts)
@@ -477,7 +699,7 @@ module Algolia
         end
         response = write(
           :POST,
-          path_encode('1/indexes/%s/synonyms/clear?', @index_name) + to_query_string({ forwardToReplicas: forward_to_replicas }),
+          path_encode('1/indexes/%s/synonyms/clear', @index_name) + handle_params({ forwardToReplicas: forward_to_replicas }),
           '',
           request_options
         )
@@ -485,11 +707,23 @@ module Algolia
         IndexingResponse.new(self, response)
       end
 
+      # Delete all synonyms from the index and wait for operation to complete
+      #
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def clear_synonyms!(opts = {})
         response     = clear_synonyms(opts)
         response.wait(opts)
       end
 
+      # Delete a single synonyms set, identified by the given objectID
+      #
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def delete_synonym(object_id, opts = {})
         forward_to_replicas = false
         request_options     = symbolize_hash(opts)
@@ -500,7 +734,7 @@ module Algolia
         end
         response = write(
           :DELETE,
-          path_encode('1/indexes/%s/synonyms/%s?', @index_name, object_id) + to_query_string({ forwardToReplicas: forward_to_replicas }),
+          path_encode('1/indexes/%s/synonyms/%s', @index_name, object_id) + handle_params({ forwardToReplicas: forward_to_replicas }),
           '',
           request_options
         )
@@ -508,6 +742,12 @@ module Algolia
         IndexingResponse.new(self, response)
       end
 
+      # Delete a single synonyms set, identified by the given objectID and wait for operation to complete
+      #
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def delete_synonym!(object_id, opts = {})
         response     = delete_synonym(object_id, opts)
         response.wait(opts)
@@ -517,6 +757,12 @@ module Algolia
       # BROWSING
       # # # # # # # # # # # # # # # # # # # # #
 
+      # Browse all index content
+      #
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Enumerator, ObjectIterator]
+      #
       def browse_objects(opts = {}, &block)
         if block_given?
           ObjectIterator.new(@transporter, @index_name, opts).each(&block)
@@ -525,6 +771,12 @@ module Algolia
         end
       end
 
+      # Browse all rules
+      #
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Enumerator, RuleIterator]
+      #
       def browse_rules(opts = {}, &block)
         if block_given?
           RuleIterator.new(@transporter, @index_name, opts).each(&block)
@@ -533,6 +785,12 @@ module Algolia
         end
       end
 
+      # Browse all synonyms
+      #
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Enumerator, SynonymIterator]
+      #
       def browse_synonyms(opts = {}, &block)
         if block_given?
           SynonymIterator.new(@transporter, @index_name, opts).each(&block)
@@ -545,6 +803,13 @@ module Algolia
       # REPLACING
       # # # # # # # # # # # # # # # # # # # # #
 
+      # Replace all objects in the index
+      #
+      # @param objects [Array] Array of objects
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Enumerator, SynonymIterator]
+      #
       def replace_all_objects(objects, opts = {})
         safe            = false
         request_options = symbolize_hash(opts)
@@ -576,10 +841,24 @@ module Algolia
         end
       end
 
+      # Replace all objects in the index and wait for the operation to complete
+      #
+      # @param objects [Array] Array of objects
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Enumerator, SynonymIterator]
+      #
       def replace_all_objects!(objects, opts = {})
         replace_all_objects(objects, opts.merge(safe: true))
       end
 
+      # Replace all rules in the index
+      #
+      # @param rules [Array] Array of rules
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Array, IndexingResponse]
+      #
       def replace_all_rules(rules, opts = {})
         request_options                      = symbolize_hash(opts)
         request_options[:clearExistingRules] = true
@@ -587,6 +866,13 @@ module Algolia
         save_rules(rules, request_options)
       end
 
+      # Replace all rules in the index and wait for the operation to complete
+      #
+      # @param rules [Array] Array of rules
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Array, IndexingResponse]
+      #
       def replace_all_rules!(rules, opts = {})
         request_options                      = symbolize_hash(opts)
         request_options[:clearExistingRules] = true
@@ -594,6 +880,13 @@ module Algolia
         save_rules!(rules, request_options)
       end
 
+      # Replace all synonyms in the index
+      #
+      # @param synonyms [Array] Array of synonyms
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Array, IndexingResponse]
+      #
       def replace_all_synonyms(synonyms, opts = {})
         request_options                           = symbolize_hash(opts)
         request_options[:replaceExistingSynonyms] = true
@@ -601,6 +894,13 @@ module Algolia
         save_synonyms(synonyms, request_options)
       end
 
+      # Replace all synonyms in the index and wait for the operation to complete
+      #
+      # @param synonyms [Array] Array of synonyms
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Array, IndexingResponse]
+      #
       def replace_all_synonyms!(synonyms, opts = {})
         request_options                           = symbolize_hash(opts)
         request_options[:replaceExistingSynonyms] = true
@@ -615,23 +915,46 @@ module Algolia
       # Perform a search on the index
       #
       # @param query the full text query
-      # @param opts contains extra parameters to send with your query
+      # @param opts [Hash] contains extra parameters to send with your query
       #
-      # @return Algolia::Response
+      # @return [Hash]
       #
       def search(query, opts = {})
         read(:POST, path_encode('/1/indexes/%s/query', @index_name), { 'query': query.to_s }, opts)
       end
 
+      # Search for values of a given facet, optionally restricting the returned values to those contained
+      # in objects matching other search criteria
+      #
+      # @param facet_name [String]
+      # @param facet_query [String]
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Hash]
+      #
       def search_for_facet_values(facet_name, facet_query, opts = {})
         read(:POST, path_encode('/1/indexes/%s/facets/%s/query', @index_name, facet_name),
              { 'facetQuery': facet_query }, opts)
       end
 
+      # Search or browse all synonyms, optionally filtering them by type
+      #
+      # @param query [String] Search for specific synonyms matching this string
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Hash]
+      #
       def search_synonyms(query, opts = {})
         read(:POST, path_encode('/1/indexes/%s/synonyms/search', @index_name), { query: query.to_s }, opts)
       end
 
+      # Search or browse all rules, optionally filtering them by type
+      #
+      # @param query [String] Search for specific rules matching this string
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Hash]
+      #
       def search_rules(query, opts = {})
         read(:POST, path_encode('/1/indexes/%s/rules/search', @index_name), { query: query.to_s }, opts)
       end
@@ -640,16 +963,37 @@ module Algolia
       # SETTINGS
       # # # # # # # # # # # # # # # # # # # # #
 
+      # Retrieve index settings
+      #
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [Hash]
+      #
       def get_settings(opts = {})
-        read(:GET, path_encode('/1/indexes/%s/settings?', @index_name) + to_query_string({ getVersion: 2 }), {}, opts)
+        read(:GET, path_encode('/1/indexes/%s/settings', @index_name) + handle_params({ getVersion: 2 }), {}, opts)
       end
 
+      # Update some index settings. Only specified settings are overridden
+      #
+      # @param settings [Hash] the settings to update
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def set_settings(settings, opts = {})
         response = write(:PUT, path_encode('/1/indexes/%s/settings', @index_name), settings, opts)
 
         IndexingResponse.new(self, response)
       end
 
+      # Update some index settings and wait for operation to complete.
+      # Only specified settings are overridden
+      #
+      # @param settings [Hash] the settings to update
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return [IndexingResponse]
+      #
       def set_settings!(settings, opts = {})
         response = set_settings(settings, opts)
         response.wait(opts)
@@ -659,6 +1003,10 @@ module Algolia
       # EXISTS
       # # # # # # # # # # # # # # # # # # # # #
 
+      # Checks if the current index exists
+      #
+      # @return [Boolean]
+      #
       def exists
         begin
           get_settings
