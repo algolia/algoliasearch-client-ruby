@@ -6,6 +6,7 @@ module Algolia
   module Search
     # Class Client
     class Client
+      include CallType
       include Helpers
       extend Forwardable
 
@@ -590,6 +591,17 @@ module Algolia
       # Aliases the pending_mappings? method
       #
       alias_method :has_pending_mappings, :pending_mappings?
+
+      #
+      # Method available to make custom requests to the API
+      #
+      def custom_request(data, uri, method, call_type, opts = {})
+        if call_type == WRITE
+          write(method.to_sym, uri, data, opts)
+        elsif call_type == READ
+          read(method.to_sym, uri, data, opts)
+        end
+      end
     end
   end
 end
