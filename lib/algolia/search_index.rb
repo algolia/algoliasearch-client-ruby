@@ -482,6 +482,14 @@ module Algolia
       # @return [Array, IndexingResponse]
       #
       def save_rules(rules, opts = {})
+        if rules.is_a?(RuleIterator)
+          iterated = []
+          rules.each do |rule|
+            iterated.push(rule)
+          end
+          rules    = iterated
+        end
+
         if rules.empty?
           return []
         end
@@ -638,6 +646,14 @@ module Algolia
       # @return [Array, IndexingResponse]
       #
       def save_synonyms(synonyms, opts = {})
+        if synonyms.is_a?(SynonymIterator)
+          iterated = []
+          synonyms.each do |synonym|
+            iterated.push(synonym)
+          end
+          synonyms = iterated
+        end
+
         if synonyms.empty?
           return []
         end
@@ -1072,7 +1088,6 @@ module Algolia
       # @param with_object_id [Boolean] if set to true, check if each object has an objectID set
       #
       def chunk(action, objects, with_object_id = false)
-        check_array(objects)
         objects.map do |object|
             check_object(object, true)
             request            = { action: action, body: object }
