@@ -77,6 +77,8 @@ module Algolia
           end
           return json_to_hash(response.body, @config.symbolize_keys) unless outcome == RETRY
         end
+
+        raise AlgoliaUnreachableHostError, 'Unreachable hosts'
       end
 
       private
