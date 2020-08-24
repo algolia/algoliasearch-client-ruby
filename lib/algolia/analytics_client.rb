@@ -2,6 +2,7 @@ module Algolia
   module Analytics
     class Client
       include Helpers
+      extend Forwardable
 
       def_delegators :@transporter, :read, :write
 
