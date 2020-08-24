@@ -1,5 +1,5 @@
 module Algolia
-  module Analytics
+  module Insights
     class Config < AlgoliaConfig
       include CallType
       attr_accessor :region, :default_hosts
@@ -14,7 +14,7 @@ module Algolia
         super(opts)
 
         @region        = opts[:region] || 'us'
-        @default_hosts = [Transport::StatefulHost.new("analytics.#{region}.algolia.com")]
+        @default_hosts = [Transport::StatefulHost.new("insights.#{region}.algolia.io")]
       end
     end
   end
