@@ -39,6 +39,16 @@ module Algolia
         new(config)
       end
 
+      # Create a new client providing only the search config
+      #
+      # @param config [Search::Config]
+      #
+      # @return self
+      #
+      def self.create_with_config(config)
+        new(config)
+      end
+
       # Fetch the task status until it returns as "published", meaning the operation is done
       #
       # @param index_name [String]
