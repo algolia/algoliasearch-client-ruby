@@ -107,7 +107,7 @@ module Algolia
       # @return [Hash]
       #
       def list_indexes(opts = {})
-        read(:GET, '1/indexes', {}, opts)
+        read(:GET, '/1/indexes', {}, opts)
       end
 
       # Retrieve the client logs
@@ -117,7 +117,7 @@ module Algolia
       # @return [Hash]
       #
       def get_logs(opts = {})
-        read(:GET, '1/logs', {}, opts)
+        read(:GET, '/1/logs', {}, opts)
       end
 
       # # # # # # # # # # # # # # # # # # # # #
@@ -217,7 +217,7 @@ module Algolia
       # @return [IndexingResponse]
       #
       def copy_index(src_index_name, dest_index_name, opts = {})
-        response = write(:POST, path_encode('1/indexes/%s/operation', src_index_name), { operation: 'copy', destination: dest_index_name }, opts)
+        response = write(:POST, path_encode('/1/indexes/%s/operation', src_index_name), { operation: 'copy', destination: dest_index_name }, opts)
 
         IndexingResponse.new(init_index(src_index_name), response)
       end
@@ -249,7 +249,7 @@ module Algolia
       # @return [IndexingResponse]
       #
       def move_index(src_index_name, dest_index_name, opts = {})
-        response = write(:POST, path_encode('1/indexes/%s/operation', src_index_name), { operation: 'move', destination: dest_index_name }, opts)
+        response = write(:POST, path_encode('/1/indexes/%s/operation', src_index_name), { operation: 'move', destination: dest_index_name }, opts)
 
         IndexingResponse.new(init_index(src_index_name), response)
       end
@@ -279,7 +279,7 @@ module Algolia
       # @return [Hash]
       #
       def get_api_key(key_id, opts = {})
-        read(:GET, path_encode('1/keys/%s', key_id), {}, opts)
+        read(:GET, path_encode('/1/keys/%s', key_id), {}, opts)
       end
 
       # Add an API key with the given ACL
@@ -290,7 +290,7 @@ module Algolia
       # @return [AddApiKeyResponse]
       #
       def add_api_key(acl, opts = {})
-        response = write(:POST, '1/keys', { acl: acl }, opts)
+        response = write(:POST, '/1/keys', { acl: acl }, opts)
 
         AddApiKeyResponse.new(self, response)
       end
@@ -318,7 +318,7 @@ module Algolia
       def update_api_key(key, opts = {})
         request_options = symbolize_hash(opts)
 
-        response = write(:PUT, path_encode('1/keys/%s', key), {}, request_options)
+        response = write(:PUT, path_encode('/1/keys/%s', key), {}, request_options)
 
         UpdateApiKeyResponse.new(self, response, request_options)
       end
@@ -344,7 +344,7 @@ module Algolia
       # @return [DeleteApiKeyResponse]
       #
       def delete_api_key(key, opts = {})
-        response = write(:DELETE, path_encode('1/keys/%s', key), {}, opts)
+        response = write(:DELETE, path_encode('/1/keys/%s', key), {}, opts)
 
         DeleteApiKeyResponse.new(self, response, key)
       end
@@ -370,7 +370,7 @@ module Algolia
       # @return [RestoreApiKeyResponse]
       #
       def restore_api_key(key, opts = {})
-        write(:POST, path_encode('1/keys/%s/restore', key), {}, opts)
+        write(:POST, path_encode('/1/keys/%s/restore', key), {}, opts)
 
         RestoreApiKeyResponse.new(self, key)
       end
@@ -395,7 +395,7 @@ module Algolia
       # @return [Hash]
       #
       def list_api_keys(opts = {})
-        read(:GET, '1/keys', {}, opts)
+        read(:GET, '/1/keys', {}, opts)
       end
 
       # Generate a secured API key from the given parent key with the given restrictions
@@ -444,7 +444,7 @@ module Algolia
       # @return [MultipleIndexBatchIndexingResponse]
       #
       def multiple_batch(operations, opts = {})
-        response = write(:POST, '1/indexes/*/batch', { requests: operations }, opts)
+        response = write(:POST, '/1/indexes/*/batch', { requests: operations }, opts)
 
         MultipleIndexBatchIndexingResponse.new(self, response)
       end
@@ -470,7 +470,7 @@ module Algolia
       # @return [Hash]
       #
       def multiple_get_objects(requests, opts = {})
-        read(:POST, '1/indexes/*/objects', { requests: requests }, opts)
+        read(:POST, '/1/indexes/*/objects', { requests: requests }, opts)
       end
 
       # Search multiple indices
@@ -481,7 +481,7 @@ module Algolia
       # @return [Hash]
       #
       def multiple_queries(queries, opts = {})
-        read(:POST, '1/indexes/*/queries', { requests: queries }, opts)
+        read(:POST, '/1/indexes/*/queries', { requests: queries }, opts)
       end
 
       # # # # # # # # # # # # # # # # # # # # #
@@ -499,7 +499,7 @@ module Algolia
         request_options           = symbolize_hash(opts)
         request_options[:headers] = { 'X-Algolia-User-ID': user_id }
 
-        write(:POST, '1/clusters/mapping', { cluster: cluster_name }, request_options)
+        write(:POST, '/1/clusters/mapping', { cluster: cluster_name }, request_options)
       end
 
       # Assign multiple userIDs to a cluster.
@@ -510,7 +510,7 @@ module Algolia
       # @return [Hash]
       #
       def assign_user_ids(user_ids, cluster_name, opts = {})
-        write(:POST, '1/clusters/mapping/batch', { cluster: cluster_name, users: user_ids }, opts)
+        write(:POST, '/1/clusters/mapping/batch', { cluster: cluster_name, users: user_ids }, opts)
       end
 
       # Get the top 10 userIDs with the highest number of records per cluster.
@@ -520,7 +520,7 @@ module Algolia
       # @return [Hash]
       #
       def get_top_user_ids(opts = {})
-        read(:GET, '1/clusters/mapping/top', {}, opts)
+        read(:GET, '/1/clusters/mapping/top', {}, opts)
       end
 
       # Returns the userID data stored in the mapping.
@@ -531,7 +531,7 @@ module Algolia
       # @return [Hash]
       #
       def get_user_id(user_id, opts = {})
-        read(:GET, path_encode('1/clusters/mapping/%s', user_id), {}, opts)
+        read(:GET, path_encode('/1/clusters/mapping/%s', user_id), {}, opts)
       end
 
       # List the clusters available in a multi-clusters setup for a single appID
@@ -541,7 +541,7 @@ module Algolia
       # @return [Hash]
       #
       def list_clusters(opts = {})
-        read(:GET, '1/clusters', {}, opts)
+        read(:GET, '/1/clusters', {}, opts)
       end
 
       # List the userIDs assigned to a multi-clusters appID
@@ -551,7 +551,7 @@ module Algolia
       # @return [Hash]
       #
       def list_user_ids(opts = {})
-        read(:GET, '1/clusters/mapping', {}, opts)
+        read(:GET, '/1/clusters/mapping', {}, opts)
       end
 
       # Remove a userID and its associated data from the multi-clusters
@@ -565,7 +565,7 @@ module Algolia
         request_options           = symbolize_hash(opts)
         request_options[:headers] = { 'X-Algolia-User-ID': user_id }
 
-        write(:DELETE, '1/clusters/mapping', {}, request_options)
+        write(:DELETE, '/1/clusters/mapping', {}, request_options)
       end
 
       # Search for userIDs
@@ -576,7 +576,7 @@ module Algolia
       # @return [Hash]
       #
       def search_user_ids(query, opts = {})
-        read(:POST, '1/clusters/mapping/search', { query: query }, opts)
+        read(:POST, '/1/clusters/mapping/search', { query: query }, opts)
       end
 
       # Get the status of your clusters' migrations or user creations
@@ -594,7 +594,7 @@ module Algolia
           request_options.delete(:retrieveMappings)
         end
 
-        read(:GET, '1/clusters/mapping/pending' + handle_params({ getClusters: retrieve_mappings }), {}, request_options)
+        read(:GET, '/1/clusters/mapping/pending' + handle_params({ getClusters: retrieve_mappings }), {}, request_options)
       end
 
       #

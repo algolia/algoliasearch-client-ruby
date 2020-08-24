@@ -31,17 +31,29 @@ module Algolia
       end
 
       def add_ab_test(ab_test, opts = {})
-        write(:POST, '2/abtests', ab_test, opts)
+        write(:POST, '/2/abtests', ab_test, opts)
       end
 
       def get_ab_test(ab_test_id, opts = {})
         raise AlgoliaError, 'ab_test_id cannot be empty.' if ab_test_id.nil?
 
-        read(:GET, path_encode('2/abtests/%s', ab_test_id), {}, opts)
+        read(:GET, path_encode('/2/abtests/%s', ab_test_id), {}, opts)
       end
 
       def get_ab_tests(opts = {})
-        read(:GET, '2/abtests/', {}, opts)
+        read(:GET, '/2/abtests', {}, opts)
+      end
+
+      def stop_ab_test(ab_test_id, opts = {})
+        raise AlgoliaError, 'ab_test_id cannot be empty.' if ab_test_id.nil?
+
+        write(:POST, path_encode('/2/abtests/%s/stop', ab_test_id), {}, opts)
+      end
+
+      def delete_ab_test(ab_test_id, opts = {})
+        raise AlgoliaError, 'ab_test_id cannot be empty.' if ab_test_id.nil?
+
+        write(:DELETE, path_encode('/2/abtests/%s', ab_test_id), {}, opts)
       end
     end
   end
