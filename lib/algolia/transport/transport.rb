@@ -119,6 +119,10 @@ module Algolia
       # @return [Hash]
       #
       def build_body(body, request_options, method)
+        if method == :GET && body.empty?
+          return nil
+        end
+
         body.merge!(request_options.data) if body.is_a?(Hash) && method != :GET
         to_json(body)
       end

@@ -39,7 +39,7 @@ module Algolia
       end
 
       def send_events(events, opts = {})
-        write(:POST, '1/events', { events: events }, opts)
+        write(:POST, '/1/events', { events: events }, opts)
       end
     end
 
