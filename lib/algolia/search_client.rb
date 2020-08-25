@@ -36,7 +36,7 @@ module Algolia
       #
       def self.create(app_id, api_key)
         config = Search::Config.new(app_id: app_id, api_key: api_key)
-        new(config)
+        create_with_config(config)
       end
 
       # Create a new client providing only the search config

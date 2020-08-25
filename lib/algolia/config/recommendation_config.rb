@@ -1,5 +1,5 @@
 module Algolia
-  module Insights
+  module Recommendation
     class Config < AlgoliaConfig
       attr_accessor :region, :default_hosts
 
@@ -13,7 +13,7 @@ module Algolia
         super(opts)
 
         @region        = opts[:region] || 'us'
-        @default_hosts = [Transport::StatefulHost.new("insights.#{region}.algolia.io")]
+        @default_hosts = [Transport::StatefulHost.new("recommendation.#{region}.algolia.com")]
       end
     end
   end

@@ -23,7 +23,7 @@ module Algolia
       #
       def self.create(app_id, api_key)
         config = Analytics::Config.new(app_id: app_id, api_key: api_key)
-        new(config)
+        create_with_config(config)
       end
 
       def self.create_with_config(config)
