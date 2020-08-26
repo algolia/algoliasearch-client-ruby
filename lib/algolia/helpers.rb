@@ -50,6 +50,23 @@ module Helpers
     format(path, *arguments)
   end
 
+  def deserialize_settings(data)
+    settings = symbolize_hash(data)
+    keys     = {
+      attributesToIndex: 'searchableAttributes',
+      numericAttributesToIndex: 'numericAttributesForFiltering',
+      slaves: 'replicas'
+    }
+
+    keys.each do |deprecated_key, current_key|
+      if settings.has_key?(deprecated_key)
+        settings[current_key.to_sym] = settings.delete(deprecated_key)
+      end
+    end
+
+    settings
+  end
+
   def self.included(base)
     base.extend(Helpers)
   end

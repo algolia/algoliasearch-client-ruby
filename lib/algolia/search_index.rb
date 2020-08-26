@@ -986,7 +986,9 @@ module Algolia
       # @return [Hash]
       #
       def get_settings(opts = {})
-        read(:GET, path_encode('/1/indexes/%s/settings', @index_name) + handle_params({ getVersion: 2 }), {}, opts)
+        response = read(:GET, path_encode('/1/indexes/%s/settings', @index_name) + handle_params({ getVersion: 2 }), {}, opts)
+
+        deserialize_settings(response)
       end
 
       # Update some index settings. Only specified settings are overridden

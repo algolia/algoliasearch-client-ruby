@@ -1,6 +1,6 @@
 require_relative 'base_test'
 
-class SearchClientTest < BaseTest
+class AccountClientTest < BaseTest
   describe 'Account client' do
     def test_account_client
       index1 = @@search_client.init_index(get_test_index_name('copy_index'))
