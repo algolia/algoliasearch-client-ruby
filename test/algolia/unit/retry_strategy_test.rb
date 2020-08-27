@@ -71,6 +71,21 @@ class RetryStrategyTest
     end
   end
 
+  describe 'All hosts are unreachable' do
+    def test_failure_when_all_hosts_are_down
+      stateful_hosts = ['0.0.0.0']
+      @config        = Algolia::Search::Config.new(app_id: 'foo', api_key: 'bar', custom_hosts: stateful_hosts)
+      client         = Algolia::Search::Client.create_with_config(@config)
+      index          = client.init_index(get_test_index_name('failure'))
+
+      exception = assert_raises Algolia::AlgoliaUnreachableHostError do
+        index.save_object({ objectID: 'one' })
+      end
+
+      assert_equal 'Unreachable hosts', exception.message
+    end
+  end
+
   describe 'retry stategy decisions' do
     def before_all
       super

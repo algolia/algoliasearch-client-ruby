@@ -41,13 +41,13 @@ module Algolia
       #
       # @return [Binary] retry outcome code
       #
-      def decide(tryable_host, http_response_code: nil, is_timed_out: false)
+      def decide(tryable_host, http_response_code: nil, is_timed_out: false, network_failure: false)
         @lock.synchronize do
           if !is_timed_out && success?(http_response_code)
             tryable_host.up       = true
             tryable_host.last_use = Time.now.utc
             SUCCESS
-          elsif !is_timed_out && retryable?(http_response_code)
+          elsif !is_timed_out && retryable?(http_response_code, network_failure)
             tryable_host.up       = false
             tryable_host.last_use = Time.now.utc
             RETRY
@@ -78,7 +78,11 @@ module Algolia
       #
       # @return [Boolean]
       #
-      def retryable?(http_response_code)
+      def retryable?(http_response_code, network_failure)
+        if network_failure
+          return true
+        end
+
         !http_response_code.nil? && (http_response_code.to_i / 100).floor != 2 && (http_response_code.to_i / 100).floor != 4
       end
 
