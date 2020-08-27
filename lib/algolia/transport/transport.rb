@@ -70,7 +70,7 @@ module Algolia
             request[:connect_timeout]
           )
 
-          outcome  = @retry_strategy.decide(host, http_response_code: response.status, is_timed_out: response.has_timed_out)
+          outcome  = @retry_strategy.decide(host, http_response_code: response.status, is_timed_out: response.has_timed_out, network_failure: response.network_failure)
           if outcome == FAILURE
             decoded_error = json_to_hash(response.error, @config.symbolize_keys)
             raise AlgoliaHttpError.new(get_option(decoded_error, 'status'), get_option(decoded_error, 'message'))
