@@ -123,6 +123,8 @@ module Algolia
           return nil
         end
 
+        # merge optional special request options to the body when it
+        # doesn't have to be in the array format
         body.merge!(request_options.data) if body.is_a?(Hash) && method != :GET
         to_json(body)
       end
