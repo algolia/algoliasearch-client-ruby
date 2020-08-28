@@ -6,6 +6,7 @@ module Algolia
   class AlgoliaError < StandardError
   end
 
+  # Used when hosts are unreachable
   class AlgoliaUnreachableHostError < AlgoliaError
   end
 

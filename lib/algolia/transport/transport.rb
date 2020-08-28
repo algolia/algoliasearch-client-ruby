@@ -9,9 +9,7 @@ module Algolia
 
       #
       # @param config [Search::Config] config used for search
-      # @param logger_class [Object] logger used for debug
-      # @param requester_class [Object] requester used for sending requests. Uses Algolia::Http::HttpRequester by default
-      # @option adapter [String] adapter used for sending requests, if needed. Uses Faraday.default_adapter by default
+      # @param requester [Object] requester used for sending requests. Uses Algolia::Http::HttpRequester by default
       #
       def initialize(config, requester)
         @config           = config

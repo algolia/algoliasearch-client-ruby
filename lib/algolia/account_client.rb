@@ -2,6 +2,16 @@ module Algolia
   module Account
     class Client
       class << self
+        # Copies settings, synonyms, rules and objects from the source index to the
+        # destination index. The replicas of the source index should not be copied.
+        #
+        # Throw an exception if the destination index already exists
+        # Throw an exception if the indices are on the same application
+        #
+        # @param src_index the source index object
+        # @param dest_index the destination index object
+        # @param opts contains extra parameters to send with your query
+        #
         def copy_index(src_index, dest_index, opts = {})
           raise AlgoliaError, 'The indices are on the same application. Use Algolia::Search::Client.copy_index instead.' if src_index.config.app_id == dest_index.config.app_id
 
@@ -34,6 +44,17 @@ module Algolia
           responses
         end
 
+        # Copies settings, synonyms, rules and objects from the source index to the
+        # destination index ans wait for the task to complete.
+        # The replicas of the source index should not be copied.
+        #
+        # Throw an exception if the destination index already exists
+        # Throw an exception if the indices are on the same application
+        #
+        # @param src_index the source index object
+        # @param dest_index the destination index object
+        # @param opts contains extra parameters to send with your query
+        #
         def copy_index!(src_index, dest_index, opts = {})
           response = copy_index(src_index, dest_index, opts)
           response.wait(opts)
