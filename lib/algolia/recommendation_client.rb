@@ -25,14 +25,30 @@ module Algolia
         create_with_config(config)
       end
 
+      # Create a new client providing only an Recommendation::Config object
+      #
+      # @param config [Recommendation::Config]
+      #
+      # @return self
+      #
       def self.create_with_config(config)
         new(config)
       end
 
+      # Set the personalization strategy.
+      #
+      # @param personalization_strategy [Hash] A strategy object.
+      #
+      # @return [Hash]
+      #
       def set_personalization_strategy(personalization_strategy, opts = {})
         write(:POST, '1/strategies/personalization', personalization_strategy, opts)
       end
 
+      # Get the personalization strategy.
+      #
+      # @return [Hash]
+      #
       def get_personalization_strategy(opts = {})
         read(:GET, '1/strategies/personalization', {}, opts)
       end

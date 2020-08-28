@@ -50,6 +50,8 @@ module Helpers
     format(path, *arguments)
   end
 
+  # Support to convert old settings to their new names
+  #
   def deserialize_settings(data)
     settings = symbolize_hash(data)
     keys     = {

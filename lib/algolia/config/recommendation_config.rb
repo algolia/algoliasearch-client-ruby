@@ -7,7 +7,7 @@ module Algolia
       #
       # @option options [String] :app_id
       # @option options [String] :api_key
-      # @option options [Hash] :custom_hosts
+      # @option options [String] :region
       #
       def initialize(opts = {})
         super(opts)
