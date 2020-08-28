@@ -47,9 +47,7 @@ describe 'Account client' do
 
   it 'should perform a cross app copy index and assert that destination must not exist' do
 
-    @index_1.save_objects! ([
-        {:objectID => 'one'},
-    ])
+    @index_1.save_objects!(1.upto(1500).map { |i| { :objectID => i, :i => i } })
 
     @index_1.batch_rules! ([
         {
@@ -67,9 +65,9 @@ describe 'Account client' do
 
     Algolia::AccountClient.copy_index!(@index_1, @index_3)
 
-    res = @index_3.search('');
-    res['nbHits'].should eq(1)
-    res['hits'][0]['objectID'].should eq('one')
+    res = @index_3.search('')
+    res['nbHits'].should eq(1500)
+    res['hits'][0]['objectID'].should eq('999')
 
     res = @index_3.search_rules('')['hits']
     res.size.should eq(1)
