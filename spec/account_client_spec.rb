@@ -67,7 +67,6 @@ describe 'Account client' do
 
     res = @index_3.search('')
     res['nbHits'].should eq(1500)
-    res['hits'][0]['objectID'].should eq('999')
 
     res = @index_3.search_rules('')['hits']
     res.size.should eq(1)
