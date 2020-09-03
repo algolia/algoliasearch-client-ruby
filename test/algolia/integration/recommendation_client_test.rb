@@ -17,7 +17,11 @@ class RecommendationClientTest < BaseTest
         personalizationImpact: 0
       }
 
-      client.set_personalization_strategy(personalization_strategy)
+      begin
+        client.set_personalization_strategy(personalization_strategy)
+      rescue Algolia::AlgoliaHttpError => e
+        raise e unless e.code == 429
+      end
       response = client.get_personalization_strategy
 
       assert_equal response, personalization_strategy
