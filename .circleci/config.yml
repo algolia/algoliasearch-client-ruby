@@ -21,11 +21,7 @@ aliases:
 
   - &run_lint
     name: Run linting tool
-    command: |
-      if [ << parameters.version >> -eq '2.6' || 'latest' ]
-      then
-        bundle exec rake rubocop
-      fi
+    command: bundle exec rake rubocop
 
   - &run_tests
      name: Run unit and integration tests
@@ -58,6 +54,19 @@ references:
 version: 2.1
 
 jobs:
+  format:
+    description: Run our linter checks against the entire code base
+    parameters:
+      version:
+        type: string
+    docker:
+      - *default_docker_ruby_executor
+    steps:
+      - checkout
+      - run: *check_bundler
+      - run: *install_bundler
+      - run: *run_lint
+
   test_ruby:
     description: Build, unit and integration tests for Ruby
     parameters:
@@ -71,7 +80,6 @@ jobs:
       - restore_cache: *restore_cache
       - run: *install_bundler
       - save_cache: *save_cache
-      - run: *run_lint
       - run: *run_tests
       - store_test_results: *store_test_results
       - store_artifacts: *store_artifacts
@@ -89,7 +97,6 @@ jobs:
       - restore_cache: *restore_cache
       - run: *install_bundler
       - save_cache: *save_cache
-      - run: *run_lint
       - run: *run_tests
       - store_test_results: *store_test_results
       - store_artifacts: *store_artifacts
@@ -98,6 +105,8 @@ workflows:
   version: 2
   ci:
     jobs:
+      - format:
+          version: '2.7'
       - test_ruby:
           matrix:
             parameters:
