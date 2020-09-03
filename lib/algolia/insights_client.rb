@@ -6,6 +6,13 @@ module Algolia
 
       def_delegators :@transporter, :read, :write
 
+      # Initializes the Insights client
+      #
+      # @param insights_config [Insights::Config] an Insights::Config object which contains your APP_ID and API_KEY
+      # @option adapter [Object] adapter object used for the connection
+      # @option logger [Object]
+      # @option http_requester [Object] http_requester object used for the connection
+      #
       def initialize(insights_config, opts = {})
         @config      = insights_config
         adapter      = opts[:adapter] || Defaults::ADAPTER
@@ -51,6 +58,7 @@ module Algolia
       # @param event [Hash]
       #
       # @return [Hash]
+      #
       def send_event(event, opts = {})
         send_events([event], opts)
       end
@@ -60,12 +68,18 @@ module Algolia
       # @param events [Array]
       #
       # @return [Hash]
+      #
       def send_events(events, opts = {})
         write(:POST, '/1/events', { events: events }, opts)
       end
     end
 
     class UserClient
+      # Initializes the Insights userClient
+      #
+      # @param insights_client [Insights::Client] Insights Client used to make API calls
+      # @param user_token [String] user token used to build the client
+      #
       def initialize(insights_client, user_token)
         @insights_client = insights_client
         @user_token      = user_token

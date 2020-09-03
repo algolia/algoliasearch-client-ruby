@@ -7,7 +7,6 @@ module Algolia
       attr_reader :url, :protocol, :accept
       attr_accessor :last_use, :retry_count, :up
 
-      #
       # @param url [String] host url
       # @option options [binary] :accept accept type flag
       # @option options [DateTime] :last_use last usage date

@@ -10,7 +10,7 @@ module Algolia
         #
         # @param src_index the source index object
         # @param dest_index the destination index object
-        # @param opts contains extra parameters to send with your query
+        # @param opts [Hash] contains extra parameters to send with your query
         #
         def copy_index(src_index, dest_index, opts = {})
           raise AlgoliaError, 'The indices are on the same application. Use Algolia::Search::Client.copy_index instead.' if src_index.config.app_id == dest_index.config.app_id
@@ -53,7 +53,7 @@ module Algolia
         #
         # @param src_index the source index object
         # @param dest_index the destination index object
-        # @param opts contains extra parameters to send with your query
+        # @param opts [Hash] contains extra parameters to send with your query
         #
         def copy_index!(src_index, dest_index, opts = {})
           response = copy_index(src_index, dest_index, opts)

@@ -2,6 +2,10 @@ module Algolia
   class UpdateApiKeyResponse < BaseResponse
     attr_reader :raw_response
 
+    # @param client [Search::Client] Algolia Search Client used for verification
+    # @param response [Hash] Raw response from the client
+    # @param request_options [Hash] request_options used to find the api key
+    #
     def initialize(client, response, request_options)
       @client          = client
       @raw_response    = response
@@ -9,6 +13,10 @@ module Algolia
       @done            = false
     end
 
+    # Wait for the task to complete
+    #
+    # @param opts [Hash] contains extra parameters to send with your query
+    #
     def wait(opts = {})
       retries_count = 1
 

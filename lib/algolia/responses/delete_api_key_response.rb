@@ -2,6 +2,10 @@ module Algolia
   class DeleteApiKeyResponse < BaseResponse
     attr_reader :raw_response
 
+    # @param client [Search::Client] Algolia Search Client used for verification
+    # @param response [Hash] Raw response from the client
+    # @param key [String] the key to check
+    #
     def initialize(client, response, key)
       @client       = client
       @raw_response = response
@@ -9,6 +13,10 @@ module Algolia
       @done         = false
     end
 
+    # Wait for the task to complete
+    #
+    # @param opts [Hash] contains extra parameters to send with your query
+    #
     def wait(opts = {})
       retries_count = 1
 

@@ -285,7 +285,7 @@ module Algolia
       # Add an API key with the given ACL
       #
       # @param acl [Array] API key to retrieve
-      # @param opts [Hash] optional parameters used for the key
+      # @param opts [Hash] contains extra parameters to send with your query used for the key
       #
       # @return [AddApiKeyResponse]
       #
@@ -298,7 +298,7 @@ module Algolia
       # Add an API key with the given ACL and wait for the task to complete
       #
       # @param acl [Array] API key to retrieve
-      # @param opts [Hash] optional parameters used for the key
+      # @param opts [Hash] contains extra parameters to send with your query used for the key
       #
       # @return [AddApiKeyResponse]
       #
@@ -311,7 +311,7 @@ module Algolia
       # Update an API key with the optional parameters
       #
       # @param key [String] API key to update
-      # @param opts [Hash] optional parameters used to update the key
+      # @param opts [Hash] contains extra parameters to send with your query used to update the key
       #
       # @return [UpdateApiKeyResponse]
       #
@@ -326,7 +326,7 @@ module Algolia
       # Update an API key with the optional parameters and wait for the task to complete
       #
       # @param key [String] API key to update
-      # @param opts [Hash] optional parameters used to update the key
+      # @param opts [Hash] contains extra parameters to send with your query used to update the key
       #
       # @return [UpdateApiKeyResponse]
       #
@@ -339,7 +339,7 @@ module Algolia
       # Delete the given API key
       #
       # @param key [String] API key to delete
-      # @param opts [Hash] optional parameters
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [DeleteApiKeyResponse]
       #
@@ -352,7 +352,7 @@ module Algolia
       # Delete the given API key and wait for the task to complete
       #
       # @param key [String] API key to delete
-      # @param opts [Hash] optional parameters
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [DeleteApiKeyResponse]
       #
@@ -365,7 +365,7 @@ module Algolia
       # Restore the given API key
       #
       # @param key [String] API key to restore
-      # @param opts [Hash] optional parameters
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [RestoreApiKeyResponse]
       #
@@ -378,7 +378,7 @@ module Algolia
       # Restore the given API key and wait for the task to complete
       #
       # @param key [String] API key to restore
-      # @param opts [Hash] optional parameters
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [RestoreApiKeyResponse]
       #
@@ -390,7 +390,7 @@ module Algolia
 
       # List all keys associated with the current client
       #
-      # @param opts [Hash] optional parameters
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [Hash]
       #
@@ -439,7 +439,7 @@ module Algolia
       # Batch multiple operations
       #
       # @param operations [Array] array of operations (addObject, updateObject, ...)
-      # @param opts [Hash] optional parameters
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [MultipleIndexBatchIndexingResponse]
       #
@@ -452,7 +452,7 @@ module Algolia
       # Batch multiple operations and wait for the task to complete
       #
       # @param operations [Array] array of operations (addObject, updateObject, ...)
-      # @param opts [Hash] optional parameters
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [MultipleIndexBatchIndexingResponse]
       #
@@ -465,7 +465,7 @@ module Algolia
       # Retrieve multiple objects in one batch request
       #
       # @param requests [Array] array of requests
-      # @param opts [Hash] optional parameters
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [Hash]
       #
@@ -476,7 +476,7 @@ module Algolia
       # Search multiple indices
       #
       # @param queries [Array] array of queries
-      # @param opts [Hash] optional parameters
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [Hash]
       #
@@ -515,7 +515,7 @@ module Algolia
 
       # Get the top 10 userIDs with the highest number of records per cluster.
       #
-      # @param opts [Hash] request options
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [Hash]
       #
@@ -526,7 +526,7 @@ module Algolia
       # Returns the userID data stored in the mapping.
       #
       # @param user_id [String]
-      # @param opts [Hash] request options
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [Hash]
       #
@@ -536,7 +536,7 @@ module Algolia
 
       # List the clusters available in a multi-clusters setup for a single appID
       #
-      # @param opts [Hash] request options
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [Hash]
       #
@@ -546,7 +546,7 @@ module Algolia
 
       # List the userIDs assigned to a multi-clusters appID
       #
-      # @param opts [Hash] request options
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [Hash]
       #
@@ -557,7 +557,7 @@ module Algolia
       # Remove a userID and its associated data from the multi-clusters
       #
       # @param user_id [String]
-      # @param opts [Hash] request options
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [Hash]
       #
@@ -571,7 +571,7 @@ module Algolia
       # Search for userIDs
       #
       # @param query [String]
-      # @param opts [Hash] request options
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [Hash]
       #
@@ -581,7 +581,7 @@ module Algolia
 
       # Get the status of your clusters' migrations or user creations
       #
-      # @param opts [Hash] request options
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [Hash]
       #
