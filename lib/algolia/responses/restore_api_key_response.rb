@@ -20,7 +20,7 @@ module Algolia
         begin
           @client.get_api_key(@key, opts)
           @done = true
-        rescue StandardError => e
+        rescue AlgoliaError => e
           if e.code != 404
             raise e
           end

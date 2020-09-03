@@ -23,7 +23,7 @@ module Algolia
       until @done
         begin
           @client.get_api_key(@key, opts)
-        rescue StandardError => e
+        rescue AlgoliaError => e
           @done = e.code == 404
 
           unless @done
