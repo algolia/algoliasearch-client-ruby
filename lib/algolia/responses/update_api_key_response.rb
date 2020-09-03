@@ -24,7 +24,7 @@ module Algolia
         begin
           api_key = @client.get_api_key(@raw_response[:key], opts)
           @done   = @request_options <= api_key
-        rescue StandardError => e
+        rescue AlgoliaError => e
           if e.code != 404
             raise e
           end
