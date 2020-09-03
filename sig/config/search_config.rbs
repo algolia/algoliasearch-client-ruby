@@ -1,0 +1,17 @@
+module Algolia
+  module Search
+    class Config < AlgoliaConfig
+      include CallType
+
+      attr_accessor default_hosts: Array[untyped]
+
+      # Initialize a config
+      #
+      # @option options [String] :app_id
+      # @option options [String] :api_key
+      # @option options [Hash] :custom_hosts
+      #
+      def initialize: (?::Hash[Symbol, String | [String]] opts) -> bool
+    end
+  end
+end

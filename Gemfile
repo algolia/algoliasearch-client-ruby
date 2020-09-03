@@ -9,6 +9,7 @@ gem 'minitest-ci'
 
 group :development do
   gem 'git-precommit'
+  gem 'steep'
   gem 'yard'
 end
 
