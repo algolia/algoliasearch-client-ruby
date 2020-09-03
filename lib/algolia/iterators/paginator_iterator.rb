@@ -1,5 +1,9 @@
 module Algolia
   class PaginatorIterator < BaseIterator
+    # @param transporter    [Transport::Transport]  transporter used for requests
+    # @param index_name    [String]  Name of the index
+    # @param opts [Hash] contains extra parameters to send with your query
+    #
     def initialize(transporter, index_name, opts)
       super(transporter, index_name, opts)
 
