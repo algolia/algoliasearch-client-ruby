@@ -1,0 +1,17 @@
+module Algolia
+  module Recommendation
+    class Config < AlgoliaConfig
+      attr_accessor region: String
+
+      attr_accessor default_hosts: [String]
+
+      # Initialize a config
+      #
+      # @option options [String] :app_id
+      # @option options [String] :api_key
+      # @option options [String] :region
+      #
+      def initialize: (?::Hash[Symbol, String] opts) -> bool
+    end
+  end
+end

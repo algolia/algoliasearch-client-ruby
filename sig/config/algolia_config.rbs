@@ -1,0 +1,33 @@
+module Algolia
+  # Class AlgoliaConfig
+  class AlgoliaConfig
+    attr_accessor app_id: String
+
+    attr_accessor api_key: String
+
+    attr_accessor default_headers: Hash[String, String]
+
+    attr_accessor batch_size: Integer
+
+    attr_accessor read_timeout: Integer
+
+    attr_accessor write_timeout: Integer
+
+    attr_accessor connect_timeout: Integer
+
+    attr_accessor compression_type: String
+
+    attr_accessor symbolize_keys: bool
+
+    #
+    # @option options [String] :app_id
+    # @option options [String] :api_key
+    # @option options [Integer] :batch_size
+    # @option options [Integer] :read_timeout
+    # @option options [Integer] :write_timeout
+    # @option options [Integer] :connect_timeout
+    # @option options [Boolean] :symbolize_keys
+    #
+    def initialize: (?::Hash[Symbol, String|[String]] opts) -> bool
+  end
+end
