@@ -101,6 +101,26 @@ jobs:
       - store_test_results: *store_test_results
       - store_artifacts: *store_artifacts
 
+  release:
+    description: Release a new version of the Ruby client
+    parameters:
+      version:
+        type: string
+    docker:
+      - *default_docker_ruby_executor
+    steps:
+      - checkout
+      - run: *check_bundler
+      - run: *install_bundler
+      - run:
+          name: Build new gem
+          command: gem build algolia.gemspec
+      - run:
+          name: Publish new gem
+          command: |
+            if [[ -z "$RUBYGEMS_API_KEY" ]]; then echo '$RUBYGEMS_API_KEY is not set'; exit 1; fi
+            gem push --key $RUBYGEMS_API_KEY $(ls algolia-*.gem)
+
 workflows:
   version: 2
   ci:
@@ -115,3 +135,14 @@ workflows:
           matrix:
             parameters:
               version: ['9.1', '9.2']
+      - release:
+          version: '2.7'
+          requires:
+            - format
+            - test_ruby
+            - test_jruby
+          filters:
+            branches:
+              only: master
+            tags:
+              only: /^[1-9]+.[0-9]+.[0-9]+.*/
