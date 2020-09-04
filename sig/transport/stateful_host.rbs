@@ -3,17 +3,12 @@ module Algolia
     class StatefulHost
       include CallType
 
-      attr_reader url: untyped
-
-      attr_reader protocol: untyped
-
-      attr_reader accept: untyped
-
-      attr_accessor last_use: untyped
-
-      attr_accessor retry_count: untyped
-
-      attr_accessor up: untyped
+      attr_reader url: String
+      attr_reader protocol: String
+      attr_reader accept: String
+      attr_accessor last_use: String
+      attr_accessor retry_count: Integer
+      attr_accessor up: bool
 
       def initialize: (String url, ?::Hash[Symbol|String, untyped] opts) -> void
     end

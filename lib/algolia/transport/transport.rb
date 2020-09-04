@@ -127,11 +127,11 @@ module Algolia
 
       # Generates headers from config headers and optional parameters
       #
-      # @option options [String] :headers
+      # @param request_options [RequestOptions]
       #
       # @return [Hash] merged headers
       #
-      def generate_headers(request_options = {})
+      def generate_headers(request_options)
         headers                                                     = {}
         extra_headers                                               = request_options.headers || {}
         @config.default_headers.each { |key, val| headers[key.to_s] = val }

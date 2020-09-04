@@ -1,0 +1,17 @@
+module Algolia
+  module Transport
+    # Class RetryStatregy
+    class RetryStrategy
+      include RetryOutcomeType
+
+      def initialize: (Search::Config config) -> bool
+      def get_tryable_hosts: (Integer call_type) -> [String]
+      def decide: (StatefulHost tryable_host, ?http_response_code: Integer http_response_code, ?is_timed_out: bool is_timed_out, ?network_failure: bool network_failure) -> Integer
+      def success?: (Integer http_response_code) -> bool
+      def retryable?: (Integer http_response_code, bool network_failure) -> bool
+      def reset_expired_hosts: () -> void
+      def reset: (StatefulHost host) -> void
+      def flag?: (Integer item, Integer flag) -> bool
+    end
+  end
+end
