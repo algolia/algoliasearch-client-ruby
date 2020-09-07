@@ -1,0 +1,60 @@
+module Algolia
+  module Transport
+    class RequestOptions
+      attr_accessor headers: untyped
+
+      attr_accessor params: untyped
+
+      attr_accessor data: untyped
+
+      attr_accessor timeout: untyped
+
+      attr_accessor connect_timeout: untyped
+
+      attr_accessor compression_type: untyped
+
+      #
+      # @param [Search::Config] config
+      #
+      def initialize: (Algolia::Search::Config config) -> untyped
+
+      # Create and format headers and params from request options
+      #
+      # @param opts [Hash]
+      #
+      def create: (?::Hash[untyped, untyped] opts) -> untyped
+
+      # Add or update headers
+      #
+      # @param opts [Hash]
+      #
+      def add_headers: (?::Hash[untyped, untyped] opts) -> untyped
+
+      # Add or update query parameters
+      #
+      # @param opts [Hash]
+      #
+      def add_params: (?::Hash[untyped, untyped] opts) -> untyped
+
+      # Add or update timeout
+      #
+      # @param opts [Hash]
+      #
+      def add_timeout: (?::Hash[untyped, untyped] opts) -> untyped
+
+      # Add or update connect timeout
+      #
+      # @param opts [Hash]
+      #
+      def add_connect_timeout: (?::Hash[untyped, untyped] opts) -> untyped
+
+      # Add or update compression_type
+      #
+      # @param opts [Hash]
+      #
+      def add_compression_type: (?::Hash[untyped, untyped] opts) -> untyped
+
+      def add_data_body: (?::Hash[untyped, untyped] opts) -> untyped
+    end
+  end
+end

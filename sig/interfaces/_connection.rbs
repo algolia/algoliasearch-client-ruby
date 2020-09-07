@@ -1,0 +1,16 @@
+interface _Connection
+
+  def options: () -> _ConnectionOptions
+
+  def run_request: (untyped method, untyped path, untyped body, untyped headers) -> untyped
+
+end
+
+interface _ConnectionOptions
+
+  def timeout: () -> Integer
+  def timeout=: (Integer timeout) -> Integer
+  def open_timeout: () -> Integer
+  def open_timeout=: (Integer timeout) -> Integer
+
+end

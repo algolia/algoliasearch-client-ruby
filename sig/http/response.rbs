@@ -1,0 +1,26 @@
+module Algolia
+  module Http
+    class Response
+      attr_reader status: untyped
+
+      attr_reader body: untyped
+
+      attr_reader error: untyped
+
+      attr_reader headers: untyped
+
+      attr_reader has_timed_out: bool
+
+      attr_reader network_failure: untyped
+
+      #
+      # @option status    [String]  Response status
+      # @option body    [String]  Response body
+      # @option error    [String]  Response error or caught error
+      # @option headers    [String]  Response headers
+      # @option has_timed_out    [String]  If the request has timed out
+      #
+      def initialize: (?::Hash[Symbol, String | bool] opts) -> untyped
+    end
+  end
+end
