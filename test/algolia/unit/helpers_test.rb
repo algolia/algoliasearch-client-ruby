@@ -3,6 +3,7 @@ require 'test_helper'
 
 class HelpersTest
   include Helpers
+
   describe 'test helpers' do
     def test_deserialize_settings
       old_settings = {
@@ -19,6 +20,50 @@ class HelpersTest
 
       deserialized_settings = deserialize_settings(old_settings)
       assert_equal new_settings, deserialized_settings
+    end
+  end
+
+  describe 'test hash_includes_subset' do
+    def test_empty_hashes
+      h      = {}
+      subset = {}
+      assert hash_includes_subset?(h, subset)
+    end
+
+    def test_with_empty_subset
+      h      = { a: 100, b: 200 }
+      subset = {}
+      assert hash_includes_subset?(h, subset)
+    end
+
+    def test_subset_included
+      h      = { a: 100, b: 200 }
+      subset = { a: 100 }
+      assert hash_includes_subset?(h, subset)
+    end
+
+    def test_subset_not_included
+      h      = { a: 100, b: 200 }
+      subset = { c: 300 }
+      refute hash_includes_subset?(h, subset)
+    end
+
+    def test_subset_included_but_wrong_value
+      h      = { a: 100, b: 200 }
+      subset = { a: 200 }
+      refute hash_includes_subset?(h, subset)
+    end
+
+    def test_subset_included_with_multiple_values
+      h      = { a: 100, b: 200, c: 300 }
+      subset = { a: 100, b: 200 }
+      assert hash_includes_subset?(h, subset)
+    end
+
+    def test_subset_not_included_because_too_many_values
+      h      = { a: 100, b: 200 }
+      subset = { a: 100, b: 200, c: 300 }
+      refute hash_includes_subset?(h, subset)
     end
   end
 end

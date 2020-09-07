@@ -72,4 +72,12 @@ module Helpers
   def self.included(base)
     base.extend(Helpers)
   end
+
+  def hash_includes_subset?(hash, subset)
+    res = true
+    subset.each do |k, v|
+      res &&= hash[k] == v
+    end
+    res
+  end
 end
