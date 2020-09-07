@@ -1,60 +1,33 @@
 module Algolia
   module Transport
     class RequestOptions
-      attr_accessor headers: untyped
+      attr_accessor headers: Hash[Symbol|String, String]
 
-      attr_accessor params: untyped
+      attr_accessor params: Hash[Symbol|String, untyped]
 
-      attr_accessor data: untyped
+      attr_accessor data: Hash[Symbol|String, untyped]
 
-      attr_accessor timeout: untyped
+      attr_accessor timeout: Integer
 
-      attr_accessor connect_timeout: untyped
+      attr_accessor connect_timeout: Integer
 
-      attr_accessor compression_type: untyped
+      attr_accessor compression_type: String
 
-      #
-      # @param [Search::Config] config
-      #
-      def initialize: (Algolia::Search::Config config) -> untyped
+      def initialize: (Algolia::Search::Config config) -> void
 
-      # Create and format headers and params from request options
-      #
-      # @param opts [Hash]
-      #
-      def create: (?::Hash[untyped, untyped] opts) -> untyped
+      def create: (?::Hash[Symbol | String, untyped] opts) -> void
 
-      # Add or update headers
-      #
-      # @param opts [Hash]
-      #
-      def add_headers: (?::Hash[untyped, untyped] opts) -> untyped
+      def add_headers: (?::Hash[Symbol | String, untyped] opts) -> void
 
-      # Add or update query parameters
-      #
-      # @param opts [Hash]
-      #
-      def add_params: (?::Hash[untyped, untyped] opts) -> untyped
+      def add_params: (?::Hash[Symbol | String, untyped] opts) -> void
 
-      # Add or update timeout
-      #
-      # @param opts [Hash]
-      #
-      def add_timeout: (?::Hash[untyped, untyped] opts) -> untyped
+      def add_timeout: (?::Hash[Symbol | String, untyped] opts) -> void
 
-      # Add or update connect timeout
-      #
-      # @param opts [Hash]
-      #
-      def add_connect_timeout: (?::Hash[untyped, untyped] opts) -> untyped
+      def add_connect_timeout: (?::Hash[Symbol | String, untyped] opts) -> void
 
-      # Add or update compression_type
-      #
-      # @param opts [Hash]
-      #
-      def add_compression_type: (?::Hash[untyped, untyped] opts) -> untyped
+      def add_compression_type: (?::Hash[Symbol | String, untyped] opts) -> void
 
-      def add_data_body: (?::Hash[untyped, untyped] opts) -> untyped
+      def add_data_body: (?::Hash[Symbol | String, untyped] opts) -> void
     end
   end
 end
