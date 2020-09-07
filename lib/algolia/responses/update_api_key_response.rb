@@ -1,5 +1,6 @@
 module Algolia
   class UpdateApiKeyResponse < BaseResponse
+    include Helpers
     attr_reader :raw_response
 
     # @param client [Search::Client] Algolia Search Client used for verification
@@ -23,7 +24,7 @@ module Algolia
       until @done
         begin
           api_key = @client.get_api_key(@raw_response[:key], opts)
-          @done   = @request_options <= api_key
+          @done   = hash_includes_subset?(api_key, @request_options)
         rescue AlgoliaError => e
           raise e unless e.code == 404
           retries_count    += 1
