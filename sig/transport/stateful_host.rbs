@@ -6,7 +6,7 @@ module Algolia
       attr_reader url: String
       attr_reader protocol: String
       attr_reader accept: String
-      attr_accessor last_use: String
+      attr_accessor last_use: Time
       attr_accessor retry_count: Integer
       attr_accessor up: bool
 
