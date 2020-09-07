@@ -17,10 +17,16 @@ class RecommendationClientTest < BaseTest
         personalizationImpact: 0
       }
 
-      client.set_personalization_strategy(personalization_strategy)
-      response = client.get_personalization_strategy
+      begin
+        client.set_personalization_strategy(personalization_strategy)
+        response = client.get_personalization_strategy
 
-      assert_equal response, personalization_strategy
+        assert_equal response, personalization_strategy
+      rescue Algolia::AlgoliaHttpError => http_error
+        # We rescue HTTP 429 errors because of the limit of 15 daily strategy saves in the API
+        raise http_error unless http_error.code === 429
+      end
+
     end
   end
 end
