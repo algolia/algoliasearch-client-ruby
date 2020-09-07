@@ -24,10 +24,9 @@ module Algolia
         begin
           api_key = @client.get_api_key(@raw_response[:key], opts)
           @done   = @request_options <= api_key
-        rescue StandardError => e
-          if e.code != 404
-            raise e
-          end
+        rescue Algolia::AlgoliaError => e
+          raise e unless e.code == 404
+
           retries_count    += 1
           time_before_retry = retries_count * Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY
           sleep(time_before_retry / 1000)
