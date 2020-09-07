@@ -23,7 +23,7 @@ module Algolia
       until @done
         begin
           api_key = @client.get_api_key(@raw_response[:key], opts)
-          @done   = @request_options.subset? api_key
+          @done   = @request_options.to_set.subset? api_key.to_set
         rescue Algolia::AlgoliaError => e
           raise e unless e.code == 404
 
