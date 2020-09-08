@@ -107,7 +107,6 @@ module Algolia
       #
       # @return [Hash|AlgoliaHttpError] the matching object and its position in the result set
       #
-      # TODO: use lambda
       def find_object(callback, opts = {})
         request_options = symbolize_hash(opts)
         paginate        = true
