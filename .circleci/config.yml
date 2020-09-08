@@ -127,14 +127,23 @@ workflows:
     jobs:
       - format:
           version: '2.7'
+          filters:
+            tags:
+              only: /.*/
       - test_ruby:
           matrix:
             parameters:
               version: ['2.2', '2.3', '2.4', '2.5', '2.6', '2.7']
+          filters:
+            tags:
+              only: /.*/
       - test_jruby:
           matrix:
             parameters:
               version: ['9.1', '9.2']
+          filters:
+            tags:
+              only: /.*/
       - release:
           version: '2.7'
           requires:
@@ -143,6 +152,6 @@ workflows:
             - test_jruby
           filters:
             branches:
-              only: master
+              ignore: /.*/
             tags:
               only: /^[1-9]+.[0-9]+.[0-9]+.*/
