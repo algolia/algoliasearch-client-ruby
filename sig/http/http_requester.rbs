@@ -7,7 +7,7 @@ module Algolia
 
       def initialize: (String adapter, Logger logger) -> void
 
-      def send_request: (Algolia::Transport::StatefulHost host, Symbol method, String path, Hash[Symbol | String, untyped] body, Hash[String | Symbol, String | bool] headers, Integer timeout, Integer connect_timeout) -> Algolia::Http::Response
+      def send_request: (Algolia::Transport::StatefulHost host, Symbol method, String path, Hash[Symbol|String, untyped] body, Hash[String|Symbol, String|bool] headers, Integer timeout, Integer connect_timeout) -> Algolia::Http::Response
 
       def connection: (Algolia::Transport::StatefulHost host) -> _Connection
 

@@ -15,19 +15,19 @@ module Algolia
 
       def initialize: (Algolia::Search::Config config) -> void
 
-      def create: (?::Hash[Symbol | String, untyped] opts) -> void
+      def create: (?::Hash[Symbol|String, untyped] opts) -> void
 
-      def add_headers: (?::Hash[Symbol | String, untyped] opts) -> void
+      def add_headers: (?::Hash[Symbol|String, untyped] opts) -> void
 
-      def add_params: (?::Hash[Symbol | String, untyped] opts) -> void
+      def add_params: (?::Hash[Symbol|String, untyped] opts) -> void
 
-      def add_timeout: (?::Hash[Symbol | String, untyped] opts) -> void
+      def add_timeout: (?::Hash[Symbol|String, untyped] opts) -> void
 
-      def add_connect_timeout: (?::Hash[Symbol | String, untyped] opts) -> void
+      def add_connect_timeout: (?::Hash[Symbol|String, untyped] opts) -> void
 
-      def add_compression_type: (?::Hash[Symbol | String, untyped] opts) -> void
+      def add_compression_type: (?::Hash[Symbol|String, untyped] opts) -> void
 
-      def add_data_body: (?::Hash[Symbol | String, untyped] opts) -> void
+      def add_data_body: (?::Hash[Symbol|String, untyped] opts) -> void
     end
   end
 end

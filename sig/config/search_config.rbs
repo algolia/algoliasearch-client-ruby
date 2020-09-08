@@ -5,7 +5,7 @@ module Algolia
 
       attr_accessor default_hosts: Array[untyped]
 
-      def initialize: (?::Hash[Symbol, String | [String]] opts) -> void
+      def initialize: (?::Hash[Symbol, String|[String]] opts) -> void
     end
   end
 end
