@@ -19,15 +19,6 @@ module Algolia
 
     attr_accessor symbolize_keys: bool
 
-    #
-    # @option options [String] :app_id
-    # @option options [String] :api_key
-    # @option options [Integer] :batch_size
-    # @option options [Integer] :read_timeout
-    # @option options [Integer] :write_timeout
-    # @option options [Integer] :connect_timeout
-    # @option options [Boolean] :symbolize_keys
-    #
-    def initialize: (?::Hash[Symbol, String|[String]] opts) -> bool
+    def initialize: (?::Hash[Symbol, String|[String]] opts) -> void
   end
 end

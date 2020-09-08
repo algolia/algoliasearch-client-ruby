@@ -2,7 +2,7 @@ interface _Connection
 
   def options: () -> _ConnectionOptions
 
-  def run_request: (untyped method, untyped path, untyped body, untyped headers) -> untyped
+  def run_request: (Symbol method, String path, Hash[Symbol, String | [String]] body, Hash[String, String] headers) -> Http::Response
 
 end
 
