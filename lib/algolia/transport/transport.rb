@@ -7,7 +7,6 @@ module Algolia
       include CallType
       include Helpers
 
-      #
       # @param config [Search::Config] config used for search
       # @param requester [Object] requester used for sending requests. Uses Algolia::Http::HttpRequester by default
       #
@@ -22,7 +21,7 @@ module Algolia
       # @param method [Symbol] method used for request
       # @param path [String] path of the request
       # @param body [Hash] request body
-      # @param opts [Hash] optional request parameters
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       def read(method, path, body = {}, opts = {})
         request(READ, method, path, body, opts)
@@ -33,18 +32,17 @@ module Algolia
       # @param method [Symbol] method used for request
       # @param path [String] path of the request
       # @param body [Hash] request body
-      # @param opts [Hash] optional request parameters
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       def write(method, path, body = {}, opts = {})
         request(WRITE, method, path, body, opts)
       end
 
-      #
       # @param call_type [Binary] READ or WRITE operation
       # @param method [Symbol] method used for request
       # @param path [String] path of the request
       # @param body [Hash] request body
-      # @param opts [Hash] optional request parameters
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [Response] response of the request
       #

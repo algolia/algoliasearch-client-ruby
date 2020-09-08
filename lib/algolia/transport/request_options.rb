@@ -3,7 +3,6 @@ module Algolia
     class RequestOptions
       attr_accessor :headers, :params, :data, :timeout, :connect_timeout, :compression_type
 
-      #
       # @param [Search::Config] config
       #
       def initialize(config)
@@ -81,6 +80,8 @@ module Algolia
         opts.delete(:compression_type)
       end
 
+      # @param opts [Hash]
+      #
       def add_data_body(opts = {})
         unless opts.empty?
           opts.each do |key, value|

@@ -1,11 +1,18 @@
 module Algolia
   class RestoreApiKeyResponse < BaseResponse
+    # @param index [Search::Index] Algolia Search Index used for verification
+    # @param key [String] the key to check
+    #
     def initialize(client, key)
       @client = client
       @key    = key
       @done   = false
     end
 
+    # Wait for the task to complete
+    #
+    # @param opts [Hash] contains extra parameters to send with your query
+    #
     def wait(opts = {})
       retries_count = 1
 

@@ -5,6 +5,13 @@ module Algolia
 
       def_delegators :@transporter, :read, :write
 
+      # Initializes the Recommendation client
+      #
+      # @param recommendation_config [Recommendation::Config] a Recommendation::Config object which contains your APP_ID and API_KEY
+      # @option adapter [Object] adapter object used for the connection
+      # @option logger [Object]
+      # @option http_requester [Object] http_requester object used for the connection
+      #
       def initialize(recommendation_config, opts = {})
         @config      = recommendation_config
         adapter      = opts[:adapter] || Defaults::ADAPTER

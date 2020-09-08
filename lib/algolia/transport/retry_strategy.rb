@@ -4,7 +4,6 @@ module Algolia
     class RetryStrategy
       include RetryOutcomeType
 
-      #
       # @param config [Search::Config] config which contains the hosts
       #
       def initialize(config)
@@ -64,7 +63,6 @@ module Algolia
 
       private
 
-      #
       # @param http_response_code [Integer]
       #
       # @return [Boolean]
@@ -73,7 +71,6 @@ module Algolia
         !http_response_code.nil? && (http_response_code.to_i / 100).floor == 2
       end
 
-      #
       # @param http_response_code [Integer]
       #
       # @return [Boolean]
@@ -86,7 +83,6 @@ module Algolia
         !http_response_code.nil? && (http_response_code.to_i / 100).floor != 2 && (http_response_code.to_i / 100).floor != 4
       end
 
-      #
       # Iterates in the hosts list and reset the ones that are down
       #
       def reset_expired_hosts
@@ -96,7 +92,6 @@ module Algolia
         end
       end
 
-      #
       # Reset a single host
       #
       # @param host [StatefulHost]
@@ -107,7 +102,6 @@ module Algolia
         host.last_use    = Time.now.utc
       end
 
-      #
       # Make a binary check to know whether the item contains the flag
       #
       # @param item [binary] item to check

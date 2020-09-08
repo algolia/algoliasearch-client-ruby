@@ -46,7 +46,7 @@ module Algolia
       # Creates a new A/B test with provided configuration.
       #
       # @param ab_test [Hash]
-      # @param opts [Hash]
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [Hash]
       #
@@ -57,7 +57,7 @@ module Algolia
       # Returns metadata and metrics for A/B test id.
       #
       # @param ab_test_id [Integer] A/B test ID
-      # @param opts [Hash]
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [Hash]
       #
@@ -70,7 +70,7 @@ module Algolia
       # Fetch all existing A/B tests for App that are available for the current API Key.
       # Returns an array of metadata and metrics.
       #
-      # @param opts [Hash]
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [Hash]
       #
@@ -81,7 +81,7 @@ module Algolia
       # Marks the A/B test as stopped. At this point, the test is over and cannot be restarted
       #
       # @param ab_test_id [Integer] A/B test ID
-      # @param opts [Hash]
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [Hash]
       #
@@ -94,7 +94,7 @@ module Algolia
       # Deletes the A/B Test and removes all associated metadata & metrics.
       #
       # @param ab_test_id [Integer] A/B test ID
-      # @param opts [Hash]
+      # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [Hash]
       #
