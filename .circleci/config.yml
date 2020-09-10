@@ -29,13 +29,6 @@ aliases:
        mkdir /tmp/test-results
        bundle exec rake test:all
 
-  - &store_test_results
-    path: /tmp/test-results
-
-  - &store_artifacts
-    path: /tmp/test-results
-    destination: test-results
-
 references:
   default_docker_ruby_executor: &default_docker_ruby_executor
     image: circleci/ruby:<< parameters.version >>
@@ -81,8 +74,6 @@ jobs:
       - run: *install_bundler
       - save_cache: *save_cache
       - run: *run_tests
-      - store_test_results: *store_test_results
-      - store_artifacts: *store_artifacts
 
   test_jruby:
     description: Build, unit and integration tests for JRuby
@@ -98,8 +89,6 @@ jobs:
       - run: *install_bundler
       - save_cache: *save_cache
       - run: *run_tests
-      - store_test_results: *store_test_results
-      - store_artifacts: *store_artifacts
 
   release:
     description: Release a new version of the Ruby client
