@@ -1,7 +1,7 @@
 module Helpers
 
   def to_json: (String|Hash[Symbol, String] body) -> String
-  def symbolize_hash: (Hash[Symbol|String, untyped] hash) -> Hash[Symbol, String]
+  def symbolize_hash: (Hash[Symbol|String, untyped] hash) -> Hash[Symbol, untyped]
   def handle_params: (Hash[Symbol, String] params) -> String
   def to_query_string: (Hash[Symbol, String] params) -> String
   def json_to_hash: (String json, bool symbolize_keys) -> Hash[Symbol, String]
