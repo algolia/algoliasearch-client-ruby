@@ -10,6 +10,6 @@ module Algolia
     attr_reader opts: Hash[Symbol, String|[String]]
 
     # TODO: add Transporter
-    def initialize: (untyped transporter, String index_name, Hash[Symbol, String|[String]] opts) -> bool
+    def initialize: (untyped transporter, String index_name, Hash[Symbol, String|[String]] opts) -> void
   end
 end

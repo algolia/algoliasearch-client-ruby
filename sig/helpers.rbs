@@ -1,35 +1,12 @@
 module Helpers
-  # Convert an Hash to json
-  #
+
   def to_json: (String|Hash[Symbol, String] body) -> String
-
-  # Converts each key of a hash to symbols
-  #
-  def symbolize_hash: (Hash[Symbol|String, String] hash) -> Hash[Symbol, String]
-
-  # Convert params to a full query string
-  #
+  def symbolize_hash: (Hash[Symbol|String, untyped] hash) -> Hash[Symbol, String]
   def handle_params: (Hash[Symbol, String] params) -> String
-
-  # Create a query string from params
-  #
   def to_query_string: (Hash[Symbol, String] params) -> String
-
-  # Convert a json object to an hash
-  #
   def json_to_hash: (String json, bool symbolize_keys) -> Hash[Symbol, String]
-
-  # Retrieve the given value associated with a key, in string or symbol format
-  #
   def get_option: ([Symbol|String, String] hash, String key) -> (String | [String])
-
-  # Build a path with the given arguments
-  #
   def path_encode: (String path, *String args) -> String
-
-  # Support to convert old settings to their new names
-  #
   def deserialize_settings: (Hash[Symbol|String, String] data) -> Hash[Symbol, String]
-
   def self.included: (self base) -> self
 end
