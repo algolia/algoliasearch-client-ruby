@@ -131,7 +131,7 @@ module Algolia
           end
 
           has_next_page = page + 1 < res[:nbPages]
-          raise AlgoliaHttpError.new(404, 'Object not found') unless paginate || has_next_page
+          raise AlgoliaHttpError.new(404, 'Object not found') unless paginate && has_next_page
 
           page += 1
         end
