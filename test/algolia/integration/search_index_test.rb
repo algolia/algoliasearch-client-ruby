@@ -296,12 +296,12 @@ class SearchIndexTest < BaseTest
 
     def test_find_objects
       exception = assert_raises Algolia::AlgoliaHttpError do
-        @index.find_object(lambda {|hit| false }, { query: '', paginate: false })
+        @index.find_object(-> (_hit) { false }, { query: '', paginate: false })
       end
 
       assert_equal 'Object not found', exception.message
 
-      response = @index.find_object(lambda {|hit| true }, { query: '', paginate: false })
+      response = @index.find_object(-> (_hit) { true }, { query: '', paginate: false })
       assert_equal 0, response[:position]
       assert_equal 0, response[:page]
 

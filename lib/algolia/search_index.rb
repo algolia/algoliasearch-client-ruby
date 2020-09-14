@@ -112,11 +112,11 @@ module Algolia
         paginate        = true
         page            = 0
 
-        query = request_options.delete(:query) || ''
+        query    = request_options.delete(:query) || ''
         paginate = request_options.delete(:paginate) if request_options.has_key?(:paginate)
 
         has_next_page = true
-        while has_next_page do
+        while has_next_page
           request_options[:page] = page
           res                    = search(query, request_options)
 
