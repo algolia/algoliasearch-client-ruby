@@ -6,7 +6,7 @@ module Algolia
       #TODO include Helpers
       include Helpers
 
-      def initialize: (Search::Config config, Object requester) -> bool
+      def initialize: (Search::Config config, Object requester) -> void
       def read: (Symbol method, String path, ?::Hash[Symbol, String|[String]] body, ?::Hash[Symbol, String|[String]] opts) -> String
       def write: (Symbol method, String path, ?::Hash[Symbol, String|[String]] body, ?::Hash[Symbol, String|[String]] opts) -> String
       def request: (Integer call_type, Symbol method, String path, ?::Hash[Symbol, String|[String]] body, ?::Hash[Symbol, String|[String]] opts) -> String

@@ -132,10 +132,7 @@ module Algolia
       # @return [Hash] merged headers
       #
       def generate_headers(request_options)
-        headers                                                = {}
-        extra_headers                                          = request_options.headers
-        @config.default_headers.each { |key, val| headers[key] = val }
-        extra_headers.each { |key, val| headers[key]           = val }
+        headers = @config.default_headers.merge(request_options.headers)
         if request_options.compression_type == Defaults::GZIP_ENCODING
           headers['Accept-Encoding']  = Defaults::GZIP_ENCODING
         end
