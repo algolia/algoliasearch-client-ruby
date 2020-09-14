@@ -102,45 +102,36 @@ module Algolia
       # Usage example:
       #  index.find_object({'query' => '', 'paginate' => true}) {|obj| obj.key?('company') and obj['company'] == 'Apple'}
       #
+      # @param callback [Lambda] contains extra parameters to send with your query
       # @param opts [Hash] contains extra parameters to send with your query
       #
       # @return [Hash|AlgoliaHttpError] the matching object and its position in the result set
       #
-      # TODO: use lambda
-      def find_object(opts = {})
+      def find_object(callback, opts = {})
         request_options = symbolize_hash(opts)
         paginate        = true
         page            = 0
 
-        query = request_options[:query] || ''
-        request_options.delete(:query)
+        query    = request_options.delete(:query) || ''
+        paginate = request_options.delete(:paginate) if request_options.has_key?(:paginate)
 
-        if request_options.has_key? :paginate
-          paginate = request_options[:paginate]
-        end
-
-        request_options.delete(:paginate)
-
-        loop do
+        has_next_page = true
+        while has_next_page
           request_options[:page] = page
           res                    = search(query, request_options)
 
-          if block_given?
-            res[:hits].each_with_index do |hit, i|
-              if yield(hit)
-                return {
-                  object: hit,
-                  position: i,
-                  page: page
-                }
-              end
+          res[:hits].each_with_index do |hit, i|
+            if callback.call(hit)
+              return {
+                object: hit,
+                position: i,
+                page: page
+              }
             end
           end
 
           has_next_page = page + 1 < res[:nbPages]
-          if !paginate || !has_next_page
-            raise AlgoliaHttpError.new(404, 'Object not found')
-          end
+          raise AlgoliaHttpError.new(404, 'Object not found') unless paginate && has_next_page
 
           page += 1
         end
