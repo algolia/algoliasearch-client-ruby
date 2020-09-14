@@ -1,6 +1,5 @@
 module Algolia
   module Transport
-    # Class RetryStatregy
     class RetryStrategy
       include RetryOutcomeType
 
