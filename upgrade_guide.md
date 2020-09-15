@@ -349,3 +349,16 @@ New method to check the status of your clusters' migration or user creation.
 ```ruby
 client.pending_mapping?({ retrieveMappings: true })
 ``` 
+
+### `get_logs`
+The `offset`, `length`, and `type` parameters are now part of the `requestOptions`.
+```ruby
+client.get_logs({ offset: 5, length: 10, type: 'all' })
+```
+
+## Configuring timeouts
+You can configure timeouts by passing a custom `Algolia::Search::Config` object to the constructor of your client.
+```ruby
+search_config = Algolia::Search::Config.new(app_id: app_id, api_key: api_key, read_timeout: 10, connect_timeout: 2)
+client = Algolia::Search::Client.new(search_config)
+```
