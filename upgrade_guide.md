@@ -104,3 +104,13 @@ No change.
 
 ### `batch`
 No change.
+
+### `get_settings`
+No change.
+
+### set_settings
+No change.
+
+### `copy_settings`
+No change.
+
