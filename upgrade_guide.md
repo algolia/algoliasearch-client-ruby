@@ -303,3 +303,9 @@ No change.
 
 ### `viewed_filters`
 No change.
+
+### `set_personalization_strategy`
+This method is moved to the `Algolia::Recommendation::Client` class.
+
+### `set_personalization_strategy`
+This method is moved to the `Algolia::Recommendation::Client` class.
