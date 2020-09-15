@@ -90,7 +90,7 @@ No change.
 No change.
 
 ### `clear_index`
-Renamed to `clear_objects`
+Renamed to `clear_objects`.
 
 ### `get_object` and `get_objects`
 The `attributesToRetrieve` parameter is now part of the `requestOptions`.
@@ -178,3 +178,37 @@ This method is moved to the `Algolia::Search::Client` class.
 ```ruby
 Algolia::Search::Client.get_secured_api_key_remaining_validity('api_key')
 ```
+
+### `save_synonym`
+The `objectID` parameter has been removed, and should be part of the synonym hash.
+```ruby
+index.save_synonym({ objectID: 'one', type: 'synonym', synonyms: %w(one two) })
+```
+
+### `batch_synonyms`
+Renamed to `save_synonyms`. `forwardToReplicas` and `replaceExistingSynonyms` parmameters are now part of `requestOptions`.
+```ruby
+synonym = synonym2 = {}
+index.save_synonyms([synonym, synonym2], { forwardToReplicas: true, replaceExistingSynonyms: true })
+```
+
+### `delete_synonym`
+No change.
+
+### `clear_synonyms`
+No change.
+
+### `get_synonym`
+No change.
+
+### `search_synonyms`
+No change.
+
+### `replace_all_synonyms`
+No change.
+
+### `copy_synonyms`
+No change.
+
+### `export_synonyms`
+Renamed to `browse_synonyms`.
