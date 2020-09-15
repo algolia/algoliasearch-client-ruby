@@ -2,9 +2,6 @@ module Algolia
   module Analytics
     class Client
       include Helpers
-      extend Forwardable
-
-      def_delegators :@transporter, :read, :write
 
       # Initializes the Analytics client
       #
@@ -51,7 +48,7 @@ module Algolia
       # @return [Hash]
       #
       def add_ab_test(ab_test, opts = {})
-        write(:POST, '/2/abtests', ab_test, opts)
+        @transporter.write(:POST, '/2/abtests', ab_test, opts)
       end
 
       # Returns metadata and metrics for A/B test id.
@@ -64,7 +61,7 @@ module Algolia
       def get_ab_test(ab_test_id, opts = {})
         raise AlgoliaError, 'ab_test_id cannot be empty.' if ab_test_id.nil?
 
-        read(:GET, path_encode('/2/abtests/%s', ab_test_id), {}, opts)
+        @transporter.read(:GET, path_encode('/2/abtests/%s', ab_test_id), {}, opts)
       end
 
       # Fetch all existing A/B tests for App that are available for the current API Key.
@@ -75,7 +72,7 @@ module Algolia
       # @return [Hash]
       #
       def get_ab_tests(opts = {})
-        read(:GET, '/2/abtests', {}, opts)
+        @transporter.read(:GET, '/2/abtests', {}, opts)
       end
 
       # Marks the A/B test as stopped. At this point, the test is over and cannot be restarted
@@ -88,7 +85,7 @@ module Algolia
       def stop_ab_test(ab_test_id, opts = {})
         raise AlgoliaError, 'ab_test_id cannot be empty.' if ab_test_id.nil?
 
-        write(:POST, path_encode('/2/abtests/%s/stop', ab_test_id), {}, opts)
+        @transporter.write(:POST, path_encode('/2/abtests/%s/stop', ab_test_id), {}, opts)
       end
 
       # Deletes the A/B Test and removes all associated metadata & metrics.
@@ -101,7 +98,7 @@ module Algolia
       def delete_ab_test(ab_test_id, opts = {})
         raise AlgoliaError, 'ab_test_id cannot be empty.' if ab_test_id.nil?
 
-        write(:DELETE, path_encode('/2/abtests/%s', ab_test_id), {}, opts)
+        @transporter.write(:DELETE, path_encode('/2/abtests/%s', ab_test_id), {}, opts)
       end
     end
   end
