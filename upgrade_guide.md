@@ -114,3 +114,25 @@ No change.
 ### `copy_settings`
 No change.
 
+### `list_indexes
+No change.
+
+### `delete_index`
+Instead of calling the `delete_index` method on the client, you should call the `delete` method directly on the index object.
+
+```ruby
+index = client.init_index('foo')
+index.delete
+```
+
+### `copy_index`
+No change.
+
+### `browse`
+Renamed to `browse_objects`.
+
+### `move_index`
+No change.
+
+### `index.exists?`
+No change.
