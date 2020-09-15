@@ -212,3 +212,55 @@ No change.
 
 ### `export_synonyms`
 Renamed to `browse_synonyms`.
+
+### `save_rule`
+The `objectID` parameter has been removed, and should be part of the Rule object.
+```ruby
+index.save_rule({
+  objectID: 'one',
+  condition: { anchoring: 'is', pattern: 'pattern' },
+  consequence: {
+   params: {
+      query: {
+        edits: [
+          { type: 'remove', delete: 'pattern' }
+        ]
+      }
+    }
+  }
+})
+```
+
+### `batch_rules`
+Renamed to `save_rules`. The `forwardToReplicas` and `clearExistingRules` parameters should now be part of the `requestOptions`.
+```ruby
+rules = []
+index.save_rules(rules, { forwardToReplicas: true, clearExistingRules: true })
+```
+
+### `get_rule`
+No change.
+
+### `delete_rule`
+The `forwardToReplicas` parameter is now part of the `requestOptions`.
+```ruby
+index.delete_rule('rule-id', { forwardToReplicas: true })
+```
+
+### `clear_rules`
+The `forwardToReplicas` parameter is now part of the `requestOptions`.
+```ruby
+index.clear_rules({ forwardToReplicas: true })
+```
+
+### `search_rules`
+No change.
+
+### `replace_all_rules`
+No change.
+
+### `copy_rules`
+No change.
+
+### `export_rules`
+Renamed to `browse_rules`.
