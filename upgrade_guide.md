@@ -264,3 +264,19 @@ No change.
 
 ### `export_rules`
 Renamed to `browse_rules`.
+
+### `add_ab_test`
+No change.
+
+### `get_ab_test`
+No change.
+
+### `get_ab_tests`
+No change.
+
+### `stop_ab_test`
+No change.
+
+### `delete_ab_test`
+No change.
+
