@@ -136,3 +136,45 @@ No change.
 
 ### `index.exists?`
 No change.
+
+### `generate_secured_api_key`
+This method is moved to the `Algolia::Search::Client` class.
+```ruby
+secured_api_key = Algolia::Search::Client.generate_secured_api_key('api_key', {
+  validUntil: now - (10 * 60)
+})
+```
+
+### `add_api_key`
+`acl` is still the first parameter. The other parameters have been moved to the `reuqestOptions`.
+
+```ruby
+client.add_api_key(['search'], {
+  description: 'A description',
+  indexes: ['index']
+})
+```
+
+### `update_api_key`
+This method is moved to the `Algolia::Search::Client` class.
+```ruby
+client.update_api_key('api_key', { maxHitsPerQuery: 42 })
+```
+
+### `delete_api_key`
+No change.
+
+### `restore_api_key`
+No change.
+
+### `get_api_key`
+No change.
+
+### `list_api_keys`
+No change.
+
+### `get_secured_api_key_remaining_validity`
+This method is moved to the `Algolia::Search::Client` class.
+```ruby
+Algolia::Search::Client.get_secured_api_key_remaining_validity('api_key')
+```
