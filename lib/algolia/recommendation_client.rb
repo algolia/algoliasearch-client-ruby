@@ -1,10 +1,6 @@
 module Algolia
   module Recommendation
     class Client
-      extend Forwardable
-
-      def_delegators :@transporter, :read, :write
-
       # Initializes the Recommendation client
       #
       # @param recommendation_config [Recommendation::Config] a Recommendation::Config object which contains your APP_ID and API_KEY
@@ -49,7 +45,7 @@ module Algolia
       # @return [Hash]
       #
       def set_personalization_strategy(personalization_strategy, opts = {})
-        write(:POST, '1/strategies/personalization', personalization_strategy, opts)
+        @transporter.write(:POST, '1/strategies/personalization', personalization_strategy, opts)
       end
 
       # Get the personalization strategy.
@@ -57,7 +53,7 @@ module Algolia
       # @return [Hash]
       #
       def get_personalization_strategy(opts = {})
-        read(:GET, '1/strategies/personalization', {}, opts)
+        @transporter.read(:GET, '1/strategies/personalization', {}, opts)
       end
     end
   end

@@ -2,9 +2,6 @@ module Algolia
   module Insights
     class Client
       include Helpers
-      extend Forwardable
-
-      def_delegators :@transporter, :read, :write
 
       # Initializes the Insights client
       #
@@ -70,7 +67,7 @@ module Algolia
       # @return [Hash]
       #
       def send_events(events, opts = {})
-        write(:POST, '/1/events', { events: events }, opts)
+        @transporter.write(:POST, '/1/events', { events: events }, opts)
       end
     end
 
