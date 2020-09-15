@@ -280,3 +280,26 @@ No change.
 ### `delete_ab_test`
 No change.
 
+### `clicked_object_ids_after_search`
+No change.
+
+### `clicked_object_ids`
+No change.
+
+### `clicked_filters`
+No change.
+
+### `converted_object_ids_after_search`
+No change.
+
+### `converted_object_ids`
+No change.
+
+### `converted_filters`
+No change.
+
+### `viewed_object_ids`
+No change.
+
+### `viewed_filters`
+No change.
