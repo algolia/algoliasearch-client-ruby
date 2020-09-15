@@ -34,7 +34,7 @@ module Algolia
       def add_headers(opts = {})
         unless opts[:headers].nil?
           opts[:headers].each do |opt, value|
-            @headers[opt.to_sym] = value
+            @headers[opt.to_s] = value
           end
           opts.delete(:headers)
         end
