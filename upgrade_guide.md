@@ -309,3 +309,43 @@ This method is moved to the `Algolia::Recommendation::Client` class.
 
 ### `set_personalization_strategy`
 This method is moved to the `Algolia::Recommendation::Client` class.
+
+### `assign_user_id`
+No change.
+
+### `assign_user_ids`
+Newly added method to add multiple userIDs to a cluster.
+```ruby
+user_ids = [1,2,3]
+client.list_user_ids(user_ids, 'my-cluster')
+```
+
+### `get_top_user_id`
+No change.
+
+### `get_user_id`
+No change.
+
+### `list_clusters`
+No change.
+
+### `list_user_ids`
+The `page` and `hitsPerPage` parameters are now part of the `requestOptions`.
+```ruby
+client.list_user_ids({ hitPerPage: 5, page: 1 })
+```
+
+### `remove_user_id`
+No change.
+
+### `search_user_ids`
+The `clusterName`, `page` and `hitsPerPage` parameters are now part of the `requestOptions`.
+```ruby
+client.search_user_ids('query', {clusterName: 'my-cluster', hitPerPage: 5, page: 1 })
+```
+
+### `pending_mappings`
+New method to check the status of your clusters' migration or user creation.
+```ruby
+client.pending_mapping?({ retrieveMappings: true })
+``` 
