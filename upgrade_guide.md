@@ -1,3 +1,12 @@
+## Class names
+All classes have been namespaced. The mostly used classes are now as follows:
+ 
+- `Algolia::Client` -> `Algolia::Search::Client`
+- `Algolia::Index` -> `Algolia::Search::Index`
+- `Algolia::AccountClient` -> `Algolia::Account::Client`
+- `Algolia::Analytics` -> `Algolia::Analytics::Client`
+- `Algolia::Insights` -> `Algolia::Insights::Client`
+
 ## Initialize the client
 There's a slight change in how you initialize the client.
 ```ruby
@@ -8,8 +17,9 @@ client = Algolia::Search::Client.new(search_config)
 ```
 
 ## Initialize an index
+The way you instantiate an Index from the client did not change.
 ```ruby
-client.init_index
+client.init_index('index_name')
 ```
 
 ## Search parameters and request options
