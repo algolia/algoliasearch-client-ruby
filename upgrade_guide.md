@@ -13,7 +13,7 @@ There's a slight change in how you initialize the client.
 client = Algolia::Search::Client.create('APP_ID', 'API_KEY')
 # OR
 search_config = Algolia::Search::Config.new(app_id: app_id, api_key: api_key)
-client = Algolia::Search::Client.new(search_config)
+client = Algolia::Search::Client.create_with_config(search_config)
 ```
 
 ## Initialize an index
@@ -124,7 +124,7 @@ No change.
 ### `copy_settings`
 No change.
 
-### `list_indexes
+### `list_indexes`
 No change.
 
 ### `delete_index`
@@ -156,7 +156,7 @@ secured_api_key = Algolia::Search::Client.generate_secured_api_key('api_key', {
 ```
 
 ### `add_api_key`
-`acl` is still the first parameter. The other parameters have been moved to the `reuqestOptions`.
+`acl` is still the first parameter. The other parameters have been moved to the `requestOptions`.
 
 ```ruby
 client.add_api_key(['search'], {
@@ -370,5 +370,5 @@ client.get_logs({ offset: 5, length: 10, type: 'all' })
 You can configure timeouts by passing a custom `Algolia::Search::Config` object to the constructor of your client.
 ```ruby
 search_config = Algolia::Search::Config.new(app_id: app_id, api_key: api_key, read_timeout: 10, connect_timeout: 2)
-client = Algolia::Search::Client.new(search_config)
+client = Algolia::Search::Client.create_with_config(search_config)
 ```
