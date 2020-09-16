@@ -148,7 +148,7 @@ No change.
 #### `assign_user_ids`
 Newly added method to add multiple userIDs to a cluster.
 ```ruby
-user_ids = [1,2,3]
+user_ids = ['1','2','3']
 
 # Before
 user_ids.each { |id| client.assign_user_id(id, 'my-cluster')}
