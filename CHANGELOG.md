@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## [1.27.4](https://github.com/algolia/algoliasearch-client-ruby/compare/1.27.3...1.27.4) (2020-09-16)
+
+**Fixed**
+
+* Retrieve all objects when using `copy_index` from `AccountClient` class ([399](https://github.com/algolia/algoliasearch-client-ruby/pull/399))
+
 ## [1.27.3](https://github.com/algolia/algoliasearch-client-ruby/compare/1.27.2...1.27.3) (2020-06-03)
 
 **Fixed**
