@@ -112,6 +112,7 @@ This method is moved to the `Algolia::Search::Client` class.
 ```ruby
 # Before
 Algolia.update_api_key('api_key', { maxHitsPerQuery: 42 })
+
 # After
 client.update_api_key('api_key', { maxHitsPerQuery: 42 })
 ```
