@@ -55,7 +55,7 @@ module Algolia
         batch_size = 1000
         count = 0
 
-        source_index.browse()['hits'].each do |obj|
+        source_index.browse do |obj|
           batch << obj
           count += 1
 
