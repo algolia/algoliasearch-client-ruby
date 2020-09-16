@@ -7,25 +7,36 @@ All classes have been namespaced. The mostly used classes are now as follows:
 - `Algolia::Analytics` -> `Algolia::Analytics::Client`
 - `Algolia::Insights` -> `Algolia::Insights::Client`
 
-## Initialize the client
-There's a slight change in how you initialize the client.
+## Initialize the client and index
+There's a slight change in how you initialize the client. The index initialization didn't change.
 ```ruby
+# Before
+client = Algolia::Client.new(
+   application_id: 'APP_ID',
+   api_key: 'API_KEY'
+)
+index = client.init_index('index_name')
+
+# After
 client = Algolia::Search::Client.create('APP_ID', 'API_KEY')
-# OR
+index = client.init_index('index_name')
+# or
 search_config = Algolia::Search::Config.new(app_id: app_id, api_key: api_key)
 client = Algolia::Search::Client.create_with_config(search_config)
-```
-
-## Initialize an index
-The way you instantiate an Index from the client did not change.
-```ruby
-client.init_index('index_name')
+index = client.init_index('index_name')
 ```
 
 ## Search parameters and request options
 The search parameters and request options are still optional, but they are combined into a single hash instead of two. 
 For example:
 ```ruby
+# Before
+request_opts = { 'X-Algolia-UserToken': 'user123' }
+search_params = { hitsPerPage: 50 }
+
+index.search('query', search_params, request_opts)
+
+# After
 opts = {
   :headers => {
     'X-Algolia-UserToken': 'user123'
@@ -39,195 +50,409 @@ index.search('query', opts)
 
 ## Methods
 
-### `search` 
-`searchParameters` and `requestOptions` are a single parameter now. 
+### `Client`
 
-### `search_for_facet_values`
-`searchParameters` and `requestOptions` are a single parameter now.
-
-### `multiple_queries`
+#### `multiple_queries`
 The `strategy` parameter is no longer a string, but a key in the `requestOptions`.
-
 ```ruby
-client.multiple_queries([
-        { indexName: 'index_name1', params: to_query_string({ query: '', hitsPerPage: 2 }) },
-        { indexName: 'index_name2', params: to_query_string({ query: '', hitsPerPage: 2 }) }
-      ], { strategy: 'none' })
+queries = [
+  { indexName: 'index_name1', params: { query: 'query', hitsPerPage: 2 } },
+  { indexName: 'index_name2', params: { query: 'another_query', hitsPerPage: 5 } }
+]
+
+# Before
+client.multiple_queries(queries, 'stopIfEnoughMatches')
+
+# After
+client.multiple_queries(queries, { strategy: 'stopIfEnoughMatches' })
 ```
 
-### `find_object`
-The method takes a lambda, proc or block as the first argument (anything that responds to `call`), and the `requestOptions` as the second
-```ruby
-index.find_object(-> (hit) { h.yes? }, { query: '', paginate: true })
-```
-
-### `get_object_position`
-The classname has changed, not the method itself.
-```ruby
-objects = []
-position = Algolia::Search::Index.find_object_position(objects, 'objectID-to-find')
-```
-
-### `add_object` and `add_objects`
-These methods have been removed in favor of `save_object` and `save_objects`.
-
-### `save_object` and `save_objects`
+#### `copy_settings`
 No change.
 
-### `partial_update_object`
-The `objectID` parameter is removed. `create_if_not_exists` is now part of the `requestOptions` parameter.
-
-```ruby
-obj = { objectID: '1234', prop: 'value' }
-index.partial_update_object(obj, { createIfNotExists: true })
-```
-
-### `partial_update_objects`
-The `create_if_not_exists` parameter is now part of the `requestOptions` parameter.
-
-```ruby
-objects = []
-index.partial_update_objects(objects, { createIfNotExists: true })
-```
-
-### `delete_object` and `delete_objects`
+#### `list_indexes`
 No change.
 
-### `replace_all_objects`
+#### `copy_index`
 No change.
 
-### `delete_by`
+#### `move_index`
 No change.
 
-### `clear_index`
-Renamed to `clear_objects`.
-
-### `get_object` and `get_objects`
-The `attributesToRetrieve` parameter is now part of the `requestOptions`.
-```ruby
-index.get_object('1234', { attributesToRetrieve: ['title'] })
-index.get_objects([1,2,3], { attributesToRetrieve: ['title'] })
-```
-
-### `multiple_get_objects`
-No change.
-
-### `batch`
-No change.
-
-### `get_settings`
-No change.
-
-### set_settings
-No change.
-
-### `copy_settings`
-No change.
-
-### `list_indexes`
-No change.
-
-### `delete_index`
-Instead of calling the `delete_index` method on the client, you should call the `delete` method directly on the index object.
-
-```ruby
-index = client.init_index('foo')
-index.delete
-```
-
-### `copy_index`
-No change.
-
-### `browse`
-Renamed to `browse_objects`.
-
-### `move_index`
-No change.
-
-### `index.exists?`
-No change.
-
-### `generate_secured_api_key`
+#### `generate_secured_api_key`
 This method is moved to the `Algolia::Search::Client` class.
 ```ruby
+# Before
+secured_api_key = Algolia.generate_secured_api_key('api_key', {
+  validUntil: now - (10 * 60)
+})
+
+# After
 secured_api_key = Algolia::Search::Client.generate_secured_api_key('api_key', {
   validUntil: now - (10 * 60)
 })
 ```
 
-### `add_api_key`
+#### `add_api_key`
 `acl` is still the first parameter. The other parameters have been moved to the `requestOptions`.
 
 ```ruby
+# Before
+client.add_api_key({ acl: ['search'], description: 'A description', indexes: ['index']})
+
+# After
 client.add_api_key(['search'], {
   description: 'A description',
   indexes: ['index']
 })
 ```
 
-### `update_api_key`
+#### `update_api_key`
 This method is moved to the `Algolia::Search::Client` class.
 ```ruby
+# Before
+Algolia.update_api_key('api_key', { maxHitsPerQuery: 42 })
+# After
 client.update_api_key('api_key', { maxHitsPerQuery: 42 })
 ```
 
-### `delete_api_key`
+#### `delete_api_key`
 No change.
 
-### `restore_api_key`
+#### `restore_api_key`
 No change.
 
-### `get_api_key`
+#### `get_api_key`
 No change.
 
-### `list_api_keys`
+#### `list_api_keys`
 No change.
 
-### `get_secured_api_key_remaining_validity`
+#### `get_secured_api_key_remaining_validity`
 This method is moved to the `Algolia::Search::Client` class.
 ```ruby
+# Before
+Algolia.get_secured_api_key_remaining_validity('api_key')
+
+# After
 Algolia::Search::Client.get_secured_api_key_remaining_validity('api_key')
 ```
 
-### `save_synonym`
+#### `copy_synonyms`
+No change.
+
+#### `assign_user_id`
+No change.
+
+#### `assign_user_ids`
+Newly added method to add multiple userIDs to a cluster.
+```ruby
+user_ids = [1,2,3]
+
+# Before
+user_ids.each { |id| client.assign_user_id(id, 'my-cluster')}
+
+# After
+client.assign_user_ids(user_ids, 'my-cluster')
+```
+
+#### `get_top_user_id`
+No change.
+
+#### `get_user_id`
+No change.
+
+#### `list_clusters`
+No change.
+
+#### `list_user_ids`
+The `page` and `hitsPerPage` parameters are now part of the `requestOptions`.
+```ruby
+# Before
+page = 0
+hits_per_page = 20
+client.list_user_ids(page, hits_per_page)
+
+# After
+client.list_user_ids({ hitPerPage: 20, page: 0 })
+```
+
+#### `remove_user_id`
+No change.
+
+#### `search_user_ids`
+The `clusterName`, `page` and `hitsPerPage` parameters are now part of the `requestOptions`.
+```ruby
+# Before
+page = 0
+hits_per_page = 12
+client.search_user_ids('query', 'my-cluster', page, hits_per_page)
+
+# After
+client.search_user_ids('query', {clusterName: 'my-cluster', hitPerPage: 12, page: 0 })
+```
+
+#### `pending_mappings`
+New method to check the status of your clusters' migration or user creation.
+```ruby
+client.pending_mapping?({ retrieveMappings: true })
+``` 
+
+#### `get_logs`
+The `offset`, `length`, and `type` parameters are now part of the `requestOptions`.
+```ruby
+# Before
+offset = 5
+length = 100
+puts client.get_logs(offset, length, 'all')
+
+# After
+client.get_logs({ offset: 5, length: 10, type: 'all' })
+```
+
+#### `copy_rules`
+No change.
+
+### `Index`
+#### `search` 
+`searchParameters` and `requestOptions` are a single parameter now. 
+
+```ruby
+# Before
+request_opts = { 'X-Algolia-UserToken': 'user123' }
+search_params = { hitsPerPage: 50 }
+
+index.search('query', search_params, request_opts)
+
+# After
+opts = {
+  :headers => {
+    'X-Algolia-UserToken': 'user123'
+  },
+  :params => {
+    hitsPerPage: 50
+  }
+}
+index.search('query', opts)
+```
+
+#### `search_for_facet_values`
+`searchParameters` and `requestOptions` are a single parameter now.
+```ruby
+# Before
+request_opts = { 'X-Algolia-UserToken': 'user123' }
+search_params = { hitsPerPage: 50 }
+
+index.search_for_facet_values('category', 'phone', search_params, request_opts)
+
+# After
+opts = {
+  :headers => {
+    'X-Algolia-UserToken': 'user123'
+  },
+  :params => {
+    hitsPerPage: 50
+  }
+}
+index.search_for_facet_values('category', 'phone', opts)
+```
+
+#### `find_object`
+The method takes a lambda, proc or block as the first argument (anything that responds to `call`), and the `requestOptions` as the second
+```ruby
+# Before
+index.find_object({query: 'query', paginate: true}) { |hit| hit[:title].include?('algolia') }
+
+# After
+index.find_object(-> (hit) { hit[:title].include?('algolia') }, { query: 'query', paginate: true })
+```
+
+#### `get_object_position`
+The classname has changed, not the method itself.
+```ruby
+# Before
+position = Algolia::Index.get_object_position(results, 'object')
+
+# After
+position = Algolia::Search::Index.get_object_position(results, 'object')
+```
+
+#### `add_object` and `add_objects`
+These methods have been removed in favor of `save_object` and `save_objects`.
+
+#### `save_object` and `save_objects`
+No change.
+
+#### `partial_update_object`
+The `objectID` parameter is removed. `create_if_not_exists` is now part of the `requestOptions` parameter.
+
+```ruby
+obj = { objectID: '1234', prop: 'value' }
+
+# Before
+create_if_not_exists = true
+index.partial_update_object(obj, obj[:objectID], create_if_not_exists)
+
+# After
+index.partial_update_object(obj, { createIfNotExists: true })
+```
+
+#### `partial_update_objects`
+The `create_if_not_exists` parameter is now part of the `requestOptions` parameter.
+
+```ruby
+# Before
+create_if_not_exists = true
+index.partial_update_objects(objects, create_if_not_exists)
+
+# After
+index.partial_update_objects(objects, { createIfNotExists: true })
+```
+
+#### `delete_object` and `delete_objects`
+No change.
+
+#### `replace_all_objects`
+No change.
+
+#### `delete_by`
+No change.
+
+#### `clear_index`
+Renamed to `clear_objects`.
+```ruby
+# Before
+index.clear_index
+
+# After
+index.clear_objects
+```
+
+#### `get_object` and `get_objects`
+The `attributesToRetrieve` parameter is now part of the `requestOptions`.
+```ruby
+# Before
+index.get_object('1234', ['title'])
+index.get_objects([1,2,3], ['title'])
+
+# After 
+index.get_object('1234', { attributesToRetrieve: ['title'] })
+index.get_objects([1,2,3], { attributesToRetrieve: ['title'] })
+```
+
+#### `multiple_get_objects`
+No change.
+
+#### `batch`
+No change.
+
+#### `get_settings`
+No change.
+
+#### `set_settings`
+No change.
+
+#### `delete_index`
+Instead of calling the `delete_index` method on the client, you should call the `delete` method directly on the index object.
+
+```ruby
+# Before
+client.delete_index('foo')
+
+# After
+index.delete
+```
+
+#### `browse`
+Renamed to `browse_objects`.
+```ruby
+# Before
+request_opts = { 'X-Algolia-UserToken': 'user123' }
+index.browse({ query: 'query'}, nil, request_opts) do |hit|
+  puts hit
+end
+
+# After
+opts = {
+  query: 'query',
+  headers: { 'X-Algolia-UserToken': 'user123' }
+}
+index.browse_objects(opts) do |hit|
+  puts hit
+end
+```
+
+#### `index.exists?`
+No change.
+
+#### `save_synonym`
 The `objectID` parameter has been removed, and should be part of the synonym hash.
 ```ruby
-index.save_synonym({ objectID: 'one', type: 'synonym', synonyms: %w(one two) })
+# Before
+forward_to_replicas = true
+index.save_synonym('one', { objectID: 'one', type: 'synonym', synonyms: %w(one two) }, forward_to_replicas)
+
+# After
+index.save_synonym({ objectID: 'one', type: 'synonym', synonyms: %w(one two) }, { forwardToReplicas: true})
 ```
 
-### `batch_synonyms`
+#### `batch_synonyms`
 Renamed to `save_synonyms`. `forwardToReplicas` and `replaceExistingSynonyms` parmameters are now part of `requestOptions`.
 ```ruby
-synonym = synonym2 = {}
-index.save_synonyms([synonym, synonym2], { forwardToReplicas: true, replaceExistingSynonyms: true })
+# Before
+forward_to_replicas = true
+replace_existing_synonyms = true
+index.batch_synonyms(synonyms, forward_to_replicas, replace_existing_synonyms)
+# After
+index.save_synonyms(synonyms, { forwardToReplicas: true, replaceExistingSynonyms: true })
 ```
 
-### `delete_synonym`
+#### `delete_synonym`
 No change.
 
-### `clear_synonyms`
+#### `clear_synonyms`
 No change.
 
-### `get_synonym`
+#### `get_synonym`
 No change.
 
-### `search_synonyms`
+#### `search_synonyms`
 No change.
 
-### `replace_all_synonyms`
+#### `replace_all_synonyms`
 No change.
 
-### `copy_synonyms`
-No change.
-
-### `export_synonyms`
+#### `export_synonyms`
 Renamed to `browse_synonyms`.
+```ruby
+# Before
+synonyms = index.export_synonyms
 
-### `save_rule`
+# After
+synonyms = index.browse_synonyms
+```
+
+#### `save_rule`
 The `objectID` parameter has been removed, and should be part of the Rule object.
 ```ruby
+# Before
+index.save_rule('unique-id', {
+  objectID: 'unique-id',
+  condition: { anchoring: 'is', pattern: 'pattern' },
+  consequence: {
+   params: {
+      query: {
+        edits: [
+          { type: 'remove', delete: 'pattern' }
+        ]
+      }
+    }
+  }
+})
+
+# After
 index.save_rule({
-  objectID: 'one',
+  objectID: 'unique-id',
   condition: { anchoring: 'is', pattern: 'pattern' },
   consequence: {
    params: {
@@ -241,134 +466,112 @@ index.save_rule({
 })
 ```
 
-### `batch_rules`
+#### `batch_rules`
 Renamed to `save_rules`. The `forwardToReplicas` and `clearExistingRules` parameters should now be part of the `requestOptions`.
 ```ruby
-rules = []
+# Before
+forward_to_replicas = true
+clear_existing_rules = true
+index.batch_rules(rules, forward_to_replicas, clear_existing_rules)
+
+# After
 index.save_rules(rules, { forwardToReplicas: true, clearExistingRules: true })
 ```
 
-### `get_rule`
+#### `get_rule`
 No change.
 
-### `delete_rule`
+#### `delete_rule`
 The `forwardToReplicas` parameter is now part of the `requestOptions`.
 ```ruby
+# Before
+forward_to_replicas = true
+index.delete_rule('rule-id', forward_to_replicas)
+
+# After
 index.delete_rule('rule-id', { forwardToReplicas: true })
 ```
 
-### `clear_rules`
+#### `clear_rules`
 The `forwardToReplicas` parameter is now part of the `requestOptions`.
 ```ruby
+# Before
+forward_to_replicas = true
+index.clear_rules(forward_to_replicas)
+
+# After
 index.clear_rules({ forwardToReplicas: true })
 ```
 
-### `search_rules`
+#### `search_rules`
 No change.
 
-### `replace_all_rules`
+#### `replace_all_rules`
 No change.
 
-### `copy_rules`
-No change.
-
-### `export_rules`
+#### `export_rules`
 Renamed to `browse_rules`.
 
-### `add_ab_test`
+### `AnalyticsClient`
+#### `add_ab_test`
 No change.
 
-### `get_ab_test`
+#### `get_ab_test`
 No change.
 
-### `get_ab_tests`
+#### `get_ab_tests`
 No change.
 
-### `stop_ab_test`
+#### `stop_ab_test`
 No change.
 
-### `delete_ab_test`
+#### `delete_ab_test`
 No change.
 
-### `clicked_object_ids_after_search`
+### `InsightsClient`
+#### `clicked_object_ids_after_search`
 No change.
 
-### `clicked_object_ids`
+#### `clicked_object_ids`
 No change.
 
-### `clicked_filters`
+#### `clicked_filters`
 No change.
 
-### `converted_object_ids_after_search`
+#### `converted_object_ids_after_search`
 No change.
 
-### `converted_object_ids`
+#### `converted_object_ids`
 No change.
 
-### `converted_filters`
+#### `converted_filters`
 No change.
 
-### `viewed_object_ids`
+#### `viewed_object_ids`
 No change.
 
-### `viewed_filters`
+#### `viewed_filters`
 No change.
 
-### `set_personalization_strategy`
-This method is moved to the `Algolia::Recommendation::Client` class.
+### `RecommendationClient`
+#### `set_personalization_strategy`
+This new method is available on the `Algolia::Recommendation::Client` class.
 
-### `set_personalization_strategy`
-This method is moved to the `Algolia::Recommendation::Client` class.
-
-### `assign_user_id`
-No change.
-
-### `assign_user_ids`
-Newly added method to add multiple userIDs to a cluster.
-```ruby
-user_ids = [1,2,3]
-client.list_user_ids(user_ids, 'my-cluster')
-```
-
-### `get_top_user_id`
-No change.
-
-### `get_user_id`
-No change.
-
-### `list_clusters`
-No change.
-
-### `list_user_ids`
-The `page` and `hitsPerPage` parameters are now part of the `requestOptions`.
-```ruby
-client.list_user_ids({ hitPerPage: 5, page: 1 })
-```
-
-### `remove_user_id`
-No change.
-
-### `search_user_ids`
-The `clusterName`, `page` and `hitsPerPage` parameters are now part of the `requestOptions`.
-```ruby
-client.search_user_ids('query', {clusterName: 'my-cluster', hitPerPage: 5, page: 1 })
-```
-
-### `pending_mappings`
-New method to check the status of your clusters' migration or user creation.
-```ruby
-client.pending_mapping?({ retrieveMappings: true })
-``` 
-
-### `get_logs`
-The `offset`, `length`, and `type` parameters are now part of the `requestOptions`.
-```ruby
-client.get_logs({ offset: 5, length: 10, type: 'all' })
-```
+#### `set_personalization_strategy`
+This new method is available on the `Algolia::Recommendation::Client` class.
 
 ## Configuring timeouts
 You can configure timeouts by passing a custom `Algolia::Search::Config` object to the constructor of your client.
 ```ruby
-search_config = Algolia::Search::Config.new(app_id: app_id, api_key: api_key, read_timeout: 10, connect_timeout: 2)
+# Before
+client = Algolia::Client.new({
+  application_id: 'app_id',
+  api_key: 'api_key',
+  connect_timeout: 2,
+  receive_timeout: 10,
+})
+
+# After
+search_config = Algolia::Search::Config.new(app_id: 'app_id', api_key: 'api_key', read_timeout: 10, connect_timeout: 2)
 client = Algolia::Search::Client.create_with_config(search_config)
 ```
