@@ -1,0 +1,19 @@
+module Algolia
+  module Transport
+    class Transport
+      include RetryOutcomeType
+      include CallType
+      include Helpers
+
+      def initialize: (Search::Config config, Object requester) -> void
+      def read: (Symbol method, String path, ?::Hash[Symbol, String|[String]] body, ?::Hash[Symbol, String|[String]] opts) -> String
+      def write: (Symbol method, String path, ?::Hash[Symbol, String|[String]] body, ?::Hash[Symbol, String|[String]] opts) -> String
+      def request: (Integer call_type, Symbol method, String path, ?::Hash[Symbol, String|[String]] body, ?::Hash[Symbol, String|[String]] opts) -> String
+      def build_request: (Symbol method, String path, Hash[Symbol, String|[String]] body, RequestOptions request_options) -> Hash[Symbol, String|[String]]
+      def build_uri_path: (String path, Hash[Symbol, String|[String]] params) -> String
+      def build_body: (Hash[Symbol, String|[String]] body, RequestOptions request_options, Symbol method) -> (nil | String)
+      def generate_headers: (RequestOptions request_options) -> Hash[Symbol, String]
+      def get_timeout: (Integer call_type) -> Integer
+    end
+  end
+end
