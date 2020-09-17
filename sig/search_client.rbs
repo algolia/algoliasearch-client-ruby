@@ -1,0 +1,57 @@
+module Algolia
+  module Search
+    # Class Client
+    class Client
+      include CallType
+      include Helpers
+
+      def initialize: (Search::Config search_config, ?::Hash[Symbol, String|[String]] opts) -> bool
+      def self.create: (String app_id, String api_key) -> self
+      def self.create_with_config: (Search::Config config) -> self
+      def wait_task: (String index_name, Integer task_id, ?Integer time_before_retry, ?::Hash[Symbol, String|[String]] opts) -> nil
+      def get_task_status: (String index_name, Integer task_id, ?::Hash[Symbol, String|[String]] opts) -> String
+
+      # TODO add Index
+      #
+      def init_index: (String index_name) -> untyped
+      def list_indexes: (?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def get_logs: (?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def copy_rules: (String src_index_name, String dest_index_name, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def copy_rules!: (String src_index_name, String dest_index_name, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def copy_settings: (String src_index_name, String dest_index_name, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def copy_settings!: (String src_index_name, String dest_index_name, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def copy_synonyms: (String src_index_name, String dest_index_name, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def copy_synonyms!: (String src_index_name, String dest_index_name, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def copy_index: (String src_index_name, String dest_index_name, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def copy_index!: (String src_index_name, String dest_index_name, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def move_index: (String src_index_name, String dest_index_name, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def move_index!: (String src_index_name, String dest_index_name, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def get_api_key: (String key_id, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def add_api_key: ([String] acl, ?::Hash[Symbol, String|[String]] opts) -> AddApiKeyResponse
+      def add_api_key!: ([String] acl, ?::Hash[Symbol, String|[String]] opts) -> AddApiKeyResponse
+      def update_api_key: (String key, ?::Hash[Symbol, String|[String]] opts) -> UpdateApiKeyResponse
+      def update_api_key!: (String key, ?::Hash[Symbol, String|[String]] opts) -> UpdateApiKeyResponse
+      def delete_api_key: (String key, ?::Hash[Symbol, String|[String]] opts) -> DeleteApiKeyResponse
+      def delete_api_key!: (String key, ?::Hash[Symbol, String|[String]] opts) -> DeleteApiKeyResponse
+      def restore_api_key: (String key, ?::Hash[Symbol, String|[String]] opts) -> RestoreApiKeyResponse
+      def restore_api_key!: (String key, ?::Hash[Symbol, String|[String]] opts) -> RestoreApiKeyResponse
+      def list_api_keys: (?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def self.generate_secured_api_key: (String parent_key, Hash[Symbol, String] restrictions) -> String
+      def self.get_secured_api_key_remaining_validity: (String secured_api_key) -> Integer
+      def multiple_batch: ([Object] operations, ?::Hash[Symbol, String|[String]] opts) -> MultipleIndexBatchIndexingResponse
+      def multiple_batch!: ([Object] operations, ?::Hash[Symbol, String|[String]] opts) -> MultipleIndexBatchIndexingResponse
+      def multiple_get_objects: ([Object] requests, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def multiple_queries: ([Object] queries, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def assign_user_id: (String user_id, String cluster_name, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def assign_user_ids: ([String] user_ids, String cluster_name, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def get_top_user_ids: (?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def get_user_id: (String user_id, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def list_clusters: (?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def list_user_ids: (?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def remove_user_id: (String user_id, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def search_user_ids: (String query, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def pending_mappings?: (?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def custom_request: (Hash[Symbol, String|[String]] data, String uri, Symbol method, Integer call_type, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      end
+      end
+      end
