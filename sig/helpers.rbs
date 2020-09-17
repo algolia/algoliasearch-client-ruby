@@ -1,5 +1,4 @@
 module Helpers
-
   def to_json: (String|Hash[Symbol, String] body) -> String
   def symbolize_hash: (Hash[Symbol|String, untyped] hash) -> Hash[Symbol, untyped]
   def handle_params: (Hash[Symbol, String] params) -> String
