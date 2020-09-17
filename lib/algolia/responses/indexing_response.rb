@@ -1,5 +1,6 @@
 module Algolia
   class IndexingResponse < BaseResponse
+    # @dynamic raw_response
     attr_reader :raw_response
 
     # @param index [Search::Index] Algolia Search Index used for verification

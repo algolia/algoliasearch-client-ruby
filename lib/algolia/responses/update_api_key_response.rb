@@ -1,6 +1,8 @@
 module Algolia
   class UpdateApiKeyResponse < BaseResponse
     include Helpers
+
+    # @dynamic raw_response
     attr_reader :raw_response
 
     # @param client [Search::Client] Algolia Search Client used for verification

@@ -1,0 +1,9 @@
+module Algolia
+  class UpdateApiKeyResponse < BaseResponse
+    attr_reader raw_response: Hash[Symbol, String|[String]]
+
+    # TODO use Client
+    def initialize: (untyped client, Hash[Symbol, String|[String]] response, Hash[Symbol, String|[String]] request_options) -> void
+    def wait: (?::Hash[Symbol, String|[String]] opts) -> self
+  end
+end

@@ -1,0 +1,9 @@
+module Algolia
+  class IndexingResponse < BaseResponse
+    attr_reader raw_response: Hash[Symbol, String|[String]]
+
+    # TODO: add Search::Index
+    def initialize: (untyped index, Hash[Symbol, String|[String]] response) -> bool
+    def wait: (?::Hash[Symbol, String|[String]] opts) -> self
+  end
+end

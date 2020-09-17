@@ -1,5 +1,8 @@
 module Algolia
   class RestoreApiKeyResponse < BaseResponse
+    # @dynamic raw_response
+    attr_reader :raw_response
+
     # @param index [Search::Index] Algolia Search Index used for verification
     # @param key [String] the key to check
     #
