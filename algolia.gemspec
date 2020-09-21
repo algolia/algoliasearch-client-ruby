@@ -12,8 +12,9 @@ Gem::Specification.new do |spec|
 
   spec.date        = Date.today
   spec.licenses    = ['MIT']
-  spec.summary     = 'A simple Ruby client for the algolia.com REST API'
-  spec.description = 'A simple Ruby client for the algolia.com REST API'
+  spec.summary     = 'A simple Ruby client for the algolia.com REST API (alpha release)'
+  spec.description = 'This is the alpha version of the upcoming v2 release of Algolia Client. Please keep on using the algoliasearch gem in the meantime.'
+  spec.homepage    = 'https://github.com/algolia/algoliasearch-client-ruby/tree/release/v2'
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem
