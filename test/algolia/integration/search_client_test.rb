@@ -233,7 +233,16 @@ class SearchClientTest < BaseTest
 
       assert_equal 'Key does not exist', exception.message
 
-      @@search_client.restore_api_key!(@api_key[:value])
+      loop do
+        begin
+          @@search_client.restore_api_key!(@api_key[:value])
+          break
+        rescue Algolia::AlgoliaHttpError => e
+          if e.code != 404
+            raise StandardError
+          end
+        end
+      end
 
       restored_key = @@search_client.get_api_key(@api_key[:value])
 
