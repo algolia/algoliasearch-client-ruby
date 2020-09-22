@@ -16,6 +16,12 @@ Gem::Specification.new do |spec|
   spec.description = 'This is the alpha version of the upcoming v2 release of Algolia Client. Please keep on using the algoliasearch gem in the meantime.'
   spec.homepage    = 'https://github.com/algolia/algoliasearch-client-ruby/tree/release/v2'
 
+  spec.metadata = {
+    'bug_tracker_uri' => 'https://github.com/algolia/algoliasearch-client-ruby/issues',
+    'documentation_uri' => 'http://www.rubydoc.info/gems/algolia',
+    'source_code_uri' => 'https://github.com/algolia/algoliasearch-client-ruby/tree/release/v2'
+  }
+
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem
   # that have been added into git.
