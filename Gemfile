@@ -9,7 +9,7 @@ gem 'minitest-ci'
 
 group :development do
   gem 'git-precommit'
-  gem 'steep'
+  gem 'steep' if RUBY_VERSION >= '2.5'
   gem 'yard'
 end
 
