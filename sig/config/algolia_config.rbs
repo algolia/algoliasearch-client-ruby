@@ -5,7 +5,7 @@ module Algolia
 
     attr_accessor api_key: String
 
-    attr_accessor default_headers: Hash[String, String]
+    attr_accessor headers: Hash[String, String]
 
     attr_accessor batch_size: Integer
 

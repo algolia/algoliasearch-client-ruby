@@ -3,7 +3,7 @@ require 'faraday'
 module Algolia
   # Class AlgoliaConfig
   class AlgoliaConfig
-    attr_accessor :app_id, :api_key, :default_headers, :batch_size, :read_timeout, :write_timeout, :connect_timeout, :compression_type,
+    attr_accessor :app_id, :api_key, :headers, :batch_size, :read_timeout, :write_timeout, :connect_timeout, :compression_type,
                   :symbolize_keys
 
     #
@@ -22,7 +22,7 @@ module Algolia
       @app_id  = opts[:app_id]
       @api_key = opts[:api_key]
 
-      @default_headers = {
+      @headers = {
         Defaults::HEADER_API_KEY => @api_key,
         Defaults::HEADER_APP_ID => @app_id,
         'Content-Type' => 'application/json; charset=utf-8',
