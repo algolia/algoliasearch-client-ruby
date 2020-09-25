@@ -9,92 +9,95 @@ module Algolia
   class WebMock
     def self.mock!
       # list indexes
-      ::WebMock.stub_request(:get, %r{.*\.algolia(net\.com|\.net)/1/indexes}).to_return(body: '{ "items": [] }')
+      mock_request(:get, '/1/indexes', { body: '{ "items": [] }' })
       # query index
-      ::WebMock.stub_request(:get, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+}).to_return(body: '{ "hits": [ { "objectID": 42 } ], "page": 1, "hitsPerPage": 1, "nbHits": 1, "nbPages": 1 }')
+      mock_request(:get, '/1/indexes/%s', { body: '{ "hits": [ { "objectID": 42 } ], "page": 1, "hitsPerPage": 1, "nbHits": 1, "nbPages": 1 }' })
       # delete index
-      ::WebMock.stub_request(:delete, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+}).to_return(body: '{ "taskID": 42 }')
+      mock_request(:delete, '/1/indexes/%s', { body: '{ "taskID": 42 }' })
       # clear index
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/clear}).to_return(body: '{ "taskID": 42 }')
+      mock_request(:post, '/1/indexes/%s/clear', { body: '{ "taskID": 42 }' })
       # add object
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+}).to_return(body: '{ "taskID": 42 }')
+      mock_request(:post, '/1/indexes/%s', { body: '{ "taskID": 42 }' })
       # save object
-      ::WebMock.stub_request(:put, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/[^/]+}).to_return(body: '{ "taskID": 42 }')
+      mock_request(:put, '/1/indexes/%s/%s', { body: '{ "taskID": 42 }' })
       # partial update
-      ::WebMock.stub_request(:put, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/[^/]+/partial}).to_return(body: '{ "taskID": 42 }')
+      mock_request(:put, '/1/indexes/%s/%s/partial', { body: '{ "taskID": 42 }' })
       # get object
-      ::WebMock.stub_request(:get, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/[^/]+}).to_return(body: '{}')
+      mock_request(:get, '/1/indexes/%s/%s', { body: '{}' })
       # delete object
-      ::WebMock.stub_request(:delete, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/[^/]+}).to_return(body: '{ "taskID": 42 }')
+      mock_request(:delete, '/1/indexes/%s/%s', { body: '{ "taskID": 42 }' })
       # delete by
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/deleteByQuery}).to_return(body: '{ "taskID": 42 }')
+      mock_request(:post, '/1/indexes/%s/deleteByQuery', { body: '{ "taskID": 42 }' })
       # batch
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/batch}).to_return(body: '{ "taskID": 42 }')
+      mock_request(:post, '/1/indexes/%s/batch', { body: '{ "taskID": 42 }' })
       # settings
-      ::WebMock.stub_request(:get, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/settings}).to_return(body: '{}')
-      ::WebMock.stub_request(:put, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/settings}).to_return(body: '{ "taskID": 42 }')
+      mock_request(:delete, '/1/indexes/%s/settings', { body: '{}' })
+      mock_request(:put, '/1/indexes/%s/settings', { body: '{ "taskID": 42 }' })
       # browse
-      ::WebMock.stub_request(:get, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/browse}).to_return(body: '{ "hits": [] }')
+      mock_request(:get, '/1/indexes/%s/browse', { body: '{ "hits": [] }' })
       # operations
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/operation}).to_return(body: '{ "taskID": 42 }')
+      mock_request(:post, '/1/indexes/%s/operation', { body: '{ "taskID": 42 }' })
       # tasks
-      ::WebMock.stub_request(:get, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/task/[^/]+}).to_return(body: '{ "status": "published" }')
+      mock_request(:get, '/1/indexes/%s/task/%s', { body: '{ "status": "published" }' })
       # index keys
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/keys}).to_return(body: '{ }')
-      ::WebMock.stub_request(:get, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/keys}).to_return(body: '{ "keys": [] }')
+      mock_request(:post, '/1/indexes/%s/keys', { body: '{}' })
+      mock_request(:get, '/1/indexes/%s/keys', { body: '{ "keys": [] }' })
       # global keys
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/keys}).to_return(body: '{ }')
-      ::WebMock.stub_request(:get, %r{.*\.algolia(net\.com|\.net)/1/keys}).to_return(body: '{ "keys": [] }')
-      ::WebMock.stub_request(:get, %r{.*\.algolia(net\.com|\.net)/1/keys/[^/]+}).to_return(body: '{ }')
-      ::WebMock.stub_request(:delete, %r{.*\.algolia(net\.com|\.net)/1/keys/[^/]+}).to_return(body: '{ }')
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/keys/[^/]+/restore}).to_return(body: '{ "keys": "42" }')
+      mock_request(:post, '/1/keys', { body: '{ }' })
+      mock_request(:get, '/1/keys', { body: '{ "keys": [] }' })
+      mock_request(:get, '/1/keys/%s', { body: '{ }' })
+      mock_request(:delete, '/1/keys/%s', { body: '{ }' })
+      mock_request(:post, '/1/keys/%s/restore', { body: '{ "keys": "42" }' })
       # query POST
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/query}).to_return(body: '{ "hits": [ { "objectID": 42 } ], "page": 1, "hitsPerPage": 1, "nbHits": 1, "nbPages": 1 }')
+      mock_request(:post, '/1/indexes/%s/query', { body: '{ "hits": [ { "objectID": 42 } ], "page": 1, "hitsPerPage": 1, "nbHits": 1, "nbPages": 1 }' })
       # multiple operations
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/objects}).to_return(body: '{ "results": [ ] }')
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/queries}).to_return(body: '{ "results": [ ] }')
+      mock_request(:post, '/1/indexes/%s/objects', { body: '{ "results": [ ] }' })
+      mock_request(:post, '/1/indexes/%s/queries', { body: '{ "results": [ ] }' })
       # clusters
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/clusters/mappings}).to_return(body: '{ "createdAt": "" }')
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/clusters/mappings/batch}).to_return(body: '{ "createdAt": "" }')
-      ::WebMock.stub_request(:get, %r{.*\.algolia(net\.com|\.net)/1/clusters/mappings/top}).to_return(body: '{ "topUsers": [] }')
-      ::WebMock.stub_request(:get, %r{.*\.algolia(net\.com|\.net)/1/clusters/mappings/[^/]+}).to_return(body: '{ "userID": "user42" }')
-      ::WebMock.stub_request(:get, %r{.*\.algolia(net\.com|\.net)/1/clusters}).to_return(body: '{ "clusters": [] }')
-      ::WebMock.stub_request(:get, %r{.*\.algolia(net\.com|\.net)/1/clusters/mappings}).to_return(body: '{ "userIDs": [] }')
-      ::WebMock.stub_request(:delete, %r{.*\.algolia(net\.com|\.net)/1/clusters/mappings}).to_return(body: '{ "deletedAt": "" }')
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/clusters/mappings/search}).to_return(body: '{ "hits": [] }')
-      ::WebMock.stub_request(:get, %r{.*\.algolia(net\.com|\.net)/1/clusters/mappings/pending}).to_return(body: '{ "createdAt": "" }')
+      mock_request(:post, '/1/clusters/mappings', { body: '{ "createdAt": "" }' })
+      mock_request(:post, '/1/clusters/mappings/batch', { body: '{ "createdAt": "" }' })
+      mock_request(:get, '/1/clusters/mappings/top', { body: '{ "topUsers": [] }' })
+      mock_request(:get, '/1/clusters/mappings/%s', { body: '{ "userID": "user42" }' })
+      mock_request(:get, '/1/clusters', { body: '{ "clusters": [] }' })
+      mock_request(:get, '/1/clusters/mappings', { body: '{ "userIDs": [] }' })
+      mock_request(:delete, '/1/clusters/mappings', { body: '{ "deletedAt": "" }' })
+      mock_request(:post, '/1/clusters/mappings/search', { body: '{ "hits": [] }' })
+      mock_request(:get, '/1/clusters/mappings/pending', { body: '{ "createdAt": "" }' })
       # rules
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/rules/batch}).to_return(body: '{ "taskID": 42 }')
-      ::WebMock.stub_request(:get, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/rules/[^/]+}).to_return(body: '{ "objectID": "42" }')
-      ::WebMock.stub_request(:delete, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/rules/[^/]+}).to_return(body: '{ "taskID": 42 }')
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/rules/clear}).to_return(body: '{ "taskID": 42 }')
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/rules/search}).to_return(body: '{ "hits": [] }')
+      mock_request(:post, '/1/indexes/%s/rules/batch', { body: '{ "taskID": 42 }' })
+      mock_request(:get, '/1/indexes/%s/rules/%s', { body: '{ "objectID": "42" }' })
+      mock_request(:delete, '/1/indexes/%s/rules/%s', { body: '{ "taskID": 42 }' })
+      mock_request(:post, '/1/indexes/%s/rules/clear', { body: '{ "taskID": 42 }' })
+      mock_request(:post, '/1/indexes/%s/rules/search', { body: '{ "hits": [] }' })
       # synonyms
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/synonyms/batch}).to_return(body: '{ "taskID": 42 }')
-      ::WebMock.stub_request(:get, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/synonyms/[^/]+}).to_return(body: '{ "objectID": "42" }')
-      ::WebMock.stub_request(:delete, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/synonyms/[^/]+}).to_return(body: '{ "taskID": 42 }')
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/synonyms/clear}).to_return(body: '{ "taskID": 42 }')
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/synonyms/search}).to_return(body: '{ "hits": [] }')
+      mock_request(:post, '/1/indexes/%s/synonyms/batch', { body: '{ "taskID": 42 }' })
+      mock_request(:get, '/1/indexes/%s/synonyms/%s', { body: '{ "objectID": 42 }' })
+      mock_request(:delete, '/1/indexes/%s/synonyms/%s', { body: '{ "taskID": 42 }' })
+      mock_request(:post, '/1/indexes/%s/synonyms/clear', { body: '{ "taskID": 42 }' })
+      mock_request(:post, '/1/indexes/%s/synonyms/search', { body: '{ "hits": [] }' })
       # facets
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/indexes/[^/]+/facets/[^/]+/query}).to_return(body: '{ "facetHits": [] }')
+      mock_request(:post, '/1/indexes/%s/facets/%s/query', { body: '{ "facetHits": [] }' })
       # get logs
-      ::WebMock.stub_request(:get, %r{.*\.algolia(net\.com|\.net)/1/logs}).to_return(body: '{ "logs": [ ] }')
-      # add ab_test
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/2/abtests}).to_return(body: '{ "taskID": 42 }')
-      # get ab test
-      ::WebMock.stub_request(:get, %r{.*\.algolia(net\.com|\.net)/2/abtests/[^/]+}).to_return(body: '{ "abTestID": 42 }')
-      # get ab tests
-      ::WebMock.stub_request(:get, %r{.*\.algolia(net\.com|\.net)/2/abtests}).to_return(body: '{ "abtests": [] }')
-      # stop ab tests
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/2/abtests/[^/]+/stop}).to_return(body: '{ "status": 200 }')
-      # delete ab tests
-      ::WebMock.stub_request(:delete, %r{.*\.algolia(net\.com|\.net)/2/abtests/[^/]+}).to_return(body: '{ "status": 200 }')
+      mock_request(:get, '/1/logs', { body: '{ "logs": [ ] }' })
+      # ab_tests
+      mock_request(:post, '/2/abtests', { body: '{ "taskID": 42 }' })
+      mock_request(:get, '/2/abtests/%s', { body: '{ "abTestID": 42 }' })
+      mock_request(:get, '/2/abtests/%s', { body: '{ "abtests": [] }' })
+      mock_request(:post, '/2/abtests/%s/stop', { body: '{ "status": 200 }' })
+      mock_request(:delete, '/2/abtests/%s', { body: '{ "status": 200 }' })
       # send events
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/events}).to_return(body: '{ "status": 200 }')
+      mock_request(:post, '/1/events', { body: '{ "status": 200 }' })
       # set personalization strategy
-      ::WebMock.stub_request(:post, %r{.*\.algolia(net\.com|\.net)/1/strategies/personalization}).to_return(body: '{ "status": 200 }')
+      mock_request(:post, '/1/strategies/personalization', { body: '{ "status": 200 }' })
       # get personalization strategy
-      ::WebMock.stub_request(:get, %r{.*\.algolia(net\.com|\.net)/1/strategies/personalization}).to_return(body: '{ "eventsScoring": { } }')
+      mock_request(:get, '/1/strategies/personalization', { body: '{ "eventsScoring": { } }' })
+    end
+
+    def self.mock_request(method, uri, response)
+      base_uri      = '.*\.algolia(net\.com|\.net)(uri)'
+      regex_uri     = uri.gsub('%s', '[^/]+')
+      formatted_uri = Regexp.new base_uri.gsub('(uri)', regex_uri)
+      ::WebMock.stub_request(method, formatted_uri).to_return(response)
     end
   end
 end
