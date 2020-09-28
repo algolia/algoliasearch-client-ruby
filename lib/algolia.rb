@@ -36,7 +36,6 @@ require 'algolia/recommendation_client'
 require 'algolia/error'
 require 'algolia/search_index'
 require 'algolia/logger_helper'
-require 'algolia/webmock'
 
 # Algolia module
 module Algolia

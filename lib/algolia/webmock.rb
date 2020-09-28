@@ -97,7 +97,11 @@ module Algolia
       base_uri      = '.*\.algolia(net\.com|\.net)(uri)'
       regex_uri     = uri.gsub('%s', '[^/]+')
       formatted_uri = Regexp.new base_uri.gsub('(uri)', regex_uri)
-      ::WebMock.stub_request(method, formatted_uri).to_return(response)
+      if method == :get
+        ::WebMock.stub_request(method, formatted_uri).to_return(response)
+      else
+        ::WebMock.stub_request(method, formatted_uri).with(body: /(.)+$/).to_return(response)
+      end
     end
   end
 end

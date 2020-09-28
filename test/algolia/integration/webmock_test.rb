@@ -1,4 +1,4 @@
-require 'webmock'
+require 'algolia/webmock'
 require_relative 'base_test'
 
 class WebmockTest < BaseTest
@@ -17,7 +17,11 @@ class WebmockTest < BaseTest
       index.get_settings
       index.clear_objects
       index.delete
+    end
+
+    def after_all
       WebMock.disable!
+      super
     end
   end
 end
