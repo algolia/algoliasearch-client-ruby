@@ -55,12 +55,8 @@ index.search('query', search_params, request_opts)
 
 # After
 opts = {
-  :headers => {
-    'X-Algolia-UserToken': 'user123'
-  },
-  :params => {
-    hitsPerPage: 50
-  }
+  headers: { 'X-Algolia-UserToken': 'user123' },
+  hitsPerPage: 50
 }
 index.search('query', opts)
 ```
@@ -244,12 +240,8 @@ index.search('query', search_params, request_opts)
 
 # After
 opts = {
-  :headers => {
-    'X-Algolia-UserToken': 'user123'
-  },
-  :params => {
-    hitsPerPage: 50
-  }
+  headers: { 'X-Algolia-UserToken': 'user123' },
+  hitsPerPage: 50
 }
 index.search('query', opts)
 ```
@@ -265,12 +257,8 @@ index.search_for_facet_values('category', 'phone', search_params, request_opts)
 
 # After
 opts = {
-  :headers => {
-    'X-Algolia-UserToken': 'user123'
-  },
-  :params => {
-    hitsPerPage: 50
-  }
+  headers: { 'X-Algolia-UserToken': 'user123' },
+  hitsPerPage: 50
 }
 index.search_for_facet_values('category', 'phone', opts)
 ```
