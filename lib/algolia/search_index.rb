@@ -210,7 +210,7 @@ module Algolia
           requests.push(request)
         end
 
-        @transporter.read(:POST, '/1/indexes/*/objects', { 'requests': requests }, opts)
+        @transporter.read(:POST, '/1/indexes/*/objects', { requests: requests }, opts)
       end
 
       # Add an object to the index
@@ -407,6 +407,7 @@ module Algolia
       # @return [IndexingResponse]
       #
       def batch(requests, opts = {})
+        puts requests
         response = raw_batch(requests, opts)
 
         IndexingResponse.new(self, response)
@@ -479,7 +480,7 @@ module Algolia
         end
 
         if rules.empty?
-          return []
+          IndexingResponse.new(self, [])
         end
 
         forward_to_replicas  = false
@@ -643,7 +644,7 @@ module Algolia
         end
 
         if synonyms.empty?
-          return []
+          IndexingResponse.new(self, [])
         end
 
         synonyms.each do |synonym|
@@ -664,6 +665,7 @@ module Algolia
           replace_existing_synonyms = true
           request_options.delete(:replaceExistingSynonyms)
         end
+
         response = @transporter.write(
           :POST,
           path_encode('/1/indexes/%s/synonyms/batch', @name) + handle_params({ forwardToReplicas: forward_to_replicas, replaceExistingSynonyms: replace_existing_synonyms }),
@@ -812,9 +814,10 @@ module Algolia
       # @param objects [Array] Array of objects
       # @param opts [Hash] contains extra parameters to send with your query
       #
-      # @return [Enumerator, SynonymIterator]
+      # @return [IndexingResponse|MultipleResponse]
       #
       def replace_all_objects(objects, opts = {})
+        responses       = MultipleResponse.new
         safe            = false
         request_options = symbolize_hash(opts)
         if request_options[:safe]
@@ -824,6 +827,7 @@ module Algolia
 
         tmp_index_name   = @name + '_tmp_' + rand(10000000).to_s
         copy_to_response = copy_to(tmp_index_name, request_options.merge({ scope: %w(settings synonyms rules) }))
+        responses.push(copy_to_response)
 
         if safe
           copy_to_response.wait
@@ -834,15 +838,20 @@ module Algolia
         tmp_index  = tmp_client.init_index(tmp_index_name)
 
         save_objects_response = tmp_index.save_objects(objects, request_options)
+        responses.push(save_objects_response)
 
         if safe
           save_objects_response.wait
         end
 
         move_to_response = tmp_index.move_to(@name)
+        responses.push(move_to_response)
+
         if safe
           move_to_response.wait
         end
+
+        responses
       end
 
       # Replace all objects in the index and wait for the operation to complete
@@ -1066,7 +1075,7 @@ module Algolia
       #
       def get_object_id(object, object_id = nil)
         check_object(object)
-        object_id ||= object[:objectID] || object['objectID']
+        object_id ||= object[:objectID]
         raise AlgoliaError, "Missing 'objectID'" if object_id.nil?
         object_id
       end
@@ -1081,7 +1090,7 @@ module Algolia
         objects.map do |object|
             check_object(object, true)
             request            = { action: action, body: object }
-            request[:objectID] = get_object_id(object).to_s if with_object_id
+            request[:objectID] = get_object_id(object) if with_object_id
             request
         end
       end

@@ -159,37 +159,31 @@ class SearchClientTest < BaseTest
 
     def retrieve_user_id(number)
       loop do
-        begin
           return @mcm_client.get_user_id(get_mcm_user_name(number))
         rescue Algolia::AlgoliaHttpError => e
           if e.code != 404
             raise StandardError
           end
-        end
       end
     end
 
     def remove_user_id(number)
       loop do
-        begin
           return @mcm_client.remove_user_id(get_mcm_user_name(number))
         rescue Algolia::AlgoliaHttpError => e
           if e.code != 400
             raise StandardError
           end
-        end
       end
     end
 
     def assert_removed(number)
       loop do
-        begin
           return @mcm_client.get_user_id(get_mcm_user_name(number))
         rescue Algolia::AlgoliaHttpError => e
           if e.code == 404
             return true
           end
-        end
       end
     end
   end

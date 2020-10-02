@@ -2,7 +2,7 @@ module Algolia
   class PaginatorIterator < BaseIterator
     # TODO: type transporter
     def initialize: (untyped transporter, String index_name, Hash[Symbol, String|[String]] opts) -> bool
-    def each: () { (Hash[Symbol, String|[String]]) -> void } -> Hash[Symbol, String|[String]]
+    def each: () { () -> void } -> Hash[Symbol, String|[String]]
     def get_endpoint: () -> String
   end
 end

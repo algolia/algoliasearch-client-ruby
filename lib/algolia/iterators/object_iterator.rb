@@ -2,7 +2,7 @@ module Algolia
   class ObjectIterator < BaseIterator
     # Custom each function to iterate through the objects
     #
-    def each
+    def each(&block)
       loop do
         data = {}
 

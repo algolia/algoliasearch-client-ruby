@@ -6,14 +6,11 @@ module Algolia
       include Helpers
 
       def initialize: (Search::Config search_config, ?::Hash[Symbol, String|[String]] opts) -> bool
-      def self.create: (String app_id, String api_key) -> self
-      def self.create_with_config: (Search::Config config) -> self
+      def self.create: (String app_id, String api_key) -> Algolia::Search::Client
+      def self.create_with_config: (Search::Config config) -> Algolia::Search::Client
       def wait_task: (String index_name, Integer task_id, ?Integer time_before_retry, ?::Hash[Symbol, String|[String]] opts) -> nil
-      def get_task_status: (String index_name, Integer task_id, ?::Hash[Symbol, String|[String]] opts) -> String
-
-      # TODO add Index
-      #
-      def init_index: (String index_name) -> untyped
+      def get_task_status: (String index_name, Integer task_id, ?::Hash[Symbol, String|[String]] opts) -> (String|[String])
+      def init_index: (String index_name) -> Algolia::Search::Index
       def list_indexes: (?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
       def get_logs: (?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
       def copy_rules: (String src_index_name, String dest_index_name, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse

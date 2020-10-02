@@ -174,8 +174,8 @@ class SearchIndexTest < BaseTest
         ranking: %w(asc(attribute1) desc(attribute2) attribute custom exact filters geo proximity typo words),
         customRanking: %w(asc(attribute1) desc(attribute1)),
         replicas: [
-          @index_name + '_replica1',
-          @index_name + '_replica2'
+          "#{@index_name}_replica1",
+          "#{@index_name}_replica2"
         ],
         maxValuesPerFacet: 100,
         sortFacetValuesBy: 'count',

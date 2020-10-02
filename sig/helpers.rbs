@@ -1,11 +1,11 @@
 module Helpers
   def to_json: (String|Hash[Symbol, String] body) -> String
   def symbolize_hash: (Hash[Symbol|String, untyped] hash) -> Hash[Symbol, untyped]
-  def handle_params: (Hash[Symbol, String] params) -> String
+  def handle_params: (Hash[Symbol, String|Integer|bool] params) -> String
   def to_query_string: (Hash[Symbol, String] params) -> String
   def json_to_hash: (String json, bool symbolize_keys) -> Hash[Symbol, String]
-  def get_option: ([Symbol|String, String] hash, String key) -> (String | [String])
-  def path_encode: (String path, *String args) -> String
+  def get_option: (Hash[Symbol, String|[Object]] hash, String key) -> (String | [String])
+  def path_encode: (String path, *String|Integer args) -> String
   def deserialize_settings: (Hash[Symbol|String, String] data) -> Hash[Symbol, String]
   def self.included: (self base) -> self
 end

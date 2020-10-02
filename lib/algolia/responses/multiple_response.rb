@@ -36,10 +36,8 @@ module Algolia
 
     # Iterates through the responses
     #
-    def each
-      @raw_responses.each do |response|
-        yield response
-      end
+    def each(&block)
+      @raw_responses.each(&block)
     end
   end
 end

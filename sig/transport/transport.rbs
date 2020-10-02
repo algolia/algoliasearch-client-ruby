@@ -6,9 +6,10 @@ module Algolia
       include Helpers
 
       def initialize: (Search::Config config, Object requester) -> void
-      def read: (Symbol method, String path, ?::Hash[Symbol, String|[String]] body, ?::Hash[Symbol, String|[String]] opts) -> String
-      def write: (Symbol method, String path, ?::Hash[Symbol, String|[String]] body, ?::Hash[Symbol, String|[String]] opts) -> String
-      def request: (Integer call_type, Symbol method, String path, ?::Hash[Symbol, String|[String]] body, ?::Hash[Symbol, String|[String]] opts) -> String
+      def read: (Symbol method, String path, ?::Hash[Symbol, untyped]|Array[untyped] body, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, untyped]
+      def write: (Symbol method, String path, ?::Hash[Symbol, untyped]|Array[untyped] body, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, untyped]
+      # TODO: add AlgoliaHttpError
+      def request: (Integer call_type, Symbol method, String path, ?::Hash[Symbol, String|[String]] body, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, untyped]
       def build_request: (Symbol method, String path, Hash[Symbol, String|[String]] body, RequestOptions request_options) -> Hash[Symbol, String|[String]]
       def build_uri_path: (String path, Hash[Symbol, String|[String]] params) -> String
       def build_body: (Hash[Symbol, String|[String]] body, RequestOptions request_options, Symbol method) -> (nil | String)

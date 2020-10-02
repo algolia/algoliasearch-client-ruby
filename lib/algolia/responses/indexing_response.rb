@@ -18,8 +18,10 @@ module Algolia
     #
     def wait(opts = {})
       unless @done
-        task_id = get_option(@raw_response, 'taskID')
-        @index.wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        unless @raw_response.empty?
+          task_id = get_option(@raw_response, 'taskID')
+          @index.wait_task(task_id, Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY, opts)
+        end
       end
 
       @done = true
