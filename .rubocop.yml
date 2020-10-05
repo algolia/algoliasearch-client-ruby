@@ -184,3 +184,6 @@ Style/HashTransformValues:
 
 Style/HashEachMethods:
   Enabled: true
+
+Style/RedundantBegin:
+  Enabled: false

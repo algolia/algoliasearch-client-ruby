@@ -35,5 +35,9 @@ module Algolia
       @compression_type = opts[:compression_type] || Defaults::NONE_ENCODING
       @symbolize_keys   = opts[:symbolize_keys] || true
     end
+
+    def set_extra_header(key, value)
+      @headers[key] = value
+    end
   end
 end
