@@ -1,6 +1,6 @@
 module Algolia
   module Recommendation
-    class Config < AlgoliaConfig
+    class Config < BaseConfig
       attr_accessor :region, :default_hosts
 
       # Initialize a config

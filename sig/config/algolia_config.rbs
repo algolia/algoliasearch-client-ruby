@@ -1,6 +1,5 @@
 module Algolia
-  # Class AlgoliaConfig
-  class AlgoliaConfig
+  class BaseConfig
     attr_accessor app_id: String
 
     attr_accessor api_key: String
