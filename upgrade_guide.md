@@ -65,6 +65,20 @@ index.search('query', opts)
 
 ### `Client`
 
+#### `set_extra_header`
+The `set_extra_header` method has been moved from the Client to the `Algolia::AlgoliaConfig` class. You have to define your extra headers on Client instantiation.
+```ruby
+# Before
+client.set_extra_header('admin', 'admin-key')
+
+# After
+# `Algolia::Search::Config` inherits from `Algolia::AlgoliaConfig` 
+config = Algolia::Search::Config.new(app_id: 'APP_ID', api_key: 'API_KEY')
+config.set_extra_header('admin', 'admin-key')
+
+client = Algolia::Search::Client.create_with_config(config)
+```
+
 #### `multiple_queries`
 The `strategy` parameter is no longer a string, but a key in the `requestOptions`.
 ```ruby
