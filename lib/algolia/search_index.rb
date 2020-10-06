@@ -5,16 +5,16 @@ module Algolia
       include CallType
       include Helpers
 
-      attr_reader :index_name, :transporter, :config
+      attr_reader :name, :transporter, :config
 
       # Initialize an index
       #
-      # @param index_name [String] name of the index
+      # @param name [String] name of the index
       # @param transporter [Object] transport object used for the connection
       # @param config [Config] a Config object which contains your APP_ID and API_KEY
       #
-      def initialize(index_name, transporter, config)
-        @index_name  = index_name
+      def initialize(name, transporter, config)
+        @name        = name
         @transporter = transporter
         @config      = config
       end
@@ -47,7 +47,7 @@ module Algolia
       # @param opts [Hash] contains extra parameters to send with your query
       #
       def get_task_status(task_id, opts = {})
-        res    = @transporter.read(:GET, path_encode('/1/indexes/%s/task/%s', @index_name, task_id), {}, opts)
+        res    = @transporter.read(:GET, path_encode('/1/indexes/%s/task/%s', @name, task_id), {}, opts)
         get_option(res, 'status')
       end
 
@@ -56,7 +56,7 @@ module Algolia
       # @param opts [Hash] contains extra parameters to send with your query
       #
       def clear_objects(opts = {})
-        response = @transporter.write(:POST, path_encode('/1/indexes/%s/clear', @index_name), {}, opts)
+        response = @transporter.write(:POST, path_encode('/1/indexes/%s/clear', @name), {}, opts)
 
         IndexingResponse.new(self, response)
       end
@@ -75,7 +75,7 @@ module Algolia
       # @param opts [Hash] contains extra parameters to send with your query
       #
       def delete(opts = {})
-        response = @transporter.write(:DELETE, path_encode('/1/indexes/%s', @index_name), opts)
+        response = @transporter.write(:DELETE, path_encode('/1/indexes/%s', @name), opts)
 
         IndexingResponse.new(self, response)
       end
@@ -154,7 +154,7 @@ module Algolia
       # @return [IndexingResponse]
       #
       def copy_to(name, opts = {})
-        response = @transporter.write(:POST, path_encode('/1/indexes/%s/operation', @index_name), { operation: 'copy', destination: name }, opts)
+        response = @transporter.write(:POST, path_encode('/1/indexes/%s/operation', @name), { operation: 'copy', destination: name }, opts)
 
         IndexingResponse.new(self, response)
       end
@@ -167,7 +167,7 @@ module Algolia
       # @return [IndexingResponse]
       #
       def move_to(name, opts = {})
-        response = @transporter.write(:POST, path_encode('/1/indexes/%s/operation', @index_name), { operation: 'move', destination: name }, opts)
+        response = @transporter.write(:POST, path_encode('/1/indexes/%s/operation', @name), { operation: 'move', destination: name }, opts)
 
         IndexingResponse.new(self, response)
       end
@@ -184,7 +184,7 @@ module Algolia
       # @return [Hash]
       #
       def get_object(object_id, opts = {})
-        @transporter.read(:GET, path_encode('/1/indexes/%s/%s', @index_name, object_id), {}, opts)
+        @transporter.read(:GET, path_encode('/1/indexes/%s/%s', @name, object_id), {}, opts)
       end
 
       # Retrieve one or more objects in a single API call
@@ -201,7 +201,7 @@ module Algolia
 
         requests = []
         object_ids.each do |object_id|
-          request = { indexName: @index_name, objectID: object_id.to_s }
+          request = { indexName: @name, objectID: object_id.to_s }
 
           if attributes_to_retrieve
             request[:attributesToRetrieve] = attributes_to_retrieve
@@ -381,7 +381,7 @@ module Algolia
       # @return [IndexingResponse]
       #
       def delete_by(filters, opts = {})
-        response = @transporter.write(:POST, path_encode('/1/indexes/%s/deleteByQuery', @index_name), filters, opts)
+        response = @transporter.write(:POST, path_encode('/1/indexes/%s/deleteByQuery', @name), filters, opts)
 
         IndexingResponse.new(self, response)
       end
@@ -436,7 +436,7 @@ module Algolia
       # @return [Hash]
       #
       def get_rule(object_id, opts = {})
-        @transporter.read(:GET, path_encode('/1/indexes/%s/rules/%s', @index_name, object_id), {}, opts)
+        @transporter.read(:GET, path_encode('/1/indexes/%s/rules/%s', @name, object_id), {}, opts)
       end
 
       # Create or update a rule
@@ -500,7 +500,7 @@ module Algolia
           get_object_id(rule)
         end
 
-        response = @transporter.write(:POST, path_encode('/1/indexes/%s/rules/batch', @index_name) + handle_params({ forwardToReplicas: forward_to_replicas, clearExistingRules: clear_existing_rules }), rules, request_options)
+        response = @transporter.write(:POST, path_encode('/1/indexes/%s/rules/batch', @name) + handle_params({ forwardToReplicas: forward_to_replicas, clearExistingRules: clear_existing_rules }), rules, request_options)
 
         IndexingResponse.new(self, response)
       end
@@ -532,7 +532,7 @@ module Algolia
           request_options.delete(:forwardToReplicas)
         end
 
-        response = @transporter.write(:POST, path_encode('1/indexes/%s/rules/clear', @index_name) + handle_params({ forwardToReplicas: forward_to_replicas }), '', request_options)
+        response = @transporter.write(:POST, path_encode('1/indexes/%s/rules/clear', @name) + handle_params({ forwardToReplicas: forward_to_replicas }), '', request_options)
 
         IndexingResponse.new(self, response)
       end
@@ -566,7 +566,7 @@ module Algolia
 
         response = @transporter.write(
           :DELETE,
-          path_encode('1/indexes/%s/rules/%s', @index_name, object_id) + handle_params({ forwardToReplicas: forward_to_replicas }),
+          path_encode('1/indexes/%s/rules/%s', @name, object_id) + handle_params({ forwardToReplicas: forward_to_replicas }),
           '',
           request_options
         )
@@ -598,7 +598,7 @@ module Algolia
       # @return [Hash]
       #
       def get_synonym(object_id, opts = {})
-        @transporter.read(:GET, path_encode('/1/indexes/%s/synonyms/%s', @index_name, object_id), {}, opts)
+        @transporter.read(:GET, path_encode('/1/indexes/%s/synonyms/%s', @name, object_id), {}, opts)
       end
 
       # Create a new synonym object or update the existing synonym object with the given object ID
@@ -666,7 +666,7 @@ module Algolia
         end
         response = @transporter.write(
           :POST,
-          path_encode('/1/indexes/%s/synonyms/batch', @index_name) + handle_params({ forwardToReplicas: forward_to_replicas, replaceExistingSynonyms: replace_existing_synonyms }),
+          path_encode('/1/indexes/%s/synonyms/batch', @name) + handle_params({ forwardToReplicas: forward_to_replicas, replaceExistingSynonyms: replace_existing_synonyms }),
           synonyms,
           request_options
         )
@@ -703,7 +703,7 @@ module Algolia
         end
         response = @transporter.write(
           :POST,
-          path_encode('1/indexes/%s/synonyms/clear', @index_name) + handle_params({ forwardToReplicas: forward_to_replicas }),
+          path_encode('1/indexes/%s/synonyms/clear', @name) + handle_params({ forwardToReplicas: forward_to_replicas }),
           '',
           request_options
         )
@@ -738,7 +738,7 @@ module Algolia
         end
         response = @transporter.write(
           :DELETE,
-          path_encode('1/indexes/%s/synonyms/%s', @index_name, object_id) + handle_params({ forwardToReplicas: forward_to_replicas }),
+          path_encode('1/indexes/%s/synonyms/%s', @name, object_id) + handle_params({ forwardToReplicas: forward_to_replicas }),
           '',
           request_options
         )
@@ -769,9 +769,9 @@ module Algolia
       #
       def browse_objects(opts = {}, &block)
         if block_given?
-          ObjectIterator.new(@transporter, @index_name, opts).each(&block)
+          ObjectIterator.new(@transporter, @name, opts).each(&block)
         else
-          ObjectIterator.new(@transporter, @index_name, opts)
+          ObjectIterator.new(@transporter, @name, opts)
         end
       end
 
@@ -783,9 +783,9 @@ module Algolia
       #
       def browse_rules(opts = {}, &block)
         if block_given?
-          RuleIterator.new(@transporter, @index_name, opts).each(&block)
+          RuleIterator.new(@transporter, @name, opts).each(&block)
         else
-          RuleIterator.new(@transporter, @index_name, opts)
+          RuleIterator.new(@transporter, @name, opts)
         end
       end
 
@@ -797,9 +797,9 @@ module Algolia
       #
       def browse_synonyms(opts = {}, &block)
         if block_given?
-          SynonymIterator.new(@transporter, @index_name, opts).each(&block)
+          SynonymIterator.new(@transporter, @name, opts).each(&block)
         else
-          SynonymIterator.new(@transporter, @index_name, opts)
+          SynonymIterator.new(@transporter, @name, opts)
         end
       end
 
@@ -822,7 +822,7 @@ module Algolia
           request_options.delete(:safe)
         end
 
-        tmp_index_name   = @index_name + '_tmp_' + rand(10000000).to_s
+        tmp_index_name   = @name + '_tmp_' + rand(10000000).to_s
         copy_to_response = copy_to(tmp_index_name, request_options.merge({ scope: %w(settings synonyms rules) }))
 
         if safe
@@ -839,7 +839,7 @@ module Algolia
           save_objects_response.wait
         end
 
-        move_to_response = tmp_index.move_to(@index_name)
+        move_to_response = tmp_index.move_to(@name)
         if safe
           move_to_response.wait
         end
@@ -924,7 +924,7 @@ module Algolia
       # @return [Hash]
       #
       def search(query, opts = {})
-        @transporter.read(:POST, path_encode('/1/indexes/%s/query', @index_name), { 'query': query.to_s }, opts)
+        @transporter.read(:POST, path_encode('/1/indexes/%s/query', @name), { 'query': query.to_s }, opts)
       end
 
       # Search for values of a given facet, optionally restricting the returned values to those contained
@@ -937,7 +937,7 @@ module Algolia
       # @return [Hash]
       #
       def search_for_facet_values(facet_name, facet_query, opts = {})
-        @transporter.read(:POST, path_encode('/1/indexes/%s/facets/%s/query', @index_name, facet_name),
+        @transporter.read(:POST, path_encode('/1/indexes/%s/facets/%s/query', @name, facet_name),
                           { 'facetQuery': facet_query }, opts)
       end
 
@@ -949,7 +949,7 @@ module Algolia
       # @return [Hash]
       #
       def search_synonyms(query, opts = {})
-        @transporter.read(:POST, path_encode('/1/indexes/%s/synonyms/search', @index_name), { query: query.to_s }, opts)
+        @transporter.read(:POST, path_encode('/1/indexes/%s/synonyms/search', @name), { query: query.to_s }, opts)
       end
 
       # Search or browse all rules, optionally filtering them by type
@@ -960,7 +960,7 @@ module Algolia
       # @return [Hash]
       #
       def search_rules(query, opts = {})
-        @transporter.read(:POST, path_encode('/1/indexes/%s/rules/search', @index_name), { query: query.to_s }, opts)
+        @transporter.read(:POST, path_encode('/1/indexes/%s/rules/search', @name), { query: query.to_s }, opts)
       end
 
       # # # # # # # # # # # # # # # # # # # # #
@@ -974,7 +974,7 @@ module Algolia
       # @return [Hash]
       #
       def get_settings(opts = {})
-        response = @transporter.read(:GET, path_encode('/1/indexes/%s/settings', @index_name) + handle_params({ getVersion: 2 }), {}, opts)
+        response = @transporter.read(:GET, path_encode('/1/indexes/%s/settings', @name) + handle_params({ getVersion: 2 }), {}, opts)
 
         deserialize_settings(response)
       end
@@ -987,7 +987,7 @@ module Algolia
       # @return [IndexingResponse]
       #
       def set_settings(settings, opts = {})
-        response = @transporter.write(:PUT, path_encode('/1/indexes/%s/settings', @index_name), settings, opts)
+        response = @transporter.write(:PUT, path_encode('/1/indexes/%s/settings', @name), settings, opts)
 
         IndexingResponse.new(self, response)
       end
@@ -1087,7 +1087,7 @@ module Algolia
       end
 
       def raw_batch(requests, opts)
-        @transporter.write(:POST, path_encode('/1/indexes/%s/batch', @index_name), { requests: requests }, opts)
+        @transporter.write(:POST, path_encode('/1/indexes/%s/batch', @name), { requests: requests }, opts)
       end
     end
   end

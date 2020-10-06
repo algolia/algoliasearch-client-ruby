@@ -11,14 +11,14 @@ class AnalyticsClientTest < BaseTest
       index1.save_object!({ objectID: 'one' })
       index2.save_object!({ objectID: 'one' })
 
-      ab_test_name = index1.index_name
+      ab_test_name = index1.name
       tomorrow     = Time.now + 24*60*60
 
       ab_test = {
         name: ab_test_name,
         variants: [
-          { index: index1.index_name, trafficPercentage: 60, description: 'a description' },
-          { index: index2.index_name, trafficPercentage: 40 }
+          { index: index1.name, trafficPercentage: 60, description: 'a description' },
+          { index: index2.name, trafficPercentage: 40 }
         ],
         endAt: tomorrow.strftime('%Y-%m-%dT%H:%M:%SZ')
       }
@@ -74,14 +74,14 @@ class AnalyticsClientTest < BaseTest
 
       index.save_object!({ objectID: 'one' })
 
-      ab_test_name = index.index_name
+      ab_test_name = index.name
       tomorrow     = Time.now + 24*60*60
 
       ab_test = {
         name: ab_test_name,
         variants: [
-          { index: index.index_name, trafficPercentage: 90 },
-          { index: index.index_name, trafficPercentage: 10, customSearchParameters: { ignorePlurals: true } }
+          { index: index.name, trafficPercentage: 90 },
+          { index: index.name, trafficPercentage: 10, customSearchParameters: { ignorePlurals: true } }
         ],
         endAt: tomorrow.strftime('%Y-%m-%dT%H:%M:%SZ')
       }
