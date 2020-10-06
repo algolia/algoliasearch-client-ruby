@@ -5,7 +5,7 @@ require 'algolia/enums/call_type'
 
 module Algolia
   module Search
-    class Config < AlgoliaConfig
+    class Config < BaseConfig
       include CallType
       attr_accessor :default_hosts
 
