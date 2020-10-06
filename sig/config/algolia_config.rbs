@@ -1,5 +1,4 @@
 module Algolia
-  # Class BaseConfig
   class BaseConfig
     attr_accessor app_id: String
 
