@@ -11,7 +11,7 @@ module Algolia
 
       # Initialize a config
       #
-      # @option options [String] :app_id
+      # @option options [String] :application_id
       # @option options [String] :api_key
       # @option options [Hash] :custom_hosts
       #

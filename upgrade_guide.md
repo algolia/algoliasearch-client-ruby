@@ -38,7 +38,7 @@ index = client.init_index('index_name')
 client = Algolia::Search::Client.create('APP_ID', 'API_KEY')
 index = client.init_index('index_name')
 # or
-search_config = Algolia::Search::Config.new(app_id: app_id, api_key: api_key)
+search_config = Algolia::Search::Config.new(application_id: app_id, api_key: api_key)
 client = Algolia::Search::Client.create_with_config(search_config)
 index = client.init_index('index_name')
 ```
@@ -578,6 +578,6 @@ client = Algolia::Client.new({
 })
 
 # After
-search_config = Algolia::Search::Config.new(app_id: 'app_id', api_key: 'api_key', read_timeout: 10, connect_timeout: 2)
+search_config = Algolia::Search::Config.new(application_id: 'app_id', api_key: 'api_key', read_timeout: 10, connect_timeout: 2)
 client = Algolia::Search::Client.create_with_config(search_config)
 ```

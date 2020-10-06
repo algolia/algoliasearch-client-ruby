@@ -13,7 +13,7 @@ class RetryStrategyTest
       stateful_hosts << "#{@app_id}-4.algolianet.com"
       stateful_hosts << "#{@app_id}-5.algolianet.com"
       stateful_hosts << "#{@app_id}-6.algolianet.com"
-      @config        = Algolia::Search::Config.new(app_id: @app_id, api_key: @api_key, custom_hosts: stateful_hosts)
+      @config        = Algolia::Search::Config.new(application_id: @app_id, api_key: @api_key, custom_hosts: stateful_hosts)
     end
 
     def test_resets_expired_hosts_according_to_read_type
@@ -74,7 +74,7 @@ class RetryStrategyTest
   describe 'All hosts are unreachable' do
     def test_failure_when_all_hosts_are_down
       stateful_hosts = ['0.0.0.0']
-      @config        = Algolia::Search::Config.new(app_id: 'foo', api_key: 'bar', custom_hosts: stateful_hosts)
+      @config        = Algolia::Search::Config.new(application_id: 'foo', api_key: 'bar', custom_hosts: stateful_hosts)
       client         = Algolia::Search::Client.create_with_config(@config)
       index          = client.init_index(get_test_index_name('failure'))
 
@@ -91,7 +91,7 @@ class RetryStrategyTest
       super
       @app_id         = 'app_id'
       @api_key        = 'api_key'
-      @config         = Algolia::Search::Config.new(app_id: @app_id, api_key: @api_key)
+      @config         = Algolia::Search::Config.new(application_id: @app_id, api_key: @api_key)
       @retry_strategy = Algolia::Transport::RetryStrategy.new(@config)
       @hosts          = @retry_strategy.get_tryable_hosts(READ|WRITE)
     end
