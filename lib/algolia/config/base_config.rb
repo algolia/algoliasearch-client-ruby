@@ -1,8 +1,8 @@
 require 'faraday'
 
 module Algolia
-  # Class AlgoliaConfig
-  class AlgoliaConfig
+  # Class BaseConfig
+  class BaseConfig
     attr_accessor :app_id, :api_key, :headers, :batch_size, :read_timeout, :write_timeout, :connect_timeout, :compression_type,
                   :symbolize_keys
 

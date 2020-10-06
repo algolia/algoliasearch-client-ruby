@@ -1,6 +1,6 @@
 module Algolia
   module Search
-    class Config < AlgoliaConfig
+    class Config < BaseConfig
       include CallType
 
       attr_accessor default_hosts: Array[untyped]

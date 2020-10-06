@@ -1,6 +1,6 @@
 module Algolia
   module Insights
-    class Config < AlgoliaConfig
+    class Config < BaseConfig
       attr_accessor region: String
 
       attr_accessor default_hosts: [String]

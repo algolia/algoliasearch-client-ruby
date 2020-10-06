@@ -1,6 +1,6 @@
 module Algolia
   module Analytics
-    class Config < AlgoliaConfig
+    class Config < BaseConfig
       attr_accessor :region, :default_hosts
 
       # Initialize a config
