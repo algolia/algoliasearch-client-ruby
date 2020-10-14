@@ -24,7 +24,7 @@ module Algolia
       # @return self
       #
       def self.create(app_id, api_key)
-        config = Recommendation::Config.new(app_id: app_id, api_key: api_key)
+        config = Recommendation::Config.new(application_id: app_id, api_key: api_key)
         create_with_config(config)
       end
 
