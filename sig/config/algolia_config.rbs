@@ -19,5 +19,6 @@ module Algolia
     attr_accessor symbolize_keys: bool
 
     def initialize: (?::Hash[Symbol, String|[String]] opts) -> void
+    def set_extra_header: (Symbol|String key, String value) -> void
   end
 end
