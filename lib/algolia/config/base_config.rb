@@ -6,7 +6,7 @@ module Algolia
                   :symbolize_keys
 
     #
-    # @option options [String] :app_id
+    # @option options [String] :application_id
     # @option options [String] :api_key
     # @option options [Integer] :batch_size
     # @option options [Integer] :read_timeout
@@ -15,10 +15,10 @@ module Algolia
     # @option options [Boolean] :symbolize_keys
     #
     def initialize(opts = {})
-      raise AlgoliaError, 'No Application ID provided, please set :app_id' unless opts.has_key?(:app_id)
+      raise AlgoliaError, 'No Application ID provided, please set :application_id' unless opts.has_key?(:application_id)
       raise AlgoliaError, 'No API key provided, please set :api_key' unless opts.has_key?(:api_key)
 
-      @app_id  = opts[:app_id]
+      @app_id  = opts[:application_id]
       @api_key = opts[:api_key]
 
       @headers = {
