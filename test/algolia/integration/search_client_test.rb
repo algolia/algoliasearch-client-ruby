@@ -80,10 +80,10 @@ class SearchClientTest < BaseTest
       copy_rules_index     = @@search_client.init_index(get_test_index_name('copy_index_rules'))
       copy_synonyms_index  = @@search_client.init_index(get_test_index_name('copy_index_synonyms'))
       copy_full_copy_index = @@search_client.init_index(get_test_index_name('copy_index_full_copy'))
-      @@search_client.copy_settings!(@index_name, copy_settings_index.index_name)
-      @@search_client.copy_rules!(@index_name, copy_rules_index.index_name)
-      @@search_client.copy_synonyms!(@index_name, copy_synonyms_index.index_name)
-      @@search_client.copy_index!(@index_name, copy_full_copy_index.index_name)
+      @@search_client.copy_settings!(@index_name, copy_settings_index.name)
+      @@search_client.copy_rules!(@index_name, copy_rules_index.name)
+      @@search_client.copy_synonyms!(@index_name, copy_synonyms_index.name)
+      @@search_client.copy_index!(@index_name, copy_full_copy_index.name)
 
       assert_equal @index.get_settings, copy_settings_index.get_settings
       assert_equal @index.get_rule(rule[:objectID]), copy_rules_index.get_rule(rule[:objectID])
@@ -93,7 +93,7 @@ class SearchClientTest < BaseTest
       assert_equal @index.get_synonym(synonym[:objectID]), copy_full_copy_index.get_synonym(synonym[:objectID])
 
       moved_index = @@search_client.init_index(get_test_index_name('move_index'))
-      @@search_client.move_index!(@index_name, moved_index.index_name)
+      @@search_client.move_index!(@index_name, moved_index.name)
 
       moved_index.get_synonym('google_placeholder')
       moved_index.get_rule('company_auto_faceting')
@@ -270,8 +270,8 @@ class SearchClientTest < BaseTest
     end
 
     def test_multiple_operations
-      index_name1 = @index1.index_name
-      index_name2 = @index2.index_name
+      index_name1 = @index1.name
+      index_name2 = @index2.name
 
       response = @@search_client.multiple_batch!([
         { indexName: index_name1, action: 'addObject', body: { firstname: 'Jimmie' } },
@@ -326,12 +326,12 @@ class SearchClientTest < BaseTest
         now             = Time.now.to_i
         secured_api_key = Algolia::Search::Client.generate_secured_api_key(SEARCH_KEY_1, {
           validUntil: now + (10 * 60),
-          restrictIndices: @index1.index_name
+          restrictIndices: @index1.name
         })
 
         secured_client = Algolia::Search::Client.create(APPLICATION_ID_1, secured_api_key)
-        secured_index1 = secured_client.init_index(@index1.index_name)
-        secured_index2 = secured_client.init_index(@index2.index_name)
+        secured_index1 = secured_client.init_index(@index1.name)
+        secured_index2 = secured_client.init_index(@index2.name)
 
         secured_index1.search('')
         exception = assert_raises Algolia::AlgoliaHttpError do

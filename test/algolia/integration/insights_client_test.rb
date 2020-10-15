@@ -17,7 +17,7 @@ class InsightsClientTest < BaseTest
       client.send_event({
         eventType: 'click',
         eventName: 'foo',
-        index: index.index_name,
+        index: index.name,
         userToken: 'bar',
         objectIDs: %w(one two),
         timestamp: (today - 2).strftime('%Q').to_i
@@ -27,14 +27,14 @@ class InsightsClientTest < BaseTest
         {
           eventType: 'click',
           eventName: 'foo',
-          index: index.index_name,
+          index: index.name,
           userToken: 'bar',
           objectIDs: %w(one two),
           timestamp: (today - 2).strftime('%Q').to_i
         }, {
           eventType: 'click',
           eventName: 'foo',
-          index: index.index_name,
+          index: index.name,
           userToken: 'bar',
           objectIDs: %w(one two),
           timestamp: (today - 2).strftime('%Q').to_i
@@ -42,37 +42,37 @@ class InsightsClientTest < BaseTest
       ])
 
       user_client = client.user('bar')
-      response    = user_client.clicked_object_ids('foo', index.index_name, %w(one two))
+      response    = user_client.clicked_object_ids('foo', index.name, %w(one two))
       assert_equal 200, response[:status]
       assert_equal 'OK', response[:message]
 
       query_id = index.search('', { clickAnalytics: true })[:queryID]
 
-      response = user_client.clicked_object_ids_after_search('foo', index.index_name, %w(one two), [1, 2], query_id)
+      response = user_client.clicked_object_ids_after_search('foo', index.name, %w(one two), [1, 2], query_id)
       assert_equal 200, response[:status]
       assert_equal 'OK', response[:message]
 
-      response = user_client.clicked_filters('foo', index.index_name, %w(filter:foo filter:bar))
+      response = user_client.clicked_filters('foo', index.name, %w(filter:foo filter:bar))
       assert_equal 200, response[:status]
       assert_equal 'OK', response[:message]
 
-      response = user_client.converted_object_ids('foo', index.index_name, %w(one two))
+      response = user_client.converted_object_ids('foo', index.name, %w(one two))
       assert_equal 200, response[:status]
       assert_equal 'OK', response[:message]
 
-      response = user_client.converted_object_ids_after_search('foo', index.index_name, %w(one two), query_id)
+      response = user_client.converted_object_ids_after_search('foo', index.name, %w(one two), query_id)
       assert_equal 200, response[:status]
       assert_equal 'OK', response[:message]
 
-      response = user_client.converted_filters('foo', index.index_name, %w(filter:foo filter:bar))
+      response = user_client.converted_filters('foo', index.name, %w(filter:foo filter:bar))
       assert_equal 200, response[:status]
       assert_equal 'OK', response[:message]
 
-      response = user_client.viewed_object_ids('foo', index.index_name, %w(one two))
+      response = user_client.viewed_object_ids('foo', index.name, %w(one two))
       assert_equal 200, response[:status]
       assert_equal 'OK', response[:message]
 
-      response = user_client.viewed_filters('foo', index.index_name, %w(filter:foo filter:bar))
+      response = user_client.viewed_filters('foo', index.name, %w(filter:foo filter:bar))
       assert_equal 200, response[:status]
       assert_equal 'OK', response[:message]
     end
