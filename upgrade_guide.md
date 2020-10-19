@@ -43,6 +43,12 @@ client = Algolia::Search::Client.create_with_config(search_config)
 index = client.init_index('index_name')
 ```
 
+By default the keys of the response hashes are symbols. If you wish to change that for strings, use the following configuration
+```ruby
+search_config = Algolia::Search::Config.new(application_id: app_id, api_key: api_key, symbolize_keys: false)
+client = Algolia::Search::Client.create_with_config(search_config)
+```
+
 ## Search parameters and request options
 The search parameters and request options are still optional, but they are combined into a single hash instead of two. 
 For example:
