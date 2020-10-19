@@ -5,7 +5,7 @@ First, you'll have to include the new version in your Gemfile. To do so, change 
 
 ```diff
 - gem 'algoliasearch'
-+ gem 'algolia', git: 'https://github.com/algolia/algoliasearch-client-ruby.git', tag: 'v2.0.0-alpha.1'
++ gem 'algolia', git: 'https://github.com/algolia/algoliasearch-client-ruby.git', tag: 'v2.0.0-beta.1'
 ```
 
 Then, you'll need to change your current `require` statements:
