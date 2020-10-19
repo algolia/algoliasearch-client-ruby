@@ -16,13 +16,15 @@ module Algolia
     def each
       loop do
         if @response
-          if @response[:hits].length
-            @response[:hits].each do |hit|
+          parsed_response = symbolize_hash(@response)
+          parsed_data     = symbolize_hash(@data)
+          if parsed_response[:hits].length
+            parsed_response[:hits].each do |hit|
               hit.delete(:_highlightResult)
               yield hit
             end
 
-            if @response[:nbHits] < @data[:hitsPerPage]
+            if parsed_response[:nbHits] < parsed_data[:hitsPerPage]
               @response = nil
               @data     = {
                 hitsPerPage: 1000,

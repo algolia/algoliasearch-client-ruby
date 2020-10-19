@@ -7,16 +7,17 @@ module Algolia
         data = {}
 
         if @response
-          if @response[:hits].length
-            @response[:hits].each do |hit|
+          parsed_response = symbolize_hash(@response)
+          if parsed_response[:hits].length
+            parsed_response[:hits].each do |hit|
               yield hit
             end
 
-            if @response[:cursor].nil?
+            if parsed_response[:cursor].nil?
               @response = nil
               raise StopIteration
             else
-              data[:cursor] = @response[:cursor]
+              data[:cursor] = parsed_response[:cursor]
             end
           end
         end

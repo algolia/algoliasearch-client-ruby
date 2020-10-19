@@ -17,8 +17,7 @@ module Algolia
   # which is also included in the response attribute.
   #
   class AlgoliaHttpError < AlgoliaError
-    attr_accessor :code
-    attr_accessor :message
+    attr_accessor :code, :message
 
     def initialize(code, message)
       self.code    = code
