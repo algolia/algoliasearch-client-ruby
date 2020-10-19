@@ -4,7 +4,7 @@ require 'test_helper'
 class AlgoliaConfigTest
   describe 'set an extra header' do
     def before_all
-      @config = Algolia::AlgoliaConfig.new(application_id: 'app_id', api_key: 'api_key')
+      @config = Algolia::BaseConfig.new(application_id: 'app_id', api_key: 'api_key')
     end
 
     def test_set_extra_header
