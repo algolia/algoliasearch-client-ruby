@@ -33,7 +33,7 @@ module Algolia
       @write_timeout    = opts[:write_timeout] || Defaults::WRITE_TIMEOUT
       @connect_timeout  = opts[:connect_timeout] || Defaults::CONNECT_TIMEOUT
       @compression_type = opts[:compression_type] || Defaults::NONE_ENCODING
-      @symbolize_keys   = opts[:symbolize_keys] || true
+      @symbolize_keys   = opts.has_key?(:symbolize_keys) ? opts[:symbolize_keys] : true
     end
 
     def set_extra_header(key, value)

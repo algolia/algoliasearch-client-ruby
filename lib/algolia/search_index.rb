@@ -115,7 +115,7 @@ module Algolia
         has_next_page = true
         while has_next_page
           request_options[:page] = page
-          res                    = search(query, request_options)
+          res                    = symbolize_hash(search(query, request_options))
 
           res[:hits].each_with_index do |hit, i|
             if callback.call(hit)
