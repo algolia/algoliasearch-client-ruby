@@ -3,7 +3,7 @@ require 'faraday'
 module Algolia
   class BaseConfig
     attr_accessor :app_id, :api_key, :headers, :batch_size, :read_timeout, :write_timeout, :connect_timeout, :compression_type,
-                  :symbolize_keys
+                  :symbolize_keys, :use_latest_settings
 
     #
     # @option options [String] :application_id
@@ -28,12 +28,14 @@ module Algolia
         'User-Agent' => UserAgent.value
       }
 
-      @batch_size       = opts[:batch_size] || Defaults::BATCH_SIZE
-      @read_timeout     = opts[:read_timeout] || Defaults::READ_TIMEOUT
-      @write_timeout    = opts[:write_timeout] || Defaults::WRITE_TIMEOUT
-      @connect_timeout  = opts[:connect_timeout] || Defaults::CONNECT_TIMEOUT
-      @compression_type = opts[:compression_type] || Defaults::NONE_ENCODING
-      @symbolize_keys   = opts.has_key?(:symbolize_keys) ? opts[:symbolize_keys] : true
+      @batch_size          = opts[:batch_size] || Defaults::BATCH_SIZE
+      @read_timeout        = opts[:read_timeout] || Defaults::READ_TIMEOUT
+      @write_timeout       = opts[:write_timeout] || Defaults::WRITE_TIMEOUT
+      @connect_timeout     = opts[:connect_timeout] || Defaults::CONNECT_TIMEOUT
+      @compression_type    = opts[:compression_type] || Defaults::NONE_ENCODING
+      @symbolize_keys      = opts.has_key?(:symbolize_keys) ? opts[:symbolize_keys] : true
+      # used to avoid BC break on Rails integration, should not be documented
+      @use_latest_settings = opts.has_key?(:use_latest_settings) ? opts[:use_latest_settings] : true
     end
 
     def set_extra_header(key, value)

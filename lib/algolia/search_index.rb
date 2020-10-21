@@ -976,7 +976,7 @@ module Algolia
       def get_settings(opts = {})
         response = @transporter.read(:GET, path_encode('/1/indexes/%s/settings', @name) + handle_params({ getVersion: 2 }), {}, opts)
 
-        deserialize_settings(response)
+        deserialize_settings(response, @config.use_latest_settings, @config.symbolize_keys)
       end
 
       # Update some index settings. Only specified settings are overridden

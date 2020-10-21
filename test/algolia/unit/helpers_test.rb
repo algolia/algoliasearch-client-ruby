@@ -18,7 +18,35 @@ class HelpersTest
         replicas: %w(index1 index2)
       }
 
-      deserialized_settings = deserialize_settings(old_settings)
+      deserialized_settings = deserialize_settings(old_settings, true, true)
+      assert_equal new_settings, deserialized_settings
+    end
+
+    def test_deserialize_settings_with_old_settings
+      old_settings = {
+        attributesToIndex: %w(attr1 attr2),
+        numericAttributesToIndex: %w(attr1 attr2),
+        slaves: %w(index1 index2)
+      }
+
+      deserialized_settings = deserialize_settings(old_settings, false, true)
+      assert_equal old_settings, deserialized_settings
+    end
+
+    def test_deserialize_settings_with_string
+      old_settings = {
+        'attributesToIndex' => %w(attr1 attr2),
+        'numericAttributesToIndex' => %w(attr1 attr2),
+        'slaves' => %w(index1 index2)
+      }
+
+      new_settings = {
+        'searchableAttributes' => %w(attr1 attr2),
+        'numericAttributesForFiltering' => %w(attr1 attr2),
+        'replicas' => %w(index1 index2)
+      }
+
+      deserialized_settings = deserialize_settings(old_settings, true, false)
       assert_equal new_settings, deserialized_settings
     end
   end
