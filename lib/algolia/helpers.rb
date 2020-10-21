@@ -52,7 +52,9 @@ module Helpers
 
   # Support to convert old settings to their new names
   #
-  def deserialize_settings(data)
+  def deserialize_settings(data, use_latest_settings, symbolize_keys)
+    return data unless use_latest_settings
+
     settings = symbolize_hash(data)
     keys     = {
       attributesToIndex: 'searchableAttributes',
@@ -62,7 +64,8 @@ module Helpers
 
     keys.each do |deprecated_key, current_key|
       if settings.has_key?(deprecated_key)
-        settings[current_key.to_sym] = settings.delete(deprecated_key)
+        key           = symbolize_keys ? current_key.to_sym : current_key.to_s
+        settings[key] = settings.delete(deprecated_key)
       end
     end
 
