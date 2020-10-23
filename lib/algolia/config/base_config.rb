@@ -34,8 +34,6 @@ module Algolia
       @connect_timeout     = opts[:connect_timeout] || Defaults::CONNECT_TIMEOUT
       @compression_type    = opts[:compression_type] || Defaults::NONE_ENCODING
       @symbolize_keys      = opts.has_key?(:symbolize_keys) ? opts[:symbolize_keys] : true
-      # used to avoid BC break on Rails integration, should not be documented
-      @use_latest_settings = opts.has_key?(:use_latest_settings) ? opts[:use_latest_settings] : true
     end
 
     def set_extra_header(key, value)

@@ -52,9 +52,7 @@ module Helpers
 
   # Support to convert old settings to their new names
   #
-  def deserialize_settings(data, use_latest_settings, symbolize_keys)
-    return data unless use_latest_settings
-
+  def deserialize_settings(data, symbolize_keys)
     settings = symbolize_hash(data)
     keys     = {
       attributesToIndex: 'searchableAttributes',
