@@ -229,7 +229,7 @@ client.search_user_ids('query', {clusterName: 'my-cluster', hitPerPage: 12, page
 #### `pending_mappings`
 New method to check the status of your clusters' migration or user creation.
 ```ruby
-client.pending_mapping?({ retrieveMappings: true })
+client.pending_mappings?({ retrieveMappings: true })
 ``` 
 
 #### `get_logs`
