@@ -1266,7 +1266,7 @@ module Algolia
       res = []
       page = 0
       loop do
-        curr = search_rules('', { :hits_per_page => hits_per_page, :page => page }, request_options)['hits']
+        curr = search_rules('', { :hitsPerPage => hits_per_page, :page => page }, request_options)['hits']
         curr.each do |rule|
           res << rule
           yield rule if block_given?
