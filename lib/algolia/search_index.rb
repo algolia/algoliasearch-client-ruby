@@ -859,7 +859,7 @@ module Algolia
       # @param objects [Array] Array of objects
       # @param opts [Hash] contains extra parameters to send with your query
       #
-      # @return [Enumerator, SynonymIterator]
+      # @return [IndexingResponse]
       #
       def replace_all_objects!(objects, opts = {})
         replace_all_objects(objects, opts.merge(safe: true))

@@ -49,6 +49,6 @@ module Algolia
       def search_user_ids: (String query, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
       def pending_mappings?: (?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
       def custom_request: (Hash[Symbol, String|[String]] data, String uri, Symbol method, Integer call_type, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
-      end
-   end
+    end
+  end
 end

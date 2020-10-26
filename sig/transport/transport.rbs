@@ -6,8 +6,8 @@ module Algolia
       include Helpers
 
       def initialize: (Search::Config config, Object requester) -> void
-      def read: (Symbol method, String path, ?::Hash[Symbol, untyped]|Array[untyped] body, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, untyped]
-      def write: (Symbol method, String path, ?::Hash[Symbol, untyped]|Array[untyped] body, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, untyped]
+      def read: (Symbol method, String path, ?::Hash[Symbol, untyped]|Array[untyped]|String body, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, untyped]
+      def write: (Symbol method, String path, ?::Hash[Symbol, untyped]|Array[untyped]|String body, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, untyped]
       # TODO: add AlgoliaHttpError
       def request: (Integer call_type, Symbol method, String path, ?::Hash[Symbol, String|[String]] body, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, untyped]
       def build_request: (Symbol method, String path, Hash[Symbol, String|[String]] body, RequestOptions request_options) -> Hash[Symbol, String|[String]]
