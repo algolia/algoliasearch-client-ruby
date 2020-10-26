@@ -1,0 +1,11 @@
+module Algolia
+  class MultipleResponse < BaseResponse
+    include Enumerable[Hash[Symbol, String|[String]], void]
+
+    def initialize: (?(nil|[BaseResponse])? responses) -> bool
+    def last: () -> void
+    def push: (BaseResponse response) -> void
+    def wait: (?::Hash[Symbol, String|[String]] opts) -> self
+    def each: () { ([BaseResponse]  ) -> void } -> void
+  end
+end

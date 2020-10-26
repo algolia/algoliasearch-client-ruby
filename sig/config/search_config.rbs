@@ -3,7 +3,7 @@ module Algolia
     class Config < BaseConfig
       include CallType
 
-      attr_accessor default_hosts: Array[untyped]
+      attr_accessor default_hosts: [Hash[Symbol, String|[String]]]
 
       def initialize: (?::Hash[Symbol, String|[String]] opts) -> void
     end

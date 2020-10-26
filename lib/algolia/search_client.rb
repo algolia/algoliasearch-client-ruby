@@ -591,7 +591,7 @@ module Algolia
           request_options.delete(:retrieveMappings)
         end
 
-        @transporter.read(:GET, '/1/clusters/mapping/pending' + handle_params({ getClusters: retrieve_mappings }), {}, request_options)
+        @transporter.read(:GET, "/1/clusters/mapping/pending#{handle_params({ getClusters: retrieve_mappings })}", {}, request_options)
       end
 
       #
@@ -603,9 +603,10 @@ module Algolia
       # Method available to make custom requests to the API
       #
       def custom_request(data, uri, method, call_type, opts = {})
-        if call_type == WRITE
+        case call_type
+        when WRITE
           @transporter.write(method.to_sym, uri, data, opts)
-        elsif call_type == READ
+        when READ
           @transporter.read(method.to_sym, uri, data, opts)
         end
       end

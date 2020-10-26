@@ -1,0 +1,7 @@
+module Algolia
+  class BaseResponse
+    include Helpers
+
+    def wait: () -> self
+  end
+end

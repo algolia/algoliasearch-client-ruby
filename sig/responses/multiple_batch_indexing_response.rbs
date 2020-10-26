@@ -1,0 +1,9 @@
+module Algolia
+  class MultipleIndexBatchIndexingResponse < BaseResponse
+    attr_reader raw_response: untyped
+
+    # TODO: add Search::Client
+    def initialize: (untyped client, Hash[Symbol, String|[String]] response) -> bool
+    def wait: (?::Hash[Symbol, String|[String]] opts) -> self
+  end
+end

@@ -1,0 +1,5 @@
+module RetryOutcomeType
+  SUCCESS: String
+  RETRY: String
+  FAILURE: String
+end
