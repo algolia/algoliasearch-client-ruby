@@ -1,5 +1,9 @@
+# rspec failure tracking
+.rspec_status
+
 ## MAC OS
 .DS_Store
+.idea/
 
 ## TEXTMATE
 *.tmproj
@@ -18,11 +22,18 @@ coverage
 rdoc
 pkg
 .rvmrc
-.rubocop.yml
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
 
 ## PROJECT::SPECIFIC
 Gemfile.lock
 spec/integration_spec_conf.rb
 data.sqlite3
 
-.idea/
+debug.log
