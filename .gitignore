@@ -36,3 +36,4 @@ Gemfile.lock
 spec/integration_spec_conf.rb
 data.sqlite3
 debug.log
+.idea/
