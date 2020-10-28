@@ -23,6 +23,8 @@ Gem::Specification.new do |s|
     "source_code_uri"   => "https://github.com/algolia/algoliasearch-client-ruby"
   }
 
+  s.post_install_message = "A new major version is available for Algolia! Please now use the https://rubygems.org/gems/algolia gem to get the latest features."
+
   s.require_paths = ["lib"]
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
 
