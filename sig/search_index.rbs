@@ -1,0 +1,83 @@
+module Algolia
+  module Search
+    # Class Index
+    class Index
+      include CallType
+      include Helpers
+
+      attr_reader name: String
+      attr_reader transporter: Algolia::Transport::Transport
+      attr_reader config: Algolia::Search::Config
+
+      def initialize: (String name, Algolia::Transport::Transport transporter, Algolia::Search::Config config) -> bool
+      def wait_task: (Integer task_id, ?Integer time_before_retry, ?::Hash[Symbol, String|[String]] opts) -> nil
+      def get_task_status: (Integer task_id, ?::Hash[Symbol, String|[String]] opts) -> (String|[String])
+      def clear_objects: (?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def clear_objects!: (?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def delete: (?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def delete!: (?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def find_object: (?::Hash[Symbol, String|[String]] opts) { (untyped) -> untyped } -> ({ object: untyped, position: untyped, page: untyped } | untyped)
+      def self.get_object_position: ([Hash[Symbol, String|[String]]] objects, String object_id) -> Integer
+      def copy_to: (String name, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def move_to: (String name, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def get_object: (String object_id, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def get_objects: ([String] object_ids, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def save_object: (Hash[Symbol, String|[String]] object, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def save_object!: (Hash[Symbol, String|[String]] object, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def save_objects: ([Hash[Symbol, String|[String]]] objects, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def save_objects!: ([Hash[Symbol, String|[String]]] objects, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def partial_update_object: (String object, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def partial_update_object!: (String object, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def partial_update_objects: ([String] objects, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def partial_update_objects!: ([String] objects, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def delete_object: (String object_id, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def delete_object!: (String object_id, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def delete_objects: ([String] object_ids, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def delete_objects!: ([String] object_ids, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def delete_by: (Hash[Symbol, String|[String]] filters, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def delete_by!: (Hash[Symbol, String|[String]] filters, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def batch: (Hash[Symbol, String|[String]] requests, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def batch!: (Hash[Symbol, String|[String]] requests, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def get_rule: (String object_id, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def save_rule: (untyped rule, ?::Hash[Symbol, String|[String]] opts) -> (IndexingResponse|Array[untyped])
+      def save_rule!: (untyped rule, ?::Hash[Symbol, String|[String]] opts) -> (IndexingResponse|Array[untyped])
+      def save_rules: (untyped rules, ?::Hash[Symbol, String|[String]] opts) -> (IndexingResponse|Array[untyped])
+      def save_rules!: (untyped rules, ?::Hash[Symbol, String|[String]] opts) -> (IndexingResponse|Array[untyped])
+      def clear_rules: (?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def clear_rules!: (?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def delete_rule: (String object_id, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def delete_rule!: (String object_id, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def get_synonym: (String object_id, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def save_synonym: (untyped synonym, ?::Hash[Symbol, String|[String]] opts) -> (IndexingResponse|Array[untyped])
+      def save_synonym!: (untyped synonym, ?::Hash[Symbol, String|[String]] opts) -> (IndexingResponse|Array[untyped])
+      def save_synonyms: (untyped synonyms, ?::Hash[Symbol, String|[String]] opts) -> (IndexingResponse|Array[untyped])
+      def save_synonyms!: (untyped synonyms, ?::Hash[Symbol, String|[String]] opts) -> (IndexingResponse|Array[untyped])
+      def clear_synonyms: (?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def clear_synonyms!: (?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def delete_synonym: (String object_id, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def delete_synonym!: (String object_id, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def browse_objects: (?::Hash[Symbol, String|[String]] opts) { () -> void } -> (Hash[Symbol, String|[String]]|Algolia::ObjectIterator)
+      def browse_rules: (?::Hash[Symbol, String|[String]] opts) { () -> void } -> (Hash[Symbol, String|[String]]|Algolia::RuleIterator)
+      def browse_synonyms: (?::Hash[Symbol, String|[String]] opts) { () -> void } -> (Hash[Symbol, String|[String]]|Algolia::SynonymIterator)
+      def replace_all_objects: ([Hash[Symbol, String|[String]]] objects, ?untyped opts) -> (IndexingResponse|MultipleResponse)
+      def replace_all_objects!: ([Hash[Symbol, String|[String]]] objects, ?untyped opts) -> (IndexingResponse|MultipleResponse)
+      def replace_all_rules: (untyped rules, ?::Hash[Symbol, String|[String]] opts) -> (IndexingResponse|Array[untyped])
+      def replace_all_rules!: (untyped rules, ?::Hash[Symbol, String|[String]] opts) -> (IndexingResponse|Array[untyped])
+      def replace_all_synonyms: (untyped synonyms, ?::Hash[Symbol, String|[String]] opts) -> (IndexingResponse|Array[untyped])
+      def replace_all_synonyms!: (untyped synonyms, ?::Hash[Symbol, String|[String]] opts) -> (IndexingResponse|Array[untyped])
+      def search: (String query, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def search_for_facet_values: (String facet_name, String facet_query, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def search_synonyms: (String query, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def search_rules: (String query, ?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def get_settings: (?::Hash[Symbol, String|[String]] opts) -> Hash[Symbol, String|[String]]
+      def set_settings: (Hash[Symbol, String|[String]] settings, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def set_settings!: (Hash[Symbol, String|[String]] settings, ?::Hash[Symbol, String|[String]] opts) -> IndexingResponse
+      def check_array: (Hash[Symbol, String|[String]] object) -> void
+      def check_object: (untyped object, ?bool in_array) -> void
+      # TODO add AlgoliaError
+      def get_object_id: (untyped object, ?String object_id) -> untyped
+      def chunk: (String action, untyped objects, ?bool with_object_id) -> Array[Hash[Symbol, untyped]]
+      def raw_batch: (Array[Hash[Symbol, untyped]]|Hash[Symbol, String|[String]] requests, Hash[Symbol, String|[String]] opts) -> Hash[Symbol, untyped]
+    end
+  end
+end

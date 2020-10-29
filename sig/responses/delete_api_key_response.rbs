@@ -1,0 +1,8 @@
+module Algolia
+  class DeleteApiKeyResponse < BaseResponse
+    attr_reader raw_response: Hash[Symbol, String|[String]]
+
+    def initialize: (untyped client, Hash[Symbol, String|[String]] response, String key) -> bool
+    def wait: (?::Hash[Symbol, String|[String]] opts) -> self
+  end
+end
