@@ -26,13 +26,15 @@ class HelpersTest
       old_settings = {
         'attributesToIndex' => %w(attr1 attr2),
         'numericAttributesToIndex' => %w(attr1 attr2),
-        'slaves' => %w(index1 index2)
+        'slaves' => %w(index1 index2),
+        'minWordSizefor1Typo' => 1
       }
 
       new_settings = {
         'searchableAttributes' => %w(attr1 attr2),
         'numericAttributesForFiltering' => %w(attr1 attr2),
-        'replicas' => %w(index1 index2)
+        'replicas' => %w(index1 index2),
+        'minWordSizefor1Typo' => 1
       }
 
       deserialized_settings = deserialize_settings(old_settings, false)
