@@ -90,11 +90,11 @@ module Algolia
       # @return [Index] new Index instance
       #
       def init_index(index_name)
-        index_name.strip!
-        if index_name.empty?
+        stripped_index_name = index_name.strip
+        if stripped_index_name.empty?
           raise AlgoliaError, 'Please provide a valid index name'
         end
-        Index.new(index_name, @transporter, @config)
+        Index.new(stripped_index_name, @transporter, @config)
       end
 
       # List all indexes of the client
