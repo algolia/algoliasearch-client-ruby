@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [2.0.2](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/2.0.2) (2020-11-09)
+
+* Fix: don't mutate index name on stripping
+
 ## [2.0.1](https://github.com/algolia/algoliasearch-client-ruby/releases/tag/2.0.1) (2020-11-02)
 
 * Fix: simplify merge of headers in `Transport` class
