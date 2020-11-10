@@ -59,6 +59,27 @@ Encountering an issue? Before reaching out to support, we recommend heading to o
 
 If you were using the v1 and wish to update to v2, please follow our [Upgrade Guide](upgrade_guide.md)
 
+## Use app in Docker
+
+If you wish to contribute but would like to avoid installing the repository locally, we provided you with a Docker image. You can build it with the following command
+```.env
+docker build -t algolia-ruby --build-arg ALGOLIA_APPLICATION_ID_1 \
+--build-arg ALGOLIA_ADMIN_KEY_1 \
+--build-arg ALGOLIA_SEARCH_KEY_1 \
+--build-arg ALGOLIA_APPLICATION_ID_2 \
+--build-arg ALGOLIA_ADMIN_KEY_2 \
+--build-arg ALGOLIA_APPLICATION_ID_MCM \
+--build-arg ALGOLIA_ADMIN_KEY_MCM .
+```
+
+and run it like this
+```.env
+docker run -it --rm -v $PWD:/app -w /app algolia-ruby bash
+```
+
+If you're an external contributor, you'll only need the `ALGOLIA_APPLICATION_ID_1`, `ALGOLIA_ADMIN_KEY_1` and `ALGOLIA_SEARCH_KEY_1`. The other variables are used to run the complete [Common Test Suite](https://github.com/algolia/algoliasearch-client-specs/tree/master/common-test-suite).
+If you would like to use the docker image but are not familiar with Docker, please check our [dedicated guide](DOCKER_README.MD).
+
 ## 📄 License
 
 Algolia Ruby API Client is an open-sourced software licensed under the [MIT license](LICENSE.md).
