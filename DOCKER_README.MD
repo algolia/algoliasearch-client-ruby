@@ -3,7 +3,7 @@ This guide is made for OSX users.
 
 ## Install docker
 
-First install docker using [Homebrew](https://brew.sh/)
+First install Docker using [Homebrew](https://brew.sh/)
 ```
 $ brew install docker
 ```
@@ -24,7 +24,7 @@ $ brew cask install virtualbox
 
 You may need to enter your password and authorize the application in your `System Settings` > `Security & Privacy`.
 
-Create now a new machine, set it up a default and connect your shell to it (here we use zsh. The commands should anyway be displayed in each steps' output)
+Create now a new machine, set it up as default and connect your shell to it (here we use zsh. The commands should anyway be displayed in each steps' output)
 
 ```
 $ docker-machine create --driver virtualbox default
@@ -32,6 +32,6 @@ $ docker-machine env default
 $ eval "$(docker-machine env default)"
 ```
 
-Now you're all setup to use our provided docker image!
+Now you're all setup to use our provided Docker image!
 
 

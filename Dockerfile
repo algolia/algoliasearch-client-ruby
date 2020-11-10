@@ -19,5 +19,5 @@ ENV ALGOLIA_ADMIN_KEY_MCM=$ALGOLIA_ADMIN_KEY_MCM
 RUN gem install bundler
 
 WORKDIR /app
-ADD . /app/
+COPY . /app/
 RUN bundle install
