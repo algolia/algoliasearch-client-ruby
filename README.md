@@ -61,40 +61,8 @@ If you were using the v1 and wish to update to v2, please follow our [Upgrade Gu
 
 ## Use the Dockerfile
 
-If you wish to contribute to the repository but would like to avoid installing all the dependencies locally, we provided you with a Docker image. You can build it with the following command
-```bash
-docker build -t algolia-ruby --build-arg ALGOLIA_APPLICATION_ID_1 \
---build-arg ALGOLIA_ADMIN_KEY_1 \
---build-arg ALGOLIA_SEARCH_KEY_1 \
---build-arg ALGOLIA_APPLICATION_ID_2 \
---build-arg ALGOLIA_ADMIN_KEY_2 \
---build-arg ALGOLIA_APPLICATION_ID_MCM \
---build-arg ALGOLIA_ADMIN_KEY_MCM .
-```
-
-and run it like this
-```bash
-docker run -it --rm -v $PWD:/app -w /app algolia-ruby bash
-```
-
-Once the container is up, you can edit files directly in your IDE: changes will be mirrored in the image.
-To launch the tests, you have different choices
-```shell script
-# run only the unit tests
-bundle exec rake test:unit
-
-# run only the integration tests
-bundle exec rake test:integration
-
-# run the whole test suite
-bundle exec rake test:all
-
-# run a single test
-bundle exec rake test TEST=/full/path/to/test.rb TESTOPTS="--name=test_name"
-```
-
-If you're an external contributor, you'll only need the `ALGOLIA_APPLICATION_ID_1`, `ALGOLIA_ADMIN_KEY_1` and `ALGOLIA_SEARCH_KEY_1`. The other variables are used to run the complete [Common Test Suite](https://github.com/algolia/algoliasearch-client-specs/tree/master/common-test-suite).
-If you would like to use the Docker image but are not familiar with Docker, please check our [dedicated guide](DOCKER_README.MD).
+If you wish to contribute to the repository but would like to avoid installing the dependencies locally, we provided you with a Docker image.
+Please check our [dedicated guide](DOCKER_README.MD) to know more.
 
 ## 📄 License
 
