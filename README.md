@@ -62,7 +62,7 @@ If you were using the v1 and wish to update to v2, please follow our [Upgrade Gu
 ## Use the Dockerfile
 
 If you wish to contribute to the repository but would like to avoid installing the dependencies locally, we provided you with a Docker image.
-Please check our [dedicated guide](DOCKER_README.MD) to know more.
+Please check our [dedicated guide](DOCKER_README.MD) to learn more.
 
 ## 📄 License
 

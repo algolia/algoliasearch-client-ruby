@@ -1,5 +1,4 @@
-In this page you will find our recommended way of installing Docker on your machine. 
-This guide is made for OSX users.
+This guide shows our recommended recommended way of installing Docker on your OS X machine. 
 
 ## Install docker
 
@@ -8,23 +7,23 @@ First install Docker using [Homebrew](https://brew.sh/)
 $ brew install docker
 ```
 
-You can then install [Docker Desktop](https://docs.docker.com/get-docker/) if you wish, or use `docker-machine`. As we prefer the second option, we will only document this one.
+You can install [Docker Desktop](https://docs.docker.com/get-docker/) if you wish, or use the `docker-machine` command to work with your Docker containers. This guide assumes you use the `docker-machine` command.
 
-## Setup your docker
+## Setup your Docker
 
 Install `docker-machine`
 ```
 $ brew install docker-machine
 ```
 
-Then install [VirtualBox](https://www.virtualbox.org/) with [Homebrew Cask](https://github.com/Homebrew/homebrew-cask) to get a driver for your Docker machine
+Then install [VirtualBox](https://www.virtualbox.org/) using [Homebrew Cask](https://github.com/Homebrew/homebrew-cask) to get a driver for your Docker machine
 ```
 $ brew cask install virtualbox
 ```
 
-You may need to enter your password and authorize the application in your `System Settings` > `Security & Privacy`.
+You may need to enter your password and authorize the application through `System Settings` > `Security & Privacy`.
 
-Create now a new machine, set it up as default and connect your shell to it (here we use zsh. The commands should anyway be displayed in each steps' output)
+Create a new machine, and set it up as default, and connect your shell to the machine with the following commands:
 
 ```
 $ docker-machine create --driver virtualbox default
@@ -87,4 +86,3 @@ bundle exec rake test TEST=/full/path/to/test.rb TESTOPTS="--name=test_name"
 ```
 
 Feel free to contact us if you have any questions.
-
