@@ -660,9 +660,10 @@ module Algolia
           request_options.delete(:forwardToReplicas)
         end
 
-        if request_options[:replaceExistingSynonyms]
+        if request_options[:replaceExistingSynonyms] || request_options[:clearExistingSynonyms]
           replace_existing_synonyms = true
           request_options.delete(:replaceExistingSynonyms)
+          request_options.delete(:clearExistingSynonyms)
         end
         response = @transporter.write(
           :POST,
@@ -893,7 +894,7 @@ module Algolia
       #
       def replace_all_synonyms(synonyms, opts = {})
         request_options                           = symbolize_hash(opts)
-        request_options[:replaceExistingSynonyms] = true
+        request_options[:clearExistingSynonyms] = true
 
         save_synonyms(synonyms, request_options)
       end
