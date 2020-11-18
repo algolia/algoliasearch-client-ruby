@@ -1,4 +1,5 @@
-This guide shows our recommended recommended way of installing Docker on your OS X machine. 
+In this page you will find our recommended way of installing Docker on your machine. 
+This guide is made for OSX users.
 
 ## Install docker
 
@@ -7,23 +8,23 @@ First install Docker using [Homebrew](https://brew.sh/)
 $ brew install docker
 ```
 
-You can install [Docker Desktop](https://docs.docker.com/get-docker/) if you wish, or use the `docker-machine` command to work with your Docker containers. This guide assumes you use the `docker-machine` command.
+You can then install [Docker Desktop](https://docs.docker.com/get-docker/) if you wish, or use `docker-machine`. As we prefer the second option, we will only document this one.
 
-## Setup your Docker
+## Setup your docker
 
 Install `docker-machine`
 ```
 $ brew install docker-machine
 ```
 
-Then install [VirtualBox](https://www.virtualbox.org/) using [Homebrew Cask](https://github.com/Homebrew/homebrew-cask) to get a driver for your Docker machine
+Then install [VirtualBox](https://www.virtualbox.org/) with [Homebrew Cask](https://github.com/Homebrew/homebrew-cask) to get a driver for your Docker machine
 ```
 $ brew cask install virtualbox
 ```
 
-You may need to enter your password and authorize the application through `System Settings` > `Security & Privacy`.
+You may need to enter your password and authorize the application in your `System Settings` > `Security & Privacy`.
 
-Create a new machine, and set it up as default, and connect your shell to the machine with the following commands:
+Create now a new machine, set it up as default and connect your shell to it (here we use zsh. The commands should anyway be displayed in each steps' output)
 
 ```
 $ docker-machine create --driver virtualbox default
@@ -42,13 +43,13 @@ docker build -t algolia-ruby .
 ## Run the image
 
 You need to provide few environment variables at runtime to be able to run the [Common Test Suite](https://github.com/algolia/algoliasearch-client-specs/tree/master/common-test-suite).
-You can set them up directly in the command
+You can set them up directly in the command:
 
 ```bash
-docker run -it --rm --env ALGOLIA_APPLICATION_ID_1=XXXXXX [...] -v $PWD:/app -w /app algolia-ruby bash
+docker run -it --rm --env ALGOLIA_APP_ID=XXXXXX [...] -v $PWD:/app -w /app algolia-ruby bash
 ```
 
-But we advise you export them in your `.bashrc` or `.zshrc`. That way, you can use [Docker's shorten syntax](https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file) to retrieve your variables.
+However, we advise you to export them in your `.bashrc` or `.zshrc`. That way, you can use [Docker's shorten syntax](https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file) to set your variables.
 
 ```bash
 ### For external contributors, only the following env variables should be enough
@@ -68,9 +69,9 @@ docker run -it --rm --env ALGOLIA_APPLICATION_ID_1 \
 -v $PWD:/app -w /app algolia-ruby bash
 ```
 
-Once the container is up, you can edit files directly in your IDE: changes will be mirrored in the image.
+Once your container is running, any changes you make in your IDE are directly reflected in the container.
 
-Lastly to launch the tests, you can use one of the following commands
+To launch the tests, you can use one of the following commands
 ```shell script
 # run only the unit tests
 bundle exec rake test:unit
