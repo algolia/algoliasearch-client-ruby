@@ -893,7 +893,7 @@ module Algolia
       # @return [Array, IndexingResponse]
       #
       def replace_all_synonyms(synonyms, opts = {})
-        request_options                           = symbolize_hash(opts)
+        request_options                         = symbolize_hash(opts)
         request_options[:clearExistingSynonyms] = true
 
         save_synonyms(synonyms, request_options)

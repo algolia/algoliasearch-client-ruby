@@ -438,261 +438,266 @@ class SearchIndexTest < BaseTest
 
       assert_equal 'Synonym set does not exist', exception.message
 
+      @index.save_synonyms!([synonym3], clearExistingSynonyms: true)
+
+      assert_equal synonym3, @index.get_synonym(synonym3[:objectID])
+      assert_equal 1, @index.search_synonyms('')[:hits].length
+
       @index.clear_synonyms!
 
       res = @index.search_synonyms('')
       assert_equal 0, res[:nbHits]
     end
+  end
 
-    describe 'query rules' do
-      def before_all
-        super
-        @index = @@search_client.init_index(get_test_index_name('rules'))
-      end
+  describe 'query rules' do
+    def before_all
+      super
+      @index = @@search_client.init_index(get_test_index_name('rules'))
+    end
 
-      def test_rules
-        responses = Algolia::MultipleResponse.new
-        responses.push(@index.save_objects([
-          { objectID: 'iphone_7', brand: 'Apple', model: '7' },
-          { objectID: 'iphone_8', brand: 'Apple', model: '8' },
-          { objectID: 'iphone_x', brand: 'Apple', model: 'X' },
-          { objectID: 'one_plus_one', brand: 'OnePlus',
-            model: 'One' },
-          { objectID: 'one_plus_two', brand: 'OnePlus',
-            model: 'Two' }
-        ], { auto_generate_object_id_if_not_exist: true }))
+    def test_rules
+      responses = Algolia::MultipleResponse.new
+      responses.push(@index.save_objects([
+        { objectID: 'iphone_7', brand: 'Apple', model: '7' },
+        { objectID: 'iphone_8', brand: 'Apple', model: '8' },
+        { objectID: 'iphone_x', brand: 'Apple', model: 'X' },
+        { objectID: 'one_plus_one', brand: 'OnePlus',
+          model: 'One' },
+        { objectID: 'one_plus_two', brand: 'OnePlus',
+          model: 'Two' }
+      ], { auto_generate_object_id_if_not_exist: true }))
 
-        responses.push(@index.set_settings({ attributesForFaceting: %w(brand model) }))
+      responses.push(@index.set_settings({ attributesForFaceting: %w(brand model) }))
 
-        rule1 = {
-          objectID: 'brand_automatic_faceting',
-          enabled: false,
-          condition: { anchoring: 'is', pattern: '{facet:brand}' },
-          consequence: {
-            params: {
-              automaticFacetFilters: [
-                { facet: 'brand', disjunctive: true, score: 42 }
+      rule1 = {
+        objectID: 'brand_automatic_faceting',
+        enabled: false,
+        condition: { anchoring: 'is', pattern: '{facet:brand}' },
+        consequence: {
+          params: {
+            automaticFacetFilters: [
+              { facet: 'brand', disjunctive: true, score: 42 }
+            ]
+          }
+        },
+        validity: [
+          {
+            from: 1532439300, # 07/24/2018 13:35:00 UTC
+            until: 1532525700 # 07/25/2018 13:35:00 UTC
+          },
+          {
+            from: 1532612100, # 07/26/2018 13:35:00 UTC
+            until: 1532698500 # 07/27/2018 13:35:00 UTC
+          }
+        ],
+        description: 'Automatic apply the faceting on `brand` if a brand value is found in the query'
+      }
+
+      responses.push(@index.save_rule(rule1))
+
+      rule2 = {
+        objectID: 'query_edits',
+        conditions: [{ anchoring: 'is', pattern: 'mobile phone', alternatives: true }],
+        consequence: {
+          filterPromotes: false,
+          params: {
+            query: {
+              edits: [
+                { type: 'remove', delete: 'mobile' },
+                { type: 'replace', delete: 'phone', insert: 'iphone' }
               ]
             }
-          },
-          validity: [
-            {
-              from: 1532439300, # 07/24/2018 13:35:00 UTC
-              until: 1532525700 # 07/25/2018 13:35:00 UTC
-            },
-            {
-              from: 1532612100, # 07/26/2018 13:35:00 UTC
-              until: 1532698500 # 07/27/2018 13:35:00 UTC
-            }
-          ],
-          description: 'Automatic apply the faceting on `brand` if a brand value is found in the query'
-        }
-
-        responses.push(@index.save_rule(rule1))
-
-        rule2 = {
-          objectID: 'query_edits',
-          conditions: [{ anchoring: 'is', pattern: 'mobile phone', alternatives: true }],
-          consequence: {
-            filterPromotes: false,
-            params: {
-              query: {
-                edits: [
-                  { type: 'remove', delete: 'mobile' },
-                  { type: 'replace', delete: 'phone', insert: 'iphone' }
-                ]
-              }
-            }
           }
         }
+      }
 
-        rule3 = {
-          objectID: 'query_promo',
-          consequence: {
-            params: {
-              filters: 'brand:OnePlus'
-            }
+      rule3 = {
+        objectID: 'query_promo',
+        consequence: {
+          params: {
+            filters: 'brand:OnePlus'
           }
         }
+      }
 
-        rule4 = {
-          objectID: 'query_promo_summer',
-          condition: {
-            context: 'summer'
-          },
-          consequence: {
-            params: {
-              filters: 'model:One'
-            }
+      rule4 = {
+        objectID: 'query_promo_summer',
+        condition: {
+          context: 'summer'
+        },
+        consequence: {
+          params: {
+            filters: 'model:One'
           }
         }
+      }
 
-        responses.push(@index.save_rules([rule2, rule3, rule4]))
+      responses.push(@index.save_rules([rule2, rule3, rule4]))
 
-        responses.wait
+      responses.wait
 
-        assert_equal 1, @index.search('', { ruleContexts: ['summer'] })[:nbHits]
+      assert_equal 1, @index.search('', { ruleContexts: ['summer'] })[:nbHits]
 
-        assert_equal rule1, rule_without_metadata(@index.get_rule(rule1[:objectID]))
-        assert_equal rule2, rule_without_metadata(@index.get_rule(rule2[:objectID]))
-        assert_equal rule3, rule_without_metadata(@index.get_rule(rule3[:objectID]))
-        assert_equal rule4, rule_without_metadata(@index.get_rule(rule4[:objectID]))
+      assert_equal rule1, rule_without_metadata(@index.get_rule(rule1[:objectID]))
+      assert_equal rule2, rule_without_metadata(@index.get_rule(rule2[:objectID]))
+      assert_equal rule3, rule_without_metadata(@index.get_rule(rule3[:objectID]))
+      assert_equal rule4, rule_without_metadata(@index.get_rule(rule4[:objectID]))
 
-        assert_equal 4, @index.search_rules('')[:nbHits]
+      assert_equal 4, @index.search_rules('')[:nbHits]
 
-        results = []
-        @index.browse_rules do |rule|
-          results.push(rule)
-        end
-
-        rules = [
-          rule1,
-          rule2,
-          rule3,
-          rule4
-        ]
-
-        results.each do |rule|
-          assert_includes rules, rule_without_metadata(rule)
-        end
-
-        @index.delete_rule!(rule1[:objectID])
-
-        exception = assert_raises Algolia::AlgoliaHttpError do
-          @index.get_rule(rule1[:objectID])
-        end
-
-        assert_equal 'ObjectID does not exist', exception.message
-
-        @index.clear_rules!
-
-        res = @index.search_rules('')
-        assert_equal 0, res[:nbHits]
+      results = []
+      @index.browse_rules do |rule|
+        results.push(rule)
       end
+
+      rules = [
+        rule1,
+        rule2,
+        rule3,
+        rule4
+      ]
+
+      results.each do |rule|
+        assert_includes rules, rule_without_metadata(rule)
+      end
+
+      @index.delete_rule!(rule1[:objectID])
+
+      exception = assert_raises Algolia::AlgoliaHttpError do
+        @index.get_rule(rule1[:objectID])
+      end
+
+      assert_equal 'ObjectID does not exist', exception.message
+
+      @index.clear_rules!
+
+      res = @index.search_rules('')
+      assert_equal 0, res[:nbHits]
+    end
+  end
+
+  describe 'batching' do
+    def before_all
+      super
+      @index = @@search_client.init_index(get_test_index_name('index_batching'))
     end
 
-    describe 'batching' do
-      def before_all
-        super
-        @index = @@search_client.init_index(get_test_index_name('index_batching'))
-      end
+    def test_index_batching
+      @index.save_objects!([
+        { objectID: 'one', key: 'value' },
+        { objectID: 'two', key: 'value' },
+        { objectID: 'three', key: 'value' },
+        { objectID: 'four', key: 'value' },
+        { objectID: 'five', key: 'value' }
+      ])
 
-      def test_index_batching
-        @index.save_objects!([
-          { objectID: 'one', key: 'value' },
-          { objectID: 'two', key: 'value' },
-          { objectID: 'three', key: 'value' },
-          { objectID: 'four', key: 'value' },
-          { objectID: 'five', key: 'value' }
-        ])
+      @index.batch!([
+        { action: 'addObject', body: { objectID: 'zero', key: 'value' } },
+        { action: 'updateObject', body: { objectID: 'one', k: 'v' } },
+        { action: 'partialUpdateObject', body: { objectID: 'two', k: 'v' } },
+        { action: 'partialUpdateObject', body: { objectID: 'two_bis', key: 'value' } },
+        { action: 'partialUpdateObjectNoCreate', body: { objectID: 'three', k: 'v' } },
+        { action: 'deleteObject', body: { objectID: 'four' } }
+      ])
 
-        @index.batch!([
-          { action: 'addObject', body: { objectID: 'zero', key: 'value' } },
-          { action: 'updateObject', body: { objectID: 'one', k: 'v' } },
-          { action: 'partialUpdateObject', body: { objectID: 'two', k: 'v' } },
-          { action: 'partialUpdateObject', body: { objectID: 'two_bis', key: 'value' } },
-          { action: 'partialUpdateObjectNoCreate', body: { objectID: 'three', k: 'v' } },
-          { action: 'deleteObject', body: { objectID: 'four' } }
-        ])
+      objects = [
+        { objectID: 'zero', key: 'value' },
+        { objectID: 'one', k: 'v' },
+        { objectID: 'two', key: 'value', k: 'v' },
+        { objectID: 'two_bis', key: 'value' },
+        { objectID: 'three', key: 'value', k: 'v' },
+        { objectID: 'five', key: 'value' }
+      ]
 
-        objects = [
-          { objectID: 'zero', key: 'value' },
-          { objectID: 'one', k: 'v' },
-          { objectID: 'two', key: 'value', k: 'v' },
-          { objectID: 'two_bis', key: 'value' },
-          { objectID: 'three', key: 'value', k: 'v' },
-          { objectID: 'five', key: 'value' }
-        ]
-
-        @index.browse_objects do |object|
-          assert_includes objects, object
-        end
+      @index.browse_objects do |object|
+        assert_includes objects, object
       end
     end
+  end
 
-    describe 'replacing' do
-      def before_all
-        super
-        @index = @@search_client.init_index(get_test_index_name('replacing'))
-      end
-
-      def test_replacing
-        responses = Algolia::MultipleResponse.new
-        responses.push(@index.save_object({ objectID: 'one' }))
-        responses.push(@index.save_rule({
-          objectID: 'one',
-          condition: { anchoring: 'is', pattern: 'pattern' },
-          consequence: {
-            params: {
-              query: {
-                edits: [
-                  { type: 'remove', delete: 'pattern' }
-                ]
-              }
-            }
-          }
-        }))
-        responses.push(@index.save_synonym({ objectID: 'one', type: 'synonym', synonyms: %w(one two) }))
-        responses.wait
-
-        @index.replace_all_objects!([{ objectID: 'two' }])
-        responses.push(@index.replace_all_rules([{
-          objectID: 'two',
-          condition: { anchoring: 'is', pattern: 'pattern' },
-          consequence: {
-            params: {
-              query: {
-                edits: [
-                  { type: 'remove', delete: 'pattern' }
-                ]
-              }
-            }
-          }
-        }]))
-
-        responses.push(@index.replace_all_synonyms([{ objectID: 'two', type: 'synonym', synonyms: %w(one two) }]))
-
-        responses.wait
-
-        exception = assert_raises Algolia::AlgoliaHttpError do
-          @index.get_object('one')
-        end
-
-        assert_equal 'ObjectID does not exist', exception.message
-
-        assert_equal 'two', @index.get_object('two')[:objectID]
-
-        exception = assert_raises Algolia::AlgoliaHttpError do
-          @index.get_rule('one')
-        end
-
-        assert_equal 'ObjectID does not exist', exception.message
-
-        assert_equal 'two', @index.get_rule('two')[:objectID]
-
-        exception = assert_raises Algolia::AlgoliaHttpError do
-          @index.get_synonym('one')
-        end
-
-        assert_equal 'Synonym set does not exist', exception.message
-
-        assert_equal 'two', @index.get_synonym('two')[:objectID]
-      end
+  describe 'replacing' do
+    def before_all
+      super
+      @index = @@search_client.init_index(get_test_index_name('replacing'))
     end
 
-    describe 'exists' do
-      def before_all
-        super
-        @index = @@search_client.init_index(get_test_index_name('exists'))
+    def test_replacing
+      responses = Algolia::MultipleResponse.new
+      responses.push(@index.save_object({ objectID: 'one' }))
+      responses.push(@index.save_rule({
+        objectID: 'one',
+        condition: { anchoring: 'is', pattern: 'pattern' },
+        consequence: {
+          params: {
+            query: {
+              edits: [
+                { type: 'remove', delete: 'pattern' }
+              ]
+            }
+          }
+        }
+      }))
+      responses.push(@index.save_synonym({ objectID: 'one', type: 'synonym', synonyms: %w(one two) }))
+      responses.wait
+
+      @index.replace_all_objects!([{ objectID: 'two' }])
+      responses.push(@index.replace_all_rules([{
+        objectID: 'two',
+        condition: { anchoring: 'is', pattern: 'pattern' },
+        consequence: {
+          params: {
+            query: {
+              edits: [
+                { type: 'remove', delete: 'pattern' }
+              ]
+            }
+          }
+        }
+      }]))
+
+      responses.push(@index.replace_all_synonyms([{ objectID: 'two', type: 'synonym', synonyms: %w(one two) }]))
+
+      responses.wait
+
+      exception = assert_raises Algolia::AlgoliaHttpError do
+        @index.get_object('one')
       end
 
-      def test_exists
-        refute @index.exists?
-        @index.save_object!(generate_object('111'))
-        assert @index.exists?
-        @index.delete!
-        refute @index.exists?
+      assert_equal 'ObjectID does not exist', exception.message
+
+      assert_equal 'two', @index.get_object('two')[:objectID]
+
+      exception = assert_raises Algolia::AlgoliaHttpError do
+        @index.get_rule('one')
       end
+
+      assert_equal 'ObjectID does not exist', exception.message
+
+      assert_equal 'two', @index.get_rule('two')[:objectID]
+
+      exception = assert_raises Algolia::AlgoliaHttpError do
+        @index.get_synonym('one')
+      end
+
+      assert_equal 'Synonym set does not exist', exception.message
+
+      assert_equal 'two', @index.get_synonym('two')[:objectID]
+    end
+  end
+
+  describe 'exists' do
+    def before_all
+      super
+      @index = @@search_client.init_index(get_test_index_name('exists'))
+    end
+
+    def test_exists
+      refute @index.exists?
+      @index.save_object!(generate_object('111'))
+      assert @index.exists?
+      @index.delete!
+      refute @index.exists?
     end
   end
 end
