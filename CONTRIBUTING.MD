@@ -31,7 +31,7 @@ Another element that will help us go faster at solving the issue is to provide a
 
 ## The code contribution process
 
-algolia gem is developed in Ruby.
+The algolia gem is developed in Ruby.
 
 For any code contribution, you need to:
 
@@ -143,7 +143,7 @@ To run only the integration tests
 bundle exec rake test:integration
 ```
 
-We ask that for each fix or feature submitted, you add at least once test demonstrating its behaviour. As you will need to use your own Algolia
+We ask that for each fix or feature submitted, you add at least one test demonstrating its behaviour. As you will need to use your own Algolia
 credentials to run them, we advise you to keep them short and use a small dataset, as well as using a mock requester anytime it's possible. If you 
 encounter huge data overload because of testing, please reach out to [Support](support@algolia.com).
 
