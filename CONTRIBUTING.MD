@@ -1,8 +1,25 @@
-# algolia gem contributing guide
+<p align="center">
+  <a href="https://www.algolia.com">
+      <img alt="Algolia for Ruby" src="https://raw.githubusercontent.com/algolia/algoliasearch-client-common/master/banners/ruby.png" >
+    </a>
+</p>
 
 Hello and welcome to the contributing guide for algolia gem. Thanks for considering participating in our project 🙇
 
-If this guide does not contain what you are looking for and thus prevents you from contributing, don't hesitate to leave a message on the [community forum](https://discourse.algolia.com/) or to [open an issue](https://github.com/algolia/algoliasearch-client-ruby/issues).
+If this guide does not contain what you are looking for and thus prevents you from contributing, don't hesitate to leave a message on the [community forum](https://discourse.algolia.com/) or to [open an issue](https://github.com/algolia/instantsearch.js/issues).
+
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN TocDown TO UPDATE -->
+<!-- TocDown Begin -->
+* [Reporting an issue](#reporting-an-issue)
+* [The code contribution process](#the-code-contribution-process)
+* [Commit conventions](#commit-conventions)
+* [Branch organization](#branch-organization)
+* [Requirements](#requirements)
+* [Code structure](#code-structure)
+  * [The source algolia folder](#the-source-algolia-folder)
+* [Tests](#tests)
+* [Linting](#linting)
+<!-- TocDown End -->
 
 ## Reporting an issue
 
@@ -14,7 +31,9 @@ Another element that will help us go faster at solving the issue is to provide a
 
 ## The code contribution process
 
-algolia gem is developed in Ruby. For any code contribution, you need to:
+algolia gem is developed in Ruby.
+
+For any code contribution, you need to:
 
 - Fork and clone the project
 - Create a new branch for what you want to solve (fix/_issue-number_, feat/_name-of-the-feature_)
@@ -26,12 +45,8 @@ Depending on what you're working on, you might consider different [base branches
 Then:
 
 - Peer review of the pull request (by at least one of the core contributors)
-- Automatic checks (tests, [commits](#commit-conventions), [linters](#linting))
+- Automatic checks ([tests](#tests), [commits](#commit-conventions), [linters](#linting))
 - When everything is green, your contribution is merged 🚀
-
-## Working with Docker
-
-If you want to contribute to this project without installing all its dependencies, you can use our Docker image. Please check our [dedicated guide](DOCKER_README.MD) to learn more.
 
 ## Commit conventions
 
@@ -51,13 +66,13 @@ In most cases, we use the following types:
 
 Even though the scope is optional, we try to fill it in as it helps us better understand the impact of a change. We either use the name of the widget/connector/component impacted or we use impact topic (e.g. `docs`, `tooling`, `deps`, `ci`).
 
-Finally, if your work is based on an issue on GitHub, please add it in the dedicated `Related Issue` line of the Pull Request Template (read "[Closing issues using keywords](https://help.github.com/en/articles/closing-issues-using-keywords)").
+Finally, if your work is based on an issue on GitHub, please fill in the dedicated line in the PR template (read "[Closing issues using keywords](https://help.github.com/en/articles/closing-issues-using-keywords)").
 
 Some examples of valid commit messages (used as first lines):
 
-> - fix(searchbox): increase magnifying glass size
-> - chore(deps): update dependency rollup-plugin-babel to v3.0.7
-> - fix(connectRefinementList): set default value for limit
+> - feat(account-client): add method XXX
+> - chore(deps): update dependency XXX to v3.0.7
+> - fix(search_user_ids): rename parameter clusterName
 > - chore: reword contributions guides
 
 ## Branch organization
@@ -75,7 +90,62 @@ _Note that no new features will be developed or backported for the `vX` branches
 
 To run this project, you will need:
 
-- Ruby ≥ 2.2 
+- Ruby ≥ 2.2
+- [Bundler](https://bundler.io/)
+
+## Code structure
+
+Here are the main files and folders of the project
+
+```
+▸ lib/algolia/              << standalone clients and helpers classes
+▸ lib/test/                 << gathers the unit and integration tests
+  .rubocop.yml              << contains the rule used for the linter
+  algolia.gemspec           << gemspec file
+  CHANGELOG.md              << changelog file
+  CONTRIBUTING.md           << this file
+  Gemfile                   << dependencies needed to run the project locally
+  Rakefile                  << defines the different tasks to lint/test the project
+  README.md                 << the introduction of the project
+```
+
+### The lib/algolia folder
+
+```
+▸ lib/algolia/
+    ▸ config/       << the configurations associated with each clients 
+    ▸ enums/        << enumerables used accross the lib
+    ▸ http/         << the http layer logic
+    ▸ iterators/    << the iterators used for the browsing methods
+    ▸ responses/    << the waitable responses
+    ▸ transport/    << the transport layer logic
+```
+
+## Tests
+
+Our unit and integration tests are written with [Minitest](https://github.com/seattlerb/minitest), in the `test` syntax.
+
+To run all the tests once:
+
+```sh
+bundle exec rake test:all
+```
+
+To run only the unit tests
+
+```sh
+bundle exec rake test:unit
+```
+
+To run only the integration tests
+
+```sh
+bundle exec rake test:integration
+```
+
+We ask that for each fix or feature submitted, you add at least once test demonstrating its behaviour. As you will need to use your own Algolia
+credentials to run them, we advise you to keep them short and use a small dataset, as well as using a mock requester anytime it's possible. If you 
+encounter huge data overload because of testing, please reach out to [Support](support@algolia.com).
 
 ## Linting
 
@@ -109,19 +179,3 @@ fi
 
 exec time bundle exec rake precommit
 ```
-
-
-## Release
-
-### Main version
-
-To release a stable version, [generate a personal Github token](https://github.com/settings/tokens/new) with the `repo` scope from your logged-in Github account, go on the `master` branch (`git checkout master`) and use:
-
-```sh
-export GITHUB_TOKEN=XXX # You can add this to your .env or .bashrc/.zshrc configuration file.
-yarn release
-```
-
-This will create a new Github PR proposing a PR to be made. Once merged, the CI will take care of publishing the new version on NPM registry.
-
-If you're part of the Algolia team, you can read more details [here](https://algolia.atlassian.net/wiki/spaces/DX/pages/2034925622/JavaScript+v4+release+process).
