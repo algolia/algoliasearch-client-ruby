@@ -93,6 +93,11 @@ To run this project, you will need:
 - Ruby ≥ 2.2
 - [Bundler](https://bundler.io/)
 
+## Use the Dockerfile
+
+If you want to contribute to this project without installing all its dependencies, you can use our Docker image. 
+Please check our [dedicated guide](DOCKER_README.MD) to learn more.
+
 ## Code structure
 
 Here are the main files and folders of the project
