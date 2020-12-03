@@ -31,7 +31,7 @@ Another element that will help us go faster at solving the issue is to provide a
 
 ## The code contribution process
 
-The algolia gem is developed in Ruby.
+The algolia gem is developed in Ruby ≥ 2.2.
 
 For any code contribution, you need to:
 
