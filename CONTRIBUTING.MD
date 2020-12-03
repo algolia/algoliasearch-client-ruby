@@ -130,19 +130,19 @@ Here are the main files and folders of the project
 
 Our unit and integration tests are written with [Minitest](https://github.com/seattlerb/minitest), in the `test` syntax.
 
-To run all the tests once:
+To run all the tests at once:
 
 ```sh
 bundle exec rake test:all
 ```
 
-To run only the unit tests
+To run only the unit tests:
 
 ```sh
 bundle exec rake test:unit
 ```
 
-To run only the integration tests
+To run only the integration tests:
 
 ```sh
 bundle exec rake test:integration
@@ -150,7 +150,7 @@ bundle exec rake test:integration
 
 We ask that for each fix or feature submitted, you add at least one test demonstrating its behaviour. As you will need to use your own Algolia
 credentials to run them, we advise you to keep them short and use a small dataset, as well as using a mock requester anytime it's possible. If you 
-encounter huge data overload because of testing, please reach out to [Support](support@algolia.com).
+encounter huge data overload because of testing, please reach out to [our support team](support@algolia.com).
 
 ## Linting
 
