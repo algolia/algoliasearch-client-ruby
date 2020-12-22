@@ -6,7 +6,7 @@
 
 Hello and welcome to the contributing guide for algolia gem. Thanks for considering participating in our project 🙇
 
-If this guide does not contain what you are looking for and thus prevents you from contributing, don't hesitate to leave a message on the [community forum](https://discourse.algolia.com/) or to [open an issue](https://github.com/algolia/instantsearch.js/issues).
+If this guide does not contain what you are looking for and thus prevents you from contributing, don't hesitate to leave a message on the [community forum](https://discourse.algolia.com/) or to [open an issue](https://github.com/algolia/algoliasearch-client-ruby/issues).
 
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN TocDown TO UPDATE -->
 <!-- TocDown Begin -->
@@ -23,11 +23,11 @@ If this guide does not contain what you are looking for and thus prevents you fr
 
 ## Reporting an issue
 
-Opening an issue is very effective way to contribute because many users might also be impacted. We'll make sure to fix it quickly if it's technically feasible and doesn't have important side effects for other users.
+Opening an issue is very effective way to contribute because other users might also be impacted. We'll make sure to fix it quickly if it's technically feasible and doesn't have important side effects for other users.
 
 Before reporting an issue, first check that there is not an already open issue for the same topic using the [issues page](https://github.com/algolia/algoliasearch-client-ruby/issues). Don't hesitate to thumb up an issue that corresponds to the problem you have.
 
-Another element that will help us go faster at solving the issue is to provide a reproducible test case.
+It would be very helpful if you're able to add a test case that reproduces the issue. This could help us solve the issue faster.
 
 ## The code contribution process
 
@@ -46,7 +46,7 @@ Then:
 
 - Peer review of the pull request (by at least one of the core contributors)
 - Automatic checks ([tests](#tests), [commits](#commit-conventions), [linters](#linting))
-- When everything is green, your contribution is merged 🚀
+- When everything is green, one of the core contributors will merge your contribution 🚀
 
 ## Commit conventions
 
@@ -148,9 +148,7 @@ To run only the integration tests:
 bundle exec rake test:integration
 ```
 
-We ask that for each fix or feature submitted, you add at least one test demonstrating its behaviour. As you will need to use your own Algolia
-credentials to run them, we advise you to keep them short and use a small dataset, as well as using a mock requester anytime it's possible. If you 
-encounter huge data overload because of testing, please reach out to [our support team](support@algolia.com).
+We ask that for each fix or feature submitted, you add at least one test demonstrating its behaviour. As you will need to use your own Algolia credentials to run them, we advise you to keep them short and use a small dataset, as well as using a mock requester anytime it's possible. If you encounter huge data overload because of testing, please reach out to [our support team](support@algolia.com).
 
 ## Linting
 
