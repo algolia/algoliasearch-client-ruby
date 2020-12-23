@@ -152,7 +152,7 @@ We ask that for each fix or feature submitted, you add at least one test demonst
 
 ## Linting
 
-Linters are static checkers for code. They help us maintain a consistent code base.
+Linters help us maintain a consistent code base.
 
 If your editor support them, then you will see the errors directly there. You can also run them using your command line:
 
