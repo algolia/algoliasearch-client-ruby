@@ -215,6 +215,7 @@ class SearchClientTest < BaseTest
 
     def test_api_keys
       assert_equal ['search'], @api_key[:acl]
+      assert_equal 'A description', @api_key[:description]
 
       api_keys = @@search_client.list_api_keys[:keys].map do |key|
         key[:value]
