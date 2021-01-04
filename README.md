@@ -59,10 +59,6 @@ Encountering an issue? Before reaching out to support, we recommend heading to o
 
 If you were using the v1 and wish to update to v2, please follow our [Upgrade Guide](upgrade_guide.md)
 
-## Use the Dockerfile
-
-If you want to contribute to this project without installing all its dependencies, you can use our Docker image. Please check our [dedicated guide](DOCKER_README.MD) to learn more.
-
 ## 📄 License
 
 Algolia Ruby API Client is an open-sourced software licensed under the [MIT license](LICENSE.md).
