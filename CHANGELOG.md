@@ -1,6 +1,8 @@
 # ChangeLog
 
-## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.0.3...master)
+## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.0.4...master)
+
+## [2.0.4](https://github.com/algolia/algoliasearch-client-ruby/compare/2.0.3...2.0.4) (2021-01-05)
 
 ### Fix
 - `app_api_key`: send opts with waitable method
