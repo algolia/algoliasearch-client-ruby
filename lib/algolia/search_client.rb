@@ -300,7 +300,7 @@ module Algolia
       # @return [AddApiKeyResponse]
       #
       def add_api_key!(acl, opts = {})
-        response = add_api_key(acl)
+        response = add_api_key(acl, opts)
 
         response.wait(opts)
       end
