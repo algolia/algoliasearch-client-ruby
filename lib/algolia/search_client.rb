@@ -630,29 +630,29 @@ module Algolia
         response.wait(opts)
       end
 
-      def delete_dictionary_entries(dictionary, object_ids, opts = {})
+      def delete_dictionary_entries(dictionary, object_ids, clear_existing_dictionary_entries = false, opts = {})
         response = @transporter.write(
           :POST,
           path_encode('/1/dictionaries/%s/batch', dictionary),
-          { clearExistingDictionaryEntries: false, requests: chunk('deleteEntry', object_ids) },
+          { clearExistingDictionaryEntries: clear_existing_dictionary_entries, requests: chunk('deleteEntry', object_ids) },
           opts
         )
 
         DictionaryResponse.new(self, response)
       end
 
-      def delete_dictionary_entries!(dictionary, object_ids, opts = {})
-        response = delete_dictionary_entries(dictionary, object_ids, opts)
+      def delete_dictionary_entries!(dictionary, object_ids, clear_existing_dictionary_entries = false, opts = {})
+        response = delete_dictionary_entries(dictionary, object_ids, clear_existing_dictionary_entries, opts)
 
         response.wait(opts)
       end
 
       def clear_dictionary_entries(dictionary, opts = {})
-        delete_dictionary_entries(dictionary, [], opts)
+        delete_dictionary_entries(dictionary, [], true, opts)
       end
 
       def clear_dictionary_entries!(dictionary, opts = {})
-        response = delete_dictionary_entries(dictionary, [], opts)
+        response = delete_dictionary_entries(dictionary, [], true, opts)
 
         response.wait(opts)
       end
@@ -667,7 +667,7 @@ module Algolia
       end
 
       def set_dictionary_settings(dictionary_settings, opts = {})
-        response = @transporter.write(:POST, '/1/dictionaries/*/settings', dictionary_settings, opts)
+        response = @transporter.write(:PUT, '/1/dictionaries/*/settings', dictionary_settings, opts)
 
         DictionaryResponse.new(self, response)
       end

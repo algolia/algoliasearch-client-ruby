@@ -369,69 +369,86 @@ class SearchClientTest < BaseTest
     end
 
     describe 'Custom Dictionaries' do
+      def before_all
+        @client = Algolia::Search::Client.create(APPLICATION_ID_2, ADMIN_KEY_2)
+
+        @client.clear_dictionary_entries!('stopwords')
+        @client.clear_dictionary_entries!('plurals')
+        @client.clear_dictionary_entries!('compounds')
+      end
+
       def test_custom_dictionaries
-        client           = Algolia::Search::Client.create(APPLICATION_ID_2, ADMIN_KEY_2)
-        stopwords_entry1 = {
+        # Stopwords
+        initial_stopwords_count = @client.search_dictionary_entries('stopwords', 'down')[:nbHits]
+
+        stopwords_entry = {
           objectID: '1',
           language: 'en',
-          word: 'down',
-          state: 'enabled'
+          word: 'down'
         }
-        stopwords_entry2 = {
-          objectID: '2',
-          language: 'en',
-          word: 'up',
-          state: 'enabled'
-        }
-        client.save_dictionary_entries!('stopwords', [
-          stopwords_entry1, stopwords_entry2
-        ])
+        @client.save_dictionary_entries!('stopwords', [stopwords_entry])
 
-        plurals_entry1         = {
-          objectID: '3',
+        stopwords = @client.search_dictionary_entries('stopwords', 'down')
+        assert_equal stopwords[:nbHits], (initial_stopwords_count + 1)
+        assert_equal stopwords[:hits][0][:objectID], stopwords_entry[:objectID]
+        assert_equal stopwords[:hits][0][:word], stopwords_entry[:word]
+
+        stopwords_settings = {
+          disableStandardEntries: {
+            stopwords: {
+              en: true
+            }
+          }
+        }
+
+        @client.set_dictionary_settings!(stopwords_settings)
+
+        assert_equal @client.get_dictionary_settings, stopwords_settings
+
+        @client.clear_dictionary_entries!('stopwords')
+        stopwords = @client.search_dictionary_entries('stopwords', 'down')
+        assert_equal stopwords[:nbHits], initial_stopwords_count
+
+        # Plurals
+        initial_plurals_count = @client.search_dictionary_entries('plurals', 'chevaux')[:nbHits]
+
+        plurals_entry = {
+          objectID: '2',
           language: 'fr',
           words: %w(cheval chevaux)
         }
+        @client.save_dictionary_entries!('plurals', [plurals_entry])
 
-        plurals_entry2 = {
-          objectID: '4',
-          language: 'fr',
-          words: %w(genou genoux)
-        }
+        plurals = @client.search_dictionary_entries('plurals', 'chevaux')
+        assert_equal plurals[:nbHits], (initial_plurals_count + 1)
+        assert_equal plurals[:hits][0][:objectID], plurals_entry[:objectID]
+        assert_equal plurals[:hits][0][:words], plurals_entry[:words]
 
-        client.save_dictionary_entries!('plurals', [
-          plurals_entry1, plurals_entry2
-        ])
+        @client.clear_dictionary_entries!('plurals')
+        plurals = @client.search_dictionary_entries('plurals', 'chevaux')
+        assert_equal plurals[:nbHits], initial_plurals_count
 
-        compounds_entry1 = {
-          objectID: '5',
+        # Compounds
+        initial_compounds_count = @client.search_dictionary_entries('compounds', 'kopfschmerztablette')[:nbHits]
+
+        compounds_entry = {
+          objectID: '3',
           language: 'de',
           word: 'kopfschmerztablette',
           decomposition: %w(kopf schmerz tablette)
+
         }
+        @client.save_dictionary_entries!('compounds', [compounds_entry])
 
-        client.save_dictionary_entries!('compounds', [compounds_entry1])
+        compounds = @client.search_dictionary_entries('compounds', 'kopfschmerztablette')
+        assert_equal compounds[:nbHits], (initial_compounds_count + 1)
+        assert_equal compounds[:hits][0][:objectID], compounds_entry[:objectID]
+        assert_equal compounds[:hits][0][:word], compounds_entry[:word]
+        assert_equal compounds[:hits][0][:decomposition], compounds_entry[:decomposition]
 
-        res                  = client.search_dictionary_entries('stopwords', 'down')[:hits]
-        assert_includes res, stopwords_entry1
-
-        res = client.search_dictionary_entries('stopwords', 'up')[:hits]
-        assert_includes res, stopwords_entry2
-
-        res = client.search_dictionary_entries('plurals', 'chevaux')[:hits]
-        assert_includes res, plurals_entry1
-
-        res = client.search_dictionary_entries('plurals', 'genoux')[:hits]
-        assert_includes res, plurals_entry2
-
-        res = client.search_dictionary_entries('compounds', 'tablette')[:hits]
-        assert_includes res, compounds_entry1
-
-        client.clear_dictionary_entries!('stopwords')
-        client.clear_dictionary_entries!('plurals')
-        client.clear_dictionary_entries!('compounds')
-        res = client.search_dictionary_entries('stopwords', 'down')
-        puts res
+        @client.clear_dictionary_entries!('compounds')
+        compounds = @client.search_dictionary_entries('compounds', 'kopfschmerztablette')
+        assert_equal compounds[:nbHits], initial_compounds_count
       end
     end
   end
