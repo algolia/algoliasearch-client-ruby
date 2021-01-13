@@ -367,5 +367,72 @@ class SearchClientTest < BaseTest
         assert_equal 'The SecuredAPIKey doesn\'t have a validUntil parameter.', exception.message
       end
     end
+
+    describe 'Custom Dictionaries' do
+      def test_custom_dictionaries
+        client           = Algolia::Search::Client.create(APPLICATION_ID_2, ADMIN_KEY_2)
+        stopwords_entry1 = {
+          objectID: '1',
+          language: 'en',
+          word: 'down',
+          state: 'enabled'
+        }
+        stopwords_entry2 = {
+          objectID: '2',
+          language: 'en',
+          word: 'up',
+          state: 'enabled'
+        }
+        client.save_dictionary_entries!('stopwords', [
+          stopwords_entry1, stopwords_entry2
+        ])
+
+        plurals_entry1         = {
+          objectID: '3',
+          language: 'fr',
+          words: %w(cheval chevaux)
+        }
+
+        plurals_entry2 = {
+          objectID: '4',
+          language: 'fr',
+          words: %w(genou genoux)
+        }
+
+        client.save_dictionary_entries!('plurals', [
+          plurals_entry1, plurals_entry2
+        ])
+
+        compounds_entry1 = {
+          objectID: '5',
+          language: 'de',
+          word: 'kopfschmerztablette',
+          decomposition: %w(kopf schmerz tablette)
+        }
+
+        client.save_dictionary_entries!('compounds', [compounds_entry1])
+
+        res                  = client.search_dictionary_entries('stopwords', 'down')[:hits]
+        assert_includes res, stopwords_entry1
+
+        res = client.search_dictionary_entries('stopwords', 'up')[:hits]
+        assert_includes res, stopwords_entry2
+
+        res = client.search_dictionary_entries('plurals', 'chevaux')[:hits]
+        assert_includes res, plurals_entry1
+
+        res = client.search_dictionary_entries('plurals', 'genoux')[:hits]
+        assert_includes res, plurals_entry2
+
+        res = client.search_dictionary_entries('compounds', 'tablette')[:hits]
+        assert_includes res, compounds_entry1
+
+        client.clear_dictionary_entries!('stopwords')
+        client.clear_dictionary_entries!('plurals')
+        client.clear_dictionary_entries!('compounds')
+        res = client.search_dictionary_entries('stopwords', 'down')
+        puts res
+      end
+    end
   end
 end

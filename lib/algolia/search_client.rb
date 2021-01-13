@@ -599,6 +599,89 @@ module Algolia
       #
       alias_method :has_pending_mappings, :pending_mappings?
 
+      # # # # # # # # # # # # # # # # # # # # #
+      # CUSTOM DICTIONARIES METHODS
+      # # # # # # # # # # # # # # # # # # # # #
+
+      def save_dictionary_entries(dictionary, dictionary_entries, clear_existing_dictionary_entries = false, opts = {})
+        response = @transporter.write(
+          :POST,
+          path_encode('/1/dictionaries/%s/batch', dictionary),
+          { clearExistingDictionaryEntries: clear_existing_dictionary_entries, requests: chunk('addEntry', dictionary_entries) },
+          opts
+        )
+
+        DictionaryResponse.new(self, response)
+      end
+
+      def save_dictionary_entries!(dictionary, dictionary_entries, clear_existing_dictionary_entries = false, opts = {})
+        response = save_dictionary_entries(dictionary, dictionary_entries, clear_existing_dictionary_entries, opts)
+
+        response.wait(opts)
+      end
+
+      def replace_dictionary_entries(dictionary, dictionary_entries, opts = {})
+        save_dictionary_entries(dictionary, dictionary_entries, true, opts)
+      end
+
+      def replace_dictionary_entries!(dictionary, dictionary_entries, opts = {})
+        response = save_dictionary_entries(dictionary, dictionary_entries, true, opts)
+
+        response.wait(opts)
+      end
+
+      def delete_dictionary_entries(dictionary, object_ids, opts = {})
+        response = @transporter.write(
+          :POST,
+          path_encode('/1/dictionaries/%s/batch', dictionary),
+          { clearExistingDictionaryEntries: false, requests: chunk('deleteEntry', object_ids) },
+          opts
+        )
+
+        DictionaryResponse.new(self, response)
+      end
+
+      def delete_dictionary_entries!(dictionary, object_ids, opts = {})
+        response = delete_dictionary_entries(dictionary, object_ids, opts)
+
+        response.wait(opts)
+      end
+
+      def clear_dictionary_entries(dictionary, opts = {})
+        delete_dictionary_entries(dictionary, [], opts)
+      end
+
+      def clear_dictionary_entries!(dictionary, opts = {})
+        response = delete_dictionary_entries(dictionary, [], opts)
+
+        response.wait(opts)
+      end
+
+      def search_dictionary_entries(dictionary, query, opts = {})
+        @transporter.read(
+          :POST,
+          path_encode('/1/dictionaries/%s/search', dictionary),
+          { query: query },
+          opts
+        )
+      end
+
+      def set_dictionary_settings(dictionary_settings, opts = {})
+        response = @transporter.write(:POST, '/1/dictionaries/*/settings', dictionary_settings, opts)
+
+        DictionaryResponse.new(self, response)
+      end
+
+      def set_dictionary_settings!(dictionary_settings, opts = {})
+        response = set_dictionary_settings(dictionary_settings, opts)
+
+        response.wait(opts)
+      end
+
+      def get_dictionary_settings(opts = {})
+        @transporter.read(:GET, '/1/dictionaries/*/settings', {}, opts)
+      end
+
       #
       # Method available to make custom requests to the API
       #
