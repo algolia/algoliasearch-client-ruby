@@ -80,7 +80,7 @@ module Algolia
       end
 
       # # # # # # # # # # # # # # # # # # # # #
-      # MISC
+      # INDEX METHODS
       # # # # # # # # # # # # # # # # # # # # #
 
       # Initialize an index with a given name
@@ -594,7 +594,6 @@ module Algolia
         @transporter.read(:GET, '/1/clusters/mapping/pending' + handle_params({ getClusters: retrieve_mappings }), {}, request_options)
       end
 
-      #
       # Aliases the pending_mappings? method
       #
       alias_method :has_pending_mappings, :pending_mappings?
@@ -603,60 +602,131 @@ module Algolia
       # CUSTOM DICTIONARIES METHODS
       # # # # # # # # # # # # # # # # # # # # #
 
-      def save_dictionary_entries(dictionary, dictionary_entries, clear_existing_dictionary_entries = false, opts = {})
+      # Save entries for a given dictionary
+      #
+      # @param dictionary [String] dictionary name. Can be either 'stopwords', 'plurals' or 'compounds'
+      # @param dictionary_entries [Array<Hash>] array of dictionary entries
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return DictionaryResponse
+      #
+      def save_dictionary_entries(dictionary, dictionary_entries, opts = {})
         response = @transporter.write(
           :POST,
           path_encode('/1/dictionaries/%s/batch', dictionary),
-          { clearExistingDictionaryEntries: clear_existing_dictionary_entries, requests: chunk('addEntry', dictionary_entries) },
+          { clearExistingDictionaryEntries: false, requests: chunk('addEntry', dictionary_entries) },
           opts
         )
 
         DictionaryResponse.new(self, response)
       end
 
-      def save_dictionary_entries!(dictionary, dictionary_entries, clear_existing_dictionary_entries = false, opts = {})
-        response = save_dictionary_entries(dictionary, dictionary_entries, clear_existing_dictionary_entries, opts)
+      # Save entries for a given dictionary and wait for the task to finish
+      #
+      # @param dictionary [String] dictionary name. Can be either 'stopwords', 'plurals' or 'compounds'
+      # @param dictionary_entries [Array<Hash>] array of dictionary entries
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      def save_dictionary_entries!(dictionary, dictionary_entries, opts = {})
+        response = save_dictionary_entries(dictionary, dictionary_entries, opts)
 
         response.wait(opts)
       end
 
+      # Replace entries for a given dictionary
+      #
+      # @param dictionary [String] dictionary name. Can be either 'stopwords', 'plurals' or 'compounds'
+      # @param dictionary_entries [Array<Hash>] array of dictionary entries
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return DictionaryResponse
+      #
       def replace_dictionary_entries(dictionary, dictionary_entries, opts = {})
-        save_dictionary_entries(dictionary, dictionary_entries, true, opts)
-      end
-
-      def replace_dictionary_entries!(dictionary, dictionary_entries, opts = {})
-        response = save_dictionary_entries(dictionary, dictionary_entries, true, opts)
-
-        response.wait(opts)
-      end
-
-      def delete_dictionary_entries(dictionary, object_ids, clear_existing_dictionary_entries = false, opts = {})
         response = @transporter.write(
           :POST,
           path_encode('/1/dictionaries/%s/batch', dictionary),
-          { clearExistingDictionaryEntries: clear_existing_dictionary_entries, requests: chunk('deleteEntry', object_ids) },
+          { clearExistingDictionaryEntries: true, requests: chunk('addEntry', dictionary_entries) },
           opts
         )
 
         DictionaryResponse.new(self, response)
       end
 
-      def delete_dictionary_entries!(dictionary, object_ids, clear_existing_dictionary_entries = false, opts = {})
-        response = delete_dictionary_entries(dictionary, object_ids, clear_existing_dictionary_entries, opts)
+      # Replace entries for a given dictionary and wait for the task to finish
+      #
+      # @param dictionary [String] dictionary name. Can be either 'stopwords', 'plurals' or 'compounds'
+      # @param dictionary_entries [Array<Hash>] array of dictionary entries
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      def replace_dictionary_entries!(dictionary, dictionary_entries, opts = {})
+        response = replace_dictionary_entries(dictionary, dictionary_entries, opts)
 
         response.wait(opts)
       end
 
+      # Delete entries for a given dictionary
+      #
+      # @param dictionary [String] dictionary name. Can be either 'stopwords', 'plurals' or 'compounds'
+      # @param object_ids [Array<Hash>] array of object ids
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return DictionaryResponse
+      #
+      def delete_dictionary_entries(dictionary, object_ids, opts = {})
+        response = @transporter.write(
+          :POST,
+          path_encode('/1/dictionaries/%s/batch', dictionary),
+          { clearExistingDictionaryEntries: false, requests: chunk('deleteEntry', object_ids) },
+          opts
+        )
+
+        DictionaryResponse.new(self, response)
+      end
+
+      # Delete entries for a given dictionary and wait for the task to finish
+      #
+      # @param dictionary [String] dictionary name. Can be either 'stopwords', 'plurals' or 'compounds'
+      # @param object_ids [Array<Hash>] array of object ids
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      def delete_dictionary_entries!(dictionary, object_ids, opts = {})
+        request  = []
+        object_ids.map do |object_id|
+          request.push({ objectID: object_id })
+        end
+        response = delete_dictionary_entries(dictionary, request, opts)
+
+        response.wait(opts)
+      end
+
+      # Clear all entries for a given dictionary
+      #
+      # @param dictionary [String] dictionary name. Can be either 'stopwords', 'plurals' or 'compounds'
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return DictionaryResponse
+      #
       def clear_dictionary_entries(dictionary, opts = {})
-        delete_dictionary_entries(dictionary, [], true, opts)
+        replace_dictionary_entries(dictionary, [], opts)
       end
 
+      # Clear all entries for a given dictionary and wait for the task to finish
+      #
+      # @param dictionary [String] dictionary name. Can be either 'stopwords', 'plurals' or 'compounds'
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
       def clear_dictionary_entries!(dictionary, opts = {})
-        response = delete_dictionary_entries(dictionary, [], true, opts)
+        response = replace_dictionary_entries(dictionary, [], opts)
 
         response.wait(opts)
       end
 
+      # Search entries for a given dictionary
+      #
+      # @param dictionary [String] dictionary name. Can be either 'stopwords', 'plurals' or 'compounds'
+      # @param query [String] query to send
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
       def search_dictionary_entries(dictionary, query, opts = {})
         @transporter.read(
           :POST,
@@ -666,23 +736,44 @@ module Algolia
         )
       end
 
+      # Set settings for all the dictionaries
+      #
+      # @param dictionary_settings [Hash]
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return DictionaryResponse
+      #
       def set_dictionary_settings(dictionary_settings, opts = {})
         response = @transporter.write(:PUT, '/1/dictionaries/*/settings', dictionary_settings, opts)
 
         DictionaryResponse.new(self, response)
       end
 
+      # Set settings for all the dictionaries and wait for the task to finish
+      #
+      # @param dictionary_settings [Hash]
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
+      # @return DictionaryResponse
+      #
       def set_dictionary_settings!(dictionary_settings, opts = {})
         response = set_dictionary_settings(dictionary_settings, opts)
 
         response.wait(opts)
       end
 
+      # Retrieve settings for all the dictionaries
+      #
+      # @param opts [Hash] contains extra parameters to send with your query
+      #
       def get_dictionary_settings(opts = {})
         @transporter.read(:GET, '/1/dictionaries/*/settings', {}, opts)
       end
 
-      #
+      # # # # # # # # # # # # # # # # # # # # #
+      # MISC METHODS
+      # # # # # # # # # # # # # # # # # # # # #
+
       # Method available to make custom requests to the API
       #
       def custom_request(data, uri, method, call_type, opts = {})

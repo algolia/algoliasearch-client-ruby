@@ -1,3 +1,4 @@
+require 'securerandom'
 require_relative 'base_test'
 
 class SearchClientTest < BaseTest
@@ -371,27 +372,37 @@ class SearchClientTest < BaseTest
     describe 'Custom Dictionaries' do
       def before_all
         @client = Algolia::Search::Client.create(APPLICATION_ID_2, ADMIN_KEY_2)
-
-        @client.clear_dictionary_entries!('stopwords')
-        @client.clear_dictionary_entries!('plurals')
-        @client.clear_dictionary_entries!('compounds')
       end
 
-      def test_custom_dictionaries
-        # Stopwords
-        initial_stopwords_count = @client.search_dictionary_entries('stopwords', 'down')[:nbHits]
+      def test_stopwords_dictionaries
+        entry_id = SecureRandom.hex
+        assert_equal 0, @client.search_dictionary_entries('stopwords', entry_id)[:nbHits]
 
-        stopwords_entry = {
-          objectID: '1',
+        entry = {
+          objectID: entry_id,
           language: 'en',
           word: 'down'
         }
-        @client.save_dictionary_entries!('stopwords', [stopwords_entry])
+        @client.save_dictionary_entries!('stopwords', [entry])
 
-        stopwords = @client.search_dictionary_entries('stopwords', 'down')
-        assert_equal stopwords[:nbHits], (initial_stopwords_count + 1)
-        assert_equal stopwords[:hits][0][:objectID], stopwords_entry[:objectID]
-        assert_equal stopwords[:hits][0][:word], stopwords_entry[:word]
+        stopwords = @client.search_dictionary_entries('stopwords', entry_id)
+        assert_equal 1, stopwords[:nbHits]
+        assert_equal stopwords[:hits][0][:objectID], entry[:objectID]
+        assert_equal stopwords[:hits][0][:word], entry[:word]
+
+        @client.delete_dictionary_entries!('stopwords', [entry_id])
+        assert_equal 0, @client.search_dictionary_entries('stopwords', entry_id)[:nbHits]
+
+        old_dictionary_state   = @client.search_dictionary_entries('stopwords', '')
+        old_dictionary_entries = old_dictionary_state[:hits].map do |hit|
+          hit.reject! { |key| key == :type }
+        end
+
+        @client.save_dictionary_entries!('stopwords', [entry])
+        assert_equal 1, @client.search_dictionary_entries('stopwords', entry_id)[:nbHits]
+
+        @client.replace_dictionary_entries!('stopwords', old_dictionary_entries)
+        assert_equal 0, @client.search_dictionary_entries('stopwords', entry_id)[:nbHits]
 
         stopwords_settings = {
           disableStandardEntries: {
@@ -404,51 +415,48 @@ class SearchClientTest < BaseTest
         @client.set_dictionary_settings!(stopwords_settings)
 
         assert_equal @client.get_dictionary_settings, stopwords_settings
+      end
 
-        @client.clear_dictionary_entries!('stopwords')
-        stopwords = @client.search_dictionary_entries('stopwords', 'down')
-        assert_equal stopwords[:nbHits], initial_stopwords_count
+      def test_plurals_dictionaries
+        entry_id = SecureRandom.hex
+        assert_equal 0, @client.search_dictionary_entries('plurals', entry_id)[:nbHits]
 
-        # Plurals
-        initial_plurals_count = @client.search_dictionary_entries('plurals', 'chevaux')[:nbHits]
-
-        plurals_entry = {
-          objectID: '2',
+        entry = {
+          objectID: entry_id,
           language: 'fr',
           words: %w(cheval chevaux)
         }
-        @client.save_dictionary_entries!('plurals', [plurals_entry])
+        @client.save_dictionary_entries!('plurals', [entry])
 
-        plurals = @client.search_dictionary_entries('plurals', 'chevaux')
-        assert_equal plurals[:nbHits], (initial_plurals_count + 1)
-        assert_equal plurals[:hits][0][:objectID], plurals_entry[:objectID]
-        assert_equal plurals[:hits][0][:words], plurals_entry[:words]
+        plurals = @client.search_dictionary_entries('plurals', entry_id)
+        assert_equal 1, plurals[:nbHits]
+        assert_equal plurals[:hits][0][:objectID], entry[:objectID]
+        assert_equal plurals[:hits][0][:words], entry[:words]
 
-        @client.clear_dictionary_entries!('plurals')
-        plurals = @client.search_dictionary_entries('plurals', 'chevaux')
-        assert_equal plurals[:nbHits], initial_plurals_count
+        @client.delete_dictionary_entries!('plurals', [entry_id])
+        assert_equal 0, @client.search_dictionary_entries('plurals', entry_id)[:nbHits]
+      end
 
-        # Compounds
-        initial_compounds_count = @client.search_dictionary_entries('compounds', 'kopfschmerztablette')[:nbHits]
+      def test_compounds_dictionaries
+        entry_id = SecureRandom.hex
+        assert_equal 0, @client.search_dictionary_entries('compounds', entry_id)[:nbHits]
 
-        compounds_entry = {
-          objectID: '3',
+        entry = {
+          objectID: entry_id,
           language: 'de',
           word: 'kopfschmerztablette',
           decomposition: %w(kopf schmerz tablette)
-
         }
-        @client.save_dictionary_entries!('compounds', [compounds_entry])
+        @client.save_dictionary_entries!('compounds', [entry])
 
-        compounds = @client.search_dictionary_entries('compounds', 'kopfschmerztablette')
-        assert_equal compounds[:nbHits], (initial_compounds_count + 1)
-        assert_equal compounds[:hits][0][:objectID], compounds_entry[:objectID]
-        assert_equal compounds[:hits][0][:word], compounds_entry[:word]
-        assert_equal compounds[:hits][0][:decomposition], compounds_entry[:decomposition]
+        compounds = @client.search_dictionary_entries('compounds', entry_id)
+        assert_equal 1, compounds[:nbHits]
+        assert_equal compounds[:hits][0][:objectID], entry[:objectID]
+        assert_equal compounds[:hits][0][:word], entry[:word]
+        assert_equal compounds[:hits][0][:decomposition], entry[:decomposition]
 
-        @client.clear_dictionary_entries!('compounds')
-        compounds = @client.search_dictionary_entries('compounds', 'kopfschmerztablette')
-        assert_equal compounds[:nbHits], initial_compounds_count
+        @client.delete_dictionary_entries!('compounds', [entry_id])
+        assert_equal 0, @client.search_dictionary_entries('compounds', entry_id)[:nbHits]
       end
     end
   end
