@@ -1037,55 +1037,6 @@ module Algolia
 
       private
 
-      # Check the passed object to determine if it's an array
-      #
-      # @param object [Object]
-      #
-      def check_array(object)
-        raise AlgoliaError, 'argument must be an array of objects' unless object.is_a?(Array)
-      end
-
-      # Check the passed object
-      #
-      # @param object [Object]
-      # @param in_array [Boolean] whether the object is an array or not
-      #
-      def check_object(object, in_array = false)
-        case object
-        when Array
-          raise AlgoliaError, in_array ? 'argument must be an array of objects' : 'argument must not be an array'
-        when String, Integer, Float, TrueClass, FalseClass, NilClass
-          raise AlgoliaError, "argument must be an #{'array of' if in_array} object, got: #{object.inspect}"
-        end
-      end
-
-      # Check if passed object has a objectID
-      #
-      # @param object [Object]
-      # @param object_id [String]
-      #
-      def get_object_id(object, object_id = nil)
-        check_object(object)
-        object_id ||= object[:objectID] || object['objectID']
-        raise AlgoliaError, "Missing 'objectID'" if object_id.nil?
-        object_id
-      end
-
-      # Build a batch request
-      #
-      # @param action [String] action to perform on the engine
-      # @param objects [Array] objects on which build the action
-      # @param with_object_id [Boolean] if set to true, check if each object has an objectID set
-      #
-      def chunk(action, objects, with_object_id = false)
-        objects.map do |object|
-            check_object(object, true)
-            request            = { action: action, body: object }
-            request[:objectID] = get_object_id(object).to_s if with_object_id
-            request
-        end
-      end
-
       def raw_batch(requests, opts)
         @transporter.write(:POST, path_encode('/1/indexes/%s/batch', @name), { requests: requests }, opts)
       end
