@@ -18,17 +18,13 @@ module Algolia
     # @param opts [Hash] contains extra parameters to send with your query
     #
     def wait(_opts = {})
-      retries_count = 1
-
       until @done
-        res               = @client.custom_request({}, path_encode('/1/task/%s', @raw_response[:taskID]), :GET, READ)
-        status            = get_option(res, 'status')
+        res    = @client.custom_request({}, path_encode('/1/task/%s', @raw_response[:taskID]), :GET, READ)
+        status = get_option(res, 'status')
         if status == 'published'
           @done = true
         end
-        retries_count    += 1
-        time_before_retry = retries_count * Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY
-        sleep(time_before_retry / 1000)
+        sleep(Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY / 1000)
       end
 
       self

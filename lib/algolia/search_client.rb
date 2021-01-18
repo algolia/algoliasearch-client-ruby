@@ -673,10 +673,13 @@ module Algolia
       # @return DictionaryResponse
       #
       def delete_dictionary_entries(dictionary, object_ids, opts = {})
+        request  = object_ids.map do |object_id|
+          { objectID: object_id }
+        end
         response = @transporter.write(
           :POST,
           path_encode('/1/dictionaries/%s/batch', dictionary),
-          { clearExistingDictionaryEntries: false, requests: chunk('deleteEntry', object_ids) },
+          { clearExistingDictionaryEntries: false, requests: chunk('deleteEntry', request) },
           opts
         )
 
@@ -690,11 +693,7 @@ module Algolia
       # @param opts [Hash] contains extra parameters to send with your query
       #
       def delete_dictionary_entries!(dictionary, object_ids, opts = {})
-        request  = []
-        object_ids.map do |object_id|
-          request.push({ objectID: object_id })
-        end
-        response = delete_dictionary_entries(dictionary, request, opts)
+        response = delete_dictionary_entries(dictionary, object_ids, opts)
 
         response.wait(opts)
       end

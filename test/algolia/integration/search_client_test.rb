@@ -395,7 +395,7 @@ class SearchClientTest < BaseTest
 
         old_dictionary_state   = @client.search_dictionary_entries('stopwords', '')
         old_dictionary_entries = old_dictionary_state[:hits].map do |hit|
-          hit.reject! { |key| key == :type }
+          hit.reject { |key| key == :type }
         end
 
         @client.save_dictionary_entries!('stopwords', [entry])
