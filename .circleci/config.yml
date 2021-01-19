@@ -23,6 +23,13 @@ aliases:
     name: Run linting tool
     command: bundle exec rake rubocop
 
+  - &credentials
+    name: Retrieve temporary Algolia credentials if needed
+    command: |
+      if [ "$CIRCLE_PR_REPONAME" ]; then
+        curl -s https://algoliasearch-client-keygen.herokuapp.com | sh >> $BASH_ENV
+      fi
+
   - &run_tests
      name: Run unit and integration tests
      command: |
@@ -73,6 +80,7 @@ jobs:
       - restore_cache: *restore_cache
       - run: *install_bundler
       - save_cache: *save_cache
+      - run: *credentials
       - run: *run_tests
 
   test_jruby:
@@ -88,6 +96,7 @@ jobs:
       - restore_cache: *restore_cache
       - run: *install_bundler
       - save_cache: *save_cache
+      - run: *credentials
       - run: *run_tests
 
   release:
