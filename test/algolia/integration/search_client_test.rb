@@ -1,3 +1,4 @@
+require 'securerandom'
 require_relative 'base_test'
 
 class SearchClientTest < BaseTest
@@ -365,6 +366,97 @@ class SearchClientTest < BaseTest
         end
 
         assert_equal 'The SecuredAPIKey doesn\'t have a validUntil parameter.', exception.message
+      end
+    end
+
+    describe 'Custom Dictionaries' do
+      def before_all
+        @client = Algolia::Search::Client.create(APPLICATION_ID_2, ADMIN_KEY_2)
+      end
+
+      def test_stopwords_dictionaries
+        entry_id = SecureRandom.hex
+        assert_equal 0, @client.search_dictionary_entries('stopwords', entry_id)[:nbHits]
+
+        entry = {
+          objectID: entry_id,
+          language: 'en',
+          word: 'down'
+        }
+        @client.save_dictionary_entries!('stopwords', [entry])
+
+        stopwords = @client.search_dictionary_entries('stopwords', entry_id)
+        assert_equal 1, stopwords[:nbHits]
+        assert_equal stopwords[:hits][0][:objectID], entry[:objectID]
+        assert_equal stopwords[:hits][0][:word], entry[:word]
+
+        @client.delete_dictionary_entries!('stopwords', [entry_id])
+        assert_equal 0, @client.search_dictionary_entries('stopwords', entry_id)[:nbHits]
+
+        old_dictionary_state   = @client.search_dictionary_entries('stopwords', '')
+        old_dictionary_entries = old_dictionary_state[:hits].map do |hit|
+          hit.reject { |key| key == :type }
+        end
+
+        @client.save_dictionary_entries!('stopwords', [entry])
+        assert_equal 1, @client.search_dictionary_entries('stopwords', entry_id)[:nbHits]
+
+        @client.replace_dictionary_entries!('stopwords', old_dictionary_entries)
+        assert_equal 0, @client.search_dictionary_entries('stopwords', entry_id)[:nbHits]
+
+        stopwords_settings = {
+          disableStandardEntries: {
+            stopwords: {
+              en: true
+            }
+          }
+        }
+
+        @client.set_dictionary_settings!(stopwords_settings)
+
+        assert_equal @client.get_dictionary_settings, stopwords_settings
+      end
+
+      def test_plurals_dictionaries
+        entry_id = SecureRandom.hex
+        assert_equal 0, @client.search_dictionary_entries('plurals', entry_id)[:nbHits]
+
+        entry = {
+          objectID: entry_id,
+          language: 'fr',
+          words: %w(cheval chevaux)
+        }
+        @client.save_dictionary_entries!('plurals', [entry])
+
+        plurals = @client.search_dictionary_entries('plurals', entry_id)
+        assert_equal 1, plurals[:nbHits]
+        assert_equal plurals[:hits][0][:objectID], entry[:objectID]
+        assert_equal plurals[:hits][0][:words], entry[:words]
+
+        @client.delete_dictionary_entries!('plurals', [entry_id])
+        assert_equal 0, @client.search_dictionary_entries('plurals', entry_id)[:nbHits]
+      end
+
+      def test_compounds_dictionaries
+        entry_id = SecureRandom.hex
+        assert_equal 0, @client.search_dictionary_entries('compounds', entry_id)[:nbHits]
+
+        entry = {
+          objectID: entry_id,
+          language: 'de',
+          word: 'kopfschmerztablette',
+          decomposition: %w(kopf schmerz tablette)
+        }
+        @client.save_dictionary_entries!('compounds', [entry])
+
+        compounds = @client.search_dictionary_entries('compounds', entry_id)
+        assert_equal 1, compounds[:nbHits]
+        assert_equal compounds[:hits][0][:objectID], entry[:objectID]
+        assert_equal compounds[:hits][0][:word], entry[:word]
+        assert_equal compounds[:hits][0][:decomposition], entry[:decomposition]
+
+        @client.delete_dictionary_entries!('compounds', [entry_id])
+        assert_equal 0, @client.search_dictionary_entries('compounds', entry_id)[:nbHits]
       end
     end
   end
