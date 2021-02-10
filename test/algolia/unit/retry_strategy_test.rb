@@ -82,7 +82,7 @@ class RetryStrategyTest
         index.save_object({ objectID: 'one' })
       end
 
-      assert_equal 'Unreachable hosts', exception.message
+      assert_equal 'Could not connect to Algolia. Reason: connection refused: 0.0.0.0:80', exception.message
     end
   end
 
