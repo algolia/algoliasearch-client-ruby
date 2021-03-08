@@ -274,6 +274,9 @@ class SearchIndexTest < BaseTest
       @index.set_settings!(settings)
 
       assert_equal @index.get_settings, settings
+
+      # check that the forwardToReplicas parameter is passed correctly
+      assert @index.set_settings!(settings, { forwardToReplicas: true })
     end
   end
 
