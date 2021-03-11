@@ -987,13 +987,8 @@ module Algolia
       # @return [IndexingResponse]
       #
       def set_settings(settings, opts = {})
-        forward_to_replicas  = false
         request_options      = symbolize_hash(opts)
-
-        if request_options[:forwardToReplicas]
-          forward_to_replicas = true
-          request_options.delete(:forwardToReplicas)
-        end
+        forward_to_replicas  = request_options.delete(:forwardToReplicas) || false
 
         response = @transporter.write(
           :PUT,
