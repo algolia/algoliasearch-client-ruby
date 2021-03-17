@@ -987,7 +987,15 @@ module Algolia
       # @return [IndexingResponse]
       #
       def set_settings(settings, opts = {})
-        response = @transporter.write(:PUT, path_encode('/1/indexes/%s/settings', @name), settings, opts)
+        request_options      = symbolize_hash(opts)
+        forward_to_replicas  = request_options.delete(:forwardToReplicas) || false
+
+        response = @transporter.write(
+          :PUT,
+          path_encode('/1/indexes/%s/settings', @name) + handle_params({ forwardToReplicas: forward_to_replicas }),
+          settings,
+          request_options
+        )
 
         IndexingResponse.new(self, response)
       end
