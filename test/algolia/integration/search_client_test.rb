@@ -224,7 +224,9 @@ class SearchClientTest < BaseTest
       assert_includes api_keys, @api_key[:value]
 
       @@search_client.update_api_key!(@api_key[:value], { maxHitsPerQuery: 42 })
-      updated_api_key = @@search_client.get_api_key(@api_key[:value])
+      updated_api_key = retry_test do
+        @@search_client.get_api_key(@api_key[:value], test: 'test')
+      end
       assert_equal 42, updated_api_key[:maxHitsPerQuery]
 
       @@search_client.delete_api_key!(@api_key[:value])
@@ -235,18 +237,13 @@ class SearchClientTest < BaseTest
 
       assert_equal 'Key does not exist', exception.message
 
-      loop do
-        begin
-          @@search_client.restore_api_key!(@api_key[:value])
-          break
-        rescue Algolia::AlgoliaHttpError => e
-          if e.code != 404
-            raise StandardError
-          end
-        end
+      retry_test do
+        @@search_client.restore_api_key!(@api_key[:value])
       end
 
-      restored_key = @@search_client.get_api_key(@api_key[:value])
+      restored_key = retry_test do
+        @@search_client.get_api_key(@api_key[:value])
+      end
 
       refute_nil restored_key
     end
@@ -335,7 +332,12 @@ class SearchClientTest < BaseTest
         secured_index1 = secured_client.init_index(@index1.name)
         secured_index2 = secured_client.init_index(@index2.name)
 
-        secured_index1.search('')
+        res = retry_test do
+          secured_index1.search('')
+        end
+
+        assert_equal 1, res[:hits].length
+
         exception = assert_raises Algolia::AlgoliaHttpError do
           secured_index2.search('')
         end
