@@ -23,7 +23,9 @@ class AnalyticsClientTest < BaseTest
         endAt: tomorrow.strftime('%Y-%m-%dT%H:%M:%SZ')
       }
 
-      response   = client.add_ab_test(ab_test)
+      response   = retry_test do
+        client.add_ab_test(ab_test)
+      end
       ab_test_id = response[:abTestID]
 
       index1.wait_task(response[:taskID])
@@ -86,7 +88,9 @@ class AnalyticsClientTest < BaseTest
         endAt: tomorrow.strftime('%Y-%m-%dT%H:%M:%SZ')
       }
 
-      response   = client.add_ab_test(ab_test)
+      response   = retry_test do
+        client.add_ab_test(ab_test)
+      end
       ab_test_id = response[:abTestID]
 
       index.wait_task(response[:taskID])

@@ -87,3 +87,15 @@ def rule_without_metadata(rule)
   rule.delete(:_metadata)
   rule
 end
+
+def retry_test(delay = 0.1, max_retries = 30)
+  (1...max_retries).each do |i|
+    begin
+      return yield
+    rescue Algolia::AlgoliaHttpError
+      sleep delay * i
+    end
+  end
+
+  raise StandardError, 'reached the maximum number of retries'
+end
