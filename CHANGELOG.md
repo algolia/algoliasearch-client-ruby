@@ -1,6 +1,14 @@
 # ChangeLog
 
-## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.0.4...master)
+## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.1.0...master)
+
+## [2.1.0](https://github.com/algolia/algoliasearch-client-ruby/compare/2.0.4...2.1.0) (2021-03-30)
+
+### Feat
+- Custom dictionaries methods
+
+### Fix
+- The parameter `forwardToReplicas` should be handled independently in the `set_settings` method
 
 ## [2.0.4](https://github.com/algolia/algoliasearch-client-ruby/compare/2.0.3...2.0.4) (2021-01-05)
 
