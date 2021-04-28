@@ -409,14 +409,21 @@ class SearchClientTest < BaseTest
         stopwords_settings = {
           disableStandardEntries: {
             stopwords: {
-              en: true
+              en: true,
+              fr: false
             }
           }
         }
 
         @client.set_dictionary_settings!(stopwords_settings)
 
-        assert_equal @client.get_dictionary_settings, stopwords_settings
+        assert_equal @client.get_dictionary_settings, {
+          disableStandardEntries: {
+            stopwords: {
+              en: true
+            }
+          }
+        }
       end
 
       def test_plurals_dictionaries
