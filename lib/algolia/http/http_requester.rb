@@ -11,7 +11,7 @@ module Algolia
       def initialize(adapter, logger)
         @adapter    = adapter
         @logger     = logger
-        @connection = nil
+        @connections = []
       end
 
       # Sends request to the engine
@@ -65,7 +65,7 @@ module Algolia
       # @return [Faraday::Connection]
       #
       def connection(host)
-        @connection ||= Faraday.new(build_url(host)) do |f|
+        @connections[host.accept] ||= Faraday.new(build_url(host)) do |f|
           f.adapter @adapter.to_sym
         end
       end
