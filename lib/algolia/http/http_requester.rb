@@ -9,8 +9,8 @@ module Algolia
       # @param logger [Object] logger used to log requests. Defaults to Algolia::LoggerHelper
       #
       def initialize(adapter, logger)
-        @adapter    = adapter
-        @logger     = logger
+        @adapter     = adapter
+        @logger      = logger
         @connections = []
       end
 
