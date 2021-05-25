@@ -11,7 +11,7 @@ module Algolia
       def initialize(adapter, logger)
         @adapter     = adapter
         @logger      = logger
-        @connections = []
+        @connections = {}
       end
 
       # Sends request to the engine
