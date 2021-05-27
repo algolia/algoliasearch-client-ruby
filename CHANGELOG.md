@@ -1,6 +1,11 @@
 # ChangeLog
 
-## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.1.0...master)
+## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.1.1..master)
+
+## [2.1.1](https://github.com/algolia/algoliasearch-client-ruby/compare/2.1.0...2.1.1) (2021-05-27)
+
+### Fix
+- Bug with read/write nodes caching ([`#455`](https://github.com/algolia/algoliasearch-client-ruby/pull/455))
 
 ## [2.1.0](https://github.com/algolia/algoliasearch-client-ruby/compare/2.0.4...2.1.0) (2021-03-30)
 
