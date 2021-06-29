@@ -480,6 +480,7 @@ module Algolia
       def multiple_queries(queries, opts = {})
         @transporter.read(:POST, '/1/indexes/*/queries', { requests: queries }, opts)
       end
+      alias_method :search, :multiple_queries
 
       # # # # # # # # # # # # # # # # # # # # #
       # MCM METHODS
