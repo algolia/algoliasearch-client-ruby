@@ -131,7 +131,7 @@ workflows:
       - test_ruby:
           matrix:
             parameters:
-              version: ['2.2', '2.3', '2.4', '2.5', '2.6', '2.7']
+              version: ['2.2', '2.3', '2.4', '2.5', '2.6', '2.7', '3.0']
           filters:
             tags:
               only: /.*/
