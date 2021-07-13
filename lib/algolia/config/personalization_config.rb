@@ -1,6 +1,5 @@
 module Algolia
-  module Recommendation
-    # <b>DEPRECATED:</b> Please use <tt>Algolia::Personalization::Config</tt> instead.
+  module Personalization
     class Config < BaseConfig
       attr_accessor :region, :default_hosts
 
