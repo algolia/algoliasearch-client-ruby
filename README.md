@@ -41,7 +41,7 @@ Then, create objects on your index:
 client = Algolia::Search::Client.create('YourApplicationID', 'YourAPIKey')
 index = client.init_index('your_index_name')
 
-index.save_objects([objectID: 1, name: 'Foo'])
+index.save_objects([{objectID: 1, name: 'Foo'}])
 ```
 
 Finally, you may begin searching a object using the `search` method:

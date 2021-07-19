@@ -9,9 +9,9 @@ module Algolia
       # @param logger [Object] logger used to log requests. Defaults to Algolia::LoggerHelper
       #
       def initialize(adapter, logger)
-        @adapter    = adapter
-        @logger     = logger
-        @connection = nil
+        @adapter     = adapter
+        @logger      = logger
+        @connections = {}
       end
 
       # Sends request to the engine
@@ -65,7 +65,7 @@ module Algolia
       # @return [Faraday::Connection]
       #
       def connection(host)
-        @connection ||= Faraday.new(build_url(host)) do |f|
+        @connections[host.accept] ||= Faraday.new(build_url(host)) do |f|
           f.adapter @adapter.to_sym
         end
       end
