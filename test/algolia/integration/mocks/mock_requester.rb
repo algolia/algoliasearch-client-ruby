@@ -2,7 +2,7 @@ class MockRequester
   attr_accessor :requests
   def initialize
     @connection = nil
-    @requests = []
+    @requests   = []
   end
 
   def send_request(host, method, path, body, headers, timeout, connect_timeout)

@@ -26,7 +26,6 @@ class Minitest::Test
   include Helpers
   @@search_config = Algolia::Search::Config.new(application_id: APPLICATION_ID_1, api_key: ADMIN_KEY_1, user_agent: USER_AGENT)
   @@search_client = Algolia::Search::Client.new(@@search_config)
-
 end
 
 def assert_requests(requester, requests)
