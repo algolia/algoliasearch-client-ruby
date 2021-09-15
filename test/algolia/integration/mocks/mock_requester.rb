@@ -1,25 +1,27 @@
 class MockRequester
+  attr_accessor :requests
   def initialize
     @connection = nil
+    @requests = []
   end
 
-  def send_request(host, method, path, _body, headers, _timeout, _connect_timeout)
-    connection = get_connection(host)
-    response   = {
-      connection: connection,
+  def send_request(host, method, path, body, headers, timeout, connect_timeout)
+    request = {
       host: host,
-      path: path,
-      headers: headers,
       method: method,
-      status: 200,
-      body: '{"hits":[],"nbHits":0,"page":0,"nbPages":1,"hitsPerPage":20,"exhaustiveNbHits":true,"query":"test","params":"query=test","processingTimeMS":1}',
-      success: true
+      path: path,
+      body: body,
+      headers: headers,
+      timeout: timeout,
+      connect_timeout: connect_timeout
     }
 
+    @requests.push(request)
+
     Algolia::Http::Response.new(
-      status: response[:status],
-      body: response[:body],
-      headers: response[:headers]
+      status: 200,
+      body: '{"hits": []}',
+      headers: {}
     )
   end
 

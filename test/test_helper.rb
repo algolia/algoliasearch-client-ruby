@@ -26,6 +26,23 @@ class Minitest::Test
   include Helpers
   @@search_config = Algolia::Search::Config.new(application_id: APPLICATION_ID_1, api_key: ADMIN_KEY_1, user_agent: USER_AGENT)
   @@search_client = Algolia::Search::Client.new(@@search_config)
+
+end
+
+def assert_requests(requester, requests)
+  refute_empty requests
+  refute_nil requester
+
+  actual_requests = requester.requests
+  assert_equal requests.size, actual_requests.size
+
+  requests.each_with_index do |expected_request, i|
+    request = actual_requests[i]
+
+    assert_equal(expected_request[:body], request[:body])
+    assert_equal(expected_request[:method], request[:method])
+    assert_equal(expected_request[:path], request[:path])
+  end
 end
 
 def check_environment_variables
