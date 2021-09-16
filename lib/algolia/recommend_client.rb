@@ -97,7 +97,7 @@ module Algolia
       #
       def format_recommendation_queries(queries)
         queries.map do |query|
-          query[:threshold] = 0 unless query.has_key?(:threshold)
+          query[:threshold] = 0 unless query[:threshold].is_a? Numeric
           query.delete(:fallbackParameters) if query[:model] == BOUGHT_TOGETHER
 
           query

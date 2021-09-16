@@ -7,14 +7,24 @@ class RecommendClientTest < BaseTest
       requester = MockRequester.new
       client    = Algolia::Recommend::Client.new(@@search_config, http_requester: requester)
 
+      # It correctly formats queries using the 'bought-together' model
       client.get_recommendations([{ indexName: 'products', objectID: 'B018APC4LE', model: Algolia::Recommend::Client::BOUGHT_TOGETHER }])
+
+      # It correctly formats queries using the 'related-products' model
       client.get_recommendations([{ indexName: 'products', objectID: 'B018APC4LE', model: Algolia::Recommend::Client::RELATED_PRODUCTS }])
+
+      # It correctly formats multiple queries.
       client.get_recommendations(
         [
           { indexName: 'products', objectID: 'B018APC4LE-1', model: Algolia::Recommend::Client::RELATED_PRODUCTS, threshold: 0 },
           { indexName: 'products', objectID: 'B018APC4LE-2', model: Algolia::Recommend::Client::RELATED_PRODUCTS, threshold: 0 }
         ]
       )
+
+      # It resets the threshold to 0 if it's not numeric.
+      client.get_recommendations([{ indexName: 'products', objectID: 'B018APC4LE', model: Algolia::Recommend::Client::BOUGHT_TOGETHER, threshold: nil }])
+
+      # It passes the threshold correctly if it's numeric.
       client.get_recommendations([{ indexName: 'products', objectID: 'B018APC4LE', model: Algolia::Recommend::Client::BOUGHT_TOGETHER, threshold: 42 }])
 
       assert_requests(
@@ -23,6 +33,7 @@ class RecommendClientTest < BaseTest
           { method: :post, path: '/1/indexes/*/recommendations', body: '{"requests":[{"indexName":"products","objectID":"B018APC4LE","model":"bought-together","threshold":0}]}' },
           { method: :post, path: '/1/indexes/*/recommendations', body: '{"requests":[{"indexName":"products","objectID":"B018APC4LE","model":"related-products","threshold":0}]}' },
           { method: :post, path: '/1/indexes/*/recommendations', body: '{"requests":[{"indexName":"products","objectID":"B018APC4LE-1","model":"related-products","threshold":0},{"indexName":"products","objectID":"B018APC4LE-2","model":"related-products","threshold":0}]}' },
+          { method: :post, path: '/1/indexes/*/recommendations', body: '{"requests":[{"indexName":"products","objectID":"B018APC4LE","model":"bought-together","threshold":0}]}' },
           { method: :post, path: '/1/indexes/*/recommendations', body: '{"requests":[{"indexName":"products","objectID":"B018APC4LE","model":"bought-together","threshold":42}]}' }
         ]
       )
