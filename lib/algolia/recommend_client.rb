@@ -1,10 +1,12 @@
 module Algolia
   module Recommend
-    class Client
-      include Helpers
-
+    class Model
       BOUGHT_TOGETHER  = 'bought-together'
       RELATED_PRODUCTS = 'related-products'
+    end
+
+    class Client
+      include Helpers
 
       # Initializes the Recommend client
       #
@@ -68,7 +70,7 @@ module Algolia
       #
       def get_related_products(queries, opts = {})
         get_recommendations(
-          set_query_models(symbolize_all(queries), RELATED_PRODUCTS),
+          set_query_models(symbolize_all(queries), Model::RELATED_PRODUCTS),
           opts
         )
       end
@@ -82,7 +84,7 @@ module Algolia
       #
       def get_frequently_bought_together(queries, opts = {})
         get_recommendations(
-          set_query_models(symbolize_all(queries), BOUGHT_TOGETHER),
+          set_query_models(symbolize_all(queries), Model::BOUGHT_TOGETHER),
           opts
         )
       end
@@ -108,7 +110,7 @@ module Algolia
       def format_recommendation_queries(queries)
         queries.map do |query|
           query[:threshold] = 0 unless query[:threshold].is_a? Numeric
-          query.delete(:fallbackParameters) if query[:model] == BOUGHT_TOGETHER
+          query.delete(:fallbackParameters) if query[:model] == Model::BOUGHT_TOGETHER
 
           query
         end
