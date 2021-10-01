@@ -54,7 +54,7 @@ module Algolia
         @transporter.write(
           :POST,
           '/1/indexes/*/recommendations',
-          { requests: format_recommendation_queries(queries.map { |q| symbolize_hash(q) }) },
+          { requests: format_recommendation_queries(symbolize_all(queries)) },
           opts
         )
       end
@@ -68,7 +68,7 @@ module Algolia
       #
       def get_related_products(queries, opts = {})
         get_recommendations(
-          set_query_models(queries.map { |q| symbolize_hash(q) }, RELATED_PRODUCTS),
+          set_query_models(symbolize_all(queries), RELATED_PRODUCTS),
           opts
         )
       end
@@ -82,12 +82,22 @@ module Algolia
       #
       def get_frequently_bought_together(queries, opts = {})
         get_recommendations(
-          set_query_models(queries.map { |q| symbolize_hash(q) }, BOUGHT_TOGETHER),
+          set_query_models(symbolize_all(queries), BOUGHT_TOGETHER),
           opts
         )
       end
 
       private
+
+      # Symbolize all hashes in an array
+      #
+      # @param hash_array [Array<Hash<String|Symbol, any>>] the hashes to symbolize
+      #
+      # @return [Array<Hash<Symbol, any>>]
+      #
+      def symbolize_all(hash_array)
+        hash_array.map { |q| symbolize_hash(q) }
+      end
 
       # Format the recommendation queries
       #
