@@ -47,44 +47,44 @@ module Algolia
 
       # Get recommendation for the given queries
       #
-      # @param queries [Array<Hash>] the queries to retrieve recommendations for
+      # @param requests [Array<Hash>] the queries to retrieve recommendations for
       # @param opts [Hash] extra parameters to send with your request
       #
       # @return [Hash]
       #
-      def get_recommendations(queries, opts = {})
+      def get_recommendations(requests, opts = {})
         @transporter.write(
           :POST,
           '/1/indexes/*/recommendations',
-          { requests: format_recommendation_queries(symbolize_all(queries)) },
+          { requests: format_recommendation_requests(symbolize_all(requests)) },
           opts
         )
       end
 
-      # Get related products for the given queries
+      # Get related products for the given requests
       #
-      # @param queries [Array<Hash>] the queries to get related products for
+      # @param requests [Array<Hash>] the requests to get related products for
       # @param opts [Hash] extra parameters to send with your request
       #
       # @return [Hash]
       #
-      def get_related_products(queries, opts = {})
+      def get_related_products(requests, opts = {})
         get_recommendations(
-          set_query_models(symbolize_all(queries), Model::RELATED_PRODUCTS),
+          set_request_models(symbolize_all(requests), Model::RELATED_PRODUCTS),
           opts
         )
       end
 
-      # Get frequently bought together items for the given queries
+      # Get frequently bought together items for the given requests
       #
-      # @param queries [Array<Hash>] the queries to get frequently bought together items for
+      # @param requests [Array<Hash>] the requests to get frequently bought together items for
       # @param opts [Hash] extra parameters to send with your request
       #
       # @return [Hash]
       #
-      def get_frequently_bought_together(queries, opts = {})
+      def get_frequently_bought_together(requests, opts = {})
         get_recommendations(
-          set_query_models(symbolize_all(queries), Model::BOUGHT_TOGETHER),
+          set_request_models(symbolize_all(requests), Model::BOUGHT_TOGETHER),
           opts
         )
       end
@@ -101,30 +101,30 @@ module Algolia
         hash_array.map { |q| symbolize_hash(q) }
       end
 
-      # Format the recommendation queries
+      # Format the recommendation requests
       #
-      # @param queries [Array<Hash>] the queries to retrieve recommendations for
+      # @param requests [Array<Hash>] the requests to retrieve recommendations for
       #
       # @return [Array<Hash>]
       #
-      def format_recommendation_queries(queries)
-        queries.map do |query|
-          query[:threshold] = 0 unless query[:threshold].is_a? Numeric
-          query.delete(:fallbackParameters) if query[:model] == Model::BOUGHT_TOGETHER
+      def format_recommendation_requests(requests)
+        requests.map do |request|
+          request[:threshold] = 0 unless request[:threshold].is_a? Numeric
+          request.delete(:fallbackParameters) if request[:model] == Model::BOUGHT_TOGETHER
 
-          query
+          request
         end
       end
 
-      # Force the queries to target a specific model
+      # Force the requests to target a specific model
       #
-      # @param queries [Array<Hash>] the queries to change
+      # @param requests [Array<Hash>] the requests to change
       # @param model [String] the model to enforce
       #
       # @return [Array<Hash>]
       #
-      def set_query_models(queries, model)
-        queries.map do |query|
+      def set_request_models(requests, model)
+        requests.map do |query|
           query[:model] = model
           query
         end
