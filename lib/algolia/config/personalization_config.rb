@@ -13,7 +13,7 @@ module Algolia
         super(opts)
 
         @region        = opts[:region] || 'us'
-        @default_hosts = [Transport::StatefulHost.new("recommendation.#{region}.algolia.com")]
+        @default_hosts = [Transport::StatefulHost.new("personalization.#{region}.algolia.com")]
       end
     end
   end
