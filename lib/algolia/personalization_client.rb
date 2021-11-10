@@ -28,9 +28,9 @@ module Algolia
         create_with_config(config)
       end
 
-      # Create a new client providing only an Recommendation::Config object
+      # Create a new client providing only an Personalization::Config object
       #
-      # @param config [Recommendation::Config]
+      # @param config [Personalization::Config]
       #
       # @return self
       #
