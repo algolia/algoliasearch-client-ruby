@@ -1,6 +1,10 @@
 # ChangeLog
 
-## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.2.0..master)
+## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.2.1..master)
+
+## [2.2.1](https://github.com/algolia/algoliasearch-client-ruby/compare/2.2.0...2.2.1) (2021-11-12)
+### Chore
+- Deprecated `RecommendationClient` in favor of `PersonalizationClient` ([`#461`](https://github.com/algolia/algoliasearch-client-ruby/pull/461))
 
 ## [2.2.0](https://github.com/algolia/algoliasearch-client-ruby/compare/2.1.1...2.2.0) (2021-11-08)
 ### Added
