@@ -20,7 +20,7 @@ class MockRequester
 
     Algolia::Http::Response.new(
       status: 200,
-      body: '{"hits": []}',
+      body: '{"hits": [], "status": "published"}',
       headers: {}
     )
   end
