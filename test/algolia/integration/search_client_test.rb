@@ -294,7 +294,7 @@ class SearchClientTest < BaseTest
 
       results = @@search_client.multiple_queries([
         { indexName: index_name1, params: to_query_string({ query: '', hitsPerPage: 2 }) },
-        { indexName: index_name2, params: to_query_string({ query: '', hitsPerPage: 2 }) }
+        { indexName: index_name2, params: { query: '', hitsPerPage: 2 } }
       ], { strategy: 'none' })[:results]
 
       assert_equal 2, results.length
