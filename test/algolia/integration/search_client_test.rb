@@ -410,7 +410,7 @@ class SearchClientTest < BaseTest
           disableStandardEntries: {
             stopwords: {
               en: true,
-              fr: true
+              fr: false
             }
           }
         }
