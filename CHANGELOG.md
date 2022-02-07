@@ -1,6 +1,19 @@
 # ChangeLog
 
-## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.1.1..master)
+## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.2.2..master)
+
+## [2.2.1](https://github.com/algolia/algoliasearch-client-ruby/compare/2.2.1...2.2.2) (2021-12-08)
+### Fixed
+- Added a `status` field to the `MockRequester` ([`#467`](https://github.com/algolia/algoliasearch-client-ruby/pull/467))
+
+## [2.2.1](https://github.com/algolia/algoliasearch-client-ruby/compare/2.2.0...2.2.1) (2021-11-12)
+### Chore
+- Deprecated `RecommendationClient` in favor of `PersonalizationClient` ([`#461`](https://github.com/algolia/algoliasearch-client-ruby/pull/461))
+
+## [2.2.0](https://github.com/algolia/algoliasearch-client-ruby/compare/2.1.1...2.2.0) (2021-11-08)
+### Added
+- Added RecommendClient ([`#466`](https://github.com/algolia/algoliasearch-client-ruby/pull/466))
+- Added `search` alias for `multiple_queries` ([`#457`](https://github.com/algolia/algoliasearch-client-ruby/pull/457))
 
 ## [2.1.1](https://github.com/algolia/algoliasearch-client-ruby/compare/2.1.0...2.1.1) (2021-05-27)
 

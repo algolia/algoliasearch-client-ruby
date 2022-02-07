@@ -28,6 +28,22 @@ class Minitest::Test
   @@search_client = Algolia::Search::Client.new(@@search_config)
 end
 
+def assert_requests(requester, requests)
+  refute_empty requests
+  refute_nil requester
+
+  actual_requests = requester.requests
+  assert_equal requests.size, actual_requests.size
+
+  requests.each_with_index do |expected_request, i|
+    request = actual_requests[i]
+
+    assert_equal(expected_request[:body], request[:body])
+    assert_equal(expected_request[:method], request[:method])
+    assert_equal(expected_request[:path], request[:path])
+  end
+end
+
 def check_environment_variables
   raise Algolia::AlgoliaError, 'ALGOLIA_APPLICATION_ID_1 must be defined' if ENV['ALGOLIA_APPLICATION_ID_1'].to_s.strip.empty?
   raise Algolia::AlgoliaError, 'ALGOLIA_ADMIN_KEY_1 must be defined' if ENV['ALGOLIA_ADMIN_KEY_1'].to_s.strip.empty?
