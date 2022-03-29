@@ -62,3 +62,4 @@ If you were using the v1 and wish to update to v2, please follow our [Upgrade Gu
 ## 📄 License
 
 Algolia Ruby API Client is an open-sourced software licensed under the [MIT license](LICENSE.md).
+
