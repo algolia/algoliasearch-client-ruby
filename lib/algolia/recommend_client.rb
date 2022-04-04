@@ -18,7 +18,7 @@ module Algolia
       def initialize(recommend_config, opts = {})
         @config      = recommend_config
         adapter      = opts[:adapter] || Defaults::ADAPTER
-        logger       = opts[:logger] || LoggerHelper.create('debug.log')
+        logger       = opts[:logger] || LoggerHelper.create
         requester    = opts[:http_requester] || Defaults::REQUESTER_CLASS.new(adapter, logger)
         @transporter = Transport::Transport.new(@config, requester)
       end
