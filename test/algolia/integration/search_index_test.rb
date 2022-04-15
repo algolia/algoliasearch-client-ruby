@@ -277,6 +277,13 @@ class SearchIndexTest < BaseTest
 
       # check that the forwardToReplicas parameter is passed correctly
       assert @index.set_settings!(settings, { forwardToReplicas: true })
+
+      # Check version 1 API calling (ref. PR #473)
+      # Currently, only the 'version' key's value in API response is checked.
+      assert_equal 1, @index.get_settings(getVersion: 1)[:version]
+
+      # To detect changes in backend behavior (ref. PR #473)
+      assert_equal 18446744073709551615, @index.get_settings(getVersion: 'invalid string')[:version]
     end
   end
 
