@@ -26,7 +26,7 @@ module Algolia
           end
           retries_count    += 1
           time_before_retry = retries_count * Defaults::WAIT_TASK_DEFAULT_TIME_BEFORE_RETRY
-          sleep(time_before_retry / 1000)
+          sleep(time_before_retry.to_f / 1000)
         end
       end
 
