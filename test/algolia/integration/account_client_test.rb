@@ -14,7 +14,7 @@ class AccountClientTest < BaseTest
 
       search_client2 = Algolia::Search::Client.create(APPLICATION_ID_2, ADMIN_KEY_2)
       index2         = search_client2.init_index(get_test_index_name('copy_index2'))
-      index1.save_object!({ objectID: 'one' })
+      index1.save_object!({ objectID: 'one', title: 'Test title' })
       index1.save_rule!({
         objectID: 'one',
         condition: { anchoring: 'is', pattern: 'pattern' },
@@ -29,7 +29,7 @@ class AccountClientTest < BaseTest
         }
       })
       index1.save_synonym!({ objectID: 'one', type: 'synonym', synonyms: %w(one two) })
-      index1.set_settings!({ searchableAttributes: ['objectID'] })
+      index1.set_settings!({ searchableAttributes: ['title'] })
 
       Algolia::Account::Client.copy_index!(index1, index2)
       assert_equal 'one', index2.get_object('one')[:objectID]
