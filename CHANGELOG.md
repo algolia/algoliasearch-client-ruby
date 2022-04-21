@@ -1,8 +1,16 @@
 # ChangeLog
 
-## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.2.2..master)
+## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.2.3..master)
 
-## [2.2.1](https://github.com/algolia/algoliasearch-client-ruby/compare/2.2.1...2.2.2) (2021-12-08)
+## [2.2.3](https://github.com/algolia/algoliasearch-client-ruby/compare/2.2.2...2.2.3) (2022-04-21)
+### Fixed
+- API polling flood issue due to msec sleep time mishandling ([`#472`](https://github.com/algolia/algoliasearch-client-ruby/pull/472))
+- mailto link in SECURITY.md ([`#463`](https://github.com/algolia/algoliasearch-client-ruby/pull/463))
+
+### Added
+- allow hash in multiple queries ([`#468`](https://github.com/algolia/algoliasearch-client-ruby/pull/468))
+
+## [2.2.2](https://github.com/algolia/algoliasearch-client-ruby/compare/2.2.1...2.2.2) (2021-12-08)
 ### Fixed
 - Added a `status` field to the `MockRequester` ([`#467`](https://github.com/algolia/algoliasearch-client-ruby/pull/467))
 
