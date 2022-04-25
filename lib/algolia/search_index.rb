@@ -977,8 +977,8 @@ module Algolia
         opts_default = {
           getVersion: 2
         }
-        opts     = opts_default.merge(opts)
-        response = @transporter.read(:GET, path_encode('/1/indexes/%s/settings', @name), {}, opts)
+        opts         = opts_default.merge(opts)
+        response     = @transporter.read(:GET, path_encode('/1/indexes/%s/settings', @name), {}, opts)
 
         deserialize_settings(response, @config.symbolize_keys)
       end
