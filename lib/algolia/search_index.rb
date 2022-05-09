@@ -36,7 +36,7 @@ module Algolia
           if status == 'published'
             return
           end
-          sleep(time_before_retry / 1000)
+          sleep(time_before_retry.to_f / 1000)
         end
       end
 
