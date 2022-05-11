@@ -278,6 +278,34 @@ class SearchIndexTest < BaseTest
       # check that the forwardToReplicas parameter is passed correctly
       assert @index.set_settings!(settings, { forwardToReplicas: true })
     end
+
+    # Check version 1 API calling (ref. PR #473)
+    def test_version_param
+      @index.save_object!(generate_object('obj1')) # create index
+
+      # Check response's version value by actual access
+      assert_equal 2, @index.get_settings[:version]
+      assert_equal 1, @index.get_settings(getVersion: 1)[:version]
+      assert_equal 2, @index.get_settings(getVersion: 2)[:version]
+
+      # Check API endpoint handling by mock access
+      requester = MockRequester.new
+      client    = Algolia::Search::Client.new(@@search_config, http_requester: requester)
+      index     = client.init_index(@index_name)
+
+      index.get_settings # default
+      index.get_settings(getVersion: 1)
+      index.get_settings(getVersion: 2)
+
+      assert_requests(
+        requester,
+        [
+          { method: :get, path: "/1/indexes/#{@index_name}/settings?getVersion=2" },
+          { method: :get, path: "/1/indexes/#{@index_name}/settings?getVersion=1" },
+          { method: :get, path: "/1/indexes/#{@index_name}/settings?getVersion=2" }
+        ]
+      )
+    end
   end
 
   describe 'search' do

@@ -38,7 +38,11 @@ def assert_requests(requester, requests)
   requests.each_with_index do |expected_request, i|
     request = actual_requests[i]
 
-    assert_equal(expected_request[:body], request[:body])
+    if expected_request[:body].nil? # for GET requests w/ NO body.
+      assert_nil(request[:body])
+    else
+      assert_equal(expected_request[:body], request[:body])
+    end
     assert_equal(expected_request[:method], request[:method])
     assert_equal(expected_request[:path], request[:path])
   end
