@@ -5,7 +5,7 @@ module Algolia
     # @param debug_file [nil|String] file used to output the logs
     #
     def self.create(debug_file = nil)
-      file              = debug_file || (ENV['ALGOLIA_DEBUG'] ? 'debug.log' : $stderr)
+      file              = debug_file || (ENV['ALGOLIA_DEBUG'] ? File.new('debug.log') : $stderr)
       instance          = ::Logger.new file
       instance.progname = 'algolia'
       instance
