@@ -479,7 +479,7 @@ module Algolia
       #
       def multiple_queries(queries, opts = {})
         queries.each do |q|
-          q[:params] = to_query_string(q[:params]) unless q[:params].is_a?(String)
+          q[:params] = to_query_string(q[:params]) unless q[:params].nil? || q[:params].is_a?(String)
         end
         @transporter.read(:POST, '/1/indexes/*/queries', { requests: queries }, opts)
       end
