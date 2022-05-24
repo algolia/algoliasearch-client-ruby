@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.2.4..master)
 
+## [2.2.5](https://github.com/algolia/algoliasearch-client-ruby/compare/2.2.4...2.2.5) (2022-05-24)
+### Fixed
+- multiple_queries: allow params to be `nil` ([`#478`](https://github.com/algolia/algoliasearch-client-ruby/pull/478))
+- 
 ## [2.2.4](https://github.com/algolia/algoliasearch-client-ruby/compare/2.2.3...2.2.4) (2022-05-24)
 ### Fixed
 - API endpoint URL mishandling in get_settings method ([`#473`](https://github.com/algolia/algoliasearch-client-ruby/pull/473))
