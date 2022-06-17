@@ -19,8 +19,8 @@ module Algolia
       def initialize(search_config, opts = {})
         @config      = search_config
         adapter      = opts[:adapter] || Defaults::ADAPTER
-        logger       = opts[:logger] || LoggerHelper.create
-        requester    = opts[:http_requester] || Defaults::REQUESTER_CLASS.new(adapter, logger)
+        @logger      = opts[:logger] || LoggerHelper.create
+        requester    = opts[:http_requester] || Defaults::REQUESTER_CLASS.new(adapter, @logger)
         @transporter = Transport::Transport.new(@config, requester)
       end
 
@@ -94,7 +94,7 @@ module Algolia
         if stripped_index_name.empty?
           raise AlgoliaError, 'Please provide a valid index name'
         end
-        Index.new(stripped_index_name, @transporter, @config)
+        Index.new(stripped_index_name, @transporter, @config, @logger)
       end
 
       # List all indexes of the client

@@ -5,18 +5,20 @@ module Algolia
       include CallType
       include Helpers
 
-      attr_reader :name, :transporter, :config
+      attr_reader :name, :transporter, :config, :logger
 
       # Initialize an index
       #
       # @param name [String] name of the index
       # @param transporter [Object] transport object used for the connection
       # @param config [Config] a Config object which contains your APP_ID and API_KEY
+      # @param logger [LoggerHelper] an optional LoggerHelper object to use
       #
-      def initialize(name, transporter, config)
+      def initialize(name, transporter, config, logger = nil)
         @name        = name
         @transporter = transporter
         @config      = config
+        @logger      = logger || LoggerHelper.create
       end
 
       # # # # # # # # # # # # # # # # # # # # #
@@ -830,7 +832,7 @@ module Algolia
         end
 
         # TODO: consider create a new client with state of retry is shared
-        tmp_client = Algolia::Search::Client.new(@config)
+        tmp_client = Algolia::Search::Client.new(@config, { logger: logger })
         tmp_index  = tmp_client.init_index(tmp_index_name)
 
         save_objects_response = tmp_index.save_objects(objects, request_options)
