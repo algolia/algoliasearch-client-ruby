@@ -35,10 +35,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rubocop', '<= 0.82.0'
 
-  faraday_range = ['>= 0.15', RUBY_VERSION <= '2.3' ? '< 2' : '< 3']
-
-  spec.add_dependency 'faraday', faraday_range
-  spec.add_dependency 'faraday-net_http_persistent', faraday_range
+  spec.add_dependency 'faraday', ['>= 0.15', '< 3']
+  spec.add_dependency 'faraday-net_http_persistent', ['>= 0.15', '< 3']
 
   spec.add_dependency 'multi_json', '~> 1.0'
   spec.add_dependency 'net-http-persistent'
