@@ -131,14 +131,14 @@ workflows:
       - test_ruby:
           matrix:
             parameters:
-              version: ['2.2', '2.3', '2.4', '2.5', '2.6', '2.7', '3.0']
+              version: ['2.4', '2.5', '2.6', '2.7', '3.0']
           filters:
             tags:
               only: /.*/
       - test_jruby:
           matrix:
             parameters:
-              version: ['9.1', '9.2']
+              version: ['9.2']
           filters:
             tags:
               only: /.*/

@@ -37,6 +37,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'faraday', ['>= 0.15', '< 3']
   spec.add_dependency 'faraday-net_http_persistent', ['>= 0.15', '< 3']
+
   spec.add_dependency 'multi_json', '~> 1.0'
   spec.add_dependency 'net-http-persistent'
 
