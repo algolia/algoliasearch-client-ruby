@@ -303,8 +303,8 @@ module Algolia
         request_options    = symbolize_hash(opts)
         if get_option(request_options, 'createIfNotExists')
           generate_object_id = true
-          request_options.delete(:createIfNotExists)
         end
+        request_options.delete(:createIfNotExists)
 
         if generate_object_id
           IndexingResponse.new(self, raw_batch(chunk('partialUpdateObject', objects), request_options))
