@@ -1,11 +1,18 @@
 # ChangeLog
 
-## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.2.4..master)
+## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.3.0..master)
+
+## [2.3.0](https://github.com/algolia/algoliasearch-client-ruby/compare/2.2.5...2.3.0) (2022-09-26)
+### Changed
+- Dropped support for Ruby < 2.4 ([`#483`](https://github.com/algolia/algoliasearch-client-ruby/pull/483))
+- Updated Faraday dependency range ([`#471`](https://github.com/algolia/algoliasearch-client-ruby/pull/471))
+- Fixed bug with `createIfNotExists` ([`#458`](https://github.com/algolia/algoliasearch-client-ruby/pull/458))
+- Use user-configured logger to temp client ([`#480`](https://github.com/algolia/algoliasearch-client-ruby/pull/480))
 
 ## [2.2.5](https://github.com/algolia/algoliasearch-client-ruby/compare/2.2.4...2.2.5) (2022-05-24)
 ### Fixed
 - multiple_queries: allow params to be `nil` ([`#478`](https://github.com/algolia/algoliasearch-client-ruby/pull/478))
-- 
+
 ## [2.2.4](https://github.com/algolia/algoliasearch-client-ruby/compare/2.2.3...2.2.4) (2022-05-24)
 ### Fixed
 - API endpoint URL mishandling in get_settings method ([`#473`](https://github.com/algolia/algoliasearch-client-ruby/pull/473))

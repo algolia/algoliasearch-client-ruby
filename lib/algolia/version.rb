@@ -1,3 +1,3 @@
 module Algolia
-  VERSION = '2.2.5'.freeze
+  VERSION = '2.3.0'.freeze
 end
