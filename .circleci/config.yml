@@ -138,7 +138,7 @@ workflows:
       - test_jruby:
           matrix:
             parameters:
-              version: ['9.2', '9.3']
+              version: ['9.2']
           filters:
             tags:
               only: /.*/
