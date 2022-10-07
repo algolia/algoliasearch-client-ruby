@@ -1,6 +1,6 @@
 require 'faraday'
 # this is the default adapter and it needs to be required to be registered.
-require 'faraday/net_http_persistent'
+require 'faraday/net_http_persistent' unless Faraday::VERSION < '1'
 
 module Algolia
   module Transport
