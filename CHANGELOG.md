@@ -1,6 +1,10 @@
 # ChangeLog
 
-## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.3.0..master)
+## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.3.1..master)
+
+## [2.3.1](https://github.com/algolia/algoliasearch-client-ruby/compare/2.3.0...2.3.1) (2022-09-26)
+### Fixed
+- Fixed issue when project uses Faraday <1 ([`#485`](https://github.com/algolia/algoliasearch-client-ruby/pull/485))
 
 ## [2.3.0](https://github.com/algolia/algoliasearch-client-ruby/compare/2.2.5...2.3.0) (2022-09-26)
 ### Changed
