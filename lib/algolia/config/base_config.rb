@@ -3,7 +3,7 @@ require 'faraday'
 module Algolia
   class BaseConfig
     attr_accessor :app_id, :api_key, :headers, :batch_size, :read_timeout, :write_timeout, :connect_timeout, :compression_type,
-                  :symbolize_keys, :use_latest_settings
+                  :symbolize_keys, :wait_task_timeout, :use_latest_settings
 
     #
     # @option options [String] :application_id
@@ -12,6 +12,7 @@ module Algolia
     # @option options [Integer] :read_timeout
     # @option options [Integer] :write_timeout
     # @option options [Integer] :connect_timeout
+    # @option options [Integer] :wait_task_timeout
     # @option options [Boolean] :symbolize_keys
     #
     def initialize(opts = {})
@@ -32,6 +33,7 @@ module Algolia
       @read_timeout        = opts[:read_timeout] || Defaults::READ_TIMEOUT
       @write_timeout       = opts[:write_timeout] || Defaults::WRITE_TIMEOUT
       @connect_timeout     = opts[:connect_timeout] || Defaults::CONNECT_TIMEOUT
+      @wait_task_timeout   = opts[:wait_task_timeout]
       @compression_type    = opts[:compression_type] || Defaults::NONE_ENCODING
       @symbolize_keys      = opts.has_key?(:symbolize_keys) ? opts[:symbolize_keys] : true
     end
