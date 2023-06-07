@@ -91,12 +91,12 @@ module Algolia
       # @return [Hash]
       #
       def build_request(method, path, body, request_options)
-        request           = {}
-        request[:method]  = method.downcase
-        request[:path]    = build_uri_path(path, request_options.params)
-        request[:body]    = build_body(body, request_options, method)
-        request[:headers] = generate_headers(request_options)
-        request[:timeout] = request_options.timeout
+        request                   = {}
+        request[:method]          = method.downcase
+        request[:path]            = build_uri_path(path, request_options.params)
+        request[:body]            = build_body(body, request_options, method)
+        request[:headers]         = generate_headers(request_options)
+        request[:timeout]         = request_options.timeout
         request[:connect_timeout] = request_options.connect_timeout
         request
       end
