@@ -1,6 +1,10 @@
 # ChangeLog
 
-## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.3.1..master)
+## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.3.2..master)
+
+## [2.3.2](https://github.com/algolia/algoliasearch-client-ruby/compare/2.3.1...2.3.2) (2023-06-07)
+### Fixed
+- Fixed issue with Request not taking timeouts into account ([`#493`](https://github.com/algolia/algoliasearch-client-ruby/pull/493))
 
 ## [2.3.1](https://github.com/algolia/algoliasearch-client-ruby/compare/2.3.0...2.3.1) (2022-09-26)
 ### Fixed
