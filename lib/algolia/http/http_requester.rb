@@ -65,7 +65,7 @@ module Algolia
       # @return [Faraday::Connection]
       #
       def connection(host)
-        @connections[host.accept] ||= Faraday.new(build_url(host)) do |f|
+        @connections[host.url] ||= Faraday.new(build_url(host)) do |f|
           f.adapter @adapter.to_sym
         end
       end
