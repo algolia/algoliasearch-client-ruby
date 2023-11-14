@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.3.2..master)
 
+## [2.3.2](https://github.com/algolia/algoliasearch-client-ruby/compare/2.3.2...2.3.3) (2023-11-14)
+### Fixed
+- Fixed issue with connection caching for faulty hosts that accept similar requests ([`#496`](https://github.com/algolia/algoliasearch-client-ruby/pull/496))
+
 ## [2.3.2](https://github.com/algolia/algoliasearch-client-ruby/compare/2.3.1...2.3.2) (2023-06-07)
 ### Fixed
 - Fixed issue with Request not taking timeouts into account ([`#493`](https://github.com/algolia/algoliasearch-client-ruby/pull/493))
