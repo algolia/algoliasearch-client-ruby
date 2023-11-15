@@ -2,7 +2,7 @@ require 'algolia'
 require 'test_helper'
 
 class HelpersTest
-  include Helpers
+  include Algolia::Helpers
 
   describe 'test helpers' do
     def test_deserialize_settings
