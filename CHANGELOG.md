@@ -2,7 +2,11 @@
 
 ## [Unreleased](https://github.com/algolia/algoliasearch-client-ruby/compare/2.3.2..master)
 
-## [2.3.2](https://github.com/algolia/algoliasearch-client-ruby/compare/2.3.2...2.3.3) (2023-11-14)
+## [2.3.4](https://github.com/algolia/algoliasearch-client-ruby/compare/2.3.3...2.3.4) (2023-11-27)
+### Fixed
+- Fixes issue with index name encoding for certain characters.
+
+## [2.3.3](https://github.com/algolia/algoliasearch-client-ruby/compare/2.3.2...2.3.3) (2023-11-14)
 ### Fixed
 - Fixed issue with connection caching for faulty hosts that accept similar requests ([`#496`](https://github.com/algolia/algoliasearch-client-ruby/pull/496))
 
