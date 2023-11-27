@@ -44,7 +44,7 @@ module Helpers
   def path_encode(path, *args)
     arguments = []
     args.each do |arg|
-      arguments.push(CGI.escape(CGI.unescape(arg.to_s)))
+      arguments.push(CGI.escape(arg.to_s))
     end
 
     format(path, *arguments)
