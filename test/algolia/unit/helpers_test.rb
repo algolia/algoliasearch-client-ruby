@@ -40,6 +40,10 @@ class HelpersTest
       deserialized_settings = deserialize_settings(old_settings, false)
       assert_equal new_settings, deserialized_settings
     end
+
+    def test_path_encode
+      assert_equal path_encode('/1/indexes/%s/settings', 'premium+ some_name'), '/1/indexes/premium%2B+some_name/settings'
+    end
   end
 
   describe 'test hash_includes_subset' do
