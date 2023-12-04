@@ -5,10 +5,8 @@ require 'time'
 
 module Algolia
   class UserHighlightResult
-    # Show highlighted section and words matched on a query.
     attr_accessor :user_id
 
-    # Show highlighted section and words matched on a query.
     attr_accessor :cluster_name
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -27,8 +25,8 @@ module Algolia
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'user_id' => :'Hash<String, HighlightResult>',
-        :'cluster_name' => :'Hash<String, HighlightResult>'
+        :'user_id' => :'HighlightResult',
+        :'cluster_name' => :'HighlightResult'
       }
     end
 
@@ -54,17 +52,13 @@ module Algolia
       }
 
       if attributes.key?(:'user_id')
-        if (value = attributes[:'user_id']).is_a?(Hash)
-          self.user_id = value
-        end
+        self.user_id = attributes[:'user_id']
       else
         self.user_id = nil
       end
 
       if attributes.key?(:'cluster_name')
-        if (value = attributes[:'cluster_name']).is_a?(Hash)
-          self.cluster_name = value
-        end
+        self.cluster_name = attributes[:'cluster_name']
       else
         self.cluster_name = nil
       end
