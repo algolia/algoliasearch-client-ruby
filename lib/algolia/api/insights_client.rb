@@ -15,8 +15,8 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Object]
-    def del(path, opts = {})
-      data, _status_code, _headers = del_with_http_info(path, opts)
+    def custom_delete(path, opts = {})
+      data, _status_code, _headers = custom_delete_with_http_info(path, opts)
       data
     end
 
@@ -26,13 +26,13 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def del_with_http_info(path, opts = {})
+    def custom_delete_with_http_info(path, opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: InsightsClient.del ...'
+        @api_client.config.logger.debug 'Calling API: InsightsClient.custom_delete ...'
       end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.del"
+        fail ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.custom_delete"
       end
       # resource path
       local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
@@ -59,7 +59,7 @@ module Algolia
       auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
 
       new_options = opts.merge(
-        :operation => :"InsightsClient.del",
+        :operation => :"InsightsClient.custom_delete",
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -70,7 +70,7 @@ module Algolia
 
       data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
       if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: InsightsClient#del\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+        @api_client.config.logger.debug "API called: InsightsClient#custom_delete\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -81,8 +81,8 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Object]
-    def get(path, opts = {})
-      data, _status_code, _headers = get_with_http_info(path, opts)
+    def custom_get(path, opts = {})
+      data, _status_code, _headers = custom_get_with_http_info(path, opts)
       data
     end
 
@@ -92,13 +92,13 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def get_with_http_info(path, opts = {})
+    def custom_get_with_http_info(path, opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: InsightsClient.get ...'
+        @api_client.config.logger.debug 'Calling API: InsightsClient.custom_get ...'
       end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.get"
+        fail ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.custom_get"
       end
       # resource path
       local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
@@ -125,7 +125,7 @@ module Algolia
       auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
 
       new_options = opts.merge(
-        :operation => :"InsightsClient.get",
+        :operation => :"InsightsClient.custom_get",
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -136,7 +136,7 @@ module Algolia
 
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: InsightsClient#get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+        @api_client.config.logger.debug "API called: InsightsClient#custom_get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -148,8 +148,8 @@ module Algolia
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @option opts [Object] :body Parameters to send with the custom request.
     # @return [Object]
-    def post(path, opts = {})
-      data, _status_code, _headers = post_with_http_info(path, opts)
+    def custom_post(path, opts = {})
+      data, _status_code, _headers = custom_post_with_http_info(path, opts)
       data
     end
 
@@ -160,13 +160,13 @@ module Algolia
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @option opts [Object] :body Parameters to send with the custom request.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def post_with_http_info(path, opts = {})
+    def custom_post_with_http_info(path, opts = {})
       if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: InsightsClient.post ...'
+        @api_client.config.logger.debug 'Calling API: InsightsClient.custom_post ...'
       end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.post"
+        fail ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.custom_post"
       end
       # resource path
       local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
@@ -198,7 +198,7 @@ module Algolia
       auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
 
       new_options = opts.merge(
-        :operation => :"InsightsClient.post",
+        :operation => :"InsightsClient.custom_post",
         :header_params => header_params,
         :query_params => query_params,
         :form_params => form_params,
@@ -209,7 +209,80 @@ module Algolia
 
       data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
       if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: InsightsClient#post\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+        @api_client.config.logger.debug "API called: InsightsClient#custom_post\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Send requests to the Algolia REST API.
+    # This method allow you to send requests to the Algolia REST API.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
+    # @param [Hash] opts the optional parameters
+    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
+    # @option opts [Object] :body Parameters to send with the custom request.
+    # @return [Object]
+    def custom_put(path, opts = {})
+      data, _status_code, _headers = custom_put_with_http_info(path, opts)
+      data
+    end
+
+    # Send requests to the Algolia REST API.
+    # This method allow you to send requests to the Algolia REST API.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
+    # @param [Hash] opts the optional parameters
+    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
+    # @option opts [Object] :body Parameters to send with the custom request.
+    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
+    def custom_put_with_http_info(path, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: InsightsClient.custom_put ...'
+      end
+      # verify the required parameter 'path' is set
+      if @api_client.config.client_side_validation && path.nil?
+        fail ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.custom_put"
+      end
+      # resource path
+      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+        header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'Object'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+
+      new_options = opts.merge(
+        :operation => :"InsightsClient.custom_put",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: InsightsClient#custom_put\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -278,79 +351,6 @@ module Algolia
       data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: InsightsClient#push_events\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
-    end
-
-    # Send requests to the Algolia REST API.
-    # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
-    # @return [Object]
-    def put(path, opts = {})
-      data, _status_code, _headers = put_with_http_info(path, opts)
-      data
-    end
-
-    # Send requests to the Algolia REST API.
-    # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
-    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def put_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: InsightsClient.put ...'
-      end
-      # verify the required parameter 'path' is set
-      if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.put"
-      end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
-      query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
-      header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
-
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
-
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
-
-      new_options = opts.merge(
-        :operation => :"InsightsClient.put",
-        :header_params => header_params,
-        :query_params => query_params,
-        :form_params => form_params,
-        :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
-      )
-
-      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: InsightsClient#put\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
