@@ -138,7 +138,7 @@ module Algolia
 
     def initialize
       @scheme = 'https'
-      @host = 'status.algolia.com'
+      @host = 'myAppId.algolia.net'
       @base_path = ''
       @server_index = nil
       @server_operation_index = {}
@@ -248,8 +248,54 @@ module Algolia
     def server_settings
       [
         {
-          url: "https://status.algolia.com",
+          url: "https://{appId}.algolia.net",
           description: "No description provided",
+          variables: {
+            appId: {
+                description: "No description provided",
+                default_value: "myAppId",
+              }
+            }
+        },
+        {
+          url: "https://{appId}-1.algolianet.com",
+          description: "No description provided",
+          variables: {
+            appId: {
+                description: "No description provided",
+                default_value: "myAppId",
+              }
+            }
+        },
+        {
+          url: "https://{appId}-2.algolianet.com",
+          description: "No description provided",
+          variables: {
+            appId: {
+                description: "No description provided",
+                default_value: "myAppId",
+              }
+            }
+        },
+        {
+          url: "https://{appId}-3.algolianet.com",
+          description: "No description provided",
+          variables: {
+            appId: {
+                description: "No description provided",
+                default_value: "myAppId",
+              }
+            }
+        },
+        {
+          url: "https://{appId}-dsn.algolia.net",
+          description: "No description provided",
+          variables: {
+            appId: {
+                description: "No description provided",
+                default_value: "myAppId",
+              }
+            }
         }
       ]
     end
