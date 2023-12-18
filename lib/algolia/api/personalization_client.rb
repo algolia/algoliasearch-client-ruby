@@ -20,7 +20,7 @@ module Algolia
 
       hosts << Transport::StatefulHost.new("personalization.{region}.algolia.com".sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
       
-      config = Algolia::Configuration.new(app_id, api_key, hosts)
+      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Personalization')
       create_with_config(config)
     end
 
@@ -47,9 +47,6 @@ module Algolia
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_delete_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: PersonalizationClient.custom_delete ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling PersonalizationClient.custom_delete"
@@ -68,14 +65,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: PersonalizationClient#custom_delete\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -96,9 +90,6 @@ module Algolia
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_get_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: PersonalizationClient.custom_get ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling PersonalizationClient.custom_get"
@@ -117,14 +108,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: PersonalizationClient#custom_get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -147,9 +135,6 @@ module Algolia
     # @option opts [Object] :body Parameters to send with the custom request.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_post_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: PersonalizationClient.custom_post ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling PersonalizationClient.custom_post"
@@ -168,14 +153,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: PersonalizationClient#custom_post\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -198,9 +180,6 @@ module Algolia
     # @option opts [Object] :body Parameters to send with the custom request.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_put_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: PersonalizationClient.custom_put ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling PersonalizationClient.custom_put"
@@ -219,14 +198,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: PersonalizationClient#custom_put\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
 
     # Delete a user profile.
@@ -245,9 +221,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DeleteUserProfileResponse, Integer, Hash)>] DeleteUserProfileResponse data, response status code and response headers
     def delete_user_profile_with_http_info(user_token, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: PersonalizationClient.delete_user_profile ...'
-      end
       # verify the required parameter 'user_token' is set
       if @api_client.config.client_side_validation && user_token.nil?
         fail ArgumentError, "Missing the required parameter 'user_token' when calling PersonalizationClient.delete_user_profile"
@@ -265,14 +238,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: PersonalizationClient#delete_user_profile\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Get the current strategy.
@@ -289,9 +259,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(PersonalizationStrategyParams, Integer, Hash)>] PersonalizationStrategyParams data, response status code and response headers
     def get_personalization_strategy_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: PersonalizationClient.get_personalization_strategy ...'
-      end
       path = '/1/strategies/personalization'
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -305,14 +272,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: PersonalizationClient#get_personalization_strategy\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a user profile.
@@ -331,9 +295,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(GetUserTokenResponse, Integer, Hash)>] GetUserTokenResponse data, response status code and response headers
     def get_user_token_profile_with_http_info(user_token, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: PersonalizationClient.get_user_token_profile ...'
-      end
       # verify the required parameter 'user_token' is set
       if @api_client.config.client_side_validation && user_token.nil?
         fail ArgumentError, "Missing the required parameter 'user_token' when calling PersonalizationClient.get_user_token_profile"
@@ -351,14 +312,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: PersonalizationClient#get_user_token_profile\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Set a new strategy.
@@ -377,9 +335,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(SetPersonalizationStrategyResponse, Integer, Hash)>] SetPersonalizationStrategyResponse data, response status code and response headers
     def set_personalization_strategy_with_http_info(personalization_strategy_params, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: PersonalizationClient.set_personalization_strategy ...'
-      end
       # verify the required parameter 'personalization_strategy_params' is set
       if @api_client.config.client_side_validation && personalization_strategy_params.nil?
         fail ArgumentError, "Missing the required parameter 'personalization_strategy_params' when calling PersonalizationClient.set_personalization_strategy"
@@ -397,14 +352,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: PersonalizationClient#set_personalization_strategy\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
   end
 end

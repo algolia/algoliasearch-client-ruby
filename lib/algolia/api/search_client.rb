@@ -20,7 +20,7 @@ module Algolia
         Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", accept: CallType::READ | CallType::WRITE)
       end.shuffle
 
-      config = Algolia::Configuration.new(app_id, api_key, hosts)
+      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Search')
       create_with_config(config)
     end
 
@@ -45,9 +45,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(AddApiKeyResponse, Integer, Hash)>] AddApiKeyResponse data, response status code and response headers
     def add_api_key_with_http_info(api_key, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.add_api_key ...'
-      end
       # verify the required parameter 'api_key' is set
       if @api_client.config.client_side_validation && api_key.nil?
         fail ArgumentError, "Missing the required parameter 'api_key' when calling SearchClient.add_api_key"
@@ -65,14 +62,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#add_api_key\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Add or update a record (using objectID).
@@ -95,9 +89,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(UpdatedAtWithObjectIdResponse, Integer, Hash)>] UpdatedAtWithObjectIdResponse data, response status code and response headers
     def add_or_update_object_with_http_info(index_name, object_id, body, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.add_or_update_object ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.add_or_update_object"
@@ -123,14 +114,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#add_or_update_object\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
 
     # Add a source.
@@ -149,9 +137,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(CreatedAtResponse, Integer, Hash)>] CreatedAtResponse data, response status code and response headers
     def append_source_with_http_info(source, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.append_source ...'
-      end
       # verify the required parameter 'source' is set
       if @api_client.config.client_side_validation && source.nil?
         fail ArgumentError, "Missing the required parameter 'source' when calling SearchClient.append_source"
@@ -169,14 +154,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#append_source\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Assign or move a user ID.
@@ -197,9 +179,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(CreatedAtResponse, Integer, Hash)>] CreatedAtResponse data, response status code and response headers
     def assign_user_id_with_http_info(x_algolia_user_id, assign_user_id_params, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.assign_user_id ...'
-      end
       # verify the required parameter 'x_algolia_user_id' is set
       if @api_client.config.client_side_validation && x_algolia_user_id.nil?
         fail ArgumentError, "Missing the required parameter 'x_algolia_user_id' when calling SearchClient.assign_user_id"
@@ -227,14 +206,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#assign_user_id\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Batch write operations on one index.
@@ -255,9 +231,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(BatchResponse, Integer, Hash)>] BatchResponse data, response status code and response headers
     def batch_with_http_info(index_name, batch_write_params, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.batch ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.batch"
@@ -279,14 +252,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#batch\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Batch assign userIDs.
@@ -307,9 +277,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(CreatedAtResponse, Integer, Hash)>] CreatedAtResponse data, response status code and response headers
     def batch_assign_user_ids_with_http_info(x_algolia_user_id, batch_assign_user_ids_params, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.batch_assign_user_ids ...'
-      end
       # verify the required parameter 'x_algolia_user_id' is set
       if @api_client.config.client_side_validation && x_algolia_user_id.nil?
         fail ArgumentError, "Missing the required parameter 'x_algolia_user_id' when calling SearchClient.batch_assign_user_ids"
@@ -337,14 +304,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#batch_assign_user_ids\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Batch dictionary entries.
@@ -365,9 +329,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(UpdatedAtResponse, Integer, Hash)>] UpdatedAtResponse data, response status code and response headers
     def batch_dictionary_entries_with_http_info(dictionary_name, batch_dictionary_entries_params, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.batch_dictionary_entries ...'
-      end
       # verify the required parameter 'dictionary_name' is set
       if @api_client.config.client_side_validation && dictionary_name.nil?
         fail ArgumentError, "Missing the required parameter 'dictionary_name' when calling SearchClient.batch_dictionary_entries"
@@ -389,14 +350,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#batch_dictionary_entries\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Get all records from an index.
@@ -417,9 +375,6 @@ module Algolia
     # @option opts [BrowseParams] :browse_params 
     # @return [Array<(BrowseResponse, Integer, Hash)>] BrowseResponse data, response status code and response headers
     def browse_with_http_info(index_name, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.browse ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.browse"
@@ -437,14 +392,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#browse\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Delete all synonyms.
@@ -465,9 +417,6 @@ module Algolia
     # @option opts [Boolean] :forward_to_replicas Indicates whether changed index settings are forwarded to the replica indices.
     # @return [Array<(UpdatedAtResponse, Integer, Hash)>] UpdatedAtResponse data, response status code and response headers
     def clear_all_synonyms_with_http_info(index_name, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.clear_all_synonyms ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.clear_all_synonyms"
@@ -486,14 +435,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#clear_all_synonyms\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Delete all records from an index.
@@ -512,9 +458,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(UpdatedAtResponse, Integer, Hash)>] UpdatedAtResponse data, response status code and response headers
     def clear_objects_with_http_info(index_name, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.clear_objects ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.clear_objects"
@@ -532,14 +475,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#clear_objects\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Delete all rules.
@@ -560,9 +500,6 @@ module Algolia
     # @option opts [Boolean] :forward_to_replicas Indicates whether changed index settings are forwarded to the replica indices.
     # @return [Array<(UpdatedAtResponse, Integer, Hash)>] UpdatedAtResponse data, response status code and response headers
     def clear_rules_with_http_info(index_name, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.clear_rules ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.clear_rules"
@@ -581,14 +518,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#clear_rules\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -609,9 +543,6 @@ module Algolia
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_delete_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.custom_delete ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling SearchClient.custom_delete"
@@ -630,14 +561,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#custom_delete\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -658,9 +586,6 @@ module Algolia
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_get_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.custom_get ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling SearchClient.custom_get"
@@ -679,14 +604,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#custom_get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -709,9 +631,6 @@ module Algolia
     # @option opts [Object] :body Parameters to send with the custom request.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_post_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.custom_post ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling SearchClient.custom_post"
@@ -730,14 +649,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#custom_post\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -760,9 +676,6 @@ module Algolia
     # @option opts [Object] :body Parameters to send with the custom request.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_put_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.custom_put ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling SearchClient.custom_put"
@@ -781,14 +694,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#custom_put\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
 
     # Delete API key.
@@ -807,9 +717,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DeleteApiKeyResponse, Integer, Hash)>] DeleteApiKeyResponse data, response status code and response headers
     def delete_api_key_with_http_info(key, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.delete_api_key ...'
-      end
       # verify the required parameter 'key' is set
       if @api_client.config.client_side_validation && key.nil?
         fail ArgumentError, "Missing the required parameter 'key' when calling SearchClient.delete_api_key"
@@ -827,14 +734,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#delete_api_key\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Delete all records matching a query.
@@ -855,9 +759,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DeletedAtResponse, Integer, Hash)>] DeletedAtResponse data, response status code and response headers
     def delete_by_with_http_info(index_name, delete_by_params, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.delete_by ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.delete_by"
@@ -879,14 +780,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#delete_by\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Delete index.
@@ -905,9 +803,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DeletedAtResponse, Integer, Hash)>] DeletedAtResponse data, response status code and response headers
     def delete_index_with_http_info(index_name, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.delete_index ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.delete_index"
@@ -925,14 +820,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#delete_index\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Delete a record.
@@ -953,9 +845,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DeletedAtResponse, Integer, Hash)>] DeletedAtResponse data, response status code and response headers
     def delete_object_with_http_info(index_name, object_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.delete_object ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.delete_object"
@@ -977,14 +866,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#delete_object\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Delete a rule.
@@ -1007,9 +893,6 @@ module Algolia
     # @option opts [Boolean] :forward_to_replicas Indicates whether changed index settings are forwarded to the replica indices.
     # @return [Array<(UpdatedAtResponse, Integer, Hash)>] UpdatedAtResponse data, response status code and response headers
     def delete_rule_with_http_info(index_name, object_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.delete_rule ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.delete_rule"
@@ -1032,14 +915,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#delete_rule\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Remove a source.
@@ -1058,9 +938,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DeleteSourceResponse, Integer, Hash)>] DeleteSourceResponse data, response status code and response headers
     def delete_source_with_http_info(source, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.delete_source ...'
-      end
       # verify the required parameter 'source' is set
       if @api_client.config.client_side_validation && source.nil?
         fail ArgumentError, "Missing the required parameter 'source' when calling SearchClient.delete_source"
@@ -1078,14 +955,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#delete_source\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Delete a synonym.
@@ -1108,9 +982,6 @@ module Algolia
     # @option opts [Boolean] :forward_to_replicas Indicates whether changed index settings are forwarded to the replica indices.
     # @return [Array<(DeletedAtResponse, Integer, Hash)>] DeletedAtResponse data, response status code and response headers
     def delete_synonym_with_http_info(index_name, object_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.delete_synonym ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.delete_synonym"
@@ -1133,14 +1004,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#delete_synonym\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Get API key permissions.
@@ -1159,9 +1027,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(GetApiKeyResponse, Integer, Hash)>] GetApiKeyResponse data, response status code and response headers
     def get_api_key_with_http_info(key, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.get_api_key ...'
-      end
       # verify the required parameter 'key' is set
       if @api_client.config.client_side_validation && key.nil?
         fail ArgumentError, "Missing the required parameter 'key' when calling SearchClient.get_api_key"
@@ -1179,14 +1044,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#get_api_key\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # List available languages.
@@ -1203,9 +1065,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Hash<String, Languages>, Integer, Hash)>] Hash<String, Languages> data, response status code and response headers
     def get_dictionary_languages_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.get_dictionary_languages ...'
-      end
       path = '/1/dictionaries/*/languages'
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -1219,14 +1078,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#get_dictionary_languages\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get stop word settings.
@@ -1243,9 +1099,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(GetDictionarySettingsResponse, Integer, Hash)>] GetDictionarySettingsResponse data, response status code and response headers
     def get_dictionary_settings_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.get_dictionary_settings ...'
-      end
       path = '/1/dictionaries/*/settings'
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -1259,14 +1112,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#get_dictionary_settings\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Return the latest log entries.
@@ -1291,9 +1141,6 @@ module Algolia
     # @option opts [LogType] :type Type of log entries to retrieve. When omitted, all log entries are retrieved. (default to 'all')
     # @return [Array<(GetLogsResponse, Integer, Hash)>] GetLogsResponse data, response status code and response headers
     def get_logs_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.get_logs ...'
-      end
       if @api_client.config.client_side_validation && !opts[:'length'].nil? && opts[:'length'] > 1000
         fail ArgumentError, 'invalid value for "opts[:"length"]" when calling SearchClient.get_logs, must be smaller than or equal to 1000.'
       end
@@ -1315,14 +1162,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#get_logs\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a record.
@@ -1345,9 +1189,6 @@ module Algolia
     # @option opts [Array<String>] :attributes_to_retrieve Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. &#x60;objectID&#x60; is always retrieved, even when not specified. [&#x60;unretrievableAttributes&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won&#39;t be retrieved unless the request is authenticated with the admin API key. 
     # @return [Array<(Hash<String, String>, Integer, Hash)>] Hash<String, String> data, response status code and response headers
     def get_object_with_http_info(index_name, object_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.get_object ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.get_object"
@@ -1370,14 +1211,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#get_object\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get multiple records.
@@ -1396,9 +1234,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(GetObjectsResponse, Integer, Hash)>] GetObjectsResponse data, response status code and response headers
     def get_objects_with_http_info(get_objects_params, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.get_objects ...'
-      end
       # verify the required parameter 'get_objects_params' is set
       if @api_client.config.client_side_validation && get_objects_params.nil?
         fail ArgumentError, "Missing the required parameter 'get_objects_params' when calling SearchClient.get_objects"
@@ -1416,14 +1251,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#get_objects\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Get a rule.
@@ -1444,9 +1276,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Rule, Integer, Hash)>] Rule data, response status code and response headers
     def get_rule_with_http_info(index_name, object_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.get_rule ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.get_rule"
@@ -1468,14 +1297,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#get_rule\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get index settings.
@@ -1494,9 +1320,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(IndexSettings, Integer, Hash)>] IndexSettings data, response status code and response headers
     def get_settings_with_http_info(index_name, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.get_settings ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.get_settings"
@@ -1514,14 +1337,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#get_settings\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get all allowed IP addresses.
@@ -1538,9 +1358,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Array<Source>, Integer, Hash)>] Array<Source> data, response status code and response headers
     def get_sources_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.get_sources ...'
-      end
       path = '/1/security/sources'
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -1554,14 +1371,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#get_sources\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a synonym object.
@@ -1582,9 +1396,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(SynonymHit, Integer, Hash)>] SynonymHit data, response status code and response headers
     def get_synonym_with_http_info(index_name, object_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.get_synonym ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.get_synonym"
@@ -1606,14 +1417,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#get_synonym\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Check a task's status.
@@ -1634,9 +1442,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(GetTaskResponse, Integer, Hash)>] GetTaskResponse data, response status code and response headers
     def get_task_with_http_info(index_name, task_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.get_task ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.get_task"
@@ -1658,14 +1463,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#get_task\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get top userID.
@@ -1682,9 +1484,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(GetTopUserIdsResponse, Integer, Hash)>] GetTopUserIdsResponse data, response status code and response headers
     def get_top_user_ids_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.get_top_user_ids ...'
-      end
       path = '/1/clusters/mapping/top'
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -1698,14 +1497,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#get_top_user_ids\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get userID.
@@ -1724,9 +1520,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(UserId, Integer, Hash)>] UserId data, response status code and response headers
     def get_user_id_with_http_info(user_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.get_user_id ...'
-      end
       # verify the required parameter 'user_id' is set
       if @api_client.config.client_side_validation && user_id.nil?
         fail ArgumentError, "Missing the required parameter 'user_id' when calling SearchClient.get_user_id"
@@ -1749,14 +1542,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#get_user_id\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get migration and user mapping status.
@@ -1775,9 +1565,6 @@ module Algolia
     # @option opts [Boolean] :get_clusters Indicates whether to include the cluster&#39;s pending mapping state in the response.
     # @return [Array<(HasPendingMappingsResponse, Integer, Hash)>] HasPendingMappingsResponse data, response status code and response headers
     def has_pending_mappings_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.has_pending_mappings ...'
-      end
       path = '/1/clusters/mapping/pending'
       query_params = opts[:query_params] || {}
       query_params[:'getClusters'] = opts[:'get_clusters'] if !opts[:'get_clusters'].nil?
@@ -1792,14 +1579,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#has_pending_mappings\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # List API keys.
@@ -1816,9 +1600,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(ListApiKeysResponse, Integer, Hash)>] ListApiKeysResponse data, response status code and response headers
     def list_api_keys_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.list_api_keys ...'
-      end
       path = '/1/keys'
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -1832,14 +1613,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#list_api_keys\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # List clusters.
@@ -1856,9 +1634,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(ListClustersResponse, Integer, Hash)>] ListClustersResponse data, response status code and response headers
     def list_clusters_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.list_clusters ...'
-      end
       path = '/1/clusters'
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -1872,14 +1647,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#list_clusters\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # List indices.
@@ -1900,9 +1672,6 @@ module Algolia
     # @option opts [Integer] :hits_per_page Maximum number of hits per page. (default to 100)
     # @return [Array<(ListIndicesResponse, Integer, Hash)>] ListIndicesResponse data, response status code and response headers
     def list_indices_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.list_indices ...'
-      end
       if @api_client.config.client_side_validation && !opts[:'page'].nil? && opts[:'page'] < 0
         fail ArgumentError, 'invalid value for "opts[:"page"]" when calling SearchClient.list_indices, must be greater than or equal to 0.'
       end
@@ -1922,14 +1691,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#list_indices\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # List userIDs.
@@ -1950,9 +1716,6 @@ module Algolia
     # @option opts [Integer] :hits_per_page Maximum number of hits per page. (default to 100)
     # @return [Array<(ListUserIdsResponse, Integer, Hash)>] ListUserIdsResponse data, response status code and response headers
     def list_user_ids_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.list_user_ids ...'
-      end
       if @api_client.config.client_side_validation && !opts[:'page'].nil? && opts[:'page'] < 0
         fail ArgumentError, 'invalid value for "opts[:"page"]" when calling SearchClient.list_user_ids, must be greater than or equal to 0.'
       end
@@ -1972,14 +1735,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#list_user_ids\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Batch write operations on multiple indices.
@@ -1998,9 +1758,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(MultipleBatchResponse, Integer, Hash)>] MultipleBatchResponse data, response status code and response headers
     def multiple_batch_with_http_info(batch_params, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.multiple_batch ...'
-      end
       # verify the required parameter 'batch_params' is set
       if @api_client.config.client_side_validation && batch_params.nil?
         fail ArgumentError, "Missing the required parameter 'batch_params' when calling SearchClient.multiple_batch"
@@ -2018,14 +1775,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#multiple_batch\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Copy, move, or rename an index.
@@ -2046,9 +1800,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(UpdatedAtResponse, Integer, Hash)>] UpdatedAtResponse data, response status code and response headers
     def operation_index_with_http_info(index_name, operation_index_params, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.operation_index ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.operation_index"
@@ -2070,14 +1821,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#operation_index\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Update record attributes.
@@ -2102,9 +1850,6 @@ module Algolia
     # @option opts [Boolean] :create_if_not_exists Indicates whether to create a new record if it doesn&#39;t exist yet.  (default to true)
     # @return [Array<(UpdatedAtWithObjectIdResponse, Integer, Hash)>] UpdatedAtWithObjectIdResponse data, response status code and response headers
     def partial_update_object_with_http_info(index_name, object_id, attributes_to_update, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.partial_update_object ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.partial_update_object"
@@ -2131,14 +1876,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#partial_update_object\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Remove userID.
@@ -2157,9 +1899,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(RemoveUserIdResponse, Integer, Hash)>] RemoveUserIdResponse data, response status code and response headers
     def remove_user_id_with_http_info(user_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.remove_user_id ...'
-      end
       # verify the required parameter 'user_id' is set
       if @api_client.config.client_side_validation && user_id.nil?
         fail ArgumentError, "Missing the required parameter 'user_id' when calling SearchClient.remove_user_id"
@@ -2182,14 +1921,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#remove_user_id\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Replace all sources.
@@ -2208,9 +1944,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(ReplaceSourceResponse, Integer, Hash)>] ReplaceSourceResponse data, response status code and response headers
     def replace_sources_with_http_info(source, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.replace_sources ...'
-      end
       # verify the required parameter 'source' is set
       if @api_client.config.client_side_validation && source.nil?
         fail ArgumentError, "Missing the required parameter 'source' when calling SearchClient.replace_sources"
@@ -2228,14 +1961,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#replace_sources\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
 
     # Restore API key.
@@ -2254,9 +1984,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(AddApiKeyResponse, Integer, Hash)>] AddApiKeyResponse data, response status code and response headers
     def restore_api_key_with_http_info(key, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.restore_api_key ...'
-      end
       # verify the required parameter 'key' is set
       if @api_client.config.client_side_validation && key.nil?
         fail ArgumentError, "Missing the required parameter 'key' when calling SearchClient.restore_api_key"
@@ -2274,14 +2001,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#restore_api_key\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Add or update a record.
@@ -2302,9 +2026,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(SaveObjectResponse, Integer, Hash)>] SaveObjectResponse data, response status code and response headers
     def save_object_with_http_info(index_name, body, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.save_object ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.save_object"
@@ -2326,14 +2047,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#save_object\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Create or update a rule.
@@ -2358,9 +2076,6 @@ module Algolia
     # @option opts [Boolean] :forward_to_replicas Indicates whether changed index settings are forwarded to the replica indices.
     # @return [Array<(UpdatedRuleResponse, Integer, Hash)>] UpdatedRuleResponse data, response status code and response headers
     def save_rule_with_http_info(index_name, object_id, rule, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.save_rule ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.save_rule"
@@ -2387,14 +2102,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#save_rule\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
 
     # Save a batch of rules.
@@ -2419,9 +2131,6 @@ module Algolia
     # @option opts [Boolean] :clear_existing_rules Indicates whether existing rules should be deleted before adding this batch.
     # @return [Array<(UpdatedAtResponse, Integer, Hash)>] UpdatedAtResponse data, response status code and response headers
     def save_rules_with_http_info(index_name, rules, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.save_rules ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.save_rules"
@@ -2445,14 +2154,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#save_rules\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Save a synonym.
@@ -2477,9 +2183,6 @@ module Algolia
     # @option opts [Boolean] :forward_to_replicas Indicates whether changed index settings are forwarded to the replica indices.
     # @return [Array<(SaveSynonymResponse, Integer, Hash)>] SaveSynonymResponse data, response status code and response headers
     def save_synonym_with_http_info(index_name, object_id, synonym_hit, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.save_synonym ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.save_synonym"
@@ -2506,14 +2209,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#save_synonym\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
 
     # Save a batch of synonyms.
@@ -2538,9 +2238,6 @@ module Algolia
     # @option opts [Boolean] :replace_existing_synonyms Indicates whether to replace all synonyms in the index with the ones sent with this request.
     # @return [Array<(UpdatedAtResponse, Integer, Hash)>] UpdatedAtResponse data, response status code and response headers
     def save_synonyms_with_http_info(index_name, synonym_hit, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.save_synonyms ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.save_synonyms"
@@ -2564,14 +2261,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#save_synonyms\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Search multiple indices.
@@ -2590,9 +2284,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(SearchResponses, Integer, Hash)>] SearchResponses data, response status code and response headers
     def search_with_http_info(search_method_params, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.search ...'
-      end
       # verify the required parameter 'search_method_params' is set
       if @api_client.config.client_side_validation && search_method_params.nil?
         fail ArgumentError, "Missing the required parameter 'search_method_params' when calling SearchClient.search"
@@ -2610,14 +2301,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#search\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Search dictionary entries.
@@ -2638,9 +2326,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(UpdatedAtResponse, Integer, Hash)>] UpdatedAtResponse data, response status code and response headers
     def search_dictionary_entries_with_http_info(dictionary_name, search_dictionary_entries_params, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.search_dictionary_entries ...'
-      end
       # verify the required parameter 'dictionary_name' is set
       if @api_client.config.client_side_validation && dictionary_name.nil?
         fail ArgumentError, "Missing the required parameter 'dictionary_name' when calling SearchClient.search_dictionary_entries"
@@ -2662,14 +2347,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#search_dictionary_entries\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Search for facet values.
@@ -2692,9 +2374,6 @@ module Algolia
     # @option opts [SearchForFacetValuesRequest] :search_for_facet_values_request 
     # @return [Array<(SearchForFacetValuesResponse, Integer, Hash)>] SearchForFacetValuesResponse data, response status code and response headers
     def search_for_facet_values_with_http_info(index_name, facet_name, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.search_for_facet_values ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.search_for_facet_values"
@@ -2716,14 +2395,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#search_for_facet_values\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Search for rules.
@@ -2744,9 +2420,6 @@ module Algolia
     # @option opts [SearchRulesParams] :search_rules_params 
     # @return [Array<(SearchRulesResponse, Integer, Hash)>] SearchRulesResponse data, response status code and response headers
     def search_rules_with_http_info(index_name, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.search_rules ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.search_rules"
@@ -2764,14 +2437,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#search_rules\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Search an index.
@@ -2792,9 +2462,6 @@ module Algolia
     # @option opts [SearchParams] :search_params 
     # @return [Array<(SearchResponse, Integer, Hash)>] SearchResponse data, response status code and response headers
     def search_single_index_with_http_info(index_name, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.search_single_index ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.search_single_index"
@@ -2812,14 +2479,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#search_single_index\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Search for synonyms.
@@ -2846,9 +2510,6 @@ module Algolia
     # @option opts [SearchSynonymsParams] :search_synonyms_params Body of the &#x60;searchSynonyms&#x60; operation.
     # @return [Array<(SearchSynonymsResponse, Integer, Hash)>] SearchSynonymsResponse data, response status code and response headers
     def search_synonyms_with_http_info(index_name, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.search_synonyms ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.search_synonyms"
@@ -2873,14 +2534,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#search_synonyms\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Search for a user ID.
@@ -2899,9 +2557,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(SearchUserIdsResponse, Integer, Hash)>] SearchUserIdsResponse data, response status code and response headers
     def search_user_ids_with_http_info(search_user_ids_params, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.search_user_ids ...'
-      end
       # verify the required parameter 'search_user_ids_params' is set
       if @api_client.config.client_side_validation && search_user_ids_params.nil?
         fail ArgumentError, "Missing the required parameter 'search_user_ids_params' when calling SearchClient.search_user_ids"
@@ -2919,14 +2574,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#search_user_ids\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Set stop word settings.
@@ -2945,9 +2597,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(UpdatedAtResponse, Integer, Hash)>] UpdatedAtResponse data, response status code and response headers
     def set_dictionary_settings_with_http_info(dictionary_settings_params, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.set_dictionary_settings ...'
-      end
       # verify the required parameter 'dictionary_settings_params' is set
       if @api_client.config.client_side_validation && dictionary_settings_params.nil?
         fail ArgumentError, "Missing the required parameter 'dictionary_settings_params' when calling SearchClient.set_dictionary_settings"
@@ -2965,14 +2614,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#set_dictionary_settings\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
 
     # Update index settings.
@@ -2995,9 +2641,6 @@ module Algolia
     # @option opts [Boolean] :forward_to_replicas Indicates whether changed index settings are forwarded to the replica indices.
     # @return [Array<(UpdatedAtResponse, Integer, Hash)>] UpdatedAtResponse data, response status code and response headers
     def set_settings_with_http_info(index_name, index_settings, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.set_settings ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.set_settings"
@@ -3020,14 +2663,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#set_settings\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
 
     # Update an API key.
@@ -3048,9 +2688,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(UpdateApiKeyResponse, Integer, Hash)>] UpdateApiKeyResponse data, response status code and response headers
     def update_api_key_with_http_info(key, api_key, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: SearchClient.update_api_key ...'
-      end
       # verify the required parameter 'key' is set
       if @api_client.config.client_side_validation && key.nil?
         fail ArgumentError, "Missing the required parameter 'key' when calling SearchClient.update_api_key"
@@ -3072,14 +2709,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: SearchClient#update_api_key\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
   end
 end

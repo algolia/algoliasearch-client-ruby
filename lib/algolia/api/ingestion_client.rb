@@ -20,7 +20,7 @@ module Algolia
 
       hosts << Transport::StatefulHost.new("data.{region}.algolia.com".sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
       
-      config = Algolia::Configuration.new(app_id, api_key, hosts)
+      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Ingestion')
       create_with_config(config)
     end
 
@@ -45,9 +45,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(AuthenticationCreateResponse, Integer, Hash)>] AuthenticationCreateResponse data, response status code and response headers
     def create_authentication_with_http_info(authentication_create, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.create_authentication ...'
-      end
       # verify the required parameter 'authentication_create' is set
       if @api_client.config.client_side_validation && authentication_create.nil?
         fail ArgumentError, "Missing the required parameter 'authentication_create' when calling IngestionClient.create_authentication"
@@ -65,14 +62,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#create_authentication\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Create a destination.
@@ -91,9 +85,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DestinationCreateResponse, Integer, Hash)>] DestinationCreateResponse data, response status code and response headers
     def create_destination_with_http_info(destination_create, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.create_destination ...'
-      end
       # verify the required parameter 'destination_create' is set
       if @api_client.config.client_side_validation && destination_create.nil?
         fail ArgumentError, "Missing the required parameter 'destination_create' when calling IngestionClient.create_destination"
@@ -111,14 +102,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#create_destination\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Create a source.
@@ -137,9 +125,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(SourceCreateResponse, Integer, Hash)>] SourceCreateResponse data, response status code and response headers
     def create_source_with_http_info(source_create, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.create_source ...'
-      end
       # verify the required parameter 'source_create' is set
       if @api_client.config.client_side_validation && source_create.nil?
         fail ArgumentError, "Missing the required parameter 'source_create' when calling IngestionClient.create_source"
@@ -157,14 +142,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#create_source\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Create a task.
@@ -183,9 +165,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(TaskCreateResponse, Integer, Hash)>] TaskCreateResponse data, response status code and response headers
     def create_task_with_http_info(task_create, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.create_task ...'
-      end
       # verify the required parameter 'task_create' is set
       if @api_client.config.client_side_validation && task_create.nil?
         fail ArgumentError, "Missing the required parameter 'task_create' when calling IngestionClient.create_task"
@@ -203,14 +182,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#create_task\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -231,9 +207,6 @@ module Algolia
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_delete_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.custom_delete ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling IngestionClient.custom_delete"
@@ -252,14 +225,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#custom_delete\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -280,9 +250,6 @@ module Algolia
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_get_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.custom_get ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling IngestionClient.custom_get"
@@ -301,14 +268,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#custom_get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -331,9 +295,6 @@ module Algolia
     # @option opts [Object] :body Parameters to send with the custom request.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_post_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.custom_post ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling IngestionClient.custom_post"
@@ -352,14 +313,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#custom_post\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -382,9 +340,6 @@ module Algolia
     # @option opts [Object] :body Parameters to send with the custom request.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_put_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.custom_put ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling IngestionClient.custom_put"
@@ -403,14 +358,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#custom_put\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
 
     # Delete a authentication.
@@ -429,9 +381,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DeleteResponse, Integer, Hash)>] DeleteResponse data, response status code and response headers
     def delete_authentication_with_http_info(authentication_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.delete_authentication ...'
-      end
       # verify the required parameter 'authentication_id' is set
       if @api_client.config.client_side_validation && authentication_id.nil?
         fail ArgumentError, "Missing the required parameter 'authentication_id' when calling IngestionClient.delete_authentication"
@@ -449,14 +398,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#delete_authentication\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Delete a destination.
@@ -475,9 +421,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DeleteResponse, Integer, Hash)>] DeleteResponse data, response status code and response headers
     def delete_destination_with_http_info(destination_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.delete_destination ...'
-      end
       # verify the required parameter 'destination_id' is set
       if @api_client.config.client_side_validation && destination_id.nil?
         fail ArgumentError, "Missing the required parameter 'destination_id' when calling IngestionClient.delete_destination"
@@ -495,14 +438,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#delete_destination\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Delete a source.
@@ -521,9 +461,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DeleteResponse, Integer, Hash)>] DeleteResponse data, response status code and response headers
     def delete_source_with_http_info(source_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.delete_source ...'
-      end
       # verify the required parameter 'source_id' is set
       if @api_client.config.client_side_validation && source_id.nil?
         fail ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.delete_source"
@@ -541,14 +478,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#delete_source\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Delete a task.
@@ -567,9 +501,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DeleteResponse, Integer, Hash)>] DeleteResponse data, response status code and response headers
     def delete_task_with_http_info(task_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.delete_task ...'
-      end
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
         fail ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.delete_task"
@@ -587,14 +518,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#delete_task\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Disable a task.
@@ -613,9 +541,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(TaskUpdateResponse, Integer, Hash)>] TaskUpdateResponse data, response status code and response headers
     def disable_task_with_http_info(task_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.disable_task ...'
-      end
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
         fail ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.disable_task"
@@ -633,14 +558,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#disable_task\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
 
     # Enable a task.
@@ -659,9 +581,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(TaskUpdateResponse, Integer, Hash)>] TaskUpdateResponse data, response status code and response headers
     def enable_task_with_http_info(task_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.enable_task ...'
-      end
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
         fail ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.enable_task"
@@ -679,14 +598,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#enable_task\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
 
     # Get a authentication.
@@ -705,9 +621,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Authentication, Integer, Hash)>] Authentication data, response status code and response headers
     def get_authentication_with_http_info(authentication_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_authentication ...'
-      end
       # verify the required parameter 'authentication_id' is set
       if @api_client.config.client_side_validation && authentication_id.nil?
         fail ArgumentError, "Missing the required parameter 'authentication_id' when calling IngestionClient.get_authentication"
@@ -725,14 +638,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_authentication\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a list of authentications.
@@ -761,9 +671,6 @@ module Algolia
     # @option opts [OrderKeys] :order The order of the returned list.
     # @return [Array<(ListAuthenticationsResponse, Integer, Hash)>] ListAuthenticationsResponse data, response status code and response headers
     def get_authentications_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_authentications ...'
-      end
       path = '/1/authentications'
       query_params = opts[:query_params] || {}
       query_params[:'itemsPerPage'] = opts[:'items_per_page'] if !opts[:'items_per_page'].nil?
@@ -783,14 +690,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_authentications\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a destination.
@@ -809,9 +713,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Destination, Integer, Hash)>] Destination data, response status code and response headers
     def get_destination_with_http_info(destination_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_destination ...'
-      end
       # verify the required parameter 'destination_id' is set
       if @api_client.config.client_side_validation && destination_id.nil?
         fail ArgumentError, "Missing the required parameter 'destination_id' when calling IngestionClient.get_destination"
@@ -829,14 +730,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_destination\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a list of destinations.
@@ -865,9 +763,6 @@ module Algolia
     # @option opts [OrderKeys] :order The order of the returned list.
     # @return [Array<(ListDestinationsResponse, Integer, Hash)>] ListDestinationsResponse data, response status code and response headers
     def get_destinations_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_destinations ...'
-      end
       path = '/1/destinations'
       query_params = opts[:query_params] || {}
       query_params[:'itemsPerPage'] = opts[:'items_per_page'] if !opts[:'items_per_page'].nil?
@@ -887,14 +782,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_destinations\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Retrieve a stream listing.
@@ -913,9 +805,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DockerSourceStreams, Integer, Hash)>] DockerSourceStreams data, response status code and response headers
     def get_docker_source_streams_with_http_info(source_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_docker_source_streams ...'
-      end
       # verify the required parameter 'source_id' is set
       if @api_client.config.client_side_validation && source_id.nil?
         fail ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.get_docker_source_streams"
@@ -933,14 +822,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_docker_source_streams\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get an event.
@@ -961,9 +847,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Event, Integer, Hash)>] Event data, response status code and response headers
     def get_event_with_http_info(run_id, event_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_event ...'
-      end
       # verify the required parameter 'run_id' is set
       if @api_client.config.client_side_validation && run_id.nil?
         fail ArgumentError, "Missing the required parameter 'run_id' when calling IngestionClient.get_event"
@@ -985,14 +868,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_event\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a list of events.
@@ -1027,9 +907,6 @@ module Algolia
     # @option opts [String] :end_date The end date (in RFC3339 format) of the events fetching window. Defaults to &#39;now&#39; days if omitted.
     # @return [Array<(ListEventsResponse, Integer, Hash)>] ListEventsResponse data, response status code and response headers
     def get_events_with_http_info(run_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_events ...'
-      end
       # verify the required parameter 'run_id' is set
       if @api_client.config.client_side_validation && run_id.nil?
         fail ArgumentError, "Missing the required parameter 'run_id' when calling IngestionClient.get_events"
@@ -1055,14 +932,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_events\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a run.
@@ -1081,9 +955,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Run, Integer, Hash)>] Run data, response status code and response headers
     def get_run_with_http_info(run_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_run ...'
-      end
       # verify the required parameter 'run_id' is set
       if @api_client.config.client_side_validation && run_id.nil?
         fail ArgumentError, "Missing the required parameter 'run_id' when calling IngestionClient.get_run"
@@ -1101,14 +972,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_run\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a list of runs.
@@ -1141,9 +1009,6 @@ module Algolia
     # @option opts [String] :end_date The end date (in RFC3339 format) of the runs fetching window. Defaults to &#39;now&#39; days if omitted.
     # @return [Array<(RunListResponse, Integer, Hash)>] RunListResponse data, response status code and response headers
     def get_runs_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_runs ...'
-      end
       path = '/1/runs'
       query_params = opts[:query_params] || {}
       query_params[:'itemsPerPage'] = opts[:'items_per_page'] if !opts[:'items_per_page'].nil?
@@ -1165,14 +1030,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_runs\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a source.
@@ -1191,9 +1053,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Source, Integer, Hash)>] Source data, response status code and response headers
     def get_source_with_http_info(source_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_source ...'
-      end
       # verify the required parameter 'source_id' is set
       if @api_client.config.client_side_validation && source_id.nil?
         fail ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.get_source"
@@ -1211,14 +1070,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_source\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a list of sources.
@@ -1247,9 +1103,6 @@ module Algolia
     # @option opts [OrderKeys] :order The order of the returned list.
     # @return [Array<(ListSourcesResponse, Integer, Hash)>] ListSourcesResponse data, response status code and response headers
     def get_sources_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_sources ...'
-      end
       path = '/1/sources'
       query_params = opts[:query_params] || {}
       query_params[:'itemsPerPage'] = opts[:'items_per_page'] if !opts[:'items_per_page'].nil?
@@ -1269,14 +1122,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_sources\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a task.
@@ -1295,9 +1145,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Task, Integer, Hash)>] Task data, response status code and response headers
     def get_task_with_http_info(task_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_task ...'
-      end
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
         fail ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.get_task"
@@ -1315,14 +1162,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_task\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a list of tasks.
@@ -1357,9 +1201,6 @@ module Algolia
     # @option opts [OrderKeys] :order The order of the returned list.
     # @return [Array<(ListTasksResponse, Integer, Hash)>] ListTasksResponse data, response status code and response headers
     def get_tasks_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.get_tasks ...'
-      end
       path = '/1/tasks'
       query_params = opts[:query_params] || {}
       query_params[:'itemsPerPage'] = opts[:'items_per_page'] if !opts[:'items_per_page'].nil?
@@ -1382,14 +1223,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#get_tasks\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Run a task.
@@ -1408,9 +1246,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(RunResponse, Integer, Hash)>] RunResponse data, response status code and response headers
     def run_task_with_http_info(task_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.run_task ...'
-      end
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
         fail ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.run_task"
@@ -1428,14 +1263,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#run_task\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Search among authentications.
@@ -1454,9 +1286,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Array<Authentication>, Integer, Hash)>] Array<Authentication> data, response status code and response headers
     def search_authentications_with_http_info(authentication_search, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.search_authentications ...'
-      end
       # verify the required parameter 'authentication_search' is set
       if @api_client.config.client_side_validation && authentication_search.nil?
         fail ArgumentError, "Missing the required parameter 'authentication_search' when calling IngestionClient.search_authentications"
@@ -1474,14 +1303,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#search_authentications\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Search among destinations.
@@ -1500,9 +1326,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Array<Destination>, Integer, Hash)>] Array<Destination> data, response status code and response headers
     def search_destinations_with_http_info(destination_search, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.search_destinations ...'
-      end
       # verify the required parameter 'destination_search' is set
       if @api_client.config.client_side_validation && destination_search.nil?
         fail ArgumentError, "Missing the required parameter 'destination_search' when calling IngestionClient.search_destinations"
@@ -1520,14 +1343,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#search_destinations\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Search among sources.
@@ -1546,9 +1366,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Array<Source>, Integer, Hash)>] Array<Source> data, response status code and response headers
     def search_sources_with_http_info(source_search, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.search_sources ...'
-      end
       # verify the required parameter 'source_search' is set
       if @api_client.config.client_side_validation && source_search.nil?
         fail ArgumentError, "Missing the required parameter 'source_search' when calling IngestionClient.search_sources"
@@ -1566,14 +1383,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#search_sources\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Search among tasks.
@@ -1592,9 +1406,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Array<Task>, Integer, Hash)>] Array<Task> data, response status code and response headers
     def search_tasks_with_http_info(task_search, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.search_tasks ...'
-      end
       # verify the required parameter 'task_search' is set
       if @api_client.config.client_side_validation && task_search.nil?
         fail ArgumentError, "Missing the required parameter 'task_search' when calling IngestionClient.search_tasks"
@@ -1612,14 +1423,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#search_tasks\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Trigger a stream listing request.
@@ -1638,9 +1446,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DockerSourceDiscover, Integer, Hash)>] DockerSourceDiscover data, response status code and response headers
     def trigger_docker_source_discover_with_http_info(source_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.trigger_docker_source_discover ...'
-      end
       # verify the required parameter 'source_id' is set
       if @api_client.config.client_side_validation && source_id.nil?
         fail ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.trigger_docker_source_discover"
@@ -1658,14 +1463,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#trigger_docker_source_discover\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Update a authentication.
@@ -1686,9 +1488,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(AuthenticationUpdateResponse, Integer, Hash)>] AuthenticationUpdateResponse data, response status code and response headers
     def update_authentication_with_http_info(authentication_id, authentication_update, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.update_authentication ...'
-      end
       # verify the required parameter 'authentication_id' is set
       if @api_client.config.client_side_validation && authentication_id.nil?
         fail ArgumentError, "Missing the required parameter 'authentication_id' when calling IngestionClient.update_authentication"
@@ -1710,14 +1509,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PATCH, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#update_authentication\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PATCH, path, new_options)
     end
 
     # Update a destination.
@@ -1738,9 +1534,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DestinationUpdateResponse, Integer, Hash)>] DestinationUpdateResponse data, response status code and response headers
     def update_destination_with_http_info(destination_id, destination_update, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.update_destination ...'
-      end
       # verify the required parameter 'destination_id' is set
       if @api_client.config.client_side_validation && destination_id.nil?
         fail ArgumentError, "Missing the required parameter 'destination_id' when calling IngestionClient.update_destination"
@@ -1762,14 +1555,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PATCH, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#update_destination\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PATCH, path, new_options)
     end
 
     # Update a source.
@@ -1790,9 +1580,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(SourceUpdateResponse, Integer, Hash)>] SourceUpdateResponse data, response status code and response headers
     def update_source_with_http_info(source_id, source_update, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.update_source ...'
-      end
       # verify the required parameter 'source_id' is set
       if @api_client.config.client_side_validation && source_id.nil?
         fail ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.update_source"
@@ -1814,14 +1601,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PATCH, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#update_source\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PATCH, path, new_options)
     end
 
     # Update a task.
@@ -1842,9 +1626,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(TaskUpdateResponse, Integer, Hash)>] TaskUpdateResponse data, response status code and response headers
     def update_task_with_http_info(task_id, task_update, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: IngestionClient.update_task ...'
-      end
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
         fail ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.update_task"
@@ -1866,14 +1647,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PATCH, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: IngestionClient#update_task\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PATCH, path, new_options)
     end
   end
 end

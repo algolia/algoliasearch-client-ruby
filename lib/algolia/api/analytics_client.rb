@@ -20,7 +20,7 @@ module Algolia
 
       hosts << Transport::StatefulHost.new(region.nil? ? "analytics.algolia.com" : "analytics.{region}.algolia.com".sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
       
-      config = Algolia::Configuration.new(app_id, api_key, hosts)
+      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Analytics')
       create_with_config(config)
     end
 
@@ -47,9 +47,6 @@ module Algolia
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_delete_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.custom_delete ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_delete"
@@ -68,14 +65,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#custom_delete\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -96,9 +90,6 @@ module Algolia
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_get_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.custom_get ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_get"
@@ -117,14 +108,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#custom_get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -147,9 +135,6 @@ module Algolia
     # @option opts [Object] :body Parameters to send with the custom request.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_post_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.custom_post ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_post"
@@ -168,14 +153,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#custom_post\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -198,9 +180,6 @@ module Algolia
     # @option opts [Object] :body Parameters to send with the custom request.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_put_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.custom_put ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_put"
@@ -219,14 +198,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#custom_put\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
 
     # Get average click position.
@@ -251,9 +227,6 @@ module Algolia
     # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @return [Array<(GetAverageClickPositionResponse, Integer, Hash)>] GetAverageClickPositionResponse data, response status code and response headers
     def get_average_click_position_with_http_info(index, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.get_average_click_position ...'
-      end
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_average_click_position"
@@ -285,14 +258,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#get_average_click_position\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get click positions.
@@ -317,9 +287,6 @@ module Algolia
     # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @return [Array<(GetClickPositionsResponse, Integer, Hash)>] GetClickPositionsResponse data, response status code and response headers
     def get_click_positions_with_http_info(index, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.get_click_positions ...'
-      end
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_click_positions"
@@ -351,14 +318,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#get_click_positions\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get click-through rate (CTR).
@@ -383,9 +347,6 @@ module Algolia
     # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @return [Array<(GetClickThroughRateResponse, Integer, Hash)>] GetClickThroughRateResponse data, response status code and response headers
     def get_click_through_rate_with_http_info(index, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.get_click_through_rate ...'
-      end
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_click_through_rate"
@@ -417,14 +378,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#get_click_through_rate\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get conversion rate (CR).
@@ -449,9 +407,6 @@ module Algolia
     # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @return [Array<(GetConversationRateResponse, Integer, Hash)>] GetConversationRateResponse data, response status code and response headers
     def get_conversation_rate_with_http_info(index, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.get_conversation_rate ...'
-      end
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_conversation_rate"
@@ -483,14 +438,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#get_conversation_rate\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get no click rate.
@@ -515,9 +467,6 @@ module Algolia
     # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @return [Array<(GetNoClickRateResponse, Integer, Hash)>] GetNoClickRateResponse data, response status code and response headers
     def get_no_click_rate_with_http_info(index, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.get_no_click_rate ...'
-      end
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_no_click_rate"
@@ -549,14 +498,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#get_no_click_rate\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get no results rate.
@@ -581,9 +527,6 @@ module Algolia
     # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @return [Array<(GetNoResultsRateResponse, Integer, Hash)>] GetNoResultsRateResponse data, response status code and response headers
     def get_no_results_rate_with_http_info(index, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.get_no_results_rate ...'
-      end
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_no_results_rate"
@@ -615,14 +558,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#get_no_results_rate\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get number of searches.
@@ -647,9 +587,6 @@ module Algolia
     # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @return [Array<(GetSearchesCountResponse, Integer, Hash)>] GetSearchesCountResponse data, response status code and response headers
     def get_searches_count_with_http_info(index, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.get_searches_count ...'
-      end
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_searches_count"
@@ -681,14 +618,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#get_searches_count\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get top searches with no clicks.
@@ -717,9 +651,6 @@ module Algolia
     # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @return [Array<(GetSearchesNoClicksResponse, Integer, Hash)>] GetSearchesNoClicksResponse data, response status code and response headers
     def get_searches_no_clicks_with_http_info(index, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.get_searches_no_clicks ...'
-      end
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_searches_no_clicks"
@@ -753,14 +684,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#get_searches_no_clicks\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get top searches with no results.
@@ -789,9 +717,6 @@ module Algolia
     # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @return [Array<(GetSearchesNoResultsResponse, Integer, Hash)>] GetSearchesNoResultsResponse data, response status code and response headers
     def get_searches_no_results_with_http_info(index, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.get_searches_no_results ...'
-      end
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_searches_no_results"
@@ -825,14 +750,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#get_searches_no_results\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get Analytics API status.
@@ -851,9 +773,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(GetStatusResponse, Integer, Hash)>] GetStatusResponse data, response status code and response headers
     def get_status_with_http_info(index, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.get_status ...'
-      end
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_status"
@@ -872,14 +791,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#get_status\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get top countries.
@@ -908,9 +824,6 @@ module Algolia
     # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @return [Array<(GetTopCountriesResponse, Integer, Hash)>] GetTopCountriesResponse data, response status code and response headers
     def get_top_countries_with_http_info(index, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.get_top_countries ...'
-      end
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_countries"
@@ -944,14 +857,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#get_top_countries\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get top filterable attributes.
@@ -982,9 +892,6 @@ module Algolia
     # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @return [Array<(GetTopFilterAttributesResponse, Integer, Hash)>] GetTopFilterAttributesResponse data, response status code and response headers
     def get_top_filter_attributes_with_http_info(index, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.get_top_filter_attributes ...'
-      end
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_filter_attributes"
@@ -1019,14 +926,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#get_top_filter_attributes\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get top filter values for an attribute.
@@ -1059,9 +963,6 @@ module Algolia
     # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @return [Array<(GetTopFilterForAttributeResponse, Integer, Hash)>] GetTopFilterForAttributeResponse data, response status code and response headers
     def get_top_filter_for_attribute_with_http_info(attribute, index, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.get_top_filter_for_attribute ...'
-      end
       # verify the required parameter 'attribute' is set
       if @api_client.config.client_side_validation && attribute.nil?
         fail ArgumentError, "Missing the required parameter 'attribute' when calling AnalyticsClient.get_top_filter_for_attribute"
@@ -1100,14 +1001,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#get_top_filter_for_attribute\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get top filters for a no result search.
@@ -1138,9 +1036,6 @@ module Algolia
     # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @return [Array<(GetTopFiltersNoResultsResponse, Integer, Hash)>] GetTopFiltersNoResultsResponse data, response status code and response headers
     def get_top_filters_no_results_with_http_info(index, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.get_top_filters_no_results ...'
-      end
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_filters_no_results"
@@ -1175,14 +1070,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#get_top_filters_no_results\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get top hits.
@@ -1215,9 +1107,6 @@ module Algolia
     # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @return [Array<(GetTopHitsResponse, Integer, Hash)>] GetTopHitsResponse data, response status code and response headers
     def get_top_hits_with_http_info(index, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.get_top_hits ...'
-      end
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_hits"
@@ -1253,14 +1142,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#get_top_hits\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get top searches.
@@ -1295,9 +1181,6 @@ module Algolia
     # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @return [Array<(GetTopSearchesResponse, Integer, Hash)>] GetTopSearchesResponse data, response status code and response headers
     def get_top_searches_with_http_info(index, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.get_top_searches ...'
-      end
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_searches"
@@ -1334,14 +1217,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#get_top_searches\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get user count.
@@ -1366,9 +1246,6 @@ module Algolia
     # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @return [Array<(GetUsersCountResponse, Integer, Hash)>] GetUsersCountResponse data, response status code and response headers
     def get_users_count_with_http_info(index, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: AnalyticsClient.get_users_count ...'
-      end
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_users_count"
@@ -1400,14 +1277,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AnalyticsClient#get_users_count\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
   end
 end

@@ -3,10 +3,19 @@
 # Common files
 require 'algolia/api_client'
 require 'algolia/api_error'
+require 'algolia/error'
 require 'algolia/version'
 require 'algolia/configuration'
+require 'algolia/user_agent'
+require 'algolia/logger_helper'
+require 'algolia/http/http_requester'
+require 'algolia/http/response'
 require 'algolia/transport/call_type'
+require 'algolia/transport/retry_outcome_type'
 require 'algolia/transport/stateful_host'
+require 'algolia/transport/retry_strategy'
+require 'algolia/transport/request_options'
+require 'algolia/transport/transport'
 
 # Models
 Dir["#{File.dirname(__FILE__)}/algolia/models/**/*.rb"].each { |file| require file }

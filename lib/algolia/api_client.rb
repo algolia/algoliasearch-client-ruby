@@ -1,31 +1,16 @@
-require 'date'
-require 'json'
-require 'logger'
-require 'tempfile'
-require 'time'
-require 'faraday'
-
 module Algolia
   class ApiClient
     # The Configuration object holding settings to be used in the API client.
     attr_accessor :config
 
-    # Defines the headers to be used in HTTP requests of all API calls by default.
-    #
-    # @return [Hash]
-    attr_accessor :default_headers
+    attr_accessor :transporter
 
     # Initializes the ApiClient
     # @option config [Configuration] Configuration for initializing the object, default to Configuration.default
     def initialize(config = Configuration.default)
       @config = config
-      @user_agent = "Algolia for Ruby (#{VERSION}); Ruby (#{RUBY_VERSION})"
-      @default_headers = {
-        'X-Algolia-Application-Id' => config.app_id,
-        'X-Algolia-API-Key' => config.api_key,
-        'Content-Type' => 'application/json',
-        'User-Agent' => @user_agent
-      }
+      @requester = Http::HttpRequester.new('net_http_persistent', LoggerHelper.create)
+      @transporter = Transport::Transport::new(config, @requester)
     end
 
     def self.default
@@ -38,26 +23,8 @@ module Algolia
     #   the data deserialized from response body (could be nil), response status code and response headers.
     def call_api(http_method, path, opts = {})
       begin
-        response = build_connection().public_send(http_method.to_sym.downcase) do |req|
-          build_request(http_method, path, req, opts)
-        end
-
-        if config.debugging
-          config.logger.debug "HTTP response body ~BEGIN~\n#{response.body}\n~END~\n"
-        end
-
-        unless response.success?
-          if response.status == 0 && response.respond_to?(:return_message)
-            # Errors from libcurl will be made visible here
-            fail ApiError.new(code: 0,
-                              message: response.return_message)
-          else
-            fail ApiError.new(code: response.status,
-                              response_headers: response.headers,
-                              response_body: response.body),
-                 response.reason_phrase
-          end
-        end
+        call_type = opts[:use_read_transporter] || http_method == 'GET' ? CallType::READ : CallType::WRITE
+        response = transporter.request(call_type, http_method, path, opts[:body], opts)
       rescue Faraday::TimeoutError
         fail ApiError.new('Connection timed out')
       rescue Faraday::ConnectionFailed
@@ -65,85 +32,18 @@ module Algolia
       end
 
       if opts[:return_type]
-        data = deserialize(response, opts[:return_type])
+        data = deserialize(response.body, opts[:return_type])
       else
         data = nil
       end
       return data, response.status, response.headers
     end
 
-    # Builds the HTTP request
-    #
-    # @param [String] http_method HTTP method/verb (e.g. POST)
-    # @param [String] path URL path (e.g. /account/new)
-    # @option opts [Hash] :header_params Header parameters
-    # @option opts [Hash] :query_params Query parameters
-    # @option opts [Object] :body HTTP body (JSON/XML)
-    # @return [Faraday::Request] A Faraday Request
-    def build_request(http_method, path, request, opts = {})
-      url = build_request_url(path, opts)
-      http_method = http_method.to_sym.downcase
-
-      header_params = @default_headers.merge(opts[:header_params] || {})
-      query_params = opts[:query_params] || {}
-
-      if [:post, :patch, :put, :delete].include?(http_method)
-        req_body = build_request_body(opts[:body])
-        if config.debugging
-          config.logger.debug "URL: #{url}"
-          config.logger.debug "HTTP request body param ~BEGIN~\n#{req_body}\n~END~\n"
-        end
-      end
-      request.headers = header_params
-      request.body = req_body
-
-      # Overload default options only if provided
-      request.options.params_encoder = config.params_encoder if config.params_encoder
-      request.options.timeout        = config.timeout        if config.timeout
-
-      request.url url
-      request.params = query_params
-      request
-    end
-
-    # Builds the HTTP request body
-    #
-    # @param [Object] body HTTP body (JSON)
-    # @return [String] HTTP body data in the form of string
-    def build_request_body(body)
-      if body
-        data = body.is_a?(String) ? body : body.to_json
-      else
-        data = nil
-      end
-      data
-    end
-
-    def build_connection
-      Faraday.new(url: 'https://' + config.hosts[0].url, ssl: ssl_options, proxy: config.proxy) do |conn|
-        config.configure_middleware(conn)
-        yield(conn) if block_given?
-        conn.adapter(Faraday.default_adapter)
-        config.configure_connection(conn)
-      end
-    end
-
-    def ssl_options
-      {
-        ca_file: config.ssl_ca_file,
-        verify: config.ssl_verify,
-        verify_mode: config.ssl_verify_mode,
-        client_cert: config.ssl_client_cert,
-        client_key: config.ssl_client_key
-      }
-    end
-
     # Deserialize the response to the given return type.
     #
-    # @param [Response] response HTTP response
+    # @param [String] body of the HTTP response
     # @param [String] return_type some examples: "User", "Array<User>", "Hash<String, Integer>"
-    def deserialize(response, return_type)
-      body = response.body
+    def deserialize(body, return_type)
       return nil if body.nil? || body.empty?
 
       # return response body directly for String return type
@@ -203,32 +103,18 @@ module Algolia
       end
     end
 
-    def build_request_url(path, opts = {})
-      # Add leading and trailing slashes to path
-      path = "/#{path}".gsub(/\/+/, '/')
-      'https://' + @config.hosts[0].url + path
-    end
-
-    # Sets user agent in HTTP header
-    #
-    # @param [String] user_agent User agent (e.g. openapi-generator/ruby/1.0.0)
-    def user_agent=(user_agent)
-      @user_agent = user_agent
-      @default_headers['User-Agent'] = @user_agent
-    end
-
     # Convert object (array, hash, object, etc) to JSON string.
     # @param [Object] model object to be converted into JSON string
     # @return [String] JSON string representation of the object
     def object_to_http_body(model)
       return model if model.nil? || model.is_a?(String)
-      local_body = nil
+      body = nil
       if model.is_a?(Array)
-        local_body = model.map { |m| object_to_hash(m) }
+        body = model.map { |m| object_to_hash(m) }
       else
-        local_body = object_to_hash(model)
+        body = object_to_hash(model)
       end
-      local_body.to_json
+      body.to_json
     end
 
     # Convert object(non-array) to hash.

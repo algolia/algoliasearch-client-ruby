@@ -20,7 +20,7 @@ module Algolia
 
       hosts << Transport::StatefulHost.new(region.nil? ? "insights.algolia.io" : "insights.{region}.algolia.io".sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
       
-      config = Algolia::Configuration.new(app_id, api_key, hosts)
+      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Insights')
       create_with_config(config)
     end
 
@@ -47,9 +47,6 @@ module Algolia
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_delete_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: InsightsClient.custom_delete ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.custom_delete"
@@ -68,14 +65,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: InsightsClient#custom_delete\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -96,9 +90,6 @@ module Algolia
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_get_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: InsightsClient.custom_get ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.custom_get"
@@ -117,14 +108,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: InsightsClient#custom_get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -147,9 +135,6 @@ module Algolia
     # @option opts [Object] :body Parameters to send with the custom request.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_post_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: InsightsClient.custom_post ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.custom_post"
@@ -168,14 +153,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: InsightsClient#custom_post\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -198,9 +180,6 @@ module Algolia
     # @option opts [Object] :body Parameters to send with the custom request.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_put_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: InsightsClient.custom_put ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.custom_put"
@@ -219,14 +198,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: InsightsClient#custom_put\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
 
     # Send events.
@@ -245,9 +221,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(EventsResponse, Integer, Hash)>] EventsResponse data, response status code and response headers
     def push_events_with_http_info(insights_events, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: InsightsClient.push_events ...'
-      end
       # verify the required parameter 'insights_events' is set
       if @api_client.config.client_side_validation && insights_events.nil?
         fail ArgumentError, "Missing the required parameter 'insights_events' when calling InsightsClient.push_events"
@@ -265,14 +238,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: InsightsClient#push_events\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
   end
 end

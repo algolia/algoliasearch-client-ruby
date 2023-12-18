@@ -20,7 +20,7 @@ module Algolia
         Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", accept: CallType::READ | CallType::WRITE)
       end.shuffle
 
-      config = Algolia::Configuration.new(app_id, api_key, hosts)
+      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Recommend')
       create_with_config(config)
     end
 
@@ -47,9 +47,6 @@ module Algolia
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_delete_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: RecommendClient.custom_delete ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling RecommendClient.custom_delete"
@@ -68,14 +65,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: RecommendClient#custom_delete\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -96,9 +90,6 @@ module Algolia
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_get_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: RecommendClient.custom_get ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling RecommendClient.custom_get"
@@ -117,14 +108,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: RecommendClient#custom_get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -147,9 +135,6 @@ module Algolia
     # @option opts [Object] :body Parameters to send with the custom request.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_post_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: RecommendClient.custom_post ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling RecommendClient.custom_post"
@@ -168,14 +153,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: RecommendClient#custom_post\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -198,9 +180,6 @@ module Algolia
     # @option opts [Object] :body Parameters to send with the custom request.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_put_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: RecommendClient.custom_put ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling RecommendClient.custom_put"
@@ -219,14 +198,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: RecommendClient#custom_put\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
 
     # Delete a Recommend rule.
@@ -249,9 +225,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(DeletedAtResponse, Integer, Hash)>] DeletedAtResponse data, response status code and response headers
     def delete_recommend_rule_with_http_info(index_name, model, object_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: RecommendClient.delete_recommend_rule ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling RecommendClient.delete_recommend_rule"
@@ -277,14 +250,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: RecommendClient#delete_recommend_rule\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Get a Recommend rule.
@@ -307,9 +277,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(RuleResponse, Integer, Hash)>] RuleResponse data, response status code and response headers
     def get_recommend_rule_with_http_info(index_name, model, object_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: RecommendClient.get_recommend_rule ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling RecommendClient.get_recommend_rule"
@@ -335,14 +302,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: RecommendClient#get_recommend_rule\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a Recommend task's status.
@@ -365,9 +329,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(GetRecommendTaskResponse, Integer, Hash)>] GetRecommendTaskResponse data, response status code and response headers
     def get_recommend_status_with_http_info(index_name, model, task_id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: RecommendClient.get_recommend_status ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling RecommendClient.get_recommend_status"
@@ -393,14 +354,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: RecommendClient#get_recommend_status\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get recommendations and trending items.
@@ -419,9 +377,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(GetRecommendationsResponse, Integer, Hash)>] GetRecommendationsResponse data, response status code and response headers
     def get_recommendations_with_http_info(get_recommendations_params, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: RecommendClient.get_recommendations ...'
-      end
       # verify the required parameter 'get_recommendations_params' is set
       if @api_client.config.client_side_validation && get_recommendations_params.nil?
         fail ArgumentError, "Missing the required parameter 'get_recommendations_params' when calling RecommendClient.get_recommendations"
@@ -439,14 +394,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: RecommendClient#get_recommendations\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # List Recommend rules.
@@ -469,9 +421,6 @@ module Algolia
     # @option opts [SearchRecommendRulesParams] :search_recommend_rules_params 
     # @return [Array<(SearchRecommendRulesResponse, Integer, Hash)>] SearchRecommendRulesResponse data, response status code and response headers
     def search_recommend_rules_with_http_info(index_name, model, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: RecommendClient.search_recommend_rules ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling RecommendClient.search_recommend_rules"
@@ -493,14 +442,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: RecommendClient#search_recommend_rules\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
   end
 end

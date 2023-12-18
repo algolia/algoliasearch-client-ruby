@@ -20,7 +20,7 @@ module Algolia
 
       hosts << Transport::StatefulHost.new("query-suggestions.{region}.algolia.com".sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
       
-      config = Algolia::Configuration.new(app_id, api_key, hosts)
+      config = Algolia::Configuration.new(app_id, api_key, hosts, 'QuerySuggestions')
       create_with_config(config)
     end
 
@@ -45,9 +45,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(BaseResponse, Integer, Hash)>] BaseResponse data, response status code and response headers
     def create_config_with_http_info(query_suggestions_configuration_with_index, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: QuerySuggestionsClient.create_config ...'
-      end
       # verify the required parameter 'query_suggestions_configuration_with_index' is set
       if @api_client.config.client_side_validation && query_suggestions_configuration_with_index.nil?
         fail ArgumentError, "Missing the required parameter 'query_suggestions_configuration_with_index' when calling QuerySuggestionsClient.create_config"
@@ -65,14 +62,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: QuerySuggestionsClient#create_config\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -93,9 +87,6 @@ module Algolia
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_delete_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: QuerySuggestionsClient.custom_delete ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling QuerySuggestionsClient.custom_delete"
@@ -114,14 +105,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: QuerySuggestionsClient#custom_delete\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -142,9 +130,6 @@ module Algolia
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_get_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: QuerySuggestionsClient.custom_get ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling QuerySuggestionsClient.custom_get"
@@ -163,14 +148,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: QuerySuggestionsClient#custom_get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -193,9 +175,6 @@ module Algolia
     # @option opts [Object] :body Parameters to send with the custom request.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_post_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: QuerySuggestionsClient.custom_post ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling QuerySuggestionsClient.custom_post"
@@ -214,14 +193,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: QuerySuggestionsClient#custom_post\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -244,9 +220,6 @@ module Algolia
     # @option opts [Object] :body Parameters to send with the custom request.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_put_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: QuerySuggestionsClient.custom_put ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling QuerySuggestionsClient.custom_put"
@@ -265,14 +238,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: QuerySuggestionsClient#custom_put\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
 
     # Delete a configuration.
@@ -291,9 +261,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(BaseResponse, Integer, Hash)>] BaseResponse data, response status code and response headers
     def delete_config_with_http_info(index_name, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: QuerySuggestionsClient.delete_config ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.delete_config"
@@ -311,14 +278,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: QuerySuggestionsClient#delete_config\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # List configurations.
@@ -335,9 +299,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Array<QuerySuggestionsConfigurationResponse>, Integer, Hash)>] Array<QuerySuggestionsConfigurationResponse> data, response status code and response headers
     def get_all_configs_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: QuerySuggestionsClient.get_all_configs ...'
-      end
       path = '/1/configs'
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -351,14 +312,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: QuerySuggestionsClient#get_all_configs\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get a configuration.
@@ -377,9 +335,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(QuerySuggestionsConfigurationResponse, Integer, Hash)>] QuerySuggestionsConfigurationResponse data, response status code and response headers
     def get_config_with_http_info(index_name, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: QuerySuggestionsClient.get_config ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.get_config"
@@ -397,14 +352,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: QuerySuggestionsClient#get_config\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get configuration status.
@@ -423,9 +375,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(GetConfigStatus200Response, Integer, Hash)>] GetConfigStatus200Response data, response status code and response headers
     def get_config_status_with_http_info(index_name, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: QuerySuggestionsClient.get_config_status ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.get_config_status"
@@ -443,14 +392,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: QuerySuggestionsClient#get_config_status\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get logs.
@@ -469,9 +415,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(GetLogFile200Response, Integer, Hash)>] GetLogFile200Response data, response status code and response headers
     def get_log_file_with_http_info(index_name, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: QuerySuggestionsClient.get_log_file ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.get_log_file"
@@ -489,14 +432,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: QuerySuggestionsClient#get_log_file\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Update a configuration.
@@ -517,9 +457,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(BaseResponse, Integer, Hash)>] BaseResponse data, response status code and response headers
     def update_config_with_http_info(index_name, query_suggestions_configuration, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: QuerySuggestionsClient.update_config ...'
-      end
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.update_config"
@@ -541,14 +478,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: QuerySuggestionsClient#update_config\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
   end
 end

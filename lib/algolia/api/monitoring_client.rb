@@ -20,7 +20,7 @@ module Algolia
         Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", accept: CallType::READ | CallType::WRITE)
       end.shuffle
 
-      config = Algolia::Configuration.new(app_id, api_key, hosts)
+      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Monitoring')
       create_with_config(config)
     end
 
@@ -47,9 +47,6 @@ module Algolia
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_delete_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.custom_delete ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling MonitoringClient.custom_delete"
@@ -68,14 +65,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#custom_delete\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:DELETE, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -96,9 +90,6 @@ module Algolia
     # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_get_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.custom_get ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling MonitoringClient.custom_get"
@@ -117,14 +108,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#custom_get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -147,9 +135,6 @@ module Algolia
     # @option opts [Object] :body Parameters to send with the custom request.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_post_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.custom_post ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling MonitoringClient.custom_post"
@@ -168,14 +153,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#custom_post\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:POST, path, new_options)
     end
 
     # Send requests to the Algolia REST API.
@@ -198,9 +180,6 @@ module Algolia
     # @option opts [Object] :body Parameters to send with the custom request.
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def custom_put_with_http_info(path, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.custom_put ...'
-      end
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling MonitoringClient.custom_put"
@@ -219,14 +198,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#custom_put\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:PUT, path, new_options)
     end
 
     # List incidents for selected clusters.
@@ -245,9 +221,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(IncidentsResponse, Integer, Hash)>] IncidentsResponse data, response status code and response headers
     def get_cluster_incidents_with_http_info(clusters, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.get_cluster_incidents ...'
-      end
       # verify the required parameter 'clusters' is set
       if @api_client.config.client_side_validation && clusters.nil?
         fail ArgumentError, "Missing the required parameter 'clusters' when calling MonitoringClient.get_cluster_incidents"
@@ -265,14 +238,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#get_cluster_incidents\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # List statuses of selected clusters.
@@ -291,9 +261,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(StatusResponse, Integer, Hash)>] StatusResponse data, response status code and response headers
     def get_cluster_status_with_http_info(clusters, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.get_cluster_status ...'
-      end
       # verify the required parameter 'clusters' is set
       if @api_client.config.client_side_validation && clusters.nil?
         fail ArgumentError, "Missing the required parameter 'clusters' when calling MonitoringClient.get_cluster_status"
@@ -311,14 +278,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#get_cluster_status\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # List incidents.
@@ -335,9 +299,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(IncidentsResponse, Integer, Hash)>] IncidentsResponse data, response status code and response headers
     def get_incidents_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.get_incidents ...'
-      end
       path = '/1/incidents'
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -351,14 +312,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#get_incidents\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get indexing times.
@@ -377,9 +335,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(IndexingTimeResponse, Integer, Hash)>] IndexingTimeResponse data, response status code and response headers
     def get_indexing_time_with_http_info(clusters, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.get_indexing_time ...'
-      end
       # verify the required parameter 'clusters' is set
       if @api_client.config.client_side_validation && clusters.nil?
         fail ArgumentError, "Missing the required parameter 'clusters' when calling MonitoringClient.get_indexing_time"
@@ -397,14 +352,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#get_indexing_time\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # List servers.
@@ -421,9 +373,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(InventoryResponse, Integer, Hash)>] InventoryResponse data, response status code and response headers
     def get_inventory_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.get_inventory ...'
-      end
       path = '/1/inventory/servers'
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -437,14 +386,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#get_inventory\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get search latency times.
@@ -463,9 +409,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(LatencyResponse, Integer, Hash)>] LatencyResponse data, response status code and response headers
     def get_latency_with_http_info(clusters, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.get_latency ...'
-      end
       # verify the required parameter 'clusters' is set
       if @api_client.config.client_side_validation && clusters.nil?
         fail ArgumentError, "Missing the required parameter 'clusters' when calling MonitoringClient.get_latency"
@@ -483,14 +426,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#get_latency\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Get metrics for a given period.
@@ -511,9 +451,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(InfrastructureResponse, Integer, Hash)>] InfrastructureResponse data, response status code and response headers
     def get_metrics_with_http_info(metric, period, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.get_metrics ...'
-      end
       # verify the required parameter 'metric' is set
       if @api_client.config.client_side_validation && metric.nil?
         fail ArgumentError, "Missing the required parameter 'metric' when calling MonitoringClient.get_metrics"
@@ -535,14 +472,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#get_metrics\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # Test the reachability of clusters.
@@ -561,9 +495,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(Hash<String, Hash>, Integer, Hash)>] Hash<String, Hash> data, response status code and response headers
     def get_reachability_with_http_info(clusters, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.get_reachability ...'
-      end
       # verify the required parameter 'clusters' is set
       if @api_client.config.client_side_validation && clusters.nil?
         fail ArgumentError, "Missing the required parameter 'clusters' when calling MonitoringClient.get_reachability"
@@ -581,14 +512,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#get_reachability\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
 
     # List cluster statuses.
@@ -605,9 +533,6 @@ module Algolia
     # @param [Hash] opts the optional parameters
     # @return [Array<(StatusResponse, Integer, Hash)>] StatusResponse data, response status code and response headers
     def get_status_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: MonitoringClient.get_status ...'
-      end
       path = '/1/status'
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -621,14 +546,11 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type
+        :return_type => return_type,
+        :use_read_transporter => false
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: MonitoringClient#get_status\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
+      @api_client.call_api(:GET, path, new_options)
     end
   end
 end

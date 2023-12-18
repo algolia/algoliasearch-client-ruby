@@ -6,61 +6,10 @@ module Algolia
     attr_accessor :app_id
     attr_accessor :api_key
 
-    # Set this to enable/disable debugging. When enabled (set to true), HTTP request/response
-    # details will be logged with `logger.debug` (see the `logger` attribute).
-    # Default to false.
-    #
-    # @return [true, false]
-    attr_accessor :debugging
-
-    # Defines the logger used for debugging.
-    # Default to `Rails.logger` (when in Rails) or logging to STDOUT.
-    #
-    # @return [#debug]
-    attr_accessor :logger
-
-    # The time limit for HTTP request in seconds.
-    # Default to 0 (never times out).
-    attr_accessor :timeout
-
     # Set this to false to skip client side validation in the operation.
     # Default to true.
     # @return [true, false]
     attr_accessor :client_side_validation
-
-    ### TLS/SSL setting
-    # Set this to false to skip verifying SSL certificate when calling API from https server.
-    # Default to true.
-    #
-    # @note Do NOT set it to false in production code, otherwise you would face multiple types of cryptographic attacks.
-    #
-    # @return [true, false]
-    attr_accessor :ssl_verify
-
-    ### TLS/SSL setting
-    # Any `OpenSSL::SSL::` constant (see https://ruby-doc.org/stdlib-2.5.1/libdoc/openssl/rdoc/OpenSSL/SSL.html)
-    #
-    # @note Do NOT set it to false in production code, otherwise you would face multiple types of cryptographic attacks.
-    #
-    attr_accessor :ssl_verify_mode
-
-    ### TLS/SSL setting
-    # Set this to customize the certificate file to verify the peer.
-    #
-    # @return [String] the path to the certificate file
-    attr_accessor :ssl_ca_file
-
-    ### TLS/SSL setting
-    # Client certificate file (for client certificate)
-    attr_accessor :ssl_client_cert
-
-    ### TLS/SSL setting
-    # Client private key file (for client certificate)
-    attr_accessor :ssl_client_key
-
-    ### Proxy setting
-    # HTTP Proxy settings
-    attr_accessor :proxy
 
     # Set this to customize parameters encoder of array parameter.
     # Default to nil. Faraday uses NestedParamsEncoder when nil.
@@ -73,24 +22,35 @@ module Algolia
 
     attr_accessor :force_ending_format
 
-    def initialize(app_id, api_key, hosts)
+    attr_accessor :user_agent
+    attr_accessor :header_params
+    attr_accessor :read_timeout
+    attr_accessor :write_timeout
+    attr_accessor :connect_timeout
+    attr_accessor :compression_type
+
+    def initialize(app_id, api_key, hosts, client_name)
       @hosts = hosts
       @app_id = app_id
       @api_key = api_key
       @client_side_validation = true
-      @ssl_verify = true
-      @ssl_verify_mode = nil
-      @ssl_ca_file = nil
-      @ssl_client_cert = nil
-      @ssl_client_key = nil
       @middlewares = Hash.new { |h, k| h[k] = [] }
-      @configure_connection_blocks = []
-      @timeout = 60
       @params_encoder = nil
-      @debugging = false
       @inject_format = false
       @force_ending_format = false
-      @logger = defined?(Rails) ? Rails.logger : Logger.new(STDOUT)
+      @read_timeout = 30000
+      @write_timeout = 5000
+      @connect_timeout = 2000
+      @compression_type = 'none'
+
+      @user_agent = UserAgent::new().add(client_name, VERSION)
+
+      @header_params = {
+        'X-Algolia-Application-Id' => app_id,
+        'X-Algolia-API-Key' => api_key,
+        'Content-Type' => 'application/json',
+        'User-Agent' => @user_agent
+      }
 
       yield(self) if block_given?
     end
@@ -98,36 +58,6 @@ module Algolia
     # The default Configuration object.
     def self.default
       @@default ||= Configuration.new
-    end
-
-    def configure
-      yield(self) if block_given?
-    end
-
-    # Configure Faraday connection directly.
-    #
-    # ```
-    # c.configure_faraday_connection do |conn|
-    #   conn.use Faraday::HttpCache, shared_cache: false, logger: logger
-    #   conn.response :logger, nil, headers: true, bodies: true, log_level: :debug do |logger|
-    #     logger.filter(/(Authorization: )(.*)/, '\1[REDACTED]')
-    #   end
-    # end
-    #
-    # c.configure_faraday_connection do |conn|
-    #   conn.adapter :typhoeus
-    # end
-    # ```
-    #
-    # @param block [Proc] `#call`able object that takes one arg, the connection
-    def configure_faraday_connection(&block)
-      @configure_connection_blocks << block
-    end
-
-    def configure_connection(conn)
-      @configure_connection_blocks.each do |block|
-        block.call(conn)
-      end
     end
 
     # Adds middleware to the stack
