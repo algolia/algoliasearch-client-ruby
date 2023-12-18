@@ -4,30 +4,32 @@ require 'date'
 require 'time'
 
 module Algolia
-  class Period
-    MINUTE = "minute".freeze
-    HOUR = "hour".freeze
-    DAY = "day".freeze
-    WEEK = "week".freeze
-    MONTH = "month".freeze
+  module Monitoring
+    class Period
+      MINUTE = "minute".freeze
+      HOUR = "hour".freeze
+      DAY = "day".freeze
+      WEEK = "week".freeze
+      MONTH = "month".freeze
 
-    def self.all_vars
-      @all_vars ||= [MINUTE, HOUR, DAY, WEEK, MONTH].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [MINUTE, HOUR, DAY, WEEK, MONTH].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if Period.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #Period"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if Period.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #Period"
+      end
     end
   end
 end

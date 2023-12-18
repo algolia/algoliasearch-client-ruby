@@ -4,27 +4,29 @@ require 'date'
 require 'time'
 
 module Algolia
-  class DictionaryEntryState
-    ENABLED = "enabled".freeze
-    DISABLED = "disabled".freeze
+  module Search
+    class DictionaryEntryState
+      ENABLED = "enabled".freeze
+      DISABLED = "disabled".freeze
 
-    def self.all_vars
-      @all_vars ||= [ENABLED, DISABLED].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [ENABLED, DISABLED].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if DictionaryEntryState.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #DictionaryEntryState"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if DictionaryEntryState.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #DictionaryEntryState"
+      end
     end
   end
 end

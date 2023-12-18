@@ -4,29 +4,31 @@ require 'date'
 require 'time'
 
 module Algolia
-  class RecommendModels
-    RELATED_PRODUCTS = "related-products".freeze
-    BOUGHT_TOGETHER = "bought-together".freeze
-    TRENDING_FACETS = "trending-facets".freeze
-    TRENDING_ITEMS = "trending-items".freeze
+  module Recommend
+    class RecommendModels
+      RELATED_PRODUCTS = "related-products".freeze
+      BOUGHT_TOGETHER = "bought-together".freeze
+      TRENDING_FACETS = "trending-facets".freeze
+      TRENDING_ITEMS = "trending-items".freeze
 
-    def self.all_vars
-      @all_vars ||= [RELATED_PRODUCTS, BOUGHT_TOGETHER, TRENDING_FACETS, TRENDING_ITEMS].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [RELATED_PRODUCTS, BOUGHT_TOGETHER, TRENDING_FACETS, TRENDING_ITEMS].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if RecommendModels.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #RecommendModels"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if RecommendModels.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #RecommendModels"
+      end
     end
   end
 end

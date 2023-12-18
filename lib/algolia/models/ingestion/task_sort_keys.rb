@@ -4,30 +4,32 @@ require 'date'
 require 'time'
 
 module Algolia
-  class TaskSortKeys
-    ENABLED = "enabled".freeze
-    TRIGGER_TYPE = "triggerType".freeze
-    ACTION = "action".freeze
-    UPDATED_AT = "updatedAt".freeze
-    CREATED_AT = "createdAt".freeze
+  module Ingestion
+    class TaskSortKeys
+      ENABLED = "enabled".freeze
+      TRIGGER_TYPE = "triggerType".freeze
+      ACTION = "action".freeze
+      UPDATED_AT = "updatedAt".freeze
+      CREATED_AT = "createdAt".freeze
 
-    def self.all_vars
-      @all_vars ||= [ENABLED, TRIGGER_TYPE, ACTION, UPDATED_AT, CREATED_AT].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [ENABLED, TRIGGER_TYPE, ACTION, UPDATED_AT, CREATED_AT].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if TaskSortKeys.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #TaskSortKeys"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if TaskSortKeys.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #TaskSortKeys"
+      end
     end
   end
 end

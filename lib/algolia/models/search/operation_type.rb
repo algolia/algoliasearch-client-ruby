@@ -4,27 +4,29 @@ require 'date'
 require 'time'
 
 module Algolia
-  class OperationType
-    MOVE = "move".freeze
-    COPY = "copy".freeze
+  module Search
+    class OperationType
+      MOVE = "move".freeze
+      COPY = "copy".freeze
 
-    def self.all_vars
-      @all_vars ||= [MOVE, COPY].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [MOVE, COPY].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if OperationType.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #OperationType"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if OperationType.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #OperationType"
+      end
     end
   end
 end

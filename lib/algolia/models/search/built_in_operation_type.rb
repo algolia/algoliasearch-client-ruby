@@ -4,32 +4,34 @@ require 'date'
 require 'time'
 
 module Algolia
-  class BuiltInOperationType
-    INCREMENT = "Increment".freeze
-    DECREMENT = "Decrement".freeze
-    ADD = "Add".freeze
-    REMOVE = "Remove".freeze
-    ADD_UNIQUE = "AddUnique".freeze
-    INCREMENT_FROM = "IncrementFrom".freeze
-    INCREMENT_SET = "IncrementSet".freeze
+  module Search
+    class BuiltInOperationType
+      INCREMENT = "Increment".freeze
+      DECREMENT = "Decrement".freeze
+      ADD = "Add".freeze
+      REMOVE = "Remove".freeze
+      ADD_UNIQUE = "AddUnique".freeze
+      INCREMENT_FROM = "IncrementFrom".freeze
+      INCREMENT_SET = "IncrementSet".freeze
 
-    def self.all_vars
-      @all_vars ||= [INCREMENT, DECREMENT, ADD, REMOVE, ADD_UNIQUE, INCREMENT_FROM, INCREMENT_SET].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [INCREMENT, DECREMENT, ADD, REMOVE, ADD_UNIQUE, INCREMENT_FROM, INCREMENT_SET].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if BuiltInOperationType.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #BuiltInOperationType"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if BuiltInOperationType.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #BuiltInOperationType"
+      end
     end
   end
 end

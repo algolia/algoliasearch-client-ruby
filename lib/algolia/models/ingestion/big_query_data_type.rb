@@ -4,27 +4,29 @@ require 'date'
 require 'time'
 
 module Algolia
-  class BigQueryDataType
-    GA4 = "ga4".freeze
-    GA360 = "ga360".freeze
+  module Ingestion
+    class BigQueryDataType
+      GA4 = "ga4".freeze
+      GA360 = "ga360".freeze
 
-    def self.all_vars
-      @all_vars ||= [GA4, GA360].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [GA4, GA360].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if BigQueryDataType.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #BigQueryDataType"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if BigQueryDataType.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #BigQueryDataType"
+      end
     end
   end
 end

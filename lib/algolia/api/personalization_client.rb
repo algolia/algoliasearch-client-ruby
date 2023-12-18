@@ -6,9 +6,29 @@ module Algolia
   class PersonalizationClient
     attr_accessor :api_client
 
-    def initialize(api_client = ApiClient.default)
-      @api_client = api_client
+    def initialize(config = nil)
+      @api_client = Algolia::ApiClient.new(config)
     end
+
+    def self.create(app_id, api_key, region = nil)
+      hosts = []
+      regions = ['eu', 'us']
+
+      if region.nil? || (region != '' && !regions.include?(region))
+        raise "`region` is required and must be one of the following: %s" % regions.join(', ')
+      end
+
+      hosts << Transport::StatefulHost.new("personalization.{region}.algolia.com".sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
+      
+      config = Algolia::Configuration.new(app_id, api_key, hosts)
+      create_with_config(config)
+    end
+
+
+    def self.create_with_config(config)
+      new(config)
+    end
+
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
@@ -34,41 +54,24 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling PersonalizationClient.custom_delete"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Personalization::Object'
 
       new_options = opts.merge(
         :operation => :"PersonalizationClient.custom_delete",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: PersonalizationClient#custom_delete\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -100,41 +103,24 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling PersonalizationClient.custom_get"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Personalization::Object'
 
       new_options = opts.merge(
         :operation => :"PersonalizationClient.custom_get",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: PersonalizationClient#custom_get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -168,46 +154,24 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling PersonalizationClient.custom_post"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Personalization::Object'
 
       new_options = opts.merge(
         :operation => :"PersonalizationClient.custom_post",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: PersonalizationClient#custom_post\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -241,46 +205,24 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling PersonalizationClient.custom_put"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Personalization::Object'
 
       new_options = opts.merge(
         :operation => :"PersonalizationClient.custom_put",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: PersonalizationClient#custom_put\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -310,40 +252,23 @@ module Algolia
       if @api_client.config.client_side_validation && user_token.nil?
         fail ArgumentError, "Missing the required parameter 'user_token' when calling PersonalizationClient.delete_user_profile"
       end
-      # resource path
-      local_var_path = '/1/profiles/{userToken}'.sub('{' + 'userToken' + '}', CGI.escape(user_token.to_s))
-
-      # query parameters
+      path = '/1/profiles/{userToken}'.sub('{' + 'userToken' + '}', CGI.escape(user_token.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'DeleteUserProfileResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Personalization::DeleteUserProfileResponse'
 
       new_options = opts.merge(
         :operation => :"PersonalizationClient.delete_user_profile",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: PersonalizationClient#delete_user_profile\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -367,40 +292,23 @@ module Algolia
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: PersonalizationClient.get_personalization_strategy ...'
       end
-      # resource path
-      local_var_path = '/1/strategies/personalization'
-
-      # query parameters
+      path = '/1/strategies/personalization'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'PersonalizationStrategyParams'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Personalization::PersonalizationStrategyParams'
 
       new_options = opts.merge(
         :operation => :"PersonalizationClient.get_personalization_strategy",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: PersonalizationClient#get_personalization_strategy\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -430,40 +338,23 @@ module Algolia
       if @api_client.config.client_side_validation && user_token.nil?
         fail ArgumentError, "Missing the required parameter 'user_token' when calling PersonalizationClient.get_user_token_profile"
       end
-      # resource path
-      local_var_path = '/1/profiles/personalization/{userToken}'.sub('{' + 'userToken' + '}', CGI.escape(user_token.to_s))
-
-      # query parameters
+      path = '/1/profiles/personalization/{userToken}'.sub('{' + 'userToken' + '}', CGI.escape(user_token.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetUserTokenResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Personalization::GetUserTokenResponse'
 
       new_options = opts.merge(
         :operation => :"PersonalizationClient.get_user_token_profile",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: PersonalizationClient#get_user_token_profile\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -493,45 +384,23 @@ module Algolia
       if @api_client.config.client_side_validation && personalization_strategy_params.nil?
         fail ArgumentError, "Missing the required parameter 'personalization_strategy_params' when calling PersonalizationClient.set_personalization_strategy"
       end
-      # resource path
-      local_var_path = '/1/strategies/personalization'
-
-      # query parameters
+      path = '/1/strategies/personalization'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(personalization_strategy_params)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'SetPersonalizationStrategyResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Personalization::SetPersonalizationStrategyResponse'
 
       new_options = opts.merge(
         :operation => :"PersonalizationClient.set_personalization_strategy",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: PersonalizationClient#set_personalization_strategy\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end

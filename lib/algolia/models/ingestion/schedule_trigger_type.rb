@@ -4,26 +4,28 @@ require 'date'
 require 'time'
 
 module Algolia
-  class ScheduleTriggerType
-    SCHEDULE = "schedule".freeze
+  module Ingestion
+    class ScheduleTriggerType
+      SCHEDULE = "schedule".freeze
 
-    def self.all_vars
-      @all_vars ||= [SCHEDULE].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [SCHEDULE].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if ScheduleTriggerType.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #ScheduleTriggerType"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if ScheduleTriggerType.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #ScheduleTriggerType"
+      end
     end
   end
 end

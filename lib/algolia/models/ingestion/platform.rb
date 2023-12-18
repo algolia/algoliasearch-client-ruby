@@ -4,27 +4,29 @@ require 'date'
 require 'time'
 
 module Algolia
-  class Platform
-    BIGCOMMERCE = "bigcommerce".freeze
-    COMMERCETOOLS = "commercetools".freeze
+  module Ingestion
+    class Platform
+      BIGCOMMERCE = "bigcommerce".freeze
+      COMMERCETOOLS = "commercetools".freeze
 
-    def self.all_vars
-      @all_vars ||= [BIGCOMMERCE, COMMERCETOOLS].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [BIGCOMMERCE, COMMERCETOOLS].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if Platform.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #Platform"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if Platform.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #Platform"
+      end
     end
   end
 end

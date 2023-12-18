@@ -4,28 +4,30 @@ require 'date'
 require 'time'
 
 module Algolia
-  class DockerImageType
-    SINGER = "singer".freeze
-    CUSTOM = "custom".freeze
-    AIRBYTE = "airbyte".freeze
+  module Ingestion
+    class DockerImageType
+      SINGER = "singer".freeze
+      CUSTOM = "custom".freeze
+      AIRBYTE = "airbyte".freeze
 
-    def self.all_vars
-      @all_vars ||= [SINGER, CUSTOM, AIRBYTE].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [SINGER, CUSTOM, AIRBYTE].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if DockerImageType.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #DockerImageType"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if DockerImageType.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #DockerImageType"
+      end
     end
   end
 end

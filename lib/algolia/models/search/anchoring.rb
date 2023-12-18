@@ -4,29 +4,31 @@ require 'date'
 require 'time'
 
 module Algolia
-  class Anchoring
-    IS = "is".freeze
-    STARTS_WITH = "startsWith".freeze
-    ENDS_WITH = "endsWith".freeze
-    CONTAINS = "contains".freeze
+  module Search
+    class Anchoring
+      IS = "is".freeze
+      STARTS_WITH = "startsWith".freeze
+      ENDS_WITH = "endsWith".freeze
+      CONTAINS = "contains".freeze
 
-    def self.all_vars
-      @all_vars ||= [IS, STARTS_WITH, ENDS_WITH, CONTAINS].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [IS, STARTS_WITH, ENDS_WITH, CONTAINS].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if Anchoring.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #Anchoring"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if Anchoring.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #Anchoring"
+      end
     end
   end
 end

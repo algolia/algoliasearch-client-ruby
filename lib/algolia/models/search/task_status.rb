@@ -4,27 +4,29 @@ require 'date'
 require 'time'
 
 module Algolia
-  class TaskStatus
-    PUBLISHED = "published".freeze
-    NOT_PUBLISHED = "notPublished".freeze
+  module Search
+    class TaskStatus
+      PUBLISHED = "published".freeze
+      NOT_PUBLISHED = "notPublished".freeze
 
-    def self.all_vars
-      @all_vars ||= [PUBLISHED, NOT_PUBLISHED].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [PUBLISHED, NOT_PUBLISHED].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if TaskStatus.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #TaskStatus"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if TaskStatus.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #TaskStatus"
+      end
     end
   end
 end

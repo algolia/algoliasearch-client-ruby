@@ -4,28 +4,30 @@ require 'date'
 require 'time'
 
 module Algolia
-  class ActionType
-    REPLACE = "replace".freeze
-    SAVE = "save".freeze
-    PARTIAL = "partial".freeze
+  module Ingestion
+    class ActionType
+      REPLACE = "replace".freeze
+      SAVE = "save".freeze
+      PARTIAL = "partial".freeze
 
-    def self.all_vars
-      @all_vars ||= [REPLACE, SAVE, PARTIAL].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [REPLACE, SAVE, PARTIAL].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if ActionType.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #ActionType"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if ActionType.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #ActionType"
+      end
     end
   end
 end

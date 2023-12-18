@@ -6,9 +6,29 @@ module Algolia
   class QuerySuggestionsClient
     attr_accessor :api_client
 
-    def initialize(api_client = ApiClient.default)
-      @api_client = api_client
+    def initialize(config = nil)
+      @api_client = Algolia::ApiClient.new(config)
     end
+
+    def self.create(app_id, api_key, region = nil)
+      hosts = []
+      regions = ['eu', 'us']
+
+      if region.nil? || (region != '' && !regions.include?(region))
+        raise "`region` is required and must be one of the following: %s" % regions.join(', ')
+      end
+
+      hosts << Transport::StatefulHost.new("query-suggestions.{region}.algolia.com".sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
+      
+      config = Algolia::Configuration.new(app_id, api_key, hosts)
+      create_with_config(config)
+    end
+
+
+    def self.create_with_config(config)
+      new(config)
+    end
+
     # Create a configuration.
     # Create a new Query Suggestions configuration.  You can have up to 100 configurations per Algolia application. 
     # @param query_suggestions_configuration_with_index [QuerySuggestionsConfigurationWithIndex] 
@@ -32,45 +52,23 @@ module Algolia
       if @api_client.config.client_side_validation && query_suggestions_configuration_with_index.nil?
         fail ArgumentError, "Missing the required parameter 'query_suggestions_configuration_with_index' when calling QuerySuggestionsClient.create_config"
       end
-      # resource path
-      local_var_path = '/1/configs'
-
-      # query parameters
+      path = '/1/configs'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(query_suggestions_configuration_with_index)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'BaseResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'QuerySuggestions::BaseResponse'
 
       new_options = opts.merge(
         :operation => :"QuerySuggestionsClient.create_config",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: QuerySuggestionsClient#create_config\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -102,41 +100,24 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling QuerySuggestionsClient.custom_delete"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'QuerySuggestions::Object'
 
       new_options = opts.merge(
         :operation => :"QuerySuggestionsClient.custom_delete",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: QuerySuggestionsClient#custom_delete\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -168,41 +149,24 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling QuerySuggestionsClient.custom_get"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'QuerySuggestions::Object'
 
       new_options = opts.merge(
         :operation => :"QuerySuggestionsClient.custom_get",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: QuerySuggestionsClient#custom_get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -236,46 +200,24 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling QuerySuggestionsClient.custom_post"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'QuerySuggestions::Object'
 
       new_options = opts.merge(
         :operation => :"QuerySuggestionsClient.custom_post",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: QuerySuggestionsClient#custom_post\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -309,46 +251,24 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling QuerySuggestionsClient.custom_put"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'QuerySuggestions::Object'
 
       new_options = opts.merge(
         :operation => :"QuerySuggestionsClient.custom_put",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: QuerySuggestionsClient#custom_put\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -378,40 +298,23 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.delete_config"
       end
-      # resource path
-      local_var_path = '/1/configs/{indexName}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/configs/{indexName}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'BaseResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'QuerySuggestions::BaseResponse'
 
       new_options = opts.merge(
         :operation => :"QuerySuggestionsClient.delete_config",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: QuerySuggestionsClient#delete_config\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -435,40 +338,23 @@ module Algolia
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: QuerySuggestionsClient.get_all_configs ...'
       end
-      # resource path
-      local_var_path = '/1/configs'
-
-      # query parameters
+      path = '/1/configs'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Array<QuerySuggestionsConfigurationResponse>'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'QuerySuggestions::Array<QuerySuggestionsConfigurationResponse>'
 
       new_options = opts.merge(
         :operation => :"QuerySuggestionsClient.get_all_configs",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: QuerySuggestionsClient#get_all_configs\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -498,40 +384,23 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.get_config"
       end
-      # resource path
-      local_var_path = '/1/configs/{indexName}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/configs/{indexName}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'QuerySuggestionsConfigurationResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'QuerySuggestions::QuerySuggestionsConfigurationResponse'
 
       new_options = opts.merge(
         :operation => :"QuerySuggestionsClient.get_config",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: QuerySuggestionsClient#get_config\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -561,40 +430,23 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.get_config_status"
       end
-      # resource path
-      local_var_path = '/1/configs/{indexName}/status'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/configs/{indexName}/status'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetConfigStatus200Response'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'QuerySuggestions::GetConfigStatus200Response'
 
       new_options = opts.merge(
         :operation => :"QuerySuggestionsClient.get_config_status",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: QuerySuggestionsClient#get_config_status\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -624,40 +476,23 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.get_log_file"
       end
-      # resource path
-      local_var_path = '/1/logs/{indexName}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/logs/{indexName}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetLogFile200Response'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'QuerySuggestions::GetLogFile200Response'
 
       new_options = opts.merge(
         :operation => :"QuerySuggestionsClient.get_log_file",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: QuerySuggestionsClient#get_log_file\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -693,45 +528,23 @@ module Algolia
       if @api_client.config.client_side_validation && query_suggestions_configuration.nil?
         fail ArgumentError, "Missing the required parameter 'query_suggestions_configuration' when calling QuerySuggestionsClient.update_config"
       end
-      # resource path
-      local_var_path = '/1/configs/{indexName}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/configs/{indexName}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(query_suggestions_configuration)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'BaseResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'QuerySuggestions::BaseResponse'
 
       new_options = opts.merge(
         :operation => :"QuerySuggestionsClient.update_config",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: QuerySuggestionsClient#update_config\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end

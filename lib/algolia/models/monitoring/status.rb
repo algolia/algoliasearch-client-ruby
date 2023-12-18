@@ -4,29 +4,31 @@ require 'date'
 require 'time'
 
 module Algolia
-  class Status
-    OPERATIONAL = "operational".freeze
-    DEGRADED_PERFORMANCE = "degraded_performance".freeze
-    PARTIAL_OUTAGE = "partial_outage".freeze
-    MAJOR_OUTAGE = "major_outage".freeze
+  module Monitoring
+    class Status
+      OPERATIONAL = "operational".freeze
+      DEGRADED_PERFORMANCE = "degraded_performance".freeze
+      PARTIAL_OUTAGE = "partial_outage".freeze
+      MAJOR_OUTAGE = "major_outage".freeze
 
-    def self.all_vars
-      @all_vars ||= [OPERATIONAL, DEGRADED_PERFORMANCE, PARTIAL_OUTAGE, MAJOR_OUTAGE].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [OPERATIONAL, DEGRADED_PERFORMANCE, PARTIAL_OUTAGE, MAJOR_OUTAGE].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if Status.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #Status"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if Status.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #Status"
+      end
     end
   end
 end

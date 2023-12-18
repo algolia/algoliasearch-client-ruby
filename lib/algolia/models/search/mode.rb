@@ -4,27 +4,29 @@ require 'date'
 require 'time'
 
 module Algolia
-  class Mode
-    NEURAL_SEARCH = "neuralSearch".freeze
-    KEYWORD_SEARCH = "keywordSearch".freeze
+  module Search
+    class Mode
+      NEURAL_SEARCH = "neuralSearch".freeze
+      KEYWORD_SEARCH = "keywordSearch".freeze
 
-    def self.all_vars
-      @all_vars ||= [NEURAL_SEARCH, KEYWORD_SEARCH].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [NEURAL_SEARCH, KEYWORD_SEARCH].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if Mode.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #Mode"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if Mode.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #Mode"
+      end
     end
   end
 end

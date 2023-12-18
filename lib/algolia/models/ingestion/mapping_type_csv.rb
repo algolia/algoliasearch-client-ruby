@@ -4,30 +4,32 @@ require 'date'
 require 'time'
 
 module Algolia
-  class MappingTypeCSV
-    STRING = "string".freeze
-    INTEGER = "integer".freeze
-    FLOAT = "float".freeze
-    BOOLEAN = "boolean".freeze
-    JSON = "json".freeze
+  module Ingestion
+    class MappingTypeCSV
+      STRING = "string".freeze
+      INTEGER = "integer".freeze
+      FLOAT = "float".freeze
+      BOOLEAN = "boolean".freeze
+      JSON = "json".freeze
 
-    def self.all_vars
-      @all_vars ||= [STRING, INTEGER, FLOAT, BOOLEAN, JSON].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [STRING, INTEGER, FLOAT, BOOLEAN, JSON].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if MappingTypeCSV.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #MappingTypeCSV"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if MappingTypeCSV.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #MappingTypeCSV"
+      end
     end
   end
 end

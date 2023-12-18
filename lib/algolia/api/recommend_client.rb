@@ -6,9 +6,29 @@ module Algolia
   class RecommendClient
     attr_accessor :api_client
 
-    def initialize(api_client = ApiClient.default)
-      @api_client = api_client
+    def initialize(config = nil)
+      @api_client = Algolia::ApiClient.new(config)
     end
+
+    def self.create(app_id, api_key)
+      hosts = []
+
+      hosts << Transport::StatefulHost.new("#{app_id}-dsn.algolia.net", accept: CallType::READ)
+      hosts << Transport::StatefulHost.new("#{app_id}.algolia.net", accept: CallType::WRITE)
+
+      hosts += 1.upto(3).map do |i|
+        Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", accept: CallType::READ | CallType::WRITE)
+      end.shuffle
+
+      config = Algolia::Configuration.new(app_id, api_key, hosts)
+      create_with_config(config)
+    end
+
+
+    def self.create_with_config(config)
+      new(config)
+    end
+
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
@@ -34,41 +54,24 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling RecommendClient.custom_delete"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Recommend::Object'
 
       new_options = opts.merge(
         :operation => :"RecommendClient.custom_delete",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: RecommendClient#custom_delete\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -100,41 +103,24 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling RecommendClient.custom_get"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Recommend::Object'
 
       new_options = opts.merge(
         :operation => :"RecommendClient.custom_get",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: RecommendClient#custom_get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -168,46 +154,24 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling RecommendClient.custom_post"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Recommend::Object'
 
       new_options = opts.merge(
         :operation => :"RecommendClient.custom_post",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: RecommendClient#custom_post\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -241,46 +205,24 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling RecommendClient.custom_put"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Recommend::Object'
 
       new_options = opts.merge(
         :operation => :"RecommendClient.custom_put",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: RecommendClient#custom_put\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -322,40 +264,23 @@ module Algolia
       if @api_client.config.client_side_validation && object_id.nil?
         fail ArgumentError, "Missing the required parameter 'object_id' when calling RecommendClient.delete_recommend_rule"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'model' + '}', CGI.escape(model.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'model' + '}', CGI.escape(model.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'DeletedAtResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Recommend::DeletedAtResponse'
 
       new_options = opts.merge(
         :operation => :"RecommendClient.delete_recommend_rule",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: RecommendClient#delete_recommend_rule\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -397,40 +322,23 @@ module Algolia
       if @api_client.config.client_side_validation && object_id.nil?
         fail ArgumentError, "Missing the required parameter 'object_id' when calling RecommendClient.get_recommend_rule"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'model' + '}', CGI.escape(model.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'model' + '}', CGI.escape(model.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'RuleResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Recommend::RuleResponse'
 
       new_options = opts.merge(
         :operation => :"RecommendClient.get_recommend_rule",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: RecommendClient#get_recommend_rule\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -472,40 +380,23 @@ module Algolia
       if @api_client.config.client_side_validation && task_id.nil?
         fail ArgumentError, "Missing the required parameter 'task_id' when calling RecommendClient.get_recommend_status"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/{model}/task/{taskID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'model' + '}', CGI.escape(model.to_s)).sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/{model}/task/{taskID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'model' + '}', CGI.escape(model.to_s)).sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetRecommendTaskResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Recommend::GetRecommendTaskResponse'
 
       new_options = opts.merge(
         :operation => :"RecommendClient.get_recommend_status",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: RecommendClient#get_recommend_status\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -535,45 +426,23 @@ module Algolia
       if @api_client.config.client_side_validation && get_recommendations_params.nil?
         fail ArgumentError, "Missing the required parameter 'get_recommendations_params' when calling RecommendClient.get_recommendations"
       end
-      # resource path
-      local_var_path = '/1/indexes/*/recommendations'
-
-      # query parameters
+      path = '/1/indexes/*/recommendations'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(get_recommendations_params)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetRecommendationsResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Recommend::GetRecommendationsResponse'
 
       new_options = opts.merge(
         :operation => :"RecommendClient.get_recommendations",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: RecommendClient#get_recommendations\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -611,45 +480,23 @@ module Algolia
       if @api_client.config.client_side_validation && model.nil?
         fail ArgumentError, "Missing the required parameter 'model' when calling RecommendClient.search_recommend_rules"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/{model}/recommend/rules/search'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'model' + '}', CGI.escape(model.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/{model}/recommend/rules/search'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'model' + '}', CGI.escape(model.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'search_recommend_rules_params'])
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'SearchRecommendRulesResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Recommend::SearchRecommendRulesResponse'
 
       new_options = opts.merge(
         :operation => :"RecommendClient.search_recommend_rules",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: RecommendClient#search_recommend_rules\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end

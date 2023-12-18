@@ -4,31 +4,33 @@ require 'date'
 require 'time'
 
 module Algolia
-  class Metric
-    AVG_BUILD_TIME = "avg_build_time".freeze
-    SSD_USAGE = "ssd_usage".freeze
-    RAM_SEARCH_USAGE = "ram_search_usage".freeze
-    RAM_INDEXING_USAGE = "ram_indexing_usage".freeze
-    CPU_USAGE = "cpu_usage".freeze
-    ALL = "*".freeze
+  module Monitoring
+    class Metric
+      AVG_BUILD_TIME = "avg_build_time".freeze
+      SSD_USAGE = "ssd_usage".freeze
+      RAM_SEARCH_USAGE = "ram_search_usage".freeze
+      RAM_INDEXING_USAGE = "ram_indexing_usage".freeze
+      CPU_USAGE = "cpu_usage".freeze
+      ALL = "*".freeze
 
-    def self.all_vars
-      @all_vars ||= [AVG_BUILD_TIME, SSD_USAGE, RAM_SEARCH_USAGE, RAM_INDEXING_USAGE, CPU_USAGE, ALL].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [AVG_BUILD_TIME, SSD_USAGE, RAM_SEARCH_USAGE, RAM_INDEXING_USAGE, CPU_USAGE, ALL].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if Metric.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #Metric"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if Metric.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #Metric"
+      end
     end
   end
 end

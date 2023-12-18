@@ -4,40 +4,42 @@ require 'date'
 require 'time'
 
 module Algolia
-  class Region
-    AU = "au".freeze
-    BR = "br".freeze
-    CA = "ca".freeze
-    DE = "de".freeze
-    EU = "eu".freeze
-    HK = "hk".freeze
-    IN = "in".freeze
-    JP = "jp".freeze
-    SG = "sg".freeze
-    UAE = "uae".freeze
-    UK = "uk".freeze
-    USC = "usc".freeze
-    USE = "use".freeze
-    USW = "usw".freeze
-    ZA = "za".freeze
+  module Monitoring
+    class Region
+      AU = "au".freeze
+      BR = "br".freeze
+      CA = "ca".freeze
+      DE = "de".freeze
+      EU = "eu".freeze
+      HK = "hk".freeze
+      IN = "in".freeze
+      JP = "jp".freeze
+      SG = "sg".freeze
+      UAE = "uae".freeze
+      UK = "uk".freeze
+      USC = "usc".freeze
+      USE = "use".freeze
+      USW = "usw".freeze
+      ZA = "za".freeze
 
-    def self.all_vars
-      @all_vars ||= [AU, BR, CA, DE, EU, HK, IN, JP, SG, UAE, UK, USC, USE, USW, ZA].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [AU, BR, CA, DE, EU, HK, IN, JP, SG, UAE, UK, USC, USE, USW, ZA].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if Region.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #Region"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if Region.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #Region"
+      end
     end
   end
 end

@@ -4,28 +4,30 @@ require 'date'
 require 'time'
 
 module Algolia
-  class DestinationType
-    SEARCH = "search".freeze
-    INSIGHTS = "insights".freeze
-    FLOW = "flow".freeze
+  module Ingestion
+    class DestinationType
+      SEARCH = "search".freeze
+      INSIGHTS = "insights".freeze
+      FLOW = "flow".freeze
 
-    def self.all_vars
-      @all_vars ||= [SEARCH, INSIGHTS, FLOW].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [SEARCH, INSIGHTS, FLOW].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if DestinationType.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #DestinationType"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if DestinationType.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #DestinationType"
+      end
     end
   end
 end

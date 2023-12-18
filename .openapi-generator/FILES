@@ -1,7 +1,4 @@
 lib/algolia/api/monitoring_client.rb
-lib/algolia/api_client.rb
-lib/algolia/api_error.rb
-lib/algolia/configuration.rb
 lib/algolia/models/monitoring/error_base.rb
 lib/algolia/models/monitoring/get_inventory403_response.rb
 lib/algolia/models/monitoring/incident.rb

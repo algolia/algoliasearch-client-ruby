@@ -5,12 +5,15 @@ require 'algolia/api_client'
 require 'algolia/api_error'
 require 'algolia/version'
 require 'algolia/configuration'
+require 'algolia/transport/call_type'
+require 'algolia/transport/stateful_host'
 
 # Models
-Dir["algolia/models/**/*.rb"].each { |file| require file }
+Dir["#{File.dirname(__FILE__)}/algolia/models/**/*.rb"].each { |file| require file }
 
 # APIs
-Dir["algolia/api/*.rb"].each { |file| require file }
+Dir["#{File.dirname(__FILE__)}/algolia/api/*.rb"].each { |file| require file }
+
 
 module Algolia
 end

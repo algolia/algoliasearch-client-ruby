@@ -6,9 +6,29 @@ module Algolia
   class AnalyticsClient
     attr_accessor :api_client
 
-    def initialize(api_client = ApiClient.default)
-      @api_client = api_client
+    def initialize(config = nil)
+      @api_client = Algolia::ApiClient.new(config)
     end
+
+    def self.create(app_id, api_key, region = nil)
+      hosts = []
+      regions = ['de', 'us']
+
+      if (region != '' && !regions.include?(region))
+        raise "`region` must be one of the following: %s" % regions.join(', ')
+      end
+
+      hosts << Transport::StatefulHost.new(region.nil? ? "analytics.algolia.com" : "analytics.{region}.algolia.com".sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
+      
+      config = Algolia::Configuration.new(app_id, api_key, hosts)
+      create_with_config(config)
+    end
+
+
+    def self.create_with_config(config)
+      new(config)
+    end
+
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
@@ -34,41 +54,24 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_delete"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::Object'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.custom_delete",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#custom_delete\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -100,41 +103,24 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_get"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::Object'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.custom_get",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#custom_get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -168,46 +154,24 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_post"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::Object'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.custom_post",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#custom_post\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -241,46 +205,24 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_put"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::Object'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.custom_put",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#custom_put\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -326,44 +268,27 @@ module Algolia
         fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_average_click_position, must conform to the pattern #{pattern}."
       end
 
-      # resource path
-      local_var_path = '/2/clicks/averageClickPosition'
-
-      # query parameters
+      path = '/2/clicks/averageClickPosition'
       query_params = opts[:query_params] || {}
       query_params[:'index'] = index
       query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
       query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
       query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetAverageClickPositionResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::GetAverageClickPositionResponse'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.get_average_click_position",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#get_average_click_position\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -409,44 +334,27 @@ module Algolia
         fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_click_positions, must conform to the pattern #{pattern}."
       end
 
-      # resource path
-      local_var_path = '/2/clicks/positions'
-
-      # query parameters
+      path = '/2/clicks/positions'
       query_params = opts[:query_params] || {}
       query_params[:'index'] = index
       query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
       query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
       query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetClickPositionsResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::GetClickPositionsResponse'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.get_click_positions",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#get_click_positions\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -492,44 +400,27 @@ module Algolia
         fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_click_through_rate, must conform to the pattern #{pattern}."
       end
 
-      # resource path
-      local_var_path = '/2/clicks/clickThroughRate'
-
-      # query parameters
+      path = '/2/clicks/clickThroughRate'
       query_params = opts[:query_params] || {}
       query_params[:'index'] = index
       query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
       query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
       query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetClickThroughRateResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::GetClickThroughRateResponse'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.get_click_through_rate",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#get_click_through_rate\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -575,44 +466,27 @@ module Algolia
         fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_conversation_rate, must conform to the pattern #{pattern}."
       end
 
-      # resource path
-      local_var_path = '/2/conversions/conversionRate'
-
-      # query parameters
+      path = '/2/conversions/conversionRate'
       query_params = opts[:query_params] || {}
       query_params[:'index'] = index
       query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
       query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
       query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetConversationRateResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::GetConversationRateResponse'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.get_conversation_rate",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#get_conversation_rate\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -658,44 +532,27 @@ module Algolia
         fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_no_click_rate, must conform to the pattern #{pattern}."
       end
 
-      # resource path
-      local_var_path = '/2/searches/noClickRate'
-
-      # query parameters
+      path = '/2/searches/noClickRate'
       query_params = opts[:query_params] || {}
       query_params[:'index'] = index
       query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
       query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
       query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetNoClickRateResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::GetNoClickRateResponse'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.get_no_click_rate",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#get_no_click_rate\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -741,44 +598,27 @@ module Algolia
         fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_no_results_rate, must conform to the pattern #{pattern}."
       end
 
-      # resource path
-      local_var_path = '/2/searches/noResultRate'
-
-      # query parameters
+      path = '/2/searches/noResultRate'
       query_params = opts[:query_params] || {}
       query_params[:'index'] = index
       query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
       query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
       query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetNoResultsRateResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::GetNoResultsRateResponse'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.get_no_results_rate",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#get_no_results_rate\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -824,44 +664,27 @@ module Algolia
         fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_searches_count, must conform to the pattern #{pattern}."
       end
 
-      # resource path
-      local_var_path = '/2/searches/count'
-
-      # query parameters
+      path = '/2/searches/count'
       query_params = opts[:query_params] || {}
       query_params[:'index'] = index
       query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
       query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
       query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetSearchesCountResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::GetSearchesCountResponse'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.get_searches_count",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#get_searches_count\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -911,10 +734,7 @@ module Algolia
         fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_searches_no_clicks, must conform to the pattern #{pattern}."
       end
 
-      # resource path
-      local_var_path = '/2/searches/noClicks'
-
-      # query parameters
+      path = '/2/searches/noClicks'
       query_params = opts[:query_params] || {}
       query_params[:'index'] = index
       query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
@@ -922,35 +742,21 @@ module Algolia
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
       query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetSearchesNoClicksResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::GetSearchesNoClicksResponse'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.get_searches_no_clicks",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#get_searches_no_clicks\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1000,10 +806,7 @@ module Algolia
         fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_searches_no_results, must conform to the pattern #{pattern}."
       end
 
-      # resource path
-      local_var_path = '/2/searches/noResults'
-
-      # query parameters
+      path = '/2/searches/noResults'
       query_params = opts[:query_params] || {}
       query_params[:'index'] = index
       query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
@@ -1011,35 +814,21 @@ module Algolia
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
       query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetSearchesNoResultsResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::GetSearchesNoResultsResponse'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.get_searches_no_results",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#get_searches_no_results\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1069,41 +858,24 @@ module Algolia
       if @api_client.config.client_side_validation && index.nil?
         fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_status"
       end
-      # resource path
-      local_var_path = '/2/status'
-
-      # query parameters
+      path = '/2/status'
       query_params = opts[:query_params] || {}
       query_params[:'index'] = index
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetStatusResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::GetStatusResponse'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.get_status",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#get_status\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1153,10 +925,7 @@ module Algolia
         fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_countries, must conform to the pattern #{pattern}."
       end
 
-      # resource path
-      local_var_path = '/2/countries'
-
-      # query parameters
+      path = '/2/countries'
       query_params = opts[:query_params] || {}
       query_params[:'index'] = index
       query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
@@ -1164,35 +933,21 @@ module Algolia
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
       query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetTopCountriesResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::GetTopCountriesResponse'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.get_top_countries",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#get_top_countries\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1244,10 +999,7 @@ module Algolia
         fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_filter_attributes, must conform to the pattern #{pattern}."
       end
 
-      # resource path
-      local_var_path = '/2/filters'
-
-      # query parameters
+      path = '/2/filters'
       query_params = opts[:query_params] || {}
       query_params[:'index'] = index
       query_params[:'search'] = opts[:'search'] if !opts[:'search'].nil?
@@ -1256,35 +1008,21 @@ module Algolia
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
       query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetTopFilterAttributesResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::GetTopFilterAttributesResponse'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.get_top_filter_attributes",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#get_top_filter_attributes\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1342,10 +1080,7 @@ module Algolia
         fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_filter_for_attribute, must conform to the pattern #{pattern}."
       end
 
-      # resource path
-      local_var_path = '/2/filters/{attribute}'.sub('{' + 'attribute' + '}', CGI.escape(attribute.to_s))
-
-      # query parameters
+      path = '/2/filters/{attribute}'.sub('{' + 'attribute' + '}', CGI.escape(attribute.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'index'] = index
       query_params[:'search'] = opts[:'search'] if !opts[:'search'].nil?
@@ -1354,35 +1089,21 @@ module Algolia
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
       query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetTopFilterForAttributeResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::GetTopFilterForAttributeResponse'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.get_top_filter_for_attribute",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#get_top_filter_for_attribute\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1434,10 +1155,7 @@ module Algolia
         fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_filters_no_results, must conform to the pattern #{pattern}."
       end
 
-      # resource path
-      local_var_path = '/2/filters/noResults'
-
-      # query parameters
+      path = '/2/filters/noResults'
       query_params = opts[:query_params] || {}
       query_params[:'index'] = index
       query_params[:'search'] = opts[:'search'] if !opts[:'search'].nil?
@@ -1446,35 +1164,21 @@ module Algolia
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
       query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetTopFiltersNoResultsResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::GetTopFiltersNoResultsResponse'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.get_top_filters_no_results",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#get_top_filters_no_results\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1528,10 +1232,7 @@ module Algolia
         fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_hits, must conform to the pattern #{pattern}."
       end
 
-      # resource path
-      local_var_path = '/2/hits'
-
-      # query parameters
+      path = '/2/hits'
       query_params = opts[:query_params] || {}
       query_params[:'index'] = index
       query_params[:'search'] = opts[:'search'] if !opts[:'search'].nil?
@@ -1541,35 +1242,21 @@ module Algolia
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
       query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetTopHitsResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::GetTopHitsResponse'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.get_top_hits",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#get_top_hits\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1625,10 +1312,7 @@ module Algolia
         fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_searches, must conform to the pattern #{pattern}."
       end
 
-      # resource path
-      local_var_path = '/2/searches'
-
-      # query parameters
+      path = '/2/searches'
       query_params = opts[:query_params] || {}
       query_params[:'index'] = index
       query_params[:'clickAnalytics'] = opts[:'click_analytics'] if !opts[:'click_analytics'].nil?
@@ -1639,35 +1323,21 @@ module Algolia
       query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
       query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
       query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetTopSearchesResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::GetTopSearchesResponse'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.get_top_searches",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#get_top_searches\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1713,44 +1383,27 @@ module Algolia
         fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_users_count, must conform to the pattern #{pattern}."
       end
 
-      # resource path
-      local_var_path = '/2/users/count'
-
-      # query parameters
+      path = '/2/users/count'
       query_params = opts[:query_params] || {}
       query_params[:'index'] = index
       query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
       query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
       query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetUsersCountResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Analytics::GetUsersCountResponse'
 
       new_options = opts.merge(
         :operation => :"AnalyticsClient.get_users_count",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AnalyticsClient#get_users_count\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end

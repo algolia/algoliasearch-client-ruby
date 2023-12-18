@@ -4,26 +4,28 @@ require 'date'
 require 'time'
 
 module Algolia
-  class PurchaseEvent
-    PURCHASE = "purchase".freeze
+  module Insights
+    class PurchaseEvent
+      PURCHASE = "purchase".freeze
 
-    def self.all_vars
-      @all_vars ||= [PURCHASE].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [PURCHASE].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if PurchaseEvent.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #PurchaseEvent"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if PurchaseEvent.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #PurchaseEvent"
+      end
     end
   end
 end

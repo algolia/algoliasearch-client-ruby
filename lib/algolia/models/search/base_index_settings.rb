@@ -4,376 +4,357 @@ require 'date'
 require 'time'
 
 module Algolia
-  class BaseIndexSettings
-    # Creates [replicas](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/), which are copies of a primary index with the same records but different settings.
-    attr_accessor :replicas
+  module Search
+    class BaseIndexSettings
+      # Creates [replicas](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/), which are copies of a primary index with the same records but different settings.
+      attr_accessor :replicas
 
-    # Maximum number of hits accessible through pagination.
-    attr_accessor :pagination_limited_to
+      # Maximum number of hits accessible through pagination.
+      attr_accessor :pagination_limited_to
 
-    # Attributes that can't be retrieved at query time.
-    attr_accessor :unretrievable_attributes
+      # Attributes that can't be retrieved at query time.
+      attr_accessor :unretrievable_attributes
 
-    # Words for which you want to turn off [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
-    attr_accessor :disable_typo_tolerance_on_words
+      # Words for which you want to turn off [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
+      attr_accessor :disable_typo_tolerance_on_words
 
-    # Attributes in your index to which [Japanese transliteration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#japanese-transliteration-and-type-ahead) applies. This will ensure that words indexed in Katakana or Kanji can also be searched in Hiragana.
-    attr_accessor :attributes_to_transliterate
+      # Attributes in your index to which [Japanese transliteration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#japanese-transliteration-and-type-ahead) applies. This will ensure that words indexed in Katakana or Kanji can also be searched in Hiragana.
+      attr_accessor :attributes_to_transliterate
 
-    # Attributes on which to split [camel case](https://wikipedia.org/wiki/Camel_case) words.
-    attr_accessor :camel_case_attributes
+      # Attributes on which to split [camel case](https://wikipedia.org/wiki/Camel_case) words.
+      attr_accessor :camel_case_attributes
 
-    # Attributes in your index to which [word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) (decompounding) applies.
-    attr_accessor :decompounded_attributes
+      # Attributes in your index to which [word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) (decompounding) applies.
+      attr_accessor :decompounded_attributes
 
-    # Set the languages of your index, for language-specific processing steps such as [tokenization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/tokenization/) and [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).
-    attr_accessor :index_languages
+      # Set the languages of your index, for language-specific processing steps such as [tokenization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/tokenization/) and [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).
+      attr_accessor :index_languages
 
-    # Attributes for which you want to turn off [prefix matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjusting-prefix-search).
-    attr_accessor :disable_prefix_on_attributes
+      # Attributes for which you want to turn off [prefix matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjusting-prefix-search).
+      attr_accessor :disable_prefix_on_attributes
 
-    # Incidates whether the engine compresses arrays with exclusively non-negative integers. When enabled, the compressed arrays may be reordered. 
-    attr_accessor :allow_compression_of_integer_array
+      # Incidates whether the engine compresses arrays with exclusively non-negative integers. When enabled, the compressed arrays may be reordered. 
+      attr_accessor :allow_compression_of_integer_array
 
-    # Numeric attributes that can be used as [numerical filters](https://www.algolia.com/doc/guides/managing-results/rules/detecting-intent/how-to/applying-a-custom-filter-for-a-specific-query/#numerical-filters).
-    attr_accessor :numeric_attributes_for_filtering
+      # Numeric attributes that can be used as [numerical filters](https://www.algolia.com/doc/guides/managing-results/rules/detecting-intent/how-to/applying-a-custom-filter-for-a-specific-query/#numerical-filters).
+      attr_accessor :numeric_attributes_for_filtering
 
-    # Controls which separators are added to an Algolia index as part of [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/#what-does-normalization-mean). Separators are all non-letter characters except spaces and currency characters, such as $€£¥.
-    attr_accessor :separators_to_index
+      # Controls which separators are added to an Algolia index as part of [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/#what-does-normalization-mean). Separators are all non-letter characters except spaces and currency characters, such as $€£¥.
+      attr_accessor :separators_to_index
 
-    # [Attributes used for searching](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/), including determining [if matches at the beginning of a word are important (ordered) or not (unordered)](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/how-to/configuring-searchable-attributes-the-right-way/#understanding-word-position). 
-    attr_accessor :searchable_attributes
+      # [Attributes used for searching](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/), including determining [if matches at the beginning of a word are important (ordered) or not (unordered)](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/how-to/configuring-searchable-attributes-the-right-way/#understanding-word-position). 
+      attr_accessor :searchable_attributes
 
-    # Lets you store custom data in your indices.
-    attr_accessor :user_data
+      # Lets you store custom data in your indices.
+      attr_accessor :user_data
 
-    # A list of characters and their normalized replacements to override Algolia's default [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).
-    attr_accessor :custom_normalization
+      # A list of characters and their normalized replacements to override Algolia's default [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).
+      attr_accessor :custom_normalization
 
-    # Name of the deduplication attribute to be used with Algolia's [_distinct_ feature](https://www.algolia.com/doc/guides/managing-results/refine-results/grouping/#introducing-algolias-distinct-feature).
-    attr_accessor :attribute_for_distinct
+      # Name of the deduplication attribute to be used with Algolia's [_distinct_ feature](https://www.algolia.com/doc/guides/managing-results/refine-results/grouping/#introducing-algolias-distinct-feature).
+      attr_accessor :attribute_for_distinct
 
-    # Attribute mapping from ruby-style variable name to JSON key.
-    def self.attribute_map
-      {
-        :'replicas' => :'replicas',
-        :'pagination_limited_to' => :'paginationLimitedTo',
-        :'unretrievable_attributes' => :'unretrievableAttributes',
-        :'disable_typo_tolerance_on_words' => :'disableTypoToleranceOnWords',
-        :'attributes_to_transliterate' => :'attributesToTransliterate',
-        :'camel_case_attributes' => :'camelCaseAttributes',
-        :'decompounded_attributes' => :'decompoundedAttributes',
-        :'index_languages' => :'indexLanguages',
-        :'disable_prefix_on_attributes' => :'disablePrefixOnAttributes',
-        :'allow_compression_of_integer_array' => :'allowCompressionOfIntegerArray',
-        :'numeric_attributes_for_filtering' => :'numericAttributesForFiltering',
-        :'separators_to_index' => :'separatorsToIndex',
-        :'searchable_attributes' => :'searchableAttributes',
-        :'user_data' => :'userData',
-        :'custom_normalization' => :'customNormalization',
-        :'attribute_for_distinct' => :'attributeForDistinct'
-      }
-    end
-
-    # Returns all the JSON keys this model knows about
-    def self.acceptable_attributes
-      attribute_map.values
-    end
-
-    # Attribute type mapping.
-    def self.openapi_types
-      {
-        :'replicas' => :'Array<String>',
-        :'pagination_limited_to' => :'Integer',
-        :'unretrievable_attributes' => :'Array<String>',
-        :'disable_typo_tolerance_on_words' => :'Array<String>',
-        :'attributes_to_transliterate' => :'Array<String>',
-        :'camel_case_attributes' => :'Array<String>',
-        :'decompounded_attributes' => :'Object',
-        :'index_languages' => :'Array<String>',
-        :'disable_prefix_on_attributes' => :'Array<String>',
-        :'allow_compression_of_integer_array' => :'Boolean',
-        :'numeric_attributes_for_filtering' => :'Array<String>',
-        :'separators_to_index' => :'String',
-        :'searchable_attributes' => :'Array<String>',
-        :'user_data' => :'Object',
-        :'custom_normalization' => :'Hash<String, Hash<String, String>>',
-        :'attribute_for_distinct' => :'String'
-      }
-    end
-
-    # List of attributes with nullable: true
-    def self.openapi_nullable
-      Set.new([
-        :'user_data',
-      ])
-    end
-
-    # Initializes the object
-    # @param [Hash] attributes Model attributes in the form of hash
-    def initialize(attributes = {})
-      if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::BaseIndexSettings` initialize method"
+      # Attribute mapping from ruby-style variable name to JSON key.
+      def self.attribute_map
+        {
+          :'replicas' => :'replicas',
+          :'pagination_limited_to' => :'paginationLimitedTo',
+          :'unretrievable_attributes' => :'unretrievableAttributes',
+          :'disable_typo_tolerance_on_words' => :'disableTypoToleranceOnWords',
+          :'attributes_to_transliterate' => :'attributesToTransliterate',
+          :'camel_case_attributes' => :'camelCaseAttributes',
+          :'decompounded_attributes' => :'decompoundedAttributes',
+          :'index_languages' => :'indexLanguages',
+          :'disable_prefix_on_attributes' => :'disablePrefixOnAttributes',
+          :'allow_compression_of_integer_array' => :'allowCompressionOfIntegerArray',
+          :'numeric_attributes_for_filtering' => :'numericAttributesForFiltering',
+          :'separators_to_index' => :'separatorsToIndex',
+          :'searchable_attributes' => :'searchableAttributes',
+          :'user_data' => :'userData',
+          :'custom_normalization' => :'customNormalization',
+          :'attribute_for_distinct' => :'attributeForDistinct'
+        }
       end
 
-      # check to see if the attribute exists and convert string to symbol for hash key
-      attributes = attributes.each_with_object({}) { |(k, v), h|
-        if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::BaseIndexSettings`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+      # Returns all the JSON keys this model knows about
+      def self.acceptable_attributes
+        attribute_map.values
+      end
+
+      # Attribute type mapping.
+      def self.types_mapping
+        {
+          :'replicas' => :'Array<String>',
+          :'pagination_limited_to' => :'Integer',
+          :'unretrievable_attributes' => :'Array<String>',
+          :'disable_typo_tolerance_on_words' => :'Array<String>',
+          :'attributes_to_transliterate' => :'Array<String>',
+          :'camel_case_attributes' => :'Array<String>',
+          :'decompounded_attributes' => :'Object',
+          :'index_languages' => :'Array<String>',
+          :'disable_prefix_on_attributes' => :'Array<String>',
+          :'allow_compression_of_integer_array' => :'Boolean',
+          :'numeric_attributes_for_filtering' => :'Array<String>',
+          :'separators_to_index' => :'String',
+          :'searchable_attributes' => :'Array<String>',
+          :'user_data' => :'Object',
+          :'custom_normalization' => :'Hash<String, Hash<String, String>>',
+          :'attribute_for_distinct' => :'String'
+        }
+      end
+
+      # List of attributes with nullable: true
+      def self.openapi_nullable
+        Set.new([
+          :'user_data',
+        ])
+      end
+
+      # Initializes the object
+      # @param [Hash] attributes Model attributes in the form of hash
+      def initialize(attributes = {})
+        if (!attributes.is_a?(Hash))
+          fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::BaseIndexSettings` initialize method"
         end
-        h[k.to_sym] = v
-      }
 
-      if attributes.key?(:'replicas')
-        if (value = attributes[:'replicas']).is_a?(Array)
-          self.replicas = value
-        end
-      end
-
-      if attributes.key?(:'pagination_limited_to')
-        self.pagination_limited_to = attributes[:'pagination_limited_to']
-      else
-        self.pagination_limited_to = 1000
-      end
-
-      if attributes.key?(:'unretrievable_attributes')
-        if (value = attributes[:'unretrievable_attributes']).is_a?(Array)
-          self.unretrievable_attributes = value
-        end
-      end
-
-      if attributes.key?(:'disable_typo_tolerance_on_words')
-        if (value = attributes[:'disable_typo_tolerance_on_words']).is_a?(Array)
-          self.disable_typo_tolerance_on_words = value
-        end
-      end
-
-      if attributes.key?(:'attributes_to_transliterate')
-        if (value = attributes[:'attributes_to_transliterate']).is_a?(Array)
-          self.attributes_to_transliterate = value
-        end
-      end
-
-      if attributes.key?(:'camel_case_attributes')
-        if (value = attributes[:'camel_case_attributes']).is_a?(Array)
-          self.camel_case_attributes = value
-        end
-      end
-
-      if attributes.key?(:'decompounded_attributes')
-        self.decompounded_attributes = attributes[:'decompounded_attributes']
-      end
-
-      if attributes.key?(:'index_languages')
-        if (value = attributes[:'index_languages']).is_a?(Array)
-          self.index_languages = value
-        end
-      end
-
-      if attributes.key?(:'disable_prefix_on_attributes')
-        if (value = attributes[:'disable_prefix_on_attributes']).is_a?(Array)
-          self.disable_prefix_on_attributes = value
-        end
-      end
-
-      if attributes.key?(:'allow_compression_of_integer_array')
-        self.allow_compression_of_integer_array = attributes[:'allow_compression_of_integer_array']
-      else
-        self.allow_compression_of_integer_array = false
-      end
-
-      if attributes.key?(:'numeric_attributes_for_filtering')
-        if (value = attributes[:'numeric_attributes_for_filtering']).is_a?(Array)
-          self.numeric_attributes_for_filtering = value
-        end
-      end
-
-      if attributes.key?(:'separators_to_index')
-        self.separators_to_index = attributes[:'separators_to_index']
-      else
-        self.separators_to_index = ''
-      end
-
-      if attributes.key?(:'searchable_attributes')
-        if (value = attributes[:'searchable_attributes']).is_a?(Array)
-          self.searchable_attributes = value
-        end
-      end
-
-      if attributes.key?(:'user_data')
-        self.user_data = attributes[:'user_data']
-      end
-
-      if attributes.key?(:'custom_normalization')
-        if (value = attributes[:'custom_normalization']).is_a?(Hash)
-          self.custom_normalization = value
-        end
-      end
-
-      if attributes.key?(:'attribute_for_distinct')
-        self.attribute_for_distinct = attributes[:'attribute_for_distinct']
-      end
-    end
-
-    # Show invalid properties with the reasons. Usually used together with valid?
-    # @return Array for valid properties with the reasons
-    def list_invalid_properties
-      warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
-      invalid_properties = Array.new
-      invalid_properties
-    end
-
-    # Check to see if the all the properties in the model are valid
-    # @return true if the model is valid
-    def valid?
-      warn '[DEPRECATED] the `valid?` method is obsolete'
-      true
-    end
-
-    # Checks equality by comparing each attribute.
-    # @param [Object] Object to be compared
-    def ==(o)
-      return true if self.equal?(o)
-      self.class == o.class &&
-          replicas == o.replicas &&
-          pagination_limited_to == o.pagination_limited_to &&
-          unretrievable_attributes == o.unretrievable_attributes &&
-          disable_typo_tolerance_on_words == o.disable_typo_tolerance_on_words &&
-          attributes_to_transliterate == o.attributes_to_transliterate &&
-          camel_case_attributes == o.camel_case_attributes &&
-          decompounded_attributes == o.decompounded_attributes &&
-          index_languages == o.index_languages &&
-          disable_prefix_on_attributes == o.disable_prefix_on_attributes &&
-          allow_compression_of_integer_array == o.allow_compression_of_integer_array &&
-          numeric_attributes_for_filtering == o.numeric_attributes_for_filtering &&
-          separators_to_index == o.separators_to_index &&
-          searchable_attributes == o.searchable_attributes &&
-          user_data == o.user_data &&
-          custom_normalization == o.custom_normalization &&
-          attribute_for_distinct == o.attribute_for_distinct
-    end
-
-    # @see the `==` method
-    # @param [Object] Object to be compared
-    def eql?(o)
-      self == o
-    end
-
-    # Calculates hash code according to all attributes.
-    # @return [Integer] Hash code
-    def hash
-      [replicas, pagination_limited_to, unretrievable_attributes, disable_typo_tolerance_on_words, attributes_to_transliterate, camel_case_attributes, decompounded_attributes, index_languages, disable_prefix_on_attributes, allow_compression_of_integer_array, numeric_attributes_for_filtering, separators_to_index, searchable_attributes, user_data, custom_normalization, attribute_for_distinct].hash
-    end
-
-    # Builds the object from hash
-    # @param [Hash] attributes Model attributes in the form of hash
-    # @return [Object] Returns the model itself
-    def self.build_from_hash(attributes)
-      return nil unless attributes.is_a?(Hash)
-      attributes = attributes.transform_keys(&:to_sym)
-      transformed_hash = {}
-      openapi_types.each_pair do |key, type|
-        if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-          transformed_hash["#{key}"] = nil
-        elsif type =~ /\AArray<(.*)>/i
-          # check to ensure the input is an array given that the attribute
-          # is documented as an array but the input is not
-          if attributes[attribute_map[key]].is_a?(Array)
-            transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+        # check to see if the attribute exists and convert string to symbol for hash key
+        attributes = attributes.each_with_object({}) { |(k, v), h|
+          if (!self.class.attribute_map.key?(k.to_sym))
+            fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::BaseIndexSettings`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
-        elsif !attributes[attribute_map[key]].nil?
-          transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+          h[k.to_sym] = v
+        }
+
+        if attributes.key?(:'replicas')
+          if (value = attributes[:'replicas']).is_a?(Array)
+            self.replicas = value
+          end
+        end
+
+        if attributes.key?(:'pagination_limited_to')
+          self.pagination_limited_to = attributes[:'pagination_limited_to']
+        end
+
+        if attributes.key?(:'unretrievable_attributes')
+          if (value = attributes[:'unretrievable_attributes']).is_a?(Array)
+            self.unretrievable_attributes = value
+          end
+        end
+
+        if attributes.key?(:'disable_typo_tolerance_on_words')
+          if (value = attributes[:'disable_typo_tolerance_on_words']).is_a?(Array)
+            self.disable_typo_tolerance_on_words = value
+          end
+        end
+
+        if attributes.key?(:'attributes_to_transliterate')
+          if (value = attributes[:'attributes_to_transliterate']).is_a?(Array)
+            self.attributes_to_transliterate = value
+          end
+        end
+
+        if attributes.key?(:'camel_case_attributes')
+          if (value = attributes[:'camel_case_attributes']).is_a?(Array)
+            self.camel_case_attributes = value
+          end
+        end
+
+        if attributes.key?(:'decompounded_attributes')
+          self.decompounded_attributes = attributes[:'decompounded_attributes']
+        end
+
+        if attributes.key?(:'index_languages')
+          if (value = attributes[:'index_languages']).is_a?(Array)
+            self.index_languages = value
+          end
+        end
+
+        if attributes.key?(:'disable_prefix_on_attributes')
+          if (value = attributes[:'disable_prefix_on_attributes']).is_a?(Array)
+            self.disable_prefix_on_attributes = value
+          end
+        end
+
+        if attributes.key?(:'allow_compression_of_integer_array')
+          self.allow_compression_of_integer_array = attributes[:'allow_compression_of_integer_array']
+        end
+
+        if attributes.key?(:'numeric_attributes_for_filtering')
+          if (value = attributes[:'numeric_attributes_for_filtering']).is_a?(Array)
+            self.numeric_attributes_for_filtering = value
+          end
+        end
+
+        if attributes.key?(:'separators_to_index')
+          self.separators_to_index = attributes[:'separators_to_index']
+        end
+
+        if attributes.key?(:'searchable_attributes')
+          if (value = attributes[:'searchable_attributes']).is_a?(Array)
+            self.searchable_attributes = value
+          end
+        end
+
+        if attributes.key?(:'user_data')
+          self.user_data = attributes[:'user_data']
+        end
+
+        if attributes.key?(:'custom_normalization')
+          if (value = attributes[:'custom_normalization']).is_a?(Hash)
+            self.custom_normalization = value
+          end
+        end
+
+        if attributes.key?(:'attribute_for_distinct')
+          self.attribute_for_distinct = attributes[:'attribute_for_distinct']
         end
       end
-      new(transformed_hash)
-    end
 
-    # Deserializes the data based on type
-    # @param string type Data type
-    # @param string value Value to be deserialized
-    # @return [Object] Deserialized data
-    def self._deserialize(type, value)
-      case type.to_sym
-      when :Time
-        Time.parse(value)
-      when :Date
-        Date.parse(value)
-      when :String
-        value.to_s
-      when :Integer
-        value.to_i
-      when :Float
-        value.to_f
-      when :Boolean
-        if value.to_s =~ /\A(true|t|yes|y|1)\z/i
-          true
+      # Checks equality by comparing each attribute.
+      # @param [Object] Object to be compared
+      def ==(o)
+        return true if self.equal?(o)
+        self.class == o.class &&
+            replicas == o.replicas &&
+            pagination_limited_to == o.pagination_limited_to &&
+            unretrievable_attributes == o.unretrievable_attributes &&
+            disable_typo_tolerance_on_words == o.disable_typo_tolerance_on_words &&
+            attributes_to_transliterate == o.attributes_to_transliterate &&
+            camel_case_attributes == o.camel_case_attributes &&
+            decompounded_attributes == o.decompounded_attributes &&
+            index_languages == o.index_languages &&
+            disable_prefix_on_attributes == o.disable_prefix_on_attributes &&
+            allow_compression_of_integer_array == o.allow_compression_of_integer_array &&
+            numeric_attributes_for_filtering == o.numeric_attributes_for_filtering &&
+            separators_to_index == o.separators_to_index &&
+            searchable_attributes == o.searchable_attributes &&
+            user_data == o.user_data &&
+            custom_normalization == o.custom_normalization &&
+            attribute_for_distinct == o.attribute_for_distinct
+      end
+
+      # @see the `==` method
+      # @param [Object] Object to be compared
+      def eql?(o)
+        self == o
+      end
+
+      # Calculates hash code according to all attributes.
+      # @return [Integer] Hash code
+      def hash
+        [replicas, pagination_limited_to, unretrievable_attributes, disable_typo_tolerance_on_words, attributes_to_transliterate, camel_case_attributes, decompounded_attributes, index_languages, disable_prefix_on_attributes, allow_compression_of_integer_array, numeric_attributes_for_filtering, separators_to_index, searchable_attributes, user_data, custom_normalization, attribute_for_distinct].hash
+      end
+
+      # Builds the object from hash
+      # @param [Hash] attributes Model attributes in the form of hash
+      # @return [Object] Returns the model itself
+      def self.build_from_hash(attributes)
+        return nil unless attributes.is_a?(Hash)
+        attributes = attributes.transform_keys(&:to_sym)
+        transformed_hash = {}
+        types_mapping.each_pair do |key, type|
+          if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
+            transformed_hash["#{key}"] = nil
+          elsif type =~ /\AArray<(.*)>/i
+            # check to ensure the input is an array given that the attribute
+            # is documented as an array but the input is not
+            if attributes[attribute_map[key]].is_a?(Array)
+              transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+            end
+          elsif !attributes[attribute_map[key]].nil?
+            transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+          end
+        end
+        new(transformed_hash)
+      end
+
+      # Deserializes the data based on type
+      # @param string type Data type
+      # @param string value Value to be deserialized
+      # @return [Object] Deserialized data
+      def self._deserialize(type, value)
+        case type.to_sym
+        when :Time
+          Time.parse(value)
+        when :Date
+          Date.parse(value)
+        when :String
+          value.to_s
+        when :Integer
+          value.to_i
+        when :Float
+          value.to_f
+        when :Boolean
+          if value.to_s =~ /\A(true|t|yes|y|1)\z/i
+            true
+          else
+            false
+          end
+        when :Object
+          # generic object (usually a Hash), return directly
+          value
+        when /\AArray<(?<inner_type>.+)>\z/
+          inner_type = Regexp.last_match[:inner_type]
+          value.map { |v| _deserialize(inner_type, v) }
+        when /\AHash<(?<k_type>.+?), (?<v_type>.+)>\z/
+          k_type = Regexp.last_match[:k_type]
+          v_type = Regexp.last_match[:v_type]
+          {}.tap do |hash|
+            value.each do |k, v|
+              hash[_deserialize(k_type, k)] = _deserialize(v_type, v)
+            end
+          end
+        else # model
+          # models (e.g. Pet) or oneOf
+          klass = Algolia::Search.const_get(type)
+          klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass.build_from_hash(value)
+        end
+      end
+
+      # Returns the string representation of the object
+      # @return [String] String presentation of the object
+      def to_s
+        to_hash.to_s
+      end
+
+      # to_body is an alias to to_hash (backward compatibility)
+      # @return [Hash] Returns the object in the form of hash
+      def to_body
+        to_hash
+      end
+
+      # Returns the object in the form of hash
+      # @return [Hash] Returns the object in the form of hash
+      def to_hash
+        hash = {}
+        self.class.attribute_map.each_pair do |attr, param|
+          value = self.send(attr)
+          if value.nil?
+            is_nullable = self.class.openapi_nullable.include?(attr)
+            next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
+          end
+
+          hash[param] = _to_hash(value)
+        end
+        hash
+      end
+
+      # Outputs non-array value in the form of hash
+      # For object, use to_hash. Otherwise, just return the value
+      # @param [Object] value Any valid value
+      # @return [Hash] Returns the value in the form of hash
+      def _to_hash(value)
+        if value.is_a?(Array)
+          value.compact.map { |v| _to_hash(v) }
+        elsif value.is_a?(Hash)
+          {}.tap do |hash|
+            value.each { |k, v| hash[k] = _to_hash(v) }
+          end
+        elsif value.respond_to? :to_hash
+          value.to_hash
         else
-          false
+          value
         end
-      when :Object
-        # generic object (usually a Hash), return directly
-        value
-      when /\AArray<(?<inner_type>.+)>\z/
-        inner_type = Regexp.last_match[:inner_type]
-        value.map { |v| _deserialize(inner_type, v) }
-      when /\AHash<(?<k_type>.+?), (?<v_type>.+)>\z/
-        k_type = Regexp.last_match[:k_type]
-        v_type = Regexp.last_match[:v_type]
-        {}.tap do |hash|
-          value.each do |k, v|
-            hash[_deserialize(k_type, k)] = _deserialize(v_type, v)
-          end
-        end
-      else # model
-        # models (e.g. Pet) or oneOf
-        klass = Algolia.const_get(type)
-        klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass.build_from_hash(value)
-      end
-    end
-
-    # Returns the string representation of the object
-    # @return [String] String presentation of the object
-    def to_s
-      to_hash.to_s
-    end
-
-    # to_body is an alias to to_hash (backward compatibility)
-    # @return [Hash] Returns the object in the form of hash
-    def to_body
-      to_hash
-    end
-
-    # Returns the object in the form of hash
-    # @return [Hash] Returns the object in the form of hash
-    def to_hash
-      hash = {}
-      self.class.attribute_map.each_pair do |attr, param|
-        value = self.send(attr)
-        if value.nil?
-          is_nullable = self.class.openapi_nullable.include?(attr)
-          next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
-        end
-
-        hash[param] = _to_hash(value)
-      end
-      hash
-    end
-
-    # Outputs non-array value in the form of hash
-    # For object, use to_hash. Otherwise, just return the value
-    # @param [Object] value Any valid value
-    # @return [Hash] Returns the value in the form of hash
-    def _to_hash(value)
-      if value.is_a?(Array)
-        value.compact.map { |v| _to_hash(v) }
-      elsif value.is_a?(Hash)
-        {}.tap do |hash|
-          value.each { |k, v| hash[k] = _to_hash(v) }
-        end
-      elsif value.respond_to? :to_hash
-        value.to_hash
-      else
-        value
       end
     end
   end

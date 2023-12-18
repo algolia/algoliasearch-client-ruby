@@ -4,28 +4,30 @@ require 'date'
 require 'time'
 
 module Algolia
-  class TriggerType
-    ON_DEMAND = "onDemand".freeze
-    SCHEDULE = "schedule".freeze
-    SUBSCRIPTION = "subscription".freeze
+  module Ingestion
+    class TriggerType
+      ON_DEMAND = "onDemand".freeze
+      SCHEDULE = "schedule".freeze
+      SUBSCRIPTION = "subscription".freeze
 
-    def self.all_vars
-      @all_vars ||= [ON_DEMAND, SCHEDULE, SUBSCRIPTION].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [ON_DEMAND, SCHEDULE, SUBSCRIPTION].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if TriggerType.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #TriggerType"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if TriggerType.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #TriggerType"
+      end
     end
   end
 end

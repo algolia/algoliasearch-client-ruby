@@ -4,27 +4,29 @@ require 'date'
 require 'time'
 
 module Algolia
-  class TypoToleranceEnum
-    MIN = "min".freeze
-    STRICT = "strict".freeze
+  module Recommend
+    class TypoToleranceEnum
+      MIN = "min".freeze
+      STRICT = "strict".freeze
 
-    def self.all_vars
-      @all_vars ||= [MIN, STRICT].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [MIN, STRICT].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if TypoToleranceEnum.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #TypoToleranceEnum"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if TypoToleranceEnum.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #TypoToleranceEnum"
+      end
     end
   end
 end

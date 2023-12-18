@@ -6,9 +6,29 @@ module Algolia
   class SearchClient
     attr_accessor :api_client
 
-    def initialize(api_client = ApiClient.default)
-      @api_client = api_client
+    def initialize(config = nil)
+      @api_client = Algolia::ApiClient.new(config)
     end
+
+    def self.create(app_id, api_key)
+      hosts = []
+
+      hosts << Transport::StatefulHost.new("#{app_id}-dsn.algolia.net", accept: CallType::READ)
+      hosts << Transport::StatefulHost.new("#{app_id}.algolia.net", accept: CallType::WRITE)
+
+      hosts += 1.upto(3).map do |i|
+        Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", accept: CallType::READ | CallType::WRITE)
+      end.shuffle
+
+      config = Algolia::Configuration.new(app_id, api_key, hosts)
+      create_with_config(config)
+    end
+
+
+    def self.create_with_config(config)
+      new(config)
+    end
+
     # Add API key.
     # Add a new API key with specific permissions and restrictions. The request must be authenticated with the admin API key. The response returns an API key string. 
     # @param api_key [ApiKey] 
@@ -32,45 +52,23 @@ module Algolia
       if @api_client.config.client_side_validation && api_key.nil?
         fail ArgumentError, "Missing the required parameter 'api_key' when calling SearchClient.add_api_key"
       end
-      # resource path
-      local_var_path = '/1/keys'
-
-      # query parameters
+      path = '/1/keys'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(api_key)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'AddApiKeyResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::AddApiKeyResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.add_api_key",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#add_api_key\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -112,45 +110,23 @@ module Algolia
       if @api_client.config.client_side_validation && body.nil?
         fail ArgumentError, "Missing the required parameter 'body' when calling SearchClient.add_or_update_object"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'UpdatedAtWithObjectIdResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::UpdatedAtWithObjectIdResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.add_or_update_object",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#add_or_update_object\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -180,45 +156,23 @@ module Algolia
       if @api_client.config.client_side_validation && source.nil?
         fail ArgumentError, "Missing the required parameter 'source' when calling SearchClient.append_source"
       end
-      # resource path
-      local_var_path = '/1/security/sources/append'
-
-      # query parameters
+      path = '/1/security/sources/append'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(source)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'CreatedAtResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::CreatedAtResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.append_source",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#append_source\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -259,46 +213,24 @@ module Algolia
       if @api_client.config.client_side_validation && assign_user_id_params.nil?
         fail ArgumentError, "Missing the required parameter 'assign_user_id_params' when calling SearchClient.assign_user_id"
       end
-      # resource path
-      local_var_path = '/1/clusters/mapping'
-
-      # query parameters
+      path = '/1/clusters/mapping'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
       header_params[:'X-Algolia-User-ID'] = x_algolia_user_id
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(assign_user_id_params)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'CreatedAtResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::CreatedAtResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.assign_user_id",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#assign_user_id\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -334,45 +266,23 @@ module Algolia
       if @api_client.config.client_side_validation && batch_write_params.nil?
         fail ArgumentError, "Missing the required parameter 'batch_write_params' when calling SearchClient.batch"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/batch'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/batch'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(batch_write_params)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'BatchResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::BatchResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.batch",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#batch\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -413,46 +323,24 @@ module Algolia
       if @api_client.config.client_side_validation && batch_assign_user_ids_params.nil?
         fail ArgumentError, "Missing the required parameter 'batch_assign_user_ids_params' when calling SearchClient.batch_assign_user_ids"
       end
-      # resource path
-      local_var_path = '/1/clusters/mapping/batch'
-
-      # query parameters
+      path = '/1/clusters/mapping/batch'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
       header_params[:'X-Algolia-User-ID'] = x_algolia_user_id
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(batch_assign_user_ids_params)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'CreatedAtResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::CreatedAtResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.batch_assign_user_ids",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#batch_assign_user_ids\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -488,45 +376,23 @@ module Algolia
       if @api_client.config.client_side_validation && batch_dictionary_entries_params.nil?
         fail ArgumentError, "Missing the required parameter 'batch_dictionary_entries_params' when calling SearchClient.batch_dictionary_entries"
       end
-      # resource path
-      local_var_path = '/1/dictionaries/{dictionaryName}/batch'.sub('{' + 'dictionaryName' + '}', CGI.escape(dictionary_name.to_s))
-
-      # query parameters
+      path = '/1/dictionaries/{dictionaryName}/batch'.sub('{' + 'dictionaryName' + '}', CGI.escape(dictionary_name.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(batch_dictionary_entries_params)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'UpdatedAtResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::UpdatedAtResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.batch_dictionary_entries",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#batch_dictionary_entries\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -558,45 +424,23 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.browse"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/browse'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/browse'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'browse_params'])
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'BrowseResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::BrowseResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.browse",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#browse\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -628,41 +472,24 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.clear_all_synonyms"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/synonyms/clear'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/synonyms/clear'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'forwardToReplicas'] = opts[:'forward_to_replicas'] if !opts[:'forward_to_replicas'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'UpdatedAtResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::UpdatedAtResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.clear_all_synonyms",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#clear_all_synonyms\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -692,40 +519,23 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.clear_objects"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/clear'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/clear'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'UpdatedAtResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::UpdatedAtResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.clear_objects",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#clear_objects\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -757,41 +567,24 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.clear_rules"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/rules/clear'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/rules/clear'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'forwardToReplicas'] = opts[:'forward_to_replicas'] if !opts[:'forward_to_replicas'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'UpdatedAtResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::UpdatedAtResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.clear_rules",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#clear_rules\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -823,41 +616,24 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling SearchClient.custom_delete"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::Object'
 
       new_options = opts.merge(
         :operation => :"SearchClient.custom_delete",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#custom_delete\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -889,41 +665,24 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling SearchClient.custom_get"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::Object'
 
       new_options = opts.merge(
         :operation => :"SearchClient.custom_get",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#custom_get\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -957,46 +716,24 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling SearchClient.custom_post"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::Object'
 
       new_options = opts.merge(
         :operation => :"SearchClient.custom_post",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#custom_post\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1030,46 +767,24 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         fail ArgumentError, "Missing the required parameter 'path' when calling SearchClient.custom_put"
       end
-      # resource path
-      local_var_path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-
-      # query parameters
+      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Object'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::Object'
 
       new_options = opts.merge(
         :operation => :"SearchClient.custom_put",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#custom_put\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1099,40 +814,23 @@ module Algolia
       if @api_client.config.client_side_validation && key.nil?
         fail ArgumentError, "Missing the required parameter 'key' when calling SearchClient.delete_api_key"
       end
-      # resource path
-      local_var_path = '/1/keys/{key}'.sub('{' + 'key' + '}', CGI.escape(key.to_s))
-
-      # query parameters
+      path = '/1/keys/{key}'.sub('{' + 'key' + '}', CGI.escape(key.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'DeleteApiKeyResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::DeleteApiKeyResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.delete_api_key",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#delete_api_key\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1168,45 +866,23 @@ module Algolia
       if @api_client.config.client_side_validation && delete_by_params.nil?
         fail ArgumentError, "Missing the required parameter 'delete_by_params' when calling SearchClient.delete_by"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/deleteByQuery'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/deleteByQuery'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(delete_by_params)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'DeletedAtResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::DeletedAtResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.delete_by",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#delete_by\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1236,40 +912,23 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.delete_index"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'DeletedAtResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::DeletedAtResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.delete_index",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#delete_index\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1305,40 +964,23 @@ module Algolia
       if @api_client.config.client_side_validation && object_id.nil?
         fail ArgumentError, "Missing the required parameter 'object_id' when calling SearchClient.delete_object"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'DeletedAtResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::DeletedAtResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.delete_object",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#delete_object\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1376,41 +1018,24 @@ module Algolia
       if @api_client.config.client_side_validation && object_id.nil?
         fail ArgumentError, "Missing the required parameter 'object_id' when calling SearchClient.delete_rule"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/rules/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/rules/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'forwardToReplicas'] = opts[:'forward_to_replicas'] if !opts[:'forward_to_replicas'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'UpdatedAtResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::UpdatedAtResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.delete_rule",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#delete_rule\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1440,40 +1065,23 @@ module Algolia
       if @api_client.config.client_side_validation && source.nil?
         fail ArgumentError, "Missing the required parameter 'source' when calling SearchClient.delete_source"
       end
-      # resource path
-      local_var_path = '/1/security/sources/{source}'.sub('{' + 'source' + '}', CGI.escape(source.to_s))
-
-      # query parameters
+      path = '/1/security/sources/{source}'.sub('{' + 'source' + '}', CGI.escape(source.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'DeleteSourceResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::DeleteSourceResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.delete_source",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#delete_source\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1511,41 +1119,24 @@ module Algolia
       if @api_client.config.client_side_validation && object_id.nil?
         fail ArgumentError, "Missing the required parameter 'object_id' when calling SearchClient.delete_synonym"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/synonyms/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/synonyms/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'forwardToReplicas'] = opts[:'forward_to_replicas'] if !opts[:'forward_to_replicas'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'DeletedAtResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::DeletedAtResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.delete_synonym",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#delete_synonym\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1575,40 +1166,23 @@ module Algolia
       if @api_client.config.client_side_validation && key.nil?
         fail ArgumentError, "Missing the required parameter 'key' when calling SearchClient.get_api_key"
       end
-      # resource path
-      local_var_path = '/1/keys/{key}'.sub('{' + 'key' + '}', CGI.escape(key.to_s))
-
-      # query parameters
+      path = '/1/keys/{key}'.sub('{' + 'key' + '}', CGI.escape(key.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetApiKeyResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::GetApiKeyResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.get_api_key",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#get_api_key\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1632,40 +1206,23 @@ module Algolia
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: SearchClient.get_dictionary_languages ...'
       end
-      # resource path
-      local_var_path = '/1/dictionaries/*/languages'
-
-      # query parameters
+      path = '/1/dictionaries/*/languages'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Hash<String, Languages>'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::Hash<String, Languages>'
 
       new_options = opts.merge(
         :operation => :"SearchClient.get_dictionary_languages",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#get_dictionary_languages\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1689,40 +1246,23 @@ module Algolia
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: SearchClient.get_dictionary_settings ...'
       end
-      # resource path
-      local_var_path = '/1/dictionaries/*/settings'
-
-      # query parameters
+      path = '/1/dictionaries/*/settings'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetDictionarySettingsResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::GetDictionarySettingsResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.get_dictionary_settings",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#get_dictionary_settings\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1758,44 +1298,27 @@ module Algolia
         fail ArgumentError, 'invalid value for "opts[:"length"]" when calling SearchClient.get_logs, must be smaller than or equal to 1000.'
       end
 
-      # resource path
-      local_var_path = '/1/logs'
-
-      # query parameters
+      path = '/1/logs'
       query_params = opts[:query_params] || {}
       query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
       query_params[:'length'] = opts[:'length'] if !opts[:'length'].nil?
       query_params[:'indexName'] = opts[:'index_name'] if !opts[:'index_name'].nil?
       query_params[:'type'] = opts[:'type'] if !opts[:'type'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetLogsResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::GetLogsResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.get_logs",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#get_logs\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1833,41 +1356,24 @@ module Algolia
       if @api_client.config.client_side_validation && object_id.nil?
         fail ArgumentError, "Missing the required parameter 'object_id' when calling SearchClient.get_object"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'attributesToRetrieve'] = @api_client.build_collection_param(opts[:'attributes_to_retrieve'], :multi) if !opts[:'attributes_to_retrieve'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Hash<String, String>'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::Hash<String, String>'
 
       new_options = opts.merge(
         :operation => :"SearchClient.get_object",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#get_object\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1897,45 +1403,23 @@ module Algolia
       if @api_client.config.client_side_validation && get_objects_params.nil?
         fail ArgumentError, "Missing the required parameter 'get_objects_params' when calling SearchClient.get_objects"
       end
-      # resource path
-      local_var_path = '/1/indexes/*/objects'
-
-      # query parameters
+      path = '/1/indexes/*/objects'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(get_objects_params)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetObjectsResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::GetObjectsResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.get_objects",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#get_objects\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -1971,40 +1455,23 @@ module Algolia
       if @api_client.config.client_side_validation && object_id.nil?
         fail ArgumentError, "Missing the required parameter 'object_id' when calling SearchClient.get_rule"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/rules/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/rules/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Rule'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::Rule'
 
       new_options = opts.merge(
         :operation => :"SearchClient.get_rule",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#get_rule\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -2034,40 +1501,23 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.get_settings"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/settings'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/settings'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'IndexSettings'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::IndexSettings'
 
       new_options = opts.merge(
         :operation => :"SearchClient.get_settings",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#get_settings\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -2091,40 +1541,23 @@ module Algolia
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: SearchClient.get_sources ...'
       end
-      # resource path
-      local_var_path = '/1/security/sources'
-
-      # query parameters
+      path = '/1/security/sources'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'Array<Source>'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::Array<Source>'
 
       new_options = opts.merge(
         :operation => :"SearchClient.get_sources",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#get_sources\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -2160,40 +1593,23 @@ module Algolia
       if @api_client.config.client_side_validation && object_id.nil?
         fail ArgumentError, "Missing the required parameter 'object_id' when calling SearchClient.get_synonym"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/synonyms/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/synonyms/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'SynonymHit'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::SynonymHit'
 
       new_options = opts.merge(
         :operation => :"SearchClient.get_synonym",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#get_synonym\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -2229,40 +1645,23 @@ module Algolia
       if @api_client.config.client_side_validation && task_id.nil?
         fail ArgumentError, "Missing the required parameter 'task_id' when calling SearchClient.get_task"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/task/{taskID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/task/{taskID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetTaskResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::GetTaskResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.get_task",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#get_task\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -2286,40 +1685,23 @@ module Algolia
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: SearchClient.get_top_user_ids ...'
       end
-      # resource path
-      local_var_path = '/1/clusters/mapping/top'
-
-      # query parameters
+      path = '/1/clusters/mapping/top'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'GetTopUserIdsResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::GetTopUserIdsResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.get_top_user_ids",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#get_top_user_ids\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -2354,40 +1736,23 @@ module Algolia
         fail ArgumentError, "invalid value for 'user_id' when calling SearchClient.get_user_id, must conform to the pattern #{pattern}."
       end
 
-      # resource path
-      local_var_path = '/1/clusters/mapping/{userID}'.sub('{' + 'userID' + '}', CGI.escape(user_id.to_s))
-
-      # query parameters
+      path = '/1/clusters/mapping/{userID}'.sub('{' + 'userID' + '}', CGI.escape(user_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'UserId'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::UserId'
 
       new_options = opts.merge(
         :operation => :"SearchClient.get_user_id",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#get_user_id\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -2413,41 +1778,24 @@ module Algolia
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: SearchClient.has_pending_mappings ...'
       end
-      # resource path
-      local_var_path = '/1/clusters/mapping/pending'
-
-      # query parameters
+      path = '/1/clusters/mapping/pending'
       query_params = opts[:query_params] || {}
       query_params[:'getClusters'] = opts[:'get_clusters'] if !opts[:'get_clusters'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'HasPendingMappingsResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::HasPendingMappingsResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.has_pending_mappings",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#has_pending_mappings\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -2471,40 +1819,23 @@ module Algolia
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: SearchClient.list_api_keys ...'
       end
-      # resource path
-      local_var_path = '/1/keys'
-
-      # query parameters
+      path = '/1/keys'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'ListApiKeysResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::ListApiKeysResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.list_api_keys",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#list_api_keys\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -2528,40 +1859,23 @@ module Algolia
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: SearchClient.list_clusters ...'
       end
-      # resource path
-      local_var_path = '/1/clusters'
-
-      # query parameters
+      path = '/1/clusters'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'ListClustersResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::ListClustersResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.list_clusters",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#list_clusters\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -2593,42 +1907,25 @@ module Algolia
         fail ArgumentError, 'invalid value for "opts[:"page"]" when calling SearchClient.list_indices, must be greater than or equal to 0.'
       end
 
-      # resource path
-      local_var_path = '/1/indexes'
-
-      # query parameters
+      path = '/1/indexes'
       query_params = opts[:query_params] || {}
       query_params[:'page'] = opts[:'page'] if !opts[:'page'].nil?
       query_params[:'hitsPerPage'] = opts[:'hits_per_page'] if !opts[:'hits_per_page'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'ListIndicesResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::ListIndicesResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.list_indices",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#list_indices\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -2660,42 +1957,25 @@ module Algolia
         fail ArgumentError, 'invalid value for "opts[:"page"]" when calling SearchClient.list_user_ids, must be greater than or equal to 0.'
       end
 
-      # resource path
-      local_var_path = '/1/clusters/mapping'
-
-      # query parameters
+      path = '/1/clusters/mapping'
       query_params = opts[:query_params] || {}
       query_params[:'page'] = opts[:'page'] if !opts[:'page'].nil?
       query_params[:'hitsPerPage'] = opts[:'hits_per_page'] if !opts[:'hits_per_page'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'ListUserIdsResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::ListUserIdsResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.list_user_ids",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:GET, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#list_user_ids\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -2725,45 +2005,23 @@ module Algolia
       if @api_client.config.client_side_validation && batch_params.nil?
         fail ArgumentError, "Missing the required parameter 'batch_params' when calling SearchClient.multiple_batch"
       end
-      # resource path
-      local_var_path = '/1/indexes/*/batch'
-
-      # query parameters
+      path = '/1/indexes/*/batch'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(batch_params)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'MultipleBatchResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::MultipleBatchResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.multiple_batch",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#multiple_batch\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -2799,45 +2057,23 @@ module Algolia
       if @api_client.config.client_side_validation && operation_index_params.nil?
         fail ArgumentError, "Missing the required parameter 'operation_index_params' when calling SearchClient.operation_index"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/operation'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/operation'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(operation_index_params)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'UpdatedAtResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::UpdatedAtResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.operation_index",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#operation_index\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -2881,46 +2117,24 @@ module Algolia
       if @api_client.config.client_side_validation && attributes_to_update.nil?
         fail ArgumentError, "Missing the required parameter 'attributes_to_update' when calling SearchClient.partial_update_object"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/{objectID}/partial'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/{objectID}/partial'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'createIfNotExists'] = opts[:'create_if_not_exists'] if !opts[:'create_if_not_exists'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(attributes_to_update)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'UpdatedAtWithObjectIdResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::UpdatedAtWithObjectIdResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.partial_update_object",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#partial_update_object\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -2955,40 +2169,23 @@ module Algolia
         fail ArgumentError, "invalid value for 'user_id' when calling SearchClient.remove_user_id, must conform to the pattern #{pattern}."
       end
 
-      # resource path
-      local_var_path = '/1/clusters/mapping/{userID}'.sub('{' + 'userID' + '}', CGI.escape(user_id.to_s))
-
-      # query parameters
+      path = '/1/clusters/mapping/{userID}'.sub('{' + 'userID' + '}', CGI.escape(user_id.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'RemoveUserIdResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::RemoveUserIdResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.remove_user_id",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:DELETE, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#remove_user_id\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -3018,45 +2215,23 @@ module Algolia
       if @api_client.config.client_side_validation && source.nil?
         fail ArgumentError, "Missing the required parameter 'source' when calling SearchClient.replace_sources"
       end
-      # resource path
-      local_var_path = '/1/security/sources'
-
-      # query parameters
+      path = '/1/security/sources'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(source)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'ReplaceSourceResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::ReplaceSourceResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.replace_sources",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#replace_sources\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -3086,40 +2261,23 @@ module Algolia
       if @api_client.config.client_side_validation && key.nil?
         fail ArgumentError, "Missing the required parameter 'key' when calling SearchClient.restore_api_key"
       end
-      # resource path
-      local_var_path = '/1/keys/{key}/restore'.sub('{' + 'key' + '}', CGI.escape(key.to_s))
-
-      # query parameters
+      path = '/1/keys/{key}/restore'.sub('{' + 'key' + '}', CGI.escape(key.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body]
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'AddApiKeyResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::AddApiKeyResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.restore_api_key",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#restore_api_key\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -3155,45 +2313,23 @@ module Algolia
       if @api_client.config.client_side_validation && body.nil?
         fail ArgumentError, "Missing the required parameter 'body' when calling SearchClient.save_object"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(body)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'SaveObjectResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::SaveObjectResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.save_object",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#save_object\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -3237,46 +2373,24 @@ module Algolia
       if @api_client.config.client_side_validation && rule.nil?
         fail ArgumentError, "Missing the required parameter 'rule' when calling SearchClient.save_rule"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/rules/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/rules/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'forwardToReplicas'] = opts[:'forward_to_replicas'] if !opts[:'forward_to_replicas'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(rule)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'UpdatedRuleResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::UpdatedRuleResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.save_rule",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#save_rule\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -3316,47 +2430,25 @@ module Algolia
       if @api_client.config.client_side_validation && rules.nil?
         fail ArgumentError, "Missing the required parameter 'rules' when calling SearchClient.save_rules"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/rules/batch'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/rules/batch'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'forwardToReplicas'] = opts[:'forward_to_replicas'] if !opts[:'forward_to_replicas'].nil?
       query_params[:'clearExistingRules'] = opts[:'clear_existing_rules'] if !opts[:'clear_existing_rules'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(rules)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'UpdatedAtResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::UpdatedAtResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.save_rules",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#save_rules\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -3400,46 +2492,24 @@ module Algolia
       if @api_client.config.client_side_validation && synonym_hit.nil?
         fail ArgumentError, "Missing the required parameter 'synonym_hit' when calling SearchClient.save_synonym"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/synonyms/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/synonyms/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'forwardToReplicas'] = opts[:'forward_to_replicas'] if !opts[:'forward_to_replicas'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(synonym_hit)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'SaveSynonymResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::SaveSynonymResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.save_synonym",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#save_synonym\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -3479,47 +2549,25 @@ module Algolia
       if @api_client.config.client_side_validation && synonym_hit.nil?
         fail ArgumentError, "Missing the required parameter 'synonym_hit' when calling SearchClient.save_synonyms"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/synonyms/batch'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/synonyms/batch'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'forwardToReplicas'] = opts[:'forward_to_replicas'] if !opts[:'forward_to_replicas'].nil?
       query_params[:'replaceExistingSynonyms'] = opts[:'replace_existing_synonyms'] if !opts[:'replace_existing_synonyms'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(synonym_hit)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'UpdatedAtResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::UpdatedAtResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.save_synonyms",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#save_synonyms\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -3549,45 +2597,23 @@ module Algolia
       if @api_client.config.client_side_validation && search_method_params.nil?
         fail ArgumentError, "Missing the required parameter 'search_method_params' when calling SearchClient.search"
       end
-      # resource path
-      local_var_path = '/1/indexes/*/queries'
-
-      # query parameters
+      path = '/1/indexes/*/queries'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(search_method_params)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'SearchResponses'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::SearchResponses'
 
       new_options = opts.merge(
         :operation => :"SearchClient.search",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#search\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -3623,45 +2649,23 @@ module Algolia
       if @api_client.config.client_side_validation && search_dictionary_entries_params.nil?
         fail ArgumentError, "Missing the required parameter 'search_dictionary_entries_params' when calling SearchClient.search_dictionary_entries"
       end
-      # resource path
-      local_var_path = '/1/dictionaries/{dictionaryName}/search'.sub('{' + 'dictionaryName' + '}', CGI.escape(dictionary_name.to_s))
-
-      # query parameters
+      path = '/1/dictionaries/{dictionaryName}/search'.sub('{' + 'dictionaryName' + '}', CGI.escape(dictionary_name.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(search_dictionary_entries_params)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'UpdatedAtResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::UpdatedAtResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.search_dictionary_entries",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#search_dictionary_entries\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -3699,45 +2703,23 @@ module Algolia
       if @api_client.config.client_side_validation && facet_name.nil?
         fail ArgumentError, "Missing the required parameter 'facet_name' when calling SearchClient.search_for_facet_values"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/facets/{facetName}/query'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'facetName' + '}', CGI.escape(facet_name.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/facets/{facetName}/query'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'facetName' + '}', CGI.escape(facet_name.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'search_for_facet_values_request'])
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'SearchForFacetValuesResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::SearchForFacetValuesResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.search_for_facet_values",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#search_for_facet_values\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -3769,45 +2751,23 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.search_rules"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/rules/search'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/rules/search'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'search_rules_params'])
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'SearchRulesResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::SearchRulesResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.search_rules",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#search_rules\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -3839,45 +2799,23 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         fail ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.search_single_index"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/query'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/query'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'search_params'])
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'SearchResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::SearchResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.search_single_index",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#search_single_index\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -3919,48 +2857,26 @@ module Algolia
         fail ArgumentError, 'invalid value for "opts[:"page"]" when calling SearchClient.search_synonyms, must be greater than or equal to 0.'
       end
 
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/synonyms/search'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/synonyms/search'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'type'] = opts[:'type'] if !opts[:'type'].nil?
       query_params[:'page'] = opts[:'page'] if !opts[:'page'].nil?
       query_params[:'hitsPerPage'] = opts[:'hits_per_page'] if !opts[:'hits_per_page'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'search_synonyms_params'])
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'SearchSynonymsResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::SearchSynonymsResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.search_synonyms",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#search_synonyms\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -3990,45 +2906,23 @@ module Algolia
       if @api_client.config.client_side_validation && search_user_ids_params.nil?
         fail ArgumentError, "Missing the required parameter 'search_user_ids_params' when calling SearchClient.search_user_ids"
       end
-      # resource path
-      local_var_path = '/1/clusters/mapping/search'
-
-      # query parameters
+      path = '/1/clusters/mapping/search'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(search_user_ids_params)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'SearchUserIdsResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::SearchUserIdsResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.search_user_ids",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:POST, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#search_user_ids\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -4058,45 +2952,23 @@ module Algolia
       if @api_client.config.client_side_validation && dictionary_settings_params.nil?
         fail ArgumentError, "Missing the required parameter 'dictionary_settings_params' when calling SearchClient.set_dictionary_settings"
       end
-      # resource path
-      local_var_path = '/1/dictionaries/*/settings'
-
-      # query parameters
+      path = '/1/dictionaries/*/settings'
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(dictionary_settings_params)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'UpdatedAtResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::UpdatedAtResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.set_dictionary_settings",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#set_dictionary_settings\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -4134,46 +3006,24 @@ module Algolia
       if @api_client.config.client_side_validation && index_settings.nil?
         fail ArgumentError, "Missing the required parameter 'index_settings' when calling SearchClient.set_settings"
       end
-      # resource path
-      local_var_path = '/1/indexes/{indexName}/settings'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
-
-      # query parameters
+      path = '/1/indexes/{indexName}/settings'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
       query_params[:'forwardToReplicas'] = opts[:'forward_to_replicas'] if !opts[:'forward_to_replicas'].nil?
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(index_settings)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'UpdatedAtResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::UpdatedAtResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.set_settings",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#set_settings\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -4209,45 +3059,23 @@ module Algolia
       if @api_client.config.client_side_validation && api_key.nil?
         fail ArgumentError, "Missing the required parameter 'api_key' when calling SearchClient.update_api_key"
       end
-      # resource path
-      local_var_path = '/1/keys/{key}'.sub('{' + 'key' + '}', CGI.escape(key.to_s))
-
-      # query parameters
+      path = '/1/keys/{key}'.sub('{' + 'key' + '}', CGI.escape(key.to_s))
       query_params = opts[:query_params] || {}
-
-      # header parameters
       header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-        header_params['Content-Type'] = content_type
-      end
 
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
       post_body = opts[:debug_body] || @api_client.object_to_http_body(api_key)
 
-      # return_type
-      return_type = opts[:debug_return_type] || 'UpdateApiKeyResponse'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['apiKey', 'appId']
+      return_type = opts[:debug_return_type] || 'Search::UpdateApiKeyResponse'
 
       new_options = opts.merge(
         :operation => :"SearchClient.update_api_key",
         :header_params => header_params,
         :query_params => query_params,
-        :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names,
         :return_type => return_type
       )
 
-      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      data, status_code, headers = @api_client.call_api(:PUT, path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: SearchClient#update_api_key\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end

@@ -4,29 +4,31 @@ require 'date'
 require 'time'
 
 module Algolia
-  class OrderBy
-    SEARCH_COUNT = "searchCount".freeze
-    CLICK_THROUGH_RATE = "clickThroughRate".freeze
-    CONVERSION_RATE = "conversionRate".freeze
-    AVERAGE_CLICK_POSITION = "averageClickPosition".freeze
+  module Analytics
+    class OrderBy
+      SEARCH_COUNT = "searchCount".freeze
+      CLICK_THROUGH_RATE = "clickThroughRate".freeze
+      CONVERSION_RATE = "conversionRate".freeze
+      AVERAGE_CLICK_POSITION = "averageClickPosition".freeze
 
-    def self.all_vars
-      @all_vars ||= [SEARCH_COUNT, CLICK_THROUGH_RATE, CONVERSION_RATE, AVERAGE_CLICK_POSITION].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [SEARCH_COUNT, CLICK_THROUGH_RATE, CONVERSION_RATE, AVERAGE_CLICK_POSITION].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if OrderBy.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #OrderBy"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if OrderBy.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #OrderBy"
+      end
     end
   end
 end

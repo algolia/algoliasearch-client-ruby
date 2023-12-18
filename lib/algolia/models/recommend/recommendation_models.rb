@@ -4,27 +4,29 @@ require 'date'
 require 'time'
 
 module Algolia
-  class RecommendationModels
-    RELATED_PRODUCTS = "related-products".freeze
-    BOUGHT_TOGETHER = "bought-together".freeze
+  module Recommend
+    class RecommendationModels
+      RELATED_PRODUCTS = "related-products".freeze
+      BOUGHT_TOGETHER = "bought-together".freeze
 
-    def self.all_vars
-      @all_vars ||= [RELATED_PRODUCTS, BOUGHT_TOGETHER].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [RELATED_PRODUCTS, BOUGHT_TOGETHER].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if RecommendationModels.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #RecommendationModels"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if RecommendationModels.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #RecommendationModels"
+      end
     end
   end
 end

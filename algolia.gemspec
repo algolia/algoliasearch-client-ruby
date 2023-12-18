@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-$:.push File.expand_path("../lib", __FILE__)
+lib = File.expand_path('lib', __dir__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "algolia/version"
 require 'date'
 
@@ -26,7 +27,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_runtime_dependency 'faraday', '>= 1.0.1', '< 3.0'
-  s.add_runtime_dependency 'faraday-multipart'
 
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'rake'

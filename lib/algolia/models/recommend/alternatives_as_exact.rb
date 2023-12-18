@@ -4,28 +4,30 @@ require 'date'
 require 'time'
 
 module Algolia
-  class AlternativesAsExact
-    IGNORE_PLURALS = "ignorePlurals".freeze
-    SINGLE_WORD_SYNONYM = "singleWordSynonym".freeze
-    MULTI_WORDS_SYNONYM = "multiWordsSynonym".freeze
+  module Recommend
+    class AlternativesAsExact
+      IGNORE_PLURALS = "ignorePlurals".freeze
+      SINGLE_WORD_SYNONYM = "singleWordSynonym".freeze
+      MULTI_WORDS_SYNONYM = "multiWordsSynonym".freeze
 
-    def self.all_vars
-      @all_vars ||= [IGNORE_PLURALS, SINGLE_WORD_SYNONYM, MULTI_WORDS_SYNONYM].freeze
-    end
+      def self.all_vars
+        @all_vars ||= [IGNORE_PLURALS, SINGLE_WORD_SYNONYM, MULTI_WORDS_SYNONYM].freeze
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def self.build_from_hash(value)
-      new.build_from_hash(value)
-    end
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def self.build_from_hash(value)
+        new.build_from_hash(value)
+      end
 
-    # Builds the enum from string
-    # @param [String] The enum value in the form of the string
-    # @return [String] The enum value
-    def build_from_hash(value)
-      return value if AlternativesAsExact.all_vars.include?(value)
-      raise "Invalid ENUM value #{value} for class #AlternativesAsExact"
+      # Builds the enum from string
+      # @param [String] The enum value in the form of the string
+      # @return [String] The enum value
+      def build_from_hash(value)
+        return value if AlternativesAsExact.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #AlternativesAsExact"
+      end
     end
   end
 end
