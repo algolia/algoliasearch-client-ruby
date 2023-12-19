@@ -10,7 +10,7 @@ module Algolia
     def initialize(config = Configuration.default)
       @config = config
       @requester = Http::HttpRequester.new('net_http_persistent', LoggerHelper.create)
-      @transporter = Transport::Transport::new(config, @requester)
+      @transporter = Transport::Transport.new(config, @requester)
     end
 
     def self.default
@@ -26,17 +26,13 @@ module Algolia
         call_type = opts[:use_read_transporter] || http_method == 'GET' ? CallType::READ : CallType::WRITE
         response = transporter.request(call_type, http_method, path, opts[:body], opts)
       rescue Faraday::TimeoutError
-        fail ApiError.new('Connection timed out')
+        raise ApiError, 'Connection timed out'
       rescue Faraday::ConnectionFailed
-        fail ApiError.new('Connection failed')
+        raise ApiError, 'Connection failed'
       end
 
-      if opts[:return_type]
-        data = deserialize(response.body, opts[:return_type])
-      else
-        data = nil
-      end
-      return data, response.status, response.headers
+      data = (deserialize(response.body, opts[:return_type]) if opts[:return_type])
+      [data, response.status, response.headers]
     end
 
     # Deserialize the response to the given return type.
@@ -52,11 +48,9 @@ module Algolia
       begin
         data = JSON.parse("[#{body}]", :symbolize_names => true)[0]
       rescue JSON::ParserError => e
-        if %w(String Date Time).include?(return_type)
-          data = body
-        else
-          raise e
-        end
+        raise e unless %w[String Date Time].include?(return_type)
+
+        data = body
       end
 
       convert_to_type data, return_type
@@ -68,6 +62,7 @@ module Algolia
     # @return [Mixed] Data in a particular type
     def convert_to_type(data, return_type)
       return nil if data.nil?
+
       case return_type
       when 'String'
         data.to_s
@@ -88,11 +83,11 @@ module Algolia
         data
       when /\AArray<(.+)>\z/
         # e.g. Array<Pet>
-        sub_type = $1
+        sub_type = ::Regexp.last_match(1)
         data.map { |item| convert_to_type(item, sub_type) }
-      when /\AHash\<String, (.+)\>\z/
+      when /\AHash<String, (.+)>\z/
         # e.g. Hash<String, Integer>
-        sub_type = $1
+        sub_type = ::Regexp.last_match(1)
         {}.tap do |hash|
           data.each { |k, v| hash[k] = convert_to_type(v, sub_type) }
         end
@@ -108,12 +103,12 @@ module Algolia
     # @return [String] JSON string representation of the object
     def object_to_http_body(model)
       return model if model.nil? || model.is_a?(String)
-      body = nil
-      if model.is_a?(Array)
-        body = model.map { |m| object_to_hash(m) }
-      else
-        body = object_to_hash(model)
-      end
+
+      body = if model.is_a?(Array)
+               model.map { |m| object_to_hash(m) }
+             else
+               object_to_hash(model)
+             end
       body.to_json
     end
 
@@ -144,7 +139,7 @@ module Algolia
         # return the array directly as typhoeus will handle it as expected
         param
       else
-        fail "unknown collection format: #{collection_format.inspect}"
+        raise "unknown collection format: #{collection_format.inspect}"
       end
     end
   end

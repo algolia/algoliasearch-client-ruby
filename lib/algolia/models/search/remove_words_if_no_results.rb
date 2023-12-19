@@ -27,6 +27,7 @@ module Algolia
       # @return [String] The enum value
       def build_from_hash(value)
         return value if RemoveWordsIfNoResults.all_vars.include?(value)
+
         raise "Invalid ENUM value #{value} for class #RemoveWordsIfNoResults"
       end
     end

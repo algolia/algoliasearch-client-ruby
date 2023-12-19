@@ -92,43 +92,43 @@ module Algolia
       # URL-encoded string of all search parameters.
       attr_accessor :params
 
-      # Cursor indicating the location to resume browsing from. Must match the value returned by the previous call. Pass this value to the subsequent browse call to get the next page of results. When the end of the index has been reached, `cursor` is absent from the response. 
+      # Cursor indicating the location to resume browsing from. Must match the value returned by the previous call. Pass this value to the subsequent browse call to get the next page of results. When the end of the index has been reached, `cursor` is absent from the response.
       attr_accessor :cursor
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :'ab_test_id' => :'abTestID',
-          :'ab_test_variant_id' => :'abTestVariantID',
-          :'around_lat_lng' => :'aroundLatLng',
-          :'automatic_radius' => :'automaticRadius',
-          :'exhaustive' => :'exhaustive',
-          :'exhaustive_facets_count' => :'exhaustiveFacetsCount',
-          :'exhaustive_nb_hits' => :'exhaustiveNbHits',
-          :'exhaustive_typo' => :'exhaustiveTypo',
-          :'facets' => :'facets',
-          :'facets_stats' => :'facets_stats',
-          :'hits_per_page' => :'hitsPerPage',
-          :'index' => :'index',
-          :'index_used' => :'indexUsed',
-          :'message' => :'message',
-          :'nb_hits' => :'nbHits',
-          :'nb_pages' => :'nbPages',
-          :'nb_sorted_hits' => :'nbSortedHits',
-          :'page' => :'page',
-          :'parsed_query' => :'parsedQuery',
-          :'processing_time_ms' => :'processingTimeMS',
-          :'processing_timings_ms' => :'processingTimingsMS',
-          :'query_after_removal' => :'queryAfterRemoval',
-          :'redirect' => :'redirect',
-          :'rendering_content' => :'renderingContent',
-          :'server_time_ms' => :'serverTimeMS',
-          :'server_used' => :'serverUsed',
-          :'user_data' => :'userData',
-          :'hits' => :'hits',
-          :'query' => :'query',
-          :'params' => :'params',
-          :'cursor' => :'cursor'
+          :ab_test_id => :abTestID,
+          :ab_test_variant_id => :abTestVariantID,
+          :around_lat_lng => :aroundLatLng,
+          :automatic_radius => :automaticRadius,
+          :exhaustive => :exhaustive,
+          :exhaustive_facets_count => :exhaustiveFacetsCount,
+          :exhaustive_nb_hits => :exhaustiveNbHits,
+          :exhaustive_typo => :exhaustiveTypo,
+          :facets => :facets,
+          :facets_stats => :facets_stats,
+          :hits_per_page => :hitsPerPage,
+          :index => :index,
+          :index_used => :indexUsed,
+          :message => :message,
+          :nb_hits => :nbHits,
+          :nb_pages => :nbPages,
+          :nb_sorted_hits => :nbSortedHits,
+          :page => :page,
+          :parsed_query => :parsedQuery,
+          :processing_time_ms => :processingTimeMS,
+          :processing_timings_ms => :processingTimingsMS,
+          :query_after_removal => :queryAfterRemoval,
+          :redirect => :redirect,
+          :rendering_content => :renderingContent,
+          :server_time_ms => :serverTimeMS,
+          :server_used => :serverUsed,
+          :user_data => :userData,
+          :hits => :hits,
+          :query => :query,
+          :params => :params,
+          :cursor => :cursor
         }
       end
 
@@ -140,214 +140,215 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :'ab_test_id' => :'Integer',
-          :'ab_test_variant_id' => :'Integer',
-          :'around_lat_lng' => :'String',
-          :'automatic_radius' => :'String',
-          :'exhaustive' => :'Exhaustive',
-          :'exhaustive_facets_count' => :'Boolean',
-          :'exhaustive_nb_hits' => :'Boolean',
-          :'exhaustive_typo' => :'Boolean',
-          :'facets' => :'Hash<String, Hash<String, Integer>>',
-          :'facets_stats' => :'Hash<String, FacetsStats>',
-          :'hits_per_page' => :'Integer',
-          :'index' => :'String',
-          :'index_used' => :'String',
-          :'message' => :'String',
-          :'nb_hits' => :'Integer',
-          :'nb_pages' => :'Integer',
-          :'nb_sorted_hits' => :'Integer',
-          :'page' => :'Integer',
-          :'parsed_query' => :'String',
-          :'processing_time_ms' => :'Integer',
-          :'processing_timings_ms' => :'Object',
-          :'query_after_removal' => :'String',
-          :'redirect' => :'Redirect',
-          :'rendering_content' => :'RenderingContent',
-          :'server_time_ms' => :'Integer',
-          :'server_used' => :'String',
-          :'user_data' => :'Object',
-          :'hits' => :'Array<Hit>',
-          :'query' => :'String',
-          :'params' => :'String',
-          :'cursor' => :'String'
+          :ab_test_id => :Integer,
+          :ab_test_variant_id => :Integer,
+          :around_lat_lng => :String,
+          :automatic_radius => :String,
+          :exhaustive => :Exhaustive,
+          :exhaustive_facets_count => :Boolean,
+          :exhaustive_nb_hits => :Boolean,
+          :exhaustive_typo => :Boolean,
+          :facets => :'Hash<String, Hash<String, Integer>>',
+          :facets_stats => :'Hash<String, FacetsStats>',
+          :hits_per_page => :Integer,
+          :index => :String,
+          :index_used => :String,
+          :message => :String,
+          :nb_hits => :Integer,
+          :nb_pages => :Integer,
+          :nb_sorted_hits => :Integer,
+          :page => :Integer,
+          :parsed_query => :String,
+          :processing_time_ms => :Integer,
+          :processing_timings_ms => :Object,
+          :query_after_removal => :String,
+          :redirect => :Redirect,
+          :rendering_content => :RenderingContent,
+          :server_time_ms => :Integer,
+          :server_used => :String,
+          :user_data => :Object,
+          :hits => :'Array<Hit>',
+          :query => :String,
+          :params => :String,
+          :cursor => :String
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([
-        ])
+        Set.new([])
       end
 
       # List of class defined in allOf (OpenAPI v3)
       def self.openapi_all_of
         [
-        :'BaseSearchResponse',
-        :'Cursor',
-        :'SearchHits'
+          :BaseSearchResponse,
+          :Cursor,
+          :SearchHits
         ]
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
-        if (!attributes.is_a?(Hash))
-          fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::BrowseResponse` initialize method"
+        unless attributes.is_a?(Hash)
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::BrowseResponse` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::BrowseResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+        attributes = attributes.each_with_object({}) do |(k, v), h|
+          unless self.class.attribute_map.key?(k.to_sym)
+            raise ArgumentError,
+                  "`#{k}` is not a valid attribute in `Algolia::BrowseResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
+
           h[k.to_sym] = v
-        }
-
-        if attributes.key?(:'ab_test_id')
-          self.ab_test_id = attributes[:'ab_test_id']
         end
 
-        if attributes.key?(:'ab_test_variant_id')
-          self.ab_test_variant_id = attributes[:'ab_test_variant_id']
+        if attributes.key?(:ab_test_id)
+          self.ab_test_id = attributes[:ab_test_id]
         end
 
-        if attributes.key?(:'around_lat_lng')
-          self.around_lat_lng = attributes[:'around_lat_lng']
+        if attributes.key?(:ab_test_variant_id)
+          self.ab_test_variant_id = attributes[:ab_test_variant_id]
         end
 
-        if attributes.key?(:'automatic_radius')
-          self.automatic_radius = attributes[:'automatic_radius']
+        if attributes.key?(:around_lat_lng)
+          self.around_lat_lng = attributes[:around_lat_lng]
         end
 
-        if attributes.key?(:'exhaustive')
-          self.exhaustive = attributes[:'exhaustive']
+        if attributes.key?(:automatic_radius)
+          self.automatic_radius = attributes[:automatic_radius]
         end
 
-        if attributes.key?(:'exhaustive_facets_count')
-          self.exhaustive_facets_count = attributes[:'exhaustive_facets_count']
+        if attributes.key?(:exhaustive)
+          self.exhaustive = attributes[:exhaustive]
         end
 
-        if attributes.key?(:'exhaustive_nb_hits')
-          self.exhaustive_nb_hits = attributes[:'exhaustive_nb_hits']
+        if attributes.key?(:exhaustive_facets_count)
+          self.exhaustive_facets_count = attributes[:exhaustive_facets_count]
         end
 
-        if attributes.key?(:'exhaustive_typo')
-          self.exhaustive_typo = attributes[:'exhaustive_typo']
+        if attributes.key?(:exhaustive_nb_hits)
+          self.exhaustive_nb_hits = attributes[:exhaustive_nb_hits]
         end
 
-        if attributes.key?(:'facets')
-          if (value = attributes[:'facets']).is_a?(Hash)
+        if attributes.key?(:exhaustive_typo)
+          self.exhaustive_typo = attributes[:exhaustive_typo]
+        end
+
+        if attributes.key?(:facets)
+          if (value = attributes[:facets]).is_a?(Hash)
             self.facets = value
           end
         end
 
-        if attributes.key?(:'facets_stats')
-          if (value = attributes[:'facets_stats']).is_a?(Hash)
+        if attributes.key?(:facets_stats)
+          if (value = attributes[:facets_stats]).is_a?(Hash)
             self.facets_stats = value
           end
         end
 
-        if attributes.key?(:'hits_per_page')
-          self.hits_per_page = attributes[:'hits_per_page']
+        if attributes.key?(:hits_per_page)
+          self.hits_per_page = attributes[:hits_per_page]
         else
           self.hits_per_page = nil
         end
 
-        if attributes.key?(:'index')
-          self.index = attributes[:'index']
+        if attributes.key?(:index)
+          self.index = attributes[:index]
         end
 
-        if attributes.key?(:'index_used')
-          self.index_used = attributes[:'index_used']
+        if attributes.key?(:index_used)
+          self.index_used = attributes[:index_used]
         end
 
-        if attributes.key?(:'message')
-          self.message = attributes[:'message']
+        if attributes.key?(:message)
+          self.message = attributes[:message]
         end
 
-        if attributes.key?(:'nb_hits')
-          self.nb_hits = attributes[:'nb_hits']
+        if attributes.key?(:nb_hits)
+          self.nb_hits = attributes[:nb_hits]
         else
           self.nb_hits = nil
         end
 
-        if attributes.key?(:'nb_pages')
-          self.nb_pages = attributes[:'nb_pages']
+        if attributes.key?(:nb_pages)
+          self.nb_pages = attributes[:nb_pages]
         else
           self.nb_pages = nil
         end
 
-        if attributes.key?(:'nb_sorted_hits')
-          self.nb_sorted_hits = attributes[:'nb_sorted_hits']
+        if attributes.key?(:nb_sorted_hits)
+          self.nb_sorted_hits = attributes[:nb_sorted_hits]
         end
 
-        if attributes.key?(:'page')
-          self.page = attributes[:'page']
+        if attributes.key?(:page)
+          self.page = attributes[:page]
         else
           self.page = nil
         end
 
-        if attributes.key?(:'parsed_query')
-          self.parsed_query = attributes[:'parsed_query']
+        if attributes.key?(:parsed_query)
+          self.parsed_query = attributes[:parsed_query]
         end
 
-        if attributes.key?(:'processing_time_ms')
-          self.processing_time_ms = attributes[:'processing_time_ms']
+        if attributes.key?(:processing_time_ms)
+          self.processing_time_ms = attributes[:processing_time_ms]
         else
           self.processing_time_ms = nil
         end
 
-        if attributes.key?(:'processing_timings_ms')
-          self.processing_timings_ms = attributes[:'processing_timings_ms']
+        if attributes.key?(:processing_timings_ms)
+          self.processing_timings_ms = attributes[:processing_timings_ms]
         end
 
-        if attributes.key?(:'query_after_removal')
-          self.query_after_removal = attributes[:'query_after_removal']
+        if attributes.key?(:query_after_removal)
+          self.query_after_removal = attributes[:query_after_removal]
         end
 
-        if attributes.key?(:'redirect')
-          self.redirect = attributes[:'redirect']
+        if attributes.key?(:redirect)
+          self.redirect = attributes[:redirect]
         end
 
-        if attributes.key?(:'rendering_content')
-          self.rendering_content = attributes[:'rendering_content']
+        if attributes.key?(:rendering_content)
+          self.rendering_content = attributes[:rendering_content]
         end
 
-        if attributes.key?(:'server_time_ms')
-          self.server_time_ms = attributes[:'server_time_ms']
+        if attributes.key?(:server_time_ms)
+          self.server_time_ms = attributes[:server_time_ms]
         end
 
-        if attributes.key?(:'server_used')
-          self.server_used = attributes[:'server_used']
+        if attributes.key?(:server_used)
+          self.server_used = attributes[:server_used]
         end
 
-        if attributes.key?(:'user_data')
-          self.user_data = attributes[:'user_data']
+        if attributes.key?(:user_data)
+          self.user_data = attributes[:user_data]
         end
 
-        if attributes.key?(:'hits')
-          if (value = attributes[:'hits']).is_a?(Array)
+        if attributes.key?(:hits)
+          if (value = attributes[:hits]).is_a?(Array)
             self.hits = value
           end
         else
           self.hits = nil
         end
 
-        if attributes.key?(:'query')
-          self.query = attributes[:'query']
+        if attributes.key?(:query)
+          self.query = attributes[:query]
         else
           self.query = nil
         end
 
-        if attributes.key?(:'params')
-          self.params = attributes[:'params']
+        if attributes.key?(:params)
+          self.params = attributes[:params]
         else
           self.params = nil
         end
 
-        if attributes.key?(:'cursor')
-          self.cursor = attributes[:'cursor']
+        if attributes.key?(:cursor)
+          self.cursor = attributes[:cursor]
         end
       end
 
@@ -355,11 +356,11 @@ module Algolia
       # @param [Object] ab_test_variant_id Value to be assigned
       def ab_test_variant_id=(ab_test_variant_id)
         if ab_test_variant_id.nil?
-          fail ArgumentError, 'ab_test_variant_id cannot be nil'
+          raise ArgumentError, 'ab_test_variant_id cannot be nil'
         end
 
         if ab_test_variant_id < 1
-          fail ArgumentError, 'invalid value for "ab_test_variant_id", must be greater than or equal to 1.'
+          raise ArgumentError, 'invalid value for "ab_test_variant_id", must be greater than or equal to 1.'
         end
 
         @ab_test_variant_id = ab_test_variant_id
@@ -369,12 +370,12 @@ module Algolia
       # @param [Object] around_lat_lng Value to be assigned
       def around_lat_lng=(around_lat_lng)
         if around_lat_lng.nil?
-          fail ArgumentError, 'around_lat_lng cannot be nil'
+          raise ArgumentError, 'around_lat_lng cannot be nil'
         end
 
-        pattern = Regexp.new(/^(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)$/)
+        pattern = /^(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)$/
         if around_lat_lng !~ pattern
-          fail ArgumentError, "invalid value for \"around_lat_lng\", must conform to the pattern #{pattern}."
+          raise ArgumentError, "invalid value for \"around_lat_lng\", must conform to the pattern #{pattern}."
         end
 
         @around_lat_lng = around_lat_lng
@@ -384,15 +385,15 @@ module Algolia
       # @param [Object] hits_per_page Value to be assigned
       def hits_per_page=(hits_per_page)
         if hits_per_page.nil?
-          fail ArgumentError, 'hits_per_page cannot be nil'
+          raise ArgumentError, 'hits_per_page cannot be nil'
         end
 
         if hits_per_page > 1000
-          fail ArgumentError, 'invalid value for "hits_per_page", must be smaller than or equal to 1000.'
+          raise ArgumentError, 'invalid value for "hits_per_page", must be smaller than or equal to 1000.'
         end
 
         if hits_per_page < 1
-          fail ArgumentError, 'invalid value for "hits_per_page", must be greater than or equal to 1.'
+          raise ArgumentError, 'invalid value for "hits_per_page", must be greater than or equal to 1.'
         end
 
         @hits_per_page = hits_per_page
@@ -400,52 +401,54 @@ module Algolia
 
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
-      def ==(o)
-        return true if self.equal?(o)
-        self.class == o.class &&
-            ab_test_id == o.ab_test_id &&
-            ab_test_variant_id == o.ab_test_variant_id &&
-            around_lat_lng == o.around_lat_lng &&
-            automatic_radius == o.automatic_radius &&
-            exhaustive == o.exhaustive &&
-            exhaustive_facets_count == o.exhaustive_facets_count &&
-            exhaustive_nb_hits == o.exhaustive_nb_hits &&
-            exhaustive_typo == o.exhaustive_typo &&
-            facets == o.facets &&
-            facets_stats == o.facets_stats &&
-            hits_per_page == o.hits_per_page &&
-            index == o.index &&
-            index_used == o.index_used &&
-            message == o.message &&
-            nb_hits == o.nb_hits &&
-            nb_pages == o.nb_pages &&
-            nb_sorted_hits == o.nb_sorted_hits &&
-            page == o.page &&
-            parsed_query == o.parsed_query &&
-            processing_time_ms == o.processing_time_ms &&
-            processing_timings_ms == o.processing_timings_ms &&
-            query_after_removal == o.query_after_removal &&
-            redirect == o.redirect &&
-            rendering_content == o.rendering_content &&
-            server_time_ms == o.server_time_ms &&
-            server_used == o.server_used &&
-            user_data == o.user_data &&
-            hits == o.hits &&
-            query == o.query &&
-            params == o.params &&
-            cursor == o.cursor
+      def ==(other)
+        return true if equal?(other)
+
+        self.class == other.class &&
+          ab_test_id == other.ab_test_id &&
+          ab_test_variant_id == other.ab_test_variant_id &&
+          around_lat_lng == other.around_lat_lng &&
+          automatic_radius == other.automatic_radius &&
+          exhaustive == other.exhaustive &&
+          exhaustive_facets_count == other.exhaustive_facets_count &&
+          exhaustive_nb_hits == other.exhaustive_nb_hits &&
+          exhaustive_typo == other.exhaustive_typo &&
+          facets == other.facets &&
+          facets_stats == other.facets_stats &&
+          hits_per_page == other.hits_per_page &&
+          index == other.index &&
+          index_used == other.index_used &&
+          message == other.message &&
+          nb_hits == other.nb_hits &&
+          nb_pages == other.nb_pages &&
+          nb_sorted_hits == other.nb_sorted_hits &&
+          page == other.page &&
+          parsed_query == other.parsed_query &&
+          processing_time_ms == other.processing_time_ms &&
+          processing_timings_ms == other.processing_timings_ms &&
+          query_after_removal == other.query_after_removal &&
+          redirect == other.redirect &&
+          rendering_content == other.rendering_content &&
+          server_time_ms == other.server_time_ms &&
+          server_used == other.server_used &&
+          user_data == other.user_data &&
+          hits == other.hits &&
+          query == other.query &&
+          params == other.params &&
+          cursor == other.cursor
       end
 
       # @see the `==` method
       # @param [Object] Object to be compared
-      def eql?(o)
-        self == o
+      def eql?(other)
+        self == other
       end
 
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [ab_test_id, ab_test_variant_id, around_lat_lng, automatic_radius, exhaustive, exhaustive_facets_count, exhaustive_nb_hits, exhaustive_typo, facets, facets_stats, hits_per_page, index, index_used, message, nb_hits, nb_pages, nb_sorted_hits, page, parsed_query, processing_time_ms, processing_timings_ms, query_after_removal, redirect, rendering_content, server_time_ms, server_used, user_data, hits, query, params, cursor].hash
+        [ab_test_id, ab_test_variant_id, around_lat_lng, automatic_radius, exhaustive, exhaustive_facets_count, exhaustive_nb_hits, exhaustive_typo, facets, facets_stats,
+         hits_per_page, index, index_used, message, nb_hits, nb_pages, nb_sorted_hits, page, parsed_query, processing_time_ms, processing_timings_ms, query_after_removal, redirect, rendering_content, server_time_ms, server_used, user_data, hits, query, params, cursor].hash
       end
 
       # Builds the object from hash
@@ -453,19 +456,20 @@ module Algolia
       # @return [Object] Returns the model itself
       def self.build_from_hash(attributes)
         return nil unless attributes.is_a?(Hash)
+
         attributes = attributes.transform_keys(&:to_sym)
         transformed_hash = {}
         types_mapping.each_pair do |key, type|
           if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = nil
+            transformed_hash[key.to_s] = nil
           elsif type =~ /\AArray<(.*)>/i
             # check to ensure the input is an array given that the attribute
             # is documented as an array but the input is not
             if attributes[attribute_map[key]].is_a?(Array)
-              transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+              transformed_hash[key.to_s] = attributes[attribute_map[key]].map { |v| _deserialize(::Regexp.last_match(1), v) }
             end
           elsif !attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+            transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
         new(transformed_hash)
@@ -531,7 +535,7 @@ module Algolia
       def to_hash
         hash = {}
         self.class.attribute_map.each_pair do |attr, param|
-          value = self.send(attr)
+          value = send(attr)
           if value.nil?
             is_nullable = self.class.openapi_nullable.include?(attr)
             next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))

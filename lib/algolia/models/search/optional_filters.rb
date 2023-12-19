@@ -5,14 +5,14 @@ require 'time'
 
 module Algolia
   module Search
-    # Create filters to boost or demote records.   Records that match the filter are ranked higher for positive and lower for negative optional filters. In contrast to regular filters, records that don't match the optional filter are still included in the results, only their ranking is affected. 
+    # Create filters to boost or demote records.   Records that match the filter are ranked higher for positive and lower for negative optional filters. In contrast to regular filters, records that don't match the optional filter are still included in the results, only their ranking is affected.
     module OptionalFilters
       class << self
         # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
             :'Array<MixedSearchFilters>',
-            :'String'
+            :String
           ]
         end
 
@@ -28,12 +28,11 @@ module Algolia
           # - TODO: scalar values are de facto behaving as if they were nullable.
           # - TODO: logging when debugging is set.
           openapi_one_of.each do |klass|
-            begin
-              next if klass == :AnyType # "nullable: true"
-              typed_data = find_and_cast_into_type(klass, data)
-              return typed_data if typed_data
-            rescue # rescue all errors so we keep iterating even if the current item lookup raises
-            end
+            next if klass == :AnyType # "nullable: true"
+
+            typed_data = find_and_cast_into_type(klass, data)
+            return typed_data if typed_data
+          rescue # rescue all errors so we keep iterating even if the current item lookup raises
           end
 
           openapi_one_of.include?(:AnyType) ? data : nil
@@ -41,56 +40,57 @@ module Algolia
 
         private
 
-          SchemaMismatchError = Class.new(StandardError)
+        SchemaMismatchError = Class.new(StandardError)
 
-          # Note: 'File' is missing here because in the regular case we get the data _after_ a call to JSON.parse.
-          def find_and_cast_into_type(klass, data)
-            return if data.nil?
+        # NOTE: 'File' is missing here because in the regular case we get the data _after_ a call to JSON.parse.
+        def find_and_cast_into_type(klass, data)
+          return if data.nil?
 
-            case klass.to_s
-            when 'Boolean'
-              return data if data.instance_of?(TrueClass) || data.instance_of?(FalseClass)
-            when 'Float'
-              return data if data.instance_of?(Float)
-            when 'Integer'
-              return data if data.instance_of?(Integer)
-            when 'Time'
-              return Time.parse(data)
-            when 'Date'
-              return Date.parse(data)
-            when 'String'
-              return data if data.instance_of?(String)
-            when 'Object' # "type: object"
-              return data if data.instance_of?(Hash)
-            when /\AArray<(?<sub_type>.+)>\z/ # "type: array"
-              if data.instance_of?(Array)
-                sub_type = Regexp.last_match[:sub_type]
-                return data.map { |item| find_and_cast_into_type(sub_type, item) }
-              end
-            when /\AHash<String, (?<sub_type>.+)>\z/ # "type: object" with "additionalProperties: { ... }"
-              if data.instance_of?(Hash) && data.keys.all? { |k| k.instance_of?(Symbol) || k.instance_of?(String) }
-                sub_type = Regexp.last_match[:sub_type]
-                return data.each_with_object({}) { |(k, v), hsh| hsh[k] = find_and_cast_into_type(sub_type, v) }
-              end
-            else # model
-              const = Algolia.const_get(klass)
-              if const
-                if const.respond_to?(:openapi_one_of) # nested oneOf model
-                  model = const.build(data)
-                  return model if model
-                else
-                  # raise if data contains keys that are not known to the model
-                  raise unless (data.keys - const.acceptable_attributes).empty?
-                  model = const.build_from_hash(data)
-                  return model if model
-                end
-              end
+          case klass.to_s
+          when 'Boolean'
+            return data if data.instance_of?(TrueClass) || data.instance_of?(FalseClass)
+          when 'Float'
+            return data if data.instance_of?(Float)
+          when 'Integer'
+            return data if data.instance_of?(Integer)
+          when 'Time'
+            return Time.parse(data)
+          when 'Date'
+            return Date.parse(data)
+          when 'String'
+            return data if data.instance_of?(String)
+          when 'Object' # "type: object"
+            return data if data.instance_of?(Hash)
+          when /\AArray<(?<sub_type>.+)>\z/ # "type: array"
+            if data.instance_of?(Array)
+              sub_type = Regexp.last_match[:sub_type]
+              return data.map { |item| find_and_cast_into_type(sub_type, item) }
             end
+          when /\AHash<String, (?<sub_type>.+)>\z/ # "type: object" with "additionalProperties: { ... }"
+            if data.instance_of?(Hash) && data.keys.all? { |k| k.instance_of?(Symbol) || k.instance_of?(String) }
+              sub_type = Regexp.last_match[:sub_type]
+              return data.each_with_object({}) { |(k, v), hsh| hsh[k] = find_and_cast_into_type(sub_type, v) }
+            end
+          else # model
+            const = Algolia.const_get(klass)
+            if const
+              if const.respond_to?(:openapi_one_of) # nested oneOf model
+                model = const.build(data)
+              else
+                # raise if data contains keys that are not known to the model
+                raise unless (data.keys - const.acceptable_attributes).empty?
 
-            raise # if no match by now, raise
-          rescue
-            raise SchemaMismatchError, "#{data} doesn't match the #{klass} type"
+                model = const.build_from_hash(data)
+              end
+
+              return model if model
+            end
           end
+
+          raise # if no match by now, raise
+        rescue
+          raise SchemaMismatchError, "#{data} doesn't match the #{klass} type"
+        end
       end
     end
   end

@@ -62,24 +62,24 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :'add_to_cart_count' => :'addToCartCount',
-          :'add_to_cart_rate' => :'addToCartRate',
-          :'average_click_position' => :'averageClickPosition',
-          :'click_count' => :'clickCount',
-          :'click_through_rate' => :'clickThroughRate',
-          :'conversion_count' => :'conversionCount',
-          :'conversion_rate' => :'conversionRate',
-          :'currencies' => :'currencies',
-          :'description' => :'description',
-          :'filter_effects' => :'filterEffects',
-          :'index' => :'index',
-          :'no_result_count' => :'noResultCount',
-          :'purchase_count' => :'purchaseCount',
-          :'purchase_rate' => :'purchaseRate',
-          :'search_count' => :'searchCount',
-          :'tracked_search_count' => :'trackedSearchCount',
-          :'traffic_percentage' => :'trafficPercentage',
-          :'user_count' => :'userCount'
+          :add_to_cart_count => :addToCartCount,
+          :add_to_cart_rate => :addToCartRate,
+          :average_click_position => :averageClickPosition,
+          :click_count => :clickCount,
+          :click_through_rate => :clickThroughRate,
+          :conversion_count => :conversionCount,
+          :conversion_rate => :conversionRate,
+          :currencies => :currencies,
+          :description => :description,
+          :filter_effects => :filterEffects,
+          :index => :index,
+          :no_result_count => :noResultCount,
+          :purchase_count => :purchaseCount,
+          :purchase_rate => :purchaseRate,
+          :search_count => :searchCount,
+          :tracked_search_count => :trackedSearchCount,
+          :traffic_percentage => :trafficPercentage,
+          :user_count => :userCount
         }
       end
 
@@ -91,152 +91,153 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :'add_to_cart_count' => :'Integer',
-          :'add_to_cart_rate' => :'Float',
-          :'average_click_position' => :'Integer',
-          :'click_count' => :'Integer',
-          :'click_through_rate' => :'Float',
-          :'conversion_count' => :'Integer',
-          :'conversion_rate' => :'Float',
-          :'currencies' => :'Hash<String, CurrenciesValue>',
-          :'description' => :'String',
-          :'filter_effects' => :'FilterEffects',
-          :'index' => :'String',
-          :'no_result_count' => :'Integer',
-          :'purchase_count' => :'Integer',
-          :'purchase_rate' => :'Float',
-          :'search_count' => :'Integer',
-          :'tracked_search_count' => :'Integer',
-          :'traffic_percentage' => :'Integer',
-          :'user_count' => :'Integer'
+          :add_to_cart_count => :Integer,
+          :add_to_cart_rate => :Float,
+          :average_click_position => :Integer,
+          :click_count => :Integer,
+          :click_through_rate => :Float,
+          :conversion_count => :Integer,
+          :conversion_rate => :Float,
+          :currencies => :'Hash<String, CurrenciesValue>',
+          :description => :String,
+          :filter_effects => :FilterEffects,
+          :index => :String,
+          :no_result_count => :Integer,
+          :purchase_count => :Integer,
+          :purchase_rate => :Float,
+          :search_count => :Integer,
+          :tracked_search_count => :Integer,
+          :traffic_percentage => :Integer,
+          :user_count => :Integer
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([
-        ])
+        Set.new([])
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
-        if (!attributes.is_a?(Hash))
-          fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Variant` initialize method"
+        unless attributes.is_a?(Hash)
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Variant` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::Variant`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+        attributes = attributes.each_with_object({}) do |(k, v), h|
+          unless self.class.attribute_map.key?(k.to_sym)
+            raise ArgumentError,
+                  "`#{k}` is not a valid attribute in `Algolia::Variant`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
-          h[k.to_sym] = v
-        }
 
-        if attributes.key?(:'add_to_cart_count')
-          self.add_to_cart_count = attributes[:'add_to_cart_count']
+          h[k.to_sym] = v
+        end
+
+        if attributes.key?(:add_to_cart_count)
+          self.add_to_cart_count = attributes[:add_to_cart_count]
         else
           self.add_to_cart_count = nil
         end
 
-        if attributes.key?(:'add_to_cart_rate')
-          self.add_to_cart_rate = attributes[:'add_to_cart_rate']
+        if attributes.key?(:add_to_cart_rate)
+          self.add_to_cart_rate = attributes[:add_to_cart_rate]
         else
           self.add_to_cart_rate = nil
         end
 
-        if attributes.key?(:'average_click_position')
-          self.average_click_position = attributes[:'average_click_position']
+        if attributes.key?(:average_click_position)
+          self.average_click_position = attributes[:average_click_position]
         else
           self.average_click_position = nil
         end
 
-        if attributes.key?(:'click_count')
-          self.click_count = attributes[:'click_count']
+        if attributes.key?(:click_count)
+          self.click_count = attributes[:click_count]
         else
           self.click_count = nil
         end
 
-        if attributes.key?(:'click_through_rate')
-          self.click_through_rate = attributes[:'click_through_rate']
+        if attributes.key?(:click_through_rate)
+          self.click_through_rate = attributes[:click_through_rate]
         else
           self.click_through_rate = nil
         end
 
-        if attributes.key?(:'conversion_count')
-          self.conversion_count = attributes[:'conversion_count']
+        if attributes.key?(:conversion_count)
+          self.conversion_count = attributes[:conversion_count]
         else
           self.conversion_count = nil
         end
 
-        if attributes.key?(:'conversion_rate')
-          self.conversion_rate = attributes[:'conversion_rate']
+        if attributes.key?(:conversion_rate)
+          self.conversion_rate = attributes[:conversion_rate]
         else
           self.conversion_rate = nil
         end
 
-        if attributes.key?(:'currencies')
-          if (value = attributes[:'currencies']).is_a?(Hash)
+        if attributes.key?(:currencies)
+          if (value = attributes[:currencies]).is_a?(Hash)
             self.currencies = value
           end
         else
           self.currencies = nil
         end
 
-        if attributes.key?(:'description')
-          self.description = attributes[:'description']
+        if attributes.key?(:description)
+          self.description = attributes[:description]
         else
           self.description = nil
         end
 
-        if attributes.key?(:'filter_effects')
-          self.filter_effects = attributes[:'filter_effects']
+        if attributes.key?(:filter_effects)
+          self.filter_effects = attributes[:filter_effects]
         end
 
-        if attributes.key?(:'index')
-          self.index = attributes[:'index']
+        if attributes.key?(:index)
+          self.index = attributes[:index]
         else
           self.index = nil
         end
 
-        if attributes.key?(:'no_result_count')
-          self.no_result_count = attributes[:'no_result_count']
+        if attributes.key?(:no_result_count)
+          self.no_result_count = attributes[:no_result_count]
         else
           self.no_result_count = nil
         end
 
-        if attributes.key?(:'purchase_count')
-          self.purchase_count = attributes[:'purchase_count']
+        if attributes.key?(:purchase_count)
+          self.purchase_count = attributes[:purchase_count]
         else
           self.purchase_count = nil
         end
 
-        if attributes.key?(:'purchase_rate')
-          self.purchase_rate = attributes[:'purchase_rate']
+        if attributes.key?(:purchase_rate)
+          self.purchase_rate = attributes[:purchase_rate]
         else
           self.purchase_rate = nil
         end
 
-        if attributes.key?(:'search_count')
-          self.search_count = attributes[:'search_count']
+        if attributes.key?(:search_count)
+          self.search_count = attributes[:search_count]
         else
           self.search_count = nil
         end
 
-        if attributes.key?(:'tracked_search_count')
-          self.tracked_search_count = attributes[:'tracked_search_count']
+        if attributes.key?(:tracked_search_count)
+          self.tracked_search_count = attributes[:tracked_search_count]
         else
           self.tracked_search_count = nil
         end
 
-        if attributes.key?(:'traffic_percentage')
-          self.traffic_percentage = attributes[:'traffic_percentage']
+        if attributes.key?(:traffic_percentage)
+          self.traffic_percentage = attributes[:traffic_percentage]
         else
           self.traffic_percentage = nil
         end
 
-        if attributes.key?(:'user_count')
-          self.user_count = attributes[:'user_count']
+        if attributes.key?(:user_count)
+          self.user_count = attributes[:user_count]
         else
           self.user_count = nil
         end
@@ -244,39 +245,41 @@ module Algolia
 
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
-      def ==(o)
-        return true if self.equal?(o)
-        self.class == o.class &&
-            add_to_cart_count == o.add_to_cart_count &&
-            add_to_cart_rate == o.add_to_cart_rate &&
-            average_click_position == o.average_click_position &&
-            click_count == o.click_count &&
-            click_through_rate == o.click_through_rate &&
-            conversion_count == o.conversion_count &&
-            conversion_rate == o.conversion_rate &&
-            currencies == o.currencies &&
-            description == o.description &&
-            filter_effects == o.filter_effects &&
-            index == o.index &&
-            no_result_count == o.no_result_count &&
-            purchase_count == o.purchase_count &&
-            purchase_rate == o.purchase_rate &&
-            search_count == o.search_count &&
-            tracked_search_count == o.tracked_search_count &&
-            traffic_percentage == o.traffic_percentage &&
-            user_count == o.user_count
+      def ==(other)
+        return true if equal?(other)
+
+        self.class == other.class &&
+          add_to_cart_count == other.add_to_cart_count &&
+          add_to_cart_rate == other.add_to_cart_rate &&
+          average_click_position == other.average_click_position &&
+          click_count == other.click_count &&
+          click_through_rate == other.click_through_rate &&
+          conversion_count == other.conversion_count &&
+          conversion_rate == other.conversion_rate &&
+          currencies == other.currencies &&
+          description == other.description &&
+          filter_effects == other.filter_effects &&
+          index == other.index &&
+          no_result_count == other.no_result_count &&
+          purchase_count == other.purchase_count &&
+          purchase_rate == other.purchase_rate &&
+          search_count == other.search_count &&
+          tracked_search_count == other.tracked_search_count &&
+          traffic_percentage == other.traffic_percentage &&
+          user_count == other.user_count
       end
 
       # @see the `==` method
       # @param [Object] Object to be compared
-      def eql?(o)
-        self == o
+      def eql?(other)
+        self == other
       end
 
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [add_to_cart_count, add_to_cart_rate, average_click_position, click_count, click_through_rate, conversion_count, conversion_rate, currencies, description, filter_effects, index, no_result_count, purchase_count, purchase_rate, search_count, tracked_search_count, traffic_percentage, user_count].hash
+        [add_to_cart_count, add_to_cart_rate, average_click_position, click_count, click_through_rate, conversion_count, conversion_rate, currencies, description, filter_effects,
+         index, no_result_count, purchase_count, purchase_rate, search_count, tracked_search_count, traffic_percentage, user_count].hash
       end
 
       # Builds the object from hash
@@ -284,19 +287,20 @@ module Algolia
       # @return [Object] Returns the model itself
       def self.build_from_hash(attributes)
         return nil unless attributes.is_a?(Hash)
+
         attributes = attributes.transform_keys(&:to_sym)
         transformed_hash = {}
         types_mapping.each_pair do |key, type|
           if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = nil
+            transformed_hash[key.to_s] = nil
           elsif type =~ /\AArray<(.*)>/i
             # check to ensure the input is an array given that the attribute
             # is documented as an array but the input is not
             if attributes[attribute_map[key]].is_a?(Array)
-              transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+              transformed_hash[key.to_s] = attributes[attribute_map[key]].map { |v| _deserialize(::Regexp.last_match(1), v) }
             end
           elsif !attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+            transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
         new(transformed_hash)
@@ -362,7 +366,7 @@ module Algolia
       def to_hash
         hash = {}
         self.class.attribute_map.each_pair do |attr, param|
-          value = self.send(attr)
+          value = send(attr)
           if value.nil?
             is_nullable = self.class.openapi_nullable.include?(attr)
             next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))

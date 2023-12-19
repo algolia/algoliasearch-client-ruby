@@ -12,43 +12,43 @@ module Algolia
       # Timestamp of creation in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
       attr_accessor :created_at
 
-      # [Permissions](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl) associated with the key. 
+      # [Permissions](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl) associated with the key.
       attr_accessor :acl
 
       # Description of an API key for you and your team members.
       attr_accessor :description
 
-      # Restricts this API key to a list of indices or index patterns. If the list is empty, all indices are allowed. Specify either an exact index name or a pattern with a leading or trailing wildcard character (or both). For example: - `dev_*` matches all indices starting with \"dev_\" - `*_dev` matches all indices ending with \"_dev\" - `*_products_*` matches all indices containing \"_products_\". 
+      # Restricts this API key to a list of indices or index patterns. If the list is empty, all indices are allowed. Specify either an exact index name or a pattern with a leading or trailing wildcard character (or both). For example: - `dev_*` matches all indices starting with \"dev_\" - `*_dev` matches all indices ending with \"_dev\" - `*_products_*` matches all indices containing \"_products_\".
       attr_accessor :indexes
 
-      # Maximum number of hits this API key can retrieve in one query. If zero, no limit is enforced. > **Note**: Use this parameter to protect you from third-party attempts to retrieve your entire content by massively querying the index. 
+      # Maximum number of hits this API key can retrieve in one query. If zero, no limit is enforced. > **Note**: Use this parameter to protect you from third-party attempts to retrieve your entire content by massively querying the index.
       attr_accessor :max_hits_per_query
 
-      # Maximum number of API calls per hour allowed from a given IP address or [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/). Each time an API call is performed with this key, a check is performed. If there were more than the specified number of calls within the last hour, the API returns an error with the status code `429` (Too Many Requests).  > **Note**: Use this parameter to protect you from third-party attempts to retrieve your entire content by massively querying the index. 
+      # Maximum number of API calls per hour allowed from a given IP address or [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/). Each time an API call is performed with this key, a check is performed. If there were more than the specified number of calls within the last hour, the API returns an error with the status code `429` (Too Many Requests).  > **Note**: Use this parameter to protect you from third-party attempts to retrieve your entire content by massively querying the index.
       attr_accessor :max_queries_per_ip_per_hour
 
-      # Force some [query parameters](https://www.algolia.com/doc/api-reference/api-parameters/) to be applied for each query made with this API key. It's a URL-encoded query string. 
+      # Force some [query parameters](https://www.algolia.com/doc/api-reference/api-parameters/) to be applied for each query made with this API key. It's a URL-encoded query string.
       attr_accessor :query_parameters
 
-      # Restrict this API key to specific [referrers](https://www.algolia.com/doc/guides/security/api-keys/in-depth/api-key-restrictions/#http-referrers). If empty, all referrers are allowed. For example: - `https://algolia.com/*` matches all referrers starting with \"https://algolia.com/\" - `*.algolia.com` matches all referrers ending with \".algolia.com\" - `*algolia.com*` allows everything in the domain \"algolia.com\". 
+      # Restrict this API key to specific [referrers](https://www.algolia.com/doc/guides/security/api-keys/in-depth/api-key-restrictions/#http-referrers). If empty, all referrers are allowed. For example: - `https://algolia.com/*` matches all referrers starting with \"https://algolia.com/\" - `*.algolia.com` matches all referrers ending with \".algolia.com\" - `*algolia.com*` allows everything in the domain \"algolia.com\".
       attr_accessor :referers
 
-      # Validity duration of a key (in seconds).  The key will automatically be removed after this time has expired. The default value of 0 never expires. Short-lived API keys are useful to grant temporary access to your data. For example, in mobile apps, you can't [control when users update your app](https://www.algolia.com/doc/guides/security/security-best-practices/#use-secured-api-keys-in-mobile-apps). So instead of encoding keys into your app as you would for a web app, you should dynamically fetch them from your mobile app's backend. 
+      # Validity duration of a key (in seconds).  The key will automatically be removed after this time has expired. The default value of 0 never expires. Short-lived API keys are useful to grant temporary access to your data. For example, in mobile apps, you can't [control when users update your app](https://www.algolia.com/doc/guides/security/security-best-practices/#use-secured-api-keys-in-mobile-apps). So instead of encoding keys into your app as you would for a web app, you should dynamically fetch them from your mobile app's backend.
       attr_accessor :validity
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :'value' => :'value',
-          :'created_at' => :'createdAt',
-          :'acl' => :'acl',
-          :'description' => :'description',
-          :'indexes' => :'indexes',
-          :'max_hits_per_query' => :'maxHitsPerQuery',
-          :'max_queries_per_ip_per_hour' => :'maxQueriesPerIPPerHour',
-          :'query_parameters' => :'queryParameters',
-          :'referers' => :'referers',
-          :'validity' => :'validity'
+          :value => :value,
+          :created_at => :createdAt,
+          :acl => :acl,
+          :description => :description,
+          :indexes => :indexes,
+          :max_hits_per_query => :maxHitsPerQuery,
+          :max_queries_per_ip_per_hour => :maxQueriesPerIPPerHour,
+          :query_parameters => :queryParameters,
+          :referers => :referers,
+          :validity => :validity
         }
       end
 
@@ -60,120 +60,122 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :'value' => :'String',
-          :'created_at' => :'Integer',
-          :'acl' => :'Array<Acl>',
-          :'description' => :'String',
-          :'indexes' => :'Array<String>',
-          :'max_hits_per_query' => :'Integer',
-          :'max_queries_per_ip_per_hour' => :'Integer',
-          :'query_parameters' => :'String',
-          :'referers' => :'Array<String>',
-          :'validity' => :'Integer'
+          :value => :String,
+          :created_at => :Integer,
+          :acl => :'Array<Acl>',
+          :description => :String,
+          :indexes => :'Array<String>',
+          :max_hits_per_query => :Integer,
+          :max_queries_per_ip_per_hour => :Integer,
+          :query_parameters => :String,
+          :referers => :'Array<String>',
+          :validity => :Integer
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([
-        ])
+        Set.new([])
       end
 
       # List of class defined in allOf (OpenAPI v3)
       def self.openapi_all_of
         [
-        :'ApiKey',
-        :'BaseGetApiKeyResponse'
+          :ApiKey,
+          :BaseGetApiKeyResponse
         ]
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
-        if (!attributes.is_a?(Hash))
-          fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::GetApiKeyResponse` initialize method"
+        unless attributes.is_a?(Hash)
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::GetApiKeyResponse` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::GetApiKeyResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+        attributes = attributes.each_with_object({}) do |(k, v), h|
+          unless self.class.attribute_map.key?(k.to_sym)
+            raise ArgumentError,
+                  "`#{k}` is not a valid attribute in `Algolia::GetApiKeyResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
-          h[k.to_sym] = v
-        }
 
-        if attributes.key?(:'value')
-          self.value = attributes[:'value']
+          h[k.to_sym] = v
         end
 
-        if attributes.key?(:'created_at')
-          self.created_at = attributes[:'created_at']
+        if attributes.key?(:value)
+          self.value = attributes[:value]
+        end
+
+        if attributes.key?(:created_at)
+          self.created_at = attributes[:created_at]
         else
           self.created_at = nil
         end
 
-        if attributes.key?(:'acl')
-          if (value = attributes[:'acl']).is_a?(Array)
+        if attributes.key?(:acl)
+          if (value = attributes[:acl]).is_a?(Array)
             self.acl = value
           end
         else
           self.acl = nil
         end
 
-        if attributes.key?(:'description')
-          self.description = attributes[:'description']
+        if attributes.key?(:description)
+          self.description = attributes[:description]
         end
 
-        if attributes.key?(:'indexes')
-          if (value = attributes[:'indexes']).is_a?(Array)
+        if attributes.key?(:indexes)
+          if (value = attributes[:indexes]).is_a?(Array)
             self.indexes = value
           end
         end
 
-        if attributes.key?(:'max_hits_per_query')
-          self.max_hits_per_query = attributes[:'max_hits_per_query']
+        if attributes.key?(:max_hits_per_query)
+          self.max_hits_per_query = attributes[:max_hits_per_query]
         end
 
-        if attributes.key?(:'max_queries_per_ip_per_hour')
-          self.max_queries_per_ip_per_hour = attributes[:'max_queries_per_ip_per_hour']
+        if attributes.key?(:max_queries_per_ip_per_hour)
+          self.max_queries_per_ip_per_hour = attributes[:max_queries_per_ip_per_hour]
         end
 
-        if attributes.key?(:'query_parameters')
-          self.query_parameters = attributes[:'query_parameters']
+        if attributes.key?(:query_parameters)
+          self.query_parameters = attributes[:query_parameters]
         end
 
-        if attributes.key?(:'referers')
-          if (value = attributes[:'referers']).is_a?(Array)
+        if attributes.key?(:referers)
+          if (value = attributes[:referers]).is_a?(Array)
             self.referers = value
           end
         end
 
-        if attributes.key?(:'validity')
-          self.validity = attributes[:'validity']
+        if attributes.key?(:validity)
+          self.validity = attributes[:validity]
         end
       end
 
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
-      def ==(o)
-        return true if self.equal?(o)
-        self.class == o.class &&
-            value == o.value &&
-            created_at == o.created_at &&
-            acl == o.acl &&
-            description == o.description &&
-            indexes == o.indexes &&
-            max_hits_per_query == o.max_hits_per_query &&
-            max_queries_per_ip_per_hour == o.max_queries_per_ip_per_hour &&
-            query_parameters == o.query_parameters &&
-            referers == o.referers &&
-            validity == o.validity
+      def ==(other)
+        return true if equal?(other)
+
+        self.class == other.class &&
+          value == other.value &&
+          created_at == other.created_at &&
+          acl == other.acl &&
+          description == other.description &&
+          indexes == other.indexes &&
+          max_hits_per_query == other.max_hits_per_query &&
+          max_queries_per_ip_per_hour == other.max_queries_per_ip_per_hour &&
+          query_parameters == other.query_parameters &&
+          referers == other.referers &&
+          validity == other.validity
       end
 
       # @see the `==` method
       # @param [Object] Object to be compared
-      def eql?(o)
-        self == o
+      def eql?(other)
+        self == other
       end
 
       # Calculates hash code according to all attributes.
@@ -187,19 +189,20 @@ module Algolia
       # @return [Object] Returns the model itself
       def self.build_from_hash(attributes)
         return nil unless attributes.is_a?(Hash)
+
         attributes = attributes.transform_keys(&:to_sym)
         transformed_hash = {}
         types_mapping.each_pair do |key, type|
           if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = nil
+            transformed_hash[key.to_s] = nil
           elsif type =~ /\AArray<(.*)>/i
             # check to ensure the input is an array given that the attribute
             # is documented as an array but the input is not
             if attributes[attribute_map[key]].is_a?(Array)
-              transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+              transformed_hash[key.to_s] = attributes[attribute_map[key]].map { |v| _deserialize(::Regexp.last_match(1), v) }
             end
           elsif !attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+            transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
         new(transformed_hash)
@@ -265,7 +268,7 @@ module Algolia
       def to_hash
         hash = {}
         self.class.attribute_map.each_pair do |attr, param|
-          value = self.send(attr)
+          value = send(attr)
           if value.nil?
             is_nullable = self.class.openapi_nullable.include?(attr)
             next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))

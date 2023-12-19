@@ -9,7 +9,7 @@ module Algolia
       # Algolia index name.
       attr_accessor :index_name
 
-      # Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the recommendations are. 
+      # Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the recommendations are.
       attr_accessor :threshold
 
       # Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.
@@ -18,9 +18,9 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :'index_name' => :'indexName',
-          :'threshold' => :'threshold',
-          :'max_recommendations' => :'maxRecommendations'
+          :index_name => :indexName,
+          :threshold => :threshold,
+          :max_recommendations => :maxRecommendations
         }
       end
 
@@ -32,45 +32,46 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :'index_name' => :'String',
-          :'threshold' => :'Integer',
-          :'max_recommendations' => :'Integer'
+          :index_name => :String,
+          :threshold => :Integer,
+          :max_recommendations => :Integer
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([
-        ])
+        Set.new([])
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
-        if (!attributes.is_a?(Hash))
-          fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::BaseRecommendRequest` initialize method"
+        unless attributes.is_a?(Hash)
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::BaseRecommendRequest` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::BaseRecommendRequest`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+        attributes = attributes.each_with_object({}) do |(k, v), h|
+          unless self.class.attribute_map.key?(k.to_sym)
+            raise ArgumentError,
+                  "`#{k}` is not a valid attribute in `Algolia::BaseRecommendRequest`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
-          h[k.to_sym] = v
-        }
 
-        if attributes.key?(:'index_name')
-          self.index_name = attributes[:'index_name']
+          h[k.to_sym] = v
+        end
+
+        if attributes.key?(:index_name)
+          self.index_name = attributes[:index_name]
         else
           self.index_name = nil
         end
 
-        if attributes.key?(:'threshold')
-          self.threshold = attributes[:'threshold']
+        if attributes.key?(:threshold)
+          self.threshold = attributes[:threshold]
         end
 
-        if attributes.key?(:'max_recommendations')
-          self.max_recommendations = attributes[:'max_recommendations']
+        if attributes.key?(:max_recommendations)
+          self.max_recommendations = attributes[:max_recommendations]
         end
       end
 
@@ -78,15 +79,15 @@ module Algolia
       # @param [Object] threshold Value to be assigned
       def threshold=(threshold)
         if threshold.nil?
-          fail ArgumentError, 'threshold cannot be nil'
+          raise ArgumentError, 'threshold cannot be nil'
         end
 
         if threshold > 100
-          fail ArgumentError, 'invalid value for "threshold", must be smaller than or equal to 100.'
+          raise ArgumentError, 'invalid value for "threshold", must be smaller than or equal to 100.'
         end
 
         if threshold < 0
-          fail ArgumentError, 'invalid value for "threshold", must be greater than or equal to 0.'
+          raise ArgumentError, 'invalid value for "threshold", must be greater than or equal to 0.'
         end
 
         @threshold = threshold
@@ -94,18 +95,19 @@ module Algolia
 
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
-      def ==(o)
-        return true if self.equal?(o)
-        self.class == o.class &&
-            index_name == o.index_name &&
-            threshold == o.threshold &&
-            max_recommendations == o.max_recommendations
+      def ==(other)
+        return true if equal?(other)
+
+        self.class == other.class &&
+          index_name == other.index_name &&
+          threshold == other.threshold &&
+          max_recommendations == other.max_recommendations
       end
 
       # @see the `==` method
       # @param [Object] Object to be compared
-      def eql?(o)
-        self == o
+      def eql?(other)
+        self == other
       end
 
       # Calculates hash code according to all attributes.
@@ -119,19 +121,20 @@ module Algolia
       # @return [Object] Returns the model itself
       def self.build_from_hash(attributes)
         return nil unless attributes.is_a?(Hash)
+
         attributes = attributes.transform_keys(&:to_sym)
         transformed_hash = {}
         types_mapping.each_pair do |key, type|
           if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = nil
+            transformed_hash[key.to_s] = nil
           elsif type =~ /\AArray<(.*)>/i
             # check to ensure the input is an array given that the attribute
             # is documented as an array but the input is not
             if attributes[attribute_map[key]].is_a?(Array)
-              transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+              transformed_hash[key.to_s] = attributes[attribute_map[key]].map { |v| _deserialize(::Regexp.last_match(1), v) }
             end
           elsif !attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+            transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
         new(transformed_hash)
@@ -197,7 +200,7 @@ module Algolia
       def to_hash
         hash = {}
         self.class.attribute_map.each_pair do |attr, param|
-          value = self.send(attr)
+          value = send(attr)
           if value.nil?
             is_nullable = self.class.openapi_nullable.include?(attr)
             next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))

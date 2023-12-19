@@ -14,16 +14,14 @@ module Algolia
       hosts = []
       regions = ['de', 'us']
 
-      if (region != '' && !regions.include?(region))
-        raise "`region` must be one of the following: %s" % regions.join(', ')
-      end
+      raise "`region` must be one of the following: #{regions.join(', ')}" if region != '' && !regions.include?(region)
 
-      hosts << Transport::StatefulHost.new(region.nil? ? "analytics.algolia.com" : "analytics.{region}.algolia.com".sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
-      
+      hosts << Transport::StatefulHost.new(region.nil? ? 'analytics.algolia.com' : 'analytics.{region}.algolia.com'.sub!('{region}', region),
+                                           accept: CallType::READ | CallType::WRITE)
+
       config = Algolia::Configuration.new(app_id, api_key, hosts, 'Analytics')
       create_with_config(config)
     end
-
 
     def self.create_with_config(config)
       new(config)
@@ -49,11 +47,12 @@ module Algolia
     def custom_delete_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_delete"
+        raise ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_delete"
       end
+
       path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -61,7 +60,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Analytics::Object'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.custom_delete",
+        :operation => :'AnalyticsClient.custom_delete',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -92,11 +91,12 @@ module Algolia
     def custom_get_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_get"
+        raise ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_get"
       end
+
       path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -104,7 +104,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Analytics::Object'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.custom_get",
+        :operation => :'AnalyticsClient.custom_get',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -137,19 +137,20 @@ module Algolia
     def custom_post_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_post"
+        raise ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_post"
       end
+
       path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:body])
 
       return_type = opts[:debug_return_type] || 'Analytics::Object'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.custom_post",
+        :operation => :'AnalyticsClient.custom_post',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -182,19 +183,20 @@ module Algolia
     def custom_put_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_put"
+        raise ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_put"
       end
+
       path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:body])
 
       return_type = opts[:debug_return_type] || 'Analytics::Object'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.custom_put",
+        :operation => :'AnalyticsClient.custom_put',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -206,7 +208,7 @@ module Algolia
     end
 
     # Get average click position.
-    # Return the average click position for the complete time range and for individual days. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`. 
+    # Return the average click position for the complete time range and for individual days. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
     # @param index [String] Index name to target.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -219,7 +221,7 @@ module Algolia
     end
 
     # Get average click position.
-    # Return the average click position for the complete time range and for individual days. &gt; **Note**: If all &#x60;positions&#x60; have a &#x60;clickCount&#x60; of &#x60;0&#x60; or &#x60;null&#x60;, it means Algolia didn&#39;t receive any click events for tracked searches. A _tracked_ search is a search request where the &#x60;clickAnalytics&#x60; parameter is &#x60;true&#x60;. 
+    # Return the average click position for the complete time range and for individual days. &gt; **Note**: If all &#x60;positions&#x60; have a &#x60;clickCount&#x60; of &#x60;0&#x60; or &#x60;null&#x60;, it means Algolia didn&#39;t receive any click events for tracked searches. A _tracked_ search is a search request where the &#x60;clickAnalytics&#x60; parameter is &#x60;true&#x60;.
     # @param index [String] Index name to target.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -229,24 +231,25 @@ module Algolia
     def get_average_click_position_with_http_info(index, opts = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_average_click_position"
-      end
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'start_date'].nil? && opts[:'start_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_average_click_position, must conform to the pattern #{pattern}."
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_average_click_position"
       end
 
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'end_date'].nil? && opts[:'end_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_average_click_position, must conform to the pattern #{pattern}."
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_average_click_position, must conform to the pattern #{pattern}."
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_average_click_position, must conform to the pattern #{pattern}."
       end
 
       path = '/2/clicks/averageClickPosition'
       query_params = opts[:query_params] || {}
-      query_params[:'index'] = index
-      query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
-      query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
-      query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
+      query_params[:index] = index
+      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
+      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
+      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -254,7 +257,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Analytics::GetAverageClickPositionResponse'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.get_average_click_position",
+        :operation => :'AnalyticsClient.get_average_click_position',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -266,7 +269,7 @@ module Algolia
     end
 
     # Get click positions.
-    # Show the number of clicks events and their associated position in the search results.  > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`. 
+    # Show the number of clicks events and their associated position in the search results.  > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
     # @param index [String] Index name to target.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -279,7 +282,7 @@ module Algolia
     end
 
     # Get click positions.
-    # Show the number of clicks events and their associated position in the search results.  &gt; **Note**: If all &#x60;positions&#x60; have a &#x60;clickCount&#x60; of &#x60;0&#x60; or &#x60;null&#x60;, it means Algolia didn&#39;t receive any click events for tracked searches. A _tracked_ search is a search request where the &#x60;clickAnalytics&#x60; parameter is &#x60;true&#x60;. 
+    # Show the number of clicks events and their associated position in the search results.  &gt; **Note**: If all &#x60;positions&#x60; have a &#x60;clickCount&#x60; of &#x60;0&#x60; or &#x60;null&#x60;, it means Algolia didn&#39;t receive any click events for tracked searches. A _tracked_ search is a search request where the &#x60;clickAnalytics&#x60; parameter is &#x60;true&#x60;.
     # @param index [String] Index name to target.
     # @param [Hash] opts the optional parameters
     # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -289,24 +292,25 @@ module Algolia
     def get_click_positions_with_http_info(index, opts = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_click_positions"
-      end
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'start_date'].nil? && opts[:'start_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_click_positions, must conform to the pattern #{pattern}."
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_click_positions"
       end
 
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'end_date'].nil? && opts[:'end_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_click_positions, must conform to the pattern #{pattern}."
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_click_positions, must conform to the pattern #{pattern}."
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_click_positions, must conform to the pattern #{pattern}."
       end
 
       path = '/2/clicks/positions'
       query_params = opts[:query_params] || {}
-      query_params[:'index'] = index
-      query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
-      query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
-      query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
+      query_params[:index] = index
+      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
+      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
+      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -314,7 +318,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Analytics::GetClickPositionsResponse'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.get_click_positions",
+        :operation => :'AnalyticsClient.get_click_positions',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -349,24 +353,25 @@ module Algolia
     def get_click_through_rate_with_http_info(index, opts = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_click_through_rate"
-      end
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'start_date'].nil? && opts[:'start_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_click_through_rate, must conform to the pattern #{pattern}."
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_click_through_rate"
       end
 
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'end_date'].nil? && opts[:'end_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_click_through_rate, must conform to the pattern #{pattern}."
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_click_through_rate, must conform to the pattern #{pattern}."
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_click_through_rate, must conform to the pattern #{pattern}."
       end
 
       path = '/2/clicks/clickThroughRate'
       query_params = opts[:query_params] || {}
-      query_params[:'index'] = index
-      query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
-      query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
-      query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
+      query_params[:index] = index
+      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
+      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
+      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -374,7 +379,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Analytics::GetClickThroughRateResponse'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.get_click_through_rate",
+        :operation => :'AnalyticsClient.get_click_through_rate',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -409,24 +414,25 @@ module Algolia
     def get_conversation_rate_with_http_info(index, opts = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_conversation_rate"
-      end
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'start_date'].nil? && opts[:'start_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_conversation_rate, must conform to the pattern #{pattern}."
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_conversation_rate"
       end
 
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'end_date'].nil? && opts[:'end_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_conversation_rate, must conform to the pattern #{pattern}."
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_conversation_rate, must conform to the pattern #{pattern}."
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_conversation_rate, must conform to the pattern #{pattern}."
       end
 
       path = '/2/conversions/conversionRate'
       query_params = opts[:query_params] || {}
-      query_params[:'index'] = index
-      query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
-      query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
-      query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
+      query_params[:index] = index
+      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
+      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
+      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -434,7 +440,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Analytics::GetConversationRateResponse'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.get_conversation_rate",
+        :operation => :'AnalyticsClient.get_conversation_rate',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -469,24 +475,25 @@ module Algolia
     def get_no_click_rate_with_http_info(index, opts = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_no_click_rate"
-      end
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'start_date'].nil? && opts[:'start_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_no_click_rate, must conform to the pattern #{pattern}."
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_no_click_rate"
       end
 
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'end_date'].nil? && opts[:'end_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_no_click_rate, must conform to the pattern #{pattern}."
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_no_click_rate, must conform to the pattern #{pattern}."
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_no_click_rate, must conform to the pattern #{pattern}."
       end
 
       path = '/2/searches/noClickRate'
       query_params = opts[:query_params] || {}
-      query_params[:'index'] = index
-      query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
-      query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
-      query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
+      query_params[:index] = index
+      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
+      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
+      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -494,7 +501,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Analytics::GetNoClickRateResponse'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.get_no_click_rate",
+        :operation => :'AnalyticsClient.get_no_click_rate',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -529,24 +536,25 @@ module Algolia
     def get_no_results_rate_with_http_info(index, opts = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_no_results_rate"
-      end
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'start_date'].nil? && opts[:'start_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_no_results_rate, must conform to the pattern #{pattern}."
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_no_results_rate"
       end
 
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'end_date'].nil? && opts[:'end_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_no_results_rate, must conform to the pattern #{pattern}."
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_no_results_rate, must conform to the pattern #{pattern}."
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_no_results_rate, must conform to the pattern #{pattern}."
       end
 
       path = '/2/searches/noResultRate'
       query_params = opts[:query_params] || {}
-      query_params[:'index'] = index
-      query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
-      query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
-      query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
+      query_params[:index] = index
+      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
+      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
+      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -554,7 +562,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Analytics::GetNoResultsRateResponse'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.get_no_results_rate",
+        :operation => :'AnalyticsClient.get_no_results_rate',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -589,24 +597,25 @@ module Algolia
     def get_searches_count_with_http_info(index, opts = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_searches_count"
-      end
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'start_date'].nil? && opts[:'start_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_searches_count, must conform to the pattern #{pattern}."
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_searches_count"
       end
 
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'end_date'].nil? && opts[:'end_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_searches_count, must conform to the pattern #{pattern}."
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_searches_count, must conform to the pattern #{pattern}."
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_searches_count, must conform to the pattern #{pattern}."
       end
 
       path = '/2/searches/count'
       query_params = opts[:query_params] || {}
-      query_params[:'index'] = index
-      query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
-      query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
-      query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
+      query_params[:index] = index
+      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
+      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
+      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -614,7 +623,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Analytics::GetSearchesCountResponse'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.get_searches_count",
+        :operation => :'AnalyticsClient.get_searches_count',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -653,26 +662,27 @@ module Algolia
     def get_searches_no_clicks_with_http_info(index, opts = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_searches_no_clicks"
-      end
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'start_date'].nil? && opts[:'start_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_searches_no_clicks, must conform to the pattern #{pattern}."
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_searches_no_clicks"
       end
 
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'end_date'].nil? && opts[:'end_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_searches_no_clicks, must conform to the pattern #{pattern}."
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_searches_no_clicks, must conform to the pattern #{pattern}."
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_searches_no_clicks, must conform to the pattern #{pattern}."
       end
 
       path = '/2/searches/noClicks'
       query_params = opts[:query_params] || {}
-      query_params[:'index'] = index
-      query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
-      query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
-      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
-      query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
+      query_params[:index] = index
+      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
+      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
+      query_params[:limit] = opts[:limit] unless opts[:limit].nil?
+      query_params[:offset] = opts[:offset] unless opts[:offset].nil?
+      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -680,7 +690,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Analytics::GetSearchesNoClicksResponse'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.get_searches_no_clicks",
+        :operation => :'AnalyticsClient.get_searches_no_clicks',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -719,26 +729,27 @@ module Algolia
     def get_searches_no_results_with_http_info(index, opts = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_searches_no_results"
-      end
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'start_date'].nil? && opts[:'start_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_searches_no_results, must conform to the pattern #{pattern}."
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_searches_no_results"
       end
 
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'end_date'].nil? && opts[:'end_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_searches_no_results, must conform to the pattern #{pattern}."
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_searches_no_results, must conform to the pattern #{pattern}."
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_searches_no_results, must conform to the pattern #{pattern}."
       end
 
       path = '/2/searches/noResults'
       query_params = opts[:query_params] || {}
-      query_params[:'index'] = index
-      query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
-      query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
-      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
-      query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
+      query_params[:index] = index
+      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
+      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
+      query_params[:limit] = opts[:limit] unless opts[:limit].nil?
+      query_params[:offset] = opts[:offset] unless opts[:offset].nil?
+      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -746,7 +757,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Analytics::GetSearchesNoResultsResponse'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.get_searches_no_results",
+        :operation => :'AnalyticsClient.get_searches_no_results',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -758,7 +769,7 @@ module Algolia
     end
 
     # Get Analytics API status.
-    # Return the latest update time of the Analytics API for an index. If the index has been recently created or no search has been performed yet, `updatedAt` will be `null`. > **Note**: The Analytics API is updated every 5&nbsp;minutes. 
+    # Return the latest update time of the Analytics API for an index. If the index has been recently created or no search has been performed yet, `updatedAt` will be `null`. > **Note**: The Analytics API is updated every 5&nbsp;minutes.
     # @param index [String] Index name to target.
     # @param [Hash] opts the optional parameters
     # @return [GetStatusResponse]
@@ -768,18 +779,19 @@ module Algolia
     end
 
     # Get Analytics API status.
-    # Return the latest update time of the Analytics API for an index. If the index has been recently created or no search has been performed yet, &#x60;updatedAt&#x60; will be &#x60;null&#x60;. &gt; **Note**: The Analytics API is updated every 5&amp;nbsp;minutes. 
+    # Return the latest update time of the Analytics API for an index. If the index has been recently created or no search has been performed yet, &#x60;updatedAt&#x60; will be &#x60;null&#x60;. &gt; **Note**: The Analytics API is updated every 5&amp;nbsp;minutes.
     # @param index [String] Index name to target.
     # @param [Hash] opts the optional parameters
     # @return [Array<(GetStatusResponse, Integer, Hash)>] GetStatusResponse data, response status code and response headers
     def get_status_with_http_info(index, opts = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_status"
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_status"
       end
+
       path = '/2/status'
       query_params = opts[:query_params] || {}
-      query_params[:'index'] = index
+      query_params[:index] = index
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -787,7 +799,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Analytics::GetStatusResponse'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.get_status",
+        :operation => :'AnalyticsClient.get_status',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -826,26 +838,27 @@ module Algolia
     def get_top_countries_with_http_info(index, opts = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_countries"
-      end
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'start_date'].nil? && opts[:'start_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_top_countries, must conform to the pattern #{pattern}."
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_countries"
       end
 
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'end_date'].nil? && opts[:'end_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_countries, must conform to the pattern #{pattern}."
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_top_countries, must conform to the pattern #{pattern}."
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_countries, must conform to the pattern #{pattern}."
       end
 
       path = '/2/countries'
       query_params = opts[:query_params] || {}
-      query_params[:'index'] = index
-      query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
-      query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
-      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
-      query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
+      query_params[:index] = index
+      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
+      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
+      query_params[:limit] = opts[:limit] unless opts[:limit].nil?
+      query_params[:offset] = opts[:offset] unless opts[:offset].nil?
+      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -853,7 +866,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Analytics::GetTopCountriesResponse'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.get_top_countries",
+        :operation => :'AnalyticsClient.get_top_countries',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -894,27 +907,28 @@ module Algolia
     def get_top_filter_attributes_with_http_info(index, opts = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_filter_attributes"
-      end
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'start_date'].nil? && opts[:'start_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_top_filter_attributes, must conform to the pattern #{pattern}."
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_filter_attributes"
       end
 
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'end_date'].nil? && opts[:'end_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_filter_attributes, must conform to the pattern #{pattern}."
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_top_filter_attributes, must conform to the pattern #{pattern}."
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_filter_attributes, must conform to the pattern #{pattern}."
       end
 
       path = '/2/filters'
       query_params = opts[:query_params] || {}
-      query_params[:'index'] = index
-      query_params[:'search'] = opts[:'search'] if !opts[:'search'].nil?
-      query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
-      query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
-      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
-      query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
+      query_params[:index] = index
+      query_params[:search] = opts[:search] unless opts[:search].nil?
+      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
+      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
+      query_params[:limit] = opts[:limit] unless opts[:limit].nil?
+      query_params[:offset] = opts[:offset] unless opts[:offset].nil?
+      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -922,7 +936,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Analytics::GetTopFilterAttributesResponse'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.get_top_filter_attributes",
+        :operation => :'AnalyticsClient.get_top_filter_attributes',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -965,31 +979,32 @@ module Algolia
     def get_top_filter_for_attribute_with_http_info(attribute, index, opts = {})
       # verify the required parameter 'attribute' is set
       if @api_client.config.client_side_validation && attribute.nil?
-        fail ArgumentError, "Missing the required parameter 'attribute' when calling AnalyticsClient.get_top_filter_for_attribute"
+        raise ArgumentError, "Missing the required parameter 'attribute' when calling AnalyticsClient.get_top_filter_for_attribute"
       end
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_filter_for_attribute"
-      end
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'start_date'].nil? && opts[:'start_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_top_filter_for_attribute, must conform to the pattern #{pattern}."
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_filter_for_attribute"
       end
 
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'end_date'].nil? && opts[:'end_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_filter_for_attribute, must conform to the pattern #{pattern}."
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_top_filter_for_attribute, must conform to the pattern #{pattern}."
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_filter_for_attribute, must conform to the pattern #{pattern}."
       end
 
       path = '/2/filters/{attribute}'.sub('{' + 'attribute' + '}', CGI.escape(attribute.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'index'] = index
-      query_params[:'search'] = opts[:'search'] if !opts[:'search'].nil?
-      query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
-      query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
-      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
-      query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
+      query_params[:index] = index
+      query_params[:search] = opts[:search] unless opts[:search].nil?
+      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
+      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
+      query_params[:limit] = opts[:limit] unless opts[:limit].nil?
+      query_params[:offset] = opts[:offset] unless opts[:offset].nil?
+      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -997,7 +1012,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Analytics::GetTopFilterForAttributeResponse'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.get_top_filter_for_attribute",
+        :operation => :'AnalyticsClient.get_top_filter_for_attribute',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1038,27 +1053,28 @@ module Algolia
     def get_top_filters_no_results_with_http_info(index, opts = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_filters_no_results"
-      end
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'start_date'].nil? && opts[:'start_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_top_filters_no_results, must conform to the pattern #{pattern}."
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_filters_no_results"
       end
 
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'end_date'].nil? && opts[:'end_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_filters_no_results, must conform to the pattern #{pattern}."
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_top_filters_no_results, must conform to the pattern #{pattern}."
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_filters_no_results, must conform to the pattern #{pattern}."
       end
 
       path = '/2/filters/noResults'
       query_params = opts[:query_params] || {}
-      query_params[:'index'] = index
-      query_params[:'search'] = opts[:'search'] if !opts[:'search'].nil?
-      query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
-      query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
-      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
-      query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
+      query_params[:index] = index
+      query_params[:search] = opts[:search] unless opts[:search].nil?
+      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
+      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
+      query_params[:limit] = opts[:limit] unless opts[:limit].nil?
+      query_params[:offset] = opts[:offset] unless opts[:offset].nil?
+      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -1066,7 +1082,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Analytics::GetTopFiltersNoResultsResponse'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.get_top_filters_no_results",
+        :operation => :'AnalyticsClient.get_top_filters_no_results',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1109,28 +1125,29 @@ module Algolia
     def get_top_hits_with_http_info(index, opts = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_hits"
-      end
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'start_date'].nil? && opts[:'start_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_top_hits, must conform to the pattern #{pattern}."
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_hits"
       end
 
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'end_date'].nil? && opts[:'end_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_hits, must conform to the pattern #{pattern}."
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_top_hits, must conform to the pattern #{pattern}."
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_hits, must conform to the pattern #{pattern}."
       end
 
       path = '/2/hits'
       query_params = opts[:query_params] || {}
-      query_params[:'index'] = index
-      query_params[:'search'] = opts[:'search'] if !opts[:'search'].nil?
-      query_params[:'clickAnalytics'] = opts[:'click_analytics'] if !opts[:'click_analytics'].nil?
-      query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
-      query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
-      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
-      query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
+      query_params[:index] = index
+      query_params[:search] = opts[:search] unless opts[:search].nil?
+      query_params[:clickAnalytics] = opts[:click_analytics] unless opts[:click_analytics].nil?
+      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
+      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
+      query_params[:limit] = opts[:limit] unless opts[:limit].nil?
+      query_params[:offset] = opts[:offset] unless opts[:offset].nil?
+      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -1138,7 +1155,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Analytics::GetTopHitsResponse'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.get_top_hits",
+        :operation => :'AnalyticsClient.get_top_hits',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1183,29 +1200,30 @@ module Algolia
     def get_top_searches_with_http_info(index, opts = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_searches"
-      end
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'start_date'].nil? && opts[:'start_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_top_searches, must conform to the pattern #{pattern}."
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_searches"
       end
 
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'end_date'].nil? && opts[:'end_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_searches, must conform to the pattern #{pattern}."
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_top_searches, must conform to the pattern #{pattern}."
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_searches, must conform to the pattern #{pattern}."
       end
 
       path = '/2/searches'
       query_params = opts[:query_params] || {}
-      query_params[:'index'] = index
-      query_params[:'clickAnalytics'] = opts[:'click_analytics'] if !opts[:'click_analytics'].nil?
-      query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
-      query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
-      query_params[:'orderBy'] = opts[:'order_by'] if !opts[:'order_by'].nil?
-      query_params[:'direction'] = opts[:'direction'] if !opts[:'direction'].nil?
-      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
-      query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
+      query_params[:index] = index
+      query_params[:clickAnalytics] = opts[:click_analytics] unless opts[:click_analytics].nil?
+      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
+      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
+      query_params[:orderBy] = opts[:order_by] unless opts[:order_by].nil?
+      query_params[:direction] = opts[:direction] unless opts[:direction].nil?
+      query_params[:limit] = opts[:limit] unless opts[:limit].nil?
+      query_params[:offset] = opts[:offset] unless opts[:offset].nil?
+      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -1213,7 +1231,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Analytics::GetTopSearchesResponse'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.get_top_searches",
+        :operation => :'AnalyticsClient.get_top_searches',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1248,24 +1266,25 @@ module Algolia
     def get_users_count_with_http_info(index, opts = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        fail ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_users_count"
-      end
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'start_date'].nil? && opts[:'start_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_users_count, must conform to the pattern #{pattern}."
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_users_count"
       end
 
-      pattern = Regexp.new(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
-      if @api_client.config.client_side_validation && !opts[:'end_date'].nil? && opts[:'end_date'] !~ pattern
-        fail ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_users_count, must conform to the pattern #{pattern}."
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_users_count, must conform to the pattern #{pattern}."
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
+        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_users_count, must conform to the pattern #{pattern}."
       end
 
       path = '/2/users/count'
       query_params = opts[:query_params] || {}
-      query_params[:'index'] = index
-      query_params[:'startDate'] = opts[:'start_date'] if !opts[:'start_date'].nil?
-      query_params[:'endDate'] = opts[:'end_date'] if !opts[:'end_date'].nil?
-      query_params[:'tags'] = opts[:'tags'] if !opts[:'tags'].nil?
+      query_params[:index] = index
+      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
+      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
+      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -1273,7 +1292,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Analytics::GetUsersCountResponse'
 
       new_options = opts.merge(
-        :operation => :"AnalyticsClient.get_users_count",
+        :operation => :'AnalyticsClient.get_users_count',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,

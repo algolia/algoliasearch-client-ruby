@@ -6,10 +6,6 @@ module Algolia
       @value = "Algolia for Ruby (#{VERSION}); Ruby (#{RUBY_VERSION})"
     end
 
-    def value
-      @value
-    end
-
     # Adds a segment to the UserAgent
     #
     def add(segment, version)

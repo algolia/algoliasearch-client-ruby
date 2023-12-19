@@ -53,14 +53,14 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :'event_id' => :'eventID',
-          :'run_id' => :'runID',
-          :'parent_id' => :'parentID',
-          :'status' => :'status',
-          :'type' => :'type',
-          :'batch_size' => :'batchSize',
-          :'data' => :'data',
-          :'published_at' => :'publishedAt'
+          :event_id => :eventID,
+          :run_id => :runID,
+          :parent_id => :parentID,
+          :status => :status,
+          :type => :type,
+          :batch_size => :batchSize,
+          :data => :data,
+          :published_at => :publishedAt
         }
       end
 
@@ -72,80 +72,81 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :'event_id' => :'String',
-          :'run_id' => :'String',
-          :'parent_id' => :'String',
-          :'status' => :'EventStatus',
-          :'type' => :'EventType',
-          :'batch_size' => :'Integer',
-          :'data' => :'Hash<String, Object>',
-          :'published_at' => :'String'
+          :event_id => :String,
+          :run_id => :String,
+          :parent_id => :String,
+          :status => :EventStatus,
+          :type => :EventType,
+          :batch_size => :Integer,
+          :data => :'Hash<String, Object>',
+          :published_at => :String
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([
-        ])
+        Set.new([])
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
-        if (!attributes.is_a?(Hash))
-          fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Event` initialize method"
+        unless attributes.is_a?(Hash)
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Event` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::Event`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+        attributes = attributes.each_with_object({}) do |(k, v), h|
+          unless self.class.attribute_map.key?(k.to_sym)
+            raise ArgumentError,
+                  "`#{k}` is not a valid attribute in `Algolia::Event`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
-          h[k.to_sym] = v
-        }
 
-        if attributes.key?(:'event_id')
-          self.event_id = attributes[:'event_id']
+          h[k.to_sym] = v
+        end
+
+        if attributes.key?(:event_id)
+          self.event_id = attributes[:event_id]
         else
           self.event_id = nil
         end
 
-        if attributes.key?(:'run_id')
-          self.run_id = attributes[:'run_id']
+        if attributes.key?(:run_id)
+          self.run_id = attributes[:run_id]
         else
           self.run_id = nil
         end
 
-        if attributes.key?(:'parent_id')
-          self.parent_id = attributes[:'parent_id']
+        if attributes.key?(:parent_id)
+          self.parent_id = attributes[:parent_id]
         end
 
-        if attributes.key?(:'status')
-          self.status = attributes[:'status']
+        if attributes.key?(:status)
+          self.status = attributes[:status]
         else
           self.status = nil
         end
 
-        if attributes.key?(:'type')
-          self.type = attributes[:'type']
+        if attributes.key?(:type)
+          self.type = attributes[:type]
         else
           self.type = nil
         end
 
-        if attributes.key?(:'batch_size')
-          self.batch_size = attributes[:'batch_size']
+        if attributes.key?(:batch_size)
+          self.batch_size = attributes[:batch_size]
         else
           self.batch_size = nil
         end
 
-        if attributes.key?(:'data')
-          if (value = attributes[:'data']).is_a?(Hash)
+        if attributes.key?(:data)
+          if (value = attributes[:data]).is_a?(Hash)
             self.data = value
           end
         end
 
-        if attributes.key?(:'published_at')
-          self.published_at = attributes[:'published_at']
+        if attributes.key?(:published_at)
+          self.published_at = attributes[:published_at]
         else
           self.published_at = nil
         end
@@ -155,11 +156,11 @@ module Algolia
       # @param [Object] batch_size Value to be assigned
       def batch_size=(batch_size)
         if batch_size.nil?
-          fail ArgumentError, 'batch_size cannot be nil'
+          raise ArgumentError, 'batch_size cannot be nil'
         end
 
         if batch_size < 0
-          fail ArgumentError, 'invalid value for "batch_size", must be greater than or equal to 0.'
+          raise ArgumentError, 'invalid value for "batch_size", must be greater than or equal to 0.'
         end
 
         @batch_size = batch_size
@@ -167,23 +168,24 @@ module Algolia
 
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
-      def ==(o)
-        return true if self.equal?(o)
-        self.class == o.class &&
-            event_id == o.event_id &&
-            run_id == o.run_id &&
-            parent_id == o.parent_id &&
-            status == o.status &&
-            type == o.type &&
-            batch_size == o.batch_size &&
-            data == o.data &&
-            published_at == o.published_at
+      def ==(other)
+        return true if equal?(other)
+
+        self.class == other.class &&
+          event_id == other.event_id &&
+          run_id == other.run_id &&
+          parent_id == other.parent_id &&
+          status == other.status &&
+          type == other.type &&
+          batch_size == other.batch_size &&
+          data == other.data &&
+          published_at == other.published_at
       end
 
       # @see the `==` method
       # @param [Object] Object to be compared
-      def eql?(o)
-        self == o
+      def eql?(other)
+        self == other
       end
 
       # Calculates hash code according to all attributes.
@@ -197,19 +199,20 @@ module Algolia
       # @return [Object] Returns the model itself
       def self.build_from_hash(attributes)
         return nil unless attributes.is_a?(Hash)
+
         attributes = attributes.transform_keys(&:to_sym)
         transformed_hash = {}
         types_mapping.each_pair do |key, type|
           if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = nil
+            transformed_hash[key.to_s] = nil
           elsif type =~ /\AArray<(.*)>/i
             # check to ensure the input is an array given that the attribute
             # is documented as an array but the input is not
             if attributes[attribute_map[key]].is_a?(Array)
-              transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+              transformed_hash[key.to_s] = attributes[attribute_map[key]].map { |v| _deserialize(::Regexp.last_match(1), v) }
             end
           elsif !attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+            transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
         new(transformed_hash)
@@ -275,7 +278,7 @@ module Algolia
       def to_hash
         hash = {}
         self.class.attribute_map.each_pair do |attr, param|
-          value = self.send(attr)
+          value = send(attr)
           if value.nil?
             is_nullable = self.class.openapi_nullable.include?(attr)
             next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))

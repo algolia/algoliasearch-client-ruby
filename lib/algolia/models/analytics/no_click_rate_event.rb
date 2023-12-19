@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Analytics
     class NoClickRateEvent
-      # [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate). 
+      # [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
       attr_accessor :rate
 
       # Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).
@@ -21,10 +21,10 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :'rate' => :'rate',
-          :'count' => :'count',
-          :'no_click_count' => :'noClickCount',
-          :'date' => :'date'
+          :rate => :rate,
+          :count => :count,
+          :no_click_count => :noClickCount,
+          :date => :date
         }
       end
 
@@ -36,54 +36,55 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :'rate' => :'Float',
-          :'count' => :'Integer',
-          :'no_click_count' => :'Integer',
-          :'date' => :'String'
+          :rate => :Float,
+          :count => :Integer,
+          :no_click_count => :Integer,
+          :date => :String
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([
-        ])
+        Set.new([])
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
-        if (!attributes.is_a?(Hash))
-          fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::NoClickRateEvent` initialize method"
+        unless attributes.is_a?(Hash)
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::NoClickRateEvent` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::NoClickRateEvent`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+        attributes = attributes.each_with_object({}) do |(k, v), h|
+          unless self.class.attribute_map.key?(k.to_sym)
+            raise ArgumentError,
+                  "`#{k}` is not a valid attribute in `Algolia::NoClickRateEvent`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
-          h[k.to_sym] = v
-        }
 
-        if attributes.key?(:'rate')
-          self.rate = attributes[:'rate']
+          h[k.to_sym] = v
+        end
+
+        if attributes.key?(:rate)
+          self.rate = attributes[:rate]
         else
           self.rate = nil
         end
 
-        if attributes.key?(:'count')
-          self.count = attributes[:'count']
+        if attributes.key?(:count)
+          self.count = attributes[:count]
         else
           self.count = nil
         end
 
-        if attributes.key?(:'no_click_count')
-          self.no_click_count = attributes[:'no_click_count']
+        if attributes.key?(:no_click_count)
+          self.no_click_count = attributes[:no_click_count]
         else
           self.no_click_count = nil
         end
 
-        if attributes.key?(:'date')
-          self.date = attributes[:'date']
+        if attributes.key?(:date)
+          self.date = attributes[:date]
         else
           self.date = nil
         end
@@ -93,15 +94,15 @@ module Algolia
       # @param [Object] rate Value to be assigned
       def rate=(rate)
         if rate.nil?
-          fail ArgumentError, 'rate cannot be nil'
+          raise ArgumentError, 'rate cannot be nil'
         end
 
         if rate > 1
-          fail ArgumentError, 'invalid value for "rate", must be smaller than or equal to 1.'
+          raise ArgumentError, 'invalid value for "rate", must be smaller than or equal to 1.'
         end
 
         if rate < 0
-          fail ArgumentError, 'invalid value for "rate", must be greater than or equal to 0.'
+          raise ArgumentError, 'invalid value for "rate", must be greater than or equal to 0.'
         end
 
         @rate = rate
@@ -109,19 +110,20 @@ module Algolia
 
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
-      def ==(o)
-        return true if self.equal?(o)
-        self.class == o.class &&
-            rate == o.rate &&
-            count == o.count &&
-            no_click_count == o.no_click_count &&
-            date == o.date
+      def ==(other)
+        return true if equal?(other)
+
+        self.class == other.class &&
+          rate == other.rate &&
+          count == other.count &&
+          no_click_count == other.no_click_count &&
+          date == other.date
       end
 
       # @see the `==` method
       # @param [Object] Object to be compared
-      def eql?(o)
-        self == o
+      def eql?(other)
+        self == other
       end
 
       # Calculates hash code according to all attributes.
@@ -135,19 +137,20 @@ module Algolia
       # @return [Object] Returns the model itself
       def self.build_from_hash(attributes)
         return nil unless attributes.is_a?(Hash)
+
         attributes = attributes.transform_keys(&:to_sym)
         transformed_hash = {}
         types_mapping.each_pair do |key, type|
           if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = nil
+            transformed_hash[key.to_s] = nil
           elsif type =~ /\AArray<(.*)>/i
             # check to ensure the input is an array given that the attribute
             # is documented as an array but the input is not
             if attributes[attribute_map[key]].is_a?(Array)
-              transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+              transformed_hash[key.to_s] = attributes[attribute_map[key]].map { |v| _deserialize(::Regexp.last_match(1), v) }
             end
           elsif !attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+            transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
         new(transformed_hash)
@@ -213,7 +216,7 @@ module Algolia
       def to_hash
         hash = {}
         self.class.attribute_map.each_pair do |attr, param|
-          value = self.send(attr)
+          value = send(attr)
           if value.nil?
             is_nullable = self.class.openapi_nullable.include?(attr)
             next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))

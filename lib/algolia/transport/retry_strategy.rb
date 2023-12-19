@@ -62,55 +62,53 @@ module Algolia
 
       private
 
-        # @param http_response_code [Integer]
-        #
-        # @return [Boolean]
-        #
-        def success?(http_response_code)
-          !http_response_code.nil? && (http_response_code.to_i / 100).floor == 2
-        end
+      # @param http_response_code [Integer]
+      #
+      # @return [Boolean]
+      #
+      def success?(http_response_code)
+        !http_response_code.nil? && (http_response_code.to_i / 100).floor == 2
+      end
 
-        # @param http_response_code [Integer]
-        #
-        # @return [Boolean]
-        #
-        def retryable?(http_response_code, network_failure)
-          if network_failure
-            return true
-          end
+      # @param http_response_code [Integer]
+      #
+      # @return [Boolean]
+      #
+      def retryable?(http_response_code, network_failure)
+        return true if network_failure
 
-          !http_response_code.nil? && (http_response_code.to_i / 100).floor != 2 && (http_response_code.to_i / 100).floor != 4
-        end
+        !http_response_code.nil? && (http_response_code.to_i / 100).floor != 2 && (http_response_code.to_i / 100).floor != 4
+      end
 
-        # Iterates in the hosts list and reset the ones that are down
-        #
-        def reset_expired_hosts
-          @hosts.each do |host|
-            host_last_usage = Time.now.utc - host.last_use
-            reset(host) if !host.up && host_last_usage.to_i > Defaults::TTL
-          end
+      # Iterates in the hosts list and reset the ones that are down
+      #
+      def reset_expired_hosts
+        @hosts.each do |host|
+          host_last_usage = Time.now.utc - host.last_use
+          reset(host) if !host.up && host_last_usage.to_i > Defaults::TTL
         end
+      end
 
-        # Reset a single host
-        #
-        # @param host [StatefulHost]
-        #
-        def reset(host)
-          host.up          = true
-          host.retry_count = 0
-          host.last_use    = Time.now.utc
-        end
+      # Reset a single host
+      #
+      # @param host [StatefulHost]
+      #
+      def reset(host)
+        host.up          = true
+        host.retry_count = 0
+        host.last_use    = Time.now.utc
+      end
 
-        # Make a binary check to know whether the item contains the flag
-        #
-        # @param item [binary] item to check
-        # @param flag [binary] flag to find in the item
-        #
-        # @return [Boolean]
-        #
-        def flag?(item, flag)
-          (item & (1 << (flag - 1))) > 0
-        end
+      # Make a binary check to know whether the item contains the flag
+      #
+      # @param item [binary] item to check
+      # @param flag [binary] flag to find in the item
+      #
+      # @return [Boolean]
+      #
+      def flag?(item, flag)
+        (item & (1 << (flag - 1))).positive?
+      end
     end
   end
 end

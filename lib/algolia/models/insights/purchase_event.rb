@@ -24,6 +24,7 @@ module Algolia
       # @return [String] The enum value
       def build_from_hash(value)
         return value if PurchaseEvent.all_vars.include?(value)
+
         raise "Invalid ENUM value #{value} for class #PurchaseEvent"
       end
     end

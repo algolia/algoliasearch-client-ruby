@@ -23,7 +23,8 @@ module Algolia
       USAGE = "usage".freeze
 
       def self.all_vars
-        @all_vars ||= [ADD_OBJECT, ANALYTICS, BROWSE, DELETE_OBJECT, DELETE_INDEX, EDIT_SETTINGS, INFERENCE, LIST_INDEXES, LOGS, PERSONALIZATION, RECOMMENDATION, SEARCH, SEE_UNRETRIEVABLE_ATTRIBUTES, SETTINGS, USAGE].freeze
+        @all_vars ||= [ADD_OBJECT, ANALYTICS, BROWSE, DELETE_OBJECT, DELETE_INDEX, EDIT_SETTINGS, INFERENCE, LIST_INDEXES, LOGS, PERSONALIZATION, RECOMMENDATION, SEARCH,
+                       SEE_UNRETRIEVABLE_ATTRIBUTES, SETTINGS, USAGE].freeze
       end
 
       # Builds the enum from string
@@ -38,6 +39,7 @@ module Algolia
       # @return [String] The enum value
       def build_from_hash(value)
         return value if Acl.all_vars.include?(value)
+
         raise "Invalid ENUM value #{value} for class #Acl"
       end
     end

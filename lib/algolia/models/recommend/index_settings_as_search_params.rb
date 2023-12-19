@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Recommend
     class IndexSettingsAsSearchParams
-      # Attributes used for [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/) and the [modifiers](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/#modifiers) that can be applied: `filterOnly`, `searchable`, and `afterDistinct`. 
+      # Attributes used for [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/) and the [modifiers](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/#modifiers) that can be applied: `filterOnly`, `searchable`, and `afterDistinct`.
       attr_accessor :attributes_for_faceting
 
       # Attributes to include in the API response. To reduce the size of your response, you can retrieve only some of the attributes. By default, the response includes all attributes.
@@ -15,7 +15,7 @@ module Algolia
       # Determines the order in which Algolia [returns your results](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/).
       attr_accessor :ranking
 
-      # Specifies the [Custom ranking criterion](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/). Use the `asc` and `desc` modifiers to specify the ranking order: ascending or descending. 
+      # Specifies the [Custom ranking criterion](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/). Use the `asc` and `desc` modifiers to specify the ranking order: ascending or descending.
       attr_accessor :custom_ranking
 
       # Relevancy threshold below which less relevant results aren't included in the results.
@@ -24,7 +24,7 @@ module Algolia
       # Attributes to highlight. Strings that match the search query in the attributes are highlighted by surrounding them with HTML tags (`highlightPreTag` and `highlightPostTag`).
       attr_accessor :attributes_to_highlight
 
-      # Attributes to _snippet_. 'Snippeting' is shortening the attribute to a certain number of words. If not specified, the attribute is shortened to the 10 words around the matching string but you can specify the number. For example: `body:20`. 
+      # Attributes to _snippet_. 'Snippeting' is shortening the attribute to a certain number of words. If not specified, the attribute is shortened to the 10 words around the matching string but you can specify the number. For example: `body:20`.
       attr_accessor :attributes_to_snippet
 
       # HTML string to insert before the highlighted parts in all highlight and snippet results.
@@ -66,7 +66,7 @@ module Algolia
       # Sets your user's search language. This adjusts language-specific settings and features such as `ignorePlurals`, `removeStopWords`, and [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) word detection.
       attr_accessor :query_languages
 
-      # [Splits compound words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words) into their component word parts in the query. 
+      # [Splits compound words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words) into their component word parts in the query.
       attr_accessor :decompound_query
 
       # Incidates whether [Rules](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/) are enabled.
@@ -155,51 +155,51 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :'attributes_for_faceting' => :'attributesForFaceting',
-          :'attributes_to_retrieve' => :'attributesToRetrieve',
-          :'ranking' => :'ranking',
-          :'custom_ranking' => :'customRanking',
-          :'relevancy_strictness' => :'relevancyStrictness',
-          :'attributes_to_highlight' => :'attributesToHighlight',
-          :'attributes_to_snippet' => :'attributesToSnippet',
-          :'highlight_pre_tag' => :'highlightPreTag',
-          :'highlight_post_tag' => :'highlightPostTag',
-          :'snippet_ellipsis_text' => :'snippetEllipsisText',
-          :'restrict_highlight_and_snippet_arrays' => :'restrictHighlightAndSnippetArrays',
-          :'hits_per_page' => :'hitsPerPage',
-          :'min_word_sizefor1_typo' => :'minWordSizefor1Typo',
-          :'min_word_sizefor2_typos' => :'minWordSizefor2Typos',
-          :'typo_tolerance' => :'typoTolerance',
-          :'allow_typos_on_numeric_tokens' => :'allowTyposOnNumericTokens',
-          :'disable_typo_tolerance_on_attributes' => :'disableTypoToleranceOnAttributes',
-          :'ignore_plurals' => :'ignorePlurals',
-          :'remove_stop_words' => :'removeStopWords',
-          :'keep_diacritics_on_characters' => :'keepDiacriticsOnCharacters',
-          :'query_languages' => :'queryLanguages',
-          :'decompound_query' => :'decompoundQuery',
-          :'enable_rules' => :'enableRules',
-          :'enable_personalization' => :'enablePersonalization',
-          :'query_type' => :'queryType',
-          :'remove_words_if_no_results' => :'removeWordsIfNoResults',
-          :'mode' => :'mode',
-          :'semantic_search' => :'semanticSearch',
-          :'advanced_syntax' => :'advancedSyntax',
-          :'optional_words' => :'optionalWords',
-          :'disable_exact_on_attributes' => :'disableExactOnAttributes',
-          :'exact_on_single_word_query' => :'exactOnSingleWordQuery',
-          :'alternatives_as_exact' => :'alternativesAsExact',
-          :'advanced_syntax_features' => :'advancedSyntaxFeatures',
-          :'distinct' => :'distinct',
-          :'replace_synonyms_in_highlight' => :'replaceSynonymsInHighlight',
-          :'min_proximity' => :'minProximity',
-          :'response_fields' => :'responseFields',
-          :'max_facet_hits' => :'maxFacetHits',
-          :'max_values_per_facet' => :'maxValuesPerFacet',
-          :'sort_facet_values_by' => :'sortFacetValuesBy',
-          :'attribute_criteria_computed_by_min_proximity' => :'attributeCriteriaComputedByMinProximity',
-          :'rendering_content' => :'renderingContent',
-          :'enable_re_ranking' => :'enableReRanking',
-          :'re_ranking_apply_filter' => :'reRankingApplyFilter'
+          :attributes_for_faceting => :attributesForFaceting,
+          :attributes_to_retrieve => :attributesToRetrieve,
+          :ranking => :ranking,
+          :custom_ranking => :customRanking,
+          :relevancy_strictness => :relevancyStrictness,
+          :attributes_to_highlight => :attributesToHighlight,
+          :attributes_to_snippet => :attributesToSnippet,
+          :highlight_pre_tag => :highlightPreTag,
+          :highlight_post_tag => :highlightPostTag,
+          :snippet_ellipsis_text => :snippetEllipsisText,
+          :restrict_highlight_and_snippet_arrays => :restrictHighlightAndSnippetArrays,
+          :hits_per_page => :hitsPerPage,
+          :min_word_sizefor1_typo => :minWordSizefor1Typo,
+          :min_word_sizefor2_typos => :minWordSizefor2Typos,
+          :typo_tolerance => :typoTolerance,
+          :allow_typos_on_numeric_tokens => :allowTyposOnNumericTokens,
+          :disable_typo_tolerance_on_attributes => :disableTypoToleranceOnAttributes,
+          :ignore_plurals => :ignorePlurals,
+          :remove_stop_words => :removeStopWords,
+          :keep_diacritics_on_characters => :keepDiacriticsOnCharacters,
+          :query_languages => :queryLanguages,
+          :decompound_query => :decompoundQuery,
+          :enable_rules => :enableRules,
+          :enable_personalization => :enablePersonalization,
+          :query_type => :queryType,
+          :remove_words_if_no_results => :removeWordsIfNoResults,
+          :mode => :mode,
+          :semantic_search => :semanticSearch,
+          :advanced_syntax => :advancedSyntax,
+          :optional_words => :optionalWords,
+          :disable_exact_on_attributes => :disableExactOnAttributes,
+          :exact_on_single_word_query => :exactOnSingleWordQuery,
+          :alternatives_as_exact => :alternativesAsExact,
+          :advanced_syntax_features => :advancedSyntaxFeatures,
+          :distinct => :distinct,
+          :replace_synonyms_in_highlight => :replaceSynonymsInHighlight,
+          :min_proximity => :minProximity,
+          :response_fields => :responseFields,
+          :max_facet_hits => :maxFacetHits,
+          :max_values_per_facet => :maxValuesPerFacet,
+          :sort_facet_values_by => :sortFacetValuesBy,
+          :attribute_criteria_computed_by_min_proximity => :attributeCriteriaComputedByMinProximity,
+          :rendering_content => :renderingContent,
+          :enable_re_ranking => :enableReRanking,
+          :re_ranking_apply_filter => :reRankingApplyFilter
         }
       end
 
@@ -211,280 +211,282 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :'attributes_for_faceting' => :'Array<String>',
-          :'attributes_to_retrieve' => :'Array<String>',
-          :'ranking' => :'Array<String>',
-          :'custom_ranking' => :'Array<String>',
-          :'relevancy_strictness' => :'Integer',
-          :'attributes_to_highlight' => :'Array<String>',
-          :'attributes_to_snippet' => :'Array<String>',
-          :'highlight_pre_tag' => :'String',
-          :'highlight_post_tag' => :'String',
-          :'snippet_ellipsis_text' => :'String',
-          :'restrict_highlight_and_snippet_arrays' => :'Boolean',
-          :'hits_per_page' => :'Integer',
-          :'min_word_sizefor1_typo' => :'Integer',
-          :'min_word_sizefor2_typos' => :'Integer',
-          :'typo_tolerance' => :'TypoTolerance',
-          :'allow_typos_on_numeric_tokens' => :'Boolean',
-          :'disable_typo_tolerance_on_attributes' => :'Array<String>',
-          :'ignore_plurals' => :'IgnorePlurals',
-          :'remove_stop_words' => :'RemoveStopWords',
-          :'keep_diacritics_on_characters' => :'String',
-          :'query_languages' => :'Array<String>',
-          :'decompound_query' => :'Boolean',
-          :'enable_rules' => :'Boolean',
-          :'enable_personalization' => :'Boolean',
-          :'query_type' => :'QueryType',
-          :'remove_words_if_no_results' => :'RemoveWordsIfNoResults',
-          :'mode' => :'Mode',
-          :'semantic_search' => :'SemanticSearch',
-          :'advanced_syntax' => :'Boolean',
-          :'optional_words' => :'Array<String>',
-          :'disable_exact_on_attributes' => :'Array<String>',
-          :'exact_on_single_word_query' => :'ExactOnSingleWordQuery',
-          :'alternatives_as_exact' => :'Array<AlternativesAsExact>',
-          :'advanced_syntax_features' => :'Array<AdvancedSyntaxFeatures>',
-          :'distinct' => :'Distinct',
-          :'replace_synonyms_in_highlight' => :'Boolean',
-          :'min_proximity' => :'Integer',
-          :'response_fields' => :'Array<String>',
-          :'max_facet_hits' => :'Integer',
-          :'max_values_per_facet' => :'Integer',
-          :'sort_facet_values_by' => :'String',
-          :'attribute_criteria_computed_by_min_proximity' => :'Boolean',
-          :'rendering_content' => :'RenderingContent',
-          :'enable_re_ranking' => :'Boolean',
-          :'re_ranking_apply_filter' => :'ReRankingApplyFilter'
+          :attributes_for_faceting => :'Array<String>',
+          :attributes_to_retrieve => :'Array<String>',
+          :ranking => :'Array<String>',
+          :custom_ranking => :'Array<String>',
+          :relevancy_strictness => :Integer,
+          :attributes_to_highlight => :'Array<String>',
+          :attributes_to_snippet => :'Array<String>',
+          :highlight_pre_tag => :String,
+          :highlight_post_tag => :String,
+          :snippet_ellipsis_text => :String,
+          :restrict_highlight_and_snippet_arrays => :Boolean,
+          :hits_per_page => :Integer,
+          :min_word_sizefor1_typo => :Integer,
+          :min_word_sizefor2_typos => :Integer,
+          :typo_tolerance => :TypoTolerance,
+          :allow_typos_on_numeric_tokens => :Boolean,
+          :disable_typo_tolerance_on_attributes => :'Array<String>',
+          :ignore_plurals => :IgnorePlurals,
+          :remove_stop_words => :RemoveStopWords,
+          :keep_diacritics_on_characters => :String,
+          :query_languages => :'Array<String>',
+          :decompound_query => :Boolean,
+          :enable_rules => :Boolean,
+          :enable_personalization => :Boolean,
+          :query_type => :QueryType,
+          :remove_words_if_no_results => :RemoveWordsIfNoResults,
+          :mode => :Mode,
+          :semantic_search => :SemanticSearch,
+          :advanced_syntax => :Boolean,
+          :optional_words => :'Array<String>',
+          :disable_exact_on_attributes => :'Array<String>',
+          :exact_on_single_word_query => :ExactOnSingleWordQuery,
+          :alternatives_as_exact => :'Array<AlternativesAsExact>',
+          :advanced_syntax_features => :'Array<AdvancedSyntaxFeatures>',
+          :distinct => :Distinct,
+          :replace_synonyms_in_highlight => :Boolean,
+          :min_proximity => :Integer,
+          :response_fields => :'Array<String>',
+          :max_facet_hits => :Integer,
+          :max_values_per_facet => :Integer,
+          :sort_facet_values_by => :String,
+          :attribute_criteria_computed_by_min_proximity => :Boolean,
+          :rendering_content => :RenderingContent,
+          :enable_re_ranking => :Boolean,
+          :re_ranking_apply_filter => :ReRankingApplyFilter
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new([
-          :'re_ranking_apply_filter'
-        ])
+                  :re_ranking_apply_filter
+                ])
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
-        if (!attributes.is_a?(Hash))
-          fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::IndexSettingsAsSearchParams` initialize method"
+        unless attributes.is_a?(Hash)
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::IndexSettingsAsSearchParams` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::IndexSettingsAsSearchParams`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+        attributes = attributes.each_with_object({}) do |(k, v), h|
+          unless self.class.attribute_map.key?(k.to_sym)
+            raise ArgumentError,
+                  "`#{k}` is not a valid attribute in `Algolia::IndexSettingsAsSearchParams`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
-          h[k.to_sym] = v
-        }
 
-        if attributes.key?(:'attributes_for_faceting')
-          if (value = attributes[:'attributes_for_faceting']).is_a?(Array)
+          h[k.to_sym] = v
+        end
+
+        if attributes.key?(:attributes_for_faceting)
+          if (value = attributes[:attributes_for_faceting]).is_a?(Array)
             self.attributes_for_faceting = value
           end
         end
 
-        if attributes.key?(:'attributes_to_retrieve')
-          if (value = attributes[:'attributes_to_retrieve']).is_a?(Array)
+        if attributes.key?(:attributes_to_retrieve)
+          if (value = attributes[:attributes_to_retrieve]).is_a?(Array)
             self.attributes_to_retrieve = value
           end
         end
 
-        if attributes.key?(:'ranking')
-          if (value = attributes[:'ranking']).is_a?(Array)
+        if attributes.key?(:ranking)
+          if (value = attributes[:ranking]).is_a?(Array)
             self.ranking = value
           end
         end
 
-        if attributes.key?(:'custom_ranking')
-          if (value = attributes[:'custom_ranking']).is_a?(Array)
+        if attributes.key?(:custom_ranking)
+          if (value = attributes[:custom_ranking]).is_a?(Array)
             self.custom_ranking = value
           end
         end
 
-        if attributes.key?(:'relevancy_strictness')
-          self.relevancy_strictness = attributes[:'relevancy_strictness']
+        if attributes.key?(:relevancy_strictness)
+          self.relevancy_strictness = attributes[:relevancy_strictness]
         end
 
-        if attributes.key?(:'attributes_to_highlight')
-          if (value = attributes[:'attributes_to_highlight']).is_a?(Array)
+        if attributes.key?(:attributes_to_highlight)
+          if (value = attributes[:attributes_to_highlight]).is_a?(Array)
             self.attributes_to_highlight = value
           end
         end
 
-        if attributes.key?(:'attributes_to_snippet')
-          if (value = attributes[:'attributes_to_snippet']).is_a?(Array)
+        if attributes.key?(:attributes_to_snippet)
+          if (value = attributes[:attributes_to_snippet]).is_a?(Array)
             self.attributes_to_snippet = value
           end
         end
 
-        if attributes.key?(:'highlight_pre_tag')
-          self.highlight_pre_tag = attributes[:'highlight_pre_tag']
+        if attributes.key?(:highlight_pre_tag)
+          self.highlight_pre_tag = attributes[:highlight_pre_tag]
         end
 
-        if attributes.key?(:'highlight_post_tag')
-          self.highlight_post_tag = attributes[:'highlight_post_tag']
+        if attributes.key?(:highlight_post_tag)
+          self.highlight_post_tag = attributes[:highlight_post_tag]
         end
 
-        if attributes.key?(:'snippet_ellipsis_text')
-          self.snippet_ellipsis_text = attributes[:'snippet_ellipsis_text']
+        if attributes.key?(:snippet_ellipsis_text)
+          self.snippet_ellipsis_text = attributes[:snippet_ellipsis_text]
         end
 
-        if attributes.key?(:'restrict_highlight_and_snippet_arrays')
-          self.restrict_highlight_and_snippet_arrays = attributes[:'restrict_highlight_and_snippet_arrays']
+        if attributes.key?(:restrict_highlight_and_snippet_arrays)
+          self.restrict_highlight_and_snippet_arrays = attributes[:restrict_highlight_and_snippet_arrays]
         end
 
-        if attributes.key?(:'hits_per_page')
-          self.hits_per_page = attributes[:'hits_per_page']
+        if attributes.key?(:hits_per_page)
+          self.hits_per_page = attributes[:hits_per_page]
         end
 
-        if attributes.key?(:'min_word_sizefor1_typo')
-          self.min_word_sizefor1_typo = attributes[:'min_word_sizefor1_typo']
+        if attributes.key?(:min_word_sizefor1_typo)
+          self.min_word_sizefor1_typo = attributes[:min_word_sizefor1_typo]
         end
 
-        if attributes.key?(:'min_word_sizefor2_typos')
-          self.min_word_sizefor2_typos = attributes[:'min_word_sizefor2_typos']
+        if attributes.key?(:min_word_sizefor2_typos)
+          self.min_word_sizefor2_typos = attributes[:min_word_sizefor2_typos]
         end
 
-        if attributes.key?(:'typo_tolerance')
-          self.typo_tolerance = attributes[:'typo_tolerance']
+        if attributes.key?(:typo_tolerance)
+          self.typo_tolerance = attributes[:typo_tolerance]
         end
 
-        if attributes.key?(:'allow_typos_on_numeric_tokens')
-          self.allow_typos_on_numeric_tokens = attributes[:'allow_typos_on_numeric_tokens']
+        if attributes.key?(:allow_typos_on_numeric_tokens)
+          self.allow_typos_on_numeric_tokens = attributes[:allow_typos_on_numeric_tokens]
         end
 
-        if attributes.key?(:'disable_typo_tolerance_on_attributes')
-          if (value = attributes[:'disable_typo_tolerance_on_attributes']).is_a?(Array)
+        if attributes.key?(:disable_typo_tolerance_on_attributes)
+          if (value = attributes[:disable_typo_tolerance_on_attributes]).is_a?(Array)
             self.disable_typo_tolerance_on_attributes = value
           end
         end
 
-        if attributes.key?(:'ignore_plurals')
-          self.ignore_plurals = attributes[:'ignore_plurals']
+        if attributes.key?(:ignore_plurals)
+          self.ignore_plurals = attributes[:ignore_plurals]
         end
 
-        if attributes.key?(:'remove_stop_words')
-          self.remove_stop_words = attributes[:'remove_stop_words']
+        if attributes.key?(:remove_stop_words)
+          self.remove_stop_words = attributes[:remove_stop_words]
         end
 
-        if attributes.key?(:'keep_diacritics_on_characters')
-          self.keep_diacritics_on_characters = attributes[:'keep_diacritics_on_characters']
+        if attributes.key?(:keep_diacritics_on_characters)
+          self.keep_diacritics_on_characters = attributes[:keep_diacritics_on_characters]
         end
 
-        if attributes.key?(:'query_languages')
-          if (value = attributes[:'query_languages']).is_a?(Array)
+        if attributes.key?(:query_languages)
+          if (value = attributes[:query_languages]).is_a?(Array)
             self.query_languages = value
           end
         end
 
-        if attributes.key?(:'decompound_query')
-          self.decompound_query = attributes[:'decompound_query']
+        if attributes.key?(:decompound_query)
+          self.decompound_query = attributes[:decompound_query]
         end
 
-        if attributes.key?(:'enable_rules')
-          self.enable_rules = attributes[:'enable_rules']
+        if attributes.key?(:enable_rules)
+          self.enable_rules = attributes[:enable_rules]
         end
 
-        if attributes.key?(:'enable_personalization')
-          self.enable_personalization = attributes[:'enable_personalization']
+        if attributes.key?(:enable_personalization)
+          self.enable_personalization = attributes[:enable_personalization]
         end
 
-        if attributes.key?(:'query_type')
-          self.query_type = attributes[:'query_type']
+        if attributes.key?(:query_type)
+          self.query_type = attributes[:query_type]
         end
 
-        if attributes.key?(:'remove_words_if_no_results')
-          self.remove_words_if_no_results = attributes[:'remove_words_if_no_results']
+        if attributes.key?(:remove_words_if_no_results)
+          self.remove_words_if_no_results = attributes[:remove_words_if_no_results]
         end
 
-        if attributes.key?(:'mode')
-          self.mode = attributes[:'mode']
+        if attributes.key?(:mode)
+          self.mode = attributes[:mode]
         end
 
-        if attributes.key?(:'semantic_search')
-          self.semantic_search = attributes[:'semantic_search']
+        if attributes.key?(:semantic_search)
+          self.semantic_search = attributes[:semantic_search]
         end
 
-        if attributes.key?(:'advanced_syntax')
-          self.advanced_syntax = attributes[:'advanced_syntax']
+        if attributes.key?(:advanced_syntax)
+          self.advanced_syntax = attributes[:advanced_syntax]
         end
 
-        if attributes.key?(:'optional_words')
-          if (value = attributes[:'optional_words']).is_a?(Array)
+        if attributes.key?(:optional_words)
+          if (value = attributes[:optional_words]).is_a?(Array)
             self.optional_words = value
           end
         end
 
-        if attributes.key?(:'disable_exact_on_attributes')
-          if (value = attributes[:'disable_exact_on_attributes']).is_a?(Array)
+        if attributes.key?(:disable_exact_on_attributes)
+          if (value = attributes[:disable_exact_on_attributes]).is_a?(Array)
             self.disable_exact_on_attributes = value
           end
         end
 
-        if attributes.key?(:'exact_on_single_word_query')
-          self.exact_on_single_word_query = attributes[:'exact_on_single_word_query']
+        if attributes.key?(:exact_on_single_word_query)
+          self.exact_on_single_word_query = attributes[:exact_on_single_word_query]
         end
 
-        if attributes.key?(:'alternatives_as_exact')
-          if (value = attributes[:'alternatives_as_exact']).is_a?(Array)
+        if attributes.key?(:alternatives_as_exact)
+          if (value = attributes[:alternatives_as_exact]).is_a?(Array)
             self.alternatives_as_exact = value
           end
         end
 
-        if attributes.key?(:'advanced_syntax_features')
-          if (value = attributes[:'advanced_syntax_features']).is_a?(Array)
+        if attributes.key?(:advanced_syntax_features)
+          if (value = attributes[:advanced_syntax_features]).is_a?(Array)
             self.advanced_syntax_features = value
           end
         end
 
-        if attributes.key?(:'distinct')
-          self.distinct = attributes[:'distinct']
+        if attributes.key?(:distinct)
+          self.distinct = attributes[:distinct]
         end
 
-        if attributes.key?(:'replace_synonyms_in_highlight')
-          self.replace_synonyms_in_highlight = attributes[:'replace_synonyms_in_highlight']
+        if attributes.key?(:replace_synonyms_in_highlight)
+          self.replace_synonyms_in_highlight = attributes[:replace_synonyms_in_highlight]
         end
 
-        if attributes.key?(:'min_proximity')
-          self.min_proximity = attributes[:'min_proximity']
+        if attributes.key?(:min_proximity)
+          self.min_proximity = attributes[:min_proximity]
         end
 
-        if attributes.key?(:'response_fields')
-          if (value = attributes[:'response_fields']).is_a?(Array)
+        if attributes.key?(:response_fields)
+          if (value = attributes[:response_fields]).is_a?(Array)
             self.response_fields = value
           end
         end
 
-        if attributes.key?(:'max_facet_hits')
-          self.max_facet_hits = attributes[:'max_facet_hits']
+        if attributes.key?(:max_facet_hits)
+          self.max_facet_hits = attributes[:max_facet_hits]
         end
 
-        if attributes.key?(:'max_values_per_facet')
-          self.max_values_per_facet = attributes[:'max_values_per_facet']
+        if attributes.key?(:max_values_per_facet)
+          self.max_values_per_facet = attributes[:max_values_per_facet]
         end
 
-        if attributes.key?(:'sort_facet_values_by')
-          self.sort_facet_values_by = attributes[:'sort_facet_values_by']
+        if attributes.key?(:sort_facet_values_by)
+          self.sort_facet_values_by = attributes[:sort_facet_values_by]
         end
 
-        if attributes.key?(:'attribute_criteria_computed_by_min_proximity')
-          self.attribute_criteria_computed_by_min_proximity = attributes[:'attribute_criteria_computed_by_min_proximity']
+        if attributes.key?(:attribute_criteria_computed_by_min_proximity)
+          self.attribute_criteria_computed_by_min_proximity = attributes[:attribute_criteria_computed_by_min_proximity]
         end
 
-        if attributes.key?(:'rendering_content')
-          self.rendering_content = attributes[:'rendering_content']
+        if attributes.key?(:rendering_content)
+          self.rendering_content = attributes[:rendering_content]
         end
 
-        if attributes.key?(:'enable_re_ranking')
-          self.enable_re_ranking = attributes[:'enable_re_ranking']
+        if attributes.key?(:enable_re_ranking)
+          self.enable_re_ranking = attributes[:enable_re_ranking]
         end
 
-        if attributes.key?(:'re_ranking_apply_filter')
-          self.re_ranking_apply_filter = attributes[:'re_ranking_apply_filter']
+        if attributes.key?(:re_ranking_apply_filter)
+          self.re_ranking_apply_filter = attributes[:re_ranking_apply_filter]
         end
       end
 
@@ -492,15 +494,15 @@ module Algolia
       # @param [Object] hits_per_page Value to be assigned
       def hits_per_page=(hits_per_page)
         if hits_per_page.nil?
-          fail ArgumentError, 'hits_per_page cannot be nil'
+          raise ArgumentError, 'hits_per_page cannot be nil'
         end
 
         if hits_per_page > 1000
-          fail ArgumentError, 'invalid value for "hits_per_page", must be smaller than or equal to 1000.'
+          raise ArgumentError, 'invalid value for "hits_per_page", must be smaller than or equal to 1000.'
         end
 
         if hits_per_page < 1
-          fail ArgumentError, 'invalid value for "hits_per_page", must be greater than or equal to 1.'
+          raise ArgumentError, 'invalid value for "hits_per_page", must be greater than or equal to 1.'
         end
 
         @hits_per_page = hits_per_page
@@ -510,15 +512,15 @@ module Algolia
       # @param [Object] min_proximity Value to be assigned
       def min_proximity=(min_proximity)
         if min_proximity.nil?
-          fail ArgumentError, 'min_proximity cannot be nil'
+          raise ArgumentError, 'min_proximity cannot be nil'
         end
 
         if min_proximity > 7
-          fail ArgumentError, 'invalid value for "min_proximity", must be smaller than or equal to 7.'
+          raise ArgumentError, 'invalid value for "min_proximity", must be smaller than or equal to 7.'
         end
 
         if min_proximity < 1
-          fail ArgumentError, 'invalid value for "min_proximity", must be greater than or equal to 1.'
+          raise ArgumentError, 'invalid value for "min_proximity", must be greater than or equal to 1.'
         end
 
         @min_proximity = min_proximity
@@ -528,11 +530,11 @@ module Algolia
       # @param [Object] max_facet_hits Value to be assigned
       def max_facet_hits=(max_facet_hits)
         if max_facet_hits.nil?
-          fail ArgumentError, 'max_facet_hits cannot be nil'
+          raise ArgumentError, 'max_facet_hits cannot be nil'
         end
 
         if max_facet_hits > 100
-          fail ArgumentError, 'invalid value for "max_facet_hits", must be smaller than or equal to 100.'
+          raise ArgumentError, 'invalid value for "max_facet_hits", must be smaller than or equal to 100.'
         end
 
         @max_facet_hits = max_facet_hits
@@ -540,66 +542,68 @@ module Algolia
 
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
-      def ==(o)
-        return true if self.equal?(o)
-        self.class == o.class &&
-            attributes_for_faceting == o.attributes_for_faceting &&
-            attributes_to_retrieve == o.attributes_to_retrieve &&
-            ranking == o.ranking &&
-            custom_ranking == o.custom_ranking &&
-            relevancy_strictness == o.relevancy_strictness &&
-            attributes_to_highlight == o.attributes_to_highlight &&
-            attributes_to_snippet == o.attributes_to_snippet &&
-            highlight_pre_tag == o.highlight_pre_tag &&
-            highlight_post_tag == o.highlight_post_tag &&
-            snippet_ellipsis_text == o.snippet_ellipsis_text &&
-            restrict_highlight_and_snippet_arrays == o.restrict_highlight_and_snippet_arrays &&
-            hits_per_page == o.hits_per_page &&
-            min_word_sizefor1_typo == o.min_word_sizefor1_typo &&
-            min_word_sizefor2_typos == o.min_word_sizefor2_typos &&
-            typo_tolerance == o.typo_tolerance &&
-            allow_typos_on_numeric_tokens == o.allow_typos_on_numeric_tokens &&
-            disable_typo_tolerance_on_attributes == o.disable_typo_tolerance_on_attributes &&
-            ignore_plurals == o.ignore_plurals &&
-            remove_stop_words == o.remove_stop_words &&
-            keep_diacritics_on_characters == o.keep_diacritics_on_characters &&
-            query_languages == o.query_languages &&
-            decompound_query == o.decompound_query &&
-            enable_rules == o.enable_rules &&
-            enable_personalization == o.enable_personalization &&
-            query_type == o.query_type &&
-            remove_words_if_no_results == o.remove_words_if_no_results &&
-            mode == o.mode &&
-            semantic_search == o.semantic_search &&
-            advanced_syntax == o.advanced_syntax &&
-            optional_words == o.optional_words &&
-            disable_exact_on_attributes == o.disable_exact_on_attributes &&
-            exact_on_single_word_query == o.exact_on_single_word_query &&
-            alternatives_as_exact == o.alternatives_as_exact &&
-            advanced_syntax_features == o.advanced_syntax_features &&
-            distinct == o.distinct &&
-            replace_synonyms_in_highlight == o.replace_synonyms_in_highlight &&
-            min_proximity == o.min_proximity &&
-            response_fields == o.response_fields &&
-            max_facet_hits == o.max_facet_hits &&
-            max_values_per_facet == o.max_values_per_facet &&
-            sort_facet_values_by == o.sort_facet_values_by &&
-            attribute_criteria_computed_by_min_proximity == o.attribute_criteria_computed_by_min_proximity &&
-            rendering_content == o.rendering_content &&
-            enable_re_ranking == o.enable_re_ranking &&
-            re_ranking_apply_filter == o.re_ranking_apply_filter
+      def ==(other)
+        return true if equal?(other)
+
+        self.class == other.class &&
+          attributes_for_faceting == other.attributes_for_faceting &&
+          attributes_to_retrieve == other.attributes_to_retrieve &&
+          ranking == other.ranking &&
+          custom_ranking == other.custom_ranking &&
+          relevancy_strictness == other.relevancy_strictness &&
+          attributes_to_highlight == other.attributes_to_highlight &&
+          attributes_to_snippet == other.attributes_to_snippet &&
+          highlight_pre_tag == other.highlight_pre_tag &&
+          highlight_post_tag == other.highlight_post_tag &&
+          snippet_ellipsis_text == other.snippet_ellipsis_text &&
+          restrict_highlight_and_snippet_arrays == other.restrict_highlight_and_snippet_arrays &&
+          hits_per_page == other.hits_per_page &&
+          min_word_sizefor1_typo == other.min_word_sizefor1_typo &&
+          min_word_sizefor2_typos == other.min_word_sizefor2_typos &&
+          typo_tolerance == other.typo_tolerance &&
+          allow_typos_on_numeric_tokens == other.allow_typos_on_numeric_tokens &&
+          disable_typo_tolerance_on_attributes == other.disable_typo_tolerance_on_attributes &&
+          ignore_plurals == other.ignore_plurals &&
+          remove_stop_words == other.remove_stop_words &&
+          keep_diacritics_on_characters == other.keep_diacritics_on_characters &&
+          query_languages == other.query_languages &&
+          decompound_query == other.decompound_query &&
+          enable_rules == other.enable_rules &&
+          enable_personalization == other.enable_personalization &&
+          query_type == other.query_type &&
+          remove_words_if_no_results == other.remove_words_if_no_results &&
+          mode == other.mode &&
+          semantic_search == other.semantic_search &&
+          advanced_syntax == other.advanced_syntax &&
+          optional_words == other.optional_words &&
+          disable_exact_on_attributes == other.disable_exact_on_attributes &&
+          exact_on_single_word_query == other.exact_on_single_word_query &&
+          alternatives_as_exact == other.alternatives_as_exact &&
+          advanced_syntax_features == other.advanced_syntax_features &&
+          distinct == other.distinct &&
+          replace_synonyms_in_highlight == other.replace_synonyms_in_highlight &&
+          min_proximity == other.min_proximity &&
+          response_fields == other.response_fields &&
+          max_facet_hits == other.max_facet_hits &&
+          max_values_per_facet == other.max_values_per_facet &&
+          sort_facet_values_by == other.sort_facet_values_by &&
+          attribute_criteria_computed_by_min_proximity == other.attribute_criteria_computed_by_min_proximity &&
+          rendering_content == other.rendering_content &&
+          enable_re_ranking == other.enable_re_ranking &&
+          re_ranking_apply_filter == other.re_ranking_apply_filter
       end
 
       # @see the `==` method
       # @param [Object] Object to be compared
-      def eql?(o)
-        self == o
+      def eql?(other)
+        self == other
       end
 
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [attributes_for_faceting, attributes_to_retrieve, ranking, custom_ranking, relevancy_strictness, attributes_to_highlight, attributes_to_snippet, highlight_pre_tag, highlight_post_tag, snippet_ellipsis_text, restrict_highlight_and_snippet_arrays, hits_per_page, min_word_sizefor1_typo, min_word_sizefor2_typos, typo_tolerance, allow_typos_on_numeric_tokens, disable_typo_tolerance_on_attributes, ignore_plurals, remove_stop_words, keep_diacritics_on_characters, query_languages, decompound_query, enable_rules, enable_personalization, query_type, remove_words_if_no_results, mode, semantic_search, advanced_syntax, optional_words, disable_exact_on_attributes, exact_on_single_word_query, alternatives_as_exact, advanced_syntax_features, distinct, replace_synonyms_in_highlight, min_proximity, response_fields, max_facet_hits, max_values_per_facet, sort_facet_values_by, attribute_criteria_computed_by_min_proximity, rendering_content, enable_re_ranking, re_ranking_apply_filter].hash
+        [attributes_for_faceting, attributes_to_retrieve, ranking, custom_ranking, relevancy_strictness, attributes_to_highlight, attributes_to_snippet, highlight_pre_tag,
+         highlight_post_tag, snippet_ellipsis_text, restrict_highlight_and_snippet_arrays, hits_per_page, min_word_sizefor1_typo, min_word_sizefor2_typos, typo_tolerance, allow_typos_on_numeric_tokens, disable_typo_tolerance_on_attributes, ignore_plurals, remove_stop_words, keep_diacritics_on_characters, query_languages, decompound_query, enable_rules, enable_personalization, query_type, remove_words_if_no_results, mode, semantic_search, advanced_syntax, optional_words, disable_exact_on_attributes, exact_on_single_word_query, alternatives_as_exact, advanced_syntax_features, distinct, replace_synonyms_in_highlight, min_proximity, response_fields, max_facet_hits, max_values_per_facet, sort_facet_values_by, attribute_criteria_computed_by_min_proximity, rendering_content, enable_re_ranking, re_ranking_apply_filter].hash
       end
 
       # Builds the object from hash
@@ -607,19 +611,20 @@ module Algolia
       # @return [Object] Returns the model itself
       def self.build_from_hash(attributes)
         return nil unless attributes.is_a?(Hash)
+
         attributes = attributes.transform_keys(&:to_sym)
         transformed_hash = {}
         types_mapping.each_pair do |key, type|
           if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = nil
+            transformed_hash[key.to_s] = nil
           elsif type =~ /\AArray<(.*)>/i
             # check to ensure the input is an array given that the attribute
             # is documented as an array but the input is not
             if attributes[attribute_map[key]].is_a?(Array)
-              transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+              transformed_hash[key.to_s] = attributes[attribute_map[key]].map { |v| _deserialize(::Regexp.last_match(1), v) }
             end
           elsif !attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+            transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
         new(transformed_hash)
@@ -685,7 +690,7 @@ module Algolia
       def to_hash
         hash = {}
         self.class.attribute_map.each_pair do |attr, param|
-          value = self.send(attr)
+          value = send(attr)
           if value.nil?
             is_nullable = self.class.openapi_nullable.include?(attr)
             next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))

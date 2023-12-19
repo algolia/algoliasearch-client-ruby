@@ -12,7 +12,7 @@ module Algolia
       # Unique identifier for a rule object.
       attr_accessor :object_id
 
-      # [Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions) required to activate a rule. You can use up to 25 conditions per rule. 
+      # [Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions) required to activate a rule. You can use up to 25 conditions per rule.
       attr_accessor :conditions
 
       attr_accessor :consequence
@@ -26,12 +26,12 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :'_metadata' => :'_metadata',
-          :'object_id' => :'objectID',
-          :'conditions' => :'conditions',
-          :'consequence' => :'consequence',
-          :'description' => :'description',
-          :'enabled' => :'enabled'
+          :_metadata => :_metadata,
+          :object_id => :objectID,
+          :conditions => :conditions,
+          :consequence => :consequence,
+          :description => :description,
+          :enabled => :enabled
         }
       end
 
@@ -43,82 +43,84 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :'_metadata' => :'RuleResponseMetadata',
-          :'object_id' => :'String',
-          :'conditions' => :'Array<Condition>',
-          :'consequence' => :'Consequence',
-          :'description' => :'String',
-          :'enabled' => :'Boolean'
+          :_metadata => :RuleResponseMetadata,
+          :object_id => :String,
+          :conditions => :'Array<Condition>',
+          :consequence => :Consequence,
+          :description => :String,
+          :enabled => :Boolean
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([
-        ])
+        Set.new([])
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
-        if (!attributes.is_a?(Hash))
-          fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::RuleResponse` initialize method"
+        unless attributes.is_a?(Hash)
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::RuleResponse` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::RuleResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+        attributes = attributes.each_with_object({}) do |(k, v), h|
+          unless self.class.attribute_map.key?(k.to_sym)
+            raise ArgumentError,
+                  "`#{k}` is not a valid attribute in `Algolia::RuleResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
-          h[k.to_sym] = v
-        }
 
-        if attributes.key?(:'_metadata')
-          self._metadata = attributes[:'_metadata']
+          h[k.to_sym] = v
         end
 
-        if attributes.key?(:'object_id')
-          self.object_id = attributes[:'object_id']
+        if attributes.key?(:_metadata)
+          self._metadata = attributes[:_metadata]
+        end
+
+        if attributes.key?(:object_id)
+          self.object_id = attributes[:object_id]
         else
           self.object_id = nil
         end
 
-        if attributes.key?(:'conditions')
-          if (value = attributes[:'conditions']).is_a?(Array)
+        if attributes.key?(:conditions)
+          if (value = attributes[:conditions]).is_a?(Array)
             self.conditions = value
           end
         end
 
-        if attributes.key?(:'consequence')
-          self.consequence = attributes[:'consequence']
+        if attributes.key?(:consequence)
+          self.consequence = attributes[:consequence]
         end
 
-        if attributes.key?(:'description')
-          self.description = attributes[:'description']
+        if attributes.key?(:description)
+          self.description = attributes[:description]
         end
 
-        if attributes.key?(:'enabled')
-          self.enabled = attributes[:'enabled']
+        if attributes.key?(:enabled)
+          self.enabled = attributes[:enabled]
         end
       end
 
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
-      def ==(o)
-        return true if self.equal?(o)
-        self.class == o.class &&
-            _metadata == o._metadata &&
-            object_id == o.object_id &&
-            conditions == o.conditions &&
-            consequence == o.consequence &&
-            description == o.description &&
-            enabled == o.enabled
+      def ==(other)
+        return true if equal?(other)
+
+        self.class == other.class &&
+          _metadata == other._metadata &&
+          object_id == other.object_id &&
+          conditions == other.conditions &&
+          consequence == other.consequence &&
+          description == other.description &&
+          enabled == other.enabled
       end
 
       # @see the `==` method
       # @param [Object] Object to be compared
-      def eql?(o)
-        self == o
+      def eql?(other)
+        self == other
       end
 
       # Calculates hash code according to all attributes.
@@ -132,19 +134,20 @@ module Algolia
       # @return [Object] Returns the model itself
       def self.build_from_hash(attributes)
         return nil unless attributes.is_a?(Hash)
+
         attributes = attributes.transform_keys(&:to_sym)
         transformed_hash = {}
         types_mapping.each_pair do |key, type|
           if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = nil
+            transformed_hash[key.to_s] = nil
           elsif type =~ /\AArray<(.*)>/i
             # check to ensure the input is an array given that the attribute
             # is documented as an array but the input is not
             if attributes[attribute_map[key]].is_a?(Array)
-              transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+              transformed_hash[key.to_s] = attributes[attribute_map[key]].map { |v| _deserialize(::Regexp.last_match(1), v) }
             end
           elsif !attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+            transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
         new(transformed_hash)
@@ -210,7 +213,7 @@ module Algolia
       def to_hash
         hash = {}
         self.class.attribute_map.each_pair do |attr, param|
-          value = self.send(attr)
+          value = send(attr)
           if value.nil?
             is_nullable = self.class.openapi_nullable.include?(attr)
             next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))

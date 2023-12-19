@@ -24,7 +24,6 @@ module Algolia
       create_with_config(config)
     end
 
-
     def self.create_with_config(config)
       new(config)
     end
@@ -49,11 +48,12 @@ module Algolia
     def custom_delete_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling RecommendClient.custom_delete"
+        raise ArgumentError, "Missing the required parameter 'path' when calling RecommendClient.custom_delete"
       end
+
       path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -61,7 +61,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Recommend::Object'
 
       new_options = opts.merge(
-        :operation => :"RecommendClient.custom_delete",
+        :operation => :'RecommendClient.custom_delete',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -92,11 +92,12 @@ module Algolia
     def custom_get_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling RecommendClient.custom_get"
+        raise ArgumentError, "Missing the required parameter 'path' when calling RecommendClient.custom_get"
       end
+
       path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -104,7 +105,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Recommend::Object'
 
       new_options = opts.merge(
-        :operation => :"RecommendClient.custom_get",
+        :operation => :'RecommendClient.custom_get',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -137,19 +138,20 @@ module Algolia
     def custom_post_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling RecommendClient.custom_post"
+        raise ArgumentError, "Missing the required parameter 'path' when calling RecommendClient.custom_post"
       end
+
       path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:body])
 
       return_type = opts[:debug_return_type] || 'Recommend::Object'
 
       new_options = opts.merge(
-        :operation => :"RecommendClient.custom_post",
+        :operation => :'RecommendClient.custom_post',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -182,19 +184,20 @@ module Algolia
     def custom_put_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling RecommendClient.custom_put"
+        raise ArgumentError, "Missing the required parameter 'path' when calling RecommendClient.custom_put"
       end
+
       path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:body])
 
       return_type = opts[:debug_return_type] || 'Recommend::Object'
 
       new_options = opts.merge(
-        :operation => :"RecommendClient.custom_put",
+        :operation => :'RecommendClient.custom_put',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -208,7 +211,7 @@ module Algolia
     # Delete a Recommend rule.
     # Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
     # @param index_name [String] Index on which to perform the request.
-    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). 
+    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
     # @param object_id [String] Unique record (object) identifier.
     # @param [Hash] opts the optional parameters
     # @return [DeletedAtResponse]
@@ -220,24 +223,27 @@ module Algolia
     # Delete a Recommend rule.
     # Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
     # @param index_name [String] Index on which to perform the request.
-    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). 
+    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
     # @param object_id [String] Unique record (object) identifier.
     # @param [Hash] opts the optional parameters
     # @return [Array<(DeletedAtResponse, Integer, Hash)>] DeletedAtResponse data, response status code and response headers
     def delete_recommend_rule_with_http_info(index_name, model, object_id, opts = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        fail ArgumentError, "Missing the required parameter 'index_name' when calling RecommendClient.delete_recommend_rule"
+        raise ArgumentError, "Missing the required parameter 'index_name' when calling RecommendClient.delete_recommend_rule"
       end
       # verify the required parameter 'model' is set
       if @api_client.config.client_side_validation && model.nil?
-        fail ArgumentError, "Missing the required parameter 'model' when calling RecommendClient.delete_recommend_rule"
+        raise ArgumentError, "Missing the required parameter 'model' when calling RecommendClient.delete_recommend_rule"
       end
       # verify the required parameter 'object_id' is set
       if @api_client.config.client_side_validation && object_id.nil?
-        fail ArgumentError, "Missing the required parameter 'object_id' when calling RecommendClient.delete_recommend_rule"
+        raise ArgumentError, "Missing the required parameter 'object_id' when calling RecommendClient.delete_recommend_rule"
       end
-      path = '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'model' + '}', CGI.escape(model.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
+
+      path = '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'model' + '}', CGI.escape(model.to_s)).sub(
+        '{' + 'objectID' + '}', CGI.escape(object_id.to_s)
+      )
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
 
@@ -246,7 +252,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Recommend::DeletedAtResponse'
 
       new_options = opts.merge(
-        :operation => :"RecommendClient.delete_recommend_rule",
+        :operation => :'RecommendClient.delete_recommend_rule',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -260,7 +266,7 @@ module Algolia
     # Get a Recommend rule.
     # Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
     # @param index_name [String] Index on which to perform the request.
-    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). 
+    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
     # @param object_id [String] Unique record (object) identifier.
     # @param [Hash] opts the optional parameters
     # @return [RuleResponse]
@@ -272,24 +278,27 @@ module Algolia
     # Get a Recommend rule.
     # Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
     # @param index_name [String] Index on which to perform the request.
-    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). 
+    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
     # @param object_id [String] Unique record (object) identifier.
     # @param [Hash] opts the optional parameters
     # @return [Array<(RuleResponse, Integer, Hash)>] RuleResponse data, response status code and response headers
     def get_recommend_rule_with_http_info(index_name, model, object_id, opts = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        fail ArgumentError, "Missing the required parameter 'index_name' when calling RecommendClient.get_recommend_rule"
+        raise ArgumentError, "Missing the required parameter 'index_name' when calling RecommendClient.get_recommend_rule"
       end
       # verify the required parameter 'model' is set
       if @api_client.config.client_side_validation && model.nil?
-        fail ArgumentError, "Missing the required parameter 'model' when calling RecommendClient.get_recommend_rule"
+        raise ArgumentError, "Missing the required parameter 'model' when calling RecommendClient.get_recommend_rule"
       end
       # verify the required parameter 'object_id' is set
       if @api_client.config.client_side_validation && object_id.nil?
-        fail ArgumentError, "Missing the required parameter 'object_id' when calling RecommendClient.get_recommend_rule"
+        raise ArgumentError, "Missing the required parameter 'object_id' when calling RecommendClient.get_recommend_rule"
       end
-      path = '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'model' + '}', CGI.escape(model.to_s)).sub('{' + 'objectID' + '}', CGI.escape(object_id.to_s))
+
+      path = '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'model' + '}', CGI.escape(model.to_s)).sub(
+        '{' + 'objectID' + '}', CGI.escape(object_id.to_s)
+      )
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
 
@@ -298,7 +307,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Recommend::RuleResponse'
 
       new_options = opts.merge(
-        :operation => :"RecommendClient.get_recommend_rule",
+        :operation => :'RecommendClient.get_recommend_rule',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -312,7 +321,7 @@ module Algolia
     # Get a Recommend task's status.
     # Some operations, such as deleting a Recommend rule, will respond with a `taskID` value. Use this value here to check the status of that task.
     # @param index_name [String] Index on which to perform the request.
-    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). 
+    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
     # @param task_id [Integer] Unique identifier of a task. Numeric value (up to 64bits).
     # @param [Hash] opts the optional parameters
     # @return [GetRecommendTaskResponse]
@@ -324,24 +333,27 @@ module Algolia
     # Get a Recommend task&#39;s status.
     # Some operations, such as deleting a Recommend rule, will respond with a &#x60;taskID&#x60; value. Use this value here to check the status of that task.
     # @param index_name [String] Index on which to perform the request.
-    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). 
+    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
     # @param task_id [Integer] Unique identifier of a task. Numeric value (up to 64bits).
     # @param [Hash] opts the optional parameters
     # @return [Array<(GetRecommendTaskResponse, Integer, Hash)>] GetRecommendTaskResponse data, response status code and response headers
     def get_recommend_status_with_http_info(index_name, model, task_id, opts = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        fail ArgumentError, "Missing the required parameter 'index_name' when calling RecommendClient.get_recommend_status"
+        raise ArgumentError, "Missing the required parameter 'index_name' when calling RecommendClient.get_recommend_status"
       end
       # verify the required parameter 'model' is set
       if @api_client.config.client_side_validation && model.nil?
-        fail ArgumentError, "Missing the required parameter 'model' when calling RecommendClient.get_recommend_status"
+        raise ArgumentError, "Missing the required parameter 'model' when calling RecommendClient.get_recommend_status"
       end
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
-        fail ArgumentError, "Missing the required parameter 'task_id' when calling RecommendClient.get_recommend_status"
+        raise ArgumentError, "Missing the required parameter 'task_id' when calling RecommendClient.get_recommend_status"
       end
-      path = '/1/indexes/{indexName}/{model}/task/{taskID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'model' + '}', CGI.escape(model.to_s)).sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
+
+      path = '/1/indexes/{indexName}/{model}/task/{taskID}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'model' + '}', CGI.escape(model.to_s)).sub(
+        '{' + 'taskID' + '}', CGI.escape(task_id.to_s)
+      )
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
 
@@ -350,7 +362,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Recommend::GetRecommendTaskResponse'
 
       new_options = opts.merge(
-        :operation => :"RecommendClient.get_recommend_status",
+        :operation => :'RecommendClient.get_recommend_status',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -362,8 +374,8 @@ module Algolia
     end
 
     # Get recommendations and trending items.
-    # Returns results from either recommendation or trending models:    - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models   - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values). 
-    # @param get_recommendations_params [GetRecommendationsParams] 
+    # Returns results from either recommendation or trending models:    - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models   - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
+    # @param get_recommendations_params [GetRecommendationsParams]
     # @param [Hash] opts the optional parameters
     # @return [GetRecommendationsResponse]
     def get_recommendations(get_recommendations_params, opts = {})
@@ -372,15 +384,16 @@ module Algolia
     end
 
     # Get recommendations and trending items.
-    # Returns results from either recommendation or trending models:    - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models   - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values). 
-    # @param get_recommendations_params [GetRecommendationsParams] 
+    # Returns results from either recommendation or trending models:    - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models   - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
+    # @param get_recommendations_params [GetRecommendationsParams]
     # @param [Hash] opts the optional parameters
     # @return [Array<(GetRecommendationsResponse, Integer, Hash)>] GetRecommendationsResponse data, response status code and response headers
     def get_recommendations_with_http_info(get_recommendations_params, opts = {})
       # verify the required parameter 'get_recommendations_params' is set
       if @api_client.config.client_side_validation && get_recommendations_params.nil?
-        fail ArgumentError, "Missing the required parameter 'get_recommendations_params' when calling RecommendClient.get_recommendations"
+        raise ArgumentError, "Missing the required parameter 'get_recommendations_params' when calling RecommendClient.get_recommendations"
       end
+
       path = '/1/indexes/*/recommendations'
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -390,7 +403,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Recommend::GetRecommendationsResponse'
 
       new_options = opts.merge(
-        :operation => :"RecommendClient.get_recommendations",
+        :operation => :'RecommendClient.get_recommendations',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -404,9 +417,9 @@ module Algolia
     # List Recommend rules.
     # List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
     # @param index_name [String] Index on which to perform the request.
-    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). 
+    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
     # @param [Hash] opts the optional parameters
-    # @option opts [SearchRecommendRulesParams] :search_recommend_rules_params 
+    # @option opts [SearchRecommendRulesParams] :search_recommend_rules_params
     # @return [SearchRecommendRulesResponse]
     def search_recommend_rules(index_name, model, opts = {})
       data, _status_code, _headers = search_recommend_rules_with_http_info(index_name, model, opts)
@@ -416,29 +429,30 @@ module Algolia
     # List Recommend rules.
     # List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
     # @param index_name [String] Index on which to perform the request.
-    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models). 
+    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
     # @param [Hash] opts the optional parameters
-    # @option opts [SearchRecommendRulesParams] :search_recommend_rules_params 
+    # @option opts [SearchRecommendRulesParams] :search_recommend_rules_params
     # @return [Array<(SearchRecommendRulesResponse, Integer, Hash)>] SearchRecommendRulesResponse data, response status code and response headers
     def search_recommend_rules_with_http_info(index_name, model, opts = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        fail ArgumentError, "Missing the required parameter 'index_name' when calling RecommendClient.search_recommend_rules"
+        raise ArgumentError, "Missing the required parameter 'index_name' when calling RecommendClient.search_recommend_rules"
       end
       # verify the required parameter 'model' is set
       if @api_client.config.client_side_validation && model.nil?
-        fail ArgumentError, "Missing the required parameter 'model' when calling RecommendClient.search_recommend_rules"
+        raise ArgumentError, "Missing the required parameter 'model' when calling RecommendClient.search_recommend_rules"
       end
+
       path = '/1/indexes/{indexName}/{model}/recommend/rules/search'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s)).sub('{' + 'model' + '}', CGI.escape(model.to_s))
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'search_recommend_rules_params'])
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:search_recommend_rules_params])
 
       return_type = opts[:debug_return_type] || 'Recommend::SearchRecommendRulesResponse'
 
       new_options = opts.merge(
-        :operation => :"RecommendClient.search_recommend_rules",
+        :operation => :'RecommendClient.search_recommend_rules',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,

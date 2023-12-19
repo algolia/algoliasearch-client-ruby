@@ -18,7 +18,7 @@ module Algolia
         @accept      = opts[:accept] || (READ | WRITE)
         @last_use    = opts[:last_use] || Time.now.utc
         @retry_count = opts[:retry_count] || 0
-        @up          = opts.has_key?(:up) ? opts[:up] : true
+        @up          = opts.key?(:up) ? opts[:up] : true
       end
     end
   end

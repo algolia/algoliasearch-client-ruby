@@ -33,7 +33,7 @@ module Algolia
       # Attributes for which you want to turn off [prefix matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjusting-prefix-search).
       attr_accessor :disable_prefix_on_attributes
 
-      # Incidates whether the engine compresses arrays with exclusively non-negative integers. When enabled, the compressed arrays may be reordered. 
+      # Incidates whether the engine compresses arrays with exclusively non-negative integers. When enabled, the compressed arrays may be reordered.
       attr_accessor :allow_compression_of_integer_array
 
       # Numeric attributes that can be used as [numerical filters](https://www.algolia.com/doc/guides/managing-results/rules/detecting-intent/how-to/applying-a-custom-filter-for-a-specific-query/#numerical-filters).
@@ -42,7 +42,7 @@ module Algolia
       # Controls which separators are added to an Algolia index as part of [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/#what-does-normalization-mean). Separators are all non-letter characters except spaces and currency characters, such as $€£¥.
       attr_accessor :separators_to_index
 
-      # [Attributes used for searching](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/), including determining [if matches at the beginning of a word are important (ordered) or not (unordered)](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/how-to/configuring-searchable-attributes-the-right-way/#understanding-word-position). 
+      # [Attributes used for searching](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/), including determining [if matches at the beginning of a word are important (ordered) or not (unordered)](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/how-to/configuring-searchable-attributes-the-right-way/#understanding-word-position).
       attr_accessor :searchable_attributes
 
       # Lets you store custom data in your indices.
@@ -57,22 +57,22 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :'replicas' => :'replicas',
-          :'pagination_limited_to' => :'paginationLimitedTo',
-          :'unretrievable_attributes' => :'unretrievableAttributes',
-          :'disable_typo_tolerance_on_words' => :'disableTypoToleranceOnWords',
-          :'attributes_to_transliterate' => :'attributesToTransliterate',
-          :'camel_case_attributes' => :'camelCaseAttributes',
-          :'decompounded_attributes' => :'decompoundedAttributes',
-          :'index_languages' => :'indexLanguages',
-          :'disable_prefix_on_attributes' => :'disablePrefixOnAttributes',
-          :'allow_compression_of_integer_array' => :'allowCompressionOfIntegerArray',
-          :'numeric_attributes_for_filtering' => :'numericAttributesForFiltering',
-          :'separators_to_index' => :'separatorsToIndex',
-          :'searchable_attributes' => :'searchableAttributes',
-          :'user_data' => :'userData',
-          :'custom_normalization' => :'customNormalization',
-          :'attribute_for_distinct' => :'attributeForDistinct'
+          :replicas => :replicas,
+          :pagination_limited_to => :paginationLimitedTo,
+          :unretrievable_attributes => :unretrievableAttributes,
+          :disable_typo_tolerance_on_words => :disableTypoToleranceOnWords,
+          :attributes_to_transliterate => :attributesToTransliterate,
+          :camel_case_attributes => :camelCaseAttributes,
+          :decompounded_attributes => :decompoundedAttributes,
+          :index_languages => :indexLanguages,
+          :disable_prefix_on_attributes => :disablePrefixOnAttributes,
+          :allow_compression_of_integer_array => :allowCompressionOfIntegerArray,
+          :numeric_attributes_for_filtering => :numericAttributesForFiltering,
+          :separators_to_index => :separatorsToIndex,
+          :searchable_attributes => :searchableAttributes,
+          :user_data => :userData,
+          :custom_normalization => :customNormalization,
+          :attribute_for_distinct => :attributeForDistinct
         }
       end
 
@@ -84,165 +84,169 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :'replicas' => :'Array<String>',
-          :'pagination_limited_to' => :'Integer',
-          :'unretrievable_attributes' => :'Array<String>',
-          :'disable_typo_tolerance_on_words' => :'Array<String>',
-          :'attributes_to_transliterate' => :'Array<String>',
-          :'camel_case_attributes' => :'Array<String>',
-          :'decompounded_attributes' => :'Object',
-          :'index_languages' => :'Array<String>',
-          :'disable_prefix_on_attributes' => :'Array<String>',
-          :'allow_compression_of_integer_array' => :'Boolean',
-          :'numeric_attributes_for_filtering' => :'Array<String>',
-          :'separators_to_index' => :'String',
-          :'searchable_attributes' => :'Array<String>',
-          :'user_data' => :'Object',
-          :'custom_normalization' => :'Hash<String, Hash<String, String>>',
-          :'attribute_for_distinct' => :'String'
+          :replicas => :'Array<String>',
+          :pagination_limited_to => :Integer,
+          :unretrievable_attributes => :'Array<String>',
+          :disable_typo_tolerance_on_words => :'Array<String>',
+          :attributes_to_transliterate => :'Array<String>',
+          :camel_case_attributes => :'Array<String>',
+          :decompounded_attributes => :Object,
+          :index_languages => :'Array<String>',
+          :disable_prefix_on_attributes => :'Array<String>',
+          :allow_compression_of_integer_array => :Boolean,
+          :numeric_attributes_for_filtering => :'Array<String>',
+          :separators_to_index => :String,
+          :searchable_attributes => :'Array<String>',
+          :user_data => :Object,
+          :custom_normalization => :'Hash<String, Hash<String, String>>',
+          :attribute_for_distinct => :String
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new([
-          :'user_data',
-        ])
+                  :user_data
+                ])
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
-        if (!attributes.is_a?(Hash))
-          fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::BaseIndexSettings` initialize method"
+        unless attributes.is_a?(Hash)
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::BaseIndexSettings` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::BaseIndexSettings`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+        attributes = attributes.each_with_object({}) do |(k, v), h|
+          unless self.class.attribute_map.key?(k.to_sym)
+            raise ArgumentError,
+                  "`#{k}` is not a valid attribute in `Algolia::BaseIndexSettings`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
-          h[k.to_sym] = v
-        }
 
-        if attributes.key?(:'replicas')
-          if (value = attributes[:'replicas']).is_a?(Array)
+          h[k.to_sym] = v
+        end
+
+        if attributes.key?(:replicas)
+          if (value = attributes[:replicas]).is_a?(Array)
             self.replicas = value
           end
         end
 
-        if attributes.key?(:'pagination_limited_to')
-          self.pagination_limited_to = attributes[:'pagination_limited_to']
+        if attributes.key?(:pagination_limited_to)
+          self.pagination_limited_to = attributes[:pagination_limited_to]
         end
 
-        if attributes.key?(:'unretrievable_attributes')
-          if (value = attributes[:'unretrievable_attributes']).is_a?(Array)
+        if attributes.key?(:unretrievable_attributes)
+          if (value = attributes[:unretrievable_attributes]).is_a?(Array)
             self.unretrievable_attributes = value
           end
         end
 
-        if attributes.key?(:'disable_typo_tolerance_on_words')
-          if (value = attributes[:'disable_typo_tolerance_on_words']).is_a?(Array)
+        if attributes.key?(:disable_typo_tolerance_on_words)
+          if (value = attributes[:disable_typo_tolerance_on_words]).is_a?(Array)
             self.disable_typo_tolerance_on_words = value
           end
         end
 
-        if attributes.key?(:'attributes_to_transliterate')
-          if (value = attributes[:'attributes_to_transliterate']).is_a?(Array)
+        if attributes.key?(:attributes_to_transliterate)
+          if (value = attributes[:attributes_to_transliterate]).is_a?(Array)
             self.attributes_to_transliterate = value
           end
         end
 
-        if attributes.key?(:'camel_case_attributes')
-          if (value = attributes[:'camel_case_attributes']).is_a?(Array)
+        if attributes.key?(:camel_case_attributes)
+          if (value = attributes[:camel_case_attributes]).is_a?(Array)
             self.camel_case_attributes = value
           end
         end
 
-        if attributes.key?(:'decompounded_attributes')
-          self.decompounded_attributes = attributes[:'decompounded_attributes']
+        if attributes.key?(:decompounded_attributes)
+          self.decompounded_attributes = attributes[:decompounded_attributes]
         end
 
-        if attributes.key?(:'index_languages')
-          if (value = attributes[:'index_languages']).is_a?(Array)
+        if attributes.key?(:index_languages)
+          if (value = attributes[:index_languages]).is_a?(Array)
             self.index_languages = value
           end
         end
 
-        if attributes.key?(:'disable_prefix_on_attributes')
-          if (value = attributes[:'disable_prefix_on_attributes']).is_a?(Array)
+        if attributes.key?(:disable_prefix_on_attributes)
+          if (value = attributes[:disable_prefix_on_attributes]).is_a?(Array)
             self.disable_prefix_on_attributes = value
           end
         end
 
-        if attributes.key?(:'allow_compression_of_integer_array')
-          self.allow_compression_of_integer_array = attributes[:'allow_compression_of_integer_array']
+        if attributes.key?(:allow_compression_of_integer_array)
+          self.allow_compression_of_integer_array = attributes[:allow_compression_of_integer_array]
         end
 
-        if attributes.key?(:'numeric_attributes_for_filtering')
-          if (value = attributes[:'numeric_attributes_for_filtering']).is_a?(Array)
+        if attributes.key?(:numeric_attributes_for_filtering)
+          if (value = attributes[:numeric_attributes_for_filtering]).is_a?(Array)
             self.numeric_attributes_for_filtering = value
           end
         end
 
-        if attributes.key?(:'separators_to_index')
-          self.separators_to_index = attributes[:'separators_to_index']
+        if attributes.key?(:separators_to_index)
+          self.separators_to_index = attributes[:separators_to_index]
         end
 
-        if attributes.key?(:'searchable_attributes')
-          if (value = attributes[:'searchable_attributes']).is_a?(Array)
+        if attributes.key?(:searchable_attributes)
+          if (value = attributes[:searchable_attributes]).is_a?(Array)
             self.searchable_attributes = value
           end
         end
 
-        if attributes.key?(:'user_data')
-          self.user_data = attributes[:'user_data']
+        if attributes.key?(:user_data)
+          self.user_data = attributes[:user_data]
         end
 
-        if attributes.key?(:'custom_normalization')
-          if (value = attributes[:'custom_normalization']).is_a?(Hash)
+        if attributes.key?(:custom_normalization)
+          if (value = attributes[:custom_normalization]).is_a?(Hash)
             self.custom_normalization = value
           end
         end
 
-        if attributes.key?(:'attribute_for_distinct')
-          self.attribute_for_distinct = attributes[:'attribute_for_distinct']
+        if attributes.key?(:attribute_for_distinct)
+          self.attribute_for_distinct = attributes[:attribute_for_distinct]
         end
       end
 
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
-      def ==(o)
-        return true if self.equal?(o)
-        self.class == o.class &&
-            replicas == o.replicas &&
-            pagination_limited_to == o.pagination_limited_to &&
-            unretrievable_attributes == o.unretrievable_attributes &&
-            disable_typo_tolerance_on_words == o.disable_typo_tolerance_on_words &&
-            attributes_to_transliterate == o.attributes_to_transliterate &&
-            camel_case_attributes == o.camel_case_attributes &&
-            decompounded_attributes == o.decompounded_attributes &&
-            index_languages == o.index_languages &&
-            disable_prefix_on_attributes == o.disable_prefix_on_attributes &&
-            allow_compression_of_integer_array == o.allow_compression_of_integer_array &&
-            numeric_attributes_for_filtering == o.numeric_attributes_for_filtering &&
-            separators_to_index == o.separators_to_index &&
-            searchable_attributes == o.searchable_attributes &&
-            user_data == o.user_data &&
-            custom_normalization == o.custom_normalization &&
-            attribute_for_distinct == o.attribute_for_distinct
+      def ==(other)
+        return true if equal?(other)
+
+        self.class == other.class &&
+          replicas == other.replicas &&
+          pagination_limited_to == other.pagination_limited_to &&
+          unretrievable_attributes == other.unretrievable_attributes &&
+          disable_typo_tolerance_on_words == other.disable_typo_tolerance_on_words &&
+          attributes_to_transliterate == other.attributes_to_transliterate &&
+          camel_case_attributes == other.camel_case_attributes &&
+          decompounded_attributes == other.decompounded_attributes &&
+          index_languages == other.index_languages &&
+          disable_prefix_on_attributes == other.disable_prefix_on_attributes &&
+          allow_compression_of_integer_array == other.allow_compression_of_integer_array &&
+          numeric_attributes_for_filtering == other.numeric_attributes_for_filtering &&
+          separators_to_index == other.separators_to_index &&
+          searchable_attributes == other.searchable_attributes &&
+          user_data == other.user_data &&
+          custom_normalization == other.custom_normalization &&
+          attribute_for_distinct == other.attribute_for_distinct
       end
 
       # @see the `==` method
       # @param [Object] Object to be compared
-      def eql?(o)
-        self == o
+      def eql?(other)
+        self == other
       end
 
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [replicas, pagination_limited_to, unretrievable_attributes, disable_typo_tolerance_on_words, attributes_to_transliterate, camel_case_attributes, decompounded_attributes, index_languages, disable_prefix_on_attributes, allow_compression_of_integer_array, numeric_attributes_for_filtering, separators_to_index, searchable_attributes, user_data, custom_normalization, attribute_for_distinct].hash
+        [replicas, pagination_limited_to, unretrievable_attributes, disable_typo_tolerance_on_words, attributes_to_transliterate, camel_case_attributes, decompounded_attributes,
+         index_languages, disable_prefix_on_attributes, allow_compression_of_integer_array, numeric_attributes_for_filtering, separators_to_index, searchable_attributes, user_data, custom_normalization, attribute_for_distinct].hash
       end
 
       # Builds the object from hash
@@ -250,19 +254,20 @@ module Algolia
       # @return [Object] Returns the model itself
       def self.build_from_hash(attributes)
         return nil unless attributes.is_a?(Hash)
+
         attributes = attributes.transform_keys(&:to_sym)
         transformed_hash = {}
         types_mapping.each_pair do |key, type|
           if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = nil
+            transformed_hash[key.to_s] = nil
           elsif type =~ /\AArray<(.*)>/i
             # check to ensure the input is an array given that the attribute
             # is documented as an array but the input is not
             if attributes[attribute_map[key]].is_a?(Array)
-              transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+              transformed_hash[key.to_s] = attributes[attribute_map[key]].map { |v| _deserialize(::Regexp.last_match(1), v) }
             end
           elsif !attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+            transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
         new(transformed_hash)
@@ -328,7 +333,7 @@ module Algolia
       def to_hash
         hash = {}
         self.class.attribute_map.each_pair do |attr, param|
-          value = self.send(attr)
+          value = send(attr)
           if value.nil?
             is_nullable = self.class.openapi_nullable.include?(attr)
             next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))

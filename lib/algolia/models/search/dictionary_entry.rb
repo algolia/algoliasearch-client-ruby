@@ -10,13 +10,13 @@ module Algolia
       # Unique identifier for a dictionary object.
       attr_accessor :object_id
 
-      # [Supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/). 
+      # [Supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
       attr_accessor :language
 
-      # Dictionary entry word. Usage depends on the type of dictionary entry. **`stopwordEntry`** The stop word you want to add or update. If the entry already exists in Algolia's standard dictionary, you can override its behavior by adding it to the custom dictionary and setting its `state` to `disabled`. **`compoundEntry`** When `decomposition` is empty: adds `word` as a compound atom. For example, atom “kino” decomposes the query “kopfkino” into \"kopf\" and \"kino\". When `decomposition` isn't empty: creates a decomposition exception. For example, when decomposition is set to the [\"hund\", \"hutte\"] exception, \"hundehutte\" decomposes into “hund” and “hutte”, discarding the linking \"e\". 
+      # Dictionary entry word. Usage depends on the type of dictionary entry. **`stopwordEntry`** The stop word you want to add or update. If the entry already exists in Algolia's standard dictionary, you can override its behavior by adding it to the custom dictionary and setting its `state` to `disabled`. **`compoundEntry`** When `decomposition` is empty: adds `word` as a compound atom. For example, atom “kino” decomposes the query “kopfkino” into \"kopf\" and \"kino\". When `decomposition` isn't empty: creates a decomposition exception. For example, when decomposition is set to the [\"hund\", \"hutte\"] exception, \"hundehutte\" decomposes into “hund” and “hutte”, discarding the linking \"e\".
       attr_accessor :word
 
-      # Compound dictionary [word declensions](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/). If the entry already exists in Algolia's standard dictionary, you can override its behavior by adding it to the custom dictionary and setting its `state` to `disabled`. 
+      # Compound dictionary [word declensions](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/). If the entry already exists in Algolia's standard dictionary, you can override its behavior by adding it to the custom dictionary and setting its `state` to `disabled`.
       attr_accessor :words
 
       # For compound entries, governs the behavior of the `word` parameter.
@@ -49,12 +49,12 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :'object_id' => :'objectID',
-          :'language' => :'language',
-          :'word' => :'word',
-          :'words' => :'words',
-          :'decomposition' => :'decomposition',
-          :'state' => :'state'
+          :object_id => :objectID,
+          :language => :language,
+          :word => :word,
+          :words => :words,
+          :decomposition => :decomposition,
+          :state => :state
         }
       end
 
@@ -66,86 +66,88 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :'object_id' => :'String',
-          :'language' => :'String',
-          :'word' => :'String',
-          :'words' => :'Array<String>',
-          :'decomposition' => :'Array<String>',
-          :'state' => :'DictionaryEntryState'
+          :object_id => :String,
+          :language => :String,
+          :word => :String,
+          :words => :'Array<String>',
+          :decomposition => :'Array<String>',
+          :state => :DictionaryEntryState
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([
-        ])
+        Set.new([])
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
-        if (!attributes.is_a?(Hash))
-          fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::DictionaryEntry` initialize method"
+        unless attributes.is_a?(Hash)
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::DictionaryEntry` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::DictionaryEntry`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+        attributes = attributes.each_with_object({}) do |(k, v), h|
+          unless self.class.attribute_map.key?(k.to_sym)
+            raise ArgumentError,
+                  "`#{k}` is not a valid attribute in `Algolia::DictionaryEntry`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
-          h[k.to_sym] = v
-        }
 
-        if attributes.key?(:'object_id')
-          self.object_id = attributes[:'object_id']
+          h[k.to_sym] = v
+        end
+
+        if attributes.key?(:object_id)
+          self.object_id = attributes[:object_id]
         else
           self.object_id = nil
         end
 
-        if attributes.key?(:'language')
-          self.language = attributes[:'language']
+        if attributes.key?(:language)
+          self.language = attributes[:language]
         else
           self.language = nil
         end
 
-        if attributes.key?(:'word')
-          self.word = attributes[:'word']
+        if attributes.key?(:word)
+          self.word = attributes[:word]
         end
 
-        if attributes.key?(:'words')
-          if (value = attributes[:'words']).is_a?(Array)
+        if attributes.key?(:words)
+          if (value = attributes[:words]).is_a?(Array)
             self.words = value
           end
         end
 
-        if attributes.key?(:'decomposition')
-          if (value = attributes[:'decomposition']).is_a?(Array)
+        if attributes.key?(:decomposition)
+          if (value = attributes[:decomposition]).is_a?(Array)
             self.decomposition = value
           end
         end
 
-        if attributes.key?(:'state')
-          self.state = attributes[:'state']
+        if attributes.key?(:state)
+          self.state = attributes[:state]
         end
       end
 
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
-      def ==(o)
-        return true if self.equal?(o)
-        self.class == o.class &&
-            object_id == o.object_id &&
-            language == o.language &&
-            word == o.word &&
-            words == o.words &&
-            decomposition == o.decomposition &&
-            state == o.state
+      def ==(other)
+        return true if equal?(other)
+
+        self.class == other.class &&
+          object_id == other.object_id &&
+          language == other.language &&
+          word == other.word &&
+          words == other.words &&
+          decomposition == other.decomposition &&
+          state == other.state
       end
 
       # @see the `==` method
       # @param [Object] Object to be compared
-      def eql?(o)
-        self == o
+      def eql?(other)
+        self == other
       end
 
       # Calculates hash code according to all attributes.
@@ -159,19 +161,20 @@ module Algolia
       # @return [Object] Returns the model itself
       def self.build_from_hash(attributes)
         return nil unless attributes.is_a?(Hash)
+
         attributes = attributes.transform_keys(&:to_sym)
         transformed_hash = {}
         types_mapping.each_pair do |key, type|
           if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = nil
+            transformed_hash[key.to_s] = nil
           elsif type =~ /\AArray<(.*)>/i
             # check to ensure the input is an array given that the attribute
             # is documented as an array but the input is not
             if attributes[attribute_map[key]].is_a?(Array)
-              transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+              transformed_hash[key.to_s] = attributes[attribute_map[key]].map { |v| _deserialize(::Regexp.last_match(1), v) }
             end
           elsif !attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+            transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
         new(transformed_hash)
@@ -237,7 +240,7 @@ module Algolia
       def to_hash
         hash = {}
         self.class.attribute_map.each_pair do |attr, param|
-          value = self.send(attr)
+          value = send(attr)
           if value.nil?
             is_nullable = self.class.openapi_nullable.include?(attr)
             next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))

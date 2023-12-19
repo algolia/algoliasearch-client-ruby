@@ -14,16 +14,13 @@ module Algolia
       hosts = []
       regions = ['de', 'us']
 
-      if (region != '' && !regions.include?(region))
-        raise "`region` must be one of the following: %s" % regions.join(', ')
-      end
+      raise "`region` must be one of the following: #{regions.join(', ')}" if region != '' && !regions.include?(region)
 
-      hosts << Transport::StatefulHost.new(region.nil? ? "insights.algolia.io" : "insights.{region}.algolia.io".sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
-      
+      hosts << Transport::StatefulHost.new(region.nil? ? 'insights.algolia.io' : 'insights.{region}.algolia.io'.sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
+
       config = Algolia::Configuration.new(app_id, api_key, hosts, 'Insights')
       create_with_config(config)
     end
-
 
     def self.create_with_config(config)
       new(config)
@@ -49,11 +46,12 @@ module Algolia
     def custom_delete_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.custom_delete"
+        raise ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.custom_delete"
       end
+
       path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -61,7 +59,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Insights::Object'
 
       new_options = opts.merge(
-        :operation => :"InsightsClient.custom_delete",
+        :operation => :'InsightsClient.custom_delete',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -92,11 +90,12 @@ module Algolia
     def custom_get_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.custom_get"
+        raise ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.custom_get"
       end
+
       path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -104,7 +103,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Insights::Object'
 
       new_options = opts.merge(
-        :operation => :"InsightsClient.custom_get",
+        :operation => :'InsightsClient.custom_get',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -137,19 +136,20 @@ module Algolia
     def custom_post_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.custom_post"
+        raise ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.custom_post"
       end
+
       path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:body])
 
       return_type = opts[:debug_return_type] || 'Insights::Object'
 
       new_options = opts.merge(
-        :operation => :"InsightsClient.custom_post",
+        :operation => :'InsightsClient.custom_post',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -182,19 +182,20 @@ module Algolia
     def custom_put_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.custom_put"
+        raise ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.custom_put"
       end
+
       path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:body])
 
       return_type = opts[:debug_return_type] || 'Insights::Object'
 
       new_options = opts.merge(
-        :operation => :"InsightsClient.custom_put",
+        :operation => :'InsightsClient.custom_put',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -206,8 +207,8 @@ module Algolia
     end
 
     # Send events.
-    # Send a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB. 
-    # @param insights_events [InsightsEvents] 
+    # Send a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
+    # @param insights_events [InsightsEvents]
     # @param [Hash] opts the optional parameters
     # @return [EventsResponse]
     def push_events(insights_events, opts = {})
@@ -216,15 +217,16 @@ module Algolia
     end
 
     # Send events.
-    # Send a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&amp;nbsp;MB. 
-    # @param insights_events [InsightsEvents] 
+    # Send a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&amp;nbsp;MB.
+    # @param insights_events [InsightsEvents]
     # @param [Hash] opts the optional parameters
     # @return [Array<(EventsResponse, Integer, Hash)>] EventsResponse data, response status code and response headers
     def push_events_with_http_info(insights_events, opts = {})
       # verify the required parameter 'insights_events' is set
       if @api_client.config.client_side_validation && insights_events.nil?
-        fail ArgumentError, "Missing the required parameter 'insights_events' when calling InsightsClient.push_events"
+        raise ArgumentError, "Missing the required parameter 'insights_events' when calling InsightsClient.push_events"
       end
+
       path = '/1/events'
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -234,7 +236,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Insights::EventsResponse'
 
       new_options = opts.merge(
-        :operation => :"InsightsClient.push_events",
+        :operation => :'InsightsClient.push_events',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,

@@ -25,11 +25,11 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :'hits' => :'hits',
-          :'nb_hits' => :'nbHits',
-          :'page' => :'page',
-          :'hits_per_page' => :'hitsPerPage',
-          :'updated_at' => :'updatedAt'
+          :hits => :hits,
+          :nb_hits => :nbHits,
+          :page => :page,
+          :hits_per_page => :hitsPerPage,
+          :updated_at => :updatedAt
         }
       end
 
@@ -41,63 +41,64 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :'hits' => :'Array<UserHit>',
-          :'nb_hits' => :'Integer',
-          :'page' => :'Integer',
-          :'hits_per_page' => :'Integer',
-          :'updated_at' => :'String'
+          :hits => :'Array<UserHit>',
+          :nb_hits => :Integer,
+          :page => :Integer,
+          :hits_per_page => :Integer,
+          :updated_at => :String
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([
-        ])
+        Set.new([])
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
-        if (!attributes.is_a?(Hash))
-          fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::SearchUserIdsResponse` initialize method"
+        unless attributes.is_a?(Hash)
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::SearchUserIdsResponse` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::SearchUserIdsResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+        attributes = attributes.each_with_object({}) do |(k, v), h|
+          unless self.class.attribute_map.key?(k.to_sym)
+            raise ArgumentError,
+                  "`#{k}` is not a valid attribute in `Algolia::SearchUserIdsResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
-          h[k.to_sym] = v
-        }
 
-        if attributes.key?(:'hits')
-          if (value = attributes[:'hits']).is_a?(Array)
+          h[k.to_sym] = v
+        end
+
+        if attributes.key?(:hits)
+          if (value = attributes[:hits]).is_a?(Array)
             self.hits = value
           end
         else
           self.hits = nil
         end
 
-        if attributes.key?(:'nb_hits')
-          self.nb_hits = attributes[:'nb_hits']
+        if attributes.key?(:nb_hits)
+          self.nb_hits = attributes[:nb_hits]
         else
           self.nb_hits = nil
         end
 
-        if attributes.key?(:'page')
-          self.page = attributes[:'page']
+        if attributes.key?(:page)
+          self.page = attributes[:page]
         else
           self.page = nil
         end
 
-        if attributes.key?(:'hits_per_page')
-          self.hits_per_page = attributes[:'hits_per_page']
+        if attributes.key?(:hits_per_page)
+          self.hits_per_page = attributes[:hits_per_page]
         else
           self.hits_per_page = nil
         end
 
-        if attributes.key?(:'updated_at')
-          self.updated_at = attributes[:'updated_at']
+        if attributes.key?(:updated_at)
+          self.updated_at = attributes[:updated_at]
         else
           self.updated_at = nil
         end
@@ -107,15 +108,15 @@ module Algolia
       # @param [Object] hits_per_page Value to be assigned
       def hits_per_page=(hits_per_page)
         if hits_per_page.nil?
-          fail ArgumentError, 'hits_per_page cannot be nil'
+          raise ArgumentError, 'hits_per_page cannot be nil'
         end
 
         if hits_per_page > 1000
-          fail ArgumentError, 'invalid value for "hits_per_page", must be smaller than or equal to 1000.'
+          raise ArgumentError, 'invalid value for "hits_per_page", must be smaller than or equal to 1000.'
         end
 
         if hits_per_page < 1
-          fail ArgumentError, 'invalid value for "hits_per_page", must be greater than or equal to 1.'
+          raise ArgumentError, 'invalid value for "hits_per_page", must be greater than or equal to 1.'
         end
 
         @hits_per_page = hits_per_page
@@ -123,20 +124,21 @@ module Algolia
 
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
-      def ==(o)
-        return true if self.equal?(o)
-        self.class == o.class &&
-            hits == o.hits &&
-            nb_hits == o.nb_hits &&
-            page == o.page &&
-            hits_per_page == o.hits_per_page &&
-            updated_at == o.updated_at
+      def ==(other)
+        return true if equal?(other)
+
+        self.class == other.class &&
+          hits == other.hits &&
+          nb_hits == other.nb_hits &&
+          page == other.page &&
+          hits_per_page == other.hits_per_page &&
+          updated_at == other.updated_at
       end
 
       # @see the `==` method
       # @param [Object] Object to be compared
-      def eql?(o)
-        self == o
+      def eql?(other)
+        self == other
       end
 
       # Calculates hash code according to all attributes.
@@ -150,19 +152,20 @@ module Algolia
       # @return [Object] Returns the model itself
       def self.build_from_hash(attributes)
         return nil unless attributes.is_a?(Hash)
+
         attributes = attributes.transform_keys(&:to_sym)
         transformed_hash = {}
         types_mapping.each_pair do |key, type|
           if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = nil
+            transformed_hash[key.to_s] = nil
           elsif type =~ /\AArray<(.*)>/i
             # check to ensure the input is an array given that the attribute
             # is documented as an array but the input is not
             if attributes[attribute_map[key]].is_a?(Array)
-              transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+              transformed_hash[key.to_s] = attributes[attribute_map[key]].map { |v| _deserialize(::Regexp.last_match(1), v) }
             end
           elsif !attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+            transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
         new(transformed_hash)
@@ -228,7 +231,7 @@ module Algolia
       def to_hash
         hash = {}
         self.class.attribute_map.each_pair do |attr, param|
-          value = self.send(attr)
+          value = send(attr)
           if value.nil?
             is_nullable = self.class.openapi_nullable.include?(attr)
             next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))

@@ -14,16 +14,14 @@ module Algolia
       hosts = []
       regions = ['de', 'us']
 
-      if (region != '' && !regions.include?(region))
-        raise "`region` must be one of the following: %s" % regions.join(', ')
-      end
+      raise "`region` must be one of the following: #{regions.join(', ')}" if region != '' && !regions.include?(region)
 
-      hosts << Transport::StatefulHost.new(region.nil? ? "analytics.algolia.com" : "analytics.{region}.algolia.com".sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
-      
+      hosts << Transport::StatefulHost.new(region.nil? ? 'analytics.algolia.com' : 'analytics.{region}.algolia.com'.sub!('{region}', region),
+                                           accept: CallType::READ | CallType::WRITE)
+
       config = Algolia::Configuration.new(app_id, api_key, hosts, 'Abtesting')
       create_with_config(config)
     end
-
 
     def self.create_with_config(config)
       new(config)
@@ -31,7 +29,7 @@ module Algolia
 
     # Create an A/B test.
     # Creates an A/B test.
-    # @param add_ab_tests_request [AddABTestsRequest] 
+    # @param add_ab_tests_request [AddABTestsRequest]
     # @param [Hash] opts the optional parameters
     # @return [ABTestResponse]
     def add_ab_tests(add_ab_tests_request, opts = {})
@@ -41,14 +39,15 @@ module Algolia
 
     # Create an A/B test.
     # Creates an A/B test.
-    # @param add_ab_tests_request [AddABTestsRequest] 
+    # @param add_ab_tests_request [AddABTestsRequest]
     # @param [Hash] opts the optional parameters
     # @return [Array<(ABTestResponse, Integer, Hash)>] ABTestResponse data, response status code and response headers
     def add_ab_tests_with_http_info(add_ab_tests_request, opts = {})
       # verify the required parameter 'add_ab_tests_request' is set
       if @api_client.config.client_side_validation && add_ab_tests_request.nil?
-        fail ArgumentError, "Missing the required parameter 'add_ab_tests_request' when calling AbtestingClient.add_ab_tests"
+        raise ArgumentError, "Missing the required parameter 'add_ab_tests_request' when calling AbtestingClient.add_ab_tests"
       end
+
       path = '/2/abtests'
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -58,7 +57,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Abtesting::ABTestResponse'
 
       new_options = opts.merge(
-        :operation => :"AbtestingClient.add_ab_tests",
+        :operation => :'AbtestingClient.add_ab_tests',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -89,11 +88,12 @@ module Algolia
     def custom_delete_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling AbtestingClient.custom_delete"
+        raise ArgumentError, "Missing the required parameter 'path' when calling AbtestingClient.custom_delete"
       end
+
       path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -101,7 +101,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Abtesting::Object'
 
       new_options = opts.merge(
-        :operation => :"AbtestingClient.custom_delete",
+        :operation => :'AbtestingClient.custom_delete',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -132,11 +132,12 @@ module Algolia
     def custom_get_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling AbtestingClient.custom_get"
+        raise ArgumentError, "Missing the required parameter 'path' when calling AbtestingClient.custom_get"
       end
+
       path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -144,7 +145,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Abtesting::Object'
 
       new_options = opts.merge(
-        :operation => :"AbtestingClient.custom_get",
+        :operation => :'AbtestingClient.custom_get',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -177,19 +178,20 @@ module Algolia
     def custom_post_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling AbtestingClient.custom_post"
+        raise ArgumentError, "Missing the required parameter 'path' when calling AbtestingClient.custom_post"
       end
+
       path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:body])
 
       return_type = opts[:debug_return_type] || 'Abtesting::Object'
 
       new_options = opts.merge(
-        :operation => :"AbtestingClient.custom_post",
+        :operation => :'AbtestingClient.custom_post',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -222,19 +224,20 @@ module Algolia
     def custom_put_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling AbtestingClient.custom_put"
+        raise ArgumentError, "Missing the required parameter 'path' when calling AbtestingClient.custom_put"
       end
+
       path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:body])
 
       return_type = opts[:debug_return_type] || 'Abtesting::Object'
 
       new_options = opts.merge(
-        :operation => :"AbtestingClient.custom_put",
+        :operation => :'AbtestingClient.custom_put',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -246,7 +249,7 @@ module Algolia
     end
 
     # Delete an A/B test.
-    # Delete an A/B test. To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests). 
+    # Delete an A/B test. To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
     # @param id [Integer] Unique A/B test ID.
     # @param [Hash] opts the optional parameters
     # @return [ABTestResponse]
@@ -256,15 +259,16 @@ module Algolia
     end
 
     # Delete an A/B test.
-    # Delete an A/B test. To determine the &#x60;id&#x60; for an A/B test, use the [&#x60;listABTests&#x60; operation](#tag/abtest/operation/listABTests). 
+    # Delete an A/B test. To determine the &#x60;id&#x60; for an A/B test, use the [&#x60;listABTests&#x60; operation](#tag/abtest/operation/listABTests).
     # @param id [Integer] Unique A/B test ID.
     # @param [Hash] opts the optional parameters
     # @return [Array<(ABTestResponse, Integer, Hash)>] ABTestResponse data, response status code and response headers
     def delete_ab_test_with_http_info(id, opts = {})
       # verify the required parameter 'id' is set
       if @api_client.config.client_side_validation && id.nil?
-        fail ArgumentError, "Missing the required parameter 'id' when calling AbtestingClient.delete_ab_test"
+        raise ArgumentError, "Missing the required parameter 'id' when calling AbtestingClient.delete_ab_test"
       end
+
       path = '/2/abtests/{id}'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -274,7 +278,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Abtesting::ABTestResponse'
 
       new_options = opts.merge(
-        :operation => :"AbtestingClient.delete_ab_test",
+        :operation => :'AbtestingClient.delete_ab_test',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -286,7 +290,7 @@ module Algolia
     end
 
     # Get A/B test details.
-    # Get specific details for an A/B test. To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests). 
+    # Get specific details for an A/B test. To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
     # @param id [Integer] Unique A/B test ID.
     # @param [Hash] opts the optional parameters
     # @return [ABTest]
@@ -296,15 +300,16 @@ module Algolia
     end
 
     # Get A/B test details.
-    # Get specific details for an A/B test. To determine the &#x60;id&#x60; for an A/B test, use the [&#x60;listABTests&#x60; operation](#tag/abtest/operation/listABTests). 
+    # Get specific details for an A/B test. To determine the &#x60;id&#x60; for an A/B test, use the [&#x60;listABTests&#x60; operation](#tag/abtest/operation/listABTests).
     # @param id [Integer] Unique A/B test ID.
     # @param [Hash] opts the optional parameters
     # @return [Array<(ABTest, Integer, Hash)>] ABTest data, response status code and response headers
     def get_ab_test_with_http_info(id, opts = {})
       # verify the required parameter 'id' is set
       if @api_client.config.client_side_validation && id.nil?
-        fail ArgumentError, "Missing the required parameter 'id' when calling AbtestingClient.get_ab_test"
+        raise ArgumentError, "Missing the required parameter 'id' when calling AbtestingClient.get_ab_test"
       end
+
       path = '/2/abtests/{id}'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -314,7 +319,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Abtesting::ABTest'
 
       new_options = opts.merge(
-        :operation => :"AbtestingClient.get_ab_test",
+        :operation => :'AbtestingClient.get_ab_test',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -349,10 +354,10 @@ module Algolia
     def list_ab_tests_with_http_info(opts = {})
       path = '/2/abtests'
       query_params = opts[:query_params] || {}
-      query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
-      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
-      query_params[:'indexPrefix'] = opts[:'index_prefix'] if !opts[:'index_prefix'].nil?
-      query_params[:'indexSuffix'] = opts[:'index_suffix'] if !opts[:'index_suffix'].nil?
+      query_params[:offset] = opts[:offset] unless opts[:offset].nil?
+      query_params[:limit] = opts[:limit] unless opts[:limit].nil?
+      query_params[:indexPrefix] = opts[:index_prefix] unless opts[:index_prefix].nil?
+      query_params[:indexSuffix] = opts[:index_suffix] unless opts[:index_suffix].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -360,7 +365,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Abtesting::ListABTestsResponse'
 
       new_options = opts.merge(
-        :operation => :"AbtestingClient.list_ab_tests",
+        :operation => :'AbtestingClient.list_ab_tests',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -372,7 +377,7 @@ module Algolia
     end
 
     # Stop an A/B test.
-    # If stopped, the test is over and can't be restarted. There is now only one index, receiving 100% of all search requests. The data gathered for stopped A/B tests is retained. To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests). 
+    # If stopped, the test is over and can't be restarted. There is now only one index, receiving 100% of all search requests. The data gathered for stopped A/B tests is retained. To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
     # @param id [Integer] Unique A/B test ID.
     # @param [Hash] opts the optional parameters
     # @return [ABTestResponse]
@@ -382,15 +387,16 @@ module Algolia
     end
 
     # Stop an A/B test.
-    # If stopped, the test is over and can&#39;t be restarted. There is now only one index, receiving 100% of all search requests. The data gathered for stopped A/B tests is retained. To determine the &#x60;id&#x60; for an A/B test, use the [&#x60;listABTests&#x60; operation](#tag/abtest/operation/listABTests). 
+    # If stopped, the test is over and can&#39;t be restarted. There is now only one index, receiving 100% of all search requests. The data gathered for stopped A/B tests is retained. To determine the &#x60;id&#x60; for an A/B test, use the [&#x60;listABTests&#x60; operation](#tag/abtest/operation/listABTests).
     # @param id [Integer] Unique A/B test ID.
     # @param [Hash] opts the optional parameters
     # @return [Array<(ABTestResponse, Integer, Hash)>] ABTestResponse data, response status code and response headers
     def stop_ab_test_with_http_info(id, opts = {})
       # verify the required parameter 'id' is set
       if @api_client.config.client_side_validation && id.nil?
-        fail ArgumentError, "Missing the required parameter 'id' when calling AbtestingClient.stop_ab_test"
+        raise ArgumentError, "Missing the required parameter 'id' when calling AbtestingClient.stop_ab_test"
       end
+
       path = '/2/abtests/{id}/stop'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -400,7 +406,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'Abtesting::ABTestResponse'
 
       new_options = opts.merge(
-        :operation => :"AbtestingClient.stop_ab_test",
+        :operation => :'AbtestingClient.stop_ab_test',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,

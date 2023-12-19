@@ -14,24 +14,21 @@ module Algolia
       hosts = []
       regions = ['eu', 'us']
 
-      if region.nil? || (region != '' && !regions.include?(region))
-        raise "`region` is required and must be one of the following: %s" % regions.join(', ')
-      end
+      raise "`region` is required and must be one of the following: #{regions.join(', ')}" if region.nil? || (region != '' && !regions.include?(region))
 
-      hosts << Transport::StatefulHost.new("query-suggestions.{region}.algolia.com".sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
-      
+      hosts << Transport::StatefulHost.new('query-suggestions.{region}.algolia.com'.sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
+
       config = Algolia::Configuration.new(app_id, api_key, hosts, 'QuerySuggestions')
       create_with_config(config)
     end
-
 
     def self.create_with_config(config)
       new(config)
     end
 
     # Create a configuration.
-    # Create a new Query Suggestions configuration.  You can have up to 100 configurations per Algolia application. 
-    # @param query_suggestions_configuration_with_index [QuerySuggestionsConfigurationWithIndex] 
+    # Create a new Query Suggestions configuration.  You can have up to 100 configurations per Algolia application.
+    # @param query_suggestions_configuration_with_index [QuerySuggestionsConfigurationWithIndex]
     # @param [Hash] opts the optional parameters
     # @return [BaseResponse]
     def create_config(query_suggestions_configuration_with_index, opts = {})
@@ -40,15 +37,16 @@ module Algolia
     end
 
     # Create a configuration.
-    # Create a new Query Suggestions configuration.  You can have up to 100 configurations per Algolia application. 
-    # @param query_suggestions_configuration_with_index [QuerySuggestionsConfigurationWithIndex] 
+    # Create a new Query Suggestions configuration.  You can have up to 100 configurations per Algolia application.
+    # @param query_suggestions_configuration_with_index [QuerySuggestionsConfigurationWithIndex]
     # @param [Hash] opts the optional parameters
     # @return [Array<(BaseResponse, Integer, Hash)>] BaseResponse data, response status code and response headers
     def create_config_with_http_info(query_suggestions_configuration_with_index, opts = {})
       # verify the required parameter 'query_suggestions_configuration_with_index' is set
       if @api_client.config.client_side_validation && query_suggestions_configuration_with_index.nil?
-        fail ArgumentError, "Missing the required parameter 'query_suggestions_configuration_with_index' when calling QuerySuggestionsClient.create_config"
+        raise ArgumentError, "Missing the required parameter 'query_suggestions_configuration_with_index' when calling QuerySuggestionsClient.create_config"
       end
+
       path = '/1/configs'
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -58,7 +56,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'QuerySuggestions::BaseResponse'
 
       new_options = opts.merge(
-        :operation => :"QuerySuggestionsClient.create_config",
+        :operation => :'QuerySuggestionsClient.create_config',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -89,11 +87,12 @@ module Algolia
     def custom_delete_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling QuerySuggestionsClient.custom_delete"
+        raise ArgumentError, "Missing the required parameter 'path' when calling QuerySuggestionsClient.custom_delete"
       end
+
       path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -101,7 +100,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'QuerySuggestions::Object'
 
       new_options = opts.merge(
-        :operation => :"QuerySuggestionsClient.custom_delete",
+        :operation => :'QuerySuggestionsClient.custom_delete',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -132,11 +131,12 @@ module Algolia
     def custom_get_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling QuerySuggestionsClient.custom_get"
+        raise ArgumentError, "Missing the required parameter 'path' when calling QuerySuggestionsClient.custom_get"
       end
+
       path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
 
       post_body = opts[:debug_body]
@@ -144,7 +144,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'QuerySuggestions::Object'
 
       new_options = opts.merge(
-        :operation => :"QuerySuggestionsClient.custom_get",
+        :operation => :'QuerySuggestionsClient.custom_get',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -177,19 +177,20 @@ module Algolia
     def custom_post_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling QuerySuggestionsClient.custom_post"
+        raise ArgumentError, "Missing the required parameter 'path' when calling QuerySuggestionsClient.custom_post"
       end
+
       path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:body])
 
       return_type = opts[:debug_return_type] || 'QuerySuggestions::Object'
 
       new_options = opts.merge(
-        :operation => :"QuerySuggestionsClient.custom_post",
+        :operation => :'QuerySuggestionsClient.custom_post',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -222,19 +223,20 @@ module Algolia
     def custom_put_with_http_info(path, opts = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        fail ArgumentError, "Missing the required parameter 'path' when calling QuerySuggestionsClient.custom_put"
+        raise ArgumentError, "Missing the required parameter 'path' when calling QuerySuggestionsClient.custom_put"
       end
+
       path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
       query_params = opts[:query_params] || {}
-      query_params[:'parameters'] = opts[:'parameters'] if !opts[:'parameters'].nil?
+      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
       header_params = opts[:header_params] || {}
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'body'])
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:body])
 
       return_type = opts[:debug_return_type] || 'QuerySuggestions::Object'
 
       new_options = opts.merge(
-        :operation => :"QuerySuggestionsClient.custom_put",
+        :operation => :'QuerySuggestionsClient.custom_put',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -246,7 +248,7 @@ module Algolia
     end
 
     # Delete a configuration.
-    # Delete a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the Query Suggestions index. The Query Suggestions index itself is not deleted. 
+    # Delete a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the Query Suggestions index. The Query Suggestions index itself is not deleted.
     # @param index_name [String] Query Suggestions index name.
     # @param [Hash] opts the optional parameters
     # @return [BaseResponse]
@@ -256,15 +258,16 @@ module Algolia
     end
 
     # Delete a configuration.
-    # Delete a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the Query Suggestions index. The Query Suggestions index itself is not deleted. 
+    # Delete a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the Query Suggestions index. The Query Suggestions index itself is not deleted.
     # @param index_name [String] Query Suggestions index name.
     # @param [Hash] opts the optional parameters
     # @return [Array<(BaseResponse, Integer, Hash)>] BaseResponse data, response status code and response headers
     def delete_config_with_http_info(index_name, opts = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        fail ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.delete_config"
+        raise ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.delete_config"
       end
+
       path = '/1/configs/{indexName}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -274,7 +277,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'QuerySuggestions::BaseResponse'
 
       new_options = opts.merge(
-        :operation => :"QuerySuggestionsClient.delete_config",
+        :operation => :'QuerySuggestionsClient.delete_config',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -308,7 +311,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'QuerySuggestions::Array<QuerySuggestionsConfigurationResponse>'
 
       new_options = opts.merge(
-        :operation => :"QuerySuggestionsClient.get_all_configs",
+        :operation => :'QuerySuggestionsClient.get_all_configs',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -337,8 +340,9 @@ module Algolia
     def get_config_with_http_info(index_name, opts = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        fail ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.get_config"
+        raise ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.get_config"
       end
+
       path = '/1/configs/{indexName}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -348,7 +352,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'QuerySuggestions::QuerySuggestionsConfigurationResponse'
 
       new_options = opts.merge(
-        :operation => :"QuerySuggestionsClient.get_config",
+        :operation => :'QuerySuggestionsClient.get_config',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -377,8 +381,9 @@ module Algolia
     def get_config_status_with_http_info(index_name, opts = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        fail ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.get_config_status"
+        raise ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.get_config_status"
       end
+
       path = '/1/configs/{indexName}/status'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -388,7 +393,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'QuerySuggestions::GetConfigStatus200Response'
 
       new_options = opts.merge(
-        :operation => :"QuerySuggestionsClient.get_config_status",
+        :operation => :'QuerySuggestionsClient.get_config_status',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -417,8 +422,9 @@ module Algolia
     def get_log_file_with_http_info(index_name, opts = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        fail ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.get_log_file"
+        raise ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.get_log_file"
       end
+
       path = '/1/logs/{indexName}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -428,7 +434,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'QuerySuggestions::GetLogFile200Response'
 
       new_options = opts.merge(
-        :operation => :"QuerySuggestionsClient.get_log_file",
+        :operation => :'QuerySuggestionsClient.get_log_file',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -442,7 +448,7 @@ module Algolia
     # Update a configuration.
     # Update a QuerySuggestions configuration.
     # @param index_name [String] Query Suggestions index name.
-    # @param query_suggestions_configuration [QuerySuggestionsConfiguration] 
+    # @param query_suggestions_configuration [QuerySuggestionsConfiguration]
     # @param [Hash] opts the optional parameters
     # @return [BaseResponse]
     def update_config(index_name, query_suggestions_configuration, opts = {})
@@ -453,18 +459,19 @@ module Algolia
     # Update a configuration.
     # Update a QuerySuggestions configuration.
     # @param index_name [String] Query Suggestions index name.
-    # @param query_suggestions_configuration [QuerySuggestionsConfiguration] 
+    # @param query_suggestions_configuration [QuerySuggestionsConfiguration]
     # @param [Hash] opts the optional parameters
     # @return [Array<(BaseResponse, Integer, Hash)>] BaseResponse data, response status code and response headers
     def update_config_with_http_info(index_name, query_suggestions_configuration, opts = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        fail ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.update_config"
+        raise ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.update_config"
       end
       # verify the required parameter 'query_suggestions_configuration' is set
       if @api_client.config.client_side_validation && query_suggestions_configuration.nil?
-        fail ArgumentError, "Missing the required parameter 'query_suggestions_configuration' when calling QuerySuggestionsClient.update_config"
+        raise ArgumentError, "Missing the required parameter 'query_suggestions_configuration' when calling QuerySuggestionsClient.update_config"
       end
+
       path = '/1/configs/{indexName}'.sub('{' + 'indexName' + '}', CGI.escape(index_name.to_s))
       query_params = opts[:query_params] || {}
       header_params = opts[:header_params] || {}
@@ -474,7 +481,7 @@ module Algolia
       return_type = opts[:debug_return_type] || 'QuerySuggestions::BaseResponse'
 
       new_options = opts.merge(
-        :operation => :"QuerySuggestionsClient.update_config",
+        :operation => :'QuerySuggestionsClient.update_config',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,

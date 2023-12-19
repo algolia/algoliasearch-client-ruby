@@ -10,37 +10,37 @@ module Algolia
       # Name of the Algolia index to use as source for query suggestions.
       attr_accessor :index_name
 
-      # If true, Query Suggestions uses all replicas of the primary index to find popular searches. If false, only the primary index is used.  
+      # If true, Query Suggestions uses all replicas of the primary index to find popular searches. If false, only the primary index is used.
       attr_accessor :replicas
 
-      # [Analytics tags](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) for filtering the popular searches. 
+      # [Analytics tags](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) for filtering the popular searches.
       attr_accessor :analytics_tags
 
-      # Facets to use as top categories with your suggestions.  If provided, Query Suggestions adds the top facet values to each suggestion. 
+      # Facets to use as top categories with your suggestions.  If provided, Query Suggestions adds the top facet values to each suggestion.
       attr_accessor :facets
 
-      # Minimum number of hits required to be included as a suggestion.  A search query must at least generate `minHits` hits to be included in the Query Suggestions index. 
+      # Minimum number of hits required to be included as a suggestion.  A search query must at least generate `minHits` hits to be included in the Query Suggestions index.
       attr_accessor :min_hits
 
-      # Minimum letters required to be included as a suggestion.  A search query must be at least `minLetters` long to be included in the Query Suggestions index. 
+      # Minimum letters required to be included as a suggestion.  A search query must be at least `minLetters` long to be included in the Query Suggestions index.
       attr_accessor :min_letters
 
       attr_accessor :generate
 
-      # Algolia indices with popular searches to use as query suggestions.  Records of these indices must have these attributes:    - `query`: search query which will be added as a suggestion   - `count`: measure of popularity of that search query  For example, you can export popular searches from an external analytics tool, such as Google Analytics or Adobe Analytics, and feed this data into an external Algolia index. You can use this external index to generate query suggestions until your Algolia analytics has collected enough data. 
+      # Algolia indices with popular searches to use as query suggestions.  Records of these indices must have these attributes:    - `query`: search query which will be added as a suggestion   - `count`: measure of popularity of that search query  For example, you can export popular searches from an external analytics tool, such as Google Analytics or Adobe Analytics, and feed this data into an external Algolia index. You can use this external index to generate query suggestions until your Algolia analytics has collected enough data.
       attr_accessor :external
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :'index_name' => :'indexName',
-          :'replicas' => :'replicas',
-          :'analytics_tags' => :'analyticsTags',
-          :'facets' => :'facets',
-          :'min_hits' => :'minHits',
-          :'min_letters' => :'minLetters',
-          :'generate' => :'generate',
-          :'external' => :'external'
+          :index_name => :indexName,
+          :replicas => :replicas,
+          :analytics_tags => :analyticsTags,
+          :facets => :facets,
+          :min_hits => :minHits,
+          :min_letters => :minLetters,
+          :generate => :generate,
+          :external => :external
         }
       end
 
@@ -52,79 +52,81 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :'index_name' => :'String',
-          :'replicas' => :'Boolean',
-          :'analytics_tags' => :'Array<String>',
-          :'facets' => :'Array<Facet>',
-          :'min_hits' => :'Integer',
-          :'min_letters' => :'Integer',
-          :'generate' => :'Array<Array<String>>',
-          :'external' => :'Array<String>'
+          :index_name => :String,
+          :replicas => :Boolean,
+          :analytics_tags => :'Array<String>',
+          :facets => :'Array<Facet>',
+          :min_hits => :Integer,
+          :min_letters => :Integer,
+          :generate => :'Array<Array<String>>',
+          :external => :'Array<String>'
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new([
-          :'analytics_tags',
-          :'facets',
-          :'external'
-        ])
+                  :analytics_tags,
+                  :facets,
+                  :external
+                ])
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
-        if (!attributes.is_a?(Hash))
-          fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::SourceIndex` initialize method"
+        unless attributes.is_a?(Hash)
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::SourceIndex` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::SourceIndex`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+        attributes = attributes.each_with_object({}) do |(k, v), h|
+          unless self.class.attribute_map.key?(k.to_sym)
+            raise ArgumentError,
+                  "`#{k}` is not a valid attribute in `Algolia::SourceIndex`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
-          h[k.to_sym] = v
-        }
 
-        if attributes.key?(:'index_name')
-          self.index_name = attributes[:'index_name']
+          h[k.to_sym] = v
+        end
+
+        if attributes.key?(:index_name)
+          self.index_name = attributes[:index_name]
         else
           self.index_name = nil
         end
 
-        if attributes.key?(:'replicas')
-          self.replicas = attributes[:'replicas']
+        if attributes.key?(:replicas)
+          self.replicas = attributes[:replicas]
         end
 
-        if attributes.key?(:'analytics_tags')
-          if (value = attributes[:'analytics_tags']).is_a?(Array)
+        if attributes.key?(:analytics_tags)
+          if (value = attributes[:analytics_tags]).is_a?(Array)
             self.analytics_tags = value
           end
         end
 
-        if attributes.key?(:'facets')
-          if (value = attributes[:'facets']).is_a?(Array)
+        if attributes.key?(:facets)
+          if (value = attributes[:facets]).is_a?(Array)
             self.facets = value
           end
         end
 
-        if attributes.key?(:'min_hits')
-          self.min_hits = attributes[:'min_hits']
+        if attributes.key?(:min_hits)
+          self.min_hits = attributes[:min_hits]
         end
 
-        if attributes.key?(:'min_letters')
-          self.min_letters = attributes[:'min_letters']
+        if attributes.key?(:min_letters)
+          self.min_letters = attributes[:min_letters]
         end
 
-        if attributes.key?(:'generate')
-          if (value = attributes[:'generate']).is_a?(Array)
+        if attributes.key?(:generate)
+          if (value = attributes[:generate]).is_a?(Array)
             self.generate = value
           end
         end
 
-        if attributes.key?(:'external')
-          if (value = attributes[:'external']).is_a?(Array)
+        if attributes.key?(:external)
+          if (value = attributes[:external]).is_a?(Array)
             self.external = value
           end
         end
@@ -134,11 +136,11 @@ module Algolia
       # @param [Object] min_hits Value to be assigned
       def min_hits=(min_hits)
         if min_hits.nil?
-          fail ArgumentError, 'min_hits cannot be nil'
+          raise ArgumentError, 'min_hits cannot be nil'
         end
 
         if min_hits < 0
-          fail ArgumentError, 'invalid value for "min_hits", must be greater than or equal to 0.'
+          raise ArgumentError, 'invalid value for "min_hits", must be greater than or equal to 0.'
         end
 
         @min_hits = min_hits
@@ -148,11 +150,11 @@ module Algolia
       # @param [Object] min_letters Value to be assigned
       def min_letters=(min_letters)
         if min_letters.nil?
-          fail ArgumentError, 'min_letters cannot be nil'
+          raise ArgumentError, 'min_letters cannot be nil'
         end
 
         if min_letters < 0
-          fail ArgumentError, 'invalid value for "min_letters", must be greater than or equal to 0.'
+          raise ArgumentError, 'invalid value for "min_letters", must be greater than or equal to 0.'
         end
 
         @min_letters = min_letters
@@ -160,23 +162,24 @@ module Algolia
 
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
-      def ==(o)
-        return true if self.equal?(o)
-        self.class == o.class &&
-            index_name == o.index_name &&
-            replicas == o.replicas &&
-            analytics_tags == o.analytics_tags &&
-            facets == o.facets &&
-            min_hits == o.min_hits &&
-            min_letters == o.min_letters &&
-            generate == o.generate &&
-            external == o.external
+      def ==(other)
+        return true if equal?(other)
+
+        self.class == other.class &&
+          index_name == other.index_name &&
+          replicas == other.replicas &&
+          analytics_tags == other.analytics_tags &&
+          facets == other.facets &&
+          min_hits == other.min_hits &&
+          min_letters == other.min_letters &&
+          generate == other.generate &&
+          external == other.external
       end
 
       # @see the `==` method
       # @param [Object] Object to be compared
-      def eql?(o)
-        self == o
+      def eql?(other)
+        self == other
       end
 
       # Calculates hash code according to all attributes.
@@ -190,19 +193,20 @@ module Algolia
       # @return [Object] Returns the model itself
       def self.build_from_hash(attributes)
         return nil unless attributes.is_a?(Hash)
+
         attributes = attributes.transform_keys(&:to_sym)
         transformed_hash = {}
         types_mapping.each_pair do |key, type|
           if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = nil
+            transformed_hash[key.to_s] = nil
           elsif type =~ /\AArray<(.*)>/i
             # check to ensure the input is an array given that the attribute
             # is documented as an array but the input is not
             if attributes[attribute_map[key]].is_a?(Array)
-              transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+              transformed_hash[key.to_s] = attributes[attribute_map[key]].map { |v| _deserialize(::Regexp.last_match(1), v) }
             end
           elsif !attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+            transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
         new(transformed_hash)
@@ -268,7 +272,7 @@ module Algolia
       def to_hash
         hash = {}
         self.class.attribute_map.each_pair do |attr, param|
-          value = self.send(attr)
+          value = send(attr)
           if value.nil?
             is_nullable = self.class.openapi_nullable.include?(attr)
             next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))

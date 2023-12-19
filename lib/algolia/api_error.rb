@@ -14,14 +14,14 @@ module Algolia
         if arg.key?(:message) || arg.key?('message')
           super(arg[:message] || arg['message'])
         else
-          super arg
+          super(arg)
         end
 
         arg.each do |k, v|
           instance_variable_set "@#{k}", v
         end
       else
-        super arg
+        super(arg)
         @message = arg
       end
     end
@@ -32,11 +32,11 @@ module Algolia
     end
 
     def message
-      if @message.nil?
-        msg = "Error message: the server returns an error"
-      else
-        msg = @message
-      end
+      msg = if @message.nil?
+              'Error message: the server returns an error'
+            else
+              @message
+            end
 
       msg += "\nHTTP status code: #{code}" if code
       msg += "\nResponse headers: #{response_headers}" if response_headers

@@ -18,11 +18,10 @@ require 'algolia/transport/request_options'
 require 'algolia/transport/transport'
 
 # Models
-Dir["#{File.dirname(__FILE__)}/algolia/models/**/*.rb"].each { |file| require file }
+Dir["#{File.dirname(__FILE__)}/algolia/models/**/*.rb"].sort.each { |file| require file }
 
 # APIs
-Dir["#{File.dirname(__FILE__)}/algolia/api/*.rb"].each { |file| require file }
-
+Dir["#{File.dirname(__FILE__)}/algolia/api/*.rb"].sort.each { |file| require file }
 
 module Algolia
 end

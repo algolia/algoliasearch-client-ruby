@@ -2,9 +2,7 @@
 
 module Algolia
   class Configuration
-    attr_accessor :hosts
-    attr_accessor :app_id
-    attr_accessor :api_key
+    attr_accessor :hosts, :app_id, :api_key, :inject_format, :force_ending_format, :user_agent, :header_params, :read_timeout, :write_timeout, :connect_timeout, :compression_type
 
     # Set this to false to skip client side validation in the operation.
     # Default to true.
@@ -18,17 +16,6 @@ module Algolia
     # https://github.com/lostisland/faraday/tree/main/lib/faraday/encoders
     attr_accessor :params_encoder
 
-    attr_accessor :inject_format
-
-    attr_accessor :force_ending_format
-
-    attr_accessor :user_agent
-    attr_accessor :header_params
-    attr_accessor :read_timeout
-    attr_accessor :write_timeout
-    attr_accessor :connect_timeout
-    attr_accessor :compression_type
-
     def initialize(app_id, api_key, hosts, client_name)
       @hosts = hosts
       @app_id = app_id
@@ -38,12 +25,12 @@ module Algolia
       @params_encoder = nil
       @inject_format = false
       @force_ending_format = false
-      @read_timeout = 30000
+      @read_timeout = 30_000
       @write_timeout = 5000
       @connect_timeout = 2000
       @compression_type = 'none'
 
-      @user_agent = UserAgent::new().add(client_name, VERSION)
+      @user_agent = UserAgent.new.add(client_name, VERSION)
 
       @header_params = {
         'X-Algolia-Application-Id' => app_id,
@@ -87,8 +74,8 @@ module Algolia
     # @see https://github.com/lostisland/faraday/blob/v2.3.0/lib/faraday/rack_builder.rb#L92-L143
     def set_faraday_middleware(operation, key, *args, &block)
       unless [:request, :response, :use, :insert, :insert_before, :insert_after, :swap, :delete].include?(operation)
-        fail ArgumentError, "Invalid faraday middleware operation #{operation}. Must be" \
-                            " :request, :response, :use, :insert, :insert_before, :insert_after, :swap or :delete."
+        raise ArgumentError, "Invalid faraday middleware operation #{operation}. Must be  " \
+                             ':request, :response, :use, :insert, :insert_before, :insert_after, :swap or :delete.'
       end
 
       @middlewares[operation] << [key, args, block]
@@ -107,10 +94,10 @@ module Algolia
         end
       end
 
-      if @middlewares.key?(:delete)
-        @middlewares[:delete].each do |key, _args, _block|
-          connection.builder.delete(key)
-        end
+      return unless @middlewares.key?(:delete)
+
+      @middlewares[:delete].each do |key, _args, _block|
+        connection.builder.delete(key)
       end
     end
   end

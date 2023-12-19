@@ -54,21 +54,21 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :'timestamp' => :'timestamp',
-          :'method' => :'method',
-          :'answer_code' => :'answer_code',
-          :'query_body' => :'query_body',
-          :'answer' => :'answer',
-          :'url' => :'url',
-          :'ip' => :'ip',
-          :'query_headers' => :'query_headers',
-          :'sha1' => :'sha1',
-          :'nb_api_calls' => :'nb_api_calls',
-          :'processing_time_ms' => :'processing_time_ms',
-          :'index' => :'index',
-          :'_query_params' => :'query_params',
-          :'query_nb_hits' => :'query_nb_hits',
-          :'inner_queries' => :'inner_queries'
+          :timestamp => :timestamp,
+          :method => :method,
+          :answer_code => :answer_code,
+          :query_body => :query_body,
+          :answer => :answer,
+          :url => :url,
+          :ip => :ip,
+          :query_headers => :query_headers,
+          :sha1 => :sha1,
+          :nb_api_calls => :nb_api_calls,
+          :processing_time_ms => :processing_time_ms,
+          :index => :index,
+          :_query_params => :query_params,
+          :query_nb_hits => :query_nb_hits,
+          :inner_queries => :inner_queries
         }
       end
 
@@ -80,125 +80,126 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :'timestamp' => :'String',
-          :'method' => :'String',
-          :'answer_code' => :'String',
-          :'query_body' => :'String',
-          :'answer' => :'String',
-          :'url' => :'String',
-          :'ip' => :'String',
-          :'query_headers' => :'String',
-          :'sha1' => :'String',
-          :'nb_api_calls' => :'String',
-          :'processing_time_ms' => :'String',
-          :'index' => :'String',
-          :'_query_params' => :'String',
-          :'query_nb_hits' => :'String',
-          :'inner_queries' => :'Array<LogQuery>'
+          :timestamp => :String,
+          :method => :String,
+          :answer_code => :String,
+          :query_body => :String,
+          :answer => :String,
+          :url => :String,
+          :ip => :String,
+          :query_headers => :String,
+          :sha1 => :String,
+          :nb_api_calls => :String,
+          :processing_time_ms => :String,
+          :index => :String,
+          :_query_params => :String,
+          :query_nb_hits => :String,
+          :inner_queries => :'Array<LogQuery>'
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([
-        ])
+        Set.new([])
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
-        if (!attributes.is_a?(Hash))
-          fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Log` initialize method"
+        unless attributes.is_a?(Hash)
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Log` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::Log`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+        attributes = attributes.each_with_object({}) do |(k, v), h|
+          unless self.class.attribute_map.key?(k.to_sym)
+            raise ArgumentError,
+                  "`#{k}` is not a valid attribute in `Algolia::Log`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
-          h[k.to_sym] = v
-        }
 
-        if attributes.key?(:'timestamp')
-          self.timestamp = attributes[:'timestamp']
+          h[k.to_sym] = v
+        end
+
+        if attributes.key?(:timestamp)
+          self.timestamp = attributes[:timestamp]
         else
           self.timestamp = nil
         end
 
-        if attributes.key?(:'method')
-          self.method = attributes[:'method']
+        if attributes.key?(:method)
+          self.method = attributes[:method]
         else
           self.method = nil
         end
 
-        if attributes.key?(:'answer_code')
-          self.answer_code = attributes[:'answer_code']
+        if attributes.key?(:answer_code)
+          self.answer_code = attributes[:answer_code]
         else
           self.answer_code = nil
         end
 
-        if attributes.key?(:'query_body')
-          self.query_body = attributes[:'query_body']
+        if attributes.key?(:query_body)
+          self.query_body = attributes[:query_body]
         else
           self.query_body = nil
         end
 
-        if attributes.key?(:'answer')
-          self.answer = attributes[:'answer']
+        if attributes.key?(:answer)
+          self.answer = attributes[:answer]
         else
           self.answer = nil
         end
 
-        if attributes.key?(:'url')
-          self.url = attributes[:'url']
+        if attributes.key?(:url)
+          self.url = attributes[:url]
         else
           self.url = nil
         end
 
-        if attributes.key?(:'ip')
-          self.ip = attributes[:'ip']
+        if attributes.key?(:ip)
+          self.ip = attributes[:ip]
         else
           self.ip = nil
         end
 
-        if attributes.key?(:'query_headers')
-          self.query_headers = attributes[:'query_headers']
+        if attributes.key?(:query_headers)
+          self.query_headers = attributes[:query_headers]
         else
           self.query_headers = nil
         end
 
-        if attributes.key?(:'sha1')
-          self.sha1 = attributes[:'sha1']
+        if attributes.key?(:sha1)
+          self.sha1 = attributes[:sha1]
         else
           self.sha1 = nil
         end
 
-        if attributes.key?(:'nb_api_calls')
-          self.nb_api_calls = attributes[:'nb_api_calls']
+        if attributes.key?(:nb_api_calls)
+          self.nb_api_calls = attributes[:nb_api_calls]
         else
           self.nb_api_calls = nil
         end
 
-        if attributes.key?(:'processing_time_ms')
-          self.processing_time_ms = attributes[:'processing_time_ms']
+        if attributes.key?(:processing_time_ms)
+          self.processing_time_ms = attributes[:processing_time_ms]
         else
           self.processing_time_ms = nil
         end
 
-        if attributes.key?(:'index')
-          self.index = attributes[:'index']
+        if attributes.key?(:index)
+          self.index = attributes[:index]
         end
 
-        if attributes.key?(:'_query_params')
-          self._query_params = attributes[:'_query_params']
+        if attributes.key?(:_query_params)
+          self._query_params = attributes[:_query_params]
         end
 
-        if attributes.key?(:'query_nb_hits')
-          self.query_nb_hits = attributes[:'query_nb_hits']
+        if attributes.key?(:query_nb_hits)
+          self.query_nb_hits = attributes[:query_nb_hits]
         end
 
-        if attributes.key?(:'inner_queries')
-          if (value = attributes[:'inner_queries']).is_a?(Array)
+        if attributes.key?(:inner_queries)
+          if (value = attributes[:inner_queries]).is_a?(Array)
             self.inner_queries = value
           end
         end
@@ -206,36 +207,38 @@ module Algolia
 
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
-      def ==(o)
-        return true if self.equal?(o)
-        self.class == o.class &&
-            timestamp == o.timestamp &&
-            method == o.method &&
-            answer_code == o.answer_code &&
-            query_body == o.query_body &&
-            answer == o.answer &&
-            url == o.url &&
-            ip == o.ip &&
-            query_headers == o.query_headers &&
-            sha1 == o.sha1 &&
-            nb_api_calls == o.nb_api_calls &&
-            processing_time_ms == o.processing_time_ms &&
-            index == o.index &&
-            _query_params == o._query_params &&
-            query_nb_hits == o.query_nb_hits &&
-            inner_queries == o.inner_queries
+      def ==(other)
+        return true if equal?(other)
+
+        self.class == other.class &&
+          timestamp == other.timestamp &&
+          method == other.method &&
+          answer_code == other.answer_code &&
+          query_body == other.query_body &&
+          answer == other.answer &&
+          url == other.url &&
+          ip == other.ip &&
+          query_headers == other.query_headers &&
+          sha1 == other.sha1 &&
+          nb_api_calls == other.nb_api_calls &&
+          processing_time_ms == other.processing_time_ms &&
+          index == other.index &&
+          _query_params == other._query_params &&
+          query_nb_hits == other.query_nb_hits &&
+          inner_queries == other.inner_queries
       end
 
       # @see the `==` method
       # @param [Object] Object to be compared
-      def eql?(o)
-        self == o
+      def eql?(other)
+        self == other
       end
 
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [timestamp, method, answer_code, query_body, answer, url, ip, query_headers, sha1, nb_api_calls, processing_time_ms, index, _query_params, query_nb_hits, inner_queries].hash
+        [timestamp, method, answer_code, query_body, answer, url, ip, query_headers, sha1, nb_api_calls, processing_time_ms, index, _query_params, query_nb_hits,
+         inner_queries].hash
       end
 
       # Builds the object from hash
@@ -243,19 +246,20 @@ module Algolia
       # @return [Object] Returns the model itself
       def self.build_from_hash(attributes)
         return nil unless attributes.is_a?(Hash)
+
         attributes = attributes.transform_keys(&:to_sym)
         transformed_hash = {}
         types_mapping.each_pair do |key, type|
           if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = nil
+            transformed_hash[key.to_s] = nil
           elsif type =~ /\AArray<(.*)>/i
             # check to ensure the input is an array given that the attribute
             # is documented as an array but the input is not
             if attributes[attribute_map[key]].is_a?(Array)
-              transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+              transformed_hash[key.to_s] = attributes[attribute_map[key]].map { |v| _deserialize(::Regexp.last_match(1), v) }
             end
           elsif !attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+            transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
         new(transformed_hash)
@@ -321,7 +325,7 @@ module Algolia
       def to_hash
         hash = {}
         self.class.attribute_map.each_pair do |attr, param|
-          value = self.send(attr)
+          value = send(attr)
           if value.nil?
             is_nullable = self.class.openapi_nullable.include?(attr)
             next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))

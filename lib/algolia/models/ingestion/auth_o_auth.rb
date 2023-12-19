@@ -19,9 +19,9 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :'url' => :'url',
-          :'client_id' => :'client_id',
-          :'client_secret' => :'client_secret'
+          :url => :url,
+          :client_id => :client_id,
+          :client_secret => :client_secret
         }
       end
 
@@ -33,47 +33,48 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :'url' => :'String',
-          :'client_id' => :'String',
-          :'client_secret' => :'String'
+          :url => :String,
+          :client_id => :String,
+          :client_secret => :String
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([
-        ])
+        Set.new([])
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
-        if (!attributes.is_a?(Hash))
-          fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::AuthOAuth` initialize method"
+        unless attributes.is_a?(Hash)
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::AuthOAuth` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::AuthOAuth`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+        attributes = attributes.each_with_object({}) do |(k, v), h|
+          unless self.class.attribute_map.key?(k.to_sym)
+            raise ArgumentError,
+                  "`#{k}` is not a valid attribute in `Algolia::AuthOAuth`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
-          h[k.to_sym] = v
-        }
 
-        if attributes.key?(:'url')
-          self.url = attributes[:'url']
+          h[k.to_sym] = v
+        end
+
+        if attributes.key?(:url)
+          self.url = attributes[:url]
         else
           self.url = nil
         end
 
-        if attributes.key?(:'client_id')
-          self.client_id = attributes[:'client_id']
+        if attributes.key?(:client_id)
+          self.client_id = attributes[:client_id]
         else
           self.client_id = nil
         end
 
-        if attributes.key?(:'client_secret')
-          self.client_secret = attributes[:'client_secret']
+        if attributes.key?(:client_secret)
+          self.client_secret = attributes[:client_secret]
         else
           self.client_secret = nil
         end
@@ -81,18 +82,19 @@ module Algolia
 
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
-      def ==(o)
-        return true if self.equal?(o)
-        self.class == o.class &&
-            url == o.url &&
-            client_id == o.client_id &&
-            client_secret == o.client_secret
+      def ==(other)
+        return true if equal?(other)
+
+        self.class == other.class &&
+          url == other.url &&
+          client_id == other.client_id &&
+          client_secret == other.client_secret
       end
 
       # @see the `==` method
       # @param [Object] Object to be compared
-      def eql?(o)
-        self == o
+      def eql?(other)
+        self == other
       end
 
       # Calculates hash code according to all attributes.
@@ -106,19 +108,20 @@ module Algolia
       # @return [Object] Returns the model itself
       def self.build_from_hash(attributes)
         return nil unless attributes.is_a?(Hash)
+
         attributes = attributes.transform_keys(&:to_sym)
         transformed_hash = {}
         types_mapping.each_pair do |key, type|
           if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = nil
+            transformed_hash[key.to_s] = nil
           elsif type =~ /\AArray<(.*)>/i
             # check to ensure the input is an array given that the attribute
             # is documented as an array but the input is not
             if attributes[attribute_map[key]].is_a?(Array)
-              transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+              transformed_hash[key.to_s] = attributes[attribute_map[key]].map { |v| _deserialize(::Regexp.last_match(1), v) }
             end
           elsif !attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+            transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
         new(transformed_hash)
@@ -184,7 +187,7 @@ module Algolia
       def to_hash
         hash = {}
         self.class.attribute_map.each_pair do |attr, param|
-          value = self.send(attr)
+          value = send(attr)
           if value.nil?
             is_nullable = self.class.openapi_nullable.include?(attr)
             next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))

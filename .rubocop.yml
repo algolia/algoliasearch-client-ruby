@@ -1,147 +1,99 @@
-# This file is based on https://github.com/rails/rails/blob/master/.rubocop.yml (MIT license)
 AllCops:
-  TargetRubyVersion: 2.4
-  # RuboCop has a bunch of cops enabled by default. This setting tells RuboCop
-  # to ignore them, so only the ones explicitly set in this file are enabled.
-  DisabledByDefault: true
-  Exclude:
-    - '**/templates/**/*'
-    - '**/vendor/**/*'
-    - 'actionpack/lib/action_dispatch/journey/parser.rb'
+  DisabledByDefault: false
+  NewCops: enable
 
-# Prefer &&/|| over and/or.
-Style/AndOr:
-  Enabled: true
-
-# Align `when` with `case`.
-Layout/CaseIndentation:
-  Enabled: true
-
-# Align comments with method definitions.
-Layout/CommentIndentation:
-  Enabled: true
-
-Layout/ElseAlignment:
-  Enabled: true
-
-Layout/EmptyLineAfterMagicComment:
-  Enabled: true
-
-# In a regular class definition, no empty lines around the body.
-Layout/EmptyLinesAroundClassBody:
-  Enabled: true
-
-# In a regular method definition, no empty lines around the body.
-Layout/EmptyLinesAroundMethodBody:
-  Enabled: true
-
-# In a regular module definition, no empty lines around the body.
-Layout/EmptyLinesAroundModuleBody:
-  Enabled: true
-
-Layout/FirstArgumentIndentation:
-  Enabled: true
-
-# Use Ruby >= 1.9 syntax for hashes. Prefer { a: :b } over { :a => :b }.
 Style/HashSyntax:
   Enabled: false
-
-# Method definitions after `private` or `protected` isolated calls need one
-# extra level of indentation.
-Layout/IndentationConsistency:
-  Enabled: true
-  EnforcedStyle: indented_internal_methods
-
-# Two spaces, no tabs (for indentation).
-Layout/IndentationWidth:
-  Enabled: true
-
-Layout/LeadingCommentSpace:
-  Enabled: true
-
-Layout/SpaceAfterColon:
-  Enabled: true
-
-Layout/SpaceAfterComma:
-  Enabled: true
-
-Layout/SpaceAroundEqualsInParameterDefault:
-  Enabled: true
-
-Layout/SpaceAroundKeyword:
-  Enabled: true
-
-Layout/SpaceAroundOperators:
-  Enabled: true
-
-Layout/SpaceBeforeComma:
-  Enabled: true
-
-Layout/SpaceBeforeFirstArg:
-  Enabled: true
-
-Style/DefWithParentheses:
-  Enabled: true
-
-# Defining a method with parameters needs parentheses.
-Style/MethodDefParentheses:
-  Enabled: true
 
 Style/FrozenStringLiteralComment:
   Enabled: false
   EnforcedStyle: always
 
-# Use `foo {}` not `foo{}`.
-Layout/SpaceBeforeBlockBraces:
-  Enabled: true
-
-# Use `foo { bar }` not `foo {bar}`.
-Layout/SpaceInsideBlockBraces:
-  Enabled: true
-
-# Use `{ a: 1 }` not `{a:1}`.
-Layout/SpaceInsideHashLiteralBraces:
-  Enabled: true
-
-Layout/SpaceInsideParens:
-  Enabled: true
-
-# Check quotes usage according to lint rule below.
-#Style/StringLiterals:
-#  Enabled: true
-#  EnforcedStyle: single_quotes
-
-# Detect hard tabs, no hard tabs.
-Layout/IndentationStyle:
-  Enabled: true
-
-# Blank lines should not have any spaces.
-Layout/TrailingEmptyLines:
-  Enabled: true
-
-# No trailing whitespace.
-Layout/TrailingWhitespace:
+Style/WordArray:
   Enabled: false
 
-# Use quotes for string literals when they are enough.
-Style/RedundantPercentQ:
-  Enabled: true
+Style/SymbolArray:
+  Enabled: false
 
-# Align `end` with the matching keyword or starting expression except for
-# assignments, where it should be aligned with the LHS.
-Layout/EndAlignment:
-  Enabled: true
-  EnforcedStyleAlignWith: variable
-  AutoCorrect: true
+Style/Documentation:
+  Enabled: false
 
-# Use my_method(my_arg) not my_method( my_arg ) or my_method my_arg.
-Lint/RequireParentheses:
-  Enabled: true
+Layout/LineLength:
+  Max: 180
 
-Style/RedundantReturn:
-  Enabled: true
-  AllowMultipleReturnValues: true
+Metrics/PerceivedComplexity:
+  Enabled: false
 
-Style/Semicolon:
-  Enabled: true
-  AllowAsExpressionSeparator: true
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Gemspec/DevelopmentDependencies:
+  Exclude:
+    - 'algolia.gemspec'
+
+Gemspec/RequiredRubyVersion:
+  Exclude:
+    - 'algolia.gemspec'
+
+Lint/DuplicateMethods:
+  Enabled: false
+
+Lint/SymbolConversion:
+  Enabled: false
+
+Lint/UnderscorePrefixedVariableName:
+  Enabled: false
+
+Naming/PredicateName:
+  Enabled: false
+
+Style/AccessorGrouping:
+  Enabled: false
+
+Style/ClassVars:
+  Enabled: false
+
+Style/ConditionalAssignment:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Style/HashTransformValues:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/NumericPredicate:
+  Enabled: false
+
+Style/RescueStandardError:
+  Enabled: false
+
+Style/SoleNestedConditional:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Lint/SuppressedException:
+  Enabled: false
+
+Metrics/BlockNesting:
+  Max: 4
+
+Metrics/ParameterLists:
+  Max: 7
+
+Security/CompoundHash:
+  Enabled: false

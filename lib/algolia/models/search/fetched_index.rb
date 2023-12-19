@@ -42,17 +42,17 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :'name' => :'name',
-          :'created_at' => :'createdAt',
-          :'updated_at' => :'updatedAt',
-          :'entries' => :'entries',
-          :'data_size' => :'dataSize',
-          :'file_size' => :'fileSize',
-          :'last_build_time_s' => :'lastBuildTimeS',
-          :'number_of_pending_tasks' => :'numberOfPendingTasks',
-          :'pending_task' => :'pendingTask',
-          :'primary' => :'primary',
-          :'replicas' => :'replicas'
+          :name => :name,
+          :created_at => :createdAt,
+          :updated_at => :updatedAt,
+          :entries => :entries,
+          :data_size => :dataSize,
+          :file_size => :fileSize,
+          :last_build_time_s => :lastBuildTimeS,
+          :number_of_pending_tasks => :numberOfPendingTasks,
+          :pending_task => :pendingTask,
+          :primary => :primary,
+          :replicas => :replicas
         }
       end
 
@@ -64,101 +64,102 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :'name' => :'String',
-          :'created_at' => :'String',
-          :'updated_at' => :'String',
-          :'entries' => :'Integer',
-          :'data_size' => :'Integer',
-          :'file_size' => :'Integer',
-          :'last_build_time_s' => :'Integer',
-          :'number_of_pending_tasks' => :'Integer',
-          :'pending_task' => :'Boolean',
-          :'primary' => :'String',
-          :'replicas' => :'Array<String>'
+          :name => :String,
+          :created_at => :String,
+          :updated_at => :String,
+          :entries => :Integer,
+          :data_size => :Integer,
+          :file_size => :Integer,
+          :last_build_time_s => :Integer,
+          :number_of_pending_tasks => :Integer,
+          :pending_task => :Boolean,
+          :primary => :String,
+          :replicas => :'Array<String>'
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([
-        ])
+        Set.new([])
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
-        if (!attributes.is_a?(Hash))
-          fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::FetchedIndex` initialize method"
+        unless attributes.is_a?(Hash)
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::FetchedIndex` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::FetchedIndex`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+        attributes = attributes.each_with_object({}) do |(k, v), h|
+          unless self.class.attribute_map.key?(k.to_sym)
+            raise ArgumentError,
+                  "`#{k}` is not a valid attribute in `Algolia::FetchedIndex`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
-          h[k.to_sym] = v
-        }
 
-        if attributes.key?(:'name')
-          self.name = attributes[:'name']
+          h[k.to_sym] = v
+        end
+
+        if attributes.key?(:name)
+          self.name = attributes[:name]
         else
           self.name = nil
         end
 
-        if attributes.key?(:'created_at')
-          self.created_at = attributes[:'created_at']
+        if attributes.key?(:created_at)
+          self.created_at = attributes[:created_at]
         else
           self.created_at = nil
         end
 
-        if attributes.key?(:'updated_at')
-          self.updated_at = attributes[:'updated_at']
+        if attributes.key?(:updated_at)
+          self.updated_at = attributes[:updated_at]
         else
           self.updated_at = nil
         end
 
-        if attributes.key?(:'entries')
-          self.entries = attributes[:'entries']
+        if attributes.key?(:entries)
+          self.entries = attributes[:entries]
         else
           self.entries = nil
         end
 
-        if attributes.key?(:'data_size')
-          self.data_size = attributes[:'data_size']
+        if attributes.key?(:data_size)
+          self.data_size = attributes[:data_size]
         else
           self.data_size = nil
         end
 
-        if attributes.key?(:'file_size')
-          self.file_size = attributes[:'file_size']
+        if attributes.key?(:file_size)
+          self.file_size = attributes[:file_size]
         else
           self.file_size = nil
         end
 
-        if attributes.key?(:'last_build_time_s')
-          self.last_build_time_s = attributes[:'last_build_time_s']
+        if attributes.key?(:last_build_time_s)
+          self.last_build_time_s = attributes[:last_build_time_s]
         else
           self.last_build_time_s = nil
         end
 
-        if attributes.key?(:'number_of_pending_tasks')
-          self.number_of_pending_tasks = attributes[:'number_of_pending_tasks']
+        if attributes.key?(:number_of_pending_tasks)
+          self.number_of_pending_tasks = attributes[:number_of_pending_tasks]
         else
           self.number_of_pending_tasks = nil
         end
 
-        if attributes.key?(:'pending_task')
-          self.pending_task = attributes[:'pending_task']
+        if attributes.key?(:pending_task)
+          self.pending_task = attributes[:pending_task]
         else
           self.pending_task = nil
         end
 
-        if attributes.key?(:'primary')
-          self.primary = attributes[:'primary']
+        if attributes.key?(:primary)
+          self.primary = attributes[:primary]
         end
 
-        if attributes.key?(:'replicas')
-          if (value = attributes[:'replicas']).is_a?(Array)
+        if attributes.key?(:replicas)
+          if (value = attributes[:replicas]).is_a?(Array)
             self.replicas = value
           end
         end
@@ -166,26 +167,27 @@ module Algolia
 
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
-      def ==(o)
-        return true if self.equal?(o)
-        self.class == o.class &&
-            name == o.name &&
-            created_at == o.created_at &&
-            updated_at == o.updated_at &&
-            entries == o.entries &&
-            data_size == o.data_size &&
-            file_size == o.file_size &&
-            last_build_time_s == o.last_build_time_s &&
-            number_of_pending_tasks == o.number_of_pending_tasks &&
-            pending_task == o.pending_task &&
-            primary == o.primary &&
-            replicas == o.replicas
+      def ==(other)
+        return true if equal?(other)
+
+        self.class == other.class &&
+          name == other.name &&
+          created_at == other.created_at &&
+          updated_at == other.updated_at &&
+          entries == other.entries &&
+          data_size == other.data_size &&
+          file_size == other.file_size &&
+          last_build_time_s == other.last_build_time_s &&
+          number_of_pending_tasks == other.number_of_pending_tasks &&
+          pending_task == other.pending_task &&
+          primary == other.primary &&
+          replicas == other.replicas
       end
 
       # @see the `==` method
       # @param [Object] Object to be compared
-      def eql?(o)
-        self == o
+      def eql?(other)
+        self == other
       end
 
       # Calculates hash code according to all attributes.
@@ -199,19 +201,20 @@ module Algolia
       # @return [Object] Returns the model itself
       def self.build_from_hash(attributes)
         return nil unless attributes.is_a?(Hash)
+
         attributes = attributes.transform_keys(&:to_sym)
         transformed_hash = {}
         types_mapping.each_pair do |key, type|
           if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = nil
+            transformed_hash[key.to_s] = nil
           elsif type =~ /\AArray<(.*)>/i
             # check to ensure the input is an array given that the attribute
             # is documented as an array but the input is not
             if attributes[attribute_map[key]].is_a?(Array)
-              transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+              transformed_hash[key.to_s] = attributes[attribute_map[key]].map { |v| _deserialize(::Regexp.last_match(1), v) }
             end
           elsif !attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+            transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
         new(transformed_hash)
@@ -277,7 +280,7 @@ module Algolia
       def to_hash
         hash = {}
         self.class.attribute_map.each_pair do |attr, param|
-          value = self.send(attr)
+          value = send(attr)
           if value.nil?
             is_nullable = self.class.openapi_nullable.include?(attr)
             next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))

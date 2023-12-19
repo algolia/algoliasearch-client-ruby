@@ -12,7 +12,7 @@ module Algolia
       # Overrides the query parameter and performs a more generic search.
       attr_accessor :similar_query
 
-      # [Filter](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) the query with numeric, facet, or tag filters. 
+      # [Filter](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) the query with numeric, facet, or tag filters.
       attr_accessor :filters
 
       attr_accessor :facet_filters
@@ -23,7 +23,7 @@ module Algolia
 
       attr_accessor :tag_filters
 
-      # Determines how to calculate [filter scores](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#accumulating-scores-with-sumorfiltersscores). If `false`, maximum score is kept. If `true`, score is summed. 
+      # Determines how to calculate [filter scores](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#accumulating-scores-with-sumorfiltersscores). If `false`, maximum score is kept. If `true`, score is summed.
       attr_accessor :sum_or_filters_scores
 
       # Restricts a query to only look at a subset of your [searchable attributes](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/).
@@ -32,16 +32,16 @@ module Algolia
       # Returns [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts), their facet values, and the number of matching facet values.
       attr_accessor :facets
 
-      # Forces faceting to be applied after [de-duplication](https://www.algolia.com/doc/guides/managing-results/refine-results/grouping/) (with the distinct feature). Alternatively, the `afterDistinct` [modifier](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/#modifiers) of `attributesForFaceting` allows for more granular control. 
+      # Forces faceting to be applied after [de-duplication](https://www.algolia.com/doc/guides/managing-results/refine-results/grouping/) (with the distinct feature). Alternatively, the `afterDistinct` [modifier](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/#modifiers) of `attributesForFaceting` allows for more granular control.
       attr_accessor :faceting_after_distinct
 
       # Page to retrieve (the first page is `0`, not `1`).
       attr_accessor :page
 
-      # Specifies the offset of the first hit to return. > **Note**: Using `page` and `hitsPerPage` is the recommended method for [paging results](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/). However, you can use `offset` and `length` to implement [an alternative approach to paging](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/#retrieving-a-subset-of-records-with-offset-and-length). 
+      # Specifies the offset of the first hit to return. > **Note**: Using `page` and `hitsPerPage` is the recommended method for [paging results](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/). However, you can use `offset` and `length` to implement [an alternative approach to paging](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/#retrieving-a-subset-of-records-with-offset-and-length).
       attr_accessor :offset
 
-      # Sets the number of hits to retrieve (for use with `offset`). > **Note**: Using `page` and `hitsPerPage` is the recommended method for [paging results](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/). However, you can use `offset` and `length` to implement [an alternative approach to paging](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/#retrieving-a-subset-of-records-with-offset-and-length). 
+      # Sets the number of hits to retrieve (for use with `offset`). > **Note**: Using `page` and `hitsPerPage` is the recommended method for [paging results](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/). However, you can use `offset` and `length` to implement [an alternative approach to paging](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/#retrieving-a-subset-of-records-with-offset-and-length).
       attr_accessor :length
 
       # Search for entries [around a central location](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filter-around-a-central-point), enabling a geographical search within a circular area.
@@ -102,39 +102,39 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :'query' => :'query',
-          :'similar_query' => :'similarQuery',
-          :'filters' => :'filters',
-          :'facet_filters' => :'facetFilters',
-          :'optional_filters' => :'optionalFilters',
-          :'numeric_filters' => :'numericFilters',
-          :'tag_filters' => :'tagFilters',
-          :'sum_or_filters_scores' => :'sumOrFiltersScores',
-          :'restrict_searchable_attributes' => :'restrictSearchableAttributes',
-          :'facets' => :'facets',
-          :'faceting_after_distinct' => :'facetingAfterDistinct',
-          :'page' => :'page',
-          :'offset' => :'offset',
-          :'length' => :'length',
-          :'around_lat_lng' => :'aroundLatLng',
-          :'around_lat_lng_via_ip' => :'aroundLatLngViaIP',
-          :'around_radius' => :'aroundRadius',
-          :'around_precision' => :'aroundPrecision',
-          :'minimum_around_radius' => :'minimumAroundRadius',
-          :'inside_bounding_box' => :'insideBoundingBox',
-          :'inside_polygon' => :'insidePolygon',
-          :'natural_languages' => :'naturalLanguages',
-          :'rule_contexts' => :'ruleContexts',
-          :'personalization_impact' => :'personalizationImpact',
-          :'user_token' => :'userToken',
-          :'get_ranking_info' => :'getRankingInfo',
-          :'explain' => :'explain',
-          :'synonyms' => :'synonyms',
-          :'click_analytics' => :'clickAnalytics',
-          :'analytics' => :'analytics',
-          :'analytics_tags' => :'analyticsTags',
-          :'percentile_computation' => :'percentileComputation',
-          :'enable_ab_test' => :'enableABTest'
+          :query => :query,
+          :similar_query => :similarQuery,
+          :filters => :filters,
+          :facet_filters => :facetFilters,
+          :optional_filters => :optionalFilters,
+          :numeric_filters => :numericFilters,
+          :tag_filters => :tagFilters,
+          :sum_or_filters_scores => :sumOrFiltersScores,
+          :restrict_searchable_attributes => :restrictSearchableAttributes,
+          :facets => :facets,
+          :faceting_after_distinct => :facetingAfterDistinct,
+          :page => :page,
+          :offset => :offset,
+          :length => :length,
+          :around_lat_lng => :aroundLatLng,
+          :around_lat_lng_via_ip => :aroundLatLngViaIP,
+          :around_radius => :aroundRadius,
+          :around_precision => :aroundPrecision,
+          :minimum_around_radius => :minimumAroundRadius,
+          :inside_bounding_box => :insideBoundingBox,
+          :inside_polygon => :insidePolygon,
+          :natural_languages => :naturalLanguages,
+          :rule_contexts => :ruleContexts,
+          :personalization_impact => :personalizationImpact,
+          :user_token => :userToken,
+          :get_ranking_info => :getRankingInfo,
+          :explain => :explain,
+          :synonyms => :synonyms,
+          :click_analytics => :clickAnalytics,
+          :analytics => :analytics,
+          :analytics_tags => :analyticsTags,
+          :percentile_computation => :percentileComputation,
+          :enable_ab_test => :enableABTest
         }
       end
 
@@ -146,217 +146,218 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :'query' => :'String',
-          :'similar_query' => :'String',
-          :'filters' => :'String',
-          :'facet_filters' => :'FacetFilters',
-          :'optional_filters' => :'OptionalFilters',
-          :'numeric_filters' => :'NumericFilters',
-          :'tag_filters' => :'TagFilters',
-          :'sum_or_filters_scores' => :'Boolean',
-          :'restrict_searchable_attributes' => :'Array<String>',
-          :'facets' => :'Array<String>',
-          :'faceting_after_distinct' => :'Boolean',
-          :'page' => :'Integer',
-          :'offset' => :'Integer',
-          :'length' => :'Integer',
-          :'around_lat_lng' => :'String',
-          :'around_lat_lng_via_ip' => :'Boolean',
-          :'around_radius' => :'AroundRadius',
-          :'around_precision' => :'AroundPrecision',
-          :'minimum_around_radius' => :'Integer',
-          :'inside_bounding_box' => :'Array<Array<Float>>',
-          :'inside_polygon' => :'Array<Array<Float>>',
-          :'natural_languages' => :'Array<String>',
-          :'rule_contexts' => :'Array<String>',
-          :'personalization_impact' => :'Integer',
-          :'user_token' => :'String',
-          :'get_ranking_info' => :'Boolean',
-          :'explain' => :'Array<String>',
-          :'synonyms' => :'Boolean',
-          :'click_analytics' => :'Boolean',
-          :'analytics' => :'Boolean',
-          :'analytics_tags' => :'Array<String>',
-          :'percentile_computation' => :'Boolean',
-          :'enable_ab_test' => :'Boolean'
+          :query => :String,
+          :similar_query => :String,
+          :filters => :String,
+          :facet_filters => :FacetFilters,
+          :optional_filters => :OptionalFilters,
+          :numeric_filters => :NumericFilters,
+          :tag_filters => :TagFilters,
+          :sum_or_filters_scores => :Boolean,
+          :restrict_searchable_attributes => :'Array<String>',
+          :facets => :'Array<String>',
+          :faceting_after_distinct => :Boolean,
+          :page => :Integer,
+          :offset => :Integer,
+          :length => :Integer,
+          :around_lat_lng => :String,
+          :around_lat_lng_via_ip => :Boolean,
+          :around_radius => :AroundRadius,
+          :around_precision => :AroundPrecision,
+          :minimum_around_radius => :Integer,
+          :inside_bounding_box => :'Array<Array<Float>>',
+          :inside_polygon => :'Array<Array<Float>>',
+          :natural_languages => :'Array<String>',
+          :rule_contexts => :'Array<String>',
+          :personalization_impact => :Integer,
+          :user_token => :String,
+          :get_ranking_info => :Boolean,
+          :explain => :'Array<String>',
+          :synonyms => :Boolean,
+          :click_analytics => :Boolean,
+          :analytics => :Boolean,
+          :analytics_tags => :'Array<String>',
+          :percentile_computation => :Boolean,
+          :enable_ab_test => :Boolean
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([
-        ])
+        Set.new([])
       end
 
       # List of class defined in allOf (OpenAPI v3)
       def self.openapi_all_of
         [
-        :'BaseSearchParamsWithoutQuery',
-        :'SearchParamsQuery'
+          :BaseSearchParamsWithoutQuery,
+          :SearchParamsQuery
         ]
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
-        if (!attributes.is_a?(Hash))
-          fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::BaseSearchParams` initialize method"
+        unless attributes.is_a?(Hash)
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::BaseSearchParams` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::BaseSearchParams`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+        attributes = attributes.each_with_object({}) do |(k, v), h|
+          unless self.class.attribute_map.key?(k.to_sym)
+            raise ArgumentError,
+                  "`#{k}` is not a valid attribute in `Algolia::BaseSearchParams`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
+
           h[k.to_sym] = v
-        }
-
-        if attributes.key?(:'query')
-          self.query = attributes[:'query']
         end
 
-        if attributes.key?(:'similar_query')
-          self.similar_query = attributes[:'similar_query']
+        if attributes.key?(:query)
+          self.query = attributes[:query]
         end
 
-        if attributes.key?(:'filters')
-          self.filters = attributes[:'filters']
+        if attributes.key?(:similar_query)
+          self.similar_query = attributes[:similar_query]
         end
 
-        if attributes.key?(:'facet_filters')
-          self.facet_filters = attributes[:'facet_filters']
+        if attributes.key?(:filters)
+          self.filters = attributes[:filters]
         end
 
-        if attributes.key?(:'optional_filters')
-          self.optional_filters = attributes[:'optional_filters']
+        if attributes.key?(:facet_filters)
+          self.facet_filters = attributes[:facet_filters]
         end
 
-        if attributes.key?(:'numeric_filters')
-          self.numeric_filters = attributes[:'numeric_filters']
+        if attributes.key?(:optional_filters)
+          self.optional_filters = attributes[:optional_filters]
         end
 
-        if attributes.key?(:'tag_filters')
-          self.tag_filters = attributes[:'tag_filters']
+        if attributes.key?(:numeric_filters)
+          self.numeric_filters = attributes[:numeric_filters]
         end
 
-        if attributes.key?(:'sum_or_filters_scores')
-          self.sum_or_filters_scores = attributes[:'sum_or_filters_scores']
+        if attributes.key?(:tag_filters)
+          self.tag_filters = attributes[:tag_filters]
         end
 
-        if attributes.key?(:'restrict_searchable_attributes')
-          if (value = attributes[:'restrict_searchable_attributes']).is_a?(Array)
+        if attributes.key?(:sum_or_filters_scores)
+          self.sum_or_filters_scores = attributes[:sum_or_filters_scores]
+        end
+
+        if attributes.key?(:restrict_searchable_attributes)
+          if (value = attributes[:restrict_searchable_attributes]).is_a?(Array)
             self.restrict_searchable_attributes = value
           end
         end
 
-        if attributes.key?(:'facets')
-          if (value = attributes[:'facets']).is_a?(Array)
+        if attributes.key?(:facets)
+          if (value = attributes[:facets]).is_a?(Array)
             self.facets = value
           end
         end
 
-        if attributes.key?(:'faceting_after_distinct')
-          self.faceting_after_distinct = attributes[:'faceting_after_distinct']
+        if attributes.key?(:faceting_after_distinct)
+          self.faceting_after_distinct = attributes[:faceting_after_distinct]
         end
 
-        if attributes.key?(:'page')
-          self.page = attributes[:'page']
+        if attributes.key?(:page)
+          self.page = attributes[:page]
         end
 
-        if attributes.key?(:'offset')
-          self.offset = attributes[:'offset']
+        if attributes.key?(:offset)
+          self.offset = attributes[:offset]
         end
 
-        if attributes.key?(:'length')
-          self.length = attributes[:'length']
+        if attributes.key?(:length)
+          self.length = attributes[:length]
         end
 
-        if attributes.key?(:'around_lat_lng')
-          self.around_lat_lng = attributes[:'around_lat_lng']
+        if attributes.key?(:around_lat_lng)
+          self.around_lat_lng = attributes[:around_lat_lng]
         end
 
-        if attributes.key?(:'around_lat_lng_via_ip')
-          self.around_lat_lng_via_ip = attributes[:'around_lat_lng_via_ip']
+        if attributes.key?(:around_lat_lng_via_ip)
+          self.around_lat_lng_via_ip = attributes[:around_lat_lng_via_ip]
         end
 
-        if attributes.key?(:'around_radius')
-          self.around_radius = attributes[:'around_radius']
+        if attributes.key?(:around_radius)
+          self.around_radius = attributes[:around_radius]
         end
 
-        if attributes.key?(:'around_precision')
-          self.around_precision = attributes[:'around_precision']
+        if attributes.key?(:around_precision)
+          self.around_precision = attributes[:around_precision]
         end
 
-        if attributes.key?(:'minimum_around_radius')
-          self.minimum_around_radius = attributes[:'minimum_around_radius']
+        if attributes.key?(:minimum_around_radius)
+          self.minimum_around_radius = attributes[:minimum_around_radius]
         end
 
-        if attributes.key?(:'inside_bounding_box')
-          if (value = attributes[:'inside_bounding_box']).is_a?(Array)
+        if attributes.key?(:inside_bounding_box)
+          if (value = attributes[:inside_bounding_box]).is_a?(Array)
             self.inside_bounding_box = value
           end
         end
 
-        if attributes.key?(:'inside_polygon')
-          if (value = attributes[:'inside_polygon']).is_a?(Array)
+        if attributes.key?(:inside_polygon)
+          if (value = attributes[:inside_polygon]).is_a?(Array)
             self.inside_polygon = value
           end
         end
 
-        if attributes.key?(:'natural_languages')
-          if (value = attributes[:'natural_languages']).is_a?(Array)
+        if attributes.key?(:natural_languages)
+          if (value = attributes[:natural_languages]).is_a?(Array)
             self.natural_languages = value
           end
         end
 
-        if attributes.key?(:'rule_contexts')
-          if (value = attributes[:'rule_contexts']).is_a?(Array)
+        if attributes.key?(:rule_contexts)
+          if (value = attributes[:rule_contexts]).is_a?(Array)
             self.rule_contexts = value
           end
         end
 
-        if attributes.key?(:'personalization_impact')
-          self.personalization_impact = attributes[:'personalization_impact']
+        if attributes.key?(:personalization_impact)
+          self.personalization_impact = attributes[:personalization_impact]
         end
 
-        if attributes.key?(:'user_token')
-          self.user_token = attributes[:'user_token']
+        if attributes.key?(:user_token)
+          self.user_token = attributes[:user_token]
         end
 
-        if attributes.key?(:'get_ranking_info')
-          self.get_ranking_info = attributes[:'get_ranking_info']
+        if attributes.key?(:get_ranking_info)
+          self.get_ranking_info = attributes[:get_ranking_info]
         end
 
-        if attributes.key?(:'explain')
-          if (value = attributes[:'explain']).is_a?(Array)
+        if attributes.key?(:explain)
+          if (value = attributes[:explain]).is_a?(Array)
             self.explain = value
           end
         end
 
-        if attributes.key?(:'synonyms')
-          self.synonyms = attributes[:'synonyms']
+        if attributes.key?(:synonyms)
+          self.synonyms = attributes[:synonyms]
         end
 
-        if attributes.key?(:'click_analytics')
-          self.click_analytics = attributes[:'click_analytics']
+        if attributes.key?(:click_analytics)
+          self.click_analytics = attributes[:click_analytics]
         end
 
-        if attributes.key?(:'analytics')
-          self.analytics = attributes[:'analytics']
+        if attributes.key?(:analytics)
+          self.analytics = attributes[:analytics]
         end
 
-        if attributes.key?(:'analytics_tags')
-          if (value = attributes[:'analytics_tags']).is_a?(Array)
+        if attributes.key?(:analytics_tags)
+          if (value = attributes[:analytics_tags]).is_a?(Array)
             self.analytics_tags = value
           end
         end
 
-        if attributes.key?(:'percentile_computation')
-          self.percentile_computation = attributes[:'percentile_computation']
+        if attributes.key?(:percentile_computation)
+          self.percentile_computation = attributes[:percentile_computation]
         end
 
-        if attributes.key?(:'enable_ab_test')
-          self.enable_ab_test = attributes[:'enable_ab_test']
+        if attributes.key?(:enable_ab_test)
+          self.enable_ab_test = attributes[:enable_ab_test]
         end
       end
 
@@ -364,15 +365,15 @@ module Algolia
       # @param [Object] length Value to be assigned
       def length=(length)
         if length.nil?
-          fail ArgumentError, 'length cannot be nil'
+          raise ArgumentError, 'length cannot be nil'
         end
 
         if length > 1000
-          fail ArgumentError, 'invalid value for "length", must be smaller than or equal to 1000.'
+          raise ArgumentError, 'invalid value for "length", must be smaller than or equal to 1000.'
         end
 
         if length < 1
-          fail ArgumentError, 'invalid value for "length", must be greater than or equal to 1.'
+          raise ArgumentError, 'invalid value for "length", must be greater than or equal to 1.'
         end
 
         @length = length
@@ -382,11 +383,11 @@ module Algolia
       # @param [Object] minimum_around_radius Value to be assigned
       def minimum_around_radius=(minimum_around_radius)
         if minimum_around_radius.nil?
-          fail ArgumentError, 'minimum_around_radius cannot be nil'
+          raise ArgumentError, 'minimum_around_radius cannot be nil'
         end
 
         if minimum_around_radius < 1
-          fail ArgumentError, 'invalid value for "minimum_around_radius", must be greater than or equal to 1.'
+          raise ArgumentError, 'invalid value for "minimum_around_radius", must be greater than or equal to 1.'
         end
 
         @minimum_around_radius = minimum_around_radius
@@ -394,54 +395,56 @@ module Algolia
 
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
-      def ==(o)
-        return true if self.equal?(o)
-        self.class == o.class &&
-            query == o.query &&
-            similar_query == o.similar_query &&
-            filters == o.filters &&
-            facet_filters == o.facet_filters &&
-            optional_filters == o.optional_filters &&
-            numeric_filters == o.numeric_filters &&
-            tag_filters == o.tag_filters &&
-            sum_or_filters_scores == o.sum_or_filters_scores &&
-            restrict_searchable_attributes == o.restrict_searchable_attributes &&
-            facets == o.facets &&
-            faceting_after_distinct == o.faceting_after_distinct &&
-            page == o.page &&
-            offset == o.offset &&
-            length == o.length &&
-            around_lat_lng == o.around_lat_lng &&
-            around_lat_lng_via_ip == o.around_lat_lng_via_ip &&
-            around_radius == o.around_radius &&
-            around_precision == o.around_precision &&
-            minimum_around_radius == o.minimum_around_radius &&
-            inside_bounding_box == o.inside_bounding_box &&
-            inside_polygon == o.inside_polygon &&
-            natural_languages == o.natural_languages &&
-            rule_contexts == o.rule_contexts &&
-            personalization_impact == o.personalization_impact &&
-            user_token == o.user_token &&
-            get_ranking_info == o.get_ranking_info &&
-            explain == o.explain &&
-            synonyms == o.synonyms &&
-            click_analytics == o.click_analytics &&
-            analytics == o.analytics &&
-            analytics_tags == o.analytics_tags &&
-            percentile_computation == o.percentile_computation &&
-            enable_ab_test == o.enable_ab_test
+      def ==(other)
+        return true if equal?(other)
+
+        self.class == other.class &&
+          query == other.query &&
+          similar_query == other.similar_query &&
+          filters == other.filters &&
+          facet_filters == other.facet_filters &&
+          optional_filters == other.optional_filters &&
+          numeric_filters == other.numeric_filters &&
+          tag_filters == other.tag_filters &&
+          sum_or_filters_scores == other.sum_or_filters_scores &&
+          restrict_searchable_attributes == other.restrict_searchable_attributes &&
+          facets == other.facets &&
+          faceting_after_distinct == other.faceting_after_distinct &&
+          page == other.page &&
+          offset == other.offset &&
+          length == other.length &&
+          around_lat_lng == other.around_lat_lng &&
+          around_lat_lng_via_ip == other.around_lat_lng_via_ip &&
+          around_radius == other.around_radius &&
+          around_precision == other.around_precision &&
+          minimum_around_radius == other.minimum_around_radius &&
+          inside_bounding_box == other.inside_bounding_box &&
+          inside_polygon == other.inside_polygon &&
+          natural_languages == other.natural_languages &&
+          rule_contexts == other.rule_contexts &&
+          personalization_impact == other.personalization_impact &&
+          user_token == other.user_token &&
+          get_ranking_info == other.get_ranking_info &&
+          explain == other.explain &&
+          synonyms == other.synonyms &&
+          click_analytics == other.click_analytics &&
+          analytics == other.analytics &&
+          analytics_tags == other.analytics_tags &&
+          percentile_computation == other.percentile_computation &&
+          enable_ab_test == other.enable_ab_test
       end
 
       # @see the `==` method
       # @param [Object] Object to be compared
-      def eql?(o)
-        self == o
+      def eql?(other)
+        self == other
       end
 
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [query, similar_query, filters, facet_filters, optional_filters, numeric_filters, tag_filters, sum_or_filters_scores, restrict_searchable_attributes, facets, faceting_after_distinct, page, offset, length, around_lat_lng, around_lat_lng_via_ip, around_radius, around_precision, minimum_around_radius, inside_bounding_box, inside_polygon, natural_languages, rule_contexts, personalization_impact, user_token, get_ranking_info, explain, synonyms, click_analytics, analytics, analytics_tags, percentile_computation, enable_ab_test].hash
+        [query, similar_query, filters, facet_filters, optional_filters, numeric_filters, tag_filters, sum_or_filters_scores, restrict_searchable_attributes, facets,
+         faceting_after_distinct, page, offset, length, around_lat_lng, around_lat_lng_via_ip, around_radius, around_precision, minimum_around_radius, inside_bounding_box, inside_polygon, natural_languages, rule_contexts, personalization_impact, user_token, get_ranking_info, explain, synonyms, click_analytics, analytics, analytics_tags, percentile_computation, enable_ab_test].hash
       end
 
       # Builds the object from hash
@@ -449,19 +452,20 @@ module Algolia
       # @return [Object] Returns the model itself
       def self.build_from_hash(attributes)
         return nil unless attributes.is_a?(Hash)
+
         attributes = attributes.transform_keys(&:to_sym)
         transformed_hash = {}
         types_mapping.each_pair do |key, type|
           if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = nil
+            transformed_hash[key.to_s] = nil
           elsif type =~ /\AArray<(.*)>/i
             # check to ensure the input is an array given that the attribute
             # is documented as an array but the input is not
             if attributes[attribute_map[key]].is_a?(Array)
-              transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+              transformed_hash[key.to_s] = attributes[attribute_map[key]].map { |v| _deserialize(::Regexp.last_match(1), v) }
             end
           elsif !attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+            transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
         new(transformed_hash)
@@ -527,7 +531,7 @@ module Algolia
       def to_hash
         hash = {}
         self.class.attribute_map.each_pair do |attr, param|
-          value = self.send(attr)
+          value = send(attr)
           if value.nil?
             is_nullable = self.class.openapi_nullable.include?(attr)
             next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))

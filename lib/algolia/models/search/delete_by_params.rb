@@ -8,7 +8,7 @@ module Algolia
     class DeleteByParams
       attr_accessor :facet_filters
 
-      # [Filter](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) the query with numeric, facet, or tag filters. 
+      # [Filter](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) the query with numeric, facet, or tag filters.
       attr_accessor :filters
 
       attr_accessor :numeric_filters
@@ -29,14 +29,14 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :'facet_filters' => :'facetFilters',
-          :'filters' => :'filters',
-          :'numeric_filters' => :'numericFilters',
-          :'tag_filters' => :'tagFilters',
-          :'around_lat_lng' => :'aroundLatLng',
-          :'around_radius' => :'aroundRadius',
-          :'inside_bounding_box' => :'insideBoundingBox',
-          :'inside_polygon' => :'insidePolygon'
+          :facet_filters => :facetFilters,
+          :filters => :filters,
+          :numeric_filters => :numericFilters,
+          :tag_filters => :tagFilters,
+          :around_lat_lng => :aroundLatLng,
+          :around_radius => :aroundRadius,
+          :inside_bounding_box => :insideBoundingBox,
+          :inside_polygon => :insidePolygon
         }
       end
 
@@ -48,70 +48,71 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :'facet_filters' => :'FacetFilters',
-          :'filters' => :'String',
-          :'numeric_filters' => :'NumericFilters',
-          :'tag_filters' => :'TagFilters',
-          :'around_lat_lng' => :'String',
-          :'around_radius' => :'AroundRadius',
-          :'inside_bounding_box' => :'Array<Array<Float>>',
-          :'inside_polygon' => :'Array<Array<Float>>'
+          :facet_filters => :FacetFilters,
+          :filters => :String,
+          :numeric_filters => :NumericFilters,
+          :tag_filters => :TagFilters,
+          :around_lat_lng => :String,
+          :around_radius => :AroundRadius,
+          :inside_bounding_box => :'Array<Array<Float>>',
+          :inside_polygon => :'Array<Array<Float>>'
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([
-        ])
+        Set.new([])
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
-        if (!attributes.is_a?(Hash))
-          fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::DeleteByParams` initialize method"
+        unless attributes.is_a?(Hash)
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::DeleteByParams` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::DeleteByParams`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+        attributes = attributes.each_with_object({}) do |(k, v), h|
+          unless self.class.attribute_map.key?(k.to_sym)
+            raise ArgumentError,
+                  "`#{k}` is not a valid attribute in `Algolia::DeleteByParams`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
+
           h[k.to_sym] = v
-        }
-
-        if attributes.key?(:'facet_filters')
-          self.facet_filters = attributes[:'facet_filters']
         end
 
-        if attributes.key?(:'filters')
-          self.filters = attributes[:'filters']
+        if attributes.key?(:facet_filters)
+          self.facet_filters = attributes[:facet_filters]
         end
 
-        if attributes.key?(:'numeric_filters')
-          self.numeric_filters = attributes[:'numeric_filters']
+        if attributes.key?(:filters)
+          self.filters = attributes[:filters]
         end
 
-        if attributes.key?(:'tag_filters')
-          self.tag_filters = attributes[:'tag_filters']
+        if attributes.key?(:numeric_filters)
+          self.numeric_filters = attributes[:numeric_filters]
         end
 
-        if attributes.key?(:'around_lat_lng')
-          self.around_lat_lng = attributes[:'around_lat_lng']
+        if attributes.key?(:tag_filters)
+          self.tag_filters = attributes[:tag_filters]
         end
 
-        if attributes.key?(:'around_radius')
-          self.around_radius = attributes[:'around_radius']
+        if attributes.key?(:around_lat_lng)
+          self.around_lat_lng = attributes[:around_lat_lng]
         end
 
-        if attributes.key?(:'inside_bounding_box')
-          if (value = attributes[:'inside_bounding_box']).is_a?(Array)
+        if attributes.key?(:around_radius)
+          self.around_radius = attributes[:around_radius]
+        end
+
+        if attributes.key?(:inside_bounding_box)
+          if (value = attributes[:inside_bounding_box]).is_a?(Array)
             self.inside_bounding_box = value
           end
         end
 
-        if attributes.key?(:'inside_polygon')
-          if (value = attributes[:'inside_polygon']).is_a?(Array)
+        if attributes.key?(:inside_polygon)
+          if (value = attributes[:inside_polygon]).is_a?(Array)
             self.inside_polygon = value
           end
         end
@@ -119,23 +120,24 @@ module Algolia
 
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
-      def ==(o)
-        return true if self.equal?(o)
-        self.class == o.class &&
-            facet_filters == o.facet_filters &&
-            filters == o.filters &&
-            numeric_filters == o.numeric_filters &&
-            tag_filters == o.tag_filters &&
-            around_lat_lng == o.around_lat_lng &&
-            around_radius == o.around_radius &&
-            inside_bounding_box == o.inside_bounding_box &&
-            inside_polygon == o.inside_polygon
+      def ==(other)
+        return true if equal?(other)
+
+        self.class == other.class &&
+          facet_filters == other.facet_filters &&
+          filters == other.filters &&
+          numeric_filters == other.numeric_filters &&
+          tag_filters == other.tag_filters &&
+          around_lat_lng == other.around_lat_lng &&
+          around_radius == other.around_radius &&
+          inside_bounding_box == other.inside_bounding_box &&
+          inside_polygon == other.inside_polygon
       end
 
       # @see the `==` method
       # @param [Object] Object to be compared
-      def eql?(o)
-        self == o
+      def eql?(other)
+        self == other
       end
 
       # Calculates hash code according to all attributes.
@@ -149,19 +151,20 @@ module Algolia
       # @return [Object] Returns the model itself
       def self.build_from_hash(attributes)
         return nil unless attributes.is_a?(Hash)
+
         attributes = attributes.transform_keys(&:to_sym)
         transformed_hash = {}
         types_mapping.each_pair do |key, type|
           if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = nil
+            transformed_hash[key.to_s] = nil
           elsif type =~ /\AArray<(.*)>/i
             # check to ensure the input is an array given that the attribute
             # is documented as an array but the input is not
             if attributes[attribute_map[key]].is_a?(Array)
-              transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+              transformed_hash[key.to_s] = attributes[attribute_map[key]].map { |v| _deserialize(::Regexp.last_match(1), v) }
             end
           elsif !attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+            transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
         new(transformed_hash)
@@ -227,7 +230,7 @@ module Algolia
       def to_hash
         hash = {}
         self.class.attribute_map.each_pair do |attr, param|
-          value = self.send(attr)
+          value = send(attr)
           if value.nil?
             is_nullable = self.class.openapi_nullable.include?(attr)
             next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))

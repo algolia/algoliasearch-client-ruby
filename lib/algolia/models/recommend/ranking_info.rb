@@ -46,19 +46,19 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :'filters' => :'filters',
-          :'first_matched_word' => :'firstMatchedWord',
-          :'geo_distance' => :'geoDistance',
-          :'geo_precision' => :'geoPrecision',
-          :'matched_geo_location' => :'matchedGeoLocation',
-          :'personalization' => :'personalization',
-          :'nb_exact_words' => :'nbExactWords',
-          :'nb_typos' => :'nbTypos',
-          :'promoted' => :'promoted',
-          :'proximity_distance' => :'proximityDistance',
-          :'user_score' => :'userScore',
-          :'words' => :'words',
-          :'promoted_by_re_ranking' => :'promotedByReRanking'
+          :filters => :filters,
+          :first_matched_word => :firstMatchedWord,
+          :geo_distance => :geoDistance,
+          :geo_precision => :geoPrecision,
+          :matched_geo_location => :matchedGeoLocation,
+          :personalization => :personalization,
+          :nb_exact_words => :nbExactWords,
+          :nb_typos => :nbTypos,
+          :promoted => :promoted,
+          :proximity_distance => :proximityDistance,
+          :user_score => :userScore,
+          :words => :words,
+          :promoted_by_re_ranking => :promotedByReRanking
         }
       end
 
@@ -70,142 +70,145 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :'filters' => :'Integer',
-          :'first_matched_word' => :'Integer',
-          :'geo_distance' => :'Integer',
-          :'geo_precision' => :'Integer',
-          :'matched_geo_location' => :'MatchedGeoLocation',
-          :'personalization' => :'Personalization',
-          :'nb_exact_words' => :'Integer',
-          :'nb_typos' => :'Integer',
-          :'promoted' => :'Boolean',
-          :'proximity_distance' => :'Integer',
-          :'user_score' => :'Integer',
-          :'words' => :'Integer',
-          :'promoted_by_re_ranking' => :'Boolean'
+          :filters => :Integer,
+          :first_matched_word => :Integer,
+          :geo_distance => :Integer,
+          :geo_precision => :Integer,
+          :matched_geo_location => :MatchedGeoLocation,
+          :personalization => :Personalization,
+          :nb_exact_words => :Integer,
+          :nb_typos => :Integer,
+          :promoted => :Boolean,
+          :proximity_distance => :Integer,
+          :user_score => :Integer,
+          :words => :Integer,
+          :promoted_by_re_ranking => :Boolean
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([
-        ])
+        Set.new([])
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
-        if (!attributes.is_a?(Hash))
-          fail ArgumentError, "The input argument (attributes) must be a hash in `Algolia::RankingInfo` initialize method"
+        unless attributes.is_a?(Hash)
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::RankingInfo` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            fail ArgumentError, "`#{k}` is not a valid attribute in `Algolia::RankingInfo`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+        attributes = attributes.each_with_object({}) do |(k, v), h|
+          unless self.class.attribute_map.key?(k.to_sym)
+            raise ArgumentError,
+                  "`#{k}` is not a valid attribute in `Algolia::RankingInfo`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
-          h[k.to_sym] = v
-        }
 
-        if attributes.key?(:'filters')
-          self.filters = attributes[:'filters']
+          h[k.to_sym] = v
+        end
+
+        if attributes.key?(:filters)
+          self.filters = attributes[:filters]
         else
           self.filters = nil
         end
 
-        if attributes.key?(:'first_matched_word')
-          self.first_matched_word = attributes[:'first_matched_word']
+        if attributes.key?(:first_matched_word)
+          self.first_matched_word = attributes[:first_matched_word]
         else
           self.first_matched_word = nil
         end
 
-        if attributes.key?(:'geo_distance')
-          self.geo_distance = attributes[:'geo_distance']
+        if attributes.key?(:geo_distance)
+          self.geo_distance = attributes[:geo_distance]
         else
           self.geo_distance = nil
         end
 
-        if attributes.key?(:'geo_precision')
-          self.geo_precision = attributes[:'geo_precision']
+        if attributes.key?(:geo_precision)
+          self.geo_precision = attributes[:geo_precision]
         end
 
-        if attributes.key?(:'matched_geo_location')
-          self.matched_geo_location = attributes[:'matched_geo_location']
+        if attributes.key?(:matched_geo_location)
+          self.matched_geo_location = attributes[:matched_geo_location]
         end
 
-        if attributes.key?(:'personalization')
-          self.personalization = attributes[:'personalization']
+        if attributes.key?(:personalization)
+          self.personalization = attributes[:personalization]
         end
 
-        if attributes.key?(:'nb_exact_words')
-          self.nb_exact_words = attributes[:'nb_exact_words']
+        if attributes.key?(:nb_exact_words)
+          self.nb_exact_words = attributes[:nb_exact_words]
         else
           self.nb_exact_words = nil
         end
 
-        if attributes.key?(:'nb_typos')
-          self.nb_typos = attributes[:'nb_typos']
+        if attributes.key?(:nb_typos)
+          self.nb_typos = attributes[:nb_typos]
         else
           self.nb_typos = nil
         end
 
-        if attributes.key?(:'promoted')
-          self.promoted = attributes[:'promoted']
+        if attributes.key?(:promoted)
+          self.promoted = attributes[:promoted]
         else
           self.promoted = nil
         end
 
-        if attributes.key?(:'proximity_distance')
-          self.proximity_distance = attributes[:'proximity_distance']
+        if attributes.key?(:proximity_distance)
+          self.proximity_distance = attributes[:proximity_distance]
         end
 
-        if attributes.key?(:'user_score')
-          self.user_score = attributes[:'user_score']
+        if attributes.key?(:user_score)
+          self.user_score = attributes[:user_score]
         else
           self.user_score = nil
         end
 
-        if attributes.key?(:'words')
-          self.words = attributes[:'words']
+        if attributes.key?(:words)
+          self.words = attributes[:words]
         else
           self.words = nil
         end
 
-        if attributes.key?(:'promoted_by_re_ranking')
-          self.promoted_by_re_ranking = attributes[:'promoted_by_re_ranking']
+        if attributes.key?(:promoted_by_re_ranking)
+          self.promoted_by_re_ranking = attributes[:promoted_by_re_ranking]
         end
       end
 
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
-      def ==(o)
-        return true if self.equal?(o)
-        self.class == o.class &&
-            filters == o.filters &&
-            first_matched_word == o.first_matched_word &&
-            geo_distance == o.geo_distance &&
-            geo_precision == o.geo_precision &&
-            matched_geo_location == o.matched_geo_location &&
-            personalization == o.personalization &&
-            nb_exact_words == o.nb_exact_words &&
-            nb_typos == o.nb_typos &&
-            promoted == o.promoted &&
-            proximity_distance == o.proximity_distance &&
-            user_score == o.user_score &&
-            words == o.words &&
-            promoted_by_re_ranking == o.promoted_by_re_ranking
+      def ==(other)
+        return true if equal?(other)
+
+        self.class == other.class &&
+          filters == other.filters &&
+          first_matched_word == other.first_matched_word &&
+          geo_distance == other.geo_distance &&
+          geo_precision == other.geo_precision &&
+          matched_geo_location == other.matched_geo_location &&
+          personalization == other.personalization &&
+          nb_exact_words == other.nb_exact_words &&
+          nb_typos == other.nb_typos &&
+          promoted == other.promoted &&
+          proximity_distance == other.proximity_distance &&
+          user_score == other.user_score &&
+          words == other.words &&
+          promoted_by_re_ranking == other.promoted_by_re_ranking
       end
 
       # @see the `==` method
       # @param [Object] Object to be compared
-      def eql?(o)
-        self == o
+      def eql?(other)
+        self == other
       end
 
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [filters, first_matched_word, geo_distance, geo_precision, matched_geo_location, personalization, nb_exact_words, nb_typos, promoted, proximity_distance, user_score, words, promoted_by_re_ranking].hash
+        [filters, first_matched_word, geo_distance, geo_precision, matched_geo_location, personalization, nb_exact_words, nb_typos, promoted, proximity_distance, user_score, words,
+         promoted_by_re_ranking].hash
       end
 
       # Builds the object from hash
@@ -213,19 +216,20 @@ module Algolia
       # @return [Object] Returns the model itself
       def self.build_from_hash(attributes)
         return nil unless attributes.is_a?(Hash)
+
         attributes = attributes.transform_keys(&:to_sym)
         transformed_hash = {}
         types_mapping.each_pair do |key, type|
           if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = nil
+            transformed_hash[key.to_s] = nil
           elsif type =~ /\AArray<(.*)>/i
             # check to ensure the input is an array given that the attribute
             # is documented as an array but the input is not
             if attributes[attribute_map[key]].is_a?(Array)
-              transformed_hash["#{key}"] = attributes[attribute_map[key]].map { |v| _deserialize($1, v) }
+              transformed_hash[key.to_s] = attributes[attribute_map[key]].map { |v| _deserialize(::Regexp.last_match(1), v) }
             end
           elsif !attributes[attribute_map[key]].nil?
-            transformed_hash["#{key}"] = _deserialize(type, attributes[attribute_map[key]])
+            transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
         new(transformed_hash)
@@ -291,7 +295,7 @@ module Algolia
       def to_hash
         hash = {}
         self.class.attribute_map.each_pair do |attr, param|
-          value = self.send(attr)
+          value = send(attr)
           if value.nil?
             is_nullable = self.class.openapi_nullable.include?(attr)
             next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
