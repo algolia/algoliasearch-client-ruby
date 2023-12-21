@@ -29,42 +29,30 @@ module Algolia
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @return [Object]
-    def custom_delete(path, opts = {})
-      data, _status_code, _headers = custom_delete_with_http_info(path, opts)
-      data
-    end
-
-    # Send requests to the Algolia REST API.
-    # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def custom_delete_with_http_info(path, opts = {})
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def custom_delete_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_delete"
       end
 
-      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-      query_params = opts[:query_params] || {}
-      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
-      header_params = opts[:header_params] || {}
+      path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
+      query_params = {}
+      query_params = query_params.merge(parameters) unless parameters.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Analytics::Object'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'AnalyticsClient.custom_delete',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
@@ -73,42 +61,41 @@ module Algolia
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Object]
-    def custom_get(path, opts = {})
-      data, _status_code, _headers = custom_get_with_http_info(path, opts)
-      data
+    def custom_delete(path, parameters = nil, request_options = {})
+      response = custom_delete_with_http_info(path, parameters, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def custom_get_with_http_info(path, opts = {})
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def custom_get_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_get"
       end
 
-      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-      query_params = opts[:query_params] || {}
-      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
-      header_params = opts[:header_params] || {}
+      path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
+      query_params = {}
+      query_params = query_params.merge(parameters) unless parameters.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Analytics::Object'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'AnalyticsClient.custom_get',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
@@ -117,44 +104,42 @@ module Algolia
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Object]
-    def custom_post(path, opts = {})
-      data, _status_code, _headers = custom_post_with_http_info(path, opts)
-      data
+    def custom_get(path, parameters = nil, request_options = {})
+      response = custom_get_with_http_info(path, parameters, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
-    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def custom_post_with_http_info(path, opts = {})
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param body [Object] Parameters to send with the custom request.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def custom_post_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_post"
       end
 
-      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-      query_params = opts[:query_params] || {}
-      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
-      header_params = opts[:header_params] || {}
+      path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
+      query_params = {}
+      query_params = query_params.merge(parameters) unless parameters.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:body])
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
-      return_type = opts[:debug_return_type] || 'Analytics::Object'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'AnalyticsClient.custom_post',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
@@ -163,105 +148,162 @@ module Algolia
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param body [Object] Parameters to send with the custom request.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Object]
-    def custom_put(path, opts = {})
-      data, _status_code, _headers = custom_put_with_http_info(path, opts)
-      data
+    def custom_post(path, parameters = nil, body = nil, request_options = {})
+      response = custom_post_with_http_info(path, parameters, body, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
-    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def custom_put_with_http_info(path, opts = {})
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param body [Object] Parameters to send with the custom request.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def custom_put_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_put"
       end
 
-      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-      query_params = opts[:query_params] || {}
-      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
-      header_params = opts[:header_params] || {}
+      path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
+      query_params = {}
+      query_params = query_params.merge(parameters) unless parameters.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:body])
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
-      return_type = opts[:debug_return_type] || 'Analytics::Object'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'AnalyticsClient.custom_put',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # Get average click position.
-    # Return the average click position for the complete time range and for individual days. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [GetAverageClickPositionResponse]
-    def get_average_click_position(index, opts = {})
-      data, _status_code, _headers = get_average_click_position_with_http_info(index, opts)
-      data
+    # Send requests to the Algolia REST API.
+    # This method allow you to send requests to the Algolia REST API.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param body [Object] Parameters to send with the custom request.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Object]
+    def custom_put(path, parameters = nil, body = nil, request_options = {})
+      response = custom_put_with_http_info(path, parameters, body, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Get average click position.
     # Return the average click position for the complete time range and for individual days. &gt; **Note**: If all &#x60;positions&#x60; have a &#x60;clickCount&#x60; of &#x60;0&#x60; or &#x60;null&#x60;, it means Algolia didn&#39;t receive any click events for tracked searches. A _tracked_ search is a search request where the &#x60;clickAnalytics&#x60; parameter is &#x60;true&#x60;.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [Array<(GetAverageClickPositionResponse, Integer, Hash)>] GetAverageClickPositionResponse data, response status code and response headers
-    def get_average_click_position_with_http_info(index, opts = {})
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_average_click_position_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_average_click_position"
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_average_click_position, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
+        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_average_click_position, must conform to the pattern #{pattern}."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_average_click_position, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
+        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_average_click_position, must conform to the pattern #{pattern}."
       end
 
       path = '/2/clicks/averageClickPosition'
-      query_params = opts[:query_params] || {}
+      query_params = {}
       query_params[:index] = index
-      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
-      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
-      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
-      header_params = opts[:header_params] || {}
+      query_params[:startDate] = start_date unless start_date.nil?
+      query_params[:endDate] = end_date unless end_date.nil?
+      query_params[:tags] = tags unless tags.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Analytics::GetAverageClickPositionResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'AnalyticsClient.get_average_click_position',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Get average click position.
+    # Return the average click position for the complete time range and for individual days. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [GetAverageClickPositionResponse]
+    def get_average_click_position(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
+      response = get_average_click_position_with_http_info(index, start_date, end_date, tags, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetAverageClickPositionResponse')
+    end
+
+    # Get click positions.
+    # Show the number of clicks events and their associated position in the search results.  &gt; **Note**: If all &#x60;positions&#x60; have a &#x60;clickCount&#x60; of &#x60;0&#x60; or &#x60;null&#x60;, it means Algolia didn&#39;t receive any click events for tracked searches. A _tracked_ search is a search request where the &#x60;clickAnalytics&#x60; parameter is &#x60;true&#x60;.
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_click_positions_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
+      # verify the required parameter 'index' is set
+      if @api_client.config.client_side_validation && index.nil?
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_click_positions"
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
+        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_click_positions, must conform to the pattern #{pattern}."
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
+        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_click_positions, must conform to the pattern #{pattern}."
+      end
+
+      path = '/2/clicks/positions'
+      query_params = {}
+      query_params[:index] = index
+      query_params[:startDate] = start_date unless start_date.nil?
+      query_params[:endDate] = end_date unless end_date.nil?
+      query_params[:tags] = tags unless tags.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :'AnalyticsClient.get_click_positions',
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
         :use_read_transporter => false
       )
 
@@ -270,120 +312,118 @@ module Algolia
 
     # Get click positions.
     # Show the number of clicks events and their associated position in the search results.  > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetClickPositionsResponse]
-    def get_click_positions(index, opts = {})
-      data, _status_code, _headers = get_click_positions_with_http_info(index, opts)
-      data
-    end
-
-    # Get click positions.
-    # Show the number of clicks events and their associated position in the search results.  &gt; **Note**: If all &#x60;positions&#x60; have a &#x60;clickCount&#x60; of &#x60;0&#x60; or &#x60;null&#x60;, it means Algolia didn&#39;t receive any click events for tracked searches. A _tracked_ search is a search request where the &#x60;clickAnalytics&#x60; parameter is &#x60;true&#x60;.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [Array<(GetClickPositionsResponse, Integer, Hash)>] GetClickPositionsResponse data, response status code and response headers
-    def get_click_positions_with_http_info(index, opts = {})
-      # verify the required parameter 'index' is set
-      if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_click_positions"
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_click_positions, must conform to the pattern #{pattern}."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_click_positions, must conform to the pattern #{pattern}."
-      end
-
-      path = '/2/clicks/positions'
-      query_params = opts[:query_params] || {}
-      query_params[:index] = index
-      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
-      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
-      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
-      header_params = opts[:header_params] || {}
-
-      post_body = opts[:debug_body]
-
-      return_type = opts[:debug_return_type] || 'Analytics::GetClickPositionsResponse'
-
-      new_options = opts.merge(
-        :operation => :'AnalyticsClient.get_click_positions',
-        :header_params => header_params,
-        :query_params => query_params,
-        :body => post_body,
-        :return_type => return_type,
-        :use_read_transporter => false
-      )
-
-      @api_client.call_api(:GET, path, new_options)
+    def get_click_positions(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
+      response = get_click_positions_with_http_info(index, start_date, end_date, tags, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetClickPositionsResponse')
     end
 
     # Get click-through rate (CTR).
     # Returns a [click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [GetClickThroughRateResponse]
-    def get_click_through_rate(index, opts = {})
-      data, _status_code, _headers = get_click_through_rate_with_http_info(index, opts)
-      data
-    end
-
-    # Get click-through rate (CTR).
-    # Returns a [click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [Array<(GetClickThroughRateResponse, Integer, Hash)>] GetClickThroughRateResponse data, response status code and response headers
-    def get_click_through_rate_with_http_info(index, opts = {})
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_click_through_rate_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_click_through_rate"
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_click_through_rate, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
+        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_click_through_rate, must conform to the pattern #{pattern}."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_click_through_rate, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
+        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_click_through_rate, must conform to the pattern #{pattern}."
       end
 
       path = '/2/clicks/clickThroughRate'
-      query_params = opts[:query_params] || {}
+      query_params = {}
       query_params[:index] = index
-      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
-      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
-      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
-      header_params = opts[:header_params] || {}
+      query_params[:startDate] = start_date unless start_date.nil?
+      query_params[:endDate] = end_date unless end_date.nil?
+      query_params[:tags] = tags unless tags.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Analytics::GetClickThroughRateResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'AnalyticsClient.get_click_through_rate',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Get click-through rate (CTR).
+    # Returns a [click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [GetClickThroughRateResponse]
+    def get_click_through_rate(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
+      response = get_click_through_rate_with_http_info(index, start_date, end_date, tags, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetClickThroughRateResponse')
+    end
+
+    # Get conversion rate (CR).
+    # Return a [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_conversation_rate_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
+      # verify the required parameter 'index' is set
+      if @api_client.config.client_side_validation && index.nil?
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_conversation_rate"
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
+        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_conversation_rate, must conform to the pattern #{pattern}."
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
+        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_conversation_rate, must conform to the pattern #{pattern}."
+      end
+
+      path = '/2/conversions/conversionRate'
+      query_params = {}
+      query_params[:index] = index
+      query_params[:startDate] = start_date unless start_date.nil?
+      query_params[:endDate] = end_date unless end_date.nil?
+      query_params[:tags] = tags unless tags.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :'AnalyticsClient.get_conversation_rate',
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
         :use_read_transporter => false
       )
 
@@ -392,59 +432,58 @@ module Algolia
 
     # Get conversion rate (CR).
     # Return a [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetConversationRateResponse]
-    def get_conversation_rate(index, opts = {})
-      data, _status_code, _headers = get_conversation_rate_with_http_info(index, opts)
-      data
+    def get_conversation_rate(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
+      response = get_conversation_rate_with_http_info(index, start_date, end_date, tags, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetConversationRateResponse')
     end
 
-    # Get conversion rate (CR).
-    # Return a [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [Array<(GetConversationRateResponse, Integer, Hash)>] GetConversationRateResponse data, response status code and response headers
-    def get_conversation_rate_with_http_info(index, opts = {})
+    # Get no click rate.
+    # Returns the rate at which searches don&#39;t lead to any clicks. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without clicks.
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_no_click_rate_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_conversation_rate"
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_no_click_rate"
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_conversation_rate, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
+        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_no_click_rate, must conform to the pattern #{pattern}."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_conversation_rate, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
+        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_no_click_rate, must conform to the pattern #{pattern}."
       end
 
-      path = '/2/conversions/conversionRate'
-      query_params = opts[:query_params] || {}
+      path = '/2/searches/noClickRate'
+      query_params = {}
       query_params[:index] = index
-      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
-      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
-      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
-      header_params = opts[:header_params] || {}
+      query_params[:startDate] = start_date unless start_date.nil?
+      query_params[:endDate] = end_date unless end_date.nil?
+      query_params[:tags] = tags unless tags.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Analytics::GetConversationRateResponse'
-
-      new_options = opts.merge(
-        :operation => :'AnalyticsClient.get_conversation_rate',
+      new_options = request_options.merge(
+        :operation => :'AnalyticsClient.get_no_click_rate',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
@@ -453,59 +492,58 @@ module Algolia
 
     # Get no click rate.
     # Returns the rate at which searches don't lead to any clicks. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without clicks.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetNoClickRateResponse]
-    def get_no_click_rate(index, opts = {})
-      data, _status_code, _headers = get_no_click_rate_with_http_info(index, opts)
-      data
+    def get_no_click_rate(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
+      response = get_no_click_rate_with_http_info(index, start_date, end_date, tags, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetNoClickRateResponse')
     end
 
-    # Get no click rate.
-    # Returns the rate at which searches don&#39;t lead to any clicks. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without clicks.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [Array<(GetNoClickRateResponse, Integer, Hash)>] GetNoClickRateResponse data, response status code and response headers
-    def get_no_click_rate_with_http_info(index, opts = {})
+    # Get no results rate.
+    # Returns the rate at which searches didn&#39;t return any results.
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_no_results_rate_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_no_click_rate"
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_no_results_rate"
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_no_click_rate, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
+        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_no_results_rate, must conform to the pattern #{pattern}."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_no_click_rate, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
+        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_no_results_rate, must conform to the pattern #{pattern}."
       end
 
-      path = '/2/searches/noClickRate'
-      query_params = opts[:query_params] || {}
+      path = '/2/searches/noResultRate'
+      query_params = {}
       query_params[:index] = index
-      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
-      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
-      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
-      header_params = opts[:header_params] || {}
+      query_params[:startDate] = start_date unless start_date.nil?
+      query_params[:endDate] = end_date unless end_date.nil?
+      query_params[:tags] = tags unless tags.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Analytics::GetNoClickRateResponse'
-
-      new_options = opts.merge(
-        :operation => :'AnalyticsClient.get_no_click_rate',
+      new_options = request_options.merge(
+        :operation => :'AnalyticsClient.get_no_results_rate',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
@@ -514,59 +552,58 @@ module Algolia
 
     # Get no results rate.
     # Returns the rate at which searches didn't return any results.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetNoResultsRateResponse]
-    def get_no_results_rate(index, opts = {})
-      data, _status_code, _headers = get_no_results_rate_with_http_info(index, opts)
-      data
+    def get_no_results_rate(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
+      response = get_no_results_rate_with_http_info(index, start_date, end_date, tags, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetNoResultsRateResponse')
     end
 
-    # Get no results rate.
-    # Returns the rate at which searches didn&#39;t return any results.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [Array<(GetNoResultsRateResponse, Integer, Hash)>] GetNoResultsRateResponse data, response status code and response headers
-    def get_no_results_rate_with_http_info(index, opts = {})
+    # Get number of searches.
+    # Returns the number of searches within a time range.
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_searches_count_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_no_results_rate"
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_searches_count"
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_no_results_rate, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
+        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_searches_count, must conform to the pattern #{pattern}."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_no_results_rate, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
+        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_searches_count, must conform to the pattern #{pattern}."
       end
 
-      path = '/2/searches/noResultRate'
-      query_params = opts[:query_params] || {}
+      path = '/2/searches/count'
+      query_params = {}
       query_params[:index] = index
-      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
-      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
-      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
-      header_params = opts[:header_params] || {}
+      query_params[:startDate] = start_date unless start_date.nil?
+      query_params[:endDate] = end_date unless end_date.nil?
+      query_params[:tags] = tags unless tags.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Analytics::GetNoResultsRateResponse'
-
-      new_options = opts.merge(
-        :operation => :'AnalyticsClient.get_no_results_rate',
+      new_options = request_options.merge(
+        :operation => :'AnalyticsClient.get_searches_count',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
@@ -575,59 +612,62 @@ module Algolia
 
     # Get number of searches.
     # Returns the number of searches within a time range.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetSearchesCountResponse]
-    def get_searches_count(index, opts = {})
-      data, _status_code, _headers = get_searches_count_with_http_info(index, opts)
-      data
+    def get_searches_count(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
+      response = get_searches_count_with_http_info(index, start_date, end_date, tags, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetSearchesCountResponse')
     end
 
-    # Get number of searches.
-    # Returns the number of searches within a time range.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [Array<(GetSearchesCountResponse, Integer, Hash)>] GetSearchesCountResponse data, response status code and response headers
-    def get_searches_count_with_http_info(index, opts = {})
+    # Get top searches with no clicks.
+    # Return the most popular of the last 1,000 searches that didn&#39;t lead to any clicks.
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of records to return (page size). (default to 10)
+    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_searches_no_clicks_with_http_info(index, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_searches_count"
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_searches_no_clicks"
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_searches_count, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
+        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_searches_no_clicks, must conform to the pattern #{pattern}."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_searches_count, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
+        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_searches_no_clicks, must conform to the pattern #{pattern}."
       end
 
-      path = '/2/searches/count'
-      query_params = opts[:query_params] || {}
+      path = '/2/searches/noClicks'
+      query_params = {}
       query_params[:index] = index
-      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
-      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
-      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
-      header_params = opts[:header_params] || {}
+      query_params[:startDate] = start_date unless start_date.nil?
+      query_params[:endDate] = end_date unless end_date.nil?
+      query_params[:limit] = limit unless limit.nil?
+      query_params[:offset] = offset unless offset.nil?
+      query_params[:tags] = tags unless tags.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Analytics::GetSearchesCountResponse'
-
-      new_options = opts.merge(
-        :operation => :'AnalyticsClient.get_searches_count',
+      new_options = request_options.merge(
+        :operation => :'AnalyticsClient.get_searches_no_clicks',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
@@ -636,65 +676,64 @@ module Algolia
 
     # Get top searches with no clicks.
     # Return the most popular of the last 1,000 searches that didn't lead to any clicks.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [Integer] :limit Number of records to return (page size). (default to 10)
-    # @option opts [Integer] :offset Position of the starting record. Used for paging. 0 is the first record. (default to 0)
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of records to return (page size). (default to 10)
+    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetSearchesNoClicksResponse]
-    def get_searches_no_clicks(index, opts = {})
-      data, _status_code, _headers = get_searches_no_clicks_with_http_info(index, opts)
-      data
+    def get_searches_no_clicks(index, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
+      response = get_searches_no_clicks_with_http_info(index, start_date, end_date, limit, offset, tags, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetSearchesNoClicksResponse')
     end
 
-    # Get top searches with no clicks.
-    # Return the most popular of the last 1,000 searches that didn&#39;t lead to any clicks.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [Integer] :limit Number of records to return (page size). (default to 10)
-    # @option opts [Integer] :offset Position of the starting record. Used for paging. 0 is the first record. (default to 0)
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [Array<(GetSearchesNoClicksResponse, Integer, Hash)>] GetSearchesNoClicksResponse data, response status code and response headers
-    def get_searches_no_clicks_with_http_info(index, opts = {})
+    # Get top searches with no results.
+    # Returns the most popular of the latest 1,000 searches that didn&#39;t return any results.
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of records to return (page size). (default to 10)
+    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_searches_no_results_with_http_info(index, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_searches_no_clicks"
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_searches_no_results"
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_searches_no_clicks, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
+        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_searches_no_results, must conform to the pattern #{pattern}."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_searches_no_clicks, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
+        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_searches_no_results, must conform to the pattern #{pattern}."
       end
 
-      path = '/2/searches/noClicks'
-      query_params = opts[:query_params] || {}
+      path = '/2/searches/noResults'
+      query_params = {}
       query_params[:index] = index
-      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
-      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
-      query_params[:limit] = opts[:limit] unless opts[:limit].nil?
-      query_params[:offset] = opts[:offset] unless opts[:offset].nil?
-      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
-      header_params = opts[:header_params] || {}
+      query_params[:startDate] = start_date unless start_date.nil?
+      query_params[:endDate] = end_date unless end_date.nil?
+      query_params[:limit] = limit unless limit.nil?
+      query_params[:offset] = offset unless offset.nil?
+      query_params[:tags] = tags unless tags.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Analytics::GetSearchesNoClicksResponse'
-
-      new_options = opts.merge(
-        :operation => :'AnalyticsClient.get_searches_no_clicks',
+      new_options = request_options.merge(
+        :operation => :'AnalyticsClient.get_searches_no_results',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
@@ -703,65 +742,44 @@ module Algolia
 
     # Get top searches with no results.
     # Returns the most popular of the latest 1,000 searches that didn't return any results.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [Integer] :limit Number of records to return (page size). (default to 10)
-    # @option opts [Integer] :offset Position of the starting record. Used for paging. 0 is the first record. (default to 0)
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of records to return (page size). (default to 10)
+    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetSearchesNoResultsResponse]
-    def get_searches_no_results(index, opts = {})
-      data, _status_code, _headers = get_searches_no_results_with_http_info(index, opts)
-      data
+    def get_searches_no_results(index, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
+      response = get_searches_no_results_with_http_info(index, start_date, end_date, limit, offset, tags, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetSearchesNoResultsResponse')
     end
 
-    # Get top searches with no results.
-    # Returns the most popular of the latest 1,000 searches that didn&#39;t return any results.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [Integer] :limit Number of records to return (page size). (default to 10)
-    # @option opts [Integer] :offset Position of the starting record. Used for paging. 0 is the first record. (default to 0)
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [Array<(GetSearchesNoResultsResponse, Integer, Hash)>] GetSearchesNoResultsResponse data, response status code and response headers
-    def get_searches_no_results_with_http_info(index, opts = {})
+    # Get Analytics API status.
+    # Return the latest update time of the Analytics API for an index. If the index has been recently created or no search has been performed yet, &#x60;updatedAt&#x60; will be &#x60;null&#x60;. &gt; **Note**: The Analytics API is updated every 5&amp;nbsp;minutes.
+    # @param index [String] Index name to target. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_status_with_http_info(index, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_searches_no_results"
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_status"
       end
 
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_searches_no_results, must conform to the pattern #{pattern}."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_searches_no_results, must conform to the pattern #{pattern}."
-      end
-
-      path = '/2/searches/noResults'
-      query_params = opts[:query_params] || {}
+      path = '/2/status'
+      query_params = {}
       query_params[:index] = index
-      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
-      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
-      query_params[:limit] = opts[:limit] unless opts[:limit].nil?
-      query_params[:offset] = opts[:offset] unless opts[:offset].nil?
-      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
-      header_params = opts[:header_params] || {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Analytics::GetSearchesNoResultsResponse'
-
-      new_options = opts.merge(
-        :operation => :'AnalyticsClient.get_searches_no_results',
+      new_options = request_options.merge(
+        :operation => :'AnalyticsClient.get_status',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
@@ -770,213 +788,162 @@ module Algolia
 
     # Get Analytics API status.
     # Return the latest update time of the Analytics API for an index. If the index has been recently created or no search has been performed yet, `updatedAt` will be `null`. > **Note**: The Analytics API is updated every 5&nbsp;minutes.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
+    # @param index [String] Index name to target. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetStatusResponse]
-    def get_status(index, opts = {})
-      data, _status_code, _headers = get_status_with_http_info(index, opts)
-      data
-    end
-
-    # Get Analytics API status.
-    # Return the latest update time of the Analytics API for an index. If the index has been recently created or no search has been performed yet, &#x60;updatedAt&#x60; will be &#x60;null&#x60;. &gt; **Note**: The Analytics API is updated every 5&amp;nbsp;minutes.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(GetStatusResponse, Integer, Hash)>] GetStatusResponse data, response status code and response headers
-    def get_status_with_http_info(index, opts = {})
-      # verify the required parameter 'index' is set
-      if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_status"
-      end
-
-      path = '/2/status'
-      query_params = opts[:query_params] || {}
-      query_params[:index] = index
-      header_params = opts[:header_params] || {}
-
-      post_body = opts[:debug_body]
-
-      return_type = opts[:debug_return_type] || 'Analytics::GetStatusResponse'
-
-      new_options = opts.merge(
-        :operation => :'AnalyticsClient.get_status',
-        :header_params => header_params,
-        :query_params => query_params,
-        :body => post_body,
-        :return_type => return_type,
-        :use_read_transporter => false
-      )
-
-      @api_client.call_api(:GET, path, new_options)
+    def get_status(index, request_options = {})
+      response = get_status_with_http_info(index, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetStatusResponse')
     end
 
     # Get top countries.
     # Returns top countries. Limited to the 1,000 most frequent ones.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [Integer] :limit Number of records to return (page size). (default to 10)
-    # @option opts [Integer] :offset Position of the starting record. Used for paging. 0 is the first record. (default to 0)
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [GetTopCountriesResponse]
-    def get_top_countries(index, opts = {})
-      data, _status_code, _headers = get_top_countries_with_http_info(index, opts)
-      data
-    end
-
-    # Get top countries.
-    # Returns top countries. Limited to the 1,000 most frequent ones.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [Integer] :limit Number of records to return (page size). (default to 10)
-    # @option opts [Integer] :offset Position of the starting record. Used for paging. 0 is the first record. (default to 0)
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [Array<(GetTopCountriesResponse, Integer, Hash)>] GetTopCountriesResponse data, response status code and response headers
-    def get_top_countries_with_http_info(index, opts = {})
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of records to return (page size). (default to 10)
+    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_top_countries_with_http_info(index, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_countries"
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_top_countries, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
+        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_top_countries, must conform to the pattern #{pattern}."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_countries, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
+        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_top_countries, must conform to the pattern #{pattern}."
       end
 
       path = '/2/countries'
-      query_params = opts[:query_params] || {}
+      query_params = {}
       query_params[:index] = index
-      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
-      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
-      query_params[:limit] = opts[:limit] unless opts[:limit].nil?
-      query_params[:offset] = opts[:offset] unless opts[:offset].nil?
-      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
-      header_params = opts[:header_params] || {}
+      query_params[:startDate] = start_date unless start_date.nil?
+      query_params[:endDate] = end_date unless end_date.nil?
+      query_params[:limit] = limit unless limit.nil?
+      query_params[:offset] = offset unless offset.nil?
+      query_params[:tags] = tags unless tags.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Analytics::GetTopCountriesResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'AnalyticsClient.get_top_countries',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get top filterable attributes.
-    # Return the most popular [filterable attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in the 1,000 most recently used filters.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :search User query.
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [Integer] :limit Number of records to return (page size). (default to 10)
-    # @option opts [Integer] :offset Position of the starting record. Used for paging. 0 is the first record. (default to 0)
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [GetTopFilterAttributesResponse]
-    def get_top_filter_attributes(index, opts = {})
-      data, _status_code, _headers = get_top_filter_attributes_with_http_info(index, opts)
-      data
+    # Get top countries.
+    # Returns top countries. Limited to the 1,000 most frequent ones.
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of records to return (page size). (default to 10)
+    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [GetTopCountriesResponse]
+    def get_top_countries(index, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
+      response = get_top_countries_with_http_info(index, start_date, end_date, limit, offset, tags, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopCountriesResponse')
     end
 
     # Get top filterable attributes.
     # Return the most popular [filterable attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in the 1,000 most recently used filters.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :search User query.
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [Integer] :limit Number of records to return (page size). (default to 10)
-    # @option opts [Integer] :offset Position of the starting record. Used for paging. 0 is the first record. (default to 0)
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [Array<(GetTopFilterAttributesResponse, Integer, Hash)>] GetTopFilterAttributesResponse data, response status code and response headers
-    def get_top_filter_attributes_with_http_info(index, opts = {})
+    # @param index [String] Index name to target. (required)
+    # @param search [String] User query.
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of records to return (page size). (default to 10)
+    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_top_filter_attributes_with_http_info(index, search = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_filter_attributes"
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_top_filter_attributes, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
+        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_top_filter_attributes, must conform to the pattern #{pattern}."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_filter_attributes, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
+        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_top_filter_attributes, must conform to the pattern #{pattern}."
       end
 
       path = '/2/filters'
-      query_params = opts[:query_params] || {}
+      query_params = {}
       query_params[:index] = index
-      query_params[:search] = opts[:search] unless opts[:search].nil?
-      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
-      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
-      query_params[:limit] = opts[:limit] unless opts[:limit].nil?
-      query_params[:offset] = opts[:offset] unless opts[:offset].nil?
-      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
-      header_params = opts[:header_params] || {}
+      query_params[:search] = search unless search.nil?
+      query_params[:startDate] = start_date unless start_date.nil?
+      query_params[:endDate] = end_date unless end_date.nil?
+      query_params[:limit] = limit unless limit.nil?
+      query_params[:offset] = offset unless offset.nil?
+      query_params[:tags] = tags unless tags.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Analytics::GetTopFilterAttributesResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'AnalyticsClient.get_top_filter_attributes',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get top filter values for an attribute.
-    # Returns the most popular filter values for an attribute in the 1,000 most recently used filters.
-    # @param attribute [String] Attribute name.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :search User query.
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [Integer] :limit Number of records to return (page size). (default to 10)
-    # @option opts [Integer] :offset Position of the starting record. Used for paging. 0 is the first record. (default to 0)
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [GetTopFilterForAttributeResponse]
-    def get_top_filter_for_attribute(attribute, index, opts = {})
-      data, _status_code, _headers = get_top_filter_for_attribute_with_http_info(attribute, index, opts)
-      data
+    # Get top filterable attributes.
+    # Return the most popular [filterable attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in the 1,000 most recently used filters.
+    # @param index [String] Index name to target. (required)
+    # @param search [String] User query.
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of records to return (page size). (default to 10)
+    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [GetTopFilterAttributesResponse]
+    def get_top_filter_attributes(index, search = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
+      response = get_top_filter_attributes_with_http_info(index, search, start_date, end_date, limit, offset, tags, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopFilterAttributesResponse')
     end
 
     # Get top filter values for an attribute.
     # Returns the most popular filter values for an attribute in the 1,000 most recently used filters.
-    # @param attribute [String] Attribute name.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :search User query.
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [Integer] :limit Number of records to return (page size). (default to 10)
-    # @option opts [Integer] :offset Position of the starting record. Used for paging. 0 is the first record. (default to 0)
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [Array<(GetTopFilterForAttributeResponse, Integer, Hash)>] GetTopFilterForAttributeResponse data, response status code and response headers
-    def get_top_filter_for_attribute_with_http_info(attribute, index, opts = {})
+    # @param attribute [String] Attribute name. (required)
+    # @param index [String] Index name to target. (required)
+    # @param search [String] User query.
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of records to return (page size). (default to 10)
+    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_top_filter_for_attribute_with_http_info(attribute, index, search = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
       # verify the required parameter 'attribute' is set
       if @api_client.config.client_side_validation && attribute.nil?
         raise ArgumentError, "Missing the required parameter 'attribute' when calling AnalyticsClient.get_top_filter_for_attribute"
@@ -987,36 +954,105 @@ module Algolia
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_top_filter_for_attribute, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
+        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_top_filter_for_attribute, must conform to the pattern #{pattern}."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_filter_for_attribute, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
+        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_top_filter_for_attribute, must conform to the pattern #{pattern}."
       end
 
       path = '/2/filters/{attribute}'.sub('{' + 'attribute' + '}', CGI.escape(attribute.to_s))
-      query_params = opts[:query_params] || {}
+      query_params = {}
       query_params[:index] = index
-      query_params[:search] = opts[:search] unless opts[:search].nil?
-      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
-      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
-      query_params[:limit] = opts[:limit] unless opts[:limit].nil?
-      query_params[:offset] = opts[:offset] unless opts[:offset].nil?
-      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
-      header_params = opts[:header_params] || {}
+      query_params[:search] = search unless search.nil?
+      query_params[:startDate] = start_date unless start_date.nil?
+      query_params[:endDate] = end_date unless end_date.nil?
+      query_params[:limit] = limit unless limit.nil?
+      query_params[:offset] = offset unless offset.nil?
+      query_params[:tags] = tags unless tags.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Analytics::GetTopFilterForAttributeResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'AnalyticsClient.get_top_filter_for_attribute',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Get top filter values for an attribute.
+    # Returns the most popular filter values for an attribute in the 1,000 most recently used filters.
+    # @param attribute [String] Attribute name. (required)
+    # @param index [String] Index name to target. (required)
+    # @param search [String] User query.
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of records to return (page size). (default to 10)
+    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [GetTopFilterForAttributeResponse]
+    def get_top_filter_for_attribute(attribute, index, search = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
+      response = get_top_filter_for_attribute_with_http_info(attribute, index, search, start_date, end_date, limit, offset, tags, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopFilterForAttributeResponse')
+    end
+
+    # Get top filters for a no result search.
+    # Returns top filters for filter-enabled searches that don&#39;t return results. Limited to the 1,000 most recently used filters.
+    # @param index [String] Index name to target. (required)
+    # @param search [String] User query.
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of records to return (page size). (default to 10)
+    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_top_filters_no_results_with_http_info(index, search = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
+      # verify the required parameter 'index' is set
+      if @api_client.config.client_side_validation && index.nil?
+        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_filters_no_results"
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
+        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_top_filters_no_results, must conform to the pattern #{pattern}."
+      end
+
+      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
+        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_top_filters_no_results, must conform to the pattern #{pattern}."
+      end
+
+      path = '/2/filters/noResults'
+      query_params = {}
+      query_params[:index] = index
+      query_params[:search] = search unless search.nil?
+      query_params[:startDate] = start_date unless start_date.nil?
+      query_params[:endDate] = end_date unless end_date.nil?
+      query_params[:limit] = limit unless limit.nil?
+      query_params[:offset] = offset unless offset.nil?
+      query_params[:tags] = tags unless tags.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :'AnalyticsClient.get_top_filters_no_results',
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
         :use_read_transporter => false
       )
 
@@ -1025,282 +1061,227 @@ module Algolia
 
     # Get top filters for a no result search.
     # Returns top filters for filter-enabled searches that don't return results. Limited to the 1,000 most recently used filters.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :search User query.
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [Integer] :limit Number of records to return (page size). (default to 10)
-    # @option opts [Integer] :offset Position of the starting record. Used for paging. 0 is the first record. (default to 0)
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param index [String] Index name to target. (required)
+    # @param search [String] User query.
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of records to return (page size). (default to 10)
+    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopFiltersNoResultsResponse]
-    def get_top_filters_no_results(index, opts = {})
-      data, _status_code, _headers = get_top_filters_no_results_with_http_info(index, opts)
-      data
-    end
-
-    # Get top filters for a no result search.
-    # Returns top filters for filter-enabled searches that don&#39;t return results. Limited to the 1,000 most recently used filters.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :search User query.
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [Integer] :limit Number of records to return (page size). (default to 10)
-    # @option opts [Integer] :offset Position of the starting record. Used for paging. 0 is the first record. (default to 0)
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [Array<(GetTopFiltersNoResultsResponse, Integer, Hash)>] GetTopFiltersNoResultsResponse data, response status code and response headers
-    def get_top_filters_no_results_with_http_info(index, opts = {})
-      # verify the required parameter 'index' is set
-      if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_filters_no_results"
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_top_filters_no_results, must conform to the pattern #{pattern}."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_filters_no_results, must conform to the pattern #{pattern}."
-      end
-
-      path = '/2/filters/noResults'
-      query_params = opts[:query_params] || {}
-      query_params[:index] = index
-      query_params[:search] = opts[:search] unless opts[:search].nil?
-      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
-      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
-      query_params[:limit] = opts[:limit] unless opts[:limit].nil?
-      query_params[:offset] = opts[:offset] unless opts[:offset].nil?
-      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
-      header_params = opts[:header_params] || {}
-
-      post_body = opts[:debug_body]
-
-      return_type = opts[:debug_return_type] || 'Analytics::GetTopFiltersNoResultsResponse'
-
-      new_options = opts.merge(
-        :operation => :'AnalyticsClient.get_top_filters_no_results',
-        :header_params => header_params,
-        :query_params => query_params,
-        :body => post_body,
-        :return_type => return_type,
-        :use_read_transporter => false
-      )
-
-      @api_client.call_api(:GET, path, new_options)
+    def get_top_filters_no_results(index, search = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
+      response = get_top_filters_no_results_with_http_info(index, search, start_date, end_date, limit, offset, tags, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopFiltersNoResultsResponse')
     end
 
     # Get top hits.
     # Return the most popular clicked results in the last 1,000 searches.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :search User query.
-    # @option opts [Boolean] :click_analytics Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search. (default to false)
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [Integer] :limit Number of records to return (page size). (default to 10)
-    # @option opts [Integer] :offset Position of the starting record. Used for paging. 0 is the first record. (default to 0)
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [GetTopHitsResponse]
-    def get_top_hits(index, opts = {})
-      data, _status_code, _headers = get_top_hits_with_http_info(index, opts)
-      data
-    end
-
-    # Get top hits.
-    # Return the most popular clicked results in the last 1,000 searches.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :search User query.
-    # @option opts [Boolean] :click_analytics Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search. (default to false)
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [Integer] :limit Number of records to return (page size). (default to 10)
-    # @option opts [Integer] :offset Position of the starting record. Used for paging. 0 is the first record. (default to 0)
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [Array<(GetTopHitsResponse, Integer, Hash)>] GetTopHitsResponse data, response status code and response headers
-    def get_top_hits_with_http_info(index, opts = {})
+    # @param index [String] Index name to target. (required)
+    # @param search [String] User query.
+    # @param click_analytics [Boolean] Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search. (default to false)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of records to return (page size). (default to 10)
+    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_top_hits_with_http_info(index, search = nil, click_analytics = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_hits"
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_top_hits, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
+        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_top_hits, must conform to the pattern #{pattern}."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_hits, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
+        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_top_hits, must conform to the pattern #{pattern}."
       end
 
       path = '/2/hits'
-      query_params = opts[:query_params] || {}
+      query_params = {}
       query_params[:index] = index
-      query_params[:search] = opts[:search] unless opts[:search].nil?
-      query_params[:clickAnalytics] = opts[:click_analytics] unless opts[:click_analytics].nil?
-      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
-      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
-      query_params[:limit] = opts[:limit] unless opts[:limit].nil?
-      query_params[:offset] = opts[:offset] unless opts[:offset].nil?
-      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
-      header_params = opts[:header_params] || {}
+      query_params[:search] = search unless search.nil?
+      query_params[:clickAnalytics] = click_analytics unless click_analytics.nil?
+      query_params[:startDate] = start_date unless start_date.nil?
+      query_params[:endDate] = end_date unless end_date.nil?
+      query_params[:limit] = limit unless limit.nil?
+      query_params[:offset] = offset unless offset.nil?
+      query_params[:tags] = tags unless tags.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Analytics::GetTopHitsResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'AnalyticsClient.get_top_hits',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get top searches.
-    # Returns the most popular of the latest 1,000 searches. For each search, also returns the number of hits.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Boolean] :click_analytics Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search. (default to false)
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [OrderBy] :order_by Reorder the results. (default to 'searchCount')
-    # @option opts [Direction] :direction Sorting direction of the results: ascending or descending.  (default to 'asc')
-    # @option opts [Integer] :limit Number of records to return (page size). (default to 10)
-    # @option opts [Integer] :offset Position of the starting record. Used for paging. 0 is the first record. (default to 0)
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [GetTopSearchesResponse]
-    def get_top_searches(index, opts = {})
-      data, _status_code, _headers = get_top_searches_with_http_info(index, opts)
-      data
+    # Get top hits.
+    # Return the most popular clicked results in the last 1,000 searches.
+    # @param index [String] Index name to target. (required)
+    # @param search [String] User query.
+    # @param click_analytics [Boolean] Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search. (default to false)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of records to return (page size). (default to 10)
+    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [GetTopHitsResponse]
+    def get_top_hits(index, search = nil, click_analytics = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
+      response = get_top_hits_with_http_info(index, search, click_analytics, start_date, end_date, limit, offset, tags, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopHitsResponse')
     end
 
     # Get top searches.
     # Returns the most popular of the latest 1,000 searches. For each search, also returns the number of hits.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Boolean] :click_analytics Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search. (default to false)
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [OrderBy] :order_by Reorder the results. (default to 'searchCount')
-    # @option opts [Direction] :direction Sorting direction of the results: ascending or descending.  (default to 'asc')
-    # @option opts [Integer] :limit Number of records to return (page size). (default to 10)
-    # @option opts [Integer] :offset Position of the starting record. Used for paging. 0 is the first record. (default to 0)
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [Array<(GetTopSearchesResponse, Integer, Hash)>] GetTopSearchesResponse data, response status code and response headers
-    def get_top_searches_with_http_info(index, opts = {})
+    # @param index [String] Index name to target. (required)
+    # @param click_analytics [Boolean] Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search. (default to false)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param order_by [OrderBy] Reorder the results. (default to 'searchCount')
+    # @param direction [Direction] Sorting direction of the results: ascending or descending.  (default to 'asc')
+    # @param limit [Integer] Number of records to return (page size). (default to 10)
+    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_top_searches_with_http_info(index, click_analytics = nil, start_date = nil, end_date = nil, order_by = nil, direction = nil, limit = nil, offset = nil, tags = nil,
+                                        request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_searches"
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_top_searches, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
+        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_top_searches, must conform to the pattern #{pattern}."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_top_searches, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
+        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_top_searches, must conform to the pattern #{pattern}."
       end
 
       path = '/2/searches'
-      query_params = opts[:query_params] || {}
+      query_params = {}
       query_params[:index] = index
-      query_params[:clickAnalytics] = opts[:click_analytics] unless opts[:click_analytics].nil?
-      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
-      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
-      query_params[:orderBy] = opts[:order_by] unless opts[:order_by].nil?
-      query_params[:direction] = opts[:direction] unless opts[:direction].nil?
-      query_params[:limit] = opts[:limit] unless opts[:limit].nil?
-      query_params[:offset] = opts[:offset] unless opts[:offset].nil?
-      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
-      header_params = opts[:header_params] || {}
+      query_params[:clickAnalytics] = click_analytics unless click_analytics.nil?
+      query_params[:startDate] = start_date unless start_date.nil?
+      query_params[:endDate] = end_date unless end_date.nil?
+      query_params[:orderBy] = order_by unless order_by.nil?
+      query_params[:direction] = direction unless direction.nil?
+      query_params[:limit] = limit unless limit.nil?
+      query_params[:offset] = offset unless offset.nil?
+      query_params[:tags] = tags unless tags.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Analytics::GetTopSearchesResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'AnalyticsClient.get_top_searches',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get user count.
-    # Return the count of unique users.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [GetUsersCountResponse]
-    def get_users_count(index, opts = {})
-      data, _status_code, _headers = get_users_count_with_http_info(index, opts)
-      data
+    # Get top searches.
+    # Returns the most popular of the latest 1,000 searches. For each search, also returns the number of hits.
+    # @param index [String] Index name to target. (required)
+    # @param click_analytics [Boolean] Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search. (default to false)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param order_by [OrderBy] Reorder the results. (default to 'searchCount')
+    # @param direction [Direction] Sorting direction of the results: ascending or descending.  (default to 'asc')
+    # @param limit [Integer] Number of records to return (page size). (default to 10)
+    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [GetTopSearchesResponse]
+    def get_top_searches(index, click_analytics = nil, start_date = nil, end_date = nil, order_by = nil, direction = nil, limit = nil, offset = nil, tags = nil,
+                         request_options = {})
+      response = get_top_searches_with_http_info(index, click_analytics, start_date, end_date, order_by, direction, limit, offset, tags, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopSearchesResponse')
     end
 
     # Get user count.
     # Return the count of unique users.
-    # @param index [String] Index name to target.
-    # @param [Hash] opts the optional parameters
-    # @option opts [String] :start_date Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :end_date End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @option opts [String] :tags Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
-    # @return [Array<(GetUsersCountResponse, Integer, Hash)>] GetUsersCountResponse data, response status code and response headers
-    def get_users_count_with_http_info(index, opts = {})
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_users_count_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_users_count"
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:start_date].nil? && opts[:start_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"start_date\"]' when calling AnalyticsClient.get_users_count, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
+        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_users_count, must conform to the pattern #{pattern}."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !opts[:end_date].nil? && opts[:end_date] !~ pattern
-        raise ArgumentError, "invalid value for 'opts[:\"end_date\"]' when calling AnalyticsClient.get_users_count, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
+        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_users_count, must conform to the pattern #{pattern}."
       end
 
       path = '/2/users/count'
-      query_params = opts[:query_params] || {}
+      query_params = {}
       query_params[:index] = index
-      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
-      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
-      query_params[:tags] = opts[:tags] unless opts[:tags].nil?
-      header_params = opts[:header_params] || {}
+      query_params[:startDate] = start_date unless start_date.nil?
+      query_params[:endDate] = end_date unless end_date.nil?
+      query_params[:tags] = tags unless tags.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Analytics::GetUsersCountResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'AnalyticsClient.get_users_count',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Get user count.
+    # Return the count of unique users.
+    # @param index [String] Index name to target. (required)
+    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [GetUsersCountResponse]
+    def get_users_count(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
+      response = get_users_count_with_http_info(index, start_date, end_date, tags, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetUsersCountResponse')
     end
   end
 end

@@ -9,7 +9,7 @@ module Algolia
     # @option config [Configuration] Configuration for initializing the object, default to Configuration.default
     def initialize(config = Configuration.default)
       @config = config
-      @requester = Http::HttpRequester.new('net_http_persistent', LoggerHelper.create)
+      @requester = config.requester || Http::HttpRequester.new('net_http_persistent', LoggerHelper.create)
       @transporter = Transport::Transport.new(config, @requester)
     end
 
@@ -19,8 +19,7 @@ module Algolia
 
     # Call an API with given options.
     #
-    # @return [Array<(Object, Integer, Hash)>] an array of 3 elements:
-    #   the data deserialized from response body (could be nil), response status code and response headers.
+    # @return [Http::Response] the response.
     def call_api(http_method, path, opts = {})
       begin
         call_type = opts[:use_read_transporter] || http_method == 'GET' ? CallType::READ : CallType::WRITE
@@ -31,8 +30,7 @@ module Algolia
         raise ApiError, 'Connection failed'
       end
 
-      data = (deserialize(response.body, opts[:return_type]) if opts[:return_type])
-      [data, response.status, response.headers]
+      response
     end
 
     # Deserialize the response to the given return type.
@@ -102,7 +100,8 @@ module Algolia
     # @param [Object] model object to be converted into JSON string
     # @return [String] JSON string representation of the object
     def object_to_http_body(model)
-      return model if model.nil? || model.is_a?(String)
+      return '{}' if model.nil?
+      return model if model.is_a?(String)
 
       body = if model.is_a?(Array)
                model.map { |m| object_to_hash(m) }
@@ -116,7 +115,9 @@ module Algolia
     # @param [Object] obj object to be converted into JSON string
     # @return [String] JSON string representation of the object
     def object_to_hash(obj)
-      if obj.respond_to?(:to_hash)
+      if obj.is_a?(Hash)
+        obj.map { |k, v| [k, object_to_hash(v)] }.to_h
+      elsif obj.respond_to?(:to_hash)
         obj.to_hash
       else
         obj

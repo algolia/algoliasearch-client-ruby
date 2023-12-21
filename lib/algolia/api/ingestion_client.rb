@@ -28,206 +28,190 @@ module Algolia
 
     # Create a authentication.
     # Create a authentication.
-    # @param authentication_create [AuthenticationCreate]
-    # @param [Hash] opts the optional parameters
-    # @return [AuthenticationCreateResponse]
-    def create_authentication(authentication_create, opts = {})
-      data, _status_code, _headers = create_authentication_with_http_info(authentication_create, opts)
-      data
-    end
-
-    # Create a authentication.
-    # Create a authentication.
-    # @param authentication_create [AuthenticationCreate]
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(AuthenticationCreateResponse, Integer, Hash)>] AuthenticationCreateResponse data, response status code and response headers
-    def create_authentication_with_http_info(authentication_create, opts = {})
+    # @param authentication_create [AuthenticationCreate]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def create_authentication_with_http_info(authentication_create, request_options = {})
       # verify the required parameter 'authentication_create' is set
       if @api_client.config.client_side_validation && authentication_create.nil?
         raise ArgumentError, "Missing the required parameter 'authentication_create' when calling IngestionClient.create_authentication"
       end
 
       path = '/1/authentications'
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(authentication_create)
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(authentication_create)
 
-      return_type = opts[:debug_return_type] || 'Ingestion::AuthenticationCreateResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.create_authentication',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Create a destination.
-    # Create a destination.
-    # @param destination_create [DestinationCreate]
-    # @param [Hash] opts the optional parameters
-    # @return [DestinationCreateResponse]
-    def create_destination(destination_create, opts = {})
-      data, _status_code, _headers = create_destination_with_http_info(destination_create, opts)
-      data
+    # Create a authentication.
+    # Create a authentication.
+    # @param authentication_create [AuthenticationCreate]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [AuthenticationCreateResponse]
+    def create_authentication(authentication_create, request_options = {})
+      response = create_authentication_with_http_info(authentication_create, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::AuthenticationCreateResponse')
     end
 
     # Create a destination.
     # Create a destination.
-    # @param destination_create [DestinationCreate]
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(DestinationCreateResponse, Integer, Hash)>] DestinationCreateResponse data, response status code and response headers
-    def create_destination_with_http_info(destination_create, opts = {})
+    # @param destination_create [DestinationCreate]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def create_destination_with_http_info(destination_create, request_options = {})
       # verify the required parameter 'destination_create' is set
       if @api_client.config.client_side_validation && destination_create.nil?
         raise ArgumentError, "Missing the required parameter 'destination_create' when calling IngestionClient.create_destination"
       end
 
       path = '/1/destinations'
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(destination_create)
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(destination_create)
 
-      return_type = opts[:debug_return_type] || 'Ingestion::DestinationCreateResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.create_destination',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Create a source.
-    # Create a source.
-    # @param source_create [SourceCreate]
-    # @param [Hash] opts the optional parameters
-    # @return [SourceCreateResponse]
-    def create_source(source_create, opts = {})
-      data, _status_code, _headers = create_source_with_http_info(source_create, opts)
-      data
+    # Create a destination.
+    # Create a destination.
+    # @param destination_create [DestinationCreate]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [DestinationCreateResponse]
+    def create_destination(destination_create, request_options = {})
+      response = create_destination_with_http_info(destination_create, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DestinationCreateResponse')
     end
 
     # Create a source.
     # Create a source.
-    # @param source_create [SourceCreate]
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(SourceCreateResponse, Integer, Hash)>] SourceCreateResponse data, response status code and response headers
-    def create_source_with_http_info(source_create, opts = {})
+    # @param source_create [SourceCreate]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def create_source_with_http_info(source_create, request_options = {})
       # verify the required parameter 'source_create' is set
       if @api_client.config.client_side_validation && source_create.nil?
         raise ArgumentError, "Missing the required parameter 'source_create' when calling IngestionClient.create_source"
       end
 
       path = '/1/sources'
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(source_create)
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(source_create)
 
-      return_type = opts[:debug_return_type] || 'Ingestion::SourceCreateResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.create_source',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Create a task.
-    # Create a task.
-    # @param task_create [TaskCreate]
-    # @param [Hash] opts the optional parameters
-    # @return [TaskCreateResponse]
-    def create_task(task_create, opts = {})
-      data, _status_code, _headers = create_task_with_http_info(task_create, opts)
-      data
+    # Create a source.
+    # Create a source.
+    # @param source_create [SourceCreate]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [SourceCreateResponse]
+    def create_source(source_create, request_options = {})
+      response = create_source_with_http_info(source_create, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceCreateResponse')
     end
 
     # Create a task.
     # Create a task.
-    # @param task_create [TaskCreate]
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(TaskCreateResponse, Integer, Hash)>] TaskCreateResponse data, response status code and response headers
-    def create_task_with_http_info(task_create, opts = {})
+    # @param task_create [TaskCreate]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def create_task_with_http_info(task_create, request_options = {})
       # verify the required parameter 'task_create' is set
       if @api_client.config.client_side_validation && task_create.nil?
         raise ArgumentError, "Missing the required parameter 'task_create' when calling IngestionClient.create_task"
       end
 
       path = '/1/tasks'
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(task_create)
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(task_create)
 
-      return_type = opts[:debug_return_type] || 'Ingestion::TaskCreateResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.create_task',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Send requests to the Algolia REST API.
-    # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @return [Object]
-    def custom_delete(path, opts = {})
-      data, _status_code, _headers = custom_delete_with_http_info(path, opts)
-      data
+    # Create a task.
+    # Create a task.
+    # @param task_create [TaskCreate]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [TaskCreateResponse]
+    def create_task(task_create, request_options = {})
+      response = create_task_with_http_info(task_create, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskCreateResponse')
     end
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def custom_delete_with_http_info(path, opts = {})
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def custom_delete_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Missing the required parameter 'path' when calling IngestionClient.custom_delete"
       end
 
-      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-      query_params = opts[:query_params] || {}
-      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
-      header_params = opts[:header_params] || {}
+      path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
+      query_params = {}
+      query_params = query_params.merge(parameters) unless parameters.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::Object'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.custom_delete',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
@@ -236,42 +220,41 @@ module Algolia
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Object]
-    def custom_get(path, opts = {})
-      data, _status_code, _headers = custom_get_with_http_info(path, opts)
-      data
+    def custom_delete(path, parameters = nil, request_options = {})
+      response = custom_delete_with_http_info(path, parameters, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def custom_get_with_http_info(path, opts = {})
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def custom_get_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Missing the required parameter 'path' when calling IngestionClient.custom_get"
       end
 
-      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-      query_params = opts[:query_params] || {}
-      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
-      header_params = opts[:header_params] || {}
+      path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
+      query_params = {}
+      query_params = query_params.merge(parameters) unless parameters.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::Object'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.custom_get',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
@@ -280,44 +263,42 @@ module Algolia
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Object]
-    def custom_post(path, opts = {})
-      data, _status_code, _headers = custom_post_with_http_info(path, opts)
-      data
+    def custom_get(path, parameters = nil, request_options = {})
+      response = custom_get_with_http_info(path, parameters, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
-    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def custom_post_with_http_info(path, opts = {})
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param body [Object] Parameters to send with the custom request.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def custom_post_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Missing the required parameter 'path' when calling IngestionClient.custom_post"
       end
 
-      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-      query_params = opts[:query_params] || {}
-      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
-      header_params = opts[:header_params] || {}
+      path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
+      query_params = {}
+      query_params = query_params.merge(parameters) unless parameters.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:body])
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
-      return_type = opts[:debug_return_type] || 'Ingestion::Object'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.custom_post',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
@@ -326,541 +307,530 @@ module Algolia
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param body [Object] Parameters to send with the custom request.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Object]
-    def custom_put(path, opts = {})
-      data, _status_code, _headers = custom_put_with_http_info(path, opts)
-      data
+    def custom_post(path, parameters = nil, body = nil, request_options = {})
+      response = custom_post_with_http_info(path, parameters, body, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
-    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def custom_put_with_http_info(path, opts = {})
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param body [Object] Parameters to send with the custom request.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def custom_put_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Missing the required parameter 'path' when calling IngestionClient.custom_put"
       end
 
-      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-      query_params = opts[:query_params] || {}
-      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
-      header_params = opts[:header_params] || {}
+      path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
+      query_params = {}
+      query_params = query_params.merge(parameters) unless parameters.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:body])
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
-      return_type = opts[:debug_return_type] || 'Ingestion::Object'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.custom_put',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # Delete a authentication.
-    # Soft delete the authentication of the given authenticationID.
-    # @param authentication_id [String] The authentication UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [DeleteResponse]
-    def delete_authentication(authentication_id, opts = {})
-      data, _status_code, _headers = delete_authentication_with_http_info(authentication_id, opts)
-      data
+    # Send requests to the Algolia REST API.
+    # This method allow you to send requests to the Algolia REST API.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param body [Object] Parameters to send with the custom request.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Object]
+    def custom_put(path, parameters = nil, body = nil, request_options = {})
+      response = custom_put_with_http_info(path, parameters, body, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Delete a authentication.
     # Soft delete the authentication of the given authenticationID.
-    # @param authentication_id [String] The authentication UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(DeleteResponse, Integer, Hash)>] DeleteResponse data, response status code and response headers
-    def delete_authentication_with_http_info(authentication_id, opts = {})
+    # @param authentication_id [String] The authentication UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def delete_authentication_with_http_info(authentication_id, request_options = {})
       # verify the required parameter 'authentication_id' is set
       if @api_client.config.client_side_validation && authentication_id.nil?
         raise ArgumentError, "Missing the required parameter 'authentication_id' when calling IngestionClient.delete_authentication"
       end
 
       path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', CGI.escape(authentication_id.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::DeleteResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.delete_authentication',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Delete a destination.
-    # Soft delete the destination of the given destinationID.
-    # @param destination_id [String] The destination UUID.
-    # @param [Hash] opts the optional parameters
+    # Delete a authentication.
+    # Soft delete the authentication of the given authenticationID.
+    # @param authentication_id [String] The authentication UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeleteResponse]
-    def delete_destination(destination_id, opts = {})
-      data, _status_code, _headers = delete_destination_with_http_info(destination_id, opts)
-      data
+    def delete_authentication(authentication_id, request_options = {})
+      response = delete_authentication_with_http_info(authentication_id, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
     end
 
     # Delete a destination.
     # Soft delete the destination of the given destinationID.
-    # @param destination_id [String] The destination UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(DeleteResponse, Integer, Hash)>] DeleteResponse data, response status code and response headers
-    def delete_destination_with_http_info(destination_id, opts = {})
+    # @param destination_id [String] The destination UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def delete_destination_with_http_info(destination_id, request_options = {})
       # verify the required parameter 'destination_id' is set
       if @api_client.config.client_side_validation && destination_id.nil?
         raise ArgumentError, "Missing the required parameter 'destination_id' when calling IngestionClient.delete_destination"
       end
 
       path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', CGI.escape(destination_id.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::DeleteResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.delete_destination',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Delete a source.
-    # Soft delete the source of the given sourceID.
-    # @param source_id [String] The source UUID.
-    # @param [Hash] opts the optional parameters
+    # Delete a destination.
+    # Soft delete the destination of the given destinationID.
+    # @param destination_id [String] The destination UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeleteResponse]
-    def delete_source(source_id, opts = {})
-      data, _status_code, _headers = delete_source_with_http_info(source_id, opts)
-      data
+    def delete_destination(destination_id, request_options = {})
+      response = delete_destination_with_http_info(destination_id, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
     end
 
     # Delete a source.
     # Soft delete the source of the given sourceID.
-    # @param source_id [String] The source UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(DeleteResponse, Integer, Hash)>] DeleteResponse data, response status code and response headers
-    def delete_source_with_http_info(source_id, opts = {})
+    # @param source_id [String] The source UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def delete_source_with_http_info(source_id, request_options = {})
       # verify the required parameter 'source_id' is set
       if @api_client.config.client_side_validation && source_id.nil?
         raise ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.delete_source"
       end
 
       path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', CGI.escape(source_id.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::DeleteResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.delete_source',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Delete a task.
-    # Soft delete the task of the given taskID.
-    # @param task_id [String] The task UUID.
-    # @param [Hash] opts the optional parameters
+    # Delete a source.
+    # Soft delete the source of the given sourceID.
+    # @param source_id [String] The source UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeleteResponse]
-    def delete_task(task_id, opts = {})
-      data, _status_code, _headers = delete_task_with_http_info(task_id, opts)
-      data
+    def delete_source(source_id, request_options = {})
+      response = delete_source_with_http_info(source_id, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
     end
 
     # Delete a task.
     # Soft delete the task of the given taskID.
-    # @param task_id [String] The task UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(DeleteResponse, Integer, Hash)>] DeleteResponse data, response status code and response headers
-    def delete_task_with_http_info(task_id, opts = {})
+    # @param task_id [String] The task UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def delete_task_with_http_info(task_id, request_options = {})
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
         raise ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.delete_task"
       end
 
       path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::DeleteResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.delete_task',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Disable a task.
-    # Disable the task of the given taskID.
-    # @param task_id [String] The task UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [TaskUpdateResponse]
-    def disable_task(task_id, opts = {})
-      data, _status_code, _headers = disable_task_with_http_info(task_id, opts)
-      data
+    # Delete a task.
+    # Soft delete the task of the given taskID.
+    # @param task_id [String] The task UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [DeleteResponse]
+    def delete_task(task_id, request_options = {})
+      response = delete_task_with_http_info(task_id, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
     end
 
     # Disable a task.
     # Disable the task of the given taskID.
-    # @param task_id [String] The task UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(TaskUpdateResponse, Integer, Hash)>] TaskUpdateResponse data, response status code and response headers
-    def disable_task_with_http_info(task_id, opts = {})
+    # @param task_id [String] The task UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def disable_task_with_http_info(task_id, request_options = {})
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
         raise ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.disable_task"
       end
 
       path = '/1/tasks/{taskID}/disable'.sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::TaskUpdateResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.disable_task',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # Enable a task.
-    # Enable the task of the given taskID.
-    # @param task_id [String] The task UUID.
-    # @param [Hash] opts the optional parameters
+    # Disable a task.
+    # Disable the task of the given taskID.
+    # @param task_id [String] The task UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [TaskUpdateResponse]
-    def enable_task(task_id, opts = {})
-      data, _status_code, _headers = enable_task_with_http_info(task_id, opts)
-      data
+    def disable_task(task_id, request_options = {})
+      response = disable_task_with_http_info(task_id, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskUpdateResponse')
     end
 
     # Enable a task.
     # Enable the task of the given taskID.
-    # @param task_id [String] The task UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(TaskUpdateResponse, Integer, Hash)>] TaskUpdateResponse data, response status code and response headers
-    def enable_task_with_http_info(task_id, opts = {})
+    # @param task_id [String] The task UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def enable_task_with_http_info(task_id, request_options = {})
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
         raise ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.enable_task"
       end
 
       path = '/1/tasks/{taskID}/enable'.sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::TaskUpdateResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.enable_task',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # Get a authentication.
-    # Get the authentication of the given authenticationID.
-    # @param authentication_id [String] The authentication UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Authentication]
-    def get_authentication(authentication_id, opts = {})
-      data, _status_code, _headers = get_authentication_with_http_info(authentication_id, opts)
-      data
+    # Enable a task.
+    # Enable the task of the given taskID.
+    # @param task_id [String] The task UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [TaskUpdateResponse]
+    def enable_task(task_id, request_options = {})
+      response = enable_task_with_http_info(task_id, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskUpdateResponse')
     end
 
     # Get a authentication.
     # Get the authentication of the given authenticationID.
-    # @param authentication_id [String] The authentication UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(Authentication, Integer, Hash)>] Authentication data, response status code and response headers
-    def get_authentication_with_http_info(authentication_id, opts = {})
+    # @param authentication_id [String] The authentication UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_authentication_with_http_info(authentication_id, request_options = {})
       # verify the required parameter 'authentication_id' is set
       if @api_client.config.client_side_validation && authentication_id.nil?
         raise ArgumentError, "Missing the required parameter 'authentication_id' when calling IngestionClient.get_authentication"
       end
 
       path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', CGI.escape(authentication_id.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::Authentication'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.get_authentication',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a list of authentications.
-    # Get a list of authentications for the given query parameters, with pagination details.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :items_per_page The number of items per page to return.
-    # @option opts [Integer] :page The page number to fetch, starting at 1.
-    # @option opts [Array<AuthenticationType>] :type The type of the authentications to retrieve.
-    # @option opts [Array<PlatformWithNone>] :platform The platform of the authentications to retrieve.
-    # @option opts [AuthenticationSortKeys] :sort The key by which the list should be sorted.
-    # @option opts [OrderKeys] :order The order of the returned list.
-    # @return [ListAuthenticationsResponse]
-    def get_authentications(opts = {})
-      data, _status_code, _headers = get_authentications_with_http_info(opts)
-      data
+    # Get a authentication.
+    # Get the authentication of the given authenticationID.
+    # @param authentication_id [String] The authentication UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Authentication]
+    def get_authentication(authentication_id, request_options = {})
+      response = get_authentication_with_http_info(authentication_id, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Authentication')
     end
 
     # Get a list of authentications.
     # Get a list of authentications for the given query parameters, with pagination details.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :items_per_page The number of items per page to return.
-    # @option opts [Integer] :page The page number to fetch, starting at 1.
-    # @option opts [Array<AuthenticationType>] :type The type of the authentications to retrieve.
-    # @option opts [Array<PlatformWithNone>] :platform The platform of the authentications to retrieve.
-    # @option opts [AuthenticationSortKeys] :sort The key by which the list should be sorted.
-    # @option opts [OrderKeys] :order The order of the returned list.
-    # @return [Array<(ListAuthenticationsResponse, Integer, Hash)>] ListAuthenticationsResponse data, response status code and response headers
-    def get_authentications_with_http_info(opts = {})
+    # @param items_per_page [Integer] The number of items per page to return.
+    # @param page [Integer] The page number to fetch, starting at 1.
+    # @param type [Array<AuthenticationType>] The type of the authentications to retrieve.
+    # @param platform [Array<PlatformWithNone>] The platform of the authentications to retrieve.
+    # @param sort [AuthenticationSortKeys] The key by which the list should be sorted.
+    # @param order [OrderKeys] The order of the returned list.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_authentications_with_http_info(items_per_page = nil, page = nil, type = nil, platform = nil, sort = nil, order = nil, request_options = {})
       path = '/1/authentications'
-      query_params = opts[:query_params] || {}
-      query_params[:itemsPerPage] = opts[:items_per_page] unless opts[:items_per_page].nil?
-      query_params[:page] = opts[:page] unless opts[:page].nil?
-      query_params[:type] = @api_client.build_collection_param(opts[:type], :csv) unless opts[:type].nil?
-      query_params[:platform] = @api_client.build_collection_param(opts[:platform], :csv) unless opts[:platform].nil?
-      query_params[:sort] = opts[:sort] unless opts[:sort].nil?
-      query_params[:order] = opts[:order] unless opts[:order].nil?
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
+      query_params[:page] = page unless page.nil?
+      query_params[:type] = @api_client.build_collection_param(type, :csv) unless type.nil?
+      query_params[:platform] = @api_client.build_collection_param(platform, :csv) unless platform.nil?
+      query_params[:sort] = sort unless sort.nil?
+      query_params[:order] = order unless order.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::ListAuthenticationsResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.get_authentications',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a destination.
-    # Get the destination of the given destinationID.
-    # @param destination_id [String] The destination UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Destination]
-    def get_destination(destination_id, opts = {})
-      data, _status_code, _headers = get_destination_with_http_info(destination_id, opts)
-      data
+    # Get a list of authentications.
+    # Get a list of authentications for the given query parameters, with pagination details.
+    # @param items_per_page [Integer] The number of items per page to return.
+    # @param page [Integer] The page number to fetch, starting at 1.
+    # @param type [Array<AuthenticationType>] The type of the authentications to retrieve.
+    # @param platform [Array<PlatformWithNone>] The platform of the authentications to retrieve.
+    # @param sort [AuthenticationSortKeys] The key by which the list should be sorted.
+    # @param order [OrderKeys] The order of the returned list.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [ListAuthenticationsResponse]
+    def get_authentications(items_per_page = nil, page = nil, type = nil, platform = nil, sort = nil, order = nil, request_options = {})
+      response = get_authentications_with_http_info(items_per_page, page, type, platform, sort, order, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListAuthenticationsResponse')
     end
 
     # Get a destination.
     # Get the destination of the given destinationID.
-    # @param destination_id [String] The destination UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(Destination, Integer, Hash)>] Destination data, response status code and response headers
-    def get_destination_with_http_info(destination_id, opts = {})
+    # @param destination_id [String] The destination UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_destination_with_http_info(destination_id, request_options = {})
       # verify the required parameter 'destination_id' is set
       if @api_client.config.client_side_validation && destination_id.nil?
         raise ArgumentError, "Missing the required parameter 'destination_id' when calling IngestionClient.get_destination"
       end
 
       path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', CGI.escape(destination_id.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::Destination'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.get_destination',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a list of destinations.
-    # Get a list of destinations for the given query parameters, with pagination details.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :items_per_page The number of items per page to return.
-    # @option opts [Integer] :page The page number to fetch, starting at 1.
-    # @option opts [Array<DestinationType>] :type The type of the destinations to retrive.
-    # @option opts [Array<String>] :authentication_id The authenticationIDs of the destinations to retrive.
-    # @option opts [DestinationSortKeys] :sort The key by which the list should be sorted.
-    # @option opts [OrderKeys] :order The order of the returned list.
-    # @return [ListDestinationsResponse]
-    def get_destinations(opts = {})
-      data, _status_code, _headers = get_destinations_with_http_info(opts)
-      data
+    # Get a destination.
+    # Get the destination of the given destinationID.
+    # @param destination_id [String] The destination UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Destination]
+    def get_destination(destination_id, request_options = {})
+      response = get_destination_with_http_info(destination_id, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Destination')
     end
 
     # Get a list of destinations.
     # Get a list of destinations for the given query parameters, with pagination details.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :items_per_page The number of items per page to return.
-    # @option opts [Integer] :page The page number to fetch, starting at 1.
-    # @option opts [Array<DestinationType>] :type The type of the destinations to retrive.
-    # @option opts [Array<String>] :authentication_id The authenticationIDs of the destinations to retrive.
-    # @option opts [DestinationSortKeys] :sort The key by which the list should be sorted.
-    # @option opts [OrderKeys] :order The order of the returned list.
-    # @return [Array<(ListDestinationsResponse, Integer, Hash)>] ListDestinationsResponse data, response status code and response headers
-    def get_destinations_with_http_info(opts = {})
+    # @param items_per_page [Integer] The number of items per page to return.
+    # @param page [Integer] The page number to fetch, starting at 1.
+    # @param type [Array<DestinationType>] The type of the destinations to retrive.
+    # @param authentication_id [Array<String>] The authenticationIDs of the destinations to retrive.
+    # @param sort [DestinationSortKeys] The key by which the list should be sorted.
+    # @param order [OrderKeys] The order of the returned list.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_destinations_with_http_info(items_per_page = nil, page = nil, type = nil, authentication_id = nil, sort = nil, order = nil, request_options = {})
       path = '/1/destinations'
-      query_params = opts[:query_params] || {}
-      query_params[:itemsPerPage] = opts[:items_per_page] unless opts[:items_per_page].nil?
-      query_params[:page] = opts[:page] unless opts[:page].nil?
-      query_params[:type] = @api_client.build_collection_param(opts[:type], :csv) unless opts[:type].nil?
-      query_params[:authenticationID] = @api_client.build_collection_param(opts[:authentication_id], :csv) unless opts[:authentication_id].nil?
-      query_params[:sort] = opts[:sort] unless opts[:sort].nil?
-      query_params[:order] = opts[:order] unless opts[:order].nil?
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
+      query_params[:page] = page unless page.nil?
+      query_params[:type] = @api_client.build_collection_param(type, :csv) unless type.nil?
+      query_params[:authenticationID] = @api_client.build_collection_param(authentication_id, :csv) unless authentication_id.nil?
+      query_params[:sort] = sort unless sort.nil?
+      query_params[:order] = order unless order.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::ListDestinationsResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.get_destinations',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Retrieve a stream listing.
-    # Retrieve a stream listing for a given Singer specification compatible docker type source ID.
-    # @param source_id [String] The source UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [DockerSourceStreams]
-    def get_docker_source_streams(source_id, opts = {})
-      data, _status_code, _headers = get_docker_source_streams_with_http_info(source_id, opts)
-      data
+    # Get a list of destinations.
+    # Get a list of destinations for the given query parameters, with pagination details.
+    # @param items_per_page [Integer] The number of items per page to return.
+    # @param page [Integer] The page number to fetch, starting at 1.
+    # @param type [Array<DestinationType>] The type of the destinations to retrive.
+    # @param authentication_id [Array<String>] The authenticationIDs of the destinations to retrive.
+    # @param sort [DestinationSortKeys] The key by which the list should be sorted.
+    # @param order [OrderKeys] The order of the returned list.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [ListDestinationsResponse]
+    def get_destinations(items_per_page = nil, page = nil, type = nil, authentication_id = nil, sort = nil, order = nil, request_options = {})
+      response = get_destinations_with_http_info(items_per_page, page, type, authentication_id, sort, order, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListDestinationsResponse')
     end
 
     # Retrieve a stream listing.
     # Retrieve a stream listing for a given Singer specification compatible docker type source ID.
-    # @param source_id [String] The source UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(DockerSourceStreams, Integer, Hash)>] DockerSourceStreams data, response status code and response headers
-    def get_docker_source_streams_with_http_info(source_id, opts = {})
+    # @param source_id [String] The source UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_docker_source_streams_with_http_info(source_id, request_options = {})
       # verify the required parameter 'source_id' is set
       if @api_client.config.client_side_validation && source_id.nil?
         raise ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.get_docker_source_streams"
       end
 
       path = '/1/sources/{sourceID}/discover'.sub('{' + 'sourceID' + '}', CGI.escape(source_id.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::DockerSourceStreams'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.get_docker_source_streams',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get an event.
-    # Get a single event for a specific runID.
-    # @param run_id [String] The run UUID.
-    # @param event_id [String] The event UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Event]
-    def get_event(run_id, event_id, opts = {})
-      data, _status_code, _headers = get_event_with_http_info(run_id, event_id, opts)
-      data
+    # Retrieve a stream listing.
+    # Retrieve a stream listing for a given Singer specification compatible docker type source ID.
+    # @param source_id [String] The source UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [DockerSourceStreams]
+    def get_docker_source_streams(source_id, request_options = {})
+      response = get_docker_source_streams_with_http_info(source_id, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DockerSourceStreams')
     end
 
     # Get an event.
     # Get a single event for a specific runID.
-    # @param run_id [String] The run UUID.
-    # @param event_id [String] The event UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(Event, Integer, Hash)>] Event data, response status code and response headers
-    def get_event_with_http_info(run_id, event_id, opts = {})
+    # @param run_id [String] The run UUID. (required)
+    # @param event_id [String] The event UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_event_with_http_info(run_id, event_id, request_options = {})
       # verify the required parameter 'run_id' is set
       if @api_client.config.client_side_validation && run_id.nil?
         raise ArgumentError, "Missing the required parameter 'run_id' when calling IngestionClient.get_event"
@@ -871,648 +841,637 @@ module Algolia
       end
 
       path = '/1/runs/{runID}/events/{eventID}'.sub('{' + 'runID' + '}', CGI.escape(run_id.to_s)).sub('{' + 'eventID' + '}', CGI.escape(event_id.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::Event'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.get_event',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a list of events.
-    # Get a list of events associated to the given runID, for the given query parameters.
-    # @param run_id [String] The run UUID.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :items_per_page The number of items per page to return.
-    # @option opts [Integer] :page The page number to fetch, starting at 1.
-    # @option opts [Array<EventStatus>] :status Filter the status of the events.
-    # @option opts [Array<EventType>] :type Filter the type of the events.
-    # @option opts [EventSortKeys] :sort The key by which the list should be sorted.
-    # @option opts [OrderKeys] :order The order of the returned list.
-    # @option opts [String] :start_date The start date (in RFC3339 format) of the events fetching window. Defaults to &#39;now&#39;-3 hours if omitted.
-    # @option opts [String] :end_date The end date (in RFC3339 format) of the events fetching window. Defaults to &#39;now&#39; days if omitted.
-    # @return [ListEventsResponse]
-    def get_events(run_id, opts = {})
-      data, _status_code, _headers = get_events_with_http_info(run_id, opts)
-      data
+    # Get an event.
+    # Get a single event for a specific runID.
+    # @param run_id [String] The run UUID. (required)
+    # @param event_id [String] The event UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Event]
+    def get_event(run_id, event_id, request_options = {})
+      response = get_event_with_http_info(run_id, event_id, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Event')
     end
 
     # Get a list of events.
     # Get a list of events associated to the given runID, for the given query parameters.
-    # @param run_id [String] The run UUID.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :items_per_page The number of items per page to return.
-    # @option opts [Integer] :page The page number to fetch, starting at 1.
-    # @option opts [Array<EventStatus>] :status Filter the status of the events.
-    # @option opts [Array<EventType>] :type Filter the type of the events.
-    # @option opts [EventSortKeys] :sort The key by which the list should be sorted.
-    # @option opts [OrderKeys] :order The order of the returned list.
-    # @option opts [String] :start_date The start date (in RFC3339 format) of the events fetching window. Defaults to &#39;now&#39;-3 hours if omitted.
-    # @option opts [String] :end_date The end date (in RFC3339 format) of the events fetching window. Defaults to &#39;now&#39; days if omitted.
-    # @return [Array<(ListEventsResponse, Integer, Hash)>] ListEventsResponse data, response status code and response headers
-    def get_events_with_http_info(run_id, opts = {})
+    # @param run_id [String] The run UUID. (required)
+    # @param items_per_page [Integer] The number of items per page to return.
+    # @param page [Integer] The page number to fetch, starting at 1.
+    # @param status [Array<EventStatus>] Filter the status of the events.
+    # @param type [Array<EventType>] Filter the type of the events.
+    # @param sort [EventSortKeys] The key by which the list should be sorted.
+    # @param order [OrderKeys] The order of the returned list.
+    # @param start_date [String] The start date (in RFC3339 format) of the events fetching window. Defaults to &#39;now&#39;-3 hours if omitted.
+    # @param end_date [String] The end date (in RFC3339 format) of the events fetching window. Defaults to &#39;now&#39; days if omitted.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_events_with_http_info(run_id, items_per_page = nil, page = nil, status = nil, type = nil, sort = nil, order = nil, start_date = nil, end_date = nil,
+                                  request_options = {})
       # verify the required parameter 'run_id' is set
       if @api_client.config.client_side_validation && run_id.nil?
         raise ArgumentError, "Missing the required parameter 'run_id' when calling IngestionClient.get_events"
       end
 
       path = '/1/runs/{runID}/events'.sub('{' + 'runID' + '}', CGI.escape(run_id.to_s))
-      query_params = opts[:query_params] || {}
-      query_params[:itemsPerPage] = opts[:items_per_page] unless opts[:items_per_page].nil?
-      query_params[:page] = opts[:page] unless opts[:page].nil?
-      query_params[:status] = @api_client.build_collection_param(opts[:status], :multi) unless opts[:status].nil?
-      query_params[:type] = @api_client.build_collection_param(opts[:type], :multi) unless opts[:type].nil?
-      query_params[:sort] = opts[:sort] unless opts[:sort].nil?
-      query_params[:order] = opts[:order] unless opts[:order].nil?
-      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
-      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
+      query_params[:page] = page unless page.nil?
+      query_params[:status] = @api_client.build_collection_param(status, :multi) unless status.nil?
+      query_params[:type] = @api_client.build_collection_param(type, :multi) unless type.nil?
+      query_params[:sort] = sort unless sort.nil?
+      query_params[:order] = order unless order.nil?
+      query_params[:startDate] = start_date unless start_date.nil?
+      query_params[:endDate] = end_date unless end_date.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::ListEventsResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.get_events',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a run.
-    # Get a single run for the given ID.
-    # @param run_id [String] The run UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Run]
-    def get_run(run_id, opts = {})
-      data, _status_code, _headers = get_run_with_http_info(run_id, opts)
-      data
+    # Get a list of events.
+    # Get a list of events associated to the given runID, for the given query parameters.
+    # @param run_id [String] The run UUID. (required)
+    # @param items_per_page [Integer] The number of items per page to return.
+    # @param page [Integer] The page number to fetch, starting at 1.
+    # @param status [Array<EventStatus>] Filter the status of the events.
+    # @param type [Array<EventType>] Filter the type of the events.
+    # @param sort [EventSortKeys] The key by which the list should be sorted.
+    # @param order [OrderKeys] The order of the returned list.
+    # @param start_date [String] The start date (in RFC3339 format) of the events fetching window. Defaults to &#39;now&#39;-3 hours if omitted.
+    # @param end_date [String] The end date (in RFC3339 format) of the events fetching window. Defaults to &#39;now&#39; days if omitted.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [ListEventsResponse]
+    def get_events(run_id, items_per_page = nil, page = nil, status = nil, type = nil, sort = nil, order = nil, start_date = nil, end_date = nil, request_options = {})
+      response = get_events_with_http_info(run_id, items_per_page, page, status, type, sort, order, start_date, end_date, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListEventsResponse')
     end
 
     # Get a run.
     # Get a single run for the given ID.
-    # @param run_id [String] The run UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(Run, Integer, Hash)>] Run data, response status code and response headers
-    def get_run_with_http_info(run_id, opts = {})
+    # @param run_id [String] The run UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_run_with_http_info(run_id, request_options = {})
       # verify the required parameter 'run_id' is set
       if @api_client.config.client_side_validation && run_id.nil?
         raise ArgumentError, "Missing the required parameter 'run_id' when calling IngestionClient.get_run"
       end
 
       path = '/1/runs/{runID}'.sub('{' + 'runID' + '}', CGI.escape(run_id.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::Run'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.get_run',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a list of runs.
-    # Get a list of runs for the given query parameters, with pagination details.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :items_per_page The number of items per page to return.
-    # @option opts [Integer] :page The page number to fetch, starting at 1.
-    # @option opts [Array<RunStatus>] :status Filter the status of the runs.
-    # @option opts [String] :task_id Filter by taskID.
-    # @option opts [RunSortKeys] :sort The key by which the list should be sorted.
-    # @option opts [OrderKeys] :order The order of the returned list.
-    # @option opts [String] :start_date The start date (in RFC3339 format) of the runs fetching window. Defaults to &#39;now&#39;-7 days if omitted.
-    # @option opts [String] :end_date The end date (in RFC3339 format) of the runs fetching window. Defaults to &#39;now&#39; days if omitted.
-    # @return [RunListResponse]
-    def get_runs(opts = {})
-      data, _status_code, _headers = get_runs_with_http_info(opts)
-      data
+    # Get a run.
+    # Get a single run for the given ID.
+    # @param run_id [String] The run UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Run]
+    def get_run(run_id, request_options = {})
+      response = get_run_with_http_info(run_id, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Run')
     end
 
     # Get a list of runs.
     # Get a list of runs for the given query parameters, with pagination details.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :items_per_page The number of items per page to return.
-    # @option opts [Integer] :page The page number to fetch, starting at 1.
-    # @option opts [Array<RunStatus>] :status Filter the status of the runs.
-    # @option opts [String] :task_id Filter by taskID.
-    # @option opts [RunSortKeys] :sort The key by which the list should be sorted.
-    # @option opts [OrderKeys] :order The order of the returned list.
-    # @option opts [String] :start_date The start date (in RFC3339 format) of the runs fetching window. Defaults to &#39;now&#39;-7 days if omitted.
-    # @option opts [String] :end_date The end date (in RFC3339 format) of the runs fetching window. Defaults to &#39;now&#39; days if omitted.
-    # @return [Array<(RunListResponse, Integer, Hash)>] RunListResponse data, response status code and response headers
-    def get_runs_with_http_info(opts = {})
+    # @param items_per_page [Integer] The number of items per page to return.
+    # @param page [Integer] The page number to fetch, starting at 1.
+    # @param status [Array<RunStatus>] Filter the status of the runs.
+    # @param task_id [String] Filter by taskID.
+    # @param sort [RunSortKeys] The key by which the list should be sorted.
+    # @param order [OrderKeys] The order of the returned list.
+    # @param start_date [String] The start date (in RFC3339 format) of the runs fetching window. Defaults to &#39;now&#39;-7 days if omitted.
+    # @param end_date [String] The end date (in RFC3339 format) of the runs fetching window. Defaults to &#39;now&#39; days if omitted.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_runs_with_http_info(items_per_page = nil, page = nil, status = nil, task_id = nil, sort = nil, order = nil, start_date = nil, end_date = nil, request_options = {})
       path = '/1/runs'
-      query_params = opts[:query_params] || {}
-      query_params[:itemsPerPage] = opts[:items_per_page] unless opts[:items_per_page].nil?
-      query_params[:page] = opts[:page] unless opts[:page].nil?
-      query_params[:status] = @api_client.build_collection_param(opts[:status], :multi) unless opts[:status].nil?
-      query_params[:taskID] = opts[:task_id] unless opts[:task_id].nil?
-      query_params[:sort] = opts[:sort] unless opts[:sort].nil?
-      query_params[:order] = opts[:order] unless opts[:order].nil?
-      query_params[:startDate] = opts[:start_date] unless opts[:start_date].nil?
-      query_params[:endDate] = opts[:end_date] unless opts[:end_date].nil?
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
+      query_params[:page] = page unless page.nil?
+      query_params[:status] = @api_client.build_collection_param(status, :multi) unless status.nil?
+      query_params[:taskID] = task_id unless task_id.nil?
+      query_params[:sort] = sort unless sort.nil?
+      query_params[:order] = order unless order.nil?
+      query_params[:startDate] = start_date unless start_date.nil?
+      query_params[:endDate] = end_date unless end_date.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::RunListResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.get_runs',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a source.
-    # Get the source of the given sourceID.
-    # @param source_id [String] The source UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Source]
-    def get_source(source_id, opts = {})
-      data, _status_code, _headers = get_source_with_http_info(source_id, opts)
-      data
+    # Get a list of runs.
+    # Get a list of runs for the given query parameters, with pagination details.
+    # @param items_per_page [Integer] The number of items per page to return.
+    # @param page [Integer] The page number to fetch, starting at 1.
+    # @param status [Array<RunStatus>] Filter the status of the runs.
+    # @param task_id [String] Filter by taskID.
+    # @param sort [RunSortKeys] The key by which the list should be sorted.
+    # @param order [OrderKeys] The order of the returned list.
+    # @param start_date [String] The start date (in RFC3339 format) of the runs fetching window. Defaults to &#39;now&#39;-7 days if omitted.
+    # @param end_date [String] The end date (in RFC3339 format) of the runs fetching window. Defaults to &#39;now&#39; days if omitted.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [RunListResponse]
+    def get_runs(items_per_page = nil, page = nil, status = nil, task_id = nil, sort = nil, order = nil, start_date = nil, end_date = nil, request_options = {})
+      response = get_runs_with_http_info(items_per_page, page, status, task_id, sort, order, start_date, end_date, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::RunListResponse')
     end
 
     # Get a source.
     # Get the source of the given sourceID.
-    # @param source_id [String] The source UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(Source, Integer, Hash)>] Source data, response status code and response headers
-    def get_source_with_http_info(source_id, opts = {})
+    # @param source_id [String] The source UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_source_with_http_info(source_id, request_options = {})
       # verify the required parameter 'source_id' is set
       if @api_client.config.client_side_validation && source_id.nil?
         raise ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.get_source"
       end
 
       path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', CGI.escape(source_id.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::Source'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.get_source',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a list of sources.
-    # Get a list of sources for the given query parameters, with pagination details.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :items_per_page The number of items per page to return.
-    # @option opts [Integer] :page The page number to fetch, starting at 1.
-    # @option opts [Array<SourceType>] :type The type of the sources to retrieve.
-    # @option opts [Array<String>] :authentication_id The authenticationIDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication.
-    # @option opts [SourceSortKeys] :sort The key by which the list should be sorted.
-    # @option opts [OrderKeys] :order The order of the returned list.
-    # @return [ListSourcesResponse]
-    def get_sources(opts = {})
-      data, _status_code, _headers = get_sources_with_http_info(opts)
-      data
+    # Get a source.
+    # Get the source of the given sourceID.
+    # @param source_id [String] The source UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Source]
+    def get_source(source_id, request_options = {})
+      response = get_source_with_http_info(source_id, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Source')
     end
 
     # Get a list of sources.
     # Get a list of sources for the given query parameters, with pagination details.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :items_per_page The number of items per page to return.
-    # @option opts [Integer] :page The page number to fetch, starting at 1.
-    # @option opts [Array<SourceType>] :type The type of the sources to retrieve.
-    # @option opts [Array<String>] :authentication_id The authenticationIDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication.
-    # @option opts [SourceSortKeys] :sort The key by which the list should be sorted.
-    # @option opts [OrderKeys] :order The order of the returned list.
-    # @return [Array<(ListSourcesResponse, Integer, Hash)>] ListSourcesResponse data, response status code and response headers
-    def get_sources_with_http_info(opts = {})
+    # @param items_per_page [Integer] The number of items per page to return.
+    # @param page [Integer] The page number to fetch, starting at 1.
+    # @param type [Array<SourceType>] The type of the sources to retrieve.
+    # @param authentication_id [Array<String>] The authenticationIDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication.
+    # @param sort [SourceSortKeys] The key by which the list should be sorted.
+    # @param order [OrderKeys] The order of the returned list.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_sources_with_http_info(items_per_page = nil, page = nil, type = nil, authentication_id = nil, sort = nil, order = nil, request_options = {})
       path = '/1/sources'
-      query_params = opts[:query_params] || {}
-      query_params[:itemsPerPage] = opts[:items_per_page] unless opts[:items_per_page].nil?
-      query_params[:page] = opts[:page] unless opts[:page].nil?
-      query_params[:type] = @api_client.build_collection_param(opts[:type], :csv) unless opts[:type].nil?
-      query_params[:authenticationID] = @api_client.build_collection_param(opts[:authentication_id], :csv) unless opts[:authentication_id].nil?
-      query_params[:sort] = opts[:sort] unless opts[:sort].nil?
-      query_params[:order] = opts[:order] unless opts[:order].nil?
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
+      query_params[:page] = page unless page.nil?
+      query_params[:type] = @api_client.build_collection_param(type, :csv) unless type.nil?
+      query_params[:authenticationID] = @api_client.build_collection_param(authentication_id, :csv) unless authentication_id.nil?
+      query_params[:sort] = sort unless sort.nil?
+      query_params[:order] = order unless order.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::ListSourcesResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.get_sources',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a task.
-    # Get the task of the given taskID.
-    # @param task_id [String] The task UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Task]
-    def get_task(task_id, opts = {})
-      data, _status_code, _headers = get_task_with_http_info(task_id, opts)
-      data
+    # Get a list of sources.
+    # Get a list of sources for the given query parameters, with pagination details.
+    # @param items_per_page [Integer] The number of items per page to return.
+    # @param page [Integer] The page number to fetch, starting at 1.
+    # @param type [Array<SourceType>] The type of the sources to retrieve.
+    # @param authentication_id [Array<String>] The authenticationIDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication.
+    # @param sort [SourceSortKeys] The key by which the list should be sorted.
+    # @param order [OrderKeys] The order of the returned list.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [ListSourcesResponse]
+    def get_sources(items_per_page = nil, page = nil, type = nil, authentication_id = nil, sort = nil, order = nil, request_options = {})
+      response = get_sources_with_http_info(items_per_page, page, type, authentication_id, sort, order, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListSourcesResponse')
     end
 
     # Get a task.
     # Get the task of the given taskID.
-    # @param task_id [String] The task UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(Task, Integer, Hash)>] Task data, response status code and response headers
-    def get_task_with_http_info(task_id, opts = {})
+    # @param task_id [String] The task UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_task_with_http_info(task_id, request_options = {})
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
         raise ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.get_task"
       end
 
       path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::Task'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.get_task',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a list of tasks.
-    # Get a list of tasks for the given query parameters, with pagination details.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :items_per_page The number of items per page to return.
-    # @option opts [Integer] :page The page number to fetch, starting at 1.
-    # @option opts [Array<ActionType>] :action The action of the tasks to retrieve.
-    # @option opts [Boolean] :enabled Whether the task is enabled or not.
-    # @option opts [Array<String>] :source_id The sourceIDs of the tasks to retrive.
-    # @option opts [Array<String>] :destination_id The destinationIDs of the tasks to retrive.
-    # @option opts [Array<TriggerType>] :trigger_type The trigger type of the task.
-    # @option opts [TaskSortKeys] :sort The key by which the list should be sorted.
-    # @option opts [OrderKeys] :order The order of the returned list.
-    # @return [ListTasksResponse]
-    def get_tasks(opts = {})
-      data, _status_code, _headers = get_tasks_with_http_info(opts)
-      data
+    # Get a task.
+    # Get the task of the given taskID.
+    # @param task_id [String] The task UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Task]
+    def get_task(task_id, request_options = {})
+      response = get_task_with_http_info(task_id, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Task')
     end
 
     # Get a list of tasks.
     # Get a list of tasks for the given query parameters, with pagination details.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Integer] :items_per_page The number of items per page to return.
-    # @option opts [Integer] :page The page number to fetch, starting at 1.
-    # @option opts [Array<ActionType>] :action The action of the tasks to retrieve.
-    # @option opts [Boolean] :enabled Whether the task is enabled or not.
-    # @option opts [Array<String>] :source_id The sourceIDs of the tasks to retrive.
-    # @option opts [Array<String>] :destination_id The destinationIDs of the tasks to retrive.
-    # @option opts [Array<TriggerType>] :trigger_type The trigger type of the task.
-    # @option opts [TaskSortKeys] :sort The key by which the list should be sorted.
-    # @option opts [OrderKeys] :order The order of the returned list.
-    # @return [Array<(ListTasksResponse, Integer, Hash)>] ListTasksResponse data, response status code and response headers
-    def get_tasks_with_http_info(opts = {})
+    # @param items_per_page [Integer] The number of items per page to return.
+    # @param page [Integer] The page number to fetch, starting at 1.
+    # @param action [Array<ActionType>] The action of the tasks to retrieve.
+    # @param enabled [Boolean] Whether the task is enabled or not.
+    # @param source_id [Array<String>] The sourceIDs of the tasks to retrive.
+    # @param destination_id [Array<String>] The destinationIDs of the tasks to retrive.
+    # @param trigger_type [Array<TriggerType>] The trigger type of the task.
+    # @param sort [TaskSortKeys] The key by which the list should be sorted.
+    # @param order [OrderKeys] The order of the returned list.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_tasks_with_http_info(items_per_page = nil, page = nil, action = nil, enabled = nil, source_id = nil, destination_id = nil, trigger_type = nil, sort = nil, order = nil,
+                                 request_options = {})
       path = '/1/tasks'
-      query_params = opts[:query_params] || {}
-      query_params[:itemsPerPage] = opts[:items_per_page] unless opts[:items_per_page].nil?
-      query_params[:page] = opts[:page] unless opts[:page].nil?
-      query_params[:action] = @api_client.build_collection_param(opts[:action], :csv) unless opts[:action].nil?
-      query_params[:enabled] = opts[:enabled] unless opts[:enabled].nil?
-      query_params[:sourceID] = @api_client.build_collection_param(opts[:source_id], :csv) unless opts[:source_id].nil?
-      query_params[:destinationID] = @api_client.build_collection_param(opts[:destination_id], :csv) unless opts[:destination_id].nil?
-      query_params[:triggerType] = @api_client.build_collection_param(opts[:trigger_type], :csv) unless opts[:trigger_type].nil?
-      query_params[:sort] = opts[:sort] unless opts[:sort].nil?
-      query_params[:order] = opts[:order] unless opts[:order].nil?
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
+      query_params[:page] = page unless page.nil?
+      query_params[:action] = @api_client.build_collection_param(action, :csv) unless action.nil?
+      query_params[:enabled] = enabled unless enabled.nil?
+      query_params[:sourceID] = @api_client.build_collection_param(source_id, :csv) unless source_id.nil?
+      query_params[:destinationID] = @api_client.build_collection_param(destination_id, :csv) unless destination_id.nil?
+      query_params[:triggerType] = @api_client.build_collection_param(trigger_type, :csv) unless trigger_type.nil?
+      query_params[:sort] = sort unless sort.nil?
+      query_params[:order] = order unless order.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::ListTasksResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.get_tasks',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Run a task.
-    # Run the task of the given taskID.
-    # @param task_id [String] The task UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [RunResponse]
-    def run_task(task_id, opts = {})
-      data, _status_code, _headers = run_task_with_http_info(task_id, opts)
-      data
+    # Get a list of tasks.
+    # Get a list of tasks for the given query parameters, with pagination details.
+    # @param items_per_page [Integer] The number of items per page to return.
+    # @param page [Integer] The page number to fetch, starting at 1.
+    # @param action [Array<ActionType>] The action of the tasks to retrieve.
+    # @param enabled [Boolean] Whether the task is enabled or not.
+    # @param source_id [Array<String>] The sourceIDs of the tasks to retrive.
+    # @param destination_id [Array<String>] The destinationIDs of the tasks to retrive.
+    # @param trigger_type [Array<TriggerType>] The trigger type of the task.
+    # @param sort [TaskSortKeys] The key by which the list should be sorted.
+    # @param order [OrderKeys] The order of the returned list.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [ListTasksResponse]
+    def get_tasks(items_per_page = nil, page = nil, action = nil, enabled = nil, source_id = nil, destination_id = nil, trigger_type = nil, sort = nil, order = nil,
+                  request_options = {})
+      response = get_tasks_with_http_info(items_per_page, page, action, enabled, source_id, destination_id, trigger_type, sort, order, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListTasksResponse')
     end
 
     # Run a task.
     # Run the task of the given taskID.
-    # @param task_id [String] The task UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(RunResponse, Integer, Hash)>] RunResponse data, response status code and response headers
-    def run_task_with_http_info(task_id, opts = {})
+    # @param task_id [String] The task UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def run_task_with_http_info(task_id, request_options = {})
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
         raise ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.run_task"
       end
 
       path = '/1/tasks/{taskID}/run'.sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::RunResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.run_task',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Search among authentications.
-    # Search among authentications with a defined set of parameters.
-    # @param authentication_search [AuthenticationSearch]
-    # @param [Hash] opts the optional parameters
-    # @return [Array<Authentication>]
-    def search_authentications(authentication_search, opts = {})
-      data, _status_code, _headers = search_authentications_with_http_info(authentication_search, opts)
-      data
+    # Run a task.
+    # Run the task of the given taskID.
+    # @param task_id [String] The task UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [RunResponse]
+    def run_task(task_id, request_options = {})
+      response = run_task_with_http_info(task_id, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::RunResponse')
     end
 
     # Search among authentications.
     # Search among authentications with a defined set of parameters.
-    # @param authentication_search [AuthenticationSearch]
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(Array<Authentication>, Integer, Hash)>] Array<Authentication> data, response status code and response headers
-    def search_authentications_with_http_info(authentication_search, opts = {})
+    # @param authentication_search [AuthenticationSearch]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def search_authentications_with_http_info(authentication_search, request_options = {})
       # verify the required parameter 'authentication_search' is set
       if @api_client.config.client_side_validation && authentication_search.nil?
         raise ArgumentError, "Missing the required parameter 'authentication_search' when calling IngestionClient.search_authentications"
       end
 
       path = '/1/authentications/search'
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(authentication_search)
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(authentication_search)
 
-      return_type = opts[:debug_return_type] || 'Ingestion::Array<Authentication>'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.search_authentications',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Search among destinations.
-    # Search among destinations with a defined set of parameters.
-    # @param destination_search [DestinationSearch]
-    # @param [Hash] opts the optional parameters
-    # @return [Array<Destination>]
-    def search_destinations(destination_search, opts = {})
-      data, _status_code, _headers = search_destinations_with_http_info(destination_search, opts)
-      data
+    # Search among authentications.
+    # Search among authentications with a defined set of parameters.
+    # @param authentication_search [AuthenticationSearch]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Array<Authentication>]
+    def search_authentications(authentication_search, request_options = {})
+      response = search_authentications_with_http_info(authentication_search, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Authentication>')
     end
 
     # Search among destinations.
     # Search among destinations with a defined set of parameters.
-    # @param destination_search [DestinationSearch]
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(Array<Destination>, Integer, Hash)>] Array<Destination> data, response status code and response headers
-    def search_destinations_with_http_info(destination_search, opts = {})
+    # @param destination_search [DestinationSearch]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def search_destinations_with_http_info(destination_search, request_options = {})
       # verify the required parameter 'destination_search' is set
       if @api_client.config.client_side_validation && destination_search.nil?
         raise ArgumentError, "Missing the required parameter 'destination_search' when calling IngestionClient.search_destinations"
       end
 
       path = '/1/destinations/search'
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(destination_search)
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(destination_search)
 
-      return_type = opts[:debug_return_type] || 'Ingestion::Array<Destination>'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.search_destinations',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Search among sources.
-    # Search among sources with a defined set of parameters.
-    # @param source_search [SourceSearch]
-    # @param [Hash] opts the optional parameters
-    # @return [Array<Source>]
-    def search_sources(source_search, opts = {})
-      data, _status_code, _headers = search_sources_with_http_info(source_search, opts)
-      data
+    # Search among destinations.
+    # Search among destinations with a defined set of parameters.
+    # @param destination_search [DestinationSearch]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Array<Destination>]
+    def search_destinations(destination_search, request_options = {})
+      response = search_destinations_with_http_info(destination_search, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Destination>')
     end
 
     # Search among sources.
     # Search among sources with a defined set of parameters.
-    # @param source_search [SourceSearch]
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(Array<Source>, Integer, Hash)>] Array<Source> data, response status code and response headers
-    def search_sources_with_http_info(source_search, opts = {})
+    # @param source_search [SourceSearch]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def search_sources_with_http_info(source_search, request_options = {})
       # verify the required parameter 'source_search' is set
       if @api_client.config.client_side_validation && source_search.nil?
         raise ArgumentError, "Missing the required parameter 'source_search' when calling IngestionClient.search_sources"
       end
 
       path = '/1/sources/search'
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(source_search)
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(source_search)
 
-      return_type = opts[:debug_return_type] || 'Ingestion::Array<Source>'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.search_sources',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Search among tasks.
-    # Search among tasks with a defined set of parameters.
-    # @param task_search [TaskSearch]
-    # @param [Hash] opts the optional parameters
-    # @return [Array<Task>]
-    def search_tasks(task_search, opts = {})
-      data, _status_code, _headers = search_tasks_with_http_info(task_search, opts)
-      data
+    # Search among sources.
+    # Search among sources with a defined set of parameters.
+    # @param source_search [SourceSearch]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Array<Source>]
+    def search_sources(source_search, request_options = {})
+      response = search_sources_with_http_info(source_search, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Source>')
     end
 
     # Search among tasks.
     # Search among tasks with a defined set of parameters.
-    # @param task_search [TaskSearch]
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(Array<Task>, Integer, Hash)>] Array<Task> data, response status code and response headers
-    def search_tasks_with_http_info(task_search, opts = {})
+    # @param task_search [TaskSearch]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def search_tasks_with_http_info(task_search, request_options = {})
       # verify the required parameter 'task_search' is set
       if @api_client.config.client_side_validation && task_search.nil?
         raise ArgumentError, "Missing the required parameter 'task_search' when calling IngestionClient.search_tasks"
       end
 
       path = '/1/tasks/search'
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(task_search)
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(task_search)
 
-      return_type = opts[:debug_return_type] || 'Ingestion::Array<Task>'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.search_tasks',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Trigger a stream listing request.
-    # Trigger a stream listing request for a Singer specification compatible docker type source.
-    # @param source_id [String] The source UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [DockerSourceDiscover]
-    def trigger_docker_source_discover(source_id, opts = {})
-      data, _status_code, _headers = trigger_docker_source_discover_with_http_info(source_id, opts)
-      data
+    # Search among tasks.
+    # Search among tasks with a defined set of parameters.
+    # @param task_search [TaskSearch]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Array<Task>]
+    def search_tasks(task_search, request_options = {})
+      response = search_tasks_with_http_info(task_search, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Task>')
     end
 
     # Trigger a stream listing request.
     # Trigger a stream listing request for a Singer specification compatible docker type source.
-    # @param source_id [String] The source UUID.
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(DockerSourceDiscover, Integer, Hash)>] DockerSourceDiscover data, response status code and response headers
-    def trigger_docker_source_discover_with_http_info(source_id, opts = {})
+    # @param source_id [String] The source UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def trigger_docker_source_discover_with_http_info(source_id, request_options = {})
       # verify the required parameter 'source_id' is set
       if @api_client.config.client_side_validation && source_id.nil?
         raise ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.trigger_docker_source_discover"
       end
 
       path = '/1/sources/{sourceID}/discover'.sub('{' + 'sourceID' + '}', CGI.escape(source_id.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Ingestion::DockerSourceDiscover'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.trigger_docker_source_discover',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Update a authentication.
-    # Update the authentication of the given authenticationID.
-    # @param authentication_id [String] The authentication UUID.
-    # @param authentication_update [AuthenticationUpdate]
-    # @param [Hash] opts the optional parameters
-    # @return [AuthenticationUpdateResponse]
-    def update_authentication(authentication_id, authentication_update, opts = {})
-      data, _status_code, _headers = update_authentication_with_http_info(authentication_id, authentication_update, opts)
-      data
+    # Trigger a stream listing request.
+    # Trigger a stream listing request for a Singer specification compatible docker type source.
+    # @param source_id [String] The source UUID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [DockerSourceDiscover]
+    def trigger_docker_source_discover(source_id, request_options = {})
+      response = trigger_docker_source_discover_with_http_info(source_id, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DockerSourceDiscover')
     end
 
     # Update a authentication.
     # Update the authentication of the given authenticationID.
-    # @param authentication_id [String] The authentication UUID.
-    # @param authentication_update [AuthenticationUpdate]
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(AuthenticationUpdateResponse, Integer, Hash)>] AuthenticationUpdateResponse data, response status code and response headers
-    def update_authentication_with_http_info(authentication_id, authentication_update, opts = {})
+    # @param authentication_id [String] The authentication UUID. (required)
+    # @param authentication_update [AuthenticationUpdate]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def update_authentication_with_http_info(authentication_id, authentication_update, request_options = {})
       # verify the required parameter 'authentication_id' is set
       if @api_client.config.client_side_validation && authentication_id.nil?
         raise ArgumentError, "Missing the required parameter 'authentication_id' when calling IngestionClient.update_authentication"
@@ -1523,43 +1482,42 @@ module Algolia
       end
 
       path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', CGI.escape(authentication_id.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(authentication_update)
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(authentication_update)
 
-      return_type = opts[:debug_return_type] || 'Ingestion::AuthenticationUpdateResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.update_authentication',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:PATCH, path, new_options)
     end
 
-    # Update a destination.
-    # Update the destination of the given destinationID.
-    # @param destination_id [String] The destination UUID.
-    # @param destination_update [DestinationUpdate]
-    # @param [Hash] opts the optional parameters
-    # @return [DestinationUpdateResponse]
-    def update_destination(destination_id, destination_update, opts = {})
-      data, _status_code, _headers = update_destination_with_http_info(destination_id, destination_update, opts)
-      data
+    # Update a authentication.
+    # Update the authentication of the given authenticationID.
+    # @param authentication_id [String] The authentication UUID. (required)
+    # @param authentication_update [AuthenticationUpdate]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [AuthenticationUpdateResponse]
+    def update_authentication(authentication_id, authentication_update, request_options = {})
+      response = update_authentication_with_http_info(authentication_id, authentication_update, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::AuthenticationUpdateResponse')
     end
 
     # Update a destination.
     # Update the destination of the given destinationID.
-    # @param destination_id [String] The destination UUID.
-    # @param destination_update [DestinationUpdate]
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(DestinationUpdateResponse, Integer, Hash)>] DestinationUpdateResponse data, response status code and response headers
-    def update_destination_with_http_info(destination_id, destination_update, opts = {})
+    # @param destination_id [String] The destination UUID. (required)
+    # @param destination_update [DestinationUpdate]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def update_destination_with_http_info(destination_id, destination_update, request_options = {})
       # verify the required parameter 'destination_id' is set
       if @api_client.config.client_side_validation && destination_id.nil?
         raise ArgumentError, "Missing the required parameter 'destination_id' when calling IngestionClient.update_destination"
@@ -1570,43 +1528,42 @@ module Algolia
       end
 
       path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', CGI.escape(destination_id.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(destination_update)
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(destination_update)
 
-      return_type = opts[:debug_return_type] || 'Ingestion::DestinationUpdateResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.update_destination',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:PATCH, path, new_options)
     end
 
-    # Update a source.
-    # Update the source of the given sourceID.
-    # @param source_id [String] The source UUID.
-    # @param source_update [SourceUpdate]
-    # @param [Hash] opts the optional parameters
-    # @return [SourceUpdateResponse]
-    def update_source(source_id, source_update, opts = {})
-      data, _status_code, _headers = update_source_with_http_info(source_id, source_update, opts)
-      data
+    # Update a destination.
+    # Update the destination of the given destinationID.
+    # @param destination_id [String] The destination UUID. (required)
+    # @param destination_update [DestinationUpdate]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [DestinationUpdateResponse]
+    def update_destination(destination_id, destination_update, request_options = {})
+      response = update_destination_with_http_info(destination_id, destination_update, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DestinationUpdateResponse')
     end
 
     # Update a source.
     # Update the source of the given sourceID.
-    # @param source_id [String] The source UUID.
-    # @param source_update [SourceUpdate]
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(SourceUpdateResponse, Integer, Hash)>] SourceUpdateResponse data, response status code and response headers
-    def update_source_with_http_info(source_id, source_update, opts = {})
+    # @param source_id [String] The source UUID. (required)
+    # @param source_update [SourceUpdate]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def update_source_with_http_info(source_id, source_update, request_options = {})
       # verify the required parameter 'source_id' is set
       if @api_client.config.client_side_validation && source_id.nil?
         raise ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.update_source"
@@ -1617,43 +1574,42 @@ module Algolia
       end
 
       path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', CGI.escape(source_id.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(source_update)
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(source_update)
 
-      return_type = opts[:debug_return_type] || 'Ingestion::SourceUpdateResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.update_source',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:PATCH, path, new_options)
     end
 
-    # Update a task.
-    # Update the task of the given taskID.
-    # @param task_id [String] The task UUID.
-    # @param task_update [TaskUpdate]
-    # @param [Hash] opts the optional parameters
-    # @return [TaskUpdateResponse]
-    def update_task(task_id, task_update, opts = {})
-      data, _status_code, _headers = update_task_with_http_info(task_id, task_update, opts)
-      data
+    # Update a source.
+    # Update the source of the given sourceID.
+    # @param source_id [String] The source UUID. (required)
+    # @param source_update [SourceUpdate]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [SourceUpdateResponse]
+    def update_source(source_id, source_update, request_options = {})
+      response = update_source_with_http_info(source_id, source_update, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceUpdateResponse')
     end
 
     # Update a task.
     # Update the task of the given taskID.
-    # @param task_id [String] The task UUID.
-    # @param task_update [TaskUpdate]
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(TaskUpdateResponse, Integer, Hash)>] TaskUpdateResponse data, response status code and response headers
-    def update_task_with_http_info(task_id, task_update, opts = {})
+    # @param task_id [String] The task UUID. (required)
+    # @param task_update [TaskUpdate]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def update_task_with_http_info(task_id, task_update, request_options = {})
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
         raise ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.update_task"
@@ -1664,23 +1620,33 @@ module Algolia
       end
 
       path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', CGI.escape(task_id.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(task_update)
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(task_update)
 
-      return_type = opts[:debug_return_type] || 'Ingestion::TaskUpdateResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'IngestionClient.update_task',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:PATCH, path, new_options)
+    end
+
+    # Update a task.
+    # Update the task of the given taskID.
+    # @param task_id [String] The task UUID. (required)
+    # @param task_update [TaskUpdate]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [TaskUpdateResponse]
+    def update_task(task_id, task_update, request_options = {})
+      response = update_task_with_http_info(task_id, task_update, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskUpdateResponse')
     end
   end
 end

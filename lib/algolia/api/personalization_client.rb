@@ -28,42 +28,30 @@ module Algolia
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @return [Object]
-    def custom_delete(path, opts = {})
-      data, _status_code, _headers = custom_delete_with_http_info(path, opts)
-      data
-    end
-
-    # Send requests to the Algolia REST API.
-    # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def custom_delete_with_http_info(path, opts = {})
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def custom_delete_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Missing the required parameter 'path' when calling PersonalizationClient.custom_delete"
       end
 
-      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-      query_params = opts[:query_params] || {}
-      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
-      header_params = opts[:header_params] || {}
+      path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
+      query_params = {}
+      query_params = query_params.merge(parameters) unless parameters.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Personalization::Object'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'PersonalizationClient.custom_delete',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
@@ -72,42 +60,41 @@ module Algolia
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Object]
-    def custom_get(path, opts = {})
-      data, _status_code, _headers = custom_get_with_http_info(path, opts)
-      data
+    def custom_delete(path, parameters = nil, request_options = {})
+      response = custom_delete_with_http_info(path, parameters, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def custom_get_with_http_info(path, opts = {})
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def custom_get_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Missing the required parameter 'path' when calling PersonalizationClient.custom_get"
       end
 
-      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-      query_params = opts[:query_params] || {}
-      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
-      header_params = opts[:header_params] || {}
+      path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
+      query_params = {}
+      query_params = query_params.merge(parameters) unless parameters.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Personalization::Object'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'PersonalizationClient.custom_get',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
@@ -116,44 +103,42 @@ module Algolia
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Object]
-    def custom_post(path, opts = {})
-      data, _status_code, _headers = custom_post_with_http_info(path, opts)
-      data
+    def custom_get(path, parameters = nil, request_options = {})
+      response = custom_get_with_http_info(path, parameters, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
-    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def custom_post_with_http_info(path, opts = {})
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param body [Object] Parameters to send with the custom request.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def custom_post_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Missing the required parameter 'path' when calling PersonalizationClient.custom_post"
       end
 
-      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-      query_params = opts[:query_params] || {}
-      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
-      header_params = opts[:header_params] || {}
+      path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
+      query_params = {}
+      query_params = query_params.merge(parameters) unless parameters.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:body])
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
-      return_type = opts[:debug_return_type] || 'Personalization::Object'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'PersonalizationClient.custom_post',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
@@ -162,205 +147,212 @@ module Algolia
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param body [Object] Parameters to send with the custom request.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Object]
-    def custom_put(path, opts = {})
-      data, _status_code, _headers = custom_put_with_http_info(path, opts)
-      data
+    def custom_post(path, parameters = nil, body = nil, request_options = {})
+      response = custom_post_with_http_info(path, parameters, body, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
-    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def custom_put_with_http_info(path, opts = {})
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param body [Object] Parameters to send with the custom request.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def custom_put_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Missing the required parameter 'path' when calling PersonalizationClient.custom_put"
       end
 
-      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-      query_params = opts[:query_params] || {}
-      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
-      header_params = opts[:header_params] || {}
+      path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
+      query_params = {}
+      query_params = query_params.merge(parameters) unless parameters.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:body])
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
-      return_type = opts[:debug_return_type] || 'Personalization::Object'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'PersonalizationClient.custom_put',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # Delete a user profile.
-    # Delete the user profile and all its associated data.  Returns, as part of the response, a date until which the data can safely be considered as deleted for the given user. This means if you send events for the given user before this date, they will be ignored. Any data received after the deletedUntil date will start building a new user profile.  It might take a couple hours for the deletion request to be fully processed.
-    # @param user_token [String] userToken representing the user for which to fetch the Personalization profile.
-    # @param [Hash] opts the optional parameters
-    # @return [DeleteUserProfileResponse]
-    def delete_user_profile(user_token, opts = {})
-      data, _status_code, _headers = delete_user_profile_with_http_info(user_token, opts)
-      data
+    # Send requests to the Algolia REST API.
+    # This method allow you to send requests to the Algolia REST API.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param body [Object] Parameters to send with the custom request.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Object]
+    def custom_put(path, parameters = nil, body = nil, request_options = {})
+      response = custom_put_with_http_info(path, parameters, body, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Delete a user profile.
     # Delete the user profile and all its associated data.  Returns, as part of the response, a date until which the data can safely be considered as deleted for the given user. This means if you send events for the given user before this date, they will be ignored. Any data received after the deletedUntil date will start building a new user profile.  It might take a couple hours for the deletion request to be fully processed.
-    # @param user_token [String] userToken representing the user for which to fetch the Personalization profile.
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(DeleteUserProfileResponse, Integer, Hash)>] DeleteUserProfileResponse data, response status code and response headers
-    def delete_user_profile_with_http_info(user_token, opts = {})
+    # @param user_token [String] userToken representing the user for which to fetch the Personalization profile. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def delete_user_profile_with_http_info(user_token, request_options = {})
       # verify the required parameter 'user_token' is set
       if @api_client.config.client_side_validation && user_token.nil?
         raise ArgumentError, "Missing the required parameter 'user_token' when calling PersonalizationClient.delete_user_profile"
       end
 
       path = '/1/profiles/{userToken}'.sub('{' + 'userToken' + '}', CGI.escape(user_token.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Personalization::DeleteUserProfileResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'PersonalizationClient.delete_user_profile',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Get the current strategy.
-    # The strategy contains information on the events and facets that impact user profiles and personalized search results.
-    # @param [Hash] opts the optional parameters
-    # @return [PersonalizationStrategyParams]
-    def get_personalization_strategy(opts = {})
-      data, _status_code, _headers = get_personalization_strategy_with_http_info(opts)
-      data
+    # Delete a user profile.
+    # Delete the user profile and all its associated data.  Returns, as part of the response, a date until which the data can safely be considered as deleted for the given user. This means if you send events for the given user before this date, they will be ignored. Any data received after the deletedUntil date will start building a new user profile.  It might take a couple hours for the deletion request to be fully processed.
+    # @param user_token [String] userToken representing the user for which to fetch the Personalization profile. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [DeleteUserProfileResponse]
+    def delete_user_profile(user_token, request_options = {})
+      response = delete_user_profile_with_http_info(user_token, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Personalization::DeleteUserProfileResponse')
     end
 
     # Get the current strategy.
     # The strategy contains information on the events and facets that impact user profiles and personalized search results.
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(PersonalizationStrategyParams, Integer, Hash)>] PersonalizationStrategyParams data, response status code and response headers
-    def get_personalization_strategy_with_http_info(opts = {})
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_personalization_strategy_with_http_info(request_options = {})
       path = '/1/strategies/personalization'
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Personalization::PersonalizationStrategyParams'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'PersonalizationClient.get_personalization_strategy',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a user profile.
-    # Get the user profile built from Personalization strategy.  The profile is structured by facet name used in the strategy. Each facet value is mapped to its score. Each score represents the user affinity for a specific facet value given the userToken past events and the Personalization strategy defined. Scores are bounded to 20. The last processed event timestamp is provided using the ISO 8601 format for debugging purposes.
-    # @param user_token [String] userToken representing the user for which to fetch the Personalization profile.
-    # @param [Hash] opts the optional parameters
-    # @return [GetUserTokenResponse]
-    def get_user_token_profile(user_token, opts = {})
-      data, _status_code, _headers = get_user_token_profile_with_http_info(user_token, opts)
-      data
+    # Get the current strategy.
+    # The strategy contains information on the events and facets that impact user profiles and personalized search results.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [PersonalizationStrategyParams]
+    def get_personalization_strategy(request_options = {})
+      response = get_personalization_strategy_with_http_info(request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Personalization::PersonalizationStrategyParams')
     end
 
     # Get a user profile.
     # Get the user profile built from Personalization strategy.  The profile is structured by facet name used in the strategy. Each facet value is mapped to its score. Each score represents the user affinity for a specific facet value given the userToken past events and the Personalization strategy defined. Scores are bounded to 20. The last processed event timestamp is provided using the ISO 8601 format for debugging purposes.
-    # @param user_token [String] userToken representing the user for which to fetch the Personalization profile.
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(GetUserTokenResponse, Integer, Hash)>] GetUserTokenResponse data, response status code and response headers
-    def get_user_token_profile_with_http_info(user_token, opts = {})
+    # @param user_token [String] userToken representing the user for which to fetch the Personalization profile. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_user_token_profile_with_http_info(user_token, request_options = {})
       # verify the required parameter 'user_token' is set
       if @api_client.config.client_side_validation && user_token.nil?
         raise ArgumentError, "Missing the required parameter 'user_token' when calling PersonalizationClient.get_user_token_profile"
       end
 
       path = '/1/profiles/personalization/{userToken}'.sub('{' + 'userToken' + '}', CGI.escape(user_token.to_s))
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Personalization::GetUserTokenResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'PersonalizationClient.get_user_token_profile',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Set a new strategy.
-    # A strategy defines the events and facets that impact user profiles and personalized search results.
-    # @param personalization_strategy_params [PersonalizationStrategyParams]
-    # @param [Hash] opts the optional parameters
-    # @return [SetPersonalizationStrategyResponse]
-    def set_personalization_strategy(personalization_strategy_params, opts = {})
-      data, _status_code, _headers = set_personalization_strategy_with_http_info(personalization_strategy_params, opts)
-      data
+    # Get a user profile.
+    # Get the user profile built from Personalization strategy.  The profile is structured by facet name used in the strategy. Each facet value is mapped to its score. Each score represents the user affinity for a specific facet value given the userToken past events and the Personalization strategy defined. Scores are bounded to 20. The last processed event timestamp is provided using the ISO 8601 format for debugging purposes.
+    # @param user_token [String] userToken representing the user for which to fetch the Personalization profile. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [GetUserTokenResponse]
+    def get_user_token_profile(user_token, request_options = {})
+      response = get_user_token_profile_with_http_info(user_token, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Personalization::GetUserTokenResponse')
     end
 
     # Set a new strategy.
     # A strategy defines the events and facets that impact user profiles and personalized search results.
-    # @param personalization_strategy_params [PersonalizationStrategyParams]
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(SetPersonalizationStrategyResponse, Integer, Hash)>] SetPersonalizationStrategyResponse data, response status code and response headers
-    def set_personalization_strategy_with_http_info(personalization_strategy_params, opts = {})
+    # @param personalization_strategy_params [PersonalizationStrategyParams]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def set_personalization_strategy_with_http_info(personalization_strategy_params, request_options = {})
       # verify the required parameter 'personalization_strategy_params' is set
       if @api_client.config.client_side_validation && personalization_strategy_params.nil?
         raise ArgumentError, "Missing the required parameter 'personalization_strategy_params' when calling PersonalizationClient.set_personalization_strategy"
       end
 
       path = '/1/strategies/personalization'
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(personalization_strategy_params)
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(personalization_strategy_params)
 
-      return_type = opts[:debug_return_type] || 'Personalization::SetPersonalizationStrategyResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'PersonalizationClient.set_personalization_strategy',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Set a new strategy.
+    # A strategy defines the events and facets that impact user profiles and personalized search results.
+    # @param personalization_strategy_params [PersonalizationStrategyParams]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [SetPersonalizationStrategyResponse]
+    def set_personalization_strategy(personalization_strategy_params, request_options = {})
+      response = set_personalization_strategy_with_http_info(personalization_strategy_params, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Personalization::SetPersonalizationStrategyResponse')
     end
   end
 end

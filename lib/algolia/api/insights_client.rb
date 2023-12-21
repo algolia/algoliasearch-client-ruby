@@ -28,42 +28,30 @@ module Algolia
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @return [Object]
-    def custom_delete(path, opts = {})
-      data, _status_code, _headers = custom_delete_with_http_info(path, opts)
-      data
-    end
-
-    # Send requests to the Algolia REST API.
-    # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def custom_delete_with_http_info(path, opts = {})
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def custom_delete_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.custom_delete"
       end
 
-      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-      query_params = opts[:query_params] || {}
-      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
-      header_params = opts[:header_params] || {}
+      path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
+      query_params = {}
+      query_params = query_params.merge(parameters) unless parameters.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Insights::Object'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'InsightsClient.custom_delete',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
@@ -72,42 +60,41 @@ module Algolia
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Object]
-    def custom_get(path, opts = {})
-      data, _status_code, _headers = custom_get_with_http_info(path, opts)
-      data
+    def custom_delete(path, parameters = nil, request_options = {})
+      response = custom_delete_with_http_info(path, parameters, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def custom_get_with_http_info(path, opts = {})
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def custom_get_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.custom_get"
       end
 
-      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-      query_params = opts[:query_params] || {}
-      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
-      header_params = opts[:header_params] || {}
+      path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
+      query_params = {}
+      query_params = query_params.merge(parameters) unless parameters.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body]
+      post_body = request_options[:debug_body]
 
-      return_type = opts[:debug_return_type] || 'Insights::Object'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'InsightsClient.custom_get',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
@@ -116,44 +103,42 @@ module Algolia
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Object]
-    def custom_post(path, opts = {})
-      data, _status_code, _headers = custom_post_with_http_info(path, opts)
-      data
+    def custom_get(path, parameters = nil, request_options = {})
+      response = custom_get_with_http_info(path, parameters, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
-    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def custom_post_with_http_info(path, opts = {})
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param body [Object] Parameters to send with the custom request.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def custom_post_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.custom_post"
       end
 
-      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-      query_params = opts[:query_params] || {}
-      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
-      header_params = opts[:header_params] || {}
+      path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
+      query_params = {}
+      query_params = query_params.merge(parameters) unless parameters.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:body])
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
-      return_type = opts[:debug_return_type] || 'Insights::Object'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'InsightsClient.custom_post',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
@@ -162,89 +147,99 @@ module Algolia
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param body [Object] Parameters to send with the custom request.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Object]
-    def custom_put(path, opts = {})
-      data, _status_code, _headers = custom_put_with_http_info(path, opts)
-      data
+    def custom_post(path, parameters = nil, body = nil, request_options = {})
+      response = custom_post_with_http_info(path, parameters, body, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified.
-    # @param [Hash] opts the optional parameters
-    # @option opts [Hash<String, Object>] :parameters Query parameters to apply to the current query.
-    # @option opts [Object] :body Parameters to send with the custom request.
-    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
-    def custom_put_with_http_info(path, opts = {})
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param body [Object] Parameters to send with the custom request.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def custom_put_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Missing the required parameter 'path' when calling InsightsClient.custom_put"
       end
 
-      path = '/1{path}'.sub('{' + 'path' + '}', CGI.escape(path.to_s))
-      query_params = opts[:query_params] || {}
-      query_params[:parameters] = opts[:parameters] unless opts[:parameters].nil?
-      header_params = opts[:header_params] || {}
+      path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
+      query_params = {}
+      query_params = query_params.merge(parameters) unless parameters.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:body])
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
-      return_type = opts[:debug_return_type] || 'Insights::Object'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'InsightsClient.custom_put',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # Send events.
-    # Send a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
-    # @param insights_events [InsightsEvents]
-    # @param [Hash] opts the optional parameters
-    # @return [EventsResponse]
-    def push_events(insights_events, opts = {})
-      data, _status_code, _headers = push_events_with_http_info(insights_events, opts)
-      data
+    # Send requests to the Algolia REST API.
+    # This method allow you to send requests to the Algolia REST API.
+    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param body [Object] Parameters to send with the custom request.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Object]
+    def custom_put(path, parameters = nil, body = nil, request_options = {})
+      response = custom_put_with_http_info(path, parameters, body, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send events.
     # Send a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&amp;nbsp;MB.
-    # @param insights_events [InsightsEvents]
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(EventsResponse, Integer, Hash)>] EventsResponse data, response status code and response headers
-    def push_events_with_http_info(insights_events, opts = {})
+    # @param insights_events [InsightsEvents]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def push_events_with_http_info(insights_events, request_options = {})
       # verify the required parameter 'insights_events' is set
       if @api_client.config.client_side_validation && insights_events.nil?
         raise ArgumentError, "Missing the required parameter 'insights_events' when calling InsightsClient.push_events"
       end
 
       path = '/1/events'
-      query_params = opts[:query_params] || {}
-      header_params = opts[:header_params] || {}
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(insights_events)
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(insights_events)
 
-      return_type = opts[:debug_return_type] || 'Insights::EventsResponse'
-
-      new_options = opts.merge(
+      new_options = request_options.merge(
         :operation => :'InsightsClient.push_events',
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :return_type => return_type,
         :use_read_transporter => false
       )
 
       @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Send events.
+    # Send a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
+    # @param insights_events [InsightsEvents]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [EventsResponse]
+    def push_events(insights_events, request_options = {})
+      response = push_events_with_http_info(insights_events, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Insights::EventsResponse')
     end
   end
 end

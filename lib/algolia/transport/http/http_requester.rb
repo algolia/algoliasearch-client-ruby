@@ -19,14 +19,16 @@ module Algolia
       # @param method [Symbol]
       # @param path [String]
       # @param body [JSON]
+      # @param query_params [Hash]
       # @param headers [Hash]
       #
       # @return [Http::Response]
       #
-      def send_request(host, method, path, body, headers, timeout, connect_timeout)
+      def send_request(host, method, path, body, query_params, headers, timeout, connect_timeout)
         connection                      = connection(host)
         connection.options.timeout      = timeout / 1000
         connection.options.open_timeout = connect_timeout / 1000
+        path += handle_query_params(query_params)
 
         @logger.info("Sending #{method.to_s.upcase!} request to #{path} with body #{body}") if ENV['ALGOLIA_DEBUG']
 
@@ -67,6 +69,20 @@ module Algolia
       #
       def build_url(host)
         host.protocol + host.url
+      end
+
+      # Convert query_params to a full query string
+      #
+      def handle_query_params(query_params)
+        query_params.nil? || query_params.empty? ? '' : "?#{to_query_string(query_params)}"
+      end
+
+      # Create a query string from query_params
+      #
+      def to_query_string(query_params)
+        query_params.map do |key, value|
+          "#{key}=#{value}"
+        end.join('&')
       end
     end
   end
