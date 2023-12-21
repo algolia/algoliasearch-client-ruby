@@ -14,6 +14,8 @@ module Algolia
       # URL-encoded string of all search parameters.
       attr_accessor :params
 
+      attr_accessor :additional_properties
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -49,16 +51,6 @@ module Algolia
           raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::SearchHits` initialize method"
         end
 
-        # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) do |(k, v), h|
-          unless self.class.attribute_map.key?(k.to_sym)
-            raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::SearchHits`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
-          end
-
-          h[k.to_sym] = v
-        end
-
         if attributes.key?(:hits)
           if (value = attributes[:hits]).is_a?(Array)
             self.hits = value
@@ -78,6 +70,10 @@ module Algolia
         else
           self.params = nil
         end
+
+        # add extra attribute to additional_properties
+        self.additional_properties ||= {}
+        self.additional_properties.merge!(attributes.reject { |k, _| self.class.attribute_map.key?(k.to_sym) })
       end
 
       # Checks equality by comparing each attribute.
@@ -124,6 +120,8 @@ module Algolia
             transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
+
+        transformed_hash.merge!(attributes.reject { |k, _| attribute_map.key?(k.to_sym) })
         new(transformed_hash)
       end
 
@@ -194,6 +192,11 @@ module Algolia
           end
 
           hash[param] = _to_hash(value)
+        end
+
+        # also add attributes from additional_properties to hash
+        self.additional_properties&.each_pair do |k, v|
+          hash[k.to_sym] = _to_hash(v)
         end
         hash
       end

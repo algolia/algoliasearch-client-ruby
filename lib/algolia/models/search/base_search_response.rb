@@ -84,6 +84,8 @@ module Algolia
       # Lets you store custom data in your indices.
       attr_accessor :user_data
 
+      attr_accessor :additional_properties
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -167,16 +169,6 @@ module Algolia
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
           raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::BaseSearchResponse` initialize method"
-        end
-
-        # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) do |(k, v), h|
-          unless self.class.attribute_map.key?(k.to_sym)
-            raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::BaseSearchResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
-          end
-
-          h[k.to_sym] = v
         end
 
         if attributes.key?(:ab_test_id)
@@ -300,6 +292,10 @@ module Algolia
         if attributes.key?(:user_data)
           self.user_data = attributes[:user_data]
         end
+
+        # add extra attribute to additional_properties
+        self.additional_properties ||= {}
+        self.additional_properties.merge!(attributes.reject { |k, _| self.class.attribute_map.key?(k.to_sym) })
       end
 
       # Custom attribute writer method with validation
@@ -418,6 +414,8 @@ module Algolia
             transformed_hash[key.to_s] = _deserialize(type, attributes[attribute_map[key]])
           end
         end
+
+        transformed_hash.merge!(attributes.reject { |k, _| attribute_map.key?(k.to_sym) })
         new(transformed_hash)
       end
 
@@ -488,6 +486,11 @@ module Algolia
           end
 
           hash[param] = _to_hash(value)
+        end
+
+        # also add attributes from additional_properties to hash
+        self.additional_properties&.each_pair do |k, v|
+          hash[k.to_sym] = _to_hash(v)
         end
         hash
       end
