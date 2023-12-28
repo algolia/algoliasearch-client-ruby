@@ -1,0 +1,26 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - next
+
+jobs:
+  release:
+    name: Publish
+    runs-on: ubuntu-22.04
+    if: "startsWith(github.event.head_commit.message, 'chore: release')"
+    permissions:
+      id-token: write
+    steps:
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.2
+          bundler-cache: true
+
+      - name: Build gem
+        run: gem build algolia.gemspec
+
+      - name: Publish new gem
+        run: gem push --key ${{ secrets.RUBYGEMS_API_KEY }} $(ls algolia-*.gem)
