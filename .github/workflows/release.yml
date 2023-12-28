@@ -13,6 +13,8 @@ jobs:
     permissions:
       id-token: write
     steps:
+      - uses: actions/checkout@v4
+
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
         with:
