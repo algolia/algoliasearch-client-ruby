@@ -4,7 +4,7 @@ module Algolia
       attr_reader :status, :body, :error, :headers, :has_timed_out, :network_failure
 
       # used for the echo requester
-      attr_reader :method, :path, :query_params
+      attr_reader :method, :path, :query_params, :host, :timeout, :connect_timeout
 
       #
       # @option status    [String]  Response status
@@ -23,6 +23,9 @@ module Algolia
 
         @method = opts[:method] || ''
         @path = opts[:path] || ''
+        @host = opts[:host] || ''
+        @timeout = opts[:timeout] || 0
+        @connect_timeout = opts[:connect_timeout] || 0
         @query_params = opts[:query_params] || {}
       end
     end

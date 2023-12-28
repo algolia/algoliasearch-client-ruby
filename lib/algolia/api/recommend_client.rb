@@ -5,14 +5,14 @@ module Algolia
     attr_accessor :api_client
 
     def initialize(config = nil)
-      raise '`config` must be provided' if config.nil?
-      raise '`config.app_id` must be provided' if config.app_id.nil? || config.app_id == ''
-      raise '`config.api_key` must be provided' if config.api_key.nil? || config.api_key == ''
+      raise '`config` is missing.' if config.nil?
+      raise '`app_id` is missing.' if config.app_id.nil? || config.app_id == ''
+      raise '`api_key` is missing.' if config.api_key.nil? || config.api_key == ''
 
       @api_client = Algolia::ApiClient.new(config)
     end
 
-    def self.create(app_id, api_key)
+    def self.create(app_id, api_key, opts = {})
       hosts = []
 
       hosts << Transport::StatefulHost.new("#{app_id}-dsn.algolia.net", accept: CallType::READ)
@@ -22,7 +22,7 @@ module Algolia
         Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", accept: CallType::READ | CallType::WRITE)
       end.shuffle
 
-      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Recommend')
+      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Recommend', opts)
       create_with_config(config)
     end
 
@@ -39,7 +39,7 @@ module Algolia
     def custom_delete_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling RecommendClient.custom_delete"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -82,7 +82,7 @@ module Algolia
     def custom_get_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling RecommendClient.custom_get"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -126,7 +126,7 @@ module Algolia
     def custom_post_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling RecommendClient.custom_post"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -171,7 +171,7 @@ module Algolia
     def custom_put_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling RecommendClient.custom_put"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -216,15 +216,15 @@ module Algolia
     def delete_recommend_rule_with_http_info(index_name, model, object_id, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling RecommendClient.delete_recommend_rule"
+        raise ArgumentError, "Parameter `index_name` is required when calling `delete_recommend_rule`."
       end
       # verify the required parameter 'model' is set
       if @api_client.config.client_side_validation && model.nil?
-        raise ArgumentError, "Missing the required parameter 'model' when calling RecommendClient.delete_recommend_rule"
+        raise ArgumentError, "Parameter `model` is required when calling `delete_recommend_rule`."
       end
       # verify the required parameter 'object_id' is set
       if @api_client.config.client_side_validation && object_id.nil?
-        raise ArgumentError, "Missing the required parameter 'object_id' when calling RecommendClient.delete_recommend_rule"
+        raise ArgumentError, "Parameter `object_id` is required when calling `delete_recommend_rule`."
       end
 
       path = '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'model' + '}', @api_client.encode_uri(model.to_s)).sub(
@@ -270,15 +270,15 @@ module Algolia
     def get_recommend_rule_with_http_info(index_name, model, object_id, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling RecommendClient.get_recommend_rule"
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_recommend_rule`."
       end
       # verify the required parameter 'model' is set
       if @api_client.config.client_side_validation && model.nil?
-        raise ArgumentError, "Missing the required parameter 'model' when calling RecommendClient.get_recommend_rule"
+        raise ArgumentError, "Parameter `model` is required when calling `get_recommend_rule`."
       end
       # verify the required parameter 'object_id' is set
       if @api_client.config.client_side_validation && object_id.nil?
-        raise ArgumentError, "Missing the required parameter 'object_id' when calling RecommendClient.get_recommend_rule"
+        raise ArgumentError, "Parameter `object_id` is required when calling `get_recommend_rule`."
       end
 
       path = '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'model' + '}', @api_client.encode_uri(model.to_s)).sub(
@@ -324,15 +324,15 @@ module Algolia
     def get_recommend_status_with_http_info(index_name, model, task_id, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling RecommendClient.get_recommend_status"
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_recommend_status`."
       end
       # verify the required parameter 'model' is set
       if @api_client.config.client_side_validation && model.nil?
-        raise ArgumentError, "Missing the required parameter 'model' when calling RecommendClient.get_recommend_status"
+        raise ArgumentError, "Parameter `model` is required when calling `get_recommend_status`."
       end
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
-        raise ArgumentError, "Missing the required parameter 'task_id' when calling RecommendClient.get_recommend_status"
+        raise ArgumentError, "Parameter `task_id` is required when calling `get_recommend_status`."
       end
 
       path = '/1/indexes/{indexName}/{model}/task/{taskID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'model' + '}', @api_client.encode_uri(model.to_s)).sub(
@@ -376,7 +376,7 @@ module Algolia
     def get_recommendations_with_http_info(get_recommendations_params, request_options = {})
       # verify the required parameter 'get_recommendations_params' is set
       if @api_client.config.client_side_validation && get_recommendations_params.nil?
-        raise ArgumentError, "Missing the required parameter 'get_recommendations_params' when calling RecommendClient.get_recommendations"
+        raise ArgumentError, "Parameter `get_recommendations_params` is required when calling `get_recommendations`."
       end
 
       path = '/1/indexes/*/recommendations'
@@ -418,11 +418,11 @@ module Algolia
     def search_recommend_rules_with_http_info(index_name, model, search_recommend_rules_params = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling RecommendClient.search_recommend_rules"
+        raise ArgumentError, "Parameter `index_name` is required when calling `search_recommend_rules`."
       end
       # verify the required parameter 'model' is set
       if @api_client.config.client_side_validation && model.nil?
-        raise ArgumentError, "Missing the required parameter 'model' when calling RecommendClient.search_recommend_rules"
+        raise ArgumentError, "Parameter `model` is required when calling `search_recommend_rules`."
       end
 
       path = '/1/indexes/{indexName}/{model}/recommend/rules/search'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'model' + '}',

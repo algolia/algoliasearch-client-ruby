@@ -5,22 +5,27 @@ module Algolia
     attr_accessor :api_client
 
     def initialize(config = nil)
-      raise '`config` must be provided' if config.nil?
-      raise '`config.app_id` must be provided' if config.app_id.nil? || config.app_id == ''
-      raise '`config.api_key` must be provided' if config.api_key.nil? || config.api_key == ''
+      raise '`config` is missing.' if config.nil?
+      raise '`app_id` is missing.' if config.app_id.nil? || config.app_id == ''
+      raise '`api_key` is missing.' if config.api_key.nil? || config.api_key == ''
 
       @api_client = Algolia::ApiClient.new(config)
     end
 
-    def self.create(app_id, api_key, region = nil)
+    def self.create(app_id, api_key, region = nil, opts = {})
       hosts = []
       regions = ['eu', 'us']
 
-      raise "`region` is required and must be one of the following: #{regions.join(', ')}" if region.nil? || (region != '' && !regions.include?(region))
+      if region.is_a?(Hash) && (opts.nil? || opts.empty?)
+        opts = region
+        region = nil
+      end
+
+      raise "`region` is required and must be one of the following: #{regions.join(', ')}" if region.nil? || !region.is_a?(String) || !regions.include?(region)
 
       hosts << Transport::StatefulHost.new('personalization.{region}.algolia.com'.sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
 
-      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Personalization')
+      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Personalization', opts)
       create_with_config(config)
     end
 
@@ -37,7 +42,7 @@ module Algolia
     def custom_delete_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling PersonalizationClient.custom_delete"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -80,7 +85,7 @@ module Algolia
     def custom_get_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling PersonalizationClient.custom_get"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -124,7 +129,7 @@ module Algolia
     def custom_post_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling PersonalizationClient.custom_post"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -169,7 +174,7 @@ module Algolia
     def custom_put_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling PersonalizationClient.custom_put"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -212,7 +217,7 @@ module Algolia
     def delete_user_profile_with_http_info(user_token, request_options = {})
       # verify the required parameter 'user_token' is set
       if @api_client.config.client_side_validation && user_token.nil?
-        raise ArgumentError, "Missing the required parameter 'user_token' when calling PersonalizationClient.delete_user_profile"
+        raise ArgumentError, "Parameter `user_token` is required when calling `delete_user_profile`."
       end
 
       path = '/1/profiles/{userToken}'.sub('{' + 'userToken' + '}', @api_client.encode_uri(user_token.to_s))
@@ -285,7 +290,7 @@ module Algolia
     def get_user_token_profile_with_http_info(user_token, request_options = {})
       # verify the required parameter 'user_token' is set
       if @api_client.config.client_side_validation && user_token.nil?
-        raise ArgumentError, "Missing the required parameter 'user_token' when calling PersonalizationClient.get_user_token_profile"
+        raise ArgumentError, "Parameter `user_token` is required when calling `get_user_token_profile`."
       end
 
       path = '/1/profiles/personalization/{userToken}'.sub('{' + 'userToken' + '}', @api_client.encode_uri(user_token.to_s))
@@ -325,7 +330,7 @@ module Algolia
     def set_personalization_strategy_with_http_info(personalization_strategy_params, request_options = {})
       # verify the required parameter 'personalization_strategy_params' is set
       if @api_client.config.client_side_validation && personalization_strategy_params.nil?
-        raise ArgumentError, "Missing the required parameter 'personalization_strategy_params' when calling PersonalizationClient.set_personalization_strategy"
+        raise ArgumentError, "Parameter `personalization_strategy_params` is required when calling `set_personalization_strategy`."
       end
 
       path = '/1/strategies/personalization'

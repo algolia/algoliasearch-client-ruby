@@ -24,7 +24,7 @@ module Algolia
     # @return [Http::Response] the response.
     def call_api(http_method, path, opts = {})
       begin
-        call_type = opts[:use_read_transporter] || http_method == 'GET' ? CallType::READ : CallType::WRITE
+        call_type = opts[:use_read_transporter] || http_method == :GET ? CallType::READ : CallType::WRITE
         response = transporter.request(call_type, http_method, path, opts[:body], opts)
       rescue Faraday::TimeoutError
         raise ApiError, 'Connection timed out'

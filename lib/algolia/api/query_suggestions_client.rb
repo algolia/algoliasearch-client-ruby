@@ -5,22 +5,27 @@ module Algolia
     attr_accessor :api_client
 
     def initialize(config = nil)
-      raise '`config` must be provided' if config.nil?
-      raise '`config.app_id` must be provided' if config.app_id.nil? || config.app_id == ''
-      raise '`config.api_key` must be provided' if config.api_key.nil? || config.api_key == ''
+      raise '`config` is missing.' if config.nil?
+      raise '`app_id` is missing.' if config.app_id.nil? || config.app_id == ''
+      raise '`api_key` is missing.' if config.api_key.nil? || config.api_key == ''
 
       @api_client = Algolia::ApiClient.new(config)
     end
 
-    def self.create(app_id, api_key, region = nil)
+    def self.create(app_id, api_key, region = nil, opts = {})
       hosts = []
       regions = ['eu', 'us']
 
-      raise "`region` is required and must be one of the following: #{regions.join(', ')}" if region.nil? || (region != '' && !regions.include?(region))
+      if region.is_a?(Hash) && (opts.nil? || opts.empty?)
+        opts = region
+        region = nil
+      end
+
+      raise "`region` is required and must be one of the following: #{regions.join(', ')}" if region.nil? || !region.is_a?(String) || !regions.include?(region)
 
       hosts << Transport::StatefulHost.new('query-suggestions.{region}.algolia.com'.sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
 
-      config = Algolia::Configuration.new(app_id, api_key, hosts, 'QuerySuggestions')
+      config = Algolia::Configuration.new(app_id, api_key, hosts, 'QuerySuggestions', opts)
       create_with_config(config)
     end
 
@@ -36,7 +41,7 @@ module Algolia
     def create_config_with_http_info(query_suggestions_configuration_with_index, request_options = {})
       # verify the required parameter 'query_suggestions_configuration_with_index' is set
       if @api_client.config.client_side_validation && query_suggestions_configuration_with_index.nil?
-        raise ArgumentError, "Missing the required parameter 'query_suggestions_configuration_with_index' when calling QuerySuggestionsClient.create_config"
+        raise ArgumentError, "Parameter `query_suggestions_configuration_with_index` is required when calling `create_config`."
       end
 
       path = '/1/configs'
@@ -77,7 +82,7 @@ module Algolia
     def custom_delete_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling QuerySuggestionsClient.custom_delete"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -120,7 +125,7 @@ module Algolia
     def custom_get_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling QuerySuggestionsClient.custom_get"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -164,7 +169,7 @@ module Algolia
     def custom_post_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling QuerySuggestionsClient.custom_post"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -209,7 +214,7 @@ module Algolia
     def custom_put_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling QuerySuggestionsClient.custom_put"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -252,7 +257,7 @@ module Algolia
     def delete_config_with_http_info(index_name, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.delete_config"
+        raise ArgumentError, "Parameter `index_name` is required when calling `delete_config`."
       end
 
       path = '/1/configs/{indexName}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
@@ -325,7 +330,7 @@ module Algolia
     def get_config_with_http_info(index_name, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.get_config"
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_config`."
       end
 
       path = '/1/configs/{indexName}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
@@ -365,7 +370,7 @@ module Algolia
     def get_config_status_with_http_info(index_name, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.get_config_status"
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_config_status`."
       end
 
       path = '/1/configs/{indexName}/status'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
@@ -405,7 +410,7 @@ module Algolia
     def get_log_file_with_http_info(index_name, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.get_log_file"
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_log_file`."
       end
 
       path = '/1/logs/{indexName}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
@@ -446,11 +451,11 @@ module Algolia
     def update_config_with_http_info(index_name, query_suggestions_configuration, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling QuerySuggestionsClient.update_config"
+        raise ArgumentError, "Parameter `index_name` is required when calling `update_config`."
       end
       # verify the required parameter 'query_suggestions_configuration' is set
       if @api_client.config.client_side_validation && query_suggestions_configuration.nil?
-        raise ArgumentError, "Missing the required parameter 'query_suggestions_configuration' when calling QuerySuggestionsClient.update_config"
+        raise ArgumentError, "Parameter `query_suggestions_configuration` is required when calling `update_config`."
       end
 
       path = '/1/configs/{indexName}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))

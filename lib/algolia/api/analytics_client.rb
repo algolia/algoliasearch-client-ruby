@@ -5,23 +5,28 @@ module Algolia
     attr_accessor :api_client
 
     def initialize(config = nil)
-      raise '`config` must be provided' if config.nil?
-      raise '`config.app_id` must be provided' if config.app_id.nil? || config.app_id == ''
-      raise '`config.api_key` must be provided' if config.api_key.nil? || config.api_key == ''
+      raise '`config` is missing.' if config.nil?
+      raise '`app_id` is missing.' if config.app_id.nil? || config.app_id == ''
+      raise '`api_key` is missing.' if config.api_key.nil? || config.api_key == ''
 
       @api_client = Algolia::ApiClient.new(config)
     end
 
-    def self.create(app_id, api_key, region = nil)
+    def self.create(app_id, api_key, region = nil, opts = {})
       hosts = []
       regions = ['de', 'us']
 
-      raise "`region` must be one of the following: #{regions.join(', ')}" if region != '' && !regions.include?(region)
+      if region.is_a?(Hash) && (opts.nil? || opts.empty?)
+        opts = region
+        region = nil
+      end
+
+      raise "`region` must be one of the following: #{regions.join(', ')}" if !region.nil? && (!region.is_a?(String) || !regions.include?(region))
 
       hosts << Transport::StatefulHost.new(region.nil? ? 'analytics.algolia.com' : 'analytics.{region}.algolia.com'.sub!('{region}', region),
                                            accept: CallType::READ | CallType::WRITE)
 
-      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Analytics')
+      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Analytics', opts)
       create_with_config(config)
     end
 
@@ -38,7 +43,7 @@ module Algolia
     def custom_delete_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_delete"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -81,7 +86,7 @@ module Algolia
     def custom_get_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_get"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -125,7 +130,7 @@ module Algolia
     def custom_post_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_post"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -170,7 +175,7 @@ module Algolia
     def custom_put_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling AnalyticsClient.custom_put"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -216,7 +221,7 @@ module Algolia
     def get_average_click_position_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_average_click_position"
+        raise ArgumentError, "Parameter `index` is required when calling `get_average_click_position`."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
@@ -276,7 +281,7 @@ module Algolia
     def get_click_positions_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_click_positions"
+        raise ArgumentError, "Parameter `index` is required when calling `get_click_positions`."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
@@ -336,7 +341,7 @@ module Algolia
     def get_click_through_rate_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_click_through_rate"
+        raise ArgumentError, "Parameter `index` is required when calling `get_click_through_rate`."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
@@ -396,7 +401,7 @@ module Algolia
     def get_conversation_rate_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_conversation_rate"
+        raise ArgumentError, "Parameter `index` is required when calling `get_conversation_rate`."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
@@ -456,7 +461,7 @@ module Algolia
     def get_no_click_rate_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_no_click_rate"
+        raise ArgumentError, "Parameter `index` is required when calling `get_no_click_rate`."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
@@ -516,7 +521,7 @@ module Algolia
     def get_no_results_rate_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_no_results_rate"
+        raise ArgumentError, "Parameter `index` is required when calling `get_no_results_rate`."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
@@ -576,7 +581,7 @@ module Algolia
     def get_searches_count_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_searches_count"
+        raise ArgumentError, "Parameter `index` is required when calling `get_searches_count`."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
@@ -638,7 +643,7 @@ module Algolia
     def get_searches_no_clicks_with_http_info(index, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_searches_no_clicks"
+        raise ArgumentError, "Parameter `index` is required when calling `get_searches_no_clicks`."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
@@ -704,7 +709,7 @@ module Algolia
     def get_searches_no_results_with_http_info(index, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_searches_no_results"
+        raise ArgumentError, "Parameter `index` is required when calling `get_searches_no_results`."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
@@ -765,7 +770,7 @@ module Algolia
     def get_status_with_http_info(index, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_status"
+        raise ArgumentError, "Parameter `index` is required when calling `get_status`."
       end
 
       path = '/2/status'
@@ -811,7 +816,7 @@ module Algolia
     def get_top_countries_with_http_info(index, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_countries"
+        raise ArgumentError, "Parameter `index` is required when calling `get_top_countries`."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
@@ -878,7 +883,7 @@ module Algolia
     def get_top_filter_attributes_with_http_info(index, search = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_filter_attributes"
+        raise ArgumentError, "Parameter `index` is required when calling `get_top_filter_attributes`."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
@@ -948,11 +953,11 @@ module Algolia
     def get_top_filter_for_attribute_with_http_info(attribute, index, search = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
       # verify the required parameter 'attribute' is set
       if @api_client.config.client_side_validation && attribute.nil?
-        raise ArgumentError, "Missing the required parameter 'attribute' when calling AnalyticsClient.get_top_filter_for_attribute"
+        raise ArgumentError, "Parameter `attribute` is required when calling `get_top_filter_for_attribute`."
       end
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_filter_for_attribute"
+        raise ArgumentError, "Parameter `index` is required when calling `get_top_filter_for_attribute`."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
@@ -1022,7 +1027,7 @@ module Algolia
     def get_top_filters_no_results_with_http_info(index, search = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_filters_no_results"
+        raise ArgumentError, "Parameter `index` is required when calling `get_top_filters_no_results`."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
@@ -1092,7 +1097,7 @@ module Algolia
     def get_top_hits_with_http_info(index, search = nil, click_analytics = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_hits"
+        raise ArgumentError, "Parameter `index` is required when calling `get_top_hits`."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
@@ -1166,7 +1171,7 @@ module Algolia
                                         request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_top_searches"
+        raise ArgumentError, "Parameter `index` is required when calling `get_top_searches`."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
@@ -1237,7 +1242,7 @@ module Algolia
     def get_users_count_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
-        raise ArgumentError, "Missing the required parameter 'index' when calling AnalyticsClient.get_users_count"
+        raise ArgumentError, "Parameter `index` is required when calling `get_users_count`."
       end
 
       pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/

@@ -5,14 +5,14 @@ module Algolia
     attr_accessor :api_client
 
     def initialize(config = nil)
-      raise '`config` must be provided' if config.nil?
-      raise '`config.app_id` must be provided' if config.app_id.nil? || config.app_id == ''
-      raise '`config.api_key` must be provided' if config.api_key.nil? || config.api_key == ''
+      raise '`config` is missing.' if config.nil?
+      raise '`app_id` is missing.' if config.app_id.nil? || config.app_id == ''
+      raise '`api_key` is missing.' if config.api_key.nil? || config.api_key == ''
 
       @api_client = Algolia::ApiClient.new(config)
     end
 
-    def self.create(app_id, api_key)
+    def self.create(app_id, api_key, opts = {})
       hosts = []
 
       hosts << Transport::StatefulHost.new("#{app_id}-dsn.algolia.net", accept: CallType::READ)
@@ -22,7 +22,7 @@ module Algolia
         Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", accept: CallType::READ | CallType::WRITE)
       end.shuffle
 
-      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Monitoring')
+      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Monitoring', opts)
       create_with_config(config)
     end
 
@@ -39,7 +39,7 @@ module Algolia
     def custom_delete_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling MonitoringClient.custom_delete"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -82,7 +82,7 @@ module Algolia
     def custom_get_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling MonitoringClient.custom_get"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -126,7 +126,7 @@ module Algolia
     def custom_post_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling MonitoringClient.custom_post"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -171,7 +171,7 @@ module Algolia
     def custom_put_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling MonitoringClient.custom_put"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -214,7 +214,7 @@ module Algolia
     def get_cluster_incidents_with_http_info(clusters, request_options = {})
       # verify the required parameter 'clusters' is set
       if @api_client.config.client_side_validation && clusters.nil?
-        raise ArgumentError, "Missing the required parameter 'clusters' when calling MonitoringClient.get_cluster_incidents"
+        raise ArgumentError, "Parameter `clusters` is required when calling `get_cluster_incidents`."
       end
 
       path = '/1/incidents/{clusters}'.sub('{' + 'clusters' + '}', @api_client.encode_uri(clusters.to_s))
@@ -254,7 +254,7 @@ module Algolia
     def get_cluster_status_with_http_info(clusters, request_options = {})
       # verify the required parameter 'clusters' is set
       if @api_client.config.client_side_validation && clusters.nil?
-        raise ArgumentError, "Missing the required parameter 'clusters' when calling MonitoringClient.get_cluster_status"
+        raise ArgumentError, "Parameter `clusters` is required when calling `get_cluster_status`."
       end
 
       path = '/1/status/{clusters}'.sub('{' + 'clusters' + '}', @api_client.encode_uri(clusters.to_s))
@@ -327,7 +327,7 @@ module Algolia
     def get_indexing_time_with_http_info(clusters, request_options = {})
       # verify the required parameter 'clusters' is set
       if @api_client.config.client_side_validation && clusters.nil?
-        raise ArgumentError, "Missing the required parameter 'clusters' when calling MonitoringClient.get_indexing_time"
+        raise ArgumentError, "Parameter `clusters` is required when calling `get_indexing_time`."
       end
 
       path = '/1/indexing/{clusters}'.sub('{' + 'clusters' + '}', @api_client.encode_uri(clusters.to_s))
@@ -400,7 +400,7 @@ module Algolia
     def get_latency_with_http_info(clusters, request_options = {})
       # verify the required parameter 'clusters' is set
       if @api_client.config.client_side_validation && clusters.nil?
-        raise ArgumentError, "Missing the required parameter 'clusters' when calling MonitoringClient.get_latency"
+        raise ArgumentError, "Parameter `clusters` is required when calling `get_latency`."
       end
 
       path = '/1/latency/{clusters}'.sub('{' + 'clusters' + '}', @api_client.encode_uri(clusters.to_s))
@@ -441,11 +441,11 @@ module Algolia
     def get_metrics_with_http_info(metric, period, request_options = {})
       # verify the required parameter 'metric' is set
       if @api_client.config.client_side_validation && metric.nil?
-        raise ArgumentError, "Missing the required parameter 'metric' when calling MonitoringClient.get_metrics"
+        raise ArgumentError, "Parameter `metric` is required when calling `get_metrics`."
       end
       # verify the required parameter 'period' is set
       if @api_client.config.client_side_validation && period.nil?
-        raise ArgumentError, "Missing the required parameter 'period' when calling MonitoringClient.get_metrics"
+        raise ArgumentError, "Parameter `period` is required when calling `get_metrics`."
       end
 
       path = '/1/infrastructure/{metric}/period/{period}'.sub('{' + 'metric' + '}', @api_client.encode_uri(metric.to_s)).sub('{' + 'period' + '}',
@@ -487,7 +487,7 @@ module Algolia
     def get_reachability_with_http_info(clusters, request_options = {})
       # verify the required parameter 'clusters' is set
       if @api_client.config.client_side_validation && clusters.nil?
-        raise ArgumentError, "Missing the required parameter 'clusters' when calling MonitoringClient.get_reachability"
+        raise ArgumentError, "Parameter `clusters` is required when calling `get_reachability`."
       end
 
       path = '/1/reachability/{clusters}/probes'.sub('{' + 'clusters' + '}', @api_client.encode_uri(clusters.to_s))

@@ -5,22 +5,27 @@ module Algolia
     attr_accessor :api_client
 
     def initialize(config = nil)
-      raise '`config` must be provided' if config.nil?
-      raise '`config.app_id` must be provided' if config.app_id.nil? || config.app_id == ''
-      raise '`config.api_key` must be provided' if config.api_key.nil? || config.api_key == ''
+      raise '`config` is missing.' if config.nil?
+      raise '`app_id` is missing.' if config.app_id.nil? || config.app_id == ''
+      raise '`api_key` is missing.' if config.api_key.nil? || config.api_key == ''
 
       @api_client = Algolia::ApiClient.new(config)
     end
 
-    def self.create(app_id, api_key, region = nil)
+    def self.create(app_id, api_key, region = nil, opts = {})
       hosts = []
       regions = ['eu', 'us']
 
-      raise "`region` is required and must be one of the following: #{regions.join(', ')}" if region.nil? || (region != '' && !regions.include?(region))
+      if region.is_a?(Hash) && (opts.nil? || opts.empty?)
+        opts = region
+        region = nil
+      end
+
+      raise "`region` is required and must be one of the following: #{regions.join(', ')}" if region.nil? || !region.is_a?(String) || !regions.include?(region)
 
       hosts << Transport::StatefulHost.new('data.{region}.algolia.com'.sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
 
-      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Ingestion')
+      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Ingestion', opts)
       create_with_config(config)
     end
 
@@ -36,7 +41,7 @@ module Algolia
     def create_authentication_with_http_info(authentication_create, request_options = {})
       # verify the required parameter 'authentication_create' is set
       if @api_client.config.client_side_validation && authentication_create.nil?
-        raise ArgumentError, "Missing the required parameter 'authentication_create' when calling IngestionClient.create_authentication"
+        raise ArgumentError, "Parameter `authentication_create` is required when calling `create_authentication`."
       end
 
       path = '/1/authentications'
@@ -76,7 +81,7 @@ module Algolia
     def create_destination_with_http_info(destination_create, request_options = {})
       # verify the required parameter 'destination_create' is set
       if @api_client.config.client_side_validation && destination_create.nil?
-        raise ArgumentError, "Missing the required parameter 'destination_create' when calling IngestionClient.create_destination"
+        raise ArgumentError, "Parameter `destination_create` is required when calling `create_destination`."
       end
 
       path = '/1/destinations'
@@ -116,7 +121,7 @@ module Algolia
     def create_source_with_http_info(source_create, request_options = {})
       # verify the required parameter 'source_create' is set
       if @api_client.config.client_side_validation && source_create.nil?
-        raise ArgumentError, "Missing the required parameter 'source_create' when calling IngestionClient.create_source"
+        raise ArgumentError, "Parameter `source_create` is required when calling `create_source`."
       end
 
       path = '/1/sources'
@@ -156,7 +161,7 @@ module Algolia
     def create_task_with_http_info(task_create, request_options = {})
       # verify the required parameter 'task_create' is set
       if @api_client.config.client_side_validation && task_create.nil?
-        raise ArgumentError, "Missing the required parameter 'task_create' when calling IngestionClient.create_task"
+        raise ArgumentError, "Parameter `task_create` is required when calling `create_task`."
       end
 
       path = '/1/tasks'
@@ -197,7 +202,7 @@ module Algolia
     def custom_delete_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling IngestionClient.custom_delete"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -240,7 +245,7 @@ module Algolia
     def custom_get_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling IngestionClient.custom_get"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -284,7 +289,7 @@ module Algolia
     def custom_post_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling IngestionClient.custom_post"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -329,7 +334,7 @@ module Algolia
     def custom_put_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling IngestionClient.custom_put"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -372,7 +377,7 @@ module Algolia
     def delete_authentication_with_http_info(authentication_id, request_options = {})
       # verify the required parameter 'authentication_id' is set
       if @api_client.config.client_side_validation && authentication_id.nil?
-        raise ArgumentError, "Missing the required parameter 'authentication_id' when calling IngestionClient.delete_authentication"
+        raise ArgumentError, "Parameter `authentication_id` is required when calling `delete_authentication`."
       end
 
       path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', @api_client.encode_uri(authentication_id.to_s))
@@ -412,7 +417,7 @@ module Algolia
     def delete_destination_with_http_info(destination_id, request_options = {})
       # verify the required parameter 'destination_id' is set
       if @api_client.config.client_side_validation && destination_id.nil?
-        raise ArgumentError, "Missing the required parameter 'destination_id' when calling IngestionClient.delete_destination"
+        raise ArgumentError, "Parameter `destination_id` is required when calling `delete_destination`."
       end
 
       path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', @api_client.encode_uri(destination_id.to_s))
@@ -452,7 +457,7 @@ module Algolia
     def delete_source_with_http_info(source_id, request_options = {})
       # verify the required parameter 'source_id' is set
       if @api_client.config.client_side_validation && source_id.nil?
-        raise ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.delete_source"
+        raise ArgumentError, "Parameter `source_id` is required when calling `delete_source`."
       end
 
       path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', @api_client.encode_uri(source_id.to_s))
@@ -492,7 +497,7 @@ module Algolia
     def delete_task_with_http_info(task_id, request_options = {})
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
-        raise ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.delete_task"
+        raise ArgumentError, "Parameter `task_id` is required when calling `delete_task`."
       end
 
       path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', @api_client.encode_uri(task_id.to_s))
@@ -532,7 +537,7 @@ module Algolia
     def disable_task_with_http_info(task_id, request_options = {})
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
-        raise ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.disable_task"
+        raise ArgumentError, "Parameter `task_id` is required when calling `disable_task`."
       end
 
       path = '/1/tasks/{taskID}/disable'.sub('{' + 'taskID' + '}', @api_client.encode_uri(task_id.to_s))
@@ -572,7 +577,7 @@ module Algolia
     def enable_task_with_http_info(task_id, request_options = {})
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
-        raise ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.enable_task"
+        raise ArgumentError, "Parameter `task_id` is required when calling `enable_task`."
       end
 
       path = '/1/tasks/{taskID}/enable'.sub('{' + 'taskID' + '}', @api_client.encode_uri(task_id.to_s))
@@ -612,7 +617,7 @@ module Algolia
     def get_authentication_with_http_info(authentication_id, request_options = {})
       # verify the required parameter 'authentication_id' is set
       if @api_client.config.client_side_validation && authentication_id.nil?
-        raise ArgumentError, "Missing the required parameter 'authentication_id' when calling IngestionClient.get_authentication"
+        raise ArgumentError, "Parameter `authentication_id` is required when calling `get_authentication`."
       end
 
       path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', @api_client.encode_uri(authentication_id.to_s))
@@ -703,7 +708,7 @@ module Algolia
     def get_destination_with_http_info(destination_id, request_options = {})
       # verify the required parameter 'destination_id' is set
       if @api_client.config.client_side_validation && destination_id.nil?
-        raise ArgumentError, "Missing the required parameter 'destination_id' when calling IngestionClient.get_destination"
+        raise ArgumentError, "Parameter `destination_id` is required when calling `get_destination`."
       end
 
       path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', @api_client.encode_uri(destination_id.to_s))
@@ -794,7 +799,7 @@ module Algolia
     def get_docker_source_streams_with_http_info(source_id, request_options = {})
       # verify the required parameter 'source_id' is set
       if @api_client.config.client_side_validation && source_id.nil?
-        raise ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.get_docker_source_streams"
+        raise ArgumentError, "Parameter `source_id` is required when calling `get_docker_source_streams`."
       end
 
       path = '/1/sources/{sourceID}/discover'.sub('{' + 'sourceID' + '}', @api_client.encode_uri(source_id.to_s))
@@ -835,11 +840,11 @@ module Algolia
     def get_event_with_http_info(run_id, event_id, request_options = {})
       # verify the required parameter 'run_id' is set
       if @api_client.config.client_side_validation && run_id.nil?
-        raise ArgumentError, "Missing the required parameter 'run_id' when calling IngestionClient.get_event"
+        raise ArgumentError, "Parameter `run_id` is required when calling `get_event`."
       end
       # verify the required parameter 'event_id' is set
       if @api_client.config.client_side_validation && event_id.nil?
-        raise ArgumentError, "Missing the required parameter 'event_id' when calling IngestionClient.get_event"
+        raise ArgumentError, "Parameter `event_id` is required when calling `get_event`."
       end
 
       path = '/1/runs/{runID}/events/{eventID}'.sub('{' + 'runID' + '}', @api_client.encode_uri(run_id.to_s)).sub('{' + 'eventID' + '}', @api_client.encode_uri(event_id.to_s))
@@ -889,7 +894,7 @@ module Algolia
                                   request_options = {})
       # verify the required parameter 'run_id' is set
       if @api_client.config.client_side_validation && run_id.nil?
-        raise ArgumentError, "Missing the required parameter 'run_id' when calling IngestionClient.get_events"
+        raise ArgumentError, "Parameter `run_id` is required when calling `get_events`."
       end
 
       path = '/1/runs/{runID}/events'.sub('{' + 'runID' + '}', @api_client.encode_uri(run_id.to_s))
@@ -945,7 +950,7 @@ module Algolia
     def get_run_with_http_info(run_id, request_options = {})
       # verify the required parameter 'run_id' is set
       if @api_client.config.client_side_validation && run_id.nil?
-        raise ArgumentError, "Missing the required parameter 'run_id' when calling IngestionClient.get_run"
+        raise ArgumentError, "Parameter `run_id` is required when calling `get_run`."
       end
 
       path = '/1/runs/{runID}'.sub('{' + 'runID' + '}', @api_client.encode_uri(run_id.to_s))
@@ -1042,7 +1047,7 @@ module Algolia
     def get_source_with_http_info(source_id, request_options = {})
       # verify the required parameter 'source_id' is set
       if @api_client.config.client_side_validation && source_id.nil?
-        raise ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.get_source"
+        raise ArgumentError, "Parameter `source_id` is required when calling `get_source`."
       end
 
       path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', @api_client.encode_uri(source_id.to_s))
@@ -1133,7 +1138,7 @@ module Algolia
     def get_task_with_http_info(task_id, request_options = {})
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
-        raise ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.get_task"
+        raise ArgumentError, "Parameter `task_id` is required when calling `get_task`."
       end
 
       path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', @api_client.encode_uri(task_id.to_s))
@@ -1235,7 +1240,7 @@ module Algolia
     def run_task_with_http_info(task_id, request_options = {})
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
-        raise ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.run_task"
+        raise ArgumentError, "Parameter `task_id` is required when calling `run_task`."
       end
 
       path = '/1/tasks/{taskID}/run'.sub('{' + 'taskID' + '}', @api_client.encode_uri(task_id.to_s))
@@ -1275,7 +1280,7 @@ module Algolia
     def search_authentications_with_http_info(authentication_search, request_options = {})
       # verify the required parameter 'authentication_search' is set
       if @api_client.config.client_side_validation && authentication_search.nil?
-        raise ArgumentError, "Missing the required parameter 'authentication_search' when calling IngestionClient.search_authentications"
+        raise ArgumentError, "Parameter `authentication_search` is required when calling `search_authentications`."
       end
 
       path = '/1/authentications/search'
@@ -1315,7 +1320,7 @@ module Algolia
     def search_destinations_with_http_info(destination_search, request_options = {})
       # verify the required parameter 'destination_search' is set
       if @api_client.config.client_side_validation && destination_search.nil?
-        raise ArgumentError, "Missing the required parameter 'destination_search' when calling IngestionClient.search_destinations"
+        raise ArgumentError, "Parameter `destination_search` is required when calling `search_destinations`."
       end
 
       path = '/1/destinations/search'
@@ -1355,7 +1360,7 @@ module Algolia
     def search_sources_with_http_info(source_search, request_options = {})
       # verify the required parameter 'source_search' is set
       if @api_client.config.client_side_validation && source_search.nil?
-        raise ArgumentError, "Missing the required parameter 'source_search' when calling IngestionClient.search_sources"
+        raise ArgumentError, "Parameter `source_search` is required when calling `search_sources`."
       end
 
       path = '/1/sources/search'
@@ -1395,7 +1400,7 @@ module Algolia
     def search_tasks_with_http_info(task_search, request_options = {})
       # verify the required parameter 'task_search' is set
       if @api_client.config.client_side_validation && task_search.nil?
-        raise ArgumentError, "Missing the required parameter 'task_search' when calling IngestionClient.search_tasks"
+        raise ArgumentError, "Parameter `task_search` is required when calling `search_tasks`."
       end
 
       path = '/1/tasks/search'
@@ -1435,7 +1440,7 @@ module Algolia
     def trigger_docker_source_discover_with_http_info(source_id, request_options = {})
       # verify the required parameter 'source_id' is set
       if @api_client.config.client_side_validation && source_id.nil?
-        raise ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.trigger_docker_source_discover"
+        raise ArgumentError, "Parameter `source_id` is required when calling `trigger_docker_source_discover`."
       end
 
       path = '/1/sources/{sourceID}/discover'.sub('{' + 'sourceID' + '}', @api_client.encode_uri(source_id.to_s))
@@ -1476,11 +1481,11 @@ module Algolia
     def update_authentication_with_http_info(authentication_id, authentication_update, request_options = {})
       # verify the required parameter 'authentication_id' is set
       if @api_client.config.client_side_validation && authentication_id.nil?
-        raise ArgumentError, "Missing the required parameter 'authentication_id' when calling IngestionClient.update_authentication"
+        raise ArgumentError, "Parameter `authentication_id` is required when calling `update_authentication`."
       end
       # verify the required parameter 'authentication_update' is set
       if @api_client.config.client_side_validation && authentication_update.nil?
-        raise ArgumentError, "Missing the required parameter 'authentication_update' when calling IngestionClient.update_authentication"
+        raise ArgumentError, "Parameter `authentication_update` is required when calling `update_authentication`."
       end
 
       path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', @api_client.encode_uri(authentication_id.to_s))
@@ -1522,11 +1527,11 @@ module Algolia
     def update_destination_with_http_info(destination_id, destination_update, request_options = {})
       # verify the required parameter 'destination_id' is set
       if @api_client.config.client_side_validation && destination_id.nil?
-        raise ArgumentError, "Missing the required parameter 'destination_id' when calling IngestionClient.update_destination"
+        raise ArgumentError, "Parameter `destination_id` is required when calling `update_destination`."
       end
       # verify the required parameter 'destination_update' is set
       if @api_client.config.client_side_validation && destination_update.nil?
-        raise ArgumentError, "Missing the required parameter 'destination_update' when calling IngestionClient.update_destination"
+        raise ArgumentError, "Parameter `destination_update` is required when calling `update_destination`."
       end
 
       path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', @api_client.encode_uri(destination_id.to_s))
@@ -1568,11 +1573,11 @@ module Algolia
     def update_source_with_http_info(source_id, source_update, request_options = {})
       # verify the required parameter 'source_id' is set
       if @api_client.config.client_side_validation && source_id.nil?
-        raise ArgumentError, "Missing the required parameter 'source_id' when calling IngestionClient.update_source"
+        raise ArgumentError, "Parameter `source_id` is required when calling `update_source`."
       end
       # verify the required parameter 'source_update' is set
       if @api_client.config.client_side_validation && source_update.nil?
-        raise ArgumentError, "Missing the required parameter 'source_update' when calling IngestionClient.update_source"
+        raise ArgumentError, "Parameter `source_update` is required when calling `update_source`."
       end
 
       path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', @api_client.encode_uri(source_id.to_s))
@@ -1614,11 +1619,11 @@ module Algolia
     def update_task_with_http_info(task_id, task_update, request_options = {})
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
-        raise ArgumentError, "Missing the required parameter 'task_id' when calling IngestionClient.update_task"
+        raise ArgumentError, "Parameter `task_id` is required when calling `update_task`."
       end
       # verify the required parameter 'task_update' is set
       if @api_client.config.client_side_validation && task_update.nil?
-        raise ArgumentError, "Missing the required parameter 'task_update' when calling IngestionClient.update_task"
+        raise ArgumentError, "Parameter `task_update` is required when calling `update_task`."
       end
 
       path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', @api_client.encode_uri(task_id.to_s))

@@ -13,12 +13,11 @@ module Algolia
       @hosts = hosts
       @app_id = app_id
       @api_key = api_key
-      @client_side_validation = true
-      @middlewares = Hash.new { |h, k| h[k] = [] }
-      @read_timeout = 30_000
-      @write_timeout = 5000
-      @connect_timeout = 2000
-      @compression_type = 'none'
+      @client_side_validation = opts[:client_side_validation].nil? ? true : opts[:client_side_validation]
+      @write_timeout = opts[:write_timeout] || 30_000
+      @read_timeout = opts[:read_timeout] || 5_000
+      @connect_timeout = opts[:connect_timeout] || 2_000
+      @compression_type = opts[:compression_type] || 'none'
       @requester = opts[:requester]
 
       @user_agent = UserAgent.new.add(client_name, VERSION)

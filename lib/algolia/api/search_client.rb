@@ -5,14 +5,14 @@ module Algolia
     attr_accessor :api_client
 
     def initialize(config = nil)
-      raise '`config` must be provided' if config.nil?
-      raise '`config.app_id` must be provided' if config.app_id.nil? || config.app_id == ''
-      raise '`config.api_key` must be provided' if config.api_key.nil? || config.api_key == ''
+      raise '`config` is missing.' if config.nil?
+      raise '`app_id` is missing.' if config.app_id.nil? || config.app_id == ''
+      raise '`api_key` is missing.' if config.api_key.nil? || config.api_key == ''
 
       @api_client = Algolia::ApiClient.new(config)
     end
 
-    def self.create(app_id, api_key)
+    def self.create(app_id, api_key, opts = {})
       hosts = []
 
       hosts << Transport::StatefulHost.new("#{app_id}-dsn.algolia.net", accept: CallType::READ)
@@ -22,7 +22,7 @@ module Algolia
         Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", accept: CallType::READ | CallType::WRITE)
       end.shuffle
 
-      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Search')
+      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Search', opts)
       create_with_config(config)
     end
 
@@ -38,7 +38,7 @@ module Algolia
     def add_api_key_with_http_info(api_key, request_options = {})
       # verify the required parameter 'api_key' is set
       if @api_client.config.client_side_validation && api_key.nil?
-        raise ArgumentError, "Missing the required parameter 'api_key' when calling SearchClient.add_api_key"
+        raise ArgumentError, "Parameter `api_key` is required when calling `add_api_key`."
       end
 
       path = '/1/keys'
@@ -80,15 +80,15 @@ module Algolia
     def add_or_update_object_with_http_info(index_name, object_id, body, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.add_or_update_object"
+        raise ArgumentError, "Parameter `index_name` is required when calling `add_or_update_object`."
       end
       # verify the required parameter 'object_id' is set
       if @api_client.config.client_side_validation && object_id.nil?
-        raise ArgumentError, "Missing the required parameter 'object_id' when calling SearchClient.add_or_update_object"
+        raise ArgumentError, "Parameter `object_id` is required when calling `add_or_update_object`."
       end
       # verify the required parameter 'body' is set
       if @api_client.config.client_side_validation && body.nil?
-        raise ArgumentError, "Missing the required parameter 'body' when calling SearchClient.add_or_update_object"
+        raise ArgumentError, "Parameter `body` is required when calling `add_or_update_object`."
       end
 
       path = '/1/indexes/{indexName}/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
@@ -131,7 +131,7 @@ module Algolia
     def append_source_with_http_info(source, request_options = {})
       # verify the required parameter 'source' is set
       if @api_client.config.client_side_validation && source.nil?
-        raise ArgumentError, "Missing the required parameter 'source' when calling SearchClient.append_source"
+        raise ArgumentError, "Parameter `source` is required when calling `append_source`."
       end
 
       path = '/1/security/sources/append'
@@ -172,7 +172,7 @@ module Algolia
     def assign_user_id_with_http_info(x_algolia_user_id, assign_user_id_params, request_options = {})
       # verify the required parameter 'x_algolia_user_id' is set
       if @api_client.config.client_side_validation && x_algolia_user_id.nil?
-        raise ArgumentError, "Missing the required parameter 'x_algolia_user_id' when calling SearchClient.assign_user_id"
+        raise ArgumentError, "Parameter `x_algolia_user_id` is required when calling `assign_user_id`."
       end
 
       pattern = /^[a-zA-Z0-9 \-*.]+$/
@@ -182,7 +182,7 @@ module Algolia
 
       # verify the required parameter 'assign_user_id_params' is set
       if @api_client.config.client_side_validation && assign_user_id_params.nil?
-        raise ArgumentError, "Missing the required parameter 'assign_user_id_params' when calling SearchClient.assign_user_id"
+        raise ArgumentError, "Parameter `assign_user_id_params` is required when calling `assign_user_id`."
       end
 
       path = '/1/clusters/mapping'
@@ -225,11 +225,11 @@ module Algolia
     def batch_with_http_info(index_name, batch_write_params, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.batch"
+        raise ArgumentError, "Parameter `index_name` is required when calling `batch`."
       end
       # verify the required parameter 'batch_write_params' is set
       if @api_client.config.client_side_validation && batch_write_params.nil?
-        raise ArgumentError, "Missing the required parameter 'batch_write_params' when calling SearchClient.batch"
+        raise ArgumentError, "Parameter `batch_write_params` is required when calling `batch`."
       end
 
       path = '/1/indexes/{indexName}/batch'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
@@ -271,7 +271,7 @@ module Algolia
     def batch_assign_user_ids_with_http_info(x_algolia_user_id, batch_assign_user_ids_params, request_options = {})
       # verify the required parameter 'x_algolia_user_id' is set
       if @api_client.config.client_side_validation && x_algolia_user_id.nil?
-        raise ArgumentError, "Missing the required parameter 'x_algolia_user_id' when calling SearchClient.batch_assign_user_ids"
+        raise ArgumentError, "Parameter `x_algolia_user_id` is required when calling `batch_assign_user_ids`."
       end
 
       pattern = /^[a-zA-Z0-9 \-*.]+$/
@@ -281,7 +281,7 @@ module Algolia
 
       # verify the required parameter 'batch_assign_user_ids_params' is set
       if @api_client.config.client_side_validation && batch_assign_user_ids_params.nil?
-        raise ArgumentError, "Missing the required parameter 'batch_assign_user_ids_params' when calling SearchClient.batch_assign_user_ids"
+        raise ArgumentError, "Parameter `batch_assign_user_ids_params` is required when calling `batch_assign_user_ids`."
       end
 
       path = '/1/clusters/mapping/batch'
@@ -324,11 +324,11 @@ module Algolia
     def batch_dictionary_entries_with_http_info(dictionary_name, batch_dictionary_entries_params, request_options = {})
       # verify the required parameter 'dictionary_name' is set
       if @api_client.config.client_side_validation && dictionary_name.nil?
-        raise ArgumentError, "Missing the required parameter 'dictionary_name' when calling SearchClient.batch_dictionary_entries"
+        raise ArgumentError, "Parameter `dictionary_name` is required when calling `batch_dictionary_entries`."
       end
       # verify the required parameter 'batch_dictionary_entries_params' is set
       if @api_client.config.client_side_validation && batch_dictionary_entries_params.nil?
-        raise ArgumentError, "Missing the required parameter 'batch_dictionary_entries_params' when calling SearchClient.batch_dictionary_entries"
+        raise ArgumentError, "Parameter `batch_dictionary_entries_params` is required when calling `batch_dictionary_entries`."
       end
 
       path = '/1/dictionaries/{dictionaryName}/batch'.sub('{' + 'dictionaryName' + '}', @api_client.encode_uri(dictionary_name.to_s))
@@ -370,7 +370,7 @@ module Algolia
     def browse_with_http_info(index_name, browse_params = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.browse"
+        raise ArgumentError, "Parameter `index_name` is required when calling `browse`."
       end
 
       path = '/1/indexes/{indexName}/browse'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
@@ -412,7 +412,7 @@ module Algolia
     def clear_all_synonyms_with_http_info(index_name, forward_to_replicas = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.clear_all_synonyms"
+        raise ArgumentError, "Parameter `index_name` is required when calling `clear_all_synonyms`."
       end
 
       path = '/1/indexes/{indexName}/synonyms/clear'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
@@ -454,7 +454,7 @@ module Algolia
     def clear_objects_with_http_info(index_name, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.clear_objects"
+        raise ArgumentError, "Parameter `index_name` is required when calling `clear_objects`."
       end
 
       path = '/1/indexes/{indexName}/clear'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
@@ -495,7 +495,7 @@ module Algolia
     def clear_rules_with_http_info(index_name, forward_to_replicas = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.clear_rules"
+        raise ArgumentError, "Parameter `index_name` is required when calling `clear_rules`."
       end
 
       path = '/1/indexes/{indexName}/rules/clear'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
@@ -538,7 +538,7 @@ module Algolia
     def custom_delete_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling SearchClient.custom_delete"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -581,7 +581,7 @@ module Algolia
     def custom_get_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling SearchClient.custom_get"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -625,7 +625,7 @@ module Algolia
     def custom_post_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling SearchClient.custom_post"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -670,7 +670,7 @@ module Algolia
     def custom_put_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
-        raise ArgumentError, "Missing the required parameter 'path' when calling SearchClient.custom_put"
+        raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
 
       path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
@@ -713,7 +713,7 @@ module Algolia
     def delete_api_key_with_http_info(key, request_options = {})
       # verify the required parameter 'key' is set
       if @api_client.config.client_side_validation && key.nil?
-        raise ArgumentError, "Missing the required parameter 'key' when calling SearchClient.delete_api_key"
+        raise ArgumentError, "Parameter `key` is required when calling `delete_api_key`."
       end
 
       path = '/1/keys/{key}'.sub('{' + 'key' + '}', @api_client.encode_uri(key.to_s))
@@ -754,11 +754,11 @@ module Algolia
     def delete_by_with_http_info(index_name, delete_by_params, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.delete_by"
+        raise ArgumentError, "Parameter `index_name` is required when calling `delete_by`."
       end
       # verify the required parameter 'delete_by_params' is set
       if @api_client.config.client_side_validation && delete_by_params.nil?
-        raise ArgumentError, "Missing the required parameter 'delete_by_params' when calling SearchClient.delete_by"
+        raise ArgumentError, "Parameter `delete_by_params` is required when calling `delete_by`."
       end
 
       path = '/1/indexes/{indexName}/deleteByQuery'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
@@ -799,7 +799,7 @@ module Algolia
     def delete_index_with_http_info(index_name, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.delete_index"
+        raise ArgumentError, "Parameter `index_name` is required when calling `delete_index`."
       end
 
       path = '/1/indexes/{indexName}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
@@ -840,11 +840,11 @@ module Algolia
     def delete_object_with_http_info(index_name, object_id, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.delete_object"
+        raise ArgumentError, "Parameter `index_name` is required when calling `delete_object`."
       end
       # verify the required parameter 'object_id' is set
       if @api_client.config.client_side_validation && object_id.nil?
-        raise ArgumentError, "Missing the required parameter 'object_id' when calling SearchClient.delete_object"
+        raise ArgumentError, "Parameter `object_id` is required when calling `delete_object`."
       end
 
       path = '/1/indexes/{indexName}/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
@@ -888,11 +888,11 @@ module Algolia
     def delete_rule_with_http_info(index_name, object_id, forward_to_replicas = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.delete_rule"
+        raise ArgumentError, "Parameter `index_name` is required when calling `delete_rule`."
       end
       # verify the required parameter 'object_id' is set
       if @api_client.config.client_side_validation && object_id.nil?
-        raise ArgumentError, "Missing the required parameter 'object_id' when calling SearchClient.delete_rule"
+        raise ArgumentError, "Parameter `object_id` is required when calling `delete_rule`."
       end
 
       path = '/1/indexes/{indexName}/rules/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
@@ -936,7 +936,7 @@ module Algolia
     def delete_source_with_http_info(source, request_options = {})
       # verify the required parameter 'source' is set
       if @api_client.config.client_side_validation && source.nil?
-        raise ArgumentError, "Missing the required parameter 'source' when calling SearchClient.delete_source"
+        raise ArgumentError, "Parameter `source` is required when calling `delete_source`."
       end
 
       path = '/1/security/sources/{source}'.sub('{' + 'source' + '}', @api_client.encode_uri(source.to_s))
@@ -978,11 +978,11 @@ module Algolia
     def delete_synonym_with_http_info(index_name, object_id, forward_to_replicas = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.delete_synonym"
+        raise ArgumentError, "Parameter `index_name` is required when calling `delete_synonym`."
       end
       # verify the required parameter 'object_id' is set
       if @api_client.config.client_side_validation && object_id.nil?
-        raise ArgumentError, "Missing the required parameter 'object_id' when calling SearchClient.delete_synonym"
+        raise ArgumentError, "Parameter `object_id` is required when calling `delete_synonym`."
       end
 
       path = '/1/indexes/{indexName}/synonyms/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
@@ -1026,7 +1026,7 @@ module Algolia
     def get_api_key_with_http_info(key, request_options = {})
       # verify the required parameter 'key' is set
       if @api_client.config.client_side_validation && key.nil?
-        raise ArgumentError, "Missing the required parameter 'key' when calling SearchClient.get_api_key"
+        raise ArgumentError, "Parameter `key` is required when calling `get_api_key`."
       end
 
       path = '/1/keys/{key}'.sub('{' + 'key' + '}', @api_client.encode_uri(key.to_s))
@@ -1183,11 +1183,11 @@ module Algolia
     def get_object_with_http_info(index_name, object_id, attributes_to_retrieve = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.get_object"
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_object`."
       end
       # verify the required parameter 'object_id' is set
       if @api_client.config.client_side_validation && object_id.nil?
-        raise ArgumentError, "Missing the required parameter 'object_id' when calling SearchClient.get_object"
+        raise ArgumentError, "Parameter `object_id` is required when calling `get_object`."
       end
 
       path = '/1/indexes/{indexName}/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
@@ -1231,7 +1231,7 @@ module Algolia
     def get_objects_with_http_info(get_objects_params, request_options = {})
       # verify the required parameter 'get_objects_params' is set
       if @api_client.config.client_side_validation && get_objects_params.nil?
-        raise ArgumentError, "Missing the required parameter 'get_objects_params' when calling SearchClient.get_objects"
+        raise ArgumentError, "Parameter `get_objects_params` is required when calling `get_objects`."
       end
 
       path = '/1/indexes/*/objects'
@@ -1272,11 +1272,11 @@ module Algolia
     def get_rule_with_http_info(index_name, object_id, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.get_rule"
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_rule`."
       end
       # verify the required parameter 'object_id' is set
       if @api_client.config.client_side_validation && object_id.nil?
-        raise ArgumentError, "Missing the required parameter 'object_id' when calling SearchClient.get_rule"
+        raise ArgumentError, "Parameter `object_id` is required when calling `get_rule`."
       end
 
       path = '/1/indexes/{indexName}/rules/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
@@ -1318,7 +1318,7 @@ module Algolia
     def get_settings_with_http_info(index_name, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.get_settings"
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_settings`."
       end
 
       path = '/1/indexes/{indexName}/settings'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
@@ -1392,11 +1392,11 @@ module Algolia
     def get_synonym_with_http_info(index_name, object_id, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.get_synonym"
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_synonym`."
       end
       # verify the required parameter 'object_id' is set
       if @api_client.config.client_side_validation && object_id.nil?
-        raise ArgumentError, "Missing the required parameter 'object_id' when calling SearchClient.get_synonym"
+        raise ArgumentError, "Parameter `object_id` is required when calling `get_synonym`."
       end
 
       path = '/1/indexes/{indexName}/synonyms/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
@@ -1439,11 +1439,11 @@ module Algolia
     def get_task_with_http_info(index_name, task_id, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.get_task"
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_task`."
       end
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
-        raise ArgumentError, "Missing the required parameter 'task_id' when calling SearchClient.get_task"
+        raise ArgumentError, "Parameter `task_id` is required when calling `get_task`."
       end
 
       path = '/1/indexes/{indexName}/task/{taskID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'taskID' + '}',
@@ -1518,7 +1518,7 @@ module Algolia
     def get_user_id_with_http_info(user_id, request_options = {})
       # verify the required parameter 'user_id' is set
       if @api_client.config.client_side_validation && user_id.nil?
-        raise ArgumentError, "Missing the required parameter 'user_id' when calling SearchClient.get_user_id"
+        raise ArgumentError, "Parameter `user_id` is required when calling `get_user_id`."
       end
 
       pattern = /^[a-zA-Z0-9 \-*.]+$/
@@ -1751,7 +1751,7 @@ module Algolia
     def multiple_batch_with_http_info(batch_params, request_options = {})
       # verify the required parameter 'batch_params' is set
       if @api_client.config.client_side_validation && batch_params.nil?
-        raise ArgumentError, "Missing the required parameter 'batch_params' when calling SearchClient.multiple_batch"
+        raise ArgumentError, "Parameter `batch_params` is required when calling `multiple_batch`."
       end
 
       path = '/1/indexes/*/batch'
@@ -1792,11 +1792,11 @@ module Algolia
     def operation_index_with_http_info(index_name, operation_index_params, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.operation_index"
+        raise ArgumentError, "Parameter `index_name` is required when calling `operation_index`."
       end
       # verify the required parameter 'operation_index_params' is set
       if @api_client.config.client_side_validation && operation_index_params.nil?
-        raise ArgumentError, "Missing the required parameter 'operation_index_params' when calling SearchClient.operation_index"
+        raise ArgumentError, "Parameter `operation_index_params` is required when calling `operation_index`."
       end
 
       path = '/1/indexes/{indexName}/operation'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
@@ -1840,15 +1840,15 @@ module Algolia
     def partial_update_object_with_http_info(index_name, object_id, attributes_to_update, create_if_not_exists = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.partial_update_object"
+        raise ArgumentError, "Parameter `index_name` is required when calling `partial_update_object`."
       end
       # verify the required parameter 'object_id' is set
       if @api_client.config.client_side_validation && object_id.nil?
-        raise ArgumentError, "Missing the required parameter 'object_id' when calling SearchClient.partial_update_object"
+        raise ArgumentError, "Parameter `object_id` is required when calling `partial_update_object`."
       end
       # verify the required parameter 'attributes_to_update' is set
       if @api_client.config.client_side_validation && attributes_to_update.nil?
-        raise ArgumentError, "Missing the required parameter 'attributes_to_update' when calling SearchClient.partial_update_object"
+        raise ArgumentError, "Parameter `attributes_to_update` is required when calling `partial_update_object`."
       end
 
       path = '/1/indexes/{indexName}/{objectID}/partial'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
@@ -1893,7 +1893,7 @@ module Algolia
     def remove_user_id_with_http_info(user_id, request_options = {})
       # verify the required parameter 'user_id' is set
       if @api_client.config.client_side_validation && user_id.nil?
-        raise ArgumentError, "Missing the required parameter 'user_id' when calling SearchClient.remove_user_id"
+        raise ArgumentError, "Parameter `user_id` is required when calling `remove_user_id`."
       end
 
       pattern = /^[a-zA-Z0-9 \-*.]+$/
@@ -1938,7 +1938,7 @@ module Algolia
     def replace_sources_with_http_info(source, request_options = {})
       # verify the required parameter 'source' is set
       if @api_client.config.client_side_validation && source.nil?
-        raise ArgumentError, "Missing the required parameter 'source' when calling SearchClient.replace_sources"
+        raise ArgumentError, "Parameter `source` is required when calling `replace_sources`."
       end
 
       path = '/1/security/sources'
@@ -1978,7 +1978,7 @@ module Algolia
     def restore_api_key_with_http_info(key, request_options = {})
       # verify the required parameter 'key' is set
       if @api_client.config.client_side_validation && key.nil?
-        raise ArgumentError, "Missing the required parameter 'key' when calling SearchClient.restore_api_key"
+        raise ArgumentError, "Parameter `key` is required when calling `restore_api_key`."
       end
 
       path = '/1/keys/{key}/restore'.sub('{' + 'key' + '}', @api_client.encode_uri(key.to_s))
@@ -2019,11 +2019,11 @@ module Algolia
     def save_object_with_http_info(index_name, body, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.save_object"
+        raise ArgumentError, "Parameter `index_name` is required when calling `save_object`."
       end
       # verify the required parameter 'body' is set
       if @api_client.config.client_side_validation && body.nil?
-        raise ArgumentError, "Missing the required parameter 'body' when calling SearchClient.save_object"
+        raise ArgumentError, "Parameter `body` is required when calling `save_object`."
       end
 
       path = '/1/indexes/{indexName}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
@@ -2067,15 +2067,15 @@ module Algolia
     def save_rule_with_http_info(index_name, object_id, rule, forward_to_replicas = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.save_rule"
+        raise ArgumentError, "Parameter `index_name` is required when calling `save_rule`."
       end
       # verify the required parameter 'object_id' is set
       if @api_client.config.client_side_validation && object_id.nil?
-        raise ArgumentError, "Missing the required parameter 'object_id' when calling SearchClient.save_rule"
+        raise ArgumentError, "Parameter `object_id` is required when calling `save_rule`."
       end
       # verify the required parameter 'rule' is set
       if @api_client.config.client_side_validation && rule.nil?
-        raise ArgumentError, "Missing the required parameter 'rule' when calling SearchClient.save_rule"
+        raise ArgumentError, "Parameter `rule` is required when calling `save_rule`."
       end
 
       path = '/1/indexes/{indexName}/rules/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
@@ -2123,11 +2123,11 @@ module Algolia
     def save_rules_with_http_info(index_name, rules, forward_to_replicas = nil, clear_existing_rules = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.save_rules"
+        raise ArgumentError, "Parameter `index_name` is required when calling `save_rules`."
       end
       # verify the required parameter 'rules' is set
       if @api_client.config.client_side_validation && rules.nil?
-        raise ArgumentError, "Missing the required parameter 'rules' when calling SearchClient.save_rules"
+        raise ArgumentError, "Parameter `rules` is required when calling `save_rules`."
       end
 
       path = '/1/indexes/{indexName}/rules/batch'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
@@ -2175,15 +2175,15 @@ module Algolia
     def save_synonym_with_http_info(index_name, object_id, synonym_hit, forward_to_replicas = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.save_synonym"
+        raise ArgumentError, "Parameter `index_name` is required when calling `save_synonym`."
       end
       # verify the required parameter 'object_id' is set
       if @api_client.config.client_side_validation && object_id.nil?
-        raise ArgumentError, "Missing the required parameter 'object_id' when calling SearchClient.save_synonym"
+        raise ArgumentError, "Parameter `object_id` is required when calling `save_synonym`."
       end
       # verify the required parameter 'synonym_hit' is set
       if @api_client.config.client_side_validation && synonym_hit.nil?
-        raise ArgumentError, "Missing the required parameter 'synonym_hit' when calling SearchClient.save_synonym"
+        raise ArgumentError, "Parameter `synonym_hit` is required when calling `save_synonym`."
       end
 
       path = '/1/indexes/{indexName}/synonyms/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
@@ -2231,11 +2231,11 @@ module Algolia
     def save_synonyms_with_http_info(index_name, synonym_hit, forward_to_replicas = nil, replace_existing_synonyms = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.save_synonyms"
+        raise ArgumentError, "Parameter `index_name` is required when calling `save_synonyms`."
       end
       # verify the required parameter 'synonym_hit' is set
       if @api_client.config.client_side_validation && synonym_hit.nil?
-        raise ArgumentError, "Missing the required parameter 'synonym_hit' when calling SearchClient.save_synonyms"
+        raise ArgumentError, "Parameter `synonym_hit` is required when calling `save_synonyms`."
       end
 
       path = '/1/indexes/{indexName}/synonyms/batch'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
@@ -2280,7 +2280,7 @@ module Algolia
     def search_with_http_info(search_method_params, request_options = {})
       # verify the required parameter 'search_method_params' is set
       if @api_client.config.client_side_validation && search_method_params.nil?
-        raise ArgumentError, "Missing the required parameter 'search_method_params' when calling SearchClient.search"
+        raise ArgumentError, "Parameter `search_method_params` is required when calling `search`."
       end
 
       path = '/1/indexes/*/queries'
@@ -2321,11 +2321,11 @@ module Algolia
     def search_dictionary_entries_with_http_info(dictionary_name, search_dictionary_entries_params, request_options = {})
       # verify the required parameter 'dictionary_name' is set
       if @api_client.config.client_side_validation && dictionary_name.nil?
-        raise ArgumentError, "Missing the required parameter 'dictionary_name' when calling SearchClient.search_dictionary_entries"
+        raise ArgumentError, "Parameter `dictionary_name` is required when calling `search_dictionary_entries`."
       end
       # verify the required parameter 'search_dictionary_entries_params' is set
       if @api_client.config.client_side_validation && search_dictionary_entries_params.nil?
-        raise ArgumentError, "Missing the required parameter 'search_dictionary_entries_params' when calling SearchClient.search_dictionary_entries"
+        raise ArgumentError, "Parameter `search_dictionary_entries_params` is required when calling `search_dictionary_entries`."
       end
 
       path = '/1/dictionaries/{dictionaryName}/search'.sub('{' + 'dictionaryName' + '}', @api_client.encode_uri(dictionary_name.to_s))
@@ -2368,11 +2368,11 @@ module Algolia
     def search_for_facet_values_with_http_info(index_name, facet_name, search_for_facet_values_request = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.search_for_facet_values"
+        raise ArgumentError, "Parameter `index_name` is required when calling `search_for_facet_values`."
       end
       # verify the required parameter 'facet_name' is set
       if @api_client.config.client_side_validation && facet_name.nil?
-        raise ArgumentError, "Missing the required parameter 'facet_name' when calling SearchClient.search_for_facet_values"
+        raise ArgumentError, "Parameter `facet_name` is required when calling `search_for_facet_values`."
       end
 
       path = '/1/indexes/{indexName}/facets/{facetName}/query'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'facetName' + '}',
@@ -2416,7 +2416,7 @@ module Algolia
     def search_rules_with_http_info(index_name, search_rules_params = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.search_rules"
+        raise ArgumentError, "Parameter `index_name` is required when calling `search_rules`."
       end
 
       path = '/1/indexes/{indexName}/rules/search'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
@@ -2458,7 +2458,7 @@ module Algolia
     def search_single_index_with_http_info(index_name, search_params = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.search_single_index"
+        raise ArgumentError, "Parameter `index_name` is required when calling `search_single_index`."
       end
 
       path = '/1/indexes/{indexName}/query'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
@@ -2503,7 +2503,7 @@ module Algolia
     def search_synonyms_with_http_info(index_name, type = nil, page = nil, hits_per_page = nil, search_synonyms_params = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.search_synonyms"
+        raise ArgumentError, "Parameter `index_name` is required when calling `search_synonyms`."
       end
       if @api_client.config.client_side_validation && !page.nil? && page < 0
         raise ArgumentError, 'invalid value for ""page"" when calling SearchClient.search_synonyms, must be greater than or equal to 0.'
@@ -2553,7 +2553,7 @@ module Algolia
     def search_user_ids_with_http_info(search_user_ids_params, request_options = {})
       # verify the required parameter 'search_user_ids_params' is set
       if @api_client.config.client_side_validation && search_user_ids_params.nil?
-        raise ArgumentError, "Missing the required parameter 'search_user_ids_params' when calling SearchClient.search_user_ids"
+        raise ArgumentError, "Parameter `search_user_ids_params` is required when calling `search_user_ids`."
       end
 
       path = '/1/clusters/mapping/search'
@@ -2593,7 +2593,7 @@ module Algolia
     def set_dictionary_settings_with_http_info(dictionary_settings_params, request_options = {})
       # verify the required parameter 'dictionary_settings_params' is set
       if @api_client.config.client_side_validation && dictionary_settings_params.nil?
-        raise ArgumentError, "Missing the required parameter 'dictionary_settings_params' when calling SearchClient.set_dictionary_settings"
+        raise ArgumentError, "Parameter `dictionary_settings_params` is required when calling `set_dictionary_settings`."
       end
 
       path = '/1/dictionaries/*/settings'
@@ -2635,11 +2635,11 @@ module Algolia
     def set_settings_with_http_info(index_name, index_settings, forward_to_replicas = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Missing the required parameter 'index_name' when calling SearchClient.set_settings"
+        raise ArgumentError, "Parameter `index_name` is required when calling `set_settings`."
       end
       # verify the required parameter 'index_settings' is set
       if @api_client.config.client_side_validation && index_settings.nil?
-        raise ArgumentError, "Missing the required parameter 'index_settings' when calling SearchClient.set_settings"
+        raise ArgumentError, "Parameter `index_settings` is required when calling `set_settings`."
       end
 
       path = '/1/indexes/{indexName}/settings'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
@@ -2683,11 +2683,11 @@ module Algolia
     def update_api_key_with_http_info(key, api_key, request_options = {})
       # verify the required parameter 'key' is set
       if @api_client.config.client_side_validation && key.nil?
-        raise ArgumentError, "Missing the required parameter 'key' when calling SearchClient.update_api_key"
+        raise ArgumentError, "Parameter `key` is required when calling `update_api_key`."
       end
       # verify the required parameter 'api_key' is set
       if @api_client.config.client_side_validation && api_key.nil?
-        raise ArgumentError, "Missing the required parameter 'api_key' when calling SearchClient.update_api_key"
+        raise ArgumentError, "Parameter `api_key` is required when calling `update_api_key`."
       end
 
       path = '/1/keys/{key}'.sub('{' + 'key' + '}', @api_client.encode_uri(key.to_s))
