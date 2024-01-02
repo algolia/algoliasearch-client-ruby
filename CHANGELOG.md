@@ -1,4 +1,4 @@
-## [3.0.0.alpha.1](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.alpha.0...3.0.0.alpha.1)
+## [3.0.0.alpha.1](https://github.com/algolia/algoliasearch-client-ruby/tree/3.0.0.alpha.1)
 
 - [9f4f17585](https://github.com/algolia/api-clients-automation/commit/9f4f17585) fix(ruby): support ruby alpha format ([#2447](https://github.com/algolia/api-clients-automation/pull/2447)) by [@millotp](https://github.com/millotp/)
 - [443c8909a](https://github.com/algolia/api-clients-automation/commit/443c8909a) chore(ruby): setup release ([#2446](https://github.com/algolia/api-clients-automation/pull/2446)) by [@millotp](https://github.com/millotp/)
