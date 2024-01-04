@@ -22,9 +22,6 @@ module Algolia
       # Restricts responses to enabled rules. When absent (default), _all_ rules are retrieved.
       attr_accessor :enabled
 
-      # Request options to send with the API call.
-      attr_accessor :request_options
-
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -32,8 +29,7 @@ module Algolia
           :context => :context,
           :page => :page,
           :hits_per_page => :hitsPerPage,
-          :enabled => :enabled,
-          :request_options => :requestOptions
+          :enabled => :enabled
         }
       end
 
@@ -49,8 +45,7 @@ module Algolia
           :context => :String,
           :page => :Integer,
           :hits_per_page => :Integer,
-          :enabled => :Boolean,
-          :request_options => :'Array<Object>'
+          :enabled => :Boolean
         }
       end
 
@@ -97,12 +92,6 @@ module Algolia
         if attributes.key?(:enabled)
           self.enabled = attributes[:enabled]
         end
-
-        if attributes.key?(:request_options)
-          if (value = attributes[:request_options]).is_a?(Array)
-            self.request_options = value
-          end
-        end
       end
 
       # Custom attribute writer method with validation
@@ -147,8 +136,7 @@ module Algolia
           context == other.context &&
           page == other.page &&
           hits_per_page == other.hits_per_page &&
-          enabled == other.enabled &&
-          request_options == other.request_options
+          enabled == other.enabled
       end
 
       # @see the `==` method
@@ -160,7 +148,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [query, context, page, hits_per_page, enabled, request_options].hash
+        [query, context, page, hits_per_page, enabled].hash
       end
 
       # Builds the object from hash

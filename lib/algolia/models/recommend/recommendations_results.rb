@@ -5,7 +5,7 @@ require 'time'
 
 module Algolia
   module Recommend
-    class RecommendationsResponse
+    class RecommendationsResults
       # A/B test ID. This is only included in the response for indices that are part of an A/B test.
       attr_accessor :ab_test_id
 
@@ -163,7 +163,7 @@ module Algolia
           :server_time_ms => :Integer,
           :server_used => :String,
           :user_data => :Object,
-          :hits => :'Array<RecommendHit>',
+          :hits => :'Array<RecommendationsHit>',
           :query => :String,
           :params => :String
         }
@@ -178,7 +178,7 @@ module Algolia
       def self.openapi_all_of
         [
           :BaseSearchResponse,
-          :RecommendHits
+          :RecommendationsHits
         ]
       end
 
@@ -186,14 +186,14 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::RecommendationsResponse` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::RecommendationsResults` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::RecommendationsResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::RecommendationsResults`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v

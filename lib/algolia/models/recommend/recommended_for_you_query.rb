@@ -5,7 +5,7 @@ require 'time'
 
 module Algolia
   module Recommend
-    class TrendingFacetsQuery
+    class RecommendedForYouQuery
       # Algolia index name.
       attr_accessor :index_name
 
@@ -15,10 +15,11 @@ module Algolia
       # Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.
       attr_accessor :max_recommendations
 
-      # Facet name for trending models.
-      attr_accessor :facet_name
-
       attr_accessor :model
+
+      attr_accessor :query_parameters
+
+      attr_accessor :fallback_parameters
 
       class EnumAttributeValidator
         attr_reader :datatype
@@ -48,8 +49,9 @@ module Algolia
           :index_name => :indexName,
           :threshold => :threshold,
           :max_recommendations => :maxRecommendations,
-          :facet_name => :facetName,
-          :model => :model
+          :model => :model,
+          :query_parameters => :queryParameters,
+          :fallback_parameters => :fallbackParameters
         }
       end
 
@@ -64,8 +66,9 @@ module Algolia
           :index_name => :String,
           :threshold => :Integer,
           :max_recommendations => :Integer,
-          :facet_name => :String,
-          :model => :TrendingFacetsModel
+          :model => :RecommendedForYouModel,
+          :query_parameters => :RecommendedForYouQueryParameters,
+          :fallback_parameters => :RecommendedForYouQueryParameters
         }
       end
 
@@ -78,7 +81,7 @@ module Algolia
       def self.openapi_all_of
         [
           :BaseRecommendRequest,
-          :BaseTrendingFacetsQuery
+          :BaseRecommendedForYouQuery
         ]
       end
 
@@ -86,14 +89,14 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::TrendingFacetsQuery` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::RecommendedForYouQuery` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::TrendingFacetsQuery`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::RecommendedForYouQuery`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
@@ -113,14 +116,18 @@ module Algolia
           self.max_recommendations = attributes[:max_recommendations]
         end
 
-        if attributes.key?(:facet_name)
-          self.facet_name = attributes[:facet_name]
-        else
-          self.facet_name = nil
-        end
-
         if attributes.key?(:model)
           self.model = attributes[:model]
+        else
+          self.model = nil
+        end
+
+        if attributes.key?(:query_parameters)
+          self.query_parameters = attributes[:query_parameters]
+        end
+
+        if attributes.key?(:fallback_parameters)
+          self.fallback_parameters = attributes[:fallback_parameters]
         end
       end
 
@@ -151,8 +158,9 @@ module Algolia
           index_name == other.index_name &&
           threshold == other.threshold &&
           max_recommendations == other.max_recommendations &&
-          facet_name == other.facet_name &&
-          model == other.model
+          model == other.model &&
+          query_parameters == other.query_parameters &&
+          fallback_parameters == other.fallback_parameters
       end
 
       # @see the `==` method
@@ -164,7 +172,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [index_name, threshold, max_recommendations, facet_name, model].hash
+        [index_name, threshold, max_recommendations, model, query_parameters, fallback_parameters].hash
       end
 
       # Builds the object from hash

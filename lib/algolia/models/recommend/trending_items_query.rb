@@ -6,6 +6,15 @@ require 'time'
 module Algolia
   module Recommend
     class TrendingItemsQuery
+      # Algolia index name.
+      attr_accessor :index_name
+
+      # Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the recommendations are.
+      attr_accessor :threshold
+
+      # Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.
+      attr_accessor :max_recommendations
+
       # Facet name for trending models.
       attr_accessor :facet_name
 
@@ -17,15 +26,6 @@ module Algolia
       attr_accessor :query_parameters
 
       attr_accessor :fallback_parameters
-
-      # Algolia index name.
-      attr_accessor :index_name
-
-      # Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the recommendations are.
-      attr_accessor :threshold
-
-      # Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.
-      attr_accessor :max_recommendations
 
       class EnumAttributeValidator
         attr_reader :datatype
@@ -52,14 +52,14 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
+          :index_name => :indexName,
+          :threshold => :threshold,
+          :max_recommendations => :maxRecommendations,
           :facet_name => :facetName,
           :facet_value => :facetValue,
           :model => :model,
           :query_parameters => :queryParameters,
-          :fallback_parameters => :fallbackParameters,
-          :index_name => :indexName,
-          :threshold => :threshold,
-          :max_recommendations => :maxRecommendations
+          :fallback_parameters => :fallbackParameters
         }
       end
 
@@ -71,14 +71,14 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
+          :index_name => :String,
+          :threshold => :Integer,
+          :max_recommendations => :Integer,
           :facet_name => :String,
           :facet_value => :String,
           :model => :TrendingItemsModel,
           :query_parameters => :SearchParamsObject,
-          :fallback_parameters => :SearchParamsObject,
-          :index_name => :String,
-          :threshold => :Integer,
-          :max_recommendations => :Integer
+          :fallback_parameters => :SearchParamsObject
         }
       end
 
@@ -112,6 +112,20 @@ module Algolia
           h[k.to_sym] = v
         end
 
+        if attributes.key?(:index_name)
+          self.index_name = attributes[:index_name]
+        else
+          self.index_name = nil
+        end
+
+        if attributes.key?(:threshold)
+          self.threshold = attributes[:threshold]
+        end
+
+        if attributes.key?(:max_recommendations)
+          self.max_recommendations = attributes[:max_recommendations]
+        end
+
         if attributes.key?(:facet_name)
           self.facet_name = attributes[:facet_name]
         end
@@ -130,20 +144,6 @@ module Algolia
 
         if attributes.key?(:fallback_parameters)
           self.fallback_parameters = attributes[:fallback_parameters]
-        end
-
-        if attributes.key?(:index_name)
-          self.index_name = attributes[:index_name]
-        else
-          self.index_name = nil
-        end
-
-        if attributes.key?(:threshold)
-          self.threshold = attributes[:threshold]
-        end
-
-        if attributes.key?(:max_recommendations)
-          self.max_recommendations = attributes[:max_recommendations]
         end
       end
 
@@ -171,14 +171,14 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
+          index_name == other.index_name &&
+          threshold == other.threshold &&
+          max_recommendations == other.max_recommendations &&
           facet_name == other.facet_name &&
           facet_value == other.facet_value &&
           model == other.model &&
           query_parameters == other.query_parameters &&
-          fallback_parameters == other.fallback_parameters &&
-          index_name == other.index_name &&
-          threshold == other.threshold &&
-          max_recommendations == other.max_recommendations
+          fallback_parameters == other.fallback_parameters
       end
 
       # @see the `==` method
@@ -190,7 +190,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [facet_name, facet_value, model, query_parameters, fallback_parameters, index_name, threshold, max_recommendations].hash
+        [index_name, threshold, max_recommendations, facet_name, facet_value, model, query_parameters, fallback_parameters].hash
       end
 
       # Builds the object from hash

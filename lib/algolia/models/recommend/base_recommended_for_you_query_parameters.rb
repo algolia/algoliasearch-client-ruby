@@ -5,51 +5,14 @@ require 'time'
 
 module Algolia
   module Recommend
-    class TrendingFacetsQuery
-      # Algolia index name.
-      attr_accessor :index_name
-
-      # Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the recommendations are.
-      attr_accessor :threshold
-
-      # Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.
-      attr_accessor :max_recommendations
-
-      # Facet name for trending models.
-      attr_accessor :facet_name
-
-      attr_accessor :model
-
-      class EnumAttributeValidator
-        attr_reader :datatype
-        attr_reader :allowable_values
-
-        def initialize(datatype, allowable_values)
-          @allowable_values = allowable_values.map do |value|
-            case datatype.to_s
-            when /Integer/i
-              value.to_i
-            when /Float/i
-              value.to_f
-            else
-              value
-            end
-          end
-        end
-
-        def valid?(value)
-          !value || allowable_values.include?(value)
-        end
-      end
+    class BaseRecommendedForYouQueryParameters
+      # Associates a [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/) with the current search.
+      attr_accessor :user_token
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :index_name => :indexName,
-          :threshold => :threshold,
-          :max_recommendations => :maxRecommendations,
-          :facet_name => :facetName,
-          :model => :model
+          :user_token => :userToken
         }
       end
 
@@ -61,11 +24,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :index_name => :String,
-          :threshold => :Integer,
-          :max_recommendations => :Integer,
-          :facet_name => :String,
-          :model => :TrendingFacetsModel
+          :user_token => :String
         }
       end
 
@@ -74,72 +33,28 @@ module Algolia
         Set.new([])
       end
 
-      # List of class defined in allOf (OpenAPI v3)
-      def self.openapi_all_of
-        [
-          :BaseRecommendRequest,
-          :BaseTrendingFacetsQuery
-        ]
-      end
-
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::TrendingFacetsQuery` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::BaseRecommendedForYouQueryParameters` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::TrendingFacetsQuery`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::BaseRecommendedForYouQueryParameters`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:index_name)
-          self.index_name = attributes[:index_name]
+        if attributes.key?(:user_token)
+          self.user_token = attributes[:user_token]
         else
-          self.index_name = nil
+          self.user_token = nil
         end
-
-        if attributes.key?(:threshold)
-          self.threshold = attributes[:threshold]
-        end
-
-        if attributes.key?(:max_recommendations)
-          self.max_recommendations = attributes[:max_recommendations]
-        end
-
-        if attributes.key?(:facet_name)
-          self.facet_name = attributes[:facet_name]
-        else
-          self.facet_name = nil
-        end
-
-        if attributes.key?(:model)
-          self.model = attributes[:model]
-        end
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] threshold Value to be assigned
-      def threshold=(threshold)
-        if threshold.nil?
-          raise ArgumentError, 'threshold cannot be nil'
-        end
-
-        if threshold > 100
-          raise ArgumentError, 'invalid value for "threshold", must be smaller than or equal to 100.'
-        end
-
-        if threshold < 0
-          raise ArgumentError, 'invalid value for "threshold", must be greater than or equal to 0.'
-        end
-
-        @threshold = threshold
       end
 
       # Checks equality by comparing each attribute.
@@ -148,11 +63,7 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          index_name == other.index_name &&
-          threshold == other.threshold &&
-          max_recommendations == other.max_recommendations &&
-          facet_name == other.facet_name &&
-          model == other.model
+          user_token == other.user_token
       end
 
       # @see the `==` method
@@ -164,7 +75,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [index_name, threshold, max_recommendations, facet_name, model].hash
+        [user_token].hash
       end
 
       # Builds the object from hash

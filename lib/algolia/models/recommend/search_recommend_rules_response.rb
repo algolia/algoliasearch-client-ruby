@@ -9,13 +9,13 @@ module Algolia
       # Fetched rules.
       attr_accessor :hits
 
-      # Number of fetched rules.
+      # Number of hits the search query matched.
       attr_accessor :nb_hits
 
-      # Current page.
+      # Page to retrieve (the first page is `0`, not `1`).
       attr_accessor :page
 
-      # Number of pages.
+      # Number of pages of results for the current query.
       attr_accessor :nb_pages
 
       # Attribute mapping from ruby-style variable name to JSON key.

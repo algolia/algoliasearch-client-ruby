@@ -23,7 +23,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :results => :'Array<RecommendationsResponse>'
+          :results => :'Array<RecommendationsResults>'
         }
       end
 

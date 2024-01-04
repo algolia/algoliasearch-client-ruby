@@ -5,21 +5,23 @@ require 'time'
 
 module Algolia
   module Recommend
-    class RecommendHits
-      attr_accessor :hits
+    # Trending facet hit.
+    class TrendingFacetHit
+      # Recommendation score.
+      attr_accessor :_score
 
-      # Text to search for in an index.
-      attr_accessor :query
+      # Facet name for trending models.
+      attr_accessor :facet_name
 
-      # URL-encoded string of all search parameters.
-      attr_accessor :params
+      # Facet value for trending models.
+      attr_accessor :facet_value
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :hits => :hits,
-          :query => :query,
-          :params => :params
+          :_score => :_score,
+          :facet_name => :facetName,
+          :facet_value => :facetValue
         }
       end
 
@@ -31,9 +33,9 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :hits => :'Array<RecommendHit>',
-          :query => :String,
-          :params => :String
+          :_score => :Float,
+          :facet_name => :String,
+          :facet_value => :String
         }
       end
 
@@ -46,34 +48,54 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::RecommendHits` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::TrendingFacetHit` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::RecommendHits`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::TrendingFacetHit`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:hits)
-          if (value = attributes[:hits]).is_a?(Array)
-            self.hits = value
-          end
+        if attributes.key?(:_score)
+          self._score = attributes[:_score]
         else
-          self.hits = nil
+          self._score = nil
         end
 
-        if attributes.key?(:query)
-          self.query = attributes[:query]
+        if attributes.key?(:facet_name)
+          self.facet_name = attributes[:facet_name]
+        else
+          self.facet_name = nil
         end
 
-        if attributes.key?(:params)
-          self.params = attributes[:params]
+        if attributes.key?(:facet_value)
+          self.facet_value = attributes[:facet_value]
+        else
+          self.facet_value = nil
         end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] _score Value to be assigned
+      def _score=(_score)
+        if _score.nil?
+          raise ArgumentError, '_score cannot be nil'
+        end
+
+        if _score > 100
+          raise ArgumentError, 'invalid value for "_score", must be smaller than or equal to 100.'
+        end
+
+        if _score < 0
+          raise ArgumentError, 'invalid value for "_score", must be greater than or equal to 0.'
+        end
+
+        @_score = _score
       end
 
       # Checks equality by comparing each attribute.
@@ -82,9 +104,9 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          hits == other.hits &&
-          query == other.query &&
-          params == other.params
+          _score == other._score &&
+          facet_name == other.facet_name &&
+          facet_value == other.facet_value
       end
 
       # @see the `==` method
@@ -96,7 +118,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [hits, query, params].hash
+        [_score, facet_name, facet_value].hash
       end
 
       # Builds the object from hash

@@ -5,15 +5,13 @@ require 'time'
 
 module Algolia
   module Recommend
-    module RecommendationsRequest
+    module RecommendationsHit
       class << self
         # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
-            :RecommendationsQuery,
-            :RecommendedForYouQuery,
-            :TrendingFacetsQuery,
-            :TrendingItemsQuery
+            :RecommendHit,
+            :TrendingFacetHit
           ]
         end
 

@@ -6,15 +6,6 @@ require 'time'
 module Algolia
   module Recommend
     class RecommendationsQuery
-      attr_accessor :model
-
-      # Unique object identifier.
-      attr_accessor :object_id
-
-      attr_accessor :query_parameters
-
-      attr_accessor :fallback_parameters
-
       # Algolia index name.
       attr_accessor :index_name
 
@@ -23,6 +14,15 @@ module Algolia
 
       # Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.
       attr_accessor :max_recommendations
+
+      attr_accessor :model
+
+      # Unique object identifier.
+      attr_accessor :object_id
+
+      attr_accessor :query_parameters
+
+      attr_accessor :fallback_parameters
 
       class EnumAttributeValidator
         attr_reader :datatype
@@ -49,13 +49,13 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
+          :index_name => :indexName,
+          :threshold => :threshold,
+          :max_recommendations => :maxRecommendations,
           :model => :model,
           :object_id => :objectID,
           :query_parameters => :queryParameters,
-          :fallback_parameters => :fallbackParameters,
-          :index_name => :indexName,
-          :threshold => :threshold,
-          :max_recommendations => :maxRecommendations
+          :fallback_parameters => :fallbackParameters
         }
       end
 
@@ -67,13 +67,13 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
+          :index_name => :String,
+          :threshold => :Integer,
+          :max_recommendations => :Integer,
           :model => :RecommendationModels,
           :object_id => :String,
           :query_parameters => :SearchParamsObject,
-          :fallback_parameters => :SearchParamsObject,
-          :index_name => :String,
-          :threshold => :Integer,
-          :max_recommendations => :Integer
+          :fallback_parameters => :SearchParamsObject
         }
       end
 
@@ -107,6 +107,20 @@ module Algolia
           h[k.to_sym] = v
         end
 
+        if attributes.key?(:index_name)
+          self.index_name = attributes[:index_name]
+        else
+          self.index_name = nil
+        end
+
+        if attributes.key?(:threshold)
+          self.threshold = attributes[:threshold]
+        end
+
+        if attributes.key?(:max_recommendations)
+          self.max_recommendations = attributes[:max_recommendations]
+        end
+
         if attributes.key?(:model)
           self.model = attributes[:model]
         else
@@ -125,20 +139,6 @@ module Algolia
 
         if attributes.key?(:fallback_parameters)
           self.fallback_parameters = attributes[:fallback_parameters]
-        end
-
-        if attributes.key?(:index_name)
-          self.index_name = attributes[:index_name]
-        else
-          self.index_name = nil
-        end
-
-        if attributes.key?(:threshold)
-          self.threshold = attributes[:threshold]
-        end
-
-        if attributes.key?(:max_recommendations)
-          self.max_recommendations = attributes[:max_recommendations]
         end
       end
 
@@ -166,13 +166,13 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
+          index_name == other.index_name &&
+          threshold == other.threshold &&
+          max_recommendations == other.max_recommendations &&
           model == other.model &&
           object_id == other.object_id &&
           query_parameters == other.query_parameters &&
-          fallback_parameters == other.fallback_parameters &&
-          index_name == other.index_name &&
-          threshold == other.threshold &&
-          max_recommendations == other.max_recommendations
+          fallback_parameters == other.fallback_parameters
       end
 
       # @see the `==` method
@@ -184,7 +184,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [model, object_id, query_parameters, fallback_parameters, index_name, threshold, max_recommendations].hash
+        [index_name, threshold, max_recommendations, model, object_id, query_parameters, fallback_parameters].hash
       end
 
       # Builds the object from hash
