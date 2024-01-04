@@ -1,3 +1,7 @@
+## [3.0.0.alpha.2](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.alpha.1...3.0.0.alpha.2)
+
+- [ae6adfbf7](https://github.com/algolia/api-clients-automation/commit/ae6adfbf7) fix(specs): port recommend changes ([#2476](https://github.com/algolia/api-clients-automation/pull/2476)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [3.0.0.alpha.1](https://github.com/algolia/algoliasearch-client-ruby/tree/3.0.0.alpha.1)
 
 - [9f4f17585](https://github.com/algolia/api-clients-automation/commit/9f4f17585) fix(ruby): support ruby alpha format ([#2447](https://github.com/algolia/api-clients-automation/pull/2447)) by [@millotp](https://github.com/millotp/)
