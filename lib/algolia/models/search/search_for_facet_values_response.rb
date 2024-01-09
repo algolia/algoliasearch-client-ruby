@@ -8,10 +8,18 @@ module Algolia
     class SearchForFacetValuesResponse
       attr_accessor :facet_hits
 
+      # See the `facetsCount` field of the `exhaustive` object in the response.
+      attr_accessor :exhaustive_facets_count
+
+      # Time the server took to process the request, in milliseconds.
+      attr_accessor :processing_time_ms
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :facet_hits => :facetHits
+          :facet_hits => :facetHits,
+          :exhaustive_facets_count => :exhaustiveFacetsCount,
+          :processing_time_ms => :processingTimeMS
         }
       end
 
@@ -23,7 +31,9 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :facet_hits => :'Array<FacetHits>'
+          :facet_hits => :'Array<FacetHits>',
+          :exhaustive_facets_count => :Boolean,
+          :processing_time_ms => :Integer
         }
       end
 
@@ -56,6 +66,16 @@ module Algolia
         else
           self.facet_hits = nil
         end
+
+        if attributes.key?(:exhaustive_facets_count)
+          self.exhaustive_facets_count = attributes[:exhaustive_facets_count]
+        else
+          self.exhaustive_facets_count = nil
+        end
+
+        if attributes.key?(:processing_time_ms)
+          self.processing_time_ms = attributes[:processing_time_ms]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -64,7 +84,9 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          facet_hits == other.facet_hits
+          facet_hits == other.facet_hits &&
+          exhaustive_facets_count == other.exhaustive_facets_count &&
+          processing_time_ms == other.processing_time_ms
       end
 
       # @see the `==` method
@@ -76,7 +98,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [facet_hits].hash
+        [facet_hits, exhaustive_facets_count, processing_time_ms].hash
       end
 
       # Builds the object from hash
