@@ -1,5 +1,7 @@
 name: Release
 
+# This file is registered in https://rubygems.org/gems/algolia/trusted_publishers to be able to publish new versions of the gem.
+
 on:
   push:
     branches:
@@ -12,6 +14,7 @@ jobs:
     if: "startsWith(github.event.head_commit.message, 'chore: release')"
     permissions:
       id-token: write
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -21,8 +24,4 @@ jobs:
           ruby-version: 3.2.2
           bundler-cache: true
 
-      - name: Build gem
-        run: gem build algolia.gemspec
-
-      - name: Publish new gem
-        run: gem push --key ${{ secrets.RUBYGEMS_API_KEY }} $(ls algolia-*.gem)
+      - uses: rubygems/release-gem@v1
