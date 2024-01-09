@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
     'rubygems_mfa_required' => 'true'
   }
 
-  s.files         = `find *`.split("\n").uniq.sort.reject(&:empty?)
+  s.files         = `git ls-files`.split($/)
   s.executables   = []
   s.require_paths = ['lib']
 
