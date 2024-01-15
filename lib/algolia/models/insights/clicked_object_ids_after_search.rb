@@ -7,31 +7,31 @@ module Algolia
   module Insights
     # Click event after an Algolia request.  Use this event to track when users click items in the search results. If you're building your category pages with Algolia, you'll also use this event.
     class ClickedObjectIDsAfterSearch
-      # Can contain up to 64 ASCII characters.   Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
+      # The name of the event, up to 64 ASCII characters.  Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
       attr_accessor :event_name
 
       attr_accessor :event_type
 
-      # Name of the Algolia index.
+      # The name of an Algolia index.
       attr_accessor :index
 
-      # List of object identifiers for items of an Algolia index.
+      # The object IDs of the records that are part of the event.
       attr_accessor :object_ids
 
-      # Position of the clicked objects in the search results.  The first search result has a position of 1 (not 0). You must provide 1 `position` for each `objectID`.
+      # The position of the clicked item the search results.  The first search result has a position of 1 (not 0). You must provide 1 `position` for each `objectID`.
       attr_accessor :positions
 
       # Unique identifier for a search query.  The query ID is required for events related to search or browse requests. If you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response.
       attr_accessor :query_id
 
-      # Anonymous or pseudonymous user identifier.   > **Note**: Never include personally identifiable information in user tokens.
+      # An anonymous or pseudonymous user identifier.  > **Note**: Never include personally identifiable information in user tokens.
       attr_accessor :user_token
 
-      # Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
-      attr_accessor :timestamp
-
-      # User token for authenticated users.
+      # An identifier for authenticated users.  > **Note**: Never include personally identifiable information in user tokens.
       attr_accessor :authenticated_user_token
+
+      # The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
+      attr_accessor :timestamp
 
       class EnumAttributeValidator
         attr_reader :datatype
@@ -65,8 +65,8 @@ module Algolia
           :positions => :positions,
           :query_id => :queryID,
           :user_token => :userToken,
-          :timestamp => :timestamp,
-          :authenticated_user_token => :authenticatedUserToken
+          :authenticated_user_token => :authenticatedUserToken,
+          :timestamp => :timestamp
         }
       end
 
@@ -85,8 +85,8 @@ module Algolia
           :positions => :'Array<Integer>',
           :query_id => :String,
           :user_token => :String,
-          :timestamp => :Integer,
-          :authenticated_user_token => :String
+          :authenticated_user_token => :String,
+          :timestamp => :Integer
         }
       end
 
@@ -158,12 +158,12 @@ module Algolia
           self.user_token = nil
         end
 
-        if attributes.key?(:timestamp)
-          self.timestamp = attributes[:timestamp]
-        end
-
         if attributes.key?(:authenticated_user_token)
           self.authenticated_user_token = attributes[:authenticated_user_token]
+        end
+
+        if attributes.key?(:timestamp)
+          self.timestamp = attributes[:timestamp]
         end
       end
 
@@ -272,6 +272,29 @@ module Algolia
         @user_token = user_token
       end
 
+      # Custom attribute writer method with validation
+      # @param [Object] authenticated_user_token Value to be assigned
+      def authenticated_user_token=(authenticated_user_token)
+        if authenticated_user_token.nil?
+          raise ArgumentError, 'authenticated_user_token cannot be nil'
+        end
+
+        if authenticated_user_token.to_s.length > 129
+          raise ArgumentError, 'invalid value for "authenticated_user_token", the character length must be smaller than or equal to 129.'
+        end
+
+        if authenticated_user_token.to_s.length < 1
+          raise ArgumentError, 'invalid value for "authenticated_user_token", the character length must be great than or equal to 1.'
+        end
+
+        pattern = %r{[a-zA-Z0-9_=/+-]{1,129}}
+        if authenticated_user_token !~ pattern
+          raise ArgumentError, "invalid value for \"authenticated_user_token\", must conform to the pattern #{pattern}."
+        end
+
+        @authenticated_user_token = authenticated_user_token
+      end
+
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)
@@ -285,8 +308,8 @@ module Algolia
           positions == other.positions &&
           query_id == other.query_id &&
           user_token == other.user_token &&
-          timestamp == other.timestamp &&
-          authenticated_user_token == other.authenticated_user_token
+          authenticated_user_token == other.authenticated_user_token &&
+          timestamp == other.timestamp
       end
 
       # @see the `==` method
@@ -298,7 +321,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [event_name, event_type, index, object_ids, positions, query_id, user_token, timestamp, authenticated_user_token].hash
+        [event_name, event_type, index, object_ids, positions, query_id, user_token, authenticated_user_token, timestamp].hash
       end
 
       # Builds the object from hash

@@ -8,7 +8,7 @@ module Algolia
     class ObjectData
       attr_accessor :price
 
-      # The quantity of the purchased or added-to-cart item. The total value of a purchase is the sum of `quantity` multiplied with the `price` for each purchased item.
+      # The quantity of a product that has been purchased or added to the cart. The total value of a purchase is the sum of `quantity` multiplied with the `price` for each purchased item.
       attr_accessor :quantity
 
       attr_accessor :discount

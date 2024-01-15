@@ -5,7 +5,7 @@ require 'time'
 
 module Algolia
   module Insights
-    # The price of the item. This should be the final price, inclusive of any discounts in effect.
+    # The total price of a product, including any discounts, in units of `currency`.
     module Price
       class << self
         # List of class defined in oneOf (OpenAPI v3)

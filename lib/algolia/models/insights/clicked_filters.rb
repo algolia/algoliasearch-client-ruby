@@ -7,25 +7,25 @@ module Algolia
   module Insights
     # Use this event to track when users click facet filters in your user interface.
     class ClickedFilters
-      # Can contain up to 64 ASCII characters.   Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
+      # The name of the event, up to 64 ASCII characters.  Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
       attr_accessor :event_name
 
       attr_accessor :event_type
 
-      # Name of the Algolia index.
+      # The name of an Algolia index.
       attr_accessor :index
 
       # Facet filters.  Each facet filter string must be URL-encoded, such as, `discount:10%25`.
       attr_accessor :filters
 
-      # Anonymous or pseudonymous user identifier.   > **Note**: Never include personally identifiable information in user tokens.
+      # An anonymous or pseudonymous user identifier.  > **Note**: Never include personally identifiable information in user tokens.
       attr_accessor :user_token
 
-      # Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
-      attr_accessor :timestamp
-
-      # User token for authenticated users.
+      # An identifier for authenticated users.  > **Note**: Never include personally identifiable information in user tokens.
       attr_accessor :authenticated_user_token
+
+      # The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
+      attr_accessor :timestamp
 
       class EnumAttributeValidator
         attr_reader :datatype
@@ -57,8 +57,8 @@ module Algolia
           :index => :index,
           :filters => :filters,
           :user_token => :userToken,
-          :timestamp => :timestamp,
-          :authenticated_user_token => :authenticatedUserToken
+          :authenticated_user_token => :authenticatedUserToken,
+          :timestamp => :timestamp
         }
       end
 
@@ -75,8 +75,8 @@ module Algolia
           :index => :String,
           :filters => :'Array<String>',
           :user_token => :String,
-          :timestamp => :Integer,
-          :authenticated_user_token => :String
+          :authenticated_user_token => :String,
+          :timestamp => :Integer
         }
       end
 
@@ -134,12 +134,12 @@ module Algolia
           self.user_token = nil
         end
 
-        if attributes.key?(:timestamp)
-          self.timestamp = attributes[:timestamp]
-        end
-
         if attributes.key?(:authenticated_user_token)
           self.authenticated_user_token = attributes[:authenticated_user_token]
+        end
+
+        if attributes.key?(:timestamp)
+          self.timestamp = attributes[:timestamp]
         end
       end
 
@@ -207,6 +207,29 @@ module Algolia
         @user_token = user_token
       end
 
+      # Custom attribute writer method with validation
+      # @param [Object] authenticated_user_token Value to be assigned
+      def authenticated_user_token=(authenticated_user_token)
+        if authenticated_user_token.nil?
+          raise ArgumentError, 'authenticated_user_token cannot be nil'
+        end
+
+        if authenticated_user_token.to_s.length > 129
+          raise ArgumentError, 'invalid value for "authenticated_user_token", the character length must be smaller than or equal to 129.'
+        end
+
+        if authenticated_user_token.to_s.length < 1
+          raise ArgumentError, 'invalid value for "authenticated_user_token", the character length must be great than or equal to 1.'
+        end
+
+        pattern = %r{[a-zA-Z0-9_=/+-]{1,129}}
+        if authenticated_user_token !~ pattern
+          raise ArgumentError, "invalid value for \"authenticated_user_token\", must conform to the pattern #{pattern}."
+        end
+
+        @authenticated_user_token = authenticated_user_token
+      end
+
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)
@@ -218,8 +241,8 @@ module Algolia
           index == other.index &&
           filters == other.filters &&
           user_token == other.user_token &&
-          timestamp == other.timestamp &&
-          authenticated_user_token == other.authenticated_user_token
+          authenticated_user_token == other.authenticated_user_token &&
+          timestamp == other.timestamp
       end
 
       # @see the `==` method
@@ -231,7 +254,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [event_name, event_type, index, filters, user_token, timestamp, authenticated_user_token].hash
+        [event_name, event_type, index, filters, user_token, authenticated_user_token, timestamp].hash
       end
 
       # Builds the object from hash

@@ -7,33 +7,35 @@ module Algolia
   module Insights
     # Use this event to track when users add items to their shopping cart unrelated to a previous Algolia request. For example, if you don't use Algolia to build your category pages, use this event.  To track add-to-cart events related to Algolia requests, use the \"Added to cart object IDs after search\" event.
     class AddedToCartObjectIDs
-      # Can contain up to 64 ASCII characters.   Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
+      # The name of the event, up to 64 ASCII characters.  Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
       attr_accessor :event_name
 
       attr_accessor :event_type
 
       attr_accessor :event_subtype
 
-      # Name of the Algolia index.
+      # The name of an Algolia index.
       attr_accessor :index
 
-      # List of object identifiers for items of an Algolia index.
+      # The object IDs of the records that are part of the event.
       attr_accessor :object_ids
 
-      # Extra information about the records involved in the event—for example, to add price and quantities of purchased products.  If provided, must be the same length as `objectIDs`.
-      attr_accessor :object_data
-
-      # If you include pricing information in the `objectData` parameter, you must also specify the currency as ISO-4217 currency code, such as USD or EUR.
-      attr_accessor :currency
-
-      # Anonymous or pseudonymous user identifier.   > **Note**: Never include personally identifiable information in user tokens.
+      # An anonymous or pseudonymous user identifier.  > **Note**: Never include personally identifiable information in user tokens.
       attr_accessor :user_token
 
-      # Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
+      # An identifier for authenticated users.  > **Note**: Never include personally identifiable information in user tokens.
+      attr_accessor :authenticated_user_token
+
+      # Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html).
+      attr_accessor :currency
+
+      # Extra information about the records involved in a purchase or add-to-cart event.  If specified, it must have the same length as `objectIDs`.
+      attr_accessor :object_data
+
+      # The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
       attr_accessor :timestamp
 
-      # User token for authenticated users.
-      attr_accessor :authenticated_user_token
+      attr_accessor :value
 
       class EnumAttributeValidator
         attr_reader :datatype
@@ -65,11 +67,12 @@ module Algolia
           :event_subtype => :eventSubtype,
           :index => :index,
           :object_ids => :objectIDs,
-          :object_data => :objectData,
-          :currency => :currency,
           :user_token => :userToken,
+          :authenticated_user_token => :authenticatedUserToken,
+          :currency => :currency,
+          :object_data => :objectData,
           :timestamp => :timestamp,
-          :authenticated_user_token => :authenticatedUserToken
+          :value => :value
         }
       end
 
@@ -86,11 +89,12 @@ module Algolia
           :event_subtype => :AddToCartEvent,
           :index => :String,
           :object_ids => :'Array<String>',
-          :object_data => :'Array<ObjectData>',
-          :currency => :String,
           :user_token => :String,
+          :authenticated_user_token => :String,
+          :currency => :String,
+          :object_data => :'Array<ObjectData>',
           :timestamp => :Integer,
-          :authenticated_user_token => :String
+          :value => :Value
         }
       end
 
@@ -148,28 +152,32 @@ module Algolia
           self.object_ids = nil
         end
 
-        if attributes.key?(:object_data)
-          if (value = attributes[:object_data]).is_a?(Array)
-            self.object_data = value
-          end
-        end
-
-        if attributes.key?(:currency)
-          self.currency = attributes[:currency]
-        end
-
         if attributes.key?(:user_token)
           self.user_token = attributes[:user_token]
         else
           self.user_token = nil
         end
 
+        if attributes.key?(:authenticated_user_token)
+          self.authenticated_user_token = attributes[:authenticated_user_token]
+        end
+
+        if attributes.key?(:currency)
+          self.currency = attributes[:currency]
+        end
+
+        if attributes.key?(:object_data)
+          if (value = attributes[:object_data]).is_a?(Array)
+            self.object_data = value
+          end
+        end
+
         if attributes.key?(:timestamp)
           self.timestamp = attributes[:timestamp]
         end
 
-        if attributes.key?(:authenticated_user_token)
-          self.authenticated_user_token = attributes[:authenticated_user_token]
+        if attributes.key?(:value)
+          self.value = attributes[:value]
         end
       end
 
@@ -237,6 +245,47 @@ module Algolia
         @user_token = user_token
       end
 
+      # Custom attribute writer method with validation
+      # @param [Object] authenticated_user_token Value to be assigned
+      def authenticated_user_token=(authenticated_user_token)
+        if authenticated_user_token.nil?
+          raise ArgumentError, 'authenticated_user_token cannot be nil'
+        end
+
+        if authenticated_user_token.to_s.length > 129
+          raise ArgumentError, 'invalid value for "authenticated_user_token", the character length must be smaller than or equal to 129.'
+        end
+
+        if authenticated_user_token.to_s.length < 1
+          raise ArgumentError, 'invalid value for "authenticated_user_token", the character length must be great than or equal to 1.'
+        end
+
+        pattern = %r{[a-zA-Z0-9_=/+-]{1,129}}
+        if authenticated_user_token !~ pattern
+          raise ArgumentError, "invalid value for \"authenticated_user_token\", must conform to the pattern #{pattern}."
+        end
+
+        @authenticated_user_token = authenticated_user_token
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] object_data Value to be assigned
+      def object_data=(object_data)
+        if object_data.nil?
+          raise ArgumentError, 'object_data cannot be nil'
+        end
+
+        if object_data.length > 20
+          raise ArgumentError, 'invalid value for "object_data", number of items must be less than or equal to 20.'
+        end
+
+        if object_data.length < 1
+          raise ArgumentError, 'invalid value for "object_data", number of items must be greater than or equal to 1.'
+        end
+
+        @object_data = object_data
+      end
+
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)
@@ -248,11 +297,12 @@ module Algolia
           event_subtype == other.event_subtype &&
           index == other.index &&
           object_ids == other.object_ids &&
-          object_data == other.object_data &&
-          currency == other.currency &&
           user_token == other.user_token &&
+          authenticated_user_token == other.authenticated_user_token &&
+          currency == other.currency &&
+          object_data == other.object_data &&
           timestamp == other.timestamp &&
-          authenticated_user_token == other.authenticated_user_token
+          value == other.value
       end
 
       # @see the `==` method
@@ -264,7 +314,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [event_name, event_type, event_subtype, index, object_ids, object_data, currency, user_token, timestamp, authenticated_user_token].hash
+        [event_name, event_type, event_subtype, index, object_ids, user_token, authenticated_user_token, currency, object_data, timestamp, value].hash
       end
 
       # Builds the object from hash

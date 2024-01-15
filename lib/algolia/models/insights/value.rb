@@ -5,8 +5,8 @@ require 'time'
 
 module Algolia
   module Insights
-    # The absolute value of the discount for this product, in units of `currency`.
-    module Discount
+    # Total monetary value of this event in units of `currency`.
+    module Value
       class << self
         # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of

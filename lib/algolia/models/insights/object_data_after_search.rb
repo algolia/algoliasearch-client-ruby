@@ -6,12 +6,12 @@ require 'time'
 module Algolia
   module Insights
     class ObjectDataAfterSearch
-      # ID of the query that this specific record is attributable to. Used to track purchase events with multiple items originating from different searches.
+      # Unique identifier for a search query, used to track purchase events with multiple records that originate from different searches.
       attr_accessor :query_id
 
       attr_accessor :price
 
-      # The quantity of the purchased or added-to-cart item. The total value of a purchase is the sum of `quantity` multiplied with the `price` for each purchased item.
+      # The quantity of a product that has been purchased or added to the cart. The total value of a purchase is the sum of `quantity` multiplied with the `price` for each purchased item.
       attr_accessor :quantity
 
       attr_accessor :discount
@@ -78,6 +78,29 @@ module Algolia
         if attributes.key?(:discount)
           self.discount = attributes[:discount]
         end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] query_id Value to be assigned
+      def query_id=(query_id)
+        if query_id.nil?
+          raise ArgumentError, 'query_id cannot be nil'
+        end
+
+        if query_id.to_s.length > 32
+          raise ArgumentError, 'invalid value for "query_id", the character length must be smaller than or equal to 32.'
+        end
+
+        if query_id.to_s.length < 32
+          raise ArgumentError, 'invalid value for "query_id", the character length must be great than or equal to 32.'
+        end
+
+        pattern = /[0-9a-f]{32}/
+        if query_id !~ pattern
+          raise ArgumentError, "invalid value for \"query_id\", must conform to the pattern #{pattern}."
+        end
+
+        @query_id = query_id
       end
 
       # Checks equality by comparing each attribute.
