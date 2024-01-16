@@ -403,49 +403,6 @@ module Algolia
       deserialize(response.body, request_options[:debug_return_type] || 'Search::BrowseResponse')
     end
 
-    # Delete all synonyms.
-    # Delete all synonyms in the index.
-    # @param index_name [String] Index on which to perform the request. (required)
-    # @param forward_to_replicas [Boolean] Indicates whether changed index settings are forwarded to the replica indices.
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [Http::Response] the response
-    def clear_all_synonyms_with_http_info(index_name, forward_to_replicas = nil, request_options = {})
-      # verify the required parameter 'index_name' is set
-      if @api_client.config.client_side_validation && index_name.nil?
-        raise ArgumentError, "Parameter `index_name` is required when calling `clear_all_synonyms`."
-      end
-
-      path = '/1/indexes/{indexName}/synonyms/clear'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
-      query_params = {}
-      query_params[:forwardToReplicas] = forward_to_replicas unless forward_to_replicas.nil?
-      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
-      header_params = {}
-      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
-
-      post_body = request_options[:debug_body]
-
-      new_options = request_options.merge(
-        :operation => :'SearchClient.clear_all_synonyms',
-        :header_params => header_params,
-        :query_params => query_params,
-        :body => post_body,
-        :use_read_transporter => false
-      )
-
-      @api_client.call_api(:POST, path, new_options)
-    end
-
-    # Delete all synonyms.
-    # Delete all synonyms in the index.
-    # @param index_name [String] Index on which to perform the request. (required)
-    # @param forward_to_replicas [Boolean] Indicates whether changed index settings are forwarded to the replica indices.
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [UpdatedAtResponse]
-    def clear_all_synonyms(index_name, forward_to_replicas = nil, request_options = {})
-      response = clear_all_synonyms_with_http_info(index_name, forward_to_replicas, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
-    end
-
     # Delete all records from an index.
     # Delete the records but leave settings and index-specific API keys untouched.
     # @param index_name [String] Index on which to perform the request. (required)
@@ -526,6 +483,49 @@ module Algolia
     # @return [UpdatedAtResponse]
     def clear_rules(index_name, forward_to_replicas = nil, request_options = {})
       response = clear_rules_with_http_info(index_name, forward_to_replicas, request_options)
+      deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
+    end
+
+    # Delete all synonyms.
+    # Delete all synonyms in the index.
+    # @param index_name [String] Index on which to perform the request. (required)
+    # @param forward_to_replicas [Boolean] Indicates whether changed index settings are forwarded to the replica indices.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def clear_synonyms_with_http_info(index_name, forward_to_replicas = nil, request_options = {})
+      # verify the required parameter 'index_name' is set
+      if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `clear_synonyms`."
+      end
+
+      path = '/1/indexes/{indexName}/synonyms/clear'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      query_params = {}
+      query_params[:forwardToReplicas] = forward_to_replicas unless forward_to_replicas.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :'SearchClient.clear_synonyms',
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Delete all synonyms.
+    # Delete all synonyms in the index.
+    # @param index_name [String] Index on which to perform the request. (required)
+    # @param forward_to_replicas [Boolean] Indicates whether changed index settings are forwarded to the replica indices.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [UpdatedAtResponse]
+    def clear_synonyms(index_name, forward_to_replicas = nil, request_options = {})
+      response = clear_synonyms_with_http_info(index_name, forward_to_replicas, request_options)
       deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
