@@ -1,3 +1,10 @@
+## [3.0.0.alpha.5](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.alpha.4...3.0.0.alpha.5)
+
+- [7c5ba3288](https://github.com/algolia/api-clients-automation/commit/7c5ba3288) feat(specs): update Insights API spec ([#2376](https://github.com/algolia/api-clients-automation/pull/2376)) by [@kai687](https://github.com/kai687/)
+- [297baa987](https://github.com/algolia/api-clients-automation/commit/297baa987) chore(clients): provide snippets for all languages ([#2518](https://github.com/algolia/api-clients-automation/pull/2518)) by [@shortcuts](https://github.com/shortcuts/)
+- [857f3632e](https://github.com/algolia/api-clients-automation/commit/857f3632e) feat(clients): generate code snippets from cts ([#2511](https://github.com/algolia/api-clients-automation/pull/2511)) by [@shortcuts](https://github.com/shortcuts/)
+- [7085d099e](https://github.com/algolia/api-clients-automation/commit/7085d099e) fix(ruby): exclude vendor from bundled gem ([#2512](https://github.com/algolia/api-clients-automation/pull/2512)) by [@millotp](https://github.com/millotp/)
+
 ## [3.0.0.alpha.4](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.alpha.3...3.0.0.alpha.4)
 
 - [b4ca09335](https://github.com/algolia/api-clients-automation/commit/b4ca09335) fix(ruby): release using Trusted Publishing ([#2504](https://github.com/algolia/api-clients-automation/pull/2504)) by [@millotp](https://github.com/millotp/)
