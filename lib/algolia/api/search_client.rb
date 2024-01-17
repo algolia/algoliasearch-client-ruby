@@ -67,7 +67,7 @@ module Algolia
     # @return [AddApiKeyResponse]
     def add_api_key(api_key, request_options = {})
       response = add_api_key_with_http_info(api_key, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::AddApiKeyResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::AddApiKeyResponse')
     end
 
     # Add or update a record (using objectID).
@@ -120,7 +120,7 @@ module Algolia
     # @return [UpdatedAtWithObjectIdResponse]
     def add_or_update_object(index_name, object_id, body, request_options = {})
       response = add_or_update_object_with_http_info(index_name, object_id, body, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtWithObjectIdResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtWithObjectIdResponse')
     end
 
     # Add a source.
@@ -160,7 +160,7 @@ module Algolia
     # @return [CreatedAtResponse]
     def append_source(source, request_options = {})
       response = append_source_with_http_info(source, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::CreatedAtResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::CreatedAtResponse')
     end
 
     # Assign or move a user ID.
@@ -213,7 +213,7 @@ module Algolia
     # @return [CreatedAtResponse]
     def assign_user_id(x_algolia_user_id, assign_user_id_params, request_options = {})
       response = assign_user_id_with_http_info(x_algolia_user_id, assign_user_id_params, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::CreatedAtResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::CreatedAtResponse')
     end
 
     # Batch write operations on one index.
@@ -259,7 +259,7 @@ module Algolia
     # @return [BatchResponse]
     def batch(index_name, batch_write_params, request_options = {})
       response = batch_with_http_info(index_name, batch_write_params, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::BatchResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::BatchResponse')
     end
 
     # Batch assign userIDs.
@@ -312,7 +312,7 @@ module Algolia
     # @return [CreatedAtResponse]
     def batch_assign_user_ids(x_algolia_user_id, batch_assign_user_ids_params, request_options = {})
       response = batch_assign_user_ids_with_http_info(x_algolia_user_id, batch_assign_user_ids_params, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::CreatedAtResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::CreatedAtResponse')
     end
 
     # Batch dictionary entries.
@@ -358,7 +358,7 @@ module Algolia
     # @return [UpdatedAtResponse]
     def batch_dictionary_entries(dictionary_name, batch_dictionary_entries_params, request_options = {})
       response = batch_dictionary_entries_with_http_info(dictionary_name, batch_dictionary_entries_params, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
     # Get all records from an index.
@@ -400,7 +400,7 @@ module Algolia
     # @return [BrowseResponse]
     def browse(index_name, browse_params = nil, request_options = {})
       response = browse_with_http_info(index_name, browse_params, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::BrowseResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::BrowseResponse')
     end
 
     # Delete all records from an index.
@@ -440,7 +440,7 @@ module Algolia
     # @return [UpdatedAtResponse]
     def clear_objects(index_name, request_options = {})
       response = clear_objects_with_http_info(index_name, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
     # Delete all rules.
@@ -483,7 +483,7 @@ module Algolia
     # @return [UpdatedAtResponse]
     def clear_rules(index_name, forward_to_replicas = nil, request_options = {})
       response = clear_rules_with_http_info(index_name, forward_to_replicas, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
     # Delete all synonyms.
@@ -526,7 +526,7 @@ module Algolia
     # @return [UpdatedAtResponse]
     def clear_synonyms(index_name, forward_to_replicas = nil, request_options = {})
       response = clear_synonyms_with_http_info(index_name, forward_to_replicas, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
     # Send requests to the Algolia REST API.
@@ -569,7 +569,7 @@ module Algolia
     # @return [Object]
     def custom_delete(path, parameters = nil, request_options = {})
       response = custom_delete_with_http_info(path, parameters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -612,7 +612,7 @@ module Algolia
     # @return [Object]
     def custom_get(path, parameters = nil, request_options = {})
       response = custom_get_with_http_info(path, parameters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -657,7 +657,7 @@ module Algolia
     # @return [Object]
     def custom_post(path, parameters = nil, body = nil, request_options = {})
       response = custom_post_with_http_info(path, parameters, body, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -702,7 +702,7 @@ module Algolia
     # @return [Object]
     def custom_put(path, parameters = nil, body = nil, request_options = {})
       response = custom_put_with_http_info(path, parameters, body, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Delete API key.
@@ -742,7 +742,7 @@ module Algolia
     # @return [DeleteApiKeyResponse]
     def delete_api_key(key, request_options = {})
       response = delete_api_key_with_http_info(key, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::DeleteApiKeyResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::DeleteApiKeyResponse')
     end
 
     # Delete all records matching a query.
@@ -788,7 +788,7 @@ module Algolia
     # @return [DeletedAtResponse]
     def delete_by(index_name, delete_by_params, request_options = {})
       response = delete_by_with_http_info(index_name, delete_by_params, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::DeletedAtResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::DeletedAtResponse')
     end
 
     # Delete index.
@@ -828,7 +828,7 @@ module Algolia
     # @return [DeletedAtResponse]
     def delete_index(index_name, request_options = {})
       response = delete_index_with_http_info(index_name, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::DeletedAtResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::DeletedAtResponse')
     end
 
     # Delete a record.
@@ -875,7 +875,7 @@ module Algolia
     # @return [DeletedAtResponse]
     def delete_object(index_name, object_id, request_options = {})
       response = delete_object_with_http_info(index_name, object_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::DeletedAtResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::DeletedAtResponse')
     end
 
     # Delete a rule.
@@ -925,7 +925,7 @@ module Algolia
     # @return [UpdatedAtResponse]
     def delete_rule(index_name, object_id, forward_to_replicas = nil, request_options = {})
       response = delete_rule_with_http_info(index_name, object_id, forward_to_replicas, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
     # Remove a source.
@@ -965,7 +965,7 @@ module Algolia
     # @return [DeleteSourceResponse]
     def delete_source(source, request_options = {})
       response = delete_source_with_http_info(source, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::DeleteSourceResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::DeleteSourceResponse')
     end
 
     # Delete a synonym.
@@ -1015,7 +1015,7 @@ module Algolia
     # @return [DeletedAtResponse]
     def delete_synonym(index_name, object_id, forward_to_replicas = nil, request_options = {})
       response = delete_synonym_with_http_info(index_name, object_id, forward_to_replicas, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::DeletedAtResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::DeletedAtResponse')
     end
 
     # Get API key permissions.
@@ -1055,7 +1055,7 @@ module Algolia
     # @return [GetApiKeyResponse]
     def get_api_key(key, request_options = {})
       response = get_api_key_with_http_info(key, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::GetApiKeyResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::GetApiKeyResponse')
     end
 
     # List available languages.
@@ -1088,7 +1088,7 @@ module Algolia
     # @return [Hash<String, Languages>]
     def get_dictionary_languages(request_options = {})
       response = get_dictionary_languages_with_http_info(request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::Hash<String, Languages>')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::Hash<String, Languages>')
     end
 
     # Get stop word settings.
@@ -1121,7 +1121,7 @@ module Algolia
     # @return [GetDictionarySettingsResponse]
     def get_dictionary_settings(request_options = {})
       response = get_dictionary_settings_with_http_info(request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::GetDictionarySettingsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::GetDictionarySettingsResponse')
     end
 
     # Return the latest log entries.
@@ -1170,7 +1170,7 @@ module Algolia
     # @return [GetLogsResponse]
     def get_logs(offset = nil, length = nil, index_name = nil, type = nil, request_options = {})
       response = get_logs_with_http_info(offset, length, index_name, type, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::GetLogsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::GetLogsResponse')
     end
 
     # Get a record.
@@ -1220,7 +1220,7 @@ module Algolia
     # @return [Hash<String, String>]
     def get_object(index_name, object_id, attributes_to_retrieve = nil, request_options = {})
       response = get_object_with_http_info(index_name, object_id, attributes_to_retrieve, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::Hash<String, String>')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::Hash<String, String>')
     end
 
     # Get multiple records.
@@ -1247,7 +1247,7 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :use_read_transporter => false
+        :use_read_transporter => true
       )
 
       @api_client.call_api(:POST, path, new_options)
@@ -1260,7 +1260,7 @@ module Algolia
     # @return [GetObjectsResponse]
     def get_objects(get_objects_params, request_options = {})
       response = get_objects_with_http_info(get_objects_params, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::GetObjectsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::GetObjectsResponse')
     end
 
     # Get a rule.
@@ -1307,7 +1307,7 @@ module Algolia
     # @return [Rule]
     def get_rule(index_name, object_id, request_options = {})
       response = get_rule_with_http_info(index_name, object_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::Rule')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::Rule')
     end
 
     # Get index settings.
@@ -1347,7 +1347,7 @@ module Algolia
     # @return [IndexSettings]
     def get_settings(index_name, request_options = {})
       response = get_settings_with_http_info(index_name, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::IndexSettings')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::IndexSettings')
     end
 
     # Get all allowed IP addresses.
@@ -1380,7 +1380,7 @@ module Algolia
     # @return [Array<Source>]
     def get_sources(request_options = {})
       response = get_sources_with_http_info(request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Array<Search::Source>')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<Search::Source>')
     end
 
     # Get a synonym object.
@@ -1427,7 +1427,7 @@ module Algolia
     # @return [SynonymHit]
     def get_synonym(index_name, object_id, request_options = {})
       response = get_synonym_with_http_info(index_name, object_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::SynonymHit')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::SynonymHit')
     end
 
     # Check a task&#39;s status.
@@ -1474,7 +1474,7 @@ module Algolia
     # @return [GetTaskResponse]
     def get_task(index_name, task_id, request_options = {})
       response = get_task_with_http_info(index_name, task_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::GetTaskResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::GetTaskResponse')
     end
 
     # Get top userID.
@@ -1507,7 +1507,7 @@ module Algolia
     # @return [GetTopUserIdsResponse]
     def get_top_user_ids(request_options = {})
       response = get_top_user_ids_with_http_info(request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::GetTopUserIdsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::GetTopUserIdsResponse')
     end
 
     # Get userID.
@@ -1552,7 +1552,7 @@ module Algolia
     # @return [UserId]
     def get_user_id(user_id, request_options = {})
       response = get_user_id_with_http_info(user_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::UserId')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UserId')
     end
 
     # Get migration and user mapping status.
@@ -1588,7 +1588,7 @@ module Algolia
     # @return [HasPendingMappingsResponse]
     def has_pending_mappings(get_clusters = nil, request_options = {})
       response = has_pending_mappings_with_http_info(get_clusters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::HasPendingMappingsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::HasPendingMappingsResponse')
     end
 
     # List API keys.
@@ -1621,7 +1621,7 @@ module Algolia
     # @return [ListApiKeysResponse]
     def list_api_keys(request_options = {})
       response = list_api_keys_with_http_info(request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::ListApiKeysResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::ListApiKeysResponse')
     end
 
     # List clusters.
@@ -1654,7 +1654,7 @@ module Algolia
     # @return [ListClustersResponse]
     def list_clusters(request_options = {})
       response = list_clusters_with_http_info(request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::ListClustersResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::ListClustersResponse')
     end
 
     # List indices.
@@ -1697,7 +1697,7 @@ module Algolia
     # @return [ListIndicesResponse]
     def list_indices(page = nil, hits_per_page = nil, request_options = {})
       response = list_indices_with_http_info(page, hits_per_page, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::ListIndicesResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::ListIndicesResponse')
     end
 
     # List userIDs.
@@ -1740,7 +1740,7 @@ module Algolia
     # @return [ListUserIdsResponse]
     def list_user_ids(page = nil, hits_per_page = nil, request_options = {})
       response = list_user_ids_with_http_info(page, hits_per_page, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::ListUserIdsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::ListUserIdsResponse')
     end
 
     # Batch write operations on multiple indices.
@@ -1780,7 +1780,7 @@ module Algolia
     # @return [MultipleBatchResponse]
     def multiple_batch(batch_params, request_options = {})
       response = multiple_batch_with_http_info(batch_params, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::MultipleBatchResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::MultipleBatchResponse')
     end
 
     # Copy, move, or rename an index.
@@ -1826,7 +1826,7 @@ module Algolia
     # @return [UpdatedAtResponse]
     def operation_index(index_name, operation_index_params, request_options = {})
       response = operation_index_with_http_info(index_name, operation_index_params, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
     # Update record attributes.
@@ -1882,7 +1882,7 @@ module Algolia
     # @return [UpdatedAtWithObjectIdResponse]
     def partial_update_object(index_name, object_id, attributes_to_update, create_if_not_exists = nil, request_options = {})
       response = partial_update_object_with_http_info(index_name, object_id, attributes_to_update, create_if_not_exists, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtWithObjectIdResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtWithObjectIdResponse')
     end
 
     # Remove userID.
@@ -1927,7 +1927,7 @@ module Algolia
     # @return [RemoveUserIdResponse]
     def remove_user_id(user_id, request_options = {})
       response = remove_user_id_with_http_info(user_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::RemoveUserIdResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::RemoveUserIdResponse')
     end
 
     # Replace all sources.
@@ -1967,7 +1967,7 @@ module Algolia
     # @return [ReplaceSourceResponse]
     def replace_sources(source, request_options = {})
       response = replace_sources_with_http_info(source, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::ReplaceSourceResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::ReplaceSourceResponse')
     end
 
     # Restore API key.
@@ -2007,7 +2007,7 @@ module Algolia
     # @return [AddApiKeyResponse]
     def restore_api_key(key, request_options = {})
       response = restore_api_key_with_http_info(key, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::AddApiKeyResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::AddApiKeyResponse')
     end
 
     # Add or update a record.
@@ -2053,7 +2053,7 @@ module Algolia
     # @return [SaveObjectResponse]
     def save_object(index_name, body, request_options = {})
       response = save_object_with_http_info(index_name, body, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::SaveObjectResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::SaveObjectResponse')
     end
 
     # Create or update a rule.
@@ -2109,7 +2109,7 @@ module Algolia
     # @return [UpdatedRuleResponse]
     def save_rule(index_name, object_id, rule, forward_to_replicas = nil, request_options = {})
       response = save_rule_with_http_info(index_name, object_id, rule, forward_to_replicas, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedRuleResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedRuleResponse')
     end
 
     # Save a batch of rules.
@@ -2161,7 +2161,7 @@ module Algolia
     # @return [UpdatedAtResponse]
     def save_rules(index_name, rules, forward_to_replicas = nil, clear_existing_rules = nil, request_options = {})
       response = save_rules_with_http_info(index_name, rules, forward_to_replicas, clear_existing_rules, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
     # Save a synonym.
@@ -2217,7 +2217,7 @@ module Algolia
     # @return [SaveSynonymResponse]
     def save_synonym(index_name, object_id, synonym_hit, forward_to_replicas = nil, request_options = {})
       response = save_synonym_with_http_info(index_name, object_id, synonym_hit, forward_to_replicas, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::SaveSynonymResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::SaveSynonymResponse')
     end
 
     # Save a batch of synonyms.
@@ -2269,7 +2269,7 @@ module Algolia
     # @return [UpdatedAtResponse]
     def save_synonyms(index_name, synonym_hit, forward_to_replicas = nil, replace_existing_synonyms = nil, request_options = {})
       response = save_synonyms_with_http_info(index_name, synonym_hit, forward_to_replicas, replace_existing_synonyms, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
     # Search multiple indices.
@@ -2296,7 +2296,7 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :use_read_transporter => false
+        :use_read_transporter => true
       )
 
       @api_client.call_api(:POST, path, new_options)
@@ -2309,7 +2309,7 @@ module Algolia
     # @return [SearchResponses]
     def search(search_method_params, request_options = {})
       response = search_with_http_info(search_method_params, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::SearchResponses')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::SearchResponses')
     end
 
     # Search dictionary entries.
@@ -2341,7 +2341,7 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :use_read_transporter => false
+        :use_read_transporter => true
       )
 
       @api_client.call_api(:POST, path, new_options)
@@ -2355,7 +2355,7 @@ module Algolia
     # @return [UpdatedAtResponse]
     def search_dictionary_entries(dictionary_name, search_dictionary_entries_params, request_options = {})
       response = search_dictionary_entries_with_http_info(dictionary_name, search_dictionary_entries_params, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
     # Search for facet values.
@@ -2389,7 +2389,7 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :use_read_transporter => false
+        :use_read_transporter => true
       )
 
       @api_client.call_api(:POST, path, new_options)
@@ -2404,7 +2404,7 @@ module Algolia
     # @return [SearchForFacetValuesResponse]
     def search_for_facet_values(index_name, facet_name, search_for_facet_values_request = nil, request_options = {})
       response = search_for_facet_values_with_http_info(index_name, facet_name, search_for_facet_values_request, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::SearchForFacetValuesResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::SearchForFacetValuesResponse')
     end
 
     # Search for rules.
@@ -2432,7 +2432,7 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :use_read_transporter => false
+        :use_read_transporter => true
       )
 
       @api_client.call_api(:POST, path, new_options)
@@ -2446,7 +2446,7 @@ module Algolia
     # @return [SearchRulesResponse]
     def search_rules(index_name, search_rules_params = nil, request_options = {})
       response = search_rules_with_http_info(index_name, search_rules_params, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::SearchRulesResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::SearchRulesResponse')
     end
 
     # Search an index.
@@ -2474,7 +2474,7 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :use_read_transporter => false
+        :use_read_transporter => true
       )
 
       @api_client.call_api(:POST, path, new_options)
@@ -2488,7 +2488,7 @@ module Algolia
     # @return [SearchResponse]
     def search_single_index(index_name, search_params = nil, request_options = {})
       response = search_single_index_with_http_info(index_name, search_params, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::SearchResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::SearchResponse')
     end
 
     # Search for synonyms.
@@ -2525,7 +2525,7 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :use_read_transporter => false
+        :use_read_transporter => true
       )
 
       @api_client.call_api(:POST, path, new_options)
@@ -2542,7 +2542,7 @@ module Algolia
     # @return [SearchSynonymsResponse]
     def search_synonyms(index_name, type = nil, page = nil, hits_per_page = nil, search_synonyms_params = nil, request_options = {})
       response = search_synonyms_with_http_info(index_name, type, page, hits_per_page, search_synonyms_params, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::SearchSynonymsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::SearchSynonymsResponse')
     end
 
     # Search for a user ID.
@@ -2569,7 +2569,7 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :use_read_transporter => false
+        :use_read_transporter => true
       )
 
       @api_client.call_api(:POST, path, new_options)
@@ -2582,7 +2582,7 @@ module Algolia
     # @return [SearchUserIdsResponse]
     def search_user_ids(search_user_ids_params, request_options = {})
       response = search_user_ids_with_http_info(search_user_ids_params, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::SearchUserIdsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::SearchUserIdsResponse')
     end
 
     # Set stop word settings.
@@ -2622,7 +2622,7 @@ module Algolia
     # @return [UpdatedAtResponse]
     def set_dictionary_settings(dictionary_settings_params, request_options = {})
       response = set_dictionary_settings_with_http_info(dictionary_settings_params, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
     # Update index settings.
@@ -2671,7 +2671,7 @@ module Algolia
     # @return [UpdatedAtResponse]
     def set_settings(index_name, index_settings, forward_to_replicas = nil, request_options = {})
       response = set_settings_with_http_info(index_name, index_settings, forward_to_replicas, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
     # Update an API key.
@@ -2717,7 +2717,7 @@ module Algolia
     # @return [UpdateApiKeyResponse]
     def update_api_key(key, api_key, request_options = {})
       response = update_api_key_with_http_info(key, api_key, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdateApiKeyResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdateApiKeyResponse')
     end
   end
 end

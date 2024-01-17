@@ -70,7 +70,7 @@ module Algolia
     # @return [Object]
     def custom_delete(path, parameters = nil, request_options = {})
       response = custom_delete_with_http_info(path, parameters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -113,7 +113,7 @@ module Algolia
     # @return [Object]
     def custom_get(path, parameters = nil, request_options = {})
       response = custom_get_with_http_info(path, parameters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -158,7 +158,7 @@ module Algolia
     # @return [Object]
     def custom_post(path, parameters = nil, body = nil, request_options = {})
       response = custom_post_with_http_info(path, parameters, body, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -203,7 +203,7 @@ module Algolia
     # @return [Object]
     def custom_put(path, parameters = nil, body = nil, request_options = {})
       response = custom_put_with_http_info(path, parameters, body, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # List incidents for selected clusters.
@@ -243,7 +243,7 @@ module Algolia
     # @return [IncidentsResponse]
     def get_cluster_incidents(clusters, request_options = {})
       response = get_cluster_incidents_with_http_info(clusters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::IncidentsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::IncidentsResponse')
     end
 
     # List statuses of selected clusters.
@@ -283,7 +283,7 @@ module Algolia
     # @return [StatusResponse]
     def get_cluster_status(clusters, request_options = {})
       response = get_cluster_status_with_http_info(clusters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::StatusResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::StatusResponse')
     end
 
     # List incidents.
@@ -316,7 +316,7 @@ module Algolia
     # @return [IncidentsResponse]
     def get_incidents(request_options = {})
       response = get_incidents_with_http_info(request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::IncidentsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::IncidentsResponse')
     end
 
     # Get indexing times.
@@ -356,7 +356,7 @@ module Algolia
     # @return [IndexingTimeResponse]
     def get_indexing_time(clusters, request_options = {})
       response = get_indexing_time_with_http_info(clusters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::IndexingTimeResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::IndexingTimeResponse')
     end
 
     # List servers.
@@ -389,7 +389,7 @@ module Algolia
     # @return [InventoryResponse]
     def get_inventory(request_options = {})
       response = get_inventory_with_http_info(request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::InventoryResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::InventoryResponse')
     end
 
     # Get search latency times.
@@ -429,7 +429,7 @@ module Algolia
     # @return [LatencyResponse]
     def get_latency(clusters, request_options = {})
       response = get_latency_with_http_info(clusters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::LatencyResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::LatencyResponse')
     end
 
     # Get metrics for a given period.
@@ -476,7 +476,7 @@ module Algolia
     # @return [InfrastructureResponse]
     def get_metrics(metric, period, request_options = {})
       response = get_metrics_with_http_info(metric, period, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::InfrastructureResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::InfrastructureResponse')
     end
 
     # Test the reachability of clusters.
@@ -516,7 +516,7 @@ module Algolia
     # @return [Hash<String, Hash>]
     def get_reachability(clusters, request_options = {})
       response = get_reachability_with_http_info(clusters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::Hash<String, Hash>')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::Hash<String, Hash>')
     end
 
     # List cluster statuses.
@@ -549,7 +549,7 @@ module Algolia
     # @return [StatusResponse]
     def get_status(request_options = {})
       response = get_status_with_http_info(request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::StatusResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::StatusResponse')
     end
   end
 end

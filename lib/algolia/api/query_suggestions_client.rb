@@ -70,7 +70,7 @@ module Algolia
     # @return [BaseResponse]
     def create_config(query_suggestions_configuration_with_index, request_options = {})
       response = create_config_with_http_info(query_suggestions_configuration_with_index, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::BaseResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::BaseResponse')
     end
 
     # Send requests to the Algolia REST API.
@@ -113,7 +113,7 @@ module Algolia
     # @return [Object]
     def custom_delete(path, parameters = nil, request_options = {})
       response = custom_delete_with_http_info(path, parameters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -156,7 +156,7 @@ module Algolia
     # @return [Object]
     def custom_get(path, parameters = nil, request_options = {})
       response = custom_get_with_http_info(path, parameters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -201,7 +201,7 @@ module Algolia
     # @return [Object]
     def custom_post(path, parameters = nil, body = nil, request_options = {})
       response = custom_post_with_http_info(path, parameters, body, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -246,7 +246,7 @@ module Algolia
     # @return [Object]
     def custom_put(path, parameters = nil, body = nil, request_options = {})
       response = custom_put_with_http_info(path, parameters, body, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Delete a configuration.
@@ -286,7 +286,7 @@ module Algolia
     # @return [BaseResponse]
     def delete_config(index_name, request_options = {})
       response = delete_config_with_http_info(index_name, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::BaseResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::BaseResponse')
     end
 
     # List configurations.
@@ -319,7 +319,7 @@ module Algolia
     # @return [Array<QuerySuggestionsConfigurationResponse>]
     def get_all_configs(request_options = {})
       response = get_all_configs_with_http_info(request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Array<QuerySuggestions::QuerySuggestionsConfigurationResponse>')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<QuerySuggestions::QuerySuggestionsConfigurationResponse>')
     end
 
     # Get a configuration.
@@ -359,7 +359,7 @@ module Algolia
     # @return [QuerySuggestionsConfigurationResponse]
     def get_config(index_name, request_options = {})
       response = get_config_with_http_info(index_name, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::QuerySuggestionsConfigurationResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::QuerySuggestionsConfigurationResponse')
     end
 
     # Get configuration status.
@@ -399,7 +399,7 @@ module Algolia
     # @return [GetConfigStatus200Response]
     def get_config_status(index_name, request_options = {})
       response = get_config_status_with_http_info(index_name, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::GetConfigStatus200Response')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::GetConfigStatus200Response')
     end
 
     # Get logs.
@@ -439,7 +439,7 @@ module Algolia
     # @return [GetLogFile200Response]
     def get_log_file(index_name, request_options = {})
       response = get_log_file_with_http_info(index_name, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::GetLogFile200Response')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::GetLogFile200Response')
     end
 
     # Update a configuration.
@@ -485,7 +485,7 @@ module Algolia
     # @return [BaseResponse]
     def update_config(index_name, query_suggestions_configuration, request_options = {})
       response = update_config_with_http_info(index_name, query_suggestions_configuration, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::BaseResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::BaseResponse')
     end
   end
 end

@@ -81,7 +81,7 @@ module Algolia
               return data.each_with_object({}) { |(k, v), hsh| hsh[k] = find_and_cast_into_type(sub_type, v) }
             end
           else # model
-            const = Algolia.const_get(klass)
+            const = Algolia::Insights.const_get(klass)
             if const
               if const.respond_to?(:openapi_one_of) # nested oneOf model
                 model = const.build(data)

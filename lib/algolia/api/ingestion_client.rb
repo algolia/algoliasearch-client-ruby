@@ -70,7 +70,7 @@ module Algolia
     # @return [AuthenticationCreateResponse]
     def create_authentication(authentication_create, request_options = {})
       response = create_authentication_with_http_info(authentication_create, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::AuthenticationCreateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::AuthenticationCreateResponse')
     end
 
     # Create a destination.
@@ -110,7 +110,7 @@ module Algolia
     # @return [DestinationCreateResponse]
     def create_destination(destination_create, request_options = {})
       response = create_destination_with_http_info(destination_create, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DestinationCreateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DestinationCreateResponse')
     end
 
     # Create a source.
@@ -150,7 +150,7 @@ module Algolia
     # @return [SourceCreateResponse]
     def create_source(source_create, request_options = {})
       response = create_source_with_http_info(source_create, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceCreateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceCreateResponse')
     end
 
     # Create a task.
@@ -190,7 +190,7 @@ module Algolia
     # @return [TaskCreateResponse]
     def create_task(task_create, request_options = {})
       response = create_task_with_http_info(task_create, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskCreateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskCreateResponse')
     end
 
     # Send requests to the Algolia REST API.
@@ -233,7 +233,7 @@ module Algolia
     # @return [Object]
     def custom_delete(path, parameters = nil, request_options = {})
       response = custom_delete_with_http_info(path, parameters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -276,7 +276,7 @@ module Algolia
     # @return [Object]
     def custom_get(path, parameters = nil, request_options = {})
       response = custom_get_with_http_info(path, parameters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -321,7 +321,7 @@ module Algolia
     # @return [Object]
     def custom_post(path, parameters = nil, body = nil, request_options = {})
       response = custom_post_with_http_info(path, parameters, body, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -366,7 +366,7 @@ module Algolia
     # @return [Object]
     def custom_put(path, parameters = nil, body = nil, request_options = {})
       response = custom_put_with_http_info(path, parameters, body, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Delete a authentication.
@@ -406,7 +406,7 @@ module Algolia
     # @return [DeleteResponse]
     def delete_authentication(authentication_id, request_options = {})
       response = delete_authentication_with_http_info(authentication_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
     end
 
     # Delete a destination.
@@ -446,7 +446,7 @@ module Algolia
     # @return [DeleteResponse]
     def delete_destination(destination_id, request_options = {})
       response = delete_destination_with_http_info(destination_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
     end
 
     # Delete a source.
@@ -486,7 +486,7 @@ module Algolia
     # @return [DeleteResponse]
     def delete_source(source_id, request_options = {})
       response = delete_source_with_http_info(source_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
     end
 
     # Delete a task.
@@ -526,7 +526,7 @@ module Algolia
     # @return [DeleteResponse]
     def delete_task(task_id, request_options = {})
       response = delete_task_with_http_info(task_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
     end
 
     # Disable a task.
@@ -566,7 +566,7 @@ module Algolia
     # @return [TaskUpdateResponse]
     def disable_task(task_id, request_options = {})
       response = disable_task_with_http_info(task_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskUpdateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskUpdateResponse')
     end
 
     # Enable a task.
@@ -606,7 +606,7 @@ module Algolia
     # @return [TaskUpdateResponse]
     def enable_task(task_id, request_options = {})
       response = enable_task_with_http_info(task_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskUpdateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskUpdateResponse')
     end
 
     # Get a authentication.
@@ -646,7 +646,7 @@ module Algolia
     # @return [Authentication]
     def get_authentication(authentication_id, request_options = {})
       response = get_authentication_with_http_info(authentication_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Authentication')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Authentication')
     end
 
     # Get a list of authentications.
@@ -697,7 +697,7 @@ module Algolia
     # @return [ListAuthenticationsResponse]
     def get_authentications(items_per_page = nil, page = nil, type = nil, platform = nil, sort = nil, order = nil, request_options = {})
       response = get_authentications_with_http_info(items_per_page, page, type, platform, sort, order, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListAuthenticationsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListAuthenticationsResponse')
     end
 
     # Get a destination.
@@ -737,7 +737,7 @@ module Algolia
     # @return [Destination]
     def get_destination(destination_id, request_options = {})
       response = get_destination_with_http_info(destination_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Destination')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Destination')
     end
 
     # Get a list of destinations.
@@ -788,7 +788,7 @@ module Algolia
     # @return [ListDestinationsResponse]
     def get_destinations(items_per_page = nil, page = nil, type = nil, authentication_id = nil, sort = nil, order = nil, request_options = {})
       response = get_destinations_with_http_info(items_per_page, page, type, authentication_id, sort, order, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListDestinationsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListDestinationsResponse')
     end
 
     # Retrieve a stream listing.
@@ -828,7 +828,7 @@ module Algolia
     # @return [DockerSourceStreams]
     def get_docker_source_streams(source_id, request_options = {})
       response = get_docker_source_streams_with_http_info(source_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DockerSourceStreams')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DockerSourceStreams')
     end
 
     # Get an event.
@@ -874,7 +874,7 @@ module Algolia
     # @return [Event]
     def get_event(run_id, event_id, request_options = {})
       response = get_event_with_http_info(run_id, event_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Event')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Event')
     end
 
     # Get a list of events.
@@ -939,7 +939,7 @@ module Algolia
     # @return [ListEventsResponse]
     def get_events(run_id, items_per_page = nil, page = nil, status = nil, type = nil, sort = nil, order = nil, start_date = nil, end_date = nil, request_options = {})
       response = get_events_with_http_info(run_id, items_per_page, page, status, type, sort, order, start_date, end_date, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListEventsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListEventsResponse')
     end
 
     # Get a run.
@@ -979,7 +979,7 @@ module Algolia
     # @return [Run]
     def get_run(run_id, request_options = {})
       response = get_run_with_http_info(run_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Run')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Run')
     end
 
     # Get a list of runs.
@@ -1036,7 +1036,7 @@ module Algolia
     # @return [RunListResponse]
     def get_runs(items_per_page = nil, page = nil, status = nil, task_id = nil, sort = nil, order = nil, start_date = nil, end_date = nil, request_options = {})
       response = get_runs_with_http_info(items_per_page, page, status, task_id, sort, order, start_date, end_date, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::RunListResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::RunListResponse')
     end
 
     # Get a source.
@@ -1076,7 +1076,7 @@ module Algolia
     # @return [Source]
     def get_source(source_id, request_options = {})
       response = get_source_with_http_info(source_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Source')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Source')
     end
 
     # Get a list of sources.
@@ -1127,7 +1127,7 @@ module Algolia
     # @return [ListSourcesResponse]
     def get_sources(items_per_page = nil, page = nil, type = nil, authentication_id = nil, sort = nil, order = nil, request_options = {})
       response = get_sources_with_http_info(items_per_page, page, type, authentication_id, sort, order, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListSourcesResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListSourcesResponse')
     end
 
     # Get a task.
@@ -1167,7 +1167,7 @@ module Algolia
     # @return [Task]
     def get_task(task_id, request_options = {})
       response = get_task_with_http_info(task_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Task')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Task')
     end
 
     # Get a list of tasks.
@@ -1229,7 +1229,7 @@ module Algolia
     def get_tasks(items_per_page = nil, page = nil, action = nil, enabled = nil, source_id = nil, destination_id = nil, trigger_type = nil, sort = nil, order = nil,
                   request_options = {})
       response = get_tasks_with_http_info(items_per_page, page, action, enabled, source_id, destination_id, trigger_type, sort, order, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListTasksResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListTasksResponse')
     end
 
     # Run a task.
@@ -1269,7 +1269,7 @@ module Algolia
     # @return [RunResponse]
     def run_task(task_id, request_options = {})
       response = run_task_with_http_info(task_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::RunResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::RunResponse')
     end
 
     # Search among authentications.
@@ -1309,7 +1309,7 @@ module Algolia
     # @return [Array<Authentication>]
     def search_authentications(authentication_search, request_options = {})
       response = search_authentications_with_http_info(authentication_search, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Authentication>')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Authentication>')
     end
 
     # Search among destinations.
@@ -1349,7 +1349,7 @@ module Algolia
     # @return [Array<Destination>]
     def search_destinations(destination_search, request_options = {})
       response = search_destinations_with_http_info(destination_search, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Destination>')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Destination>')
     end
 
     # Search among sources.
@@ -1389,7 +1389,7 @@ module Algolia
     # @return [Array<Source>]
     def search_sources(source_search, request_options = {})
       response = search_sources_with_http_info(source_search, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Source>')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Source>')
     end
 
     # Search among tasks.
@@ -1429,7 +1429,7 @@ module Algolia
     # @return [Array<Task>]
     def search_tasks(task_search, request_options = {})
       response = search_tasks_with_http_info(task_search, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Task>')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Task>')
     end
 
     # Trigger a stream listing request.
@@ -1469,7 +1469,7 @@ module Algolia
     # @return [DockerSourceDiscover]
     def trigger_docker_source_discover(source_id, request_options = {})
       response = trigger_docker_source_discover_with_http_info(source_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DockerSourceDiscover')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DockerSourceDiscover')
     end
 
     # Update a authentication.
@@ -1515,7 +1515,7 @@ module Algolia
     # @return [AuthenticationUpdateResponse]
     def update_authentication(authentication_id, authentication_update, request_options = {})
       response = update_authentication_with_http_info(authentication_id, authentication_update, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::AuthenticationUpdateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::AuthenticationUpdateResponse')
     end
 
     # Update a destination.
@@ -1561,7 +1561,7 @@ module Algolia
     # @return [DestinationUpdateResponse]
     def update_destination(destination_id, destination_update, request_options = {})
       response = update_destination_with_http_info(destination_id, destination_update, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DestinationUpdateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DestinationUpdateResponse')
     end
 
     # Update a source.
@@ -1607,7 +1607,7 @@ module Algolia
     # @return [SourceUpdateResponse]
     def update_source(source_id, source_update, request_options = {})
       response = update_source_with_http_info(source_id, source_update, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceUpdateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceUpdateResponse')
     end
 
     # Update a task.
@@ -1653,7 +1653,7 @@ module Algolia
     # @return [TaskUpdateResponse]
     def update_task(task_id, task_update, request_options = {})
       response = update_task_with_http_info(task_id, task_update, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskUpdateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskUpdateResponse')
     end
   end
 end

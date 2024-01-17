@@ -1,4 +1,5 @@
 require 'cgi'
+require 'json'
 
 module Algolia
   class ApiClient

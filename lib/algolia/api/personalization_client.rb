@@ -73,7 +73,7 @@ module Algolia
     # @return [Object]
     def custom_delete(path, parameters = nil, request_options = {})
       response = custom_delete_with_http_info(path, parameters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -116,7 +116,7 @@ module Algolia
     # @return [Object]
     def custom_get(path, parameters = nil, request_options = {})
       response = custom_get_with_http_info(path, parameters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -161,7 +161,7 @@ module Algolia
     # @return [Object]
     def custom_post(path, parameters = nil, body = nil, request_options = {})
       response = custom_post_with_http_info(path, parameters, body, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -206,7 +206,7 @@ module Algolia
     # @return [Object]
     def custom_put(path, parameters = nil, body = nil, request_options = {})
       response = custom_put_with_http_info(path, parameters, body, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Delete a user profile.
@@ -246,7 +246,7 @@ module Algolia
     # @return [DeleteUserProfileResponse]
     def delete_user_profile(user_token, request_options = {})
       response = delete_user_profile_with_http_info(user_token, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Personalization::DeleteUserProfileResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Personalization::DeleteUserProfileResponse')
     end
 
     # Get the current strategy.
@@ -279,7 +279,7 @@ module Algolia
     # @return [PersonalizationStrategyParams]
     def get_personalization_strategy(request_options = {})
       response = get_personalization_strategy_with_http_info(request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Personalization::PersonalizationStrategyParams')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Personalization::PersonalizationStrategyParams')
     end
 
     # Get a user profile.
@@ -319,7 +319,7 @@ module Algolia
     # @return [GetUserTokenResponse]
     def get_user_token_profile(user_token, request_options = {})
       response = get_user_token_profile_with_http_info(user_token, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Personalization::GetUserTokenResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Personalization::GetUserTokenResponse')
     end
 
     # Set a new strategy.
@@ -359,7 +359,7 @@ module Algolia
     # @return [SetPersonalizationStrategyResponse]
     def set_personalization_strategy(personalization_strategy_params, request_options = {})
       response = set_personalization_strategy_with_http_info(personalization_strategy_params, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Personalization::SetPersonalizationStrategyResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Personalization::SetPersonalizationStrategyResponse')
     end
   end
 end

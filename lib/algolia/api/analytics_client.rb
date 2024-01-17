@@ -74,7 +74,7 @@ module Algolia
     # @return [Object]
     def custom_delete(path, parameters = nil, request_options = {})
       response = custom_delete_with_http_info(path, parameters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -117,7 +117,7 @@ module Algolia
     # @return [Object]
     def custom_get(path, parameters = nil, request_options = {})
       response = custom_get_with_http_info(path, parameters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -162,7 +162,7 @@ module Algolia
     # @return [Object]
     def custom_post(path, parameters = nil, body = nil, request_options = {})
       response = custom_post_with_http_info(path, parameters, body, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -207,7 +207,7 @@ module Algolia
     # @return [Object]
     def custom_put(path, parameters = nil, body = nil, request_options = {})
       response = custom_put_with_http_info(path, parameters, body, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Get average click position.
@@ -267,7 +267,7 @@ module Algolia
     # @return [GetAverageClickPositionResponse]
     def get_average_click_position(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       response = get_average_click_position_with_http_info(index, start_date, end_date, tags, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetAverageClickPositionResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetAverageClickPositionResponse')
     end
 
     # Get click positions.
@@ -327,7 +327,7 @@ module Algolia
     # @return [GetClickPositionsResponse]
     def get_click_positions(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       response = get_click_positions_with_http_info(index, start_date, end_date, tags, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetClickPositionsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetClickPositionsResponse')
     end
 
     # Get click-through rate (CTR).
@@ -387,7 +387,7 @@ module Algolia
     # @return [GetClickThroughRateResponse]
     def get_click_through_rate(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       response = get_click_through_rate_with_http_info(index, start_date, end_date, tags, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetClickThroughRateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetClickThroughRateResponse')
     end
 
     # Get conversion rate (CR).
@@ -447,7 +447,7 @@ module Algolia
     # @return [GetConversationRateResponse]
     def get_conversation_rate(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       response = get_conversation_rate_with_http_info(index, start_date, end_date, tags, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetConversationRateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetConversationRateResponse')
     end
 
     # Get no click rate.
@@ -507,7 +507,7 @@ module Algolia
     # @return [GetNoClickRateResponse]
     def get_no_click_rate(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       response = get_no_click_rate_with_http_info(index, start_date, end_date, tags, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetNoClickRateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetNoClickRateResponse')
     end
 
     # Get no results rate.
@@ -567,7 +567,7 @@ module Algolia
     # @return [GetNoResultsRateResponse]
     def get_no_results_rate(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       response = get_no_results_rate_with_http_info(index, start_date, end_date, tags, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetNoResultsRateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetNoResultsRateResponse')
     end
 
     # Get number of searches.
@@ -627,7 +627,7 @@ module Algolia
     # @return [GetSearchesCountResponse]
     def get_searches_count(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       response = get_searches_count_with_http_info(index, start_date, end_date, tags, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetSearchesCountResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetSearchesCountResponse')
     end
 
     # Get top searches with no clicks.
@@ -693,7 +693,7 @@ module Algolia
     # @return [GetSearchesNoClicksResponse]
     def get_searches_no_clicks(index, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
       response = get_searches_no_clicks_with_http_info(index, start_date, end_date, limit, offset, tags, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetSearchesNoClicksResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetSearchesNoClicksResponse')
     end
 
     # Get top searches with no results.
@@ -759,7 +759,7 @@ module Algolia
     # @return [GetSearchesNoResultsResponse]
     def get_searches_no_results(index, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
       response = get_searches_no_results_with_http_info(index, start_date, end_date, limit, offset, tags, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetSearchesNoResultsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetSearchesNoResultsResponse')
     end
 
     # Get Analytics API status.
@@ -800,7 +800,7 @@ module Algolia
     # @return [GetStatusResponse]
     def get_status(index, request_options = {})
       response = get_status_with_http_info(index, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetStatusResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetStatusResponse')
     end
 
     # Get top countries.
@@ -866,7 +866,7 @@ module Algolia
     # @return [GetTopCountriesResponse]
     def get_top_countries(index, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
       response = get_top_countries_with_http_info(index, start_date, end_date, limit, offset, tags, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopCountriesResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopCountriesResponse')
     end
 
     # Get top filterable attributes.
@@ -935,7 +935,7 @@ module Algolia
     # @return [GetTopFilterAttributesResponse]
     def get_top_filter_attributes(index, search = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
       response = get_top_filter_attributes_with_http_info(index, search, start_date, end_date, limit, offset, tags, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopFilterAttributesResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopFilterAttributesResponse')
     end
 
     # Get top filter values for an attribute.
@@ -1010,7 +1010,7 @@ module Algolia
     # @return [GetTopFilterForAttributeResponse]
     def get_top_filter_for_attribute(attribute, index, search = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
       response = get_top_filter_for_attribute_with_http_info(attribute, index, search, start_date, end_date, limit, offset, tags, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopFilterForAttributeResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopFilterForAttributeResponse')
     end
 
     # Get top filters for a no result search.
@@ -1079,7 +1079,7 @@ module Algolia
     # @return [GetTopFiltersNoResultsResponse]
     def get_top_filters_no_results(index, search = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
       response = get_top_filters_no_results_with_http_info(index, search, start_date, end_date, limit, offset, tags, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopFiltersNoResultsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopFiltersNoResultsResponse')
     end
 
     # Get top hits.
@@ -1151,7 +1151,7 @@ module Algolia
     # @return [GetTopHitsResponse]
     def get_top_hits(index, search = nil, click_analytics = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
       response = get_top_hits_with_http_info(index, search, click_analytics, start_date, end_date, limit, offset, tags, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopHitsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopHitsResponse')
     end
 
     # Get top searches.
@@ -1228,7 +1228,7 @@ module Algolia
     def get_top_searches(index, click_analytics = nil, start_date = nil, end_date = nil, order_by = nil, direction = nil, limit = nil, offset = nil, tags = nil,
                          request_options = {})
       response = get_top_searches_with_http_info(index, click_analytics, start_date, end_date, order_by, direction, limit, offset, tags, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopSearchesResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopSearchesResponse')
     end
 
     # Get user count.
@@ -1288,7 +1288,7 @@ module Algolia
     # @return [GetUsersCountResponse]
     def get_users_count(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       response = get_users_count_with_http_info(index, start_date, end_date, tags, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetUsersCountResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetUsersCountResponse')
     end
   end
 end

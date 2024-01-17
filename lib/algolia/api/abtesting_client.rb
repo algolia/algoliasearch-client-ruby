@@ -71,7 +71,7 @@ module Algolia
     # @return [ABTestResponse]
     def add_ab_tests(add_ab_tests_request, request_options = {})
       response = add_ab_tests_with_http_info(add_ab_tests_request, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Abtesting::ABTestResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Abtesting::ABTestResponse')
     end
 
     # Send requests to the Algolia REST API.
@@ -114,7 +114,7 @@ module Algolia
     # @return [Object]
     def custom_delete(path, parameters = nil, request_options = {})
       response = custom_delete_with_http_info(path, parameters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -157,7 +157,7 @@ module Algolia
     # @return [Object]
     def custom_get(path, parameters = nil, request_options = {})
       response = custom_get_with_http_info(path, parameters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -202,7 +202,7 @@ module Algolia
     # @return [Object]
     def custom_post(path, parameters = nil, body = nil, request_options = {})
       response = custom_post_with_http_info(path, parameters, body, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -247,7 +247,7 @@ module Algolia
     # @return [Object]
     def custom_put(path, parameters = nil, body = nil, request_options = {})
       response = custom_put_with_http_info(path, parameters, body, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Delete an A/B test.
@@ -287,7 +287,7 @@ module Algolia
     # @return [ABTestResponse]
     def delete_ab_test(id, request_options = {})
       response = delete_ab_test_with_http_info(id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Abtesting::ABTestResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Abtesting::ABTestResponse')
     end
 
     # Get A/B test details.
@@ -327,7 +327,7 @@ module Algolia
     # @return [ABTest]
     def get_ab_test(id, request_options = {})
       response = get_ab_test_with_http_info(id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Abtesting::ABTest')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Abtesting::ABTest')
     end
 
     # List all A/B tests.
@@ -372,7 +372,7 @@ module Algolia
     # @return [ListABTestsResponse]
     def list_ab_tests(offset = nil, limit = nil, index_prefix = nil, index_suffix = nil, request_options = {})
       response = list_ab_tests_with_http_info(offset, limit, index_prefix, index_suffix, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Abtesting::ListABTestsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Abtesting::ListABTestsResponse')
     end
 
     # Stop an A/B test.
@@ -412,7 +412,7 @@ module Algolia
     # @return [ABTestResponse]
     def stop_ab_test(id, request_options = {})
       response = stop_ab_test_with_http_info(id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Abtesting::ABTestResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Abtesting::ABTestResponse')
     end
   end
 end

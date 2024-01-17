@@ -70,7 +70,7 @@ module Algolia
     # @return [Object]
     def custom_delete(path, parameters = nil, request_options = {})
       response = custom_delete_with_http_info(path, parameters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -113,7 +113,7 @@ module Algolia
     # @return [Object]
     def custom_get(path, parameters = nil, request_options = {})
       response = custom_get_with_http_info(path, parameters, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -158,7 +158,7 @@ module Algolia
     # @return [Object]
     def custom_post(path, parameters = nil, body = nil, request_options = {})
       response = custom_post_with_http_info(path, parameters, body, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Send requests to the Algolia REST API.
@@ -203,7 +203,7 @@ module Algolia
     # @return [Object]
     def custom_put(path, parameters = nil, body = nil, request_options = {})
       response = custom_put_with_http_info(path, parameters, body, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
     # Delete a Recommend rule.
@@ -257,7 +257,7 @@ module Algolia
     # @return [DeletedAtResponse]
     def delete_recommend_rule(index_name, model, object_id, request_options = {})
       response = delete_recommend_rule_with_http_info(index_name, model, object_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Recommend::DeletedAtResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Recommend::DeletedAtResponse')
     end
 
     # Get a Recommend rule.
@@ -311,7 +311,7 @@ module Algolia
     # @return [RuleResponse]
     def get_recommend_rule(index_name, model, object_id, request_options = {})
       response = get_recommend_rule_with_http_info(index_name, model, object_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Recommend::RuleResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Recommend::RuleResponse')
     end
 
     # Get a Recommend task&#39;s status.
@@ -365,7 +365,7 @@ module Algolia
     # @return [GetRecommendTaskResponse]
     def get_recommend_status(index_name, model, task_id, request_options = {})
       response = get_recommend_status_with_http_info(index_name, model, task_id, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Recommend::GetRecommendTaskResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Recommend::GetRecommendTaskResponse')
     end
 
     # Get recommendations and trending items.
@@ -392,7 +392,7 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :use_read_transporter => false
+        :use_read_transporter => true
       )
 
       @api_client.call_api(:POST, path, new_options)
@@ -405,7 +405,7 @@ module Algolia
     # @return [GetRecommendationsResponse]
     def get_recommendations(get_recommendations_params, request_options = {})
       response = get_recommendations_with_http_info(get_recommendations_params, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Recommend::GetRecommendationsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Recommend::GetRecommendationsResponse')
     end
 
     # List Recommend rules.
@@ -439,7 +439,7 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :use_read_transporter => false
+        :use_read_transporter => true
       )
 
       @api_client.call_api(:POST, path, new_options)
@@ -454,7 +454,7 @@ module Algolia
     # @return [SearchRecommendRulesResponse]
     def search_recommend_rules(index_name, model, search_recommend_rules_params = nil, request_options = {})
       response = search_recommend_rules_with_http_info(index_name, model, search_recommend_rules_params, request_options)
-      deserialize(response.body, request_options[:debug_return_type] || 'Recommend::SearchRecommendRulesResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Recommend::SearchRecommendRulesResponse')
     end
   end
 end
