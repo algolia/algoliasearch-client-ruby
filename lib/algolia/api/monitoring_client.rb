@@ -14,13 +14,7 @@ module Algolia
 
     def self.create(app_id, api_key, opts = {})
       hosts = []
-
-      hosts << Transport::StatefulHost.new("#{app_id}-dsn.algolia.net", accept: CallType::READ)
-      hosts << Transport::StatefulHost.new("#{app_id}.algolia.net", accept: CallType::WRITE)
-
-      hosts += 1.upto(3).map do |i|
-        Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", accept: CallType::READ | CallType::WRITE)
-      end.shuffle
+      hosts << Transport::StatefulHost.new('status.algolia.com', accept: CallType::READ | CallType::WRITE)
 
       config = Algolia::Configuration.new(app_id, api_key, hosts, 'Monitoring', opts)
       create_with_config(config)

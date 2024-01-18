@@ -14,7 +14,6 @@ module Algolia
 
     def self.create(app_id, api_key, opts = {})
       hosts = []
-
       hosts << Transport::StatefulHost.new("#{app_id}-dsn.algolia.net", accept: CallType::READ)
       hosts << Transport::StatefulHost.new("#{app_id}.algolia.net", accept: CallType::WRITE)
 
