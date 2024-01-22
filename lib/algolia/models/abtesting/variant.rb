@@ -59,6 +59,9 @@ module Algolia
       # Number of users during the A/B test.
       attr_accessor :user_count
 
+      # Number of users that performed a tracked search during the A/B test.
+      attr_accessor :tracked_user_count
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -79,7 +82,8 @@ module Algolia
           :search_count => :searchCount,
           :tracked_search_count => :trackedSearchCount,
           :traffic_percentage => :trafficPercentage,
-          :user_count => :userCount
+          :user_count => :userCount,
+          :tracked_user_count => :trackedUserCount
         }
       end
 
@@ -108,7 +112,8 @@ module Algolia
           :search_count => :Integer,
           :tracked_search_count => :Integer,
           :traffic_percentage => :Integer,
-          :user_count => :Integer
+          :user_count => :Integer,
+          :tracked_user_count => :Integer
         }
       end
 
@@ -241,6 +246,12 @@ module Algolia
         else
           self.user_count = nil
         end
+
+        if attributes.key?(:tracked_user_count)
+          self.tracked_user_count = attributes[:tracked_user_count]
+        else
+          self.tracked_user_count = nil
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -266,7 +277,8 @@ module Algolia
           search_count == other.search_count &&
           tracked_search_count == other.tracked_search_count &&
           traffic_percentage == other.traffic_percentage &&
-          user_count == other.user_count
+          user_count == other.user_count &&
+          tracked_user_count == other.tracked_user_count
       end
 
       # @see the `==` method
@@ -279,7 +291,7 @@ module Algolia
       # @return [Integer] Hash code
       def hash
         [add_to_cart_count, add_to_cart_rate, average_click_position, click_count, click_through_rate, conversion_count, conversion_rate, currencies, description, filter_effects,
-         index, no_result_count, purchase_count, purchase_rate, search_count, tracked_search_count, traffic_percentage, user_count].hash
+         index, no_result_count, purchase_count, purchase_rate, search_count, tracked_search_count, traffic_percentage, user_count, tracked_user_count].hash
       end
 
       # Builds the object from hash
