@@ -119,7 +119,7 @@ module Algolia
     # @return [String] JSON string representation of the object
     def object_to_hash(obj)
       if obj.is_a?(Hash)
-        obj.map { |k, v| [k, object_to_hash(v)] }.to_h
+        obj.to_h { |k, v| [k, object_to_hash(v)] }
       elsif obj.respond_to?(:to_hash)
         obj.to_hash
       else

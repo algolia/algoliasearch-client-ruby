@@ -56,7 +56,7 @@ module Algolia
           return response unless outcome == RETRY
         end
 
-        raise AlgoliaUnreachableHostError('Unreachable hosts')
+        raise Algolia::AlgoliaUnreachableHostError('Unreachable hosts')
       end
 
       private
@@ -112,10 +112,10 @@ module Algolia
       end
 
       def stringify_query_params(query_params)
-        query_params.map do |key, value|
+        query_params.to_h do |key, value|
           value = value.join(',') if value.is_a?(Array)
           [key, value.to_s]
-        end.to_h
+        end
       end
     end
   end
