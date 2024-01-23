@@ -9,10 +9,43 @@ module Algolia
       # Text to search for in an index.
       attr_accessor :query
 
+      attr_accessor :type
+
+      # Page to retrieve (the first page is `0`, not `1`).
+      attr_accessor :page
+
+      # Number of hits per page.
+      attr_accessor :hits_per_page
+
+      class EnumAttributeValidator
+        attr_reader :datatype
+        attr_reader :allowable_values
+
+        def initialize(datatype, allowable_values)
+          @allowable_values = allowable_values.map do |value|
+            case datatype.to_s
+            when /Integer/i
+              value.to_i
+            when /Float/i
+              value.to_f
+            else
+              value
+            end
+          end
+        end
+
+        def valid?(value)
+          !value || allowable_values.include?(value)
+        end
+      end
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :query => :query
+          :query => :query,
+          :type => :type,
+          :page => :page,
+          :hits_per_page => :hitsPerPage
         }
       end
 
@@ -24,7 +57,10 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :query => :String
+          :query => :String,
+          :type => :SynonymType,
+          :page => :Integer,
+          :hits_per_page => :Integer
         }
       end
 
@@ -53,6 +89,36 @@ module Algolia
         if attributes.key?(:query)
           self.query = attributes[:query]
         end
+
+        if attributes.key?(:type)
+          self.type = attributes[:type]
+        end
+
+        if attributes.key?(:page)
+          self.page = attributes[:page]
+        end
+
+        if attributes.key?(:hits_per_page)
+          self.hits_per_page = attributes[:hits_per_page]
+        end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] hits_per_page Value to be assigned
+      def hits_per_page=(hits_per_page)
+        if hits_per_page.nil?
+          raise ArgumentError, 'hits_per_page cannot be nil'
+        end
+
+        if hits_per_page > 1000
+          raise ArgumentError, 'invalid value for "hits_per_page", must be smaller than or equal to 1000.'
+        end
+
+        if hits_per_page < 1
+          raise ArgumentError, 'invalid value for "hits_per_page", must be greater than or equal to 1.'
+        end
+
+        @hits_per_page = hits_per_page
       end
 
       # Checks equality by comparing each attribute.
@@ -61,7 +127,10 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          query == other.query
+          query == other.query &&
+          type == other.type &&
+          page == other.page &&
+          hits_per_page == other.hits_per_page
       end
 
       # @see the `==` method
@@ -73,7 +142,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [query].hash
+        [query, type, page, hits_per_page].hash
       end
 
       # Builds the object from hash

@@ -2493,26 +2493,17 @@ module Algolia
     # Search for synonyms.
     # Search for synonyms in your index. You can control and filter the search with parameters. To get all synonyms, send an empty request body.
     # @param index_name [String] Index on which to perform the request. (required)
-    # @param type [SynonymType] Search for specific [types of synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms).
-    # @param page [Integer] Returns the requested page number (the first page is 0). Page size is set by &#x60;hitsPerPage&#x60;. When null, there&#39;s no pagination.  (default to 0)
-    # @param hits_per_page [Integer] Maximum number of hits per page. (default to 100)
     # @param search_synonyms_params [SearchSynonymsParams] Body of the &#x60;searchSynonyms&#x60; operation.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def search_synonyms_with_http_info(index_name, type = nil, page = nil, hits_per_page = nil, search_synonyms_params = nil, request_options = {})
+    def search_synonyms_with_http_info(index_name, search_synonyms_params = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `search_synonyms`."
       end
-      if @api_client.config.client_side_validation && !page.nil? && page < 0
-        raise ArgumentError, 'invalid value for ""page"" when calling SearchClient.search_synonyms, must be greater than or equal to 0.'
-      end
 
       path = '/1/indexes/{indexName}/synonyms/search'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
       query_params = {}
-      query_params[:type] = type unless type.nil?
-      query_params[:page] = page unless page.nil?
-      query_params[:hitsPerPage] = hits_per_page unless hits_per_page.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
@@ -2533,14 +2524,11 @@ module Algolia
     # Search for synonyms.
     # Search for synonyms in your index. You can control and filter the search with parameters. To get all synonyms, send an empty request body.
     # @param index_name [String] Index on which to perform the request. (required)
-    # @param type [SynonymType] Search for specific [types of synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms).
-    # @param page [Integer] Returns the requested page number (the first page is 0). Page size is set by &#x60;hitsPerPage&#x60;. When null, there&#39;s no pagination.  (default to 0)
-    # @param hits_per_page [Integer] Maximum number of hits per page. (default to 100)
     # @param search_synonyms_params [SearchSynonymsParams] Body of the &#x60;searchSynonyms&#x60; operation.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [SearchSynonymsResponse]
-    def search_synonyms(index_name, type = nil, page = nil, hits_per_page = nil, search_synonyms_params = nil, request_options = {})
-      response = search_synonyms_with_http_info(index_name, type, page, hits_per_page, search_synonyms_params, request_options)
+    def search_synonyms(index_name, search_synonyms_params = nil, request_options = {})
+      response = search_synonyms_with_http_info(index_name, search_synonyms_params, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::SearchSynonymsResponse')
     end
 
