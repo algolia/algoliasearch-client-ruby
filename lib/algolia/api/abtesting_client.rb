@@ -34,8 +34,10 @@ module Algolia
       new(config)
     end
 
-    # Create an A/B test.
     # Creates an A/B test.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
     # @param add_ab_tests_request [AddABTestsRequest]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -64,8 +66,10 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Create an A/B test.
     # Creates an A/B test.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
     # @param add_ab_tests_request [AddABTestsRequest]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ABTestResponse]
@@ -74,8 +78,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Abtesting::ABTestResponse')
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -106,8 +110,8 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -117,8 +121,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -149,8 +153,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -160,8 +164,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -193,8 +197,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -205,8 +209,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -238,8 +242,8 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -250,8 +254,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Delete an A/B test.
     # Delete an A/B test. To determine the &#x60;id&#x60; for an A/B test, use the [&#x60;listABTests&#x60; operation](#tag/abtest/operation/listABTests).
+    #
+    # Required API Key ACLs:
+    #   - editSettings
     # @param id [Integer] Unique A/B test ID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -280,8 +286,10 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Delete an A/B test.
     # Delete an A/B test. To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
+    #
+    # Required API Key ACLs:
+    #   - editSettings
     # @param id [Integer] Unique A/B test ID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ABTestResponse]
@@ -290,8 +298,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Abtesting::ABTestResponse')
     end
 
-    # Get A/B test details.
     # Get specific details for an A/B test. To determine the &#x60;id&#x60; for an A/B test, use the [&#x60;listABTests&#x60; operation](#tag/abtest/operation/listABTests).
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param id [Integer] Unique A/B test ID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -320,8 +330,10 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get A/B test details.
     # Get specific details for an A/B test. To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param id [Integer] Unique A/B test ID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ABTest]
@@ -331,7 +343,9 @@ module Algolia
     end
 
     # List all A/B tests.
-    # List all A/B tests.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
     # @param limit [Integer] Number of records to return (page size). (default to 10)
     # @param index_prefix [String] Only return A/B tests for indices starting with this prefix.
@@ -363,7 +377,9 @@ module Algolia
     end
 
     # List all A/B tests.
-    # List all A/B tests.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
     # @param limit [Integer] Number of records to return (page size). (default to 10)
     # @param index_prefix [String] Only return A/B tests for indices starting with this prefix.
@@ -375,8 +391,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Abtesting::ListABTestsResponse')
     end
 
-    # Stop an A/B test.
     # If stopped, the test is over and can&#39;t be restarted. There is now only one index, receiving 100% of all search requests. The data gathered for stopped A/B tests is retained. To determine the &#x60;id&#x60; for an A/B test, use the [&#x60;listABTests&#x60; operation](#tag/abtest/operation/listABTests).
+    #
+    # Required API Key ACLs:
+    #   - editSettings
     # @param id [Integer] Unique A/B test ID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -405,8 +423,10 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Stop an A/B test.
     # If stopped, the test is over and can't be restarted. There is now only one index, receiving 100% of all search requests. The data gathered for stopped A/B tests is retained. To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
+    #
+    # Required API Key ACLs:
+    #   - editSettings
     # @param id [Integer] Unique A/B test ID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ABTestResponse]
