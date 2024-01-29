@@ -29,10 +29,8 @@ module Algolia
       new(config)
     end
 
+    # Add API key.
     # Add a new API key with specific permissions and restrictions. The request must be authenticated with the admin API key. The response returns an API key string.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param api_key [ApiKey]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -61,10 +59,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Add API key.
     # Add a new API key with specific permissions and restrictions. The request must be authenticated with the admin API key. The response returns an API key string.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param api_key [ApiKey]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [AddApiKeyResponse]
@@ -73,10 +69,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::AddApiKeyResponse')
     end
 
+    # Add or update a record (using objectID).
     # If you use an existing &#x60;objectID&#x60;, the existing record will be replaced with the new one.  To update only some attributes of an existing record, use the [&#x60;partial&#x60; operation](#tag/Records/operation/partialUpdateObject) instead.  To add multiple records to your index in a single API request, use the [&#x60;batch&#x60; operation](#tag/Records/operation/batch).
-    #
-    # Required API Key ACLs:
-    #   - addObject
     # @param index_name [String] Index on which to perform the request. (required)
     # @param object_id [String] Unique record (object) identifier. (required)
     # @param body [Object] Algolia record. (required)
@@ -116,10 +110,8 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
+    # Add or update a record (using objectID).
     # If you use an existing `objectID`, the existing record will be replaced with the new one.  To update only some attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead.  To add multiple records to your index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).
-    #
-    # Required API Key ACLs:
-    #   - addObject
     # @param index_name [String] Index on which to perform the request. (required)
     # @param object_id [String] Unique record (object) identifier. (required)
     # @param body [Object] Algolia record. (required)
@@ -130,10 +122,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtWithObjectIdResponse')
     end
 
+    # Add a source.
     # Add a source to the list of allowed sources.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param source [Source] Source to add. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -162,10 +152,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Add a source.
     # Add a source to the list of allowed sources.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param source [Source] Source to add. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [CreatedAtResponse]
@@ -174,10 +162,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::CreatedAtResponse')
     end
 
+    # Assign or move a user ID.
     # Assign or move a user ID to a cluster. The time it takes to move a user is proportional to the amount of data linked to the user ID.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param x_algolia_user_id [String] userID to assign. (required)
     # @param assign_user_id_params [AssignUserIdParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -218,10 +204,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Assign or move a user ID.
     # Assign or move a user ID to a cluster. The time it takes to move a user is proportional to the amount of data linked to the user ID.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param x_algolia_user_id [String] userID to assign. (required)
     # @param assign_user_id_params [AssignUserIdParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -231,8 +215,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::CreatedAtResponse')
     end
 
+    # Batch write operations on one index.
     # To reduce the time spent on network round trips, you can perform several write actions in a single API call. Actions are applied in the order they are specified. The supported &#x60;action&#x60;s are equivalent to the individual operations of the same name.
-
     # @param index_name [String] Index on which to perform the request. (required)
     # @param batch_write_params [BatchWriteParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -266,8 +250,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Batch write operations on one index.
     # To reduce the time spent on network round trips, you can perform several write actions in a single API call. Actions are applied in the order they are specified. The supported `action`s are equivalent to the individual operations of the same name.
-
     # @param index_name [String] Index on which to perform the request. (required)
     # @param batch_write_params [BatchWriteParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -277,10 +261,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::BatchResponse')
     end
 
+    # Batch assign userIDs.
     # Assign multiple user IDs to a cluster. **You can&#39;t _move_ users with this operation.**.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param x_algolia_user_id [String] userID to assign. (required)
     # @param batch_assign_user_ids_params [BatchAssignUserIdsParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -321,10 +303,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Batch assign userIDs.
     # Assign multiple user IDs to a cluster. **You can't _move_ users with this operation.**.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param x_algolia_user_id [String] userID to assign. (required)
     # @param batch_assign_user_ids_params [BatchAssignUserIdsParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -334,10 +314,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::CreatedAtResponse')
     end
 
+    # Batch dictionary entries.
     # Add or remove a batch of dictionary entries.
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param dictionary_name [DictionaryType] Dictionary to search in. (required)
     # @param batch_dictionary_entries_params [BatchDictionaryEntriesParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -371,10 +349,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Batch dictionary entries.
     # Add or remove a batch of dictionary entries.
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param dictionary_name [DictionaryType] Dictionary to search in. (required)
     # @param batch_dictionary_entries_params [BatchDictionaryEntriesParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -384,10 +360,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
+    # Get all records from an index.
     # Retrieve up to 1,000 records per call. Supports full-text search and filters. For better performance, it doesn&#39;t support: - The &#x60;distinct&#x60; query parameter - Sorting by typos, proximity, words, or geographical distance.
-    #
-    # Required API Key ACLs:
-    #   - browse
     # @param index_name [String] Index on which to perform the request. (required)
     # @param browse_params [BrowseParams]
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -417,10 +391,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Get all records from an index.
     # Retrieve up to 1,000 records per call. Supports full-text search and filters. For better performance, it doesn't support: - The `distinct` query parameter - Sorting by typos, proximity, words, or geographical distance.
-    #
-    # Required API Key ACLs:
-    #   - browse
     # @param index_name [String] Index on which to perform the request. (required)
     # @param browse_params [BrowseParams]
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -430,10 +402,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::BrowseResponse')
     end
 
+    # Delete all records from an index.
     # Delete the records but leave settings and index-specific API keys untouched.
-    #
-    # Required API Key ACLs:
-    #   - deleteIndex
     # @param index_name [String] Index on which to perform the request. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -462,10 +432,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Delete all records from an index.
     # Delete the records but leave settings and index-specific API keys untouched.
-    #
-    # Required API Key ACLs:
-    #   - deleteIndex
     # @param index_name [String] Index on which to perform the request. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [UpdatedAtResponse]
@@ -474,10 +442,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
+    # Delete all rules.
     # Delete all rules in the index.
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param forward_to_replicas [Boolean] Indicates whether changed index settings are forwarded to the replica indices.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -508,10 +474,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Delete all rules.
     # Delete all rules in the index.
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param forward_to_replicas [Boolean] Indicates whether changed index settings are forwarded to the replica indices.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -521,10 +485,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
+    # Delete all synonyms.
     # Delete all synonyms in the index.
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param forward_to_replicas [Boolean] Indicates whether changed index settings are forwarded to the replica indices.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -555,10 +517,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Delete all synonyms.
     # Delete all synonyms in the index.
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param forward_to_replicas [Boolean] Indicates whether changed index settings are forwarded to the replica indices.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -568,8 +528,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -600,8 +560,8 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -611,8 +571,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -643,8 +603,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -654,8 +614,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -687,8 +647,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -699,8 +659,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -732,8 +692,8 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -744,10 +704,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
+    # Delete API key.
     # Delete an existing API key. The request must be authenticated with the admin API key.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param key [String] API key. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -776,10 +734,8 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
+    # Delete API key.
     # Delete an existing API key. The request must be authenticated with the admin API key.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param key [String] API key. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeleteApiKeyResponse]
@@ -788,10 +744,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::DeleteApiKeyResponse')
     end
 
+    # Delete all records matching a query.
     # This operation doesn&#39;t support all the query options, only its filters (numeric, facet, or tag) and geo queries. It doesn&#39;t accept empty filters or queries.
-    #
-    # Required API Key ACLs:
-    #   - deleteIndex
     # @param index_name [String] Index on which to perform the request. (required)
     # @param delete_by_params [DeleteByParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -825,10 +779,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Delete all records matching a query.
     # This operation doesn't support all the query options, only its filters (numeric, facet, or tag) and geo queries. It doesn't accept empty filters or queries.
-    #
-    # Required API Key ACLs:
-    #   - deleteIndex
     # @param index_name [String] Index on which to perform the request. (required)
     # @param delete_by_params [DeleteByParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -838,10 +790,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::DeletedAtResponse')
     end
 
+    # Delete index.
     # Delete an existing index.
-    #
-    # Required API Key ACLs:
-    #   - deleteIndex
     # @param index_name [String] Index on which to perform the request. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -870,10 +820,8 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
+    # Delete index.
     # Delete an existing index.
-    #
-    # Required API Key ACLs:
-    #   - deleteIndex
     # @param index_name [String] Index on which to perform the request. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeletedAtResponse]
@@ -882,10 +830,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::DeletedAtResponse')
     end
 
+    # Delete a record.
     # To delete a set of records matching a query, use the [&#x60;deleteByQuery&#x60; operation](#tag/Records/operation/deleteBy) instead.
-    #
-    # Required API Key ACLs:
-    #   - deleteObject
     # @param index_name [String] Index on which to perform the request. (required)
     # @param object_id [String] Unique record (object) identifier. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -920,10 +866,8 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
+    # Delete a record.
     # To delete a set of records matching a query, use the [`deleteByQuery` operation](#tag/Records/operation/deleteBy) instead.
-    #
-    # Required API Key ACLs:
-    #   - deleteObject
     # @param index_name [String] Index on which to perform the request. (required)
     # @param object_id [String] Unique record (object) identifier. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -933,10 +877,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::DeletedAtResponse')
     end
 
+    # Delete a rule.
     # Delete a rule by its &#x60;objectID&#x60;. To find the &#x60;objectID&#x60; for rules, use the [&#x60;search&#x60; operation](#tag/Rules/operation/searchRules).
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param object_id [String] Unique identifier of a rule object. (required)
     # @param forward_to_replicas [Boolean] Indicates whether changed index settings are forwarded to the replica indices.
@@ -973,10 +915,8 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
+    # Delete a rule.
     # Delete a rule by its `objectID`. To find the `objectID` for rules, use the [`search` operation](#tag/Rules/operation/searchRules).
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param object_id [String] Unique identifier of a rule object. (required)
     # @param forward_to_replicas [Boolean] Indicates whether changed index settings are forwarded to the replica indices.
@@ -987,10 +927,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
+    # Remove a source.
     # Remove a source from the list of allowed sources.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param source [String] IP address range of the source. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1019,10 +957,8 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
+    # Remove a source.
     # Remove a source from the list of allowed sources.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param source [String] IP address range of the source. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeleteSourceResponse]
@@ -1031,10 +967,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::DeleteSourceResponse')
     end
 
+    # Delete a synonym.
     # Delete a synonym by its &#x60;objectID&#x60;. To find the object IDs of your synonyms, use the [&#x60;search&#x60; operation](#tag/Synonyms/operation/searchSynonyms).
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param object_id [String] Unique identifier of a synonym object. (required)
     # @param forward_to_replicas [Boolean] Indicates whether changed index settings are forwarded to the replica indices.
@@ -1071,10 +1005,8 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
+    # Delete a synonym.
     # Delete a synonym by its `objectID`. To find the object IDs of your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param object_id [String] Unique identifier of a synonym object. (required)
     # @param forward_to_replicas [Boolean] Indicates whether changed index settings are forwarded to the replica indices.
@@ -1085,8 +1017,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::DeletedAtResponse')
     end
 
+    # Get API key permissions.
     # Get the permissions and restrictions of a specific API key. When authenticating with the admin API key, you can request information for any of your application&#39;s keys. When authenticating with other API keys, you can only retrieve information for that key.
-
     # @param key [String] API key. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1115,8 +1047,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # Get API key permissions.
     # Get the permissions and restrictions of a specific API key. When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key.
-
     # @param key [String] API key. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetApiKeyResponse]
@@ -1125,10 +1057,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::GetApiKeyResponse')
     end
 
+    # List available languages.
     # Lists Algolia&#39;s [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) and any customizations applied to each language&#39;s [stop word](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plural](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), and [segmentation (compound)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) features.
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_dictionary_languages_with_http_info(request_options = {})
@@ -1151,10 +1081,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # List available languages.
     # Lists Algolia's [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) and any customizations applied to each language's [stop word](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plural](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), and [segmentation (compound)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) features.
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Hash<String, Languages>]
     def get_dictionary_languages(request_options = {})
@@ -1162,10 +1090,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::Hash<String, Languages>')
     end
 
+    # Get stop word settings.
     # Get the languages for which [stop words are turned off](#tag/Dictionaries/operation/setDictionarySettings).
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_dictionary_settings_with_http_info(request_options = {})
@@ -1188,10 +1114,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # Get stop word settings.
     # Get the languages for which [stop words are turned off](#tag/Dictionaries/operation/setDictionarySettings).
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetDictionarySettingsResponse]
     def get_dictionary_settings(request_options = {})
@@ -1199,10 +1123,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::GetDictionarySettingsResponse')
     end
 
+    # Return the latest log entries.
     # The request must be authenticated by an API key with the [&#x60;logs&#x60; ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). Logs are held for the last seven days. There&#39;s also a logging limit of 1,000 API calls per server. This request counts towards your [operations quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-) but doesn&#39;t appear in the logs itself. &gt; **Note**: To fetch the logs for a Distributed Search Network (DSN) cluster, target the [DSN&#39;s endpoint](https://www.algolia.com/doc/guides/scaling/distributed-search-network-dsn/#accessing-dsn-servers).
-    #
-    # Required API Key ACLs:
-    #   - logs
     # @param offset [Integer] First log entry to retrieve. Sorted by decreasing date with 0 being the most recent. (default to 0)
     # @param length [Integer] Maximum number of entries to retrieve. (default to 10)
     # @param index_name [String] Index for which log entries should be retrieved. When omitted, log entries are retrieved for all indices.
@@ -1237,10 +1159,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # Return the latest log entries.
     # The request must be authenticated by an API key with the [`logs` ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). Logs are held for the last seven days. There's also a logging limit of 1,000 API calls per server. This request counts towards your [operations quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-) but doesn't appear in the logs itself. > **Note**: To fetch the logs for a Distributed Search Network (DSN) cluster, target the [DSN's endpoint](https://www.algolia.com/doc/guides/scaling/distributed-search-network-dsn/#accessing-dsn-servers).
-    #
-    # Required API Key ACLs:
-    #   - logs
     # @param offset [Integer] First log entry to retrieve. Sorted by decreasing date with 0 being the most recent. (default to 0)
     # @param length [Integer] Maximum number of entries to retrieve. (default to 10)
     # @param index_name [String] Index for which log entries should be retrieved. When omitted, log entries are retrieved for all indices.
@@ -1252,10 +1172,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::GetLogsResponse')
     end
 
+    # Get a record.
     # To get more than one record, use the [&#x60;objects&#x60; operation](#tag/Records/operation/getObjects).
-    #
-    # Required API Key ACLs:
-    #   - search
     # @param index_name [String] Index on which to perform the request. (required)
     # @param object_id [String] Unique record (object) identifier. (required)
     # @param attributes_to_retrieve [Array<String>] Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. &#x60;objectID&#x60; is always retrieved, even when not specified. [&#x60;unretrievableAttributes&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won&#39;t be retrieved unless the request is authenticated with the admin API key.
@@ -1292,10 +1210,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # Get a record.
     # To get more than one record, use the [`objects` operation](#tag/Records/operation/getObjects).
-    #
-    # Required API Key ACLs:
-    #   - search
     # @param index_name [String] Index on which to perform the request. (required)
     # @param object_id [String] Unique record (object) identifier. (required)
     # @param attributes_to_retrieve [Array<String>] Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. &#x60;objectID&#x60; is always retrieved, even when not specified. [&#x60;unretrievableAttributes&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won&#39;t be retrieved unless the request is authenticated with the admin API key.
@@ -1306,10 +1222,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::Hash<String, String>')
     end
 
+    # Get multiple records.
     # Retrieve one or more records, potentially from different indices, in a single API operation. Results will be received in the same order as the requests.
-    #
-    # Required API Key ACLs:
-    #   - search
     # @param get_objects_params [GetObjectsParams] Request object. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1338,10 +1252,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Get multiple records.
     # Retrieve one or more records, potentially from different indices, in a single API operation. Results will be received in the same order as the requests.
-    #
-    # Required API Key ACLs:
-    #   - search
     # @param get_objects_params [GetObjectsParams] Request object. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetObjectsResponse]
@@ -1350,10 +1262,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::GetObjectsResponse')
     end
 
+    # Get a rule.
     # Get a rule by its &#x60;objectID&#x60;. To find the &#x60;objectID&#x60; for rules, use the [&#x60;search&#x60; operation](#tag/Rules/operation/searchRules).
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param object_id [String] Unique identifier of a rule object. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1388,10 +1298,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # Get a rule.
     # Get a rule by its `objectID`. To find the `objectID` for rules, use the [`search` operation](#tag/Rules/operation/searchRules).
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param object_id [String] Unique identifier of a rule object. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1401,10 +1309,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::Rule')
     end
 
+    # Get index settings.
     # Return an object containing an index&#39;s [configuration settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/).
-    #
-    # Required API Key ACLs:
-    #   - search
     # @param index_name [String] Index on which to perform the request. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1433,10 +1339,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # Get index settings.
     # Return an object containing an index's [configuration settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/).
-    #
-    # Required API Key ACLs:
-    #   - search
     # @param index_name [String] Index on which to perform the request. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [IndexSettings]
@@ -1445,10 +1349,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::IndexSettings')
     end
 
+    # Get all allowed IP addresses.
     # Get all allowed sources (IP addresses).
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_sources_with_http_info(request_options = {})
@@ -1471,10 +1373,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # Get all allowed IP addresses.
     # Get all allowed sources (IP addresses).
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Array<Source>]
     def get_sources(request_options = {})
@@ -1482,10 +1382,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<Search::Source>')
     end
 
+    # Get a synonym object.
     # Get a syonym by its &#x60;objectID&#x60;. To find the object IDs for your synonyms, use the [&#x60;search&#x60; operation](#tag/Synonyms/operation/searchSynonyms).
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param object_id [String] Unique identifier of a synonym object. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1520,10 +1418,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # Get a synonym object.
     # Get a syonym by its `objectID`. To find the object IDs for your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param object_id [String] Unique identifier of a synonym object. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1533,10 +1429,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::SynonymHit')
     end
 
+    # Check a task&#39;s status.
     # Some operations, such as copying an index, will respond with a &#x60;taskID&#x60; value. Use this value here to check the status of that task.
-    #
-    # Required API Key ACLs:
-    #   - addObject
     # @param index_name [String] Index on which to perform the request. (required)
     # @param task_id [Integer] Unique task identifier. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1571,10 +1465,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # Check a task's status.
     # Some operations, such as copying an index, will respond with a `taskID` value. Use this value here to check the status of that task.
-    #
-    # Required API Key ACLs:
-    #   - addObject
     # @param index_name [String] Index on which to perform the request. (required)
     # @param task_id [Integer] Unique task identifier. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1584,10 +1476,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::GetTaskResponse')
     end
 
+    # Get top userID.
     # Get the IDs of the 10 users with the highest number of records per cluster. Since it can take up to a few seconds to get the data from the different clusters, the response isn&#39;t real-time.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_top_user_ids_with_http_info(request_options = {})
@@ -1610,10 +1500,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # Get top userID.
     # Get the IDs of the 10 users with the highest number of records per cluster. Since it can take up to a few seconds to get the data from the different clusters, the response isn't real-time.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopUserIdsResponse]
     def get_top_user_ids(request_options = {})
@@ -1621,10 +1509,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::GetTopUserIdsResponse')
     end
 
+    # Get userID.
     # Returns the userID data stored in the mapping. Since it can take up to a few seconds to get the data from the different clusters, the response isn&#39;t real-time.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param user_id [String] userID to assign. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1658,10 +1544,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # Get userID.
     # Returns the userID data stored in the mapping. Since it can take up to a few seconds to get the data from the different clusters, the response isn't real-time.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param user_id [String] userID to assign. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [UserId]
@@ -1670,10 +1554,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UserId')
     end
 
+    # Get migration and user mapping status.
     # To determine when the time-consuming process of creating a large batch of users or migrating users from one cluster to another is complete, this operation retrieves the status of the process.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param get_clusters [Boolean] Indicates whether to include the cluster&#39;s pending mapping state in the response.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1698,10 +1580,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # Get migration and user mapping status.
     # To determine when the time-consuming process of creating a large batch of users or migrating users from one cluster to another is complete, this operation retrieves the status of the process.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param get_clusters [Boolean] Indicates whether to include the cluster&#39;s pending mapping state in the response.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [HasPendingMappingsResponse]
@@ -1710,10 +1590,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::HasPendingMappingsResponse')
     end
 
+    # List API keys.
     # List all API keys associated with your Algolia application, including their permissions and restrictions.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def list_api_keys_with_http_info(request_options = {})
@@ -1736,10 +1614,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # List API keys.
     # List all API keys associated with your Algolia application, including their permissions and restrictions.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListApiKeysResponse]
     def list_api_keys(request_options = {})
@@ -1747,10 +1623,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::ListApiKeysResponse')
     end
 
+    # List clusters.
     # List the available clusters in a multi-cluster setup.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def list_clusters_with_http_info(request_options = {})
@@ -1773,10 +1647,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # List clusters.
     # List the available clusters in a multi-cluster setup.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListClustersResponse]
     def list_clusters(request_options = {})
@@ -1784,10 +1656,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::ListClustersResponse')
     end
 
+    # List indices.
     # List indices in an Algolia application.
-    #
-    # Required API Key ACLs:
-    #   - listIndexes
     # @param page [Integer] Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.
     # @param hits_per_page [Integer] Maximum number of hits per page. (default to 100)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1818,10 +1688,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # List indices.
     # List indices in an Algolia application.
-    #
-    # Required API Key ACLs:
-    #   - listIndexes
     # @param page [Integer] Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.
     # @param hits_per_page [Integer] Maximum number of hits per page. (default to 100)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1831,10 +1699,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::ListIndicesResponse')
     end
 
+    # List userIDs.
     # List the userIDs assigned to a multi-cluster application. Since it can take up to a few seconds to get the data from the different clusters, the response isn&#39;t real-time.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param page [Integer] Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.
     # @param hits_per_page [Integer] Maximum number of hits per page. (default to 100)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1865,10 +1731,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # List userIDs.
     # List the userIDs assigned to a multi-cluster application. Since it can take up to a few seconds to get the data from the different clusters, the response isn't real-time.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param page [Integer] Returns the requested page number. The page size is determined by the &#x60;hitsPerPage&#x60; parameter. You can see the number of available pages in the &#x60;nbPages&#x60; response attribute. When &#x60;page&#x60; is null, the API response is not paginated.
     # @param hits_per_page [Integer] Maximum number of hits per page. (default to 100)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1878,8 +1742,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::ListUserIdsResponse')
     end
 
+    # Batch write operations on multiple indices.
     # To reduce the time spent on network round trips, you can perform several write actions in a single request. It&#39;s a multi-index version of the [&#x60;batch&#x60; operation](#tag/Records/operation/batch). Actions are applied in the order they are specified. The supported actions are equivalent to the individual operations of the same name.
-
     # @param batch_params [BatchParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1908,8 +1772,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Batch write operations on multiple indices.
     # To reduce the time spent on network round trips, you can perform several write actions in a single request. It's a multi-index version of the [`batch` operation](#tag/Records/operation/batch). Actions are applied in the order they are specified. The supported actions are equivalent to the individual operations of the same name.
-
     # @param batch_params [BatchParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [MultipleBatchResponse]
@@ -1918,10 +1782,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::MultipleBatchResponse')
     end
 
+    # Copy, move, or rename an index.
     # This &#x60;operation&#x60;, _copy_ or _move_, will copy or move a source index&#39;s (&#x60;IndexName&#x60;) records, settings, synonyms, and rules to a &#x60;destination&#x60; index. If the destination index exists, it will be replaced, except for index-specific API keys and analytics data. If the destination index doesn&#39;t exist, it will be created.  The choice between moving or copying an index depends on your needs. Choose:  - **Move** to rename an index. - **Copy** to create a new index with the same records and configuration as an existing one.  &gt; **Note**: When considering copying or moving, be aware of the [rate limitations](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits) on these processes and the [impact on your analytics data](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/concepts/indices-analytics/).
-    #
-    # Required API Key ACLs:
-    #   - addObject
     # @param index_name [String] Index on which to perform the request. (required)
     # @param operation_index_params [OperationIndexParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1955,10 +1817,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Copy, move, or rename an index.
     # This `operation`, _copy_ or _move_, will copy or move a source index's (`IndexName`) records, settings, synonyms, and rules to a `destination` index. If the destination index exists, it will be replaced, except for index-specific API keys and analytics data. If the destination index doesn't exist, it will be created.  The choice between moving or copying an index depends on your needs. Choose:  - **Move** to rename an index. - **Copy** to create a new index with the same records and configuration as an existing one.  > **Note**: When considering copying or moving, be aware of the [rate limitations](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits) on these processes and the [impact on your analytics data](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/concepts/indices-analytics/).
-    #
-    # Required API Key ACLs:
-    #   - addObject
     # @param index_name [String] Index on which to perform the request. (required)
     # @param operation_index_params [OperationIndexParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1968,10 +1828,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
+    # Update record attributes.
     # Add new attributes or update current ones in an existing record. You can use any first-level attribute but not nested attributes. If you specify a [nested attribute](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/creating-and-using-nested-attributes/), the engine treats it as a replacement for its first-level ancestor.
-    #
-    # Required API Key ACLs:
-    #   - addObject
     # @param index_name [String] Index on which to perform the request. (required)
     # @param object_id [String] Unique record (object) identifier. (required)
     # @param attributes_to_update [Hash<String, AttributeToUpdate>] Object with attributes to update. (required)
@@ -2013,10 +1871,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Update record attributes.
     # Add new attributes or update current ones in an existing record. You can use any first-level attribute but not nested attributes. If you specify a [nested attribute](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/creating-and-using-nested-attributes/), the engine treats it as a replacement for its first-level ancestor.
-    #
-    # Required API Key ACLs:
-    #   - addObject
     # @param index_name [String] Index on which to perform the request. (required)
     # @param object_id [String] Unique record (object) identifier. (required)
     # @param attributes_to_update [Hash<String, AttributeToUpdate>] Object with attributes to update. (required)
@@ -2028,10 +1884,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtWithObjectIdResponse')
     end
 
+    # Remove userID.
     # Remove a userID and its associated data from the multi-clusters.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param user_id [String] userID to assign. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -2065,10 +1919,8 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
+    # Remove userID.
     # Remove a userID and its associated data from the multi-clusters.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param user_id [String] userID to assign. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [RemoveUserIdResponse]
@@ -2077,10 +1929,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::RemoveUserIdResponse')
     end
 
+    # Replace all sources.
     # Replace all allowed sources.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param source [Array<Source>] Allowed sources. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -2109,10 +1959,8 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
+    # Replace all sources.
     # Replace all allowed sources.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param source [Array<Source>] Allowed sources. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ReplaceSourceResponse]
@@ -2121,10 +1969,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::ReplaceSourceResponse')
     end
 
+    # Restore API key.
     # Restore a deleted API key, along with its associated permissions. The request must be authenticated with the admin API key.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param key [String] API key. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -2153,10 +1999,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Restore API key.
     # Restore a deleted API key, along with its associated permissions. The request must be authenticated with the admin API key.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param key [String] API key. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [AddApiKeyResponse]
@@ -2165,10 +2009,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::AddApiKeyResponse')
     end
 
+    # Add or update a record.
     # Add a record (object) to an index or replace it. If the record doesn&#39;t contain an &#x60;objectID&#x60;, Algolia automatically adds it. If you use an existing &#x60;objectID&#x60;, the existing record is replaced with the new one. To add multiple records to your index in a single API request, use the [&#x60;batch&#x60; operation](#tag/Records/operation/batch).
-    #
-    # Required API Key ACLs:
-    #   - addObject
     # @param index_name [String] Index on which to perform the request. (required)
     # @param body [Object] The Algolia record. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -2202,10 +2044,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Add or update a record.
     # Add a record (object) to an index or replace it. If the record doesn't contain an `objectID`, Algolia automatically adds it. If you use an existing `objectID`, the existing record is replaced with the new one. To add multiple records to your index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).
-    #
-    # Required API Key ACLs:
-    #   - addObject
     # @param index_name [String] Index on which to perform the request. (required)
     # @param body [Object] The Algolia record. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -2215,10 +2055,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::SaveObjectResponse')
     end
 
+    # Create or update a rule.
     # To create or update more than one rule, use the [&#x60;batch&#x60; operation](#tag/Rules/operation/saveRules).
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param object_id [String] Unique identifier of a rule object. (required)
     # @param rule [Rule]  (required)
@@ -2260,10 +2098,8 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
+    # Create or update a rule.
     # To create or update more than one rule, use the [`batch` operation](#tag/Rules/operation/saveRules).
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param object_id [String] Unique identifier of a rule object. (required)
     # @param rule [Rule]  (required)
@@ -2275,10 +2111,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedRuleResponse')
     end
 
+    # Save a batch of rules.
     # Create or update multiple rules.
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param rules [Array<Rule>]  (required)
     # @param forward_to_replicas [Boolean] Indicates whether changed index settings are forwarded to the replica indices.
@@ -2316,10 +2150,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Save a batch of rules.
     # Create or update multiple rules.
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param rules [Array<Rule>]  (required)
     # @param forward_to_replicas [Boolean] Indicates whether changed index settings are forwarded to the replica indices.
@@ -2331,10 +2163,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
+    # Save a synonym.
     # Add a [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms) to an index or replace it. If the synonym &#x60;objectID&#x60; doesn&#39;t exist, Algolia adds a new one. If you use an existing synonym &#x60;objectID&#x60;, the existing synonym is replaced with the new one. To add multiple synonyms in a single API request, use the [&#x60;batch&#x60; operation](#tag/Synonyms/operation/saveSynonyms).
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param object_id [String] Unique identifier of a synonym object. (required)
     # @param synonym_hit [SynonymHit]  (required)
@@ -2376,10 +2206,8 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
+    # Save a synonym.
     # Add a [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms) to an index or replace it. If the synonym `objectID` doesn't exist, Algolia adds a new one. If you use an existing synonym `objectID`, the existing synonym is replaced with the new one. To add multiple synonyms in a single API request, use the [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param object_id [String] Unique identifier of a synonym object. (required)
     # @param synonym_hit [SynonymHit]  (required)
@@ -2391,10 +2219,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::SaveSynonymResponse')
     end
 
+    # Save a batch of synonyms.
     # Create or update multiple synonyms.
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param synonym_hit [Array<SynonymHit>]  (required)
     # @param forward_to_replicas [Boolean] Indicates whether changed index settings are forwarded to the replica indices.
@@ -2432,10 +2258,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Save a batch of synonyms.
     # Create or update multiple synonyms.
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param synonym_hit [Array<SynonymHit>]  (required)
     # @param forward_to_replicas [Boolean] Indicates whether changed index settings are forwarded to the replica indices.
@@ -2447,10 +2271,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
+    # Search multiple indices.
     # Send multiple search queries to one or more indices.
-    #
-    # Required API Key ACLs:
-    #   - search
     # @param search_method_params [SearchMethodParams] Query requests and strategies. Results will be received in the same order as the queries. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -2479,10 +2301,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Search multiple indices.
     # Send multiple search queries to one or more indices.
-    #
-    # Required API Key ACLs:
-    #   - search
     # @param search_method_params [SearchMethodParams] Query requests and strategies. Results will be received in the same order as the queries. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [SearchResponses]
@@ -2491,10 +2311,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::SearchResponses')
     end
 
+    # Search dictionary entries.
     # Search for standard and [custom](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/) entries in the [stop words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plurals](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), or [segmentation (compounds)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) dictionaries.
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param dictionary_name [DictionaryType] Dictionary to search in. (required)
     # @param search_dictionary_entries_params [SearchDictionaryEntriesParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -2528,10 +2346,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Search dictionary entries.
     # Search for standard and [custom](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/) entries in the [stop words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plurals](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), or [segmentation (compounds)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) dictionaries.
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param dictionary_name [DictionaryType] Dictionary to search in. (required)
     # @param search_dictionary_entries_params [SearchDictionaryEntriesParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -2541,10 +2357,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
+    # Search for facet values.
     # [Search for a facet&#39;s values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values), optionally restricting the returned values to those contained in records matching other search criteria. &gt; **Note**: Pagination isn&#39;t supported (&#x60;page&#x60; and &#x60;hitsPerPage&#x60; are ignored). By default, the engine returns a maximum of 10 values but you can adjust this with &#x60;maxFacetHits&#x60;.
-    #
-    # Required API Key ACLs:
-    #   - search
     # @param index_name [String] Index on which to perform the request. (required)
     # @param facet_name [String] Facet name. (required)
     # @param search_for_facet_values_request [SearchForFacetValuesRequest]
@@ -2580,10 +2394,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Search for facet values.
     # [Search for a facet's values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values), optionally restricting the returned values to those contained in records matching other search criteria. > **Note**: Pagination isn't supported (`page` and `hitsPerPage` are ignored). By default, the engine returns a maximum of 10 values but you can adjust this with `maxFacetHits`.
-    #
-    # Required API Key ACLs:
-    #   - search
     # @param index_name [String] Index on which to perform the request. (required)
     # @param facet_name [String] Facet name. (required)
     # @param search_for_facet_values_request [SearchForFacetValuesRequest]
@@ -2594,10 +2406,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::SearchForFacetValuesResponse')
     end
 
+    # Search for rules.
     # Search for rules in your index. You can control the search with parameters. To list all rules, send an empty request body.
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param search_rules_params [SearchRulesParams]
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -2627,10 +2437,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Search for rules.
     # Search for rules in your index. You can control the search with parameters. To list all rules, send an empty request body.
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param search_rules_params [SearchRulesParams]
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -2640,10 +2448,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::SearchRulesResponse')
     end
 
+    # Search an index.
     # Return records that match the query.
-    #
-    # Required API Key ACLs:
-    #   - search
     # @param index_name [String] Index on which to perform the request. (required)
     # @param search_params [SearchParams]
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -2673,10 +2479,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Search an index.
     # Return records that match the query.
-    #
-    # Required API Key ACLs:
-    #   - search
     # @param index_name [String] Index on which to perform the request. (required)
     # @param search_params [SearchParams]
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -2686,10 +2490,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::SearchResponse')
     end
 
+    # Search for synonyms.
     # Search for synonyms in your index. You can control and filter the search with parameters. To get all synonyms, send an empty request body.
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param search_synonyms_params [SearchSynonymsParams] Body of the &#x60;searchSynonyms&#x60; operation.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -2719,10 +2521,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Search for synonyms.
     # Search for synonyms in your index. You can control and filter the search with parameters. To get all synonyms, send an empty request body.
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param search_synonyms_params [SearchSynonymsParams] Body of the &#x60;searchSynonyms&#x60; operation.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -2732,10 +2532,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::SearchSynonymsResponse')
     end
 
+    # Search for a user ID.
     # Since it can take up to a few seconds to get the data from the different clusters, the response isn&#39;t real-time. To ensure rapid updates, the user IDs index isn&#39;t built at the same time as the mapping. Instead, it&#39;s built every 12 hours, at the same time as the update of user ID usage. For example, if you add or move a user ID, the search will show an old value until the next time the mapping is rebuilt (every 12 hours).
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param search_user_ids_params [SearchUserIdsParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -2764,10 +2562,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Search for a user ID.
     # Since it can take up to a few seconds to get the data from the different clusters, the response isn't real-time. To ensure rapid updates, the user IDs index isn't built at the same time as the mapping. Instead, it's built every 12 hours, at the same time as the update of user ID usage. For example, if you add or move a user ID, the search will show an old value until the next time the mapping is rebuilt (every 12 hours).
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param search_user_ids_params [SearchUserIdsParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [SearchUserIdsResponse]
@@ -2776,10 +2572,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::SearchUserIdsResponse')
     end
 
+    # Set stop word settings.
     # Set stop word settings for a specific language.
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param dictionary_settings_params [DictionarySettingsParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -2808,10 +2602,8 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
+    # Set stop word settings.
     # Set stop word settings for a specific language.
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param dictionary_settings_params [DictionarySettingsParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [UpdatedAtResponse]
@@ -2820,10 +2612,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
+    # Update index settings.
     # Update the specified [index settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/). Specifying null for a setting resets it to its default value.
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param index_settings [IndexSettings]  (required)
     # @param forward_to_replicas [Boolean] Indicates whether changed index settings are forwarded to the replica indices.
@@ -2859,10 +2649,8 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
+    # Update index settings.
     # Update the specified [index settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/). Specifying null for a setting resets it to its default value.
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param index_settings [IndexSettings]  (required)
     # @param forward_to_replicas [Boolean] Indicates whether changed index settings are forwarded to the replica indices.
@@ -2873,10 +2661,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::UpdatedAtResponse')
     end
 
+    # Update an API key.
     # Replace the permissions of an existing API key. Any unspecified parameter resets that permission to its default value. The request must be authenticated with the admin API key.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param key [String] API key. (required)
     # @param api_key [ApiKey]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -2910,10 +2696,8 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
+    # Update an API key.
     # Replace the permissions of an existing API key. Any unspecified parameter resets that permission to its default value. The request must be authenticated with the admin API key.
-    #
-    # Required API Key ACLs:
-    #   - admin
     # @param key [String] API key. (required)
     # @param api_key [ApiKey]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)

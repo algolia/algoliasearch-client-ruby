@@ -33,10 +33,8 @@ module Algolia
       new(config)
     end
 
+    # Create a configuration.
     # Create a new Query Suggestions configuration.  You can have up to 100 configurations per Algolia application.
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param query_suggestions_configuration_with_index [QuerySuggestionsConfigurationWithIndex]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -65,10 +63,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Create a configuration.
     # Create a new Query Suggestions configuration.  You can have up to 100 configurations per Algolia application.
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param query_suggestions_configuration_with_index [QuerySuggestionsConfigurationWithIndex]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [BaseResponse]
@@ -77,8 +73,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::BaseResponse')
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -109,8 +105,8 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -120,8 +116,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -152,8 +148,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -163,8 +159,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -196,8 +192,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -208,8 +204,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -241,8 +237,8 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -253,10 +249,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
+    # Delete a configuration.
     # Delete a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the Query Suggestions index. The Query Suggestions index itself is not deleted.
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Query Suggestions index name. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -285,10 +279,8 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
+    # Delete a configuration.
     # Delete a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the Query Suggestions index. The Query Suggestions index itself is not deleted.
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Query Suggestions index name. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [BaseResponse]
@@ -297,10 +289,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::BaseResponse')
     end
 
+    # List configurations.
     # List all Query Suggestions configurations of your Algolia application.
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_all_configs_with_http_info(request_options = {})
@@ -323,10 +313,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # List configurations.
     # List all Query Suggestions configurations of your Algolia application.
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Array<QuerySuggestionsConfigurationResponse>]
     def get_all_configs(request_options = {})
@@ -334,10 +322,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<QuerySuggestions::QuerySuggestionsConfigurationResponse>')
     end
 
+    # Get a configuration.
     # Get a single Query Suggestions configuration.
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param index_name [String] Query Suggestions index name. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -366,10 +352,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # Get a configuration.
     # Get a single Query Suggestions configuration.
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param index_name [String] Query Suggestions index name. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [QuerySuggestionsConfigurationResponse]
@@ -378,10 +362,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::QuerySuggestionsConfigurationResponse')
     end
 
+    # Get configuration status.
     # Report the status of a Query Suggestions index.
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param index_name [String] Query Suggestions index name. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -410,10 +392,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # Get configuration status.
     # Report the status of a Query Suggestions index.
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param index_name [String] Query Suggestions index name. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetConfigStatus200Response]
@@ -422,10 +402,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::GetConfigStatus200Response')
     end
 
+    # Get logs.
     # Get the logs for a single Query Suggestions index.
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param index_name [String] Query Suggestions index name. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -454,10 +432,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # Get logs.
     # Get the logs for a single Query Suggestions index.
-    #
-    # Required API Key ACLs:
-    #   - settings
     # @param index_name [String] Query Suggestions index name. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetLogFile200Response]
@@ -466,10 +442,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::GetLogFile200Response')
     end
 
+    # Update a configuration.
     # Update a QuerySuggestions configuration.
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Query Suggestions index name. (required)
     # @param query_suggestions_configuration [QuerySuggestionsConfiguration]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -503,10 +477,8 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
+    # Update a configuration.
     # Update a QuerySuggestions configuration.
-    #
-    # Required API Key ACLs:
-    #   - editSettings
     # @param index_name [String] Query Suggestions index name. (required)
     # @param query_suggestions_configuration [QuerySuggestionsConfiguration]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)

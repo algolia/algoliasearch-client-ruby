@@ -33,8 +33,8 @@ module Algolia
       new(config)
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -65,8 +65,8 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -76,8 +76,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -108,8 +108,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -119,8 +119,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -152,8 +152,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -164,8 +164,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -197,8 +197,8 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
+    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
-
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -209,10 +209,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
+    # Delete a user profile.
     # Delete the user profile and all its associated data.  Returns, as part of the response, a date until which the data can safely be considered as deleted for the given user. This means if you send events for the given user before this date, they will be ignored. Any data received after the deletedUntil date will start building a new user profile.  It might take a couple hours for the deletion request to be fully processed.
-    #
-    # Required API Key ACLs:
-    #   - recommendation
     # @param user_token [String] userToken representing the user for which to fetch the Personalization profile. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -241,10 +239,8 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
+    # Delete a user profile.
     # Delete the user profile and all its associated data.  Returns, as part of the response, a date until which the data can safely be considered as deleted for the given user. This means if you send events for the given user before this date, they will be ignored. Any data received after the deletedUntil date will start building a new user profile.  It might take a couple hours for the deletion request to be fully processed.
-    #
-    # Required API Key ACLs:
-    #   - recommendation
     # @param user_token [String] userToken representing the user for which to fetch the Personalization profile. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeleteUserProfileResponse]
@@ -253,10 +249,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Personalization::DeleteUserProfileResponse')
     end
 
+    # Get the current strategy.
     # The strategy contains information on the events and facets that impact user profiles and personalized search results.
-    #
-    # Required API Key ACLs:
-    #   - recommendation
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_personalization_strategy_with_http_info(request_options = {})
@@ -279,10 +273,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # Get the current strategy.
     # The strategy contains information on the events and facets that impact user profiles and personalized search results.
-    #
-    # Required API Key ACLs:
-    #   - recommendation
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [PersonalizationStrategyParams]
     def get_personalization_strategy(request_options = {})
@@ -290,10 +282,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Personalization::PersonalizationStrategyParams')
     end
 
+    # Get a user profile.
     # Get the user profile built from Personalization strategy.  The profile is structured by facet name used in the strategy. Each facet value is mapped to its score. Each score represents the user affinity for a specific facet value given the userToken past events and the Personalization strategy defined. Scores are bounded to 20. The last processed event timestamp is provided using the ISO 8601 format for debugging purposes.
-    #
-    # Required API Key ACLs:
-    #   - recommendation
     # @param user_token [String] userToken representing the user for which to fetch the Personalization profile. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -322,10 +312,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
+    # Get a user profile.
     # Get the user profile built from Personalization strategy.  The profile is structured by facet name used in the strategy. Each facet value is mapped to its score. Each score represents the user affinity for a specific facet value given the userToken past events and the Personalization strategy defined. Scores are bounded to 20. The last processed event timestamp is provided using the ISO 8601 format for debugging purposes.
-    #
-    # Required API Key ACLs:
-    #   - recommendation
     # @param user_token [String] userToken representing the user for which to fetch the Personalization profile. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetUserTokenResponse]
@@ -334,10 +322,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Personalization::GetUserTokenResponse')
     end
 
+    # Set a new strategy.
     # A strategy defines the events and facets that impact user profiles and personalized search results.
-    #
-    # Required API Key ACLs:
-    #   - recommendation
     # @param personalization_strategy_params [PersonalizationStrategyParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -366,10 +352,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
+    # Set a new strategy.
     # A strategy defines the events and facets that impact user profiles and personalized search results.
-    #
-    # Required API Key ACLs:
-    #   - recommendation
     # @param personalization_strategy_params [PersonalizationStrategyParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [SetPersonalizationStrategyResponse]
