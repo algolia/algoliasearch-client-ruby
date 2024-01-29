@@ -34,8 +34,8 @@ module Algolia
       new(config)
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -66,8 +66,8 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -77,8 +77,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -109,8 +109,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -120,8 +120,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -153,8 +153,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -165,8 +165,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -198,8 +198,8 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -210,8 +210,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Get average click position.
     # Return the average click position for the complete time range and for individual days. &gt; **Note**: If all &#x60;positions&#x60; have a &#x60;clickCount&#x60; of &#x60;0&#x60; or &#x60;null&#x60;, it means Algolia didn&#39;t receive any click events for tracked searches. A _tracked_ search is a search request where the &#x60;clickAnalytics&#x60; parameter is &#x60;true&#x60;.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -257,8 +259,10 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get average click position.
     # Return the average click position for the complete time range and for individual days. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -270,8 +274,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetAverageClickPositionResponse')
     end
 
-    # Get click positions.
     # Show the number of clicks events and their associated position in the search results.  &gt; **Note**: If all &#x60;positions&#x60; have a &#x60;clickCount&#x60; of &#x60;0&#x60; or &#x60;null&#x60;, it means Algolia didn&#39;t receive any click events for tracked searches. A _tracked_ search is a search request where the &#x60;clickAnalytics&#x60; parameter is &#x60;true&#x60;.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -317,8 +323,10 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get click positions.
     # Show the number of clicks events and their associated position in the search results.  > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -330,8 +338,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetClickPositionsResponse')
     end
 
-    # Get click-through rate (CTR).
     # Returns a [click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -377,8 +387,10 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get click-through rate (CTR).
     # Returns a [click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -390,8 +402,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetClickThroughRateResponse')
     end
 
-    # Get conversion rate (CR).
     # Return a [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -437,8 +451,10 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get conversion rate (CR).
     # Return a [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -450,8 +466,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetConversationRateResponse')
     end
 
-    # Get no click rate.
     # Returns the rate at which searches don&#39;t lead to any clicks. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without clicks.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -497,8 +515,10 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get no click rate.
     # Returns the rate at which searches don't lead to any clicks. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without clicks.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -510,8 +530,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetNoClickRateResponse')
     end
 
-    # Get no results rate.
     # Returns the rate at which searches didn&#39;t return any results.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -557,8 +579,10 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get no results rate.
     # Returns the rate at which searches didn't return any results.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -570,8 +594,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetNoResultsRateResponse')
     end
 
-    # Get number of searches.
     # Returns the number of searches within a time range.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -617,8 +643,10 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get number of searches.
     # Returns the number of searches within a time range.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -630,8 +658,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetSearchesCountResponse')
     end
 
-    # Get top searches with no clicks.
     # Return the most popular of the last 1,000 searches that didn&#39;t lead to any clicks.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -681,8 +711,10 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get top searches with no clicks.
     # Return the most popular of the last 1,000 searches that didn't lead to any clicks.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -696,8 +728,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetSearchesNoClicksResponse')
     end
 
-    # Get top searches with no results.
     # Returns the most popular of the latest 1,000 searches that didn&#39;t return any results.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -747,8 +781,10 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get top searches with no results.
     # Returns the most popular of the latest 1,000 searches that didn't return any results.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -762,8 +798,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetSearchesNoResultsResponse')
     end
 
-    # Get Analytics API status.
     # Return the latest update time of the Analytics API for an index. If the index has been recently created or no search has been performed yet, &#x60;updatedAt&#x60; will be &#x60;null&#x60;. &gt; **Note**: The Analytics API is updated every 5&amp;nbsp;minutes.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -793,8 +831,10 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get Analytics API status.
     # Return the latest update time of the Analytics API for an index. If the index has been recently created or no search has been performed yet, `updatedAt` will be `null`. > **Note**: The Analytics API is updated every 5&nbsp;minutes.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetStatusResponse]
@@ -803,8 +843,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetStatusResponse')
     end
 
-    # Get top countries.
     # Returns top countries. Limited to the 1,000 most frequent ones.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -854,8 +896,10 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get top countries.
     # Returns top countries. Limited to the 1,000 most frequent ones.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -869,8 +913,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopCountriesResponse')
     end
 
-    # Get top filterable attributes.
     # Return the most popular [filterable attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in the 1,000 most recently used filters.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param search [String] User query.
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -922,8 +968,10 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get top filterable attributes.
     # Return the most popular [filterable attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in the 1,000 most recently used filters.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param search [String] User query.
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -938,8 +986,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopFilterAttributesResponse')
     end
 
-    # Get top filter values for an attribute.
     # Returns the most popular filter values for an attribute in the 1,000 most recently used filters.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param attribute [String] Attribute name. (required)
     # @param index [String] Index name to target. (required)
     # @param search [String] User query.
@@ -996,8 +1046,10 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get top filter values for an attribute.
     # Returns the most popular filter values for an attribute in the 1,000 most recently used filters.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param attribute [String] Attribute name. (required)
     # @param index [String] Index name to target. (required)
     # @param search [String] User query.
@@ -1013,8 +1065,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopFilterForAttributeResponse')
     end
 
-    # Get top filters for a no result search.
     # Returns top filters for filter-enabled searches that don&#39;t return results. Limited to the 1,000 most recently used filters.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param search [String] User query.
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -1066,8 +1120,10 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get top filters for a no result search.
     # Returns top filters for filter-enabled searches that don't return results. Limited to the 1,000 most recently used filters.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param search [String] User query.
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -1082,8 +1138,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopFiltersNoResultsResponse')
     end
 
-    # Get top hits.
     # Return the most popular clicked results in the last 1,000 searches.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param search [String] User query.
     # @param click_analytics [Boolean] Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search. (default to false)
@@ -1137,8 +1195,10 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get top hits.
     # Return the most popular clicked results in the last 1,000 searches.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param search [String] User query.
     # @param click_analytics [Boolean] Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search. (default to false)
@@ -1154,8 +1214,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopHitsResponse')
     end
 
-    # Get top searches.
     # Returns the most popular of the latest 1,000 searches. For each search, also returns the number of hits.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param click_analytics [Boolean] Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search. (default to false)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -1212,8 +1274,10 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get top searches.
     # Returns the most popular of the latest 1,000 searches. For each search, also returns the number of hits.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param click_analytics [Boolean] Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search. (default to false)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -1231,8 +1295,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopSearchesResponse')
     end
 
-    # Get user count.
     # Return the count of unique users.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
@@ -1278,8 +1344,10 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get user count.
     # Return the count of unique users.
+    #
+    # Required API Key ACLs:
+    #   - analytics
     # @param index [String] Index name to target. (required)
     # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.

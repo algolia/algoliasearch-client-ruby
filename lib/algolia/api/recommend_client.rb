@@ -29,8 +29,8 @@ module Algolia
       new(config)
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -61,8 +61,8 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -72,8 +72,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -104,8 +104,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -115,8 +115,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -148,8 +148,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -160,8 +160,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -193,8 +193,8 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -205,8 +205,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Delete a Recommend rule.
     # Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+    #
+    # Required API Key ACLs:
+    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
     # @param object_id [String] Unique record (object) identifier. (required)
@@ -247,8 +249,10 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Delete a Recommend rule.
     # Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+    #
+    # Required API Key ACLs:
+    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
     # @param object_id [String] Unique record (object) identifier. (required)
@@ -259,8 +263,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Recommend::DeletedAtResponse')
     end
 
-    # Get a Recommend rule.
     # Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+    #
+    # Required API Key ACLs:
+    #   - settings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
     # @param object_id [String] Unique record (object) identifier. (required)
@@ -301,8 +307,10 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a Recommend rule.
     # Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+    #
+    # Required API Key ACLs:
+    #   - settings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
     # @param object_id [String] Unique record (object) identifier. (required)
@@ -313,8 +321,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Recommend::RuleResponse')
     end
 
-    # Get a Recommend task&#39;s status.
     # Some operations, such as deleting a Recommend rule, will respond with a &#x60;taskID&#x60; value. Use this value here to check the status of that task.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
     # @param task_id [Integer] Unique identifier of a task. Numeric value (up to 64bits). (required)
@@ -355,8 +365,10 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a Recommend task's status.
     # Some operations, such as deleting a Recommend rule, will respond with a `taskID` value. Use this value here to check the status of that task.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
     # @param task_id [Integer] Unique identifier of a task. Numeric value (up to 64bits). (required)
@@ -367,8 +379,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Recommend::GetRecommendTaskResponse')
     end
 
-    # Get recommendations and trending items.
     # Returns results from either recommendation or trending models:    - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models   - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
+    #
+    # Required API Key ACLs:
+    #   - search
     # @param get_recommendations_params [GetRecommendationsParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -397,8 +411,10 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Get recommendations and trending items.
     # Returns results from either recommendation or trending models:    - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models   - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
+    #
+    # Required API Key ACLs:
+    #   - search
     # @param get_recommendations_params [GetRecommendationsParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetRecommendationsResponse]
@@ -407,8 +423,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Recommend::GetRecommendationsResponse')
     end
 
-    # List Recommend rules.
     # List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+    #
+    # Required API Key ACLs:
+    #   - settings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
     # @param search_recommend_rules_params [SearchRecommendRulesParams]
@@ -444,8 +462,10 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # List Recommend rules.
     # List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+    #
+    # Required API Key ACLs:
+    #   - settings
     # @param index_name [String] Index on which to perform the request. (required)
     # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
     # @param search_recommend_rules_params [SearchRecommendRulesParams]

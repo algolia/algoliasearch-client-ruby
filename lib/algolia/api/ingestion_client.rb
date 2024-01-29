@@ -34,7 +34,11 @@ module Algolia
     end
 
     # Create a authentication.
-    # Create a authentication.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param authentication_create [AuthenticationCreate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -64,7 +68,11 @@ module Algolia
     end
 
     # Create a authentication.
-    # Create a authentication.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param authentication_create [AuthenticationCreate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [AuthenticationCreateResponse]
@@ -74,7 +82,11 @@ module Algolia
     end
 
     # Create a destination.
-    # Create a destination.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param destination_create [DestinationCreate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -104,7 +116,11 @@ module Algolia
     end
 
     # Create a destination.
-    # Create a destination.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param destination_create [DestinationCreate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DestinationCreateResponse]
@@ -114,7 +130,11 @@ module Algolia
     end
 
     # Create a source.
-    # Create a source.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param source_create [SourceCreate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -144,7 +164,11 @@ module Algolia
     end
 
     # Create a source.
-    # Create a source.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param source_create [SourceCreate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [SourceCreateResponse]
@@ -154,7 +178,7 @@ module Algolia
     end
 
     # Create a task.
-    # Create a task.
+
     # @param task_create [TaskCreate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -184,7 +208,7 @@ module Algolia
     end
 
     # Create a task.
-    # Create a task.
+
     # @param task_create [TaskCreate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [TaskCreateResponse]
@@ -193,8 +217,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskCreateResponse')
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -225,8 +249,8 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -236,8 +260,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -268,8 +292,8 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -279,8 +303,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -312,8 +336,8 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -324,8 +348,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -357,8 +381,8 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # Send requests to the Algolia REST API.
     # This method allow you to send requests to the Algolia REST API.
+
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
@@ -369,8 +393,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Delete a authentication.
     # Soft delete the authentication of the given authenticationID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param authentication_id [String] The authentication UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -399,8 +427,12 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Delete a authentication.
     # Soft delete the authentication of the given authenticationID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param authentication_id [String] The authentication UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeleteResponse]
@@ -409,8 +441,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
     end
 
-    # Delete a destination.
     # Soft delete the destination of the given destinationID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param destination_id [String] The destination UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -439,8 +475,12 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Delete a destination.
     # Soft delete the destination of the given destinationID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param destination_id [String] The destination UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeleteResponse]
@@ -449,8 +489,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
     end
 
-    # Delete a source.
     # Soft delete the source of the given sourceID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param source_id [String] The source UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -479,8 +523,12 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Delete a source.
     # Soft delete the source of the given sourceID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param source_id [String] The source UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeleteResponse]
@@ -489,8 +537,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
     end
 
-    # Delete a task.
     # Soft delete the task of the given taskID.
+
     # @param task_id [String] The task UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -519,8 +567,8 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Delete a task.
     # Soft delete the task of the given taskID.
+
     # @param task_id [String] The task UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeleteResponse]
@@ -529,8 +577,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
     end
 
-    # Disable a task.
     # Disable the task of the given taskID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_id [String] The task UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -559,8 +611,12 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # Disable a task.
     # Disable the task of the given taskID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_id [String] The task UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [TaskUpdateResponse]
@@ -569,8 +625,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskUpdateResponse')
     end
 
-    # Enable a task.
     # Enable the task of the given taskID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_id [String] The task UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -599,8 +659,12 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # Enable a task.
     # Enable the task of the given taskID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_id [String] The task UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [TaskUpdateResponse]
@@ -609,8 +673,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskUpdateResponse')
     end
 
-    # Get a authentication.
     # Get the authentication of the given authenticationID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param authentication_id [String] The authentication UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -639,8 +707,12 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a authentication.
     # Get the authentication of the given authenticationID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param authentication_id [String] The authentication UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Authentication]
@@ -649,8 +721,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Authentication')
     end
 
-    # Get a list of authentications.
     # Get a list of authentications for the given query parameters, with pagination details.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param items_per_page [Integer] The number of items per page to return.
     # @param page [Integer] The page number to fetch, starting at 1.
     # @param type [Array<AuthenticationType>] The type of the authentications to retrieve.
@@ -685,8 +761,12 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a list of authentications.
     # Get a list of authentications for the given query parameters, with pagination details.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param items_per_page [Integer] The number of items per page to return.
     # @param page [Integer] The page number to fetch, starting at 1.
     # @param type [Array<AuthenticationType>] The type of the authentications to retrieve.
@@ -700,8 +780,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListAuthenticationsResponse')
     end
 
-    # Get a destination.
     # Get the destination of the given destinationID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param destination_id [String] The destination UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -730,8 +814,12 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a destination.
     # Get the destination of the given destinationID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param destination_id [String] The destination UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Destination]
@@ -740,8 +828,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Destination')
     end
 
-    # Get a list of destinations.
     # Get a list of destinations for the given query parameters, with pagination details.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param items_per_page [Integer] The number of items per page to return.
     # @param page [Integer] The page number to fetch, starting at 1.
     # @param type [Array<DestinationType>] The type of the destinations to retrive.
@@ -776,8 +868,12 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a list of destinations.
     # Get a list of destinations for the given query parameters, with pagination details.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param items_per_page [Integer] The number of items per page to return.
     # @param page [Integer] The page number to fetch, starting at 1.
     # @param type [Array<DestinationType>] The type of the destinations to retrive.
@@ -791,8 +887,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListDestinationsResponse')
     end
 
-    # Retrieve a stream listing.
     # Retrieve a stream listing for a given Singer specification compatible docker type source ID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param source_id [String] The source UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -821,8 +921,12 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Retrieve a stream listing.
     # Retrieve a stream listing for a given Singer specification compatible docker type source ID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param source_id [String] The source UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DockerSourceStreams]
@@ -831,8 +935,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DockerSourceStreams')
     end
 
-    # Get an event.
     # Get a single event for a specific runID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param run_id [String] The run UUID. (required)
     # @param event_id [String] The event UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -866,8 +974,12 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get an event.
     # Get a single event for a specific runID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param run_id [String] The run UUID. (required)
     # @param event_id [String] The event UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -877,8 +989,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Event')
     end
 
-    # Get a list of events.
     # Get a list of events associated to the given runID, for the given query parameters.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param run_id [String] The run UUID. (required)
     # @param items_per_page [Integer] The number of items per page to return.
     # @param page [Integer] The page number to fetch, starting at 1.
@@ -924,8 +1040,12 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a list of events.
     # Get a list of events associated to the given runID, for the given query parameters.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param run_id [String] The run UUID. (required)
     # @param items_per_page [Integer] The number of items per page to return.
     # @param page [Integer] The page number to fetch, starting at 1.
@@ -942,8 +1062,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListEventsResponse')
     end
 
-    # Get a run.
     # Get a single run for the given ID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param run_id [String] The run UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -972,8 +1096,12 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a run.
     # Get a single run for the given ID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param run_id [String] The run UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Run]
@@ -982,8 +1110,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Run')
     end
 
-    # Get a list of runs.
     # Get a list of runs for the given query parameters, with pagination details.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param items_per_page [Integer] The number of items per page to return.
     # @param page [Integer] The page number to fetch, starting at 1.
     # @param status [Array<RunStatus>] Filter the status of the runs.
@@ -1022,8 +1154,12 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a list of runs.
     # Get a list of runs for the given query parameters, with pagination details.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param items_per_page [Integer] The number of items per page to return.
     # @param page [Integer] The page number to fetch, starting at 1.
     # @param status [Array<RunStatus>] Filter the status of the runs.
@@ -1039,8 +1175,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::RunListResponse')
     end
 
-    # Get a source.
     # Get the source of the given sourceID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param source_id [String] The source UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1069,8 +1209,12 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a source.
     # Get the source of the given sourceID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param source_id [String] The source UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Source]
@@ -1079,8 +1223,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Source')
     end
 
-    # Get a list of sources.
     # Get a list of sources for the given query parameters, with pagination details.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param items_per_page [Integer] The number of items per page to return.
     # @param page [Integer] The page number to fetch, starting at 1.
     # @param type [Array<SourceType>] The type of the sources to retrieve.
@@ -1115,8 +1263,12 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a list of sources.
     # Get a list of sources for the given query parameters, with pagination details.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param items_per_page [Integer] The number of items per page to return.
     # @param page [Integer] The page number to fetch, starting at 1.
     # @param type [Array<SourceType>] The type of the sources to retrieve.
@@ -1130,8 +1282,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListSourcesResponse')
     end
 
-    # Get a task.
     # Get the task of the given taskID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_id [String] The task UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1160,8 +1316,12 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a task.
     # Get the task of the given taskID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_id [String] The task UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Task]
@@ -1170,8 +1330,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Task')
     end
 
-    # Get a list of tasks.
     # Get a list of tasks for the given query parameters, with pagination details.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param items_per_page [Integer] The number of items per page to return.
     # @param page [Integer] The page number to fetch, starting at 1.
     # @param action [Array<ActionType>] The action of the tasks to retrieve.
@@ -1213,8 +1377,12 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a list of tasks.
     # Get a list of tasks for the given query parameters, with pagination details.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param items_per_page [Integer] The number of items per page to return.
     # @param page [Integer] The page number to fetch, starting at 1.
     # @param action [Array<ActionType>] The action of the tasks to retrieve.
@@ -1232,8 +1400,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListTasksResponse')
     end
 
-    # Run a task.
     # Run the task of the given taskID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_id [String] The task UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1262,8 +1434,12 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Run a task.
     # Run the task of the given taskID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_id [String] The task UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [RunResponse]
@@ -1272,8 +1448,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::RunResponse')
     end
 
-    # Search among authentications.
     # Search among authentications with a defined set of parameters.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param authentication_search [AuthenticationSearch]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1302,8 +1482,12 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Search among authentications.
     # Search among authentications with a defined set of parameters.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param authentication_search [AuthenticationSearch]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Array<Authentication>]
@@ -1312,8 +1496,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Authentication>')
     end
 
-    # Search among destinations.
     # Search among destinations with a defined set of parameters.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param destination_search [DestinationSearch]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1342,8 +1530,12 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Search among destinations.
     # Search among destinations with a defined set of parameters.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param destination_search [DestinationSearch]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Array<Destination>]
@@ -1352,8 +1544,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Destination>')
     end
 
-    # Search among sources.
     # Search among sources with a defined set of parameters.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param source_search [SourceSearch]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1382,8 +1578,12 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Search among sources.
     # Search among sources with a defined set of parameters.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param source_search [SourceSearch]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Array<Source>]
@@ -1392,8 +1592,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Source>')
     end
 
-    # Search among tasks.
     # Search among tasks with a defined set of parameters.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_search [TaskSearch]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1422,8 +1626,12 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Search among tasks.
     # Search among tasks with a defined set of parameters.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_search [TaskSearch]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Array<Task>]
@@ -1432,8 +1640,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Task>')
     end
 
-    # Trigger a stream listing request.
     # Trigger a stream listing request for a Singer specification compatible docker type source.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param source_id [String] The source UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1462,8 +1674,12 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Trigger a stream listing request.
     # Trigger a stream listing request for a Singer specification compatible docker type source.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param source_id [String] The source UUID. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DockerSourceDiscover]
@@ -1472,8 +1688,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DockerSourceDiscover')
     end
 
-    # Update a authentication.
     # Update the authentication of the given authenticationID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param authentication_id [String] The authentication UUID. (required)
     # @param authentication_update [AuthenticationUpdate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1507,8 +1727,12 @@ module Algolia
       @api_client.call_api(:PATCH, path, new_options)
     end
 
-    # Update a authentication.
     # Update the authentication of the given authenticationID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param authentication_id [String] The authentication UUID. (required)
     # @param authentication_update [AuthenticationUpdate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1518,8 +1742,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::AuthenticationUpdateResponse')
     end
 
-    # Update a destination.
     # Update the destination of the given destinationID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param destination_id [String] The destination UUID. (required)
     # @param destination_update [DestinationUpdate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1553,8 +1781,12 @@ module Algolia
       @api_client.call_api(:PATCH, path, new_options)
     end
 
-    # Update a destination.
     # Update the destination of the given destinationID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param destination_id [String] The destination UUID. (required)
     # @param destination_update [DestinationUpdate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1564,8 +1796,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DestinationUpdateResponse')
     end
 
-    # Update a source.
     # Update the source of the given sourceID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param source_id [String] The source UUID. (required)
     # @param source_update [SourceUpdate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1599,8 +1835,12 @@ module Algolia
       @api_client.call_api(:PATCH, path, new_options)
     end
 
-    # Update a source.
     # Update the source of the given sourceID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param source_id [String] The source UUID. (required)
     # @param source_update [SourceUpdate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1610,8 +1850,8 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceUpdateResponse')
     end
 
-    # Update a task.
     # Update the task of the given taskID.
+
     # @param task_id [String] The task UUID. (required)
     # @param task_update [TaskUpdate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1645,8 +1885,8 @@ module Algolia
       @api_client.call_api(:PATCH, path, new_options)
     end
 
-    # Update a task.
     # Update the task of the given taskID.
+
     # @param task_id [String] The task UUID. (required)
     # @param task_update [TaskUpdate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
