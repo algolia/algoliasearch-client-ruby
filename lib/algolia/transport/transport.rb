@@ -50,7 +50,6 @@ module Algolia
           outcome = @retry_strategy.decide(host, http_response_code: response.status, is_timed_out: response.has_timed_out, network_failure: response.network_failure)
           if outcome == FAILURE
             decoded_error = JSON.parse(response.error, :symbolize_names => true)
-            puts decoded_error
             raise AlgoliaHttpError.new(decoded_error[:status], decoded_error[:message])
           end
           return response unless outcome == RETRY

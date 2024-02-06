@@ -2992,5 +2992,77 @@ module Algolia
       end
       raise ApiError, "The maximum number of retries exceeded. (#{max_retries})"
     end
+
+    # Helper: Iterate on the `browse` method of the client to allow aggregating objects of an index.
+    #
+    # @param index_name [String] the `index_name` to browse. (required)
+    # @param browse_params [BrowseParamsObject] the `browse_params` to send along with the query, they will be forwarded to the `browse` method.
+    # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `browse` method.
+    # @param block [Proc] the block to execute on each object of the index.
+    def browse_objects(index_name, browse_params = Search::BrowseParamsObject.new, request_options = {}, &block)
+      hits = []
+      loop do
+        res = browse(index_name, browse_params, request_options)
+        if block_given?
+          res.hits.each do |hit|
+            block.call(hit)
+          end
+        else
+          hits.concat(res.hits)
+        end
+        browse_params.cursor = res.cursor
+        break if browse_params.cursor.nil?
+      end
+
+      hits unless block_given?
+    end
+
+    # Helper: Iterate on the `searchRules` method of the client to allow aggregating rules of an index.
+    #
+    # @param index_name [String] the `index_name` to browse rules from. (required)
+    # @param search_rules_params [SearchRulesParams] the parameters to send along with the query, they will be forwarded to the `searchRules` method.
+    # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `searchRules` method.
+    # @param block [Proc] the block to execute on each rule of the index.
+    def browse_rules(index_name, search_rules_params = Search::SearchRulesParams.new(hits_per_page: 1000, page: 0), request_options = {}, &block)
+      rules = []
+      loop do
+        res = search_rules(index_name, search_rules_params, request_options)
+        if block_given?
+          res.hits.each do |rule|
+            block.call(rule)
+          end
+        else
+          rules.concat(res.hits)
+        end
+        search_rules_params.page += 1
+        break if res.nb_hits < search_rules_params.hits_per_page
+      end
+
+      rules unless block_given?
+    end
+
+    # Helper: Iterate on the `searchSynonyms` method of the client to allow aggregating synonyms of an index.
+    #
+    # @param index_name [String] the `index_name` to browse synonyms from. (required)
+    # @param search_synonyms_params [SearchSynonymsParams] the parameters to send along with the query, they will be forwarded to the `searchSynonyms` method.
+    # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `searchSynonyms` method.
+    # @param block [Proc] the block to execute on each synonym of the index.
+    def browse_synonyms(index_name, search_synonyms_params = Search::SearchSynonymsParams.new(hits_per_page: 1000, page: 0), request_options = {}, &block)
+      synonyms = []
+      loop do
+        res = search_synonyms(index_name, search_synonyms_params, request_options)
+        if block_given?
+          res.hits.each do |synonym|
+            block.call(synonym)
+          end
+        else
+          synonyms.concat(res.hits)
+        end
+        search_synonyms_params.page += 1
+        break if res.nb_hits < search_synonyms_params.hits_per_page
+      end
+
+      synonyms unless block_given?
+    end
   end
 end
