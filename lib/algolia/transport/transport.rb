@@ -4,6 +4,10 @@ require 'faraday/net_http_persistent' unless Faraday::VERSION < '1'
 
 module Algolia
   module Transport
+    def self.encode_uri(uri)
+      CGI.escape(uri).gsub('+', '%20')
+    end
+
     class Transport
       include RetryOutcomeType
       include CallType
@@ -113,7 +117,7 @@ module Algolia
       def stringify_query_params(query_params)
         query_params.to_h do |key, value|
           value = value.join(',') if value.is_a?(Array)
-          [key, value.to_s]
+          [key, Algolia::Transport.encode_uri(value.to_s)]
         end
       end
     end

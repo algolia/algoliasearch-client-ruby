@@ -232,7 +232,7 @@ module Algolia
         raise ArgumentError, "invalid value for 'user_token' when calling InsightsClient.delete_user_token, must conform to the pattern #{pattern}."
       end
 
-      path = '/1/usertokens/{userToken}'.sub('{' + 'userToken' + '}', @api_client.encode_uri(user_token.to_s))
+      path = '/1/usertokens/{userToken}'.sub('{' + 'userToken' + '}', Transport.encode_uri(user_token.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}

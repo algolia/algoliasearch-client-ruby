@@ -146,9 +146,5 @@ module Algolia
         raise "unknown collection format: #{collection_format.inspect}"
       end
     end
-
-    def encode_uri(uri)
-      CGI.escape(uri).gsub('+', '%20')
-    end
   end
 end

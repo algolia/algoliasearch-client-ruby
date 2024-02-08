@@ -222,7 +222,7 @@ module Algolia
         raise ArgumentError, "Parameter `user_token` is required when calling `delete_user_profile`."
       end
 
-      path = '/1/profiles/{userToken}'.sub('{' + 'userToken' + '}', @api_client.encode_uri(user_token.to_s))
+      path = '/1/profiles/{userToken}'.sub('{' + 'userToken' + '}', Transport.encode_uri(user_token.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -303,7 +303,7 @@ module Algolia
         raise ArgumentError, "Parameter `user_token` is required when calling `get_user_token_profile`."
       end
 
-      path = '/1/profiles/personalization/{userToken}'.sub('{' + 'userToken' + '}', @api_client.encode_uri(user_token.to_s))
+      path = '/1/profiles/personalization/{userToken}'.sub('{' + 'userToken' + '}', Transport.encode_uri(user_token.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}

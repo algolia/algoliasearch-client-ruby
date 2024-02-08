@@ -266,7 +266,7 @@ module Algolia
         raise ArgumentError, "Parameter `index_name` is required when calling `delete_config`."
       end
 
-      path = '/1/configs/{indexName}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/configs/{indexName}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -347,7 +347,7 @@ module Algolia
         raise ArgumentError, "Parameter `index_name` is required when calling `get_config`."
       end
 
-      path = '/1/configs/{indexName}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/configs/{indexName}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -391,7 +391,7 @@ module Algolia
         raise ArgumentError, "Parameter `index_name` is required when calling `get_config_status`."
       end
 
-      path = '/1/configs/{indexName}/status'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/configs/{indexName}/status'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -435,7 +435,7 @@ module Algolia
         raise ArgumentError, "Parameter `index_name` is required when calling `get_log_file`."
       end
 
-      path = '/1/logs/{indexName}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/logs/{indexName}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -484,7 +484,7 @@ module Algolia
         raise ArgumentError, "Parameter `query_suggestions_configuration` is required when calling `update_config`."
       end
 
-      path = '/1/configs/{indexName}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/configs/{indexName}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}

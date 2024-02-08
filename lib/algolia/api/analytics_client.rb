@@ -1020,7 +1020,7 @@ module Algolia
         raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_top_filter_for_attribute, must conform to the pattern #{pattern}."
       end
 
-      path = '/2/filters/{attribute}'.sub('{' + 'attribute' + '}', @api_client.encode_uri(attribute.to_s))
+      path = '/2/filters/{attribute}'.sub('{' + 'attribute' + '}', Transport.encode_uri(attribute.to_s))
       query_params = {}
       query_params[:index] = index
       query_params[:search] = search unless search.nil?

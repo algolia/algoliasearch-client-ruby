@@ -96,8 +96,8 @@ module Algolia
         raise ArgumentError, "Parameter `body` is required when calling `add_or_update_object`."
       end
 
-      path = '/1/indexes/{indexName}/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
-                                                                                                                           @api_client.encode_uri(object_id.to_s))
+      path = '/1/indexes/{indexName}/{objectID}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
+                                                                                                                         Transport.encode_uri(object_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -247,7 +247,7 @@ module Algolia
         raise ArgumentError, "Parameter `batch_write_params` is required when calling `batch`."
       end
 
-      path = '/1/indexes/{indexName}/batch'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/indexes/{indexName}/batch'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -352,7 +352,7 @@ module Algolia
         raise ArgumentError, "Parameter `batch_dictionary_entries_params` is required when calling `batch_dictionary_entries`."
       end
 
-      path = '/1/dictionaries/{dictionaryName}/batch'.sub('{' + 'dictionaryName' + '}', @api_client.encode_uri(dictionary_name.to_s))
+      path = '/1/dictionaries/{dictionaryName}/batch'.sub('{' + 'dictionaryName' + '}', Transport.encode_uri(dictionary_name.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -398,7 +398,7 @@ module Algolia
         raise ArgumentError, "Parameter `index_name` is required when calling `browse`."
       end
 
-      path = '/1/indexes/{indexName}/browse'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/indexes/{indexName}/browse'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -443,7 +443,7 @@ module Algolia
         raise ArgumentError, "Parameter `index_name` is required when calling `clear_objects`."
       end
 
-      path = '/1/indexes/{indexName}/clear'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/indexes/{indexName}/clear'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -488,7 +488,7 @@ module Algolia
         raise ArgumentError, "Parameter `index_name` is required when calling `clear_rules`."
       end
 
-      path = '/1/indexes/{indexName}/rules/clear'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/indexes/{indexName}/rules/clear'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params[:forwardToReplicas] = forward_to_replicas unless forward_to_replicas.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -535,7 +535,7 @@ module Algolia
         raise ArgumentError, "Parameter `index_name` is required when calling `clear_synonyms`."
       end
 
-      path = '/1/indexes/{indexName}/synonyms/clear'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/indexes/{indexName}/synonyms/clear'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params[:forwardToReplicas] = forward_to_replicas unless forward_to_replicas.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -757,7 +757,7 @@ module Algolia
         raise ArgumentError, "Parameter `key` is required when calling `delete_api_key`."
       end
 
-      path = '/1/keys/{key}'.sub('{' + 'key' + '}', @api_client.encode_uri(key.to_s))
+      path = '/1/keys/{key}'.sub('{' + 'key' + '}', Transport.encode_uri(key.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -806,7 +806,7 @@ module Algolia
         raise ArgumentError, "Parameter `delete_by_params` is required when calling `delete_by`."
       end
 
-      path = '/1/indexes/{indexName}/deleteByQuery'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/indexes/{indexName}/deleteByQuery'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -851,7 +851,7 @@ module Algolia
         raise ArgumentError, "Parameter `index_name` is required when calling `delete_index`."
       end
 
-      path = '/1/indexes/{indexName}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/indexes/{indexName}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -900,8 +900,8 @@ module Algolia
         raise ArgumentError, "Parameter `object_id` is required when calling `delete_object`."
       end
 
-      path = '/1/indexes/{indexName}/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
-                                                                                                                           @api_client.encode_uri(object_id.to_s))
+      path = '/1/indexes/{indexName}/{objectID}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
+                                                                                                                         Transport.encode_uri(object_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -952,8 +952,8 @@ module Algolia
         raise ArgumentError, "Parameter `object_id` is required when calling `delete_rule`."
       end
 
-      path = '/1/indexes/{indexName}/rules/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
-                                                                                                                                 @api_client.encode_uri(object_id.to_s))
+      path = '/1/indexes/{indexName}/rules/{objectID}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
+                                                                                                                               Transport.encode_uri(object_id.to_s))
       query_params = {}
       query_params[:forwardToReplicas] = forward_to_replicas unless forward_to_replicas.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -1000,7 +1000,7 @@ module Algolia
         raise ArgumentError, "Parameter `source` is required when calling `delete_source`."
       end
 
-      path = '/1/security/sources/{source}'.sub('{' + 'source' + '}', @api_client.encode_uri(source.to_s))
+      path = '/1/security/sources/{source}'.sub('{' + 'source' + '}', Transport.encode_uri(source.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1050,8 +1050,8 @@ module Algolia
         raise ArgumentError, "Parameter `object_id` is required when calling `delete_synonym`."
       end
 
-      path = '/1/indexes/{indexName}/synonyms/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
-                                                                                                                                    @api_client.encode_uri(object_id.to_s))
+      path = '/1/indexes/{indexName}/synonyms/{objectID}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
+                                                                                                                                  Transport.encode_uri(object_id.to_s))
       query_params = {}
       query_params[:forwardToReplicas] = forward_to_replicas unless forward_to_replicas.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -1096,7 +1096,7 @@ module Algolia
         raise ArgumentError, "Parameter `key` is required when calling `get_api_key`."
       end
 
-      path = '/1/keys/{key}'.sub('{' + 'key' + '}', @api_client.encode_uri(key.to_s))
+      path = '/1/keys/{key}'.sub('{' + 'key' + '}', Transport.encode_uri(key.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1271,8 +1271,8 @@ module Algolia
         raise ArgumentError, "Parameter `object_id` is required when calling `get_object`."
       end
 
-      path = '/1/indexes/{indexName}/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
-                                                                                                                           @api_client.encode_uri(object_id.to_s))
+      path = '/1/indexes/{indexName}/{objectID}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
+                                                                                                                         Transport.encode_uri(object_id.to_s))
       query_params = {}
       query_params[:attributesToRetrieve] = @api_client.build_collection_param(attributes_to_retrieve, :multi) unless attributes_to_retrieve.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -1368,8 +1368,8 @@ module Algolia
         raise ArgumentError, "Parameter `object_id` is required when calling `get_rule`."
       end
 
-      path = '/1/indexes/{indexName}/rules/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
-                                                                                                                                 @api_client.encode_uri(object_id.to_s))
+      path = '/1/indexes/{indexName}/rules/{objectID}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
+                                                                                                                               Transport.encode_uri(object_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1414,7 +1414,7 @@ module Algolia
         raise ArgumentError, "Parameter `index_name` is required when calling `get_settings`."
       end
 
-      path = '/1/indexes/{indexName}/settings'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/indexes/{indexName}/settings'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1500,8 +1500,8 @@ module Algolia
         raise ArgumentError, "Parameter `object_id` is required when calling `get_synonym`."
       end
 
-      path = '/1/indexes/{indexName}/synonyms/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
-                                                                                                                                    @api_client.encode_uri(object_id.to_s))
+      path = '/1/indexes/{indexName}/synonyms/{objectID}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
+                                                                                                                                  Transport.encode_uri(object_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1551,8 +1551,8 @@ module Algolia
         raise ArgumentError, "Parameter `task_id` is required when calling `get_task`."
       end
 
-      path = '/1/indexes/{indexName}/task/{taskID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'taskID' + '}',
-                                                                                                                              @api_client.encode_uri(task_id.to_s))
+      path = '/1/indexes/{indexName}/task/{taskID}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s)).sub('{' + 'taskID' + '}',
+                                                                                                                            Transport.encode_uri(task_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1639,7 +1639,7 @@ module Algolia
         raise ArgumentError, "invalid value for 'user_id' when calling SearchClient.get_user_id, must conform to the pattern #{pattern}."
       end
 
-      path = '/1/clusters/mapping/{userID}'.sub('{' + 'userID' + '}', @api_client.encode_uri(user_id.to_s))
+      path = '/1/clusters/mapping/{userID}'.sub('{' + 'userID' + '}', Transport.encode_uri(user_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1936,7 +1936,7 @@ module Algolia
         raise ArgumentError, "Parameter `operation_index_params` is required when calling `operation_index`."
       end
 
-      path = '/1/indexes/{indexName}/operation'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/indexes/{indexName}/operation'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1992,8 +1992,8 @@ module Algolia
         raise ArgumentError, "Parameter `attributes_to_update` is required when calling `partial_update_object`."
       end
 
-      path = '/1/indexes/{indexName}/{objectID}/partial'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
-                                                                                                                                   @api_client.encode_uri(object_id.to_s))
+      path = '/1/indexes/{indexName}/{objectID}/partial'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
+                                                                                                                                 Transport.encode_uri(object_id.to_s))
       query_params = {}
       query_params[:createIfNotExists] = create_if_not_exists unless create_if_not_exists.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -2046,7 +2046,7 @@ module Algolia
         raise ArgumentError, "invalid value for 'user_id' when calling SearchClient.remove_user_id, must conform to the pattern #{pattern}."
       end
 
-      path = '/1/clusters/mapping/{userID}'.sub('{' + 'userID' + '}', @api_client.encode_uri(user_id.to_s))
+      path = '/1/clusters/mapping/{userID}'.sub('{' + 'userID' + '}', Transport.encode_uri(user_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -2134,7 +2134,7 @@ module Algolia
         raise ArgumentError, "Parameter `key` is required when calling `restore_api_key`."
       end
 
-      path = '/1/keys/{key}/restore'.sub('{' + 'key' + '}', @api_client.encode_uri(key.to_s))
+      path = '/1/keys/{key}/restore'.sub('{' + 'key' + '}', Transport.encode_uri(key.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -2183,7 +2183,7 @@ module Algolia
         raise ArgumentError, "Parameter `body` is required when calling `save_object`."
       end
 
-      path = '/1/indexes/{indexName}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/indexes/{indexName}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -2239,8 +2239,8 @@ module Algolia
         raise ArgumentError, "Parameter `rule` is required when calling `save_rule`."
       end
 
-      path = '/1/indexes/{indexName}/rules/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
-                                                                                                                                 @api_client.encode_uri(object_id.to_s))
+      path = '/1/indexes/{indexName}/rules/{objectID}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
+                                                                                                                               Transport.encode_uri(object_id.to_s))
       query_params = {}
       query_params[:forwardToReplicas] = forward_to_replicas unless forward_to_replicas.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -2295,7 +2295,7 @@ module Algolia
         raise ArgumentError, "Parameter `rules` is required when calling `save_rules`."
       end
 
-      path = '/1/indexes/{indexName}/rules/batch'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/indexes/{indexName}/rules/batch'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params[:forwardToReplicas] = forward_to_replicas unless forward_to_replicas.nil?
       query_params[:clearExistingRules] = clear_existing_rules unless clear_existing_rules.nil?
@@ -2355,8 +2355,8 @@ module Algolia
         raise ArgumentError, "Parameter `synonym_hit` is required when calling `save_synonym`."
       end
 
-      path = '/1/indexes/{indexName}/synonyms/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
-                                                                                                                                    @api_client.encode_uri(object_id.to_s))
+      path = '/1/indexes/{indexName}/synonyms/{objectID}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s)).sub('{' + 'objectID' + '}',
+                                                                                                                                  Transport.encode_uri(object_id.to_s))
       query_params = {}
       query_params[:forwardToReplicas] = forward_to_replicas unless forward_to_replicas.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -2411,7 +2411,7 @@ module Algolia
         raise ArgumentError, "Parameter `synonym_hit` is required when calling `save_synonyms`."
       end
 
-      path = '/1/indexes/{indexName}/synonyms/batch'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/indexes/{indexName}/synonyms/batch'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params[:forwardToReplicas] = forward_to_replicas unless forward_to_replicas.nil?
       query_params[:replaceExistingSynonyms] = replace_existing_synonyms unless replace_existing_synonyms.nil?
@@ -2509,7 +2509,7 @@ module Algolia
         raise ArgumentError, "Parameter `search_dictionary_entries_params` is required when calling `search_dictionary_entries`."
       end
 
-      path = '/1/dictionaries/{dictionaryName}/search'.sub('{' + 'dictionaryName' + '}', @api_client.encode_uri(dictionary_name.to_s))
+      path = '/1/dictionaries/{dictionaryName}/search'.sub('{' + 'dictionaryName' + '}', Transport.encode_uri(dictionary_name.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -2560,8 +2560,8 @@ module Algolia
         raise ArgumentError, "Parameter `facet_name` is required when calling `search_for_facet_values`."
       end
 
-      path = '/1/indexes/{indexName}/facets/{facetName}/query'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'facetName' + '}',
-                                                                                                                                         @api_client.encode_uri(facet_name.to_s))
+      path = '/1/indexes/{indexName}/facets/{facetName}/query'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s)).sub('{' + 'facetName' + '}',
+                                                                                                                                       Transport.encode_uri(facet_name.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -2608,7 +2608,7 @@ module Algolia
         raise ArgumentError, "Parameter `index_name` is required when calling `search_rules`."
       end
 
-      path = '/1/indexes/{indexName}/rules/search'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/indexes/{indexName}/rules/search'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -2654,7 +2654,7 @@ module Algolia
         raise ArgumentError, "Parameter `index_name` is required when calling `search_single_index`."
       end
 
-      path = '/1/indexes/{indexName}/query'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/indexes/{indexName}/query'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -2700,7 +2700,7 @@ module Algolia
         raise ArgumentError, "Parameter `index_name` is required when calling `search_synonyms`."
       end
 
-      path = '/1/indexes/{indexName}/synonyms/search'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/indexes/{indexName}/synonyms/search'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -2839,7 +2839,7 @@ module Algolia
         raise ArgumentError, "Parameter `index_settings` is required when calling `set_settings`."
       end
 
-      path = '/1/indexes/{indexName}/settings'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s))
+      path = '/1/indexes/{indexName}/settings'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params[:forwardToReplicas] = forward_to_replicas unless forward_to_replicas.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -2891,7 +2891,7 @@ module Algolia
         raise ArgumentError, "Parameter `api_key` is required when calling `update_api_key`."
       end
 
-      path = '/1/keys/{key}'.sub('{' + 'key' + '}', @api_client.encode_uri(key.to_s))
+      path = '/1/keys/{key}'.sub('{' + 'key' + '}', Transport.encode_uri(key.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}

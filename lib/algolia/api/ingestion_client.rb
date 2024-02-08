@@ -408,7 +408,7 @@ module Algolia
         raise ArgumentError, "Parameter `authentication_id` is required when calling `delete_authentication`."
       end
 
-      path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', @api_client.encode_uri(authentication_id.to_s))
+      path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', Transport.encode_uri(authentication_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -456,7 +456,7 @@ module Algolia
         raise ArgumentError, "Parameter `destination_id` is required when calling `delete_destination`."
       end
 
-      path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', @api_client.encode_uri(destination_id.to_s))
+      path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', Transport.encode_uri(destination_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -504,7 +504,7 @@ module Algolia
         raise ArgumentError, "Parameter `source_id` is required when calling `delete_source`."
       end
 
-      path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', @api_client.encode_uri(source_id.to_s))
+      path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', Transport.encode_uri(source_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -548,7 +548,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_id` is required when calling `delete_task`."
       end
 
-      path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', @api_client.encode_uri(task_id.to_s))
+      path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', Transport.encode_uri(task_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -592,7 +592,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_id` is required when calling `disable_task`."
       end
 
-      path = '/1/tasks/{taskID}/disable'.sub('{' + 'taskID' + '}', @api_client.encode_uri(task_id.to_s))
+      path = '/1/tasks/{taskID}/disable'.sub('{' + 'taskID' + '}', Transport.encode_uri(task_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -640,7 +640,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_id` is required when calling `enable_task`."
       end
 
-      path = '/1/tasks/{taskID}/enable'.sub('{' + 'taskID' + '}', @api_client.encode_uri(task_id.to_s))
+      path = '/1/tasks/{taskID}/enable'.sub('{' + 'taskID' + '}', Transport.encode_uri(task_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -688,7 +688,7 @@ module Algolia
         raise ArgumentError, "Parameter `authentication_id` is required when calling `get_authentication`."
       end
 
-      path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', @api_client.encode_uri(authentication_id.to_s))
+      path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', Transport.encode_uri(authentication_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -795,7 +795,7 @@ module Algolia
         raise ArgumentError, "Parameter `destination_id` is required when calling `get_destination`."
       end
 
-      path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', @api_client.encode_uri(destination_id.to_s))
+      path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', Transport.encode_uri(destination_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -902,7 +902,7 @@ module Algolia
         raise ArgumentError, "Parameter `source_id` is required when calling `get_docker_source_streams`."
       end
 
-      path = '/1/sources/{sourceID}/discover'.sub('{' + 'sourceID' + '}', @api_client.encode_uri(source_id.to_s))
+      path = '/1/sources/{sourceID}/discover'.sub('{' + 'sourceID' + '}', Transport.encode_uri(source_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -955,7 +955,7 @@ module Algolia
         raise ArgumentError, "Parameter `event_id` is required when calling `get_event`."
       end
 
-      path = '/1/runs/{runID}/events/{eventID}'.sub('{' + 'runID' + '}', @api_client.encode_uri(run_id.to_s)).sub('{' + 'eventID' + '}', @api_client.encode_uri(event_id.to_s))
+      path = '/1/runs/{runID}/events/{eventID}'.sub('{' + 'runID' + '}', Transport.encode_uri(run_id.to_s)).sub('{' + 'eventID' + '}', Transport.encode_uri(event_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1013,7 +1013,7 @@ module Algolia
         raise ArgumentError, "Parameter `run_id` is required when calling `get_events`."
       end
 
-      path = '/1/runs/{runID}/events'.sub('{' + 'runID' + '}', @api_client.encode_uri(run_id.to_s))
+      path = '/1/runs/{runID}/events'.sub('{' + 'runID' + '}', Transport.encode_uri(run_id.to_s))
       query_params = {}
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
       query_params[:page] = page unless page.nil?
@@ -1077,7 +1077,7 @@ module Algolia
         raise ArgumentError, "Parameter `run_id` is required when calling `get_run`."
       end
 
-      path = '/1/runs/{runID}'.sub('{' + 'runID' + '}', @api_client.encode_uri(run_id.to_s))
+      path = '/1/runs/{runID}'.sub('{' + 'runID' + '}', Transport.encode_uri(run_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1190,7 +1190,7 @@ module Algolia
         raise ArgumentError, "Parameter `source_id` is required when calling `get_source`."
       end
 
-      path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', @api_client.encode_uri(source_id.to_s))
+      path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', Transport.encode_uri(source_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1297,7 +1297,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_id` is required when calling `get_task`."
       end
 
-      path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', @api_client.encode_uri(task_id.to_s))
+      path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', Transport.encode_uri(task_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1415,7 +1415,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_id` is required when calling `run_task`."
       end
 
-      path = '/1/tasks/{taskID}/run'.sub('{' + 'taskID' + '}', @api_client.encode_uri(task_id.to_s))
+      path = '/1/tasks/{taskID}/run'.sub('{' + 'taskID' + '}', Transport.encode_uri(task_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1655,7 +1655,7 @@ module Algolia
         raise ArgumentError, "Parameter `source_id` is required when calling `trigger_docker_source_discover`."
       end
 
-      path = '/1/sources/{sourceID}/discover'.sub('{' + 'sourceID' + '}', @api_client.encode_uri(source_id.to_s))
+      path = '/1/sources/{sourceID}/discover'.sub('{' + 'sourceID' + '}', Transport.encode_uri(source_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1708,7 +1708,7 @@ module Algolia
         raise ArgumentError, "Parameter `authentication_update` is required when calling `update_authentication`."
       end
 
-      path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', @api_client.encode_uri(authentication_id.to_s))
+      path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', Transport.encode_uri(authentication_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1762,7 +1762,7 @@ module Algolia
         raise ArgumentError, "Parameter `destination_update` is required when calling `update_destination`."
       end
 
-      path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', @api_client.encode_uri(destination_id.to_s))
+      path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', Transport.encode_uri(destination_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1816,7 +1816,7 @@ module Algolia
         raise ArgumentError, "Parameter `source_update` is required when calling `update_source`."
       end
 
-      path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', @api_client.encode_uri(source_id.to_s))
+      path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', Transport.encode_uri(source_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1866,7 +1866,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_update` is required when calling `update_task`."
       end
 
-      path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', @api_client.encode_uri(task_id.to_s))
+      path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', Transport.encode_uri(task_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}

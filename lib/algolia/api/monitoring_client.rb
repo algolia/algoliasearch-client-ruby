@@ -211,7 +211,7 @@ module Algolia
         raise ArgumentError, "Parameter `clusters` is required when calling `get_cluster_incidents`."
       end
 
-      path = '/1/incidents/{clusters}'.sub('{' + 'clusters' + '}', @api_client.encode_uri(clusters.to_s))
+      path = '/1/incidents/{clusters}'.sub('{' + 'clusters' + '}', Transport.encode_uri(clusters.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -251,7 +251,7 @@ module Algolia
         raise ArgumentError, "Parameter `clusters` is required when calling `get_cluster_status`."
       end
 
-      path = '/1/status/{clusters}'.sub('{' + 'clusters' + '}', @api_client.encode_uri(clusters.to_s))
+      path = '/1/status/{clusters}'.sub('{' + 'clusters' + '}', Transport.encode_uri(clusters.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -324,7 +324,7 @@ module Algolia
         raise ArgumentError, "Parameter `clusters` is required when calling `get_indexing_time`."
       end
 
-      path = '/1/indexing/{clusters}'.sub('{' + 'clusters' + '}', @api_client.encode_uri(clusters.to_s))
+      path = '/1/indexing/{clusters}'.sub('{' + 'clusters' + '}', Transport.encode_uri(clusters.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -397,7 +397,7 @@ module Algolia
         raise ArgumentError, "Parameter `clusters` is required when calling `get_latency`."
       end
 
-      path = '/1/latency/{clusters}'.sub('{' + 'clusters' + '}', @api_client.encode_uri(clusters.to_s))
+      path = '/1/latency/{clusters}'.sub('{' + 'clusters' + '}', Transport.encode_uri(clusters.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -442,8 +442,7 @@ module Algolia
         raise ArgumentError, "Parameter `period` is required when calling `get_metrics`."
       end
 
-      path = '/1/infrastructure/{metric}/period/{period}'.sub('{' + 'metric' + '}', @api_client.encode_uri(metric.to_s)).sub('{' + 'period' + '}',
-                                                                                                                             @api_client.encode_uri(period.to_s))
+      path = '/1/infrastructure/{metric}/period/{period}'.sub('{' + 'metric' + '}', Transport.encode_uri(metric.to_s)).sub('{' + 'period' + '}', Transport.encode_uri(period.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -484,7 +483,7 @@ module Algolia
         raise ArgumentError, "Parameter `clusters` is required when calling `get_reachability`."
       end
 
-      path = '/1/reachability/{clusters}/probes'.sub('{' + 'clusters' + '}', @api_client.encode_uri(clusters.to_s))
+      path = '/1/reachability/{clusters}/probes'.sub('{' + 'clusters' + '}', Transport.encode_uri(clusters.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}

@@ -228,8 +228,8 @@ module Algolia
         raise ArgumentError, "Parameter `object_id` is required when calling `delete_recommend_rule`."
       end
 
-      path = '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'model' + '}', @api_client.encode_uri(model.to_s)).sub(
-        '{' + 'objectID' + '}', @api_client.encode_uri(object_id.to_s)
+      path = '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s)).sub('{' + 'model' + '}', Transport.encode_uri(model.to_s)).sub(
+        '{' + 'objectID' + '}', Transport.encode_uri(object_id.to_s)
       )
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -286,8 +286,8 @@ module Algolia
         raise ArgumentError, "Parameter `object_id` is required when calling `get_recommend_rule`."
       end
 
-      path = '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'model' + '}', @api_client.encode_uri(model.to_s)).sub(
-        '{' + 'objectID' + '}', @api_client.encode_uri(object_id.to_s)
+      path = '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s)).sub('{' + 'model' + '}', Transport.encode_uri(model.to_s)).sub(
+        '{' + 'objectID' + '}', Transport.encode_uri(object_id.to_s)
       )
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -344,8 +344,8 @@ module Algolia
         raise ArgumentError, "Parameter `task_id` is required when calling `get_recommend_status`."
       end
 
-      path = '/1/indexes/{indexName}/{model}/task/{taskID}'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'model' + '}', @api_client.encode_uri(model.to_s)).sub(
-        '{' + 'taskID' + '}', @api_client.encode_uri(task_id.to_s)
+      path = '/1/indexes/{indexName}/{model}/task/{taskID}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s)).sub('{' + 'model' + '}', Transport.encode_uri(model.to_s)).sub(
+        '{' + 'taskID' + '}', Transport.encode_uri(task_id.to_s)
       )
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -442,8 +442,8 @@ module Algolia
         raise ArgumentError, "Parameter `model` is required when calling `search_recommend_rules`."
       end
 
-      path = '/1/indexes/{indexName}/{model}/recommend/rules/search'.sub('{' + 'indexName' + '}', @api_client.encode_uri(index_name.to_s)).sub('{' + 'model' + '}',
-                                                                                                                                               @api_client.encode_uri(model.to_s))
+      path = '/1/indexes/{indexName}/{model}/recommend/rules/search'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s)).sub('{' + 'model' + '}',
+                                                                                                                                             Transport.encode_uri(model.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}

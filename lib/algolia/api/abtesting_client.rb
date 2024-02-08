@@ -267,7 +267,7 @@ module Algolia
         raise ArgumentError, "Parameter `id` is required when calling `delete_ab_test`."
       end
 
-      path = '/2/abtests/{id}'.sub('{' + 'id' + '}', @api_client.encode_uri(id.to_s))
+      path = '/2/abtests/{id}'.sub('{' + 'id' + '}', Transport.encode_uri(id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -311,7 +311,7 @@ module Algolia
         raise ArgumentError, "Parameter `id` is required when calling `get_ab_test`."
       end
 
-      path = '/2/abtests/{id}'.sub('{' + 'id' + '}', @api_client.encode_uri(id.to_s))
+      path = '/2/abtests/{id}'.sub('{' + 'id' + '}', Transport.encode_uri(id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -404,7 +404,7 @@ module Algolia
         raise ArgumentError, "Parameter `id` is required when calling `stop_ab_test`."
       end
 
-      path = '/2/abtests/{id}/stop'.sub('{' + 'id' + '}', @api_client.encode_uri(id.to_s))
+      path = '/2/abtests/{id}/stop'.sub('{' + 'id' + '}', Transport.encode_uri(id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
