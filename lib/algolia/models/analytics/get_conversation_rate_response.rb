@@ -45,7 +45,9 @@ module Algolia
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([])
+        Set.new([
+                  :tracked_search_count
+                ])
       end
 
       # Initializes the object

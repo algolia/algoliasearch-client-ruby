@@ -85,7 +85,13 @@ module Algolia
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([])
+        Set.new([
+                  :click_significance,
+                  :conversion_significance,
+                  :add_to_cart_significance,
+                  :purchase_significance,
+                  :revenue_significance
+                ])
       end
 
       # Initializes the object

@@ -33,6 +33,9 @@ module Algolia
       # A/B test description.
       attr_accessor :description
 
+      # The estimated number of searches that will need to be run to achieve the desired confidence level and statistical power. A `minimumDetectableEffect` must be set in the `configuration` object for this to be used.
+      attr_accessor :estimated_sample_size
+
       attr_accessor :filter_effects
 
       # A/B test index.
@@ -74,6 +77,7 @@ module Algolia
           :conversion_rate => :conversionRate,
           :currencies => :currencies,
           :description => :description,
+          :estimated_sample_size => :estimatedSampleSize,
           :filter_effects => :filterEffects,
           :index => :index,
           :no_result_count => :noResultCount,
@@ -104,6 +108,7 @@ module Algolia
           :conversion_rate => :Float,
           :currencies => :'Hash<String, CurrenciesValue>',
           :description => :String,
+          :estimated_sample_size => :Integer,
           :filter_effects => :FilterEffects,
           :index => :String,
           :no_result_count => :Integer,
@@ -119,7 +124,18 @@ module Algolia
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([])
+        Set.new([
+                  :add_to_cart_rate,
+                  :average_click_position,
+                  :click_through_rate,
+                  :conversion_rate,
+                  :no_result_count,
+                  :purchase_rate,
+                  :search_count,
+                  :tracked_search_count,
+                  :user_count,
+                  :tracked_user_count
+                ])
       end
 
       # Initializes the object
@@ -185,14 +201,16 @@ module Algolia
           if (value = attributes[:currencies]).is_a?(Hash)
             self.currencies = value
           end
-        else
-          self.currencies = nil
         end
 
         if attributes.key?(:description)
           self.description = attributes[:description]
         else
           self.description = nil
+        end
+
+        if attributes.key?(:estimated_sample_size)
+          self.estimated_sample_size = attributes[:estimated_sample_size]
         end
 
         if attributes.key?(:filter_effects)
@@ -269,6 +287,7 @@ module Algolia
           conversion_rate == other.conversion_rate &&
           currencies == other.currencies &&
           description == other.description &&
+          estimated_sample_size == other.estimated_sample_size &&
           filter_effects == other.filter_effects &&
           index == other.index &&
           no_result_count == other.no_result_count &&
@@ -290,8 +309,8 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [add_to_cart_count, add_to_cart_rate, average_click_position, click_count, click_through_rate, conversion_count, conversion_rate, currencies, description, filter_effects,
-         index, no_result_count, purchase_count, purchase_rate, search_count, tracked_search_count, traffic_percentage, user_count, tracked_user_count].hash
+        [add_to_cart_count, add_to_cart_rate, average_click_position, click_count, click_through_rate, conversion_count, conversion_rate, currencies, description,
+         estimated_sample_size, filter_effects, index, no_result_count, purchase_count, purchase_rate, search_count, tracked_search_count, traffic_percentage, user_count, tracked_user_count].hash
       end
 
       # Builds the object from hash
