@@ -3,7 +3,7 @@ module Algolia
     class StatefulHost
       include CallType
 
-      attr_reader :url, :protocol, :accept
+      attr_reader :url, :protocol, :accept, :port
       attr_accessor :last_use, :retry_count, :up
 
       # @param url [String] host url
@@ -15,6 +15,7 @@ module Algolia
       def initialize(url, opts = {})
         @url         = url
         @protocol    = opts[:protocol] || 'https://'
+        @port        = opts[:port]
         @accept      = opts[:accept] || (READ | WRITE)
         @last_use    = opts[:last_use] || Time.now.utc
         @retry_count = opts[:retry_count] || 0

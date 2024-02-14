@@ -56,7 +56,7 @@ module Algolia
       # @return [Faraday::Connection]
       #
       def connection(host)
-        @connections[host.url] ||= Faraday.new(build_url(host)) do |f|
+        @connections[build_url(host)] ||= Faraday.new(build_url(host)) do |f|
           f.adapter @adapter.to_sym
         end
       end
@@ -68,7 +68,7 @@ module Algolia
       # @return [String]
       #
       def build_url(host)
-        host.protocol + host.url
+        host.protocol + host.url + (host.port.nil? ? '' : ":#{host.port}")
       end
 
       # Convert query_params to a full query string
