@@ -117,7 +117,7 @@ module Algolia
       def stringify_query_params(query_params)
         query_params.to_h do |key, value|
           value = value.join(',') if value.is_a?(Array)
-          [key, Algolia::Transport.encode_uri(value.to_s)]
+          [Algolia::Transport.encode_uri(key.to_s).to_sym, Algolia::Transport.encode_uri(value.to_s)]
         end
       end
     end
