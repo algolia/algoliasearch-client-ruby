@@ -6,9 +6,6 @@ require 'time'
 module Algolia
   module QuerySuggestions
     class BaseQuerySuggestionsConfigurationResponse
-      # Your Algolia application ID.
-      attr_accessor :app_id
-
       # API key used to read from your source index.
       attr_accessor :source_indices_api_key
 
@@ -21,7 +18,6 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :app_id => :appId,
           :source_indices_api_key => :sourceIndicesAPIKey,
           :suggestions_indices_api_key => :suggestionsIndicesAPIKey,
           :external_indices_api_key => :externalIndicesAPIKey
@@ -36,7 +32,6 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :app_id => :String,
           :source_indices_api_key => :String,
           :suggestions_indices_api_key => :String,
           :external_indices_api_key => :String
@@ -65,10 +60,6 @@ module Algolia
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:app_id)
-          self.app_id = attributes[:app_id]
-        end
-
         if attributes.key?(:source_indices_api_key)
           self.source_indices_api_key = attributes[:source_indices_api_key]
         end
@@ -88,7 +79,6 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          app_id == other.app_id &&
           source_indices_api_key == other.source_indices_api_key &&
           suggestions_indices_api_key == other.suggestions_indices_api_key &&
           external_indices_api_key == other.external_indices_api_key
@@ -103,7 +93,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [app_id, source_indices_api_key, suggestions_indices_api_key, external_indices_api_key].hash
+        [source_indices_api_key, suggestions_indices_api_key, external_indices_api_key].hash
       end
 
       # Builds the object from hash
