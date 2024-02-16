@@ -1,3 +1,7 @@
+## [3.0.0.alpha.7](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.alpha.6...3.0.0.alpha.7)
+
+- [28b34ffb6](https://github.com/algolia/api-clients-automation/commit/28b34ffb6) feat(ruby): add browse helpers ([#2669](https://github.com/algolia/api-clients-automation/pull/2669)) by [@millotp](https://github.com/millotp/)
+
 ## [3.0.0.alpha.6](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.alpha.5...3.0.0.alpha.6)
 
 - [379fbc501](https://github.com/algolia/api-clients-automation/commit/379fbc501) fix(specs): correct `searchSynonyms` parameters ([#2595](https://github.com/algolia/api-clients-automation/pull/2595)) by [@morganleroi](https://github.com/morganleroi/)
