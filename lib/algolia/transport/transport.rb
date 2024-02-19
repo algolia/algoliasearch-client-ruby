@@ -1,6 +1,7 @@
 require 'faraday'
 # this is the default adapter and it needs to be required to be registered.
 require 'faraday/net_http_persistent' unless Faraday::VERSION < '1'
+require 'zlib'
 
 module Algolia
   module Transport
@@ -77,12 +78,23 @@ module Algolia
         request                   = {}
         request[:method]          = method.downcase
         request[:path]            = path
-        request[:body]            = body
+        request[:body]            = build_body(body, request_options)
         request[:query_params]    = stringify_query_params(request_options.query_params)
-        request[:header_params]   = generate_header_params(request_options)
+        request[:header_params]   = generate_header_params(body, request_options)
         request[:timeout]         = request_options.timeout
         request[:connect_timeout] = request_options.connect_timeout
         request
+      end
+
+      # Builds the body of the request, with gzip compression if needed
+      def build_body(body, request_options)
+        return nil if body.nil?
+
+        if request_options.compression_type == 'gzip'
+          body = Zlib.gzip(body)
+        end
+
+        body
       end
 
       # Generates headers from config headers and optional parameters
@@ -91,10 +103,13 @@ module Algolia
       #
       # @return [Hash] merged headers
       #
-      def generate_header_params(request_options = {})
+      def generate_header_params(body, request_options)
         header_params = request_options.header_params.transform_keys(&:downcase)
         header_params = @config.header_params.merge(header_params)
         header_params['accept-encoding'] = 'gzip' if request_options.compression_type == 'gzip'
+        if request_options.compression_type == 'gzip' && body.is_a?(String) && !body.to_s.strip.empty?
+          header_params['content-encoding'] = 'gzip'
+        end
 
         header_params
       end
