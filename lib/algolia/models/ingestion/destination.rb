@@ -23,6 +23,7 @@ module Algolia
       # Date of last update (RFC3339 format).
       attr_accessor :updated_at
 
+      # The authentication UUID.
       attr_accessor :authentication_id
 
       class EnumAttributeValidator

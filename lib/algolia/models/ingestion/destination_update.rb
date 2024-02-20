@@ -14,6 +14,7 @@ module Algolia
 
       attr_accessor :input
 
+      # The authentication UUID.
       attr_accessor :authentication_id
 
       class EnumAttributeValidator

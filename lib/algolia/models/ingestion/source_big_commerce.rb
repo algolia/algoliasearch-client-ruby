@@ -68,6 +68,8 @@ module Algolia
 
         if attributes.key?(:store_hash)
           self.store_hash = attributes[:store_hash]
+        else
+          self.store_hash = nil
         end
 
         if attributes.key?(:channel)

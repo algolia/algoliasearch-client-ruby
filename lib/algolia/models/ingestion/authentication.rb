@@ -5,7 +5,7 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # An authentication is used to login into a Source or a Destination.
+    # An authentication is used to login into a Source or a Destination, with obfuscated input.
     class Authentication
       # The authentication UUID.
       attr_accessor :authentication_id
@@ -72,7 +72,7 @@ module Algolia
           :type => :AuthenticationType,
           :name => :String,
           :platform => :Platform,
-          :input => :AuthInput,
+          :input => :AuthInputPartial,
           :created_at => :String,
           :updated_at => :String
         }
@@ -80,7 +80,9 @@ module Algolia
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([])
+        Set.new([
+                  :platform
+                ])
       end
 
       # Initializes the object
