@@ -18,6 +18,8 @@ module Algolia
       # Determines the value that will be stored in the Algolia record if there's no inventory information on the product.
       attr_accessor :fallback_is_in_stock_value
 
+      attr_accessor :custom_fields
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -25,7 +27,8 @@ module Algolia
           :locales => :locales,
           :url => :url,
           :project_key => :projectKey,
-          :fallback_is_in_stock_value => :fallbackIsInStockValue
+          :fallback_is_in_stock_value => :fallbackIsInStockValue,
+          :custom_fields => :customFields
         }
       end
 
@@ -41,7 +44,8 @@ module Algolia
           :locales => :'Array<String>',
           :url => :String,
           :project_key => :String,
-          :fallback_is_in_stock_value => :Boolean
+          :fallback_is_in_stock_value => :Boolean,
+          :custom_fields => :CommercetoolsCustomFields
         }
       end
 
@@ -94,6 +98,10 @@ module Algolia
         if attributes.key?(:fallback_is_in_stock_value)
           self.fallback_is_in_stock_value = attributes[:fallback_is_in_stock_value]
         end
+
+        if attributes.key?(:custom_fields)
+          self.custom_fields = attributes[:custom_fields]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -106,7 +114,8 @@ module Algolia
           locales == other.locales &&
           url == other.url &&
           project_key == other.project_key &&
-          fallback_is_in_stock_value == other.fallback_is_in_stock_value
+          fallback_is_in_stock_value == other.fallback_is_in_stock_value &&
+          custom_fields == other.custom_fields
       end
 
       # @see the `==` method
@@ -118,7 +127,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [store_keys, locales, url, project_key, fallback_is_in_stock_value].hash
+        [store_keys, locales, url, project_key, fallback_is_in_stock_value, custom_fields].hash
       end
 
       # Builds the object from hash

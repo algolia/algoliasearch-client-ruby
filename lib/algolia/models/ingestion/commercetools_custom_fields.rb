@@ -5,21 +5,23 @@ require 'time'
 
 module Algolia
   module Ingestion
-    class SourceUpdateCommercetools
-      # Unique and immutable key of the referenced Store.
-      attr_accessor :store_keys
+    # Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).
+    class CommercetoolsCustomFields
+      # Inventory custom fields.
+      attr_accessor :inventory
 
-      # Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example [\"fr-FR\", \"en\"].
-      attr_accessor :locales
+      # Price custom fields.
+      attr_accessor :price
 
-      attr_accessor :custom_fields
+      # Category custom fields.
+      attr_accessor :category
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :store_keys => :storeKeys,
-          :locales => :locales,
-          :custom_fields => :customFields
+          :inventory => :inventory,
+          :price => :price,
+          :category => :category
         }
       end
 
@@ -31,9 +33,9 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :store_keys => :'Array<String>',
-          :locales => :'Array<String>',
-          :custom_fields => :CommercetoolsCustomFields
+          :inventory => :'Array<String>',
+          :price => :'Array<String>',
+          :category => :'Array<String>'
         }
       end
 
@@ -46,33 +48,35 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::SourceUpdateCommercetools` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::CommercetoolsCustomFields` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::SourceUpdateCommercetools`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::CommercetoolsCustomFields`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:store_keys)
-          if (value = attributes[:store_keys]).is_a?(Array)
-            self.store_keys = value
+        if attributes.key?(:inventory)
+          if (value = attributes[:inventory]).is_a?(Array)
+            self.inventory = value
           end
         end
 
-        if attributes.key?(:locales)
-          if (value = attributes[:locales]).is_a?(Array)
-            self.locales = value
+        if attributes.key?(:price)
+          if (value = attributes[:price]).is_a?(Array)
+            self.price = value
           end
         end
 
-        if attributes.key?(:custom_fields)
-          self.custom_fields = attributes[:custom_fields]
+        if attributes.key?(:category)
+          if (value = attributes[:category]).is_a?(Array)
+            self.category = value
+          end
         end
       end
 
@@ -82,9 +86,9 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          store_keys == other.store_keys &&
-          locales == other.locales &&
-          custom_fields == other.custom_fields
+          inventory == other.inventory &&
+          price == other.price &&
+          category == other.category
       end
 
       # @see the `==` method
@@ -96,7 +100,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [store_keys, locales, custom_fields].hash
+        [inventory, price, category].hash
       end
 
       # Builds the object from hash
