@@ -1,3 +1,8 @@
+## [3.0.0.alpha.8](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.alpha.7...3.0.0.alpha.8)
+
+- [6624759e1](https://github.com/algolia/api-clients-automation/commit/6624759e1) feat(specs): add CustomFields to CT Source Input ([#2742](https://github.com/algolia/api-clients-automation/pull/2742)) by [@damcou](https://github.com/damcou/)
+- [ef37e65b7](https://github.com/algolia/api-clients-automation/commit/ef37e65b7) fix(clients): add e2e tests for analytics API ([#2737](https://github.com/algolia/api-clients-automation/pull/2737)) by [@millotp](https://github.com/millotp/)
+
 ## [3.0.0.alpha.7](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.alpha.6...3.0.0.alpha.7)
 
 - [28b34ffb6](https://github.com/algolia/api-clients-automation/commit/28b34ffb6) feat(ruby): add browse helpers ([#2669](https://github.com/algolia/api-clients-automation/pull/2669)) by [@millotp](https://github.com/millotp/)
