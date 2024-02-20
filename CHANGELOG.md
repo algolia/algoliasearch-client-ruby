@@ -1,3 +1,7 @@
+## [3.0.0.alpha.9](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.alpha.8...3.0.0.alpha.9)
+
+- [4f6e2d0b3](https://github.com/algolia/api-clients-automation/commit/4f6e2d0b3) fix(specs): allow custom fields to be nullable ([#2746](https://github.com/algolia/api-clients-automation/pull/2746)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [3.0.0.alpha.8](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.alpha.7...3.0.0.alpha.8)
 
 - [6624759e1](https://github.com/algolia/api-clients-automation/commit/6624759e1) feat(specs): add CustomFields to CT Source Input ([#2742](https://github.com/algolia/api-clients-automation/pull/2742)) by [@damcou](https://github.com/damcou/)
