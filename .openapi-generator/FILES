@@ -6,6 +6,7 @@ lib/algolia/models/search/advanced_syntax_features.rb
 lib/algolia/models/search/alternatives_as_exact.rb
 lib/algolia/models/search/anchoring.rb
 lib/algolia/models/search/api_key.rb
+lib/algolia/models/search/api_key_operation.rb
 lib/algolia/models/search/around_precision.rb
 lib/algolia/models/search/around_precision_from_value_inner.rb
 lib/algolia/models/search/around_radius.rb
@@ -140,6 +141,7 @@ lib/algolia/models/search/search_type_default.rb
 lib/algolia/models/search/search_type_facet.rb
 lib/algolia/models/search/search_user_ids_params.rb
 lib/algolia/models/search/search_user_ids_response.rb
+lib/algolia/models/search/secured_api_key_restrictions.rb
 lib/algolia/models/search/semantic_search.rb
 lib/algolia/models/search/snippet_result.rb
 lib/algolia/models/search/snippet_result_option.rb
