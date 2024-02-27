@@ -12,6 +12,11 @@ module Algolia
       # Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example [\"fr-FR\", \"en\"].
       attr_accessor :locales
 
+      attr_accessor :url
+
+      # Determines the value that will be stored in the Algolia record if there's no inventory information on the product.
+      attr_accessor :fallback_is_in_stock_value
+
       attr_accessor :custom_fields
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -19,6 +24,8 @@ module Algolia
         {
           :store_keys => :storeKeys,
           :locales => :locales,
+          :url => :url,
+          :fallback_is_in_stock_value => :fallbackIsInStockValue,
           :custom_fields => :customFields
         }
       end
@@ -33,6 +40,8 @@ module Algolia
         {
           :store_keys => :'Array<String>',
           :locales => :'Array<String>',
+          :url => :String,
+          :fallback_is_in_stock_value => :Boolean,
           :custom_fields => :CommercetoolsCustomFields
         }
       end
@@ -71,6 +80,14 @@ module Algolia
           end
         end
 
+        if attributes.key?(:url)
+          self.url = attributes[:url]
+        end
+
+        if attributes.key?(:fallback_is_in_stock_value)
+          self.fallback_is_in_stock_value = attributes[:fallback_is_in_stock_value]
+        end
+
         if attributes.key?(:custom_fields)
           self.custom_fields = attributes[:custom_fields]
         end
@@ -84,6 +101,8 @@ module Algolia
         self.class == other.class &&
           store_keys == other.store_keys &&
           locales == other.locales &&
+          url == other.url &&
+          fallback_is_in_stock_value == other.fallback_is_in_stock_value &&
           custom_fields == other.custom_fields
       end
 
@@ -96,7 +115,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [store_keys, locales, custom_fields].hash
+        [store_keys, locales, url, fallback_is_in_stock_value, custom_fields].hash
       end
 
       # Builds the object from hash
