@@ -45,7 +45,7 @@ module Algolia
         {
           :search_params => :SearchParamsObject,
           :filters => :String,
-          :valid_until => :Float,
+          :valid_until => :Integer,
           :restrict_indices => :'Array<String>',
           :restrict_sources => :String,
           :user_token => :String

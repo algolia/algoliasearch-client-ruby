@@ -1,3 +1,4 @@
+.openapi-generator-ignore
 lib/algolia/api/search_client.rb
 lib/algolia/models/search/acl.rb
 lib/algolia/models/search/action.rb
