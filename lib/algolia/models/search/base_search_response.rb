@@ -84,6 +84,9 @@ module Algolia
       # Lets you store custom data in your indices.
       attr_accessor :user_data
 
+      # Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+      attr_accessor :query_id
+
       attr_accessor :additional_properties
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -115,7 +118,8 @@ module Algolia
           :rendering_content => :renderingContent,
           :server_time_ms => :serverTimeMS,
           :server_used => :serverUsed,
-          :user_data => :userData
+          :user_data => :userData,
+          :query_id => :queryID
         }
       end
 
@@ -153,7 +157,8 @@ module Algolia
           :rendering_content => :RenderingContent,
           :server_time_ms => :Integer,
           :server_used => :String,
-          :user_data => :Object
+          :user_data => :Object,
+          :query_id => :String
         }
       end
 
@@ -293,6 +298,10 @@ module Algolia
           self.user_data = attributes[:user_data]
         end
 
+        if attributes.key?(:query_id)
+          self.query_id = attributes[:query_id]
+        end
+
         # add extra attribute to additional_properties
         self.additional_properties ||= {}
         self.additional_properties.merge!(attributes.reject { |k, _| self.class.attribute_map.key?(k.to_sym) })
@@ -377,7 +386,8 @@ module Algolia
           rendering_content == other.rendering_content &&
           server_time_ms == other.server_time_ms &&
           server_used == other.server_used &&
-          user_data == other.user_data
+          user_data == other.user_data &&
+          query_id == other.query_id
       end
 
       # @see the `==` method
@@ -390,7 +400,7 @@ module Algolia
       # @return [Integer] Hash code
       def hash
         [ab_test_id, ab_test_variant_id, around_lat_lng, automatic_radius, exhaustive, exhaustive_facets_count, exhaustive_nb_hits, exhaustive_typo, facets, facets_stats,
-         hits_per_page, index, index_used, message, nb_hits, nb_pages, nb_sorted_hits, page, parsed_query, processing_time_ms, processing_timings_ms, query_after_removal, redirect, rendering_content, server_time_ms, server_used, user_data].hash
+         hits_per_page, index, index_used, message, nb_hits, nb_pages, nb_sorted_hits, page, parsed_query, processing_time_ms, processing_timings_ms, query_after_removal, redirect, rendering_content, server_time_ms, server_used, user_data, query_id].hash
       end
 
       # Builds the object from hash
