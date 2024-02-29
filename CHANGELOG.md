@@ -1,3 +1,8 @@
+## [3.0.0.alpha.11](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.alpha.10...3.0.0.alpha.11)
+
+- [a138c2fef](https://github.com/algolia/api-clients-automation/commit/a138c2fef) fix(specs): add `queryID` to search response ([#2801](https://github.com/algolia/api-clients-automation/pull/2801)) by [@aallam](https://github.com/aallam/)
+- [6f0b00ead](https://github.com/algolia/api-clients-automation/commit/6f0b00ead) chore(specs): remove JSON specs and new worlds logic ([#2794](https://github.com/algolia/api-clients-automation/pull/2794)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [3.0.0.alpha.10](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.alpha.9...3.0.0.alpha.10)
 
 - [d48e2f624](https://github.com/algolia/api-clients-automation/commit/d48e2f624) fix(specs): add missing attributes for CT Source update ([#2792](https://github.com/algolia/api-clients-automation/pull/2792)) by [@damcou](https://github.com/damcou/)

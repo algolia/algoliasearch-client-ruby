@@ -84,6 +84,9 @@ module Algolia
       # Lets you store custom data in your indices.
       attr_accessor :user_data
 
+      # Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+      attr_accessor :query_id
+
       attr_accessor :hits
 
       # Text to search for in an index.
@@ -122,6 +125,7 @@ module Algolia
           :server_time_ms => :serverTimeMS,
           :server_used => :serverUsed,
           :user_data => :userData,
+          :query_id => :queryID,
           :hits => :hits,
           :query => :query,
           :params => :params
@@ -163,6 +167,7 @@ module Algolia
           :server_time_ms => :Integer,
           :server_used => :String,
           :user_data => :Object,
+          :query_id => :String,
           :hits => :'Array<RecommendationsHit>',
           :query => :String,
           :params => :String
@@ -321,6 +326,10 @@ module Algolia
           self.user_data = attributes[:user_data]
         end
 
+        if attributes.key?(:query_id)
+          self.query_id = attributes[:query_id]
+        end
+
         if attributes.key?(:hits)
           if (value = attributes[:hits]).is_a?(Array)
             self.hits = value
@@ -418,6 +427,7 @@ module Algolia
           server_time_ms == other.server_time_ms &&
           server_used == other.server_used &&
           user_data == other.user_data &&
+          query_id == other.query_id &&
           hits == other.hits &&
           query == other.query &&
           params == other.params
@@ -433,7 +443,7 @@ module Algolia
       # @return [Integer] Hash code
       def hash
         [ab_test_id, ab_test_variant_id, around_lat_lng, automatic_radius, exhaustive, exhaustive_facets_count, exhaustive_nb_hits, exhaustive_typo, facets, facets_stats,
-         hits_per_page, index, index_used, message, nb_hits, nb_pages, nb_sorted_hits, page, parsed_query, processing_time_ms, processing_timings_ms, query_after_removal, redirect, rendering_content, server_time_ms, server_used, user_data, hits, query, params].hash
+         hits_per_page, index, index_used, message, nb_hits, nb_pages, nb_sorted_hits, page, parsed_query, processing_time_ms, processing_timings_ms, query_after_removal, redirect, rendering_content, server_time_ms, server_used, user_data, query_id, hits, query, params].hash
       end
 
       # Builds the object from hash
