@@ -5,22 +5,19 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # The input for an `onDemand` task whose source is of type `bigquery` and for which extracted data spans a given time range.
-    class OnDemandDateUtilsInput
-      # The start date of the extraction (RFC3339 format).
-      attr_accessor :start_date
+    # Describes how a field should be resolved by applying a set of directives.
+    class MappingFieldDirective
+      # Destination field key.
+      attr_accessor :field_key
 
-      # The end date of the extraction (RFC3339 format).
-      attr_accessor :end_date
-
-      attr_accessor :mapping
+      # How the destination field should be resolved from the source.
+      attr_accessor :value
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :start_date => :startDate,
-          :end_date => :endDate,
-          :mapping => :mapping
+          :field_key => :fieldKey,
+          :value => :value
         }
       end
 
@@ -32,9 +29,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :start_date => :String,
-          :end_date => :String,
-          :mapping => :MappingInput
+          :field_key => :String,
+          :value => :'Hash<String, Object>'
         }
       end
 
@@ -47,33 +43,31 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::OnDemandDateUtilsInput` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::MappingFieldDirective` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::OnDemandDateUtilsInput`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::MappingFieldDirective`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:start_date)
-          self.start_date = attributes[:start_date]
+        if attributes.key?(:field_key)
+          self.field_key = attributes[:field_key]
         else
-          self.start_date = nil
+          self.field_key = nil
         end
 
-        if attributes.key?(:end_date)
-          self.end_date = attributes[:end_date]
+        if attributes.key?(:value)
+          if (value = attributes[:value]).is_a?(Hash)
+            self.value = value
+          end
         else
-          self.end_date = nil
-        end
-
-        if attributes.key?(:mapping)
-          self.mapping = attributes[:mapping]
+          self.value = nil
         end
       end
 
@@ -83,9 +77,8 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          start_date == other.start_date &&
-          end_date == other.end_date &&
-          mapping == other.mapping
+          field_key == other.field_key &&
+          value == other.value
       end
 
       # @see the `==` method
@@ -97,7 +90,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [start_date, end_date, mapping].hash
+        [field_key, value].hash
       end
 
       # Builds the object from hash

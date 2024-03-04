@@ -5,22 +5,26 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # The input for an `onDemand` task whose source is of type `bigquery` and for which extracted data spans a given time range.
-    class OnDemandDateUtilsInput
-      # The start date of the extraction (RFC3339 format).
-      attr_accessor :start_date
+    # Describes how a destination object should be resolved by means of applying a set of directives.
+    class MappingKitAction
+      # ID to uniquely identify this action.
+      attr_accessor :id
 
-      # The end date of the extraction (RFC3339 format).
-      attr_accessor :end_date
+      # Whether this action has any effect.
+      attr_accessor :enabled
 
-      attr_accessor :mapping
+      # Condition which must be satisfied to apply the action. If this evaluates to false, the action is not applied, and the process attempts to apply the next action, if any.
+      attr_accessor :trigger
+
+      attr_accessor :field_directives
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :start_date => :startDate,
-          :end_date => :endDate,
-          :mapping => :mapping
+          :id => :id,
+          :enabled => :enabled,
+          :trigger => :trigger,
+          :field_directives => :fieldDirectives
         }
       end
 
@@ -32,9 +36,10 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :start_date => :String,
-          :end_date => :String,
-          :mapping => :MappingInput
+          :id => :String,
+          :enabled => :Boolean,
+          :trigger => :String,
+          :field_directives => :'Array<MappingFieldDirective>'
         }
       end
 
@@ -47,33 +52,41 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::OnDemandDateUtilsInput` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::MappingKitAction` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::OnDemandDateUtilsInput`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::MappingKitAction`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:start_date)
-          self.start_date = attributes[:start_date]
-        else
-          self.start_date = nil
+        if attributes.key?(:id)
+          self.id = attributes[:id]
         end
 
-        if attributes.key?(:end_date)
-          self.end_date = attributes[:end_date]
+        if attributes.key?(:enabled)
+          self.enabled = attributes[:enabled]
         else
-          self.end_date = nil
+          self.enabled = nil
         end
 
-        if attributes.key?(:mapping)
-          self.mapping = attributes[:mapping]
+        if attributes.key?(:trigger)
+          self.trigger = attributes[:trigger]
+        else
+          self.trigger = nil
+        end
+
+        if attributes.key?(:field_directives)
+          if (value = attributes[:field_directives]).is_a?(Array)
+            self.field_directives = value
+          end
+        else
+          self.field_directives = nil
         end
       end
 
@@ -83,9 +96,10 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          start_date == other.start_date &&
-          end_date == other.end_date &&
-          mapping == other.mapping
+          id == other.id &&
+          enabled == other.enabled &&
+          trigger == other.trigger &&
+          field_directives == other.field_directives
       end
 
       # @see the `==` method
@@ -97,7 +111,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [start_date, end_date, mapping].hash
+        [id, enabled, trigger, field_directives].hash
       end
 
       # Builds the object from hash

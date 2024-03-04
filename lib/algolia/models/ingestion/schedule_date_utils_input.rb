@@ -10,10 +10,13 @@ module Algolia
       # The timeframe of the extraction, in number of days from today.
       attr_accessor :timeframe
 
+      attr_accessor :mapping
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :timeframe => :timeframe
+          :timeframe => :timeframe,
+          :mapping => :mapping
         }
       end
 
@@ -25,7 +28,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :timeframe => :Integer
+          :timeframe => :Integer,
+          :mapping => :MappingInput
         }
       end
 
@@ -56,6 +60,10 @@ module Algolia
         else
           self.timeframe = nil
         end
+
+        if attributes.key?(:mapping)
+          self.mapping = attributes[:mapping]
+        end
       end
 
       # Custom attribute writer method with validation
@@ -82,7 +90,8 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          timeframe == other.timeframe
+          timeframe == other.timeframe &&
+          mapping == other.mapping
       end
 
       # @see the `==` method
@@ -94,7 +103,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [timeframe].hash
+        [timeframe, mapping].hash
       end
 
       # Builds the object from hash
