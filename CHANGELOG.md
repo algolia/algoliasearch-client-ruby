@@ -1,3 +1,7 @@
+## [3.0.0.alpha.12](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.alpha.11...3.0.0.alpha.12)
+
+- [234427491](https://github.com/algolia/api-clients-automation/commit/234427491) feat(specs): Add MappingInput to Task Inputs ([#2787](https://github.com/algolia/api-clients-automation/pull/2787)) by [@jsok](https://github.com/jsok/)
+
 ## [3.0.0.alpha.11](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.alpha.10...3.0.0.alpha.11)
 
 - [a138c2fef](https://github.com/algolia/api-clients-automation/commit/a138c2fef) fix(specs): add `queryID` to search response ([#2801](https://github.com/algolia/api-clients-automation/pull/2801)) by [@aallam](https://github.com/aallam/)
