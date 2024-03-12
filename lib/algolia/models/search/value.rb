@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Search
     class Value
-      # Pinned order of facet lists.
+      # Explicit order of facets or facet values.  This setting lets you always show specific facets or facet values at the top of the list.
       attr_accessor :order
 
       attr_accessor :sort_remaining_by

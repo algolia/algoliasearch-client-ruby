@@ -5,11 +5,11 @@ require 'time'
 
 module Algolia
   module Search
-    # Defines the ordering of facets (widgets).
+    # Order of facet names and facet values in your UI.
     class FacetOrdering
       attr_accessor :facets
 
-      # Ordering of facet values within an individual facet.
+      # Order of facet values. One object for each facet.
       attr_accessor :values
 
       # Attribute mapping from ruby-style variable name to JSON key.

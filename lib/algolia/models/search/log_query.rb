@@ -9,7 +9,7 @@ module Algolia
       # Index targeted by the query.
       attr_accessor :index_name
 
-      # User identifier.
+      # A user identifier.
       attr_accessor :user_token
 
       # Unique query identifier.

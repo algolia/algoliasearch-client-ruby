@@ -7,13 +7,13 @@ module Algolia
   module Recommend
     # Recommend hit.
     class RecommendHit
-      # Unique object identifier.
+      # Unique record identifier.
       attr_accessor :object_id
 
-      # Show highlighted section and words matched on a query.
+      # Surround words that match the query with HTML tags for highlighting.
       attr_accessor :_highlight_result
 
-      # Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
+      # Snippets that show the context around a matching search query.
       attr_accessor :_snippet_result
 
       attr_accessor :_ranking_info

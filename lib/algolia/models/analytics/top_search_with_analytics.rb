@@ -30,7 +30,7 @@ module Algolia
       # Number of converted clicks.
       attr_accessor :conversion_count
 
-      # Number of hits the search query matched.
+      # Number of results (hits).
       attr_accessor :nb_hits
 
       # Attribute mapping from ruby-style variable name to JSON key.

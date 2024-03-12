@@ -5,7 +5,7 @@ require 'time'
 
 module Algolia
   module Search
-    # Precision of a geographical search (in meters), to [group results that are more or less the same distance from a central point](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/in-depth/geo-ranking-precision/).
+    # Precision of a coordinate-based search in meters to group results with similar distances.  The Geo ranking criterion considers all matches within the same range of distances to be equal.
     module AroundPrecision
       class << self
         # List of class defined in oneOf (OpenAPI v3)

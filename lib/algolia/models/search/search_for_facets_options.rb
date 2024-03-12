@@ -9,13 +9,13 @@ module Algolia
       # Facet name.
       attr_accessor :facet
 
-      # Algolia index name.
+      # Index name.
       attr_accessor :index_name
 
       # Text to search inside the facet's values.
       attr_accessor :facet_query
 
-      # Maximum number of facet hits to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
+      # Maximum number of facet values to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
       attr_accessor :max_facet_hits
 
       attr_accessor :type

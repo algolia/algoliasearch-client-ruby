@@ -7,25 +7,22 @@ module Algolia
   module Search
     # Rules search parameters.
     class SearchRulesParams
-      # Rule object query.
+      # Search query for rules.
       attr_accessor :query
 
       attr_accessor :anchoring
 
-      # Restricts responses to the specified [contextual rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
+      # Only return rules that match the context (exact match).
       attr_accessor :context
 
-      # Requested page (the first page is page 0).
+      # Requested page of the API response.
       attr_accessor :page
 
       # Maximum number of hits per page.
       attr_accessor :hits_per_page
 
-      # Restricts responses to enabled rules. When not specified (default), _all_ rules are retrieved.
+      # If `true`, return only enabled rules. If `false`, return only inactive rules. By default, _all_ rules are returned.
       attr_accessor :enabled
-
-      # Request options to send with the API call.
-      attr_accessor :request_options
 
       class EnumAttributeValidator
         attr_reader :datatype
@@ -57,8 +54,7 @@ module Algolia
           :context => :context,
           :page => :page,
           :hits_per_page => :hitsPerPage,
-          :enabled => :enabled,
-          :request_options => :requestOptions
+          :enabled => :enabled
         }
       end
 
@@ -75,8 +71,7 @@ module Algolia
           :context => :String,
           :page => :Integer,
           :hits_per_page => :Integer,
-          :enabled => :Boolean,
-          :request_options => :'Array<Object>'
+          :enabled => :Boolean
         }
       end
 
@@ -127,12 +122,6 @@ module Algolia
         if attributes.key?(:enabled)
           self.enabled = attributes[:enabled]
         end
-
-        if attributes.key?(:request_options)
-          if (value = attributes[:request_options]).is_a?(Array)
-            self.request_options = value
-          end
-        end
       end
 
       # Custom attribute writer method with validation
@@ -178,8 +167,7 @@ module Algolia
           context == other.context &&
           page == other.page &&
           hits_per_page == other.hits_per_page &&
-          enabled == other.enabled &&
-          request_options == other.request_options
+          enabled == other.enabled
       end
 
       # @see the `==` method
@@ -191,7 +179,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [query, anchoring, context, page, hits_per_page, enabled, request_options].hash
+        [query, anchoring, context, page, hits_per_page, enabled].hash
       end
 
       # Builds the object from hash

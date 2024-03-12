@@ -5,7 +5,7 @@ require 'time'
 
 module Algolia
   module Search
-    # Additional search parameters.
+    # Parameters to apply to this search.  You can use all search parameters, plus special `automaticFacetFilters`, `automaticOptionalFacetFilters`, and `query`.
     class Params
       attr_accessor :query
 

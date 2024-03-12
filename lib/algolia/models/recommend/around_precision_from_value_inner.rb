@@ -5,9 +5,12 @@ require 'time'
 
 module Algolia
   module Recommend
+    # Range object with lower and upper values in meters to define custom ranges.
     class AroundPrecisionFromValueInner
+      # Lower boundary of a range in meters. The Geo ranking criterion considers all records within the range to be equal.
       attr_accessor :from
 
+      # Upper boundary of a range in meters. The Geo ranking criterion considers all records within the range to be equal.
       attr_accessor :value
 
       # Attribute mapping from ruby-style variable name to JSON key.

@@ -6,10 +6,10 @@ require 'time'
 module Algolia
   module Search
     class SearchSynonymsResponse
-      # Synonym objects.
+      # Matching synonyms.
       attr_accessor :hits
 
-      # Number of hits the search query matched.
+      # Number of results (hits).
       attr_accessor :nb_hits
 
       attr_accessor :additional_properties

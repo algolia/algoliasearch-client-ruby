@@ -7,10 +7,10 @@ module Algolia
   module Search
     # Records to promote.
     class PromoteObjectIDs
-      # Unique identifiers of the records to promote.
+      # Object IDs of the records you want to promote.  The records are placed as a group at the `position`. For example, if you want to promote four records to position `0`, they will be the first four search results.
       attr_accessor :object_ids
 
-      # The position to promote the records to. If you pass objectIDs, the records are placed at this position as a group. For example, if you pronmote four objectIDs to position 0, the records take the first four positions.
+      # Position in the search results where you want to show the promoted records.
       attr_accessor :position
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -69,6 +69,20 @@ module Algolia
         else
           self.position = nil
         end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] object_ids Value to be assigned
+      def object_ids=(object_ids)
+        if object_ids.nil?
+          raise ArgumentError, 'object_ids cannot be nil'
+        end
+
+        if object_ids.length > 100
+          raise ArgumentError, 'invalid value for "object_ids", number of items must be less than or equal to 100.'
+        end
+
+        @object_ids = object_ids
       end
 
       # Checks equality by comparing each attribute.

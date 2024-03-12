@@ -116,6 +116,7 @@ lib/algolia/models/search/save_object_response.rb
 lib/algolia/models/search/save_synonym_response.rb
 lib/algolia/models/search/scope_type.rb
 lib/algolia/models/search/search_dictionary_entries_params.rb
+lib/algolia/models/search/search_dictionary_entries_response.rb
 lib/algolia/models/search/search_for_facet_values_request.rb
 lib/algolia/models/search/search_for_facet_values_response.rb
 lib/algolia/models/search/search_for_facets.rb

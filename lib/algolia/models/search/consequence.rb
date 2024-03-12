@@ -5,20 +5,20 @@ require 'time'
 
 module Algolia
   module Search
-    # [Consequences](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#consequences) of a rule.
+    # Effect of the rule.  For more information, see [Consequences](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#consequences).
     class Consequence
       attr_accessor :params
 
-      # Records to promote.
+      # Records you want to pin to a specific position in the search results.  You can promote up to 300 records, either individually, or as groups of up to 100 records each.
       attr_accessor :promote
 
-      # Only use in combination with the `promote` consequence. When `true`, promoted results will be restricted to match the filters of the current search. When `false`, the promoted results will show up regardless of the filters.
+      # Whether promoted records must match an active filter for the consequence to be applied.  This ensures that user actions (filtering the search) are given a higher precendence. For example, if you promote a record with the `color: red` attribute, and the user filters the search for `color: blue`, the \"red\" record won't be shown.
       attr_accessor :filter_promotes
 
-      # Records to hide. By default, you can hide up to 50 records per rule.
+      # Records you want to hide from the search results.
       attr_accessor :hide
 
-      # Custom JSON object that will be appended to the userData array in the response. This object isn't interpreted by the API. It's limited to 1kB of minified JSON.
+      # A JSON object with custom data that will be appended to the `userData` array in the response. This object isn't interpreted by the API and is limited to 1&nbsp;kB of minified JSON.
       attr_accessor :user_data
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -95,6 +95,34 @@ module Algolia
         if attributes.key?(:user_data)
           self.user_data = attributes[:user_data]
         end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] promote Value to be assigned
+      def promote=(promote)
+        if promote.nil?
+          raise ArgumentError, 'promote cannot be nil'
+        end
+
+        if promote.length > 300
+          raise ArgumentError, 'invalid value for "promote", number of items must be less than or equal to 300.'
+        end
+
+        @promote = promote
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] hide Value to be assigned
+      def hide=(hide)
+        if hide.nil?
+          raise ArgumentError, 'hide cannot be nil'
+        end
+
+        if hide.length > 50
+          raise ArgumentError, 'invalid value for "hide", number of items must be less than or equal to 50.'
+        end
+
+        @hide = hide
       end
 
       # Checks equality by comparing each attribute.

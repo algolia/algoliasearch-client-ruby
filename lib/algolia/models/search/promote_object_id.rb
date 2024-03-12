@@ -7,10 +7,10 @@ module Algolia
   module Search
     # Record to promote.
     class PromoteObjectID
-      # Unique identifier of the record to promote.
+      # Unique record identifier.
       attr_accessor :object_id
 
-      # The position to promote the records to. If you pass objectIDs, the records are placed at this position as a group. For example, if you pronmote four objectIDs to position 0, the records take the first four positions.
+      # Position in the search results where you want to show the promoted records.
       attr_accessor :position
 
       # Attribute mapping from ruby-style variable name to JSON key.

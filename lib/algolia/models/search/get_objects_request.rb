@@ -5,15 +5,15 @@ require 'time'
 
 module Algolia
   module Search
-    # Record retrieval operation.
+    # Request body for retrieving records.
     class GetObjectsRequest
       # Attributes to retrieve. If not specified, all retrievable attributes are returned.
       attr_accessor :attributes_to_retrieve
 
-      # Record's objectID.
+      # Object ID for the record to retrieve.
       attr_accessor :object_id
 
-      # Name of the index containing the required records.
+      # Index from which to retrieve the records.
       attr_accessor :index_name
 
       # Attribute mapping from ruby-style variable name to JSON key.

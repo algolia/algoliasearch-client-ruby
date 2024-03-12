@@ -5,18 +5,18 @@ require 'time'
 
 module Algolia
   module Search
-    # `searchDictionaryEntries` parameters.
+    # Search parameter.
     class SearchDictionaryEntriesParams
-      # Text to search for in an index.
+      # Search query.
       attr_accessor :query
 
-      # Page to retrieve (the first page is `0`, not `1`).
+      # Page of search results to retrieve.
       attr_accessor :page
 
       # Number of hits per page.
       attr_accessor :hits_per_page
 
-      # [Supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
+      # ISO code of a [supported language](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
       attr_accessor :language
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -83,6 +83,20 @@ module Algolia
         if attributes.key?(:language)
           self.language = attributes[:language]
         end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] page Value to be assigned
+      def page=(page)
+        if page.nil?
+          raise ArgumentError, 'page cannot be nil'
+        end
+
+        if page < 0
+          raise ArgumentError, 'invalid value for "page", must be greater than or equal to 0.'
+        end
+
+        @page = page
       end
 
       # Custom attribute writer method with validation

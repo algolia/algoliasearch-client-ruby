@@ -5,14 +5,14 @@ require 'time'
 
 module Algolia
   module Recommend
-    # Show highlighted section and words matched on a query.
+    # Surround words that match the query with HTML tags for highlighting.
     class HighlightResultOption
-      # Markup text with `facetQuery` matches highlighted.
+      # Highlighted attribute value, including HTML tags.
       attr_accessor :value
 
       attr_accessor :match_level
 
-      # List of words from the query that matched the object.
+      # List of matched words from the search query.
       attr_accessor :matched_words
 
       # Whether the entire attribute value is highlighted.

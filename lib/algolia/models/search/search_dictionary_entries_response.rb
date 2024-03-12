@@ -5,43 +5,26 @@ require 'time'
 
 module Algolia
   module Search
-    # API key object.
-    class ApiKey
-      # Permissions that determine the type of API requests this key can make. The required ACL is listed in each endpoint's reference. For more information, see [access control list](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl).
-      attr_accessor :acl
+    class SearchDictionaryEntriesResponse
+      # Dictionary entries matching the search criteria.
+      attr_accessor :hits
 
-      # Description of an API key to help you identify this API key.
-      attr_accessor :description
+      # Requested page of the API response.
+      attr_accessor :page
 
-      # Index names or patterns that this API key can access. By default, an API key can access all indices in the same application.  You can use leading and trailing wildcard characters (`*`):  - `dev_*` matches all indices starting with \"dev_\". - `*_dev` matches all indices ending with \"_dev\". - `*_products_*` matches all indices containing \"_products_\".
-      attr_accessor :indexes
+      # Number of results (hits).
+      attr_accessor :nb_hits
 
-      # Maximum number of results this API key can retrieve in one query. By default, there's no limit.
-      attr_accessor :max_hits_per_query
-
-      # Maximum number of API requests allowed per IP address or [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/) per hour.  If this limit is reached, the API returns an error with status code `429`. By default, there's no limit.
-      attr_accessor :max_queries_per_ip_per_hour
-
-      # Query parameters to add when making API requests with this API key.  To restrict this API key to specific IP addresses, add the `restrictSources` parameter. You can only add a single source, but you can provide a range of IP addresses.  Creating an API key fails if the request is made from an IP address that's outside the restricted range.
-      attr_accessor :query_parameters
-
-      # Allowed HTTP referrers for this API key.  By default, all referrers are allowed. You can use leading and trailing wildcard characters (`*`):  - `https://algolia.com/*` allows all referrers starting with \"https://algolia.com/\" - `*.algolia.com` allows all referrers ending with \".algolia.com\" - `*algolia.com*` allows all referrers in the domain \"algolia.com\".  Like all HTTP headers, referrers can be spoofed. Don't rely on them to secure your data. For more information, see [HTTP referrer restrictions](https://www.algolia.com/doc/guides/security/security-best-practices/#http-referrers-restrictions).
-      attr_accessor :referers
-
-      # Duration (in seconds) after which the API key expires. By default, API keys don't expire.
-      attr_accessor :validity
+      # Number of pages of results.
+      attr_accessor :nb_pages
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :acl => :acl,
-          :description => :description,
-          :indexes => :indexes,
-          :max_hits_per_query => :maxHitsPerQuery,
-          :max_queries_per_ip_per_hour => :maxQueriesPerIPPerHour,
-          :query_parameters => :queryParameters,
-          :referers => :referers,
-          :validity => :validity
+          :hits => :hits,
+          :page => :page,
+          :nb_hits => :nbHits,
+          :nb_pages => :nbPages
         }
       end
 
@@ -53,14 +36,10 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :acl => :'Array<Acl>',
-          :description => :String,
-          :indexes => :'Array<String>',
-          :max_hits_per_query => :Integer,
-          :max_queries_per_ip_per_hour => :Integer,
-          :query_parameters => :String,
-          :referers => :'Array<String>',
-          :validity => :Integer
+          :hits => :'Array<DictionaryEntry>',
+          :page => :Integer,
+          :nb_hits => :Integer,
+          :nb_pages => :Integer
         }
       end
 
@@ -73,58 +52,58 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::ApiKey` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::SearchDictionaryEntriesResponse` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::ApiKey`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::SearchDictionaryEntriesResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:acl)
-          if (value = attributes[:acl]).is_a?(Array)
-            self.acl = value
+        if attributes.key?(:hits)
+          if (value = attributes[:hits]).is_a?(Array)
+            self.hits = value
           end
         else
-          self.acl = nil
+          self.hits = nil
         end
 
-        if attributes.key?(:description)
-          self.description = attributes[:description]
+        if attributes.key?(:page)
+          self.page = attributes[:page]
+        else
+          self.page = nil
         end
 
-        if attributes.key?(:indexes)
-          if (value = attributes[:indexes]).is_a?(Array)
-            self.indexes = value
-          end
+        if attributes.key?(:nb_hits)
+          self.nb_hits = attributes[:nb_hits]
+        else
+          self.nb_hits = nil
         end
 
-        if attributes.key?(:max_hits_per_query)
-          self.max_hits_per_query = attributes[:max_hits_per_query]
+        if attributes.key?(:nb_pages)
+          self.nb_pages = attributes[:nb_pages]
+        else
+          self.nb_pages = nil
+        end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] page Value to be assigned
+      def page=(page)
+        if page.nil?
+          raise ArgumentError, 'page cannot be nil'
         end
 
-        if attributes.key?(:max_queries_per_ip_per_hour)
-          self.max_queries_per_ip_per_hour = attributes[:max_queries_per_ip_per_hour]
+        if page < 0
+          raise ArgumentError, 'invalid value for "page", must be greater than or equal to 0.'
         end
 
-        if attributes.key?(:query_parameters)
-          self.query_parameters = attributes[:query_parameters]
-        end
-
-        if attributes.key?(:referers)
-          if (value = attributes[:referers]).is_a?(Array)
-            self.referers = value
-          end
-        end
-
-        if attributes.key?(:validity)
-          self.validity = attributes[:validity]
-        end
+        @page = page
       end
 
       # Checks equality by comparing each attribute.
@@ -133,14 +112,10 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          acl == other.acl &&
-          description == other.description &&
-          indexes == other.indexes &&
-          max_hits_per_query == other.max_hits_per_query &&
-          max_queries_per_ip_per_hour == other.max_queries_per_ip_per_hour &&
-          query_parameters == other.query_parameters &&
-          referers == other.referers &&
-          validity == other.validity
+          hits == other.hits &&
+          page == other.page &&
+          nb_hits == other.nb_hits &&
+          nb_pages == other.nb_pages
       end
 
       # @see the `==` method
@@ -152,7 +127,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [acl, description, indexes, max_hits_per_query, max_queries_per_ip_per_hour, query_parameters, referers, validity].hash
+        [hits, page, nb_hits, nb_pages].hash
       end
 
       # Builds the object from hash

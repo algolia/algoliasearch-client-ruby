@@ -5,7 +5,7 @@ require 'time'
 
 module Algolia
   module Recommend
-    # Enables [deduplication or grouping of results (Algolia's _distinct_ feature](https://www.algolia.com/doc/guides/managing-results/refine-results/grouping/#introducing-algolias-distinct-feature)).
+    # Determines how many records of a group are included in the search results.  Records with the same value for the `attributeForDistinct` attribute are considered a group. The `distinct` setting controls how many members of the group are returned. This is useful for [deduplication and grouping](https://www.algolia.com/doc/guides/managing-results/refine-results/grouping/#introducing-algolias-distinct-feature).  The `distinct` setting is ignored if `attributeForDistinct` is not set.
     module Distinct
       class << self
         # List of class defined in oneOf (OpenAPI v3)

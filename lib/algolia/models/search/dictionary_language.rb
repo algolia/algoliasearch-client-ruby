@@ -5,9 +5,9 @@ require 'time'
 
 module Algolia
   module Search
-    # Custom entries for a dictionary.
+    # Dictionary type. If `null`, this dictionary type isn't supported for the language.
     class DictionaryLanguage
-      # If `0`, the dictionary hasn't been customized and only contains standard entries provided by Algolia. If `null`, that feature isn't available or isn't supported for that language.
+      # Number of custom dictionary entries.
       attr_accessor :nb_custom_entries
 
       # Attribute mapping from ruby-style variable name to JSON key.

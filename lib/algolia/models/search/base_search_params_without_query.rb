@@ -6,10 +6,10 @@ require 'time'
 module Algolia
   module Search
     class BaseSearchParamsWithoutQuery
-      # Overrides the query parameter and performs a more generic search.
+      # Keywords to be used instead of the search query to conduct a more broader search.  Using the `similarQuery` parameter changes other settings:  - `queryType` is set to `prefixNone`. - `removeStopWords` is set to true. - `words` is set as the first ranking criterion. - All remaining words are treated as `optionalWords`.  Since the `similarQuery` is supposed to do a broad search, they usually return many results. Combine it with `filters` to narrow down the list of results.
       attr_accessor :similar_query
 
-      # [Filter](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) the query with numeric, facet, or tag filters.
+      # Filter the search so that only records with matching values are included in the results.  These filters are supported:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
       attr_accessor :filters
 
       attr_accessor :facet_filters
@@ -20,80 +20,77 @@ module Algolia
 
       attr_accessor :tag_filters
 
-      # Determines how to calculate [filter scores](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#accumulating-scores-with-sumorfiltersscores). If `false`, maximum score is kept. If `true`, score is summed.
+      # Whether to sum all filter scores.  If true, all filter scores are summed. Otherwise, the maximum filter score is kept. For more information, see [filter scores](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#accumulating-scores-with-sumorfiltersscores).
       attr_accessor :sum_or_filters_scores
 
-      # Restricts a query to only look at a subset of your [searchable attributes](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/).
+      # Restricts a search to a subset of your searchable attributes.
       attr_accessor :restrict_searchable_attributes
 
-      # Returns [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts), their facet values, and the number of matching facet values.
+      # Facets for which to retrieve facet values that match the search criteria and the number of matching facet values.  To retrieve all facets, use the wildcard character `*`. For more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
       attr_accessor :facets
 
-      # Forces faceting to be applied after [de-duplication](https://www.algolia.com/doc/guides/managing-results/refine-results/grouping/) (with the distinct feature). Alternatively, the `afterDistinct` [modifier](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/#modifiers) of `attributesForFaceting` allows for more granular control.
+      # Whether faceting should be applied after deduplication with `distinct`.  This leads to accurate facet counts when using faceting in combination with `distinct`. It's usually better to use `afterDistinct` modifiers in the `attributesForFaceting` setting, as `facetingAfterDistinct` only computes correct facet counts if all records have the same facet values for the `attributeForDistinct`.
       attr_accessor :faceting_after_distinct
 
-      # Page to retrieve (the first page is `0`, not `1`).
+      # Page of search results to retrieve.
       attr_accessor :page
 
-      # Specifies the offset of the first hit to return. > **Note**: Using `page` and `hitsPerPage` is the recommended method for [paging results](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/). However, you can use `offset` and `length` to implement [an alternative approach to paging](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/#retrieving-a-subset-of-records-with-offset-and-length).
+      # Position of the first hit to retrieve.
       attr_accessor :offset
 
-      # Sets the number of hits to retrieve (for use with `offset`). > **Note**: Using `page` and `hitsPerPage` is the recommended method for [paging results](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/). However, you can use `offset` and `length` to implement [an alternative approach to paging](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/#retrieving-a-subset-of-records-with-offset-and-length).
+      # Number of hits to retrieve (used in combination with `offset`).
       attr_accessor :length
 
-      # Search for entries [around a central location](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filter-around-a-central-point), enabling a geographical search within a circular area.
+      # Coordinates for the center of a circle, expressed as a comma-separated string of latitude and longitude.  Only records included within circle around this central location are included in the results. The radius of the circle is determined by the `aroundRadius` and `minimumAroundRadius` settings. This parameter is ignored if you also specify `insidePolygon` or `insideBoundingBox`.
       attr_accessor :around_lat_lng
 
-      # Search for entries around a location. The location is automatically computed from the requester's IP address.
+      # Whether to obtain the coordinates from the request's IP address.
       attr_accessor :around_lat_lng_via_ip
 
       attr_accessor :around_radius
 
       attr_accessor :around_precision
 
-      # Minimum radius (in meters) used for a geographical search when `aroundRadius` isn't set.
+      # Minimum radius (in meters) for a search around a location when `aroundRadius` isn't set.
       attr_accessor :minimum_around_radius
 
-      # Search inside a [rectangular area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geographical coordinates).
+      # Coordinates for a rectangular area in which to search.  Each bounding box is defined by the two opposite points of its diagonal, and expressed as latitude and longitude pair: `[p1 lat, p1 long, p2 lat, p2 long]`. Provide multiple bounding boxes as nested arrays. For more information, see [rectangular area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
       attr_accessor :inside_bounding_box
 
-      # Search inside a [polygon](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geographical coordinates).
+      # Coordinates of a polygon in which to search.  Polygons are defined by 3 to 10,000 points. Each point is represented by its latitude and longitude. Provide multiple polygons as nested arrays. For more information, see [filtering inside polygons](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas). This parameter is ignored, if you also specify `insideBoundingBox`.
       attr_accessor :inside_polygon
 
-      # Changes the default values of parameters that work best for a natural language query, such as `ignorePlurals`, `removeStopWords`, `removeWordsIfNoResults`, `analyticsTags`, and `ruleContexts`. These parameters work well together when the query consists of fuller natural language strings instead of keywords, for example when processing voice search queries.
+      # ISO language codes that adjust settings that are useful for processing natural language queries (as opposed to keyword searches):  - Sets `removeStopWords` and `ignorePlurals` to the list of provided languages. - Sets `removeWordsIfNoResults` to `allOptional`. - Adds a `natural_language` attribute to `ruleContexts` and `analyticsTags`.
       attr_accessor :natural_languages
 
-      # Assigns [rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context) to search queries.
+      # Assigns a rule context to the search query.  [Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context) are strings that you can use to trigger matching rules.
       attr_accessor :rule_contexts
 
-      # Defines how much [Personalization affects results](https://www.algolia.com/doc/guides/personalization/personalizing-results/in-depth/configuring-personalization/#understanding-personalization-impact).
+      # Impact that Personalization should have on this search.  The higher this value is, the more Personalization determines the ranking compared to other factors. For more information, see [Understanding Personalization impact](https://www.algolia.com/doc/guides/personalization/personalizing-results/in-depth/configuring-personalization/#understanding-personalization-impact).
       attr_accessor :personalization_impact
 
-      # Associates a [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/) with the current search.
+      # Unique pseudonymous or anonymous user identifier.  This helps with analytics and click and conversion events. For more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
       attr_accessor :user_token
 
-      # Incidates whether the search response includes [detailed ranking information](https://www.algolia.com/doc/guides/building-search-ui/going-further/backend-search/in-depth/understanding-the-api-response/#ranking-information).
+      # Whether the search response should include detailed ranking information.
       attr_accessor :get_ranking_info
 
-      # Enriches the API's response with information about how the query was processed.
-      attr_accessor :explain
-
-      # Whether to take into account an index's synonyms for a particular search.
+      # Whether to take into account an index's synonyms for this search.
       attr_accessor :synonyms
 
-      # Indicates whether a query ID parameter is included in the search response. This is required for [tracking click and conversion events](https://www.algolia.com/doc/guides/sending-events/concepts/event-types/#events-related-to-algolia-requests).
+      # Whether to include a `queryID` attribute in the response.  The query ID is a unique identifier for a search query and is required for tracking [click and conversion events](https://www.algolia.com/guides/sending-events/getting-started/).
       attr_accessor :click_analytics
 
-      # Indicates whether this query will be included in [analytics](https://www.algolia.com/doc/guides/search-analytics/guides/exclude-queries/).
+      # Whether this search will be included in Analytics.
       attr_accessor :analytics
 
       # Tags to apply to the query for [segmenting analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
       attr_accessor :analytics_tags
 
-      # Whether to include or exclude a query from the processing-time percentile computation.
+      # Whether to include this search when calculating processing-time percentiles.
       attr_accessor :percentile_computation
 
-      # Incidates whether this search will be considered in A/B testing.
+      # Whether to enable A/B testing for this search.
       attr_accessor :enable_ab_test
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -124,7 +121,6 @@ module Algolia
           :personalization_impact => :personalizationImpact,
           :user_token => :userToken,
           :get_ranking_info => :getRankingInfo,
-          :explain => :explain,
           :synonyms => :synonyms,
           :click_analytics => :clickAnalytics,
           :analytics => :analytics,
@@ -167,7 +163,6 @@ module Algolia
           :personalization_impact => :Integer,
           :user_token => :String,
           :get_ranking_info => :Boolean,
-          :explain => :'Array<String>',
           :synonyms => :Boolean,
           :click_analytics => :Boolean,
           :analytics => :Boolean,
@@ -311,12 +306,6 @@ module Algolia
           self.get_ranking_info = attributes[:get_ranking_info]
         end
 
-        if attributes.key?(:explain)
-          if (value = attributes[:explain]).is_a?(Array)
-            self.explain = value
-          end
-        end
-
         if attributes.key?(:synonyms)
           self.synonyms = attributes[:synonyms]
         end
@@ -342,6 +331,20 @@ module Algolia
         if attributes.key?(:enable_ab_test)
           self.enable_ab_test = attributes[:enable_ab_test]
         end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] page Value to be assigned
+      def page=(page)
+        if page.nil?
+          raise ArgumentError, 'page cannot be nil'
+        end
+
+        if page < 0
+          raise ArgumentError, 'invalid value for "page", must be greater than or equal to 0.'
+        end
+
+        @page = page
       end
 
       # Custom attribute writer method with validation
@@ -376,6 +379,24 @@ module Algolia
         @minimum_around_radius = minimum_around_radius
       end
 
+      # Custom attribute writer method with validation
+      # @param [Object] personalization_impact Value to be assigned
+      def personalization_impact=(personalization_impact)
+        if personalization_impact.nil?
+          raise ArgumentError, 'personalization_impact cannot be nil'
+        end
+
+        if personalization_impact > 100
+          raise ArgumentError, 'invalid value for "personalization_impact", must be smaller than or equal to 100.'
+        end
+
+        if personalization_impact < 0
+          raise ArgumentError, 'invalid value for "personalization_impact", must be greater than or equal to 0.'
+        end
+
+        @personalization_impact = personalization_impact
+      end
+
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)
@@ -407,7 +428,6 @@ module Algolia
           personalization_impact == other.personalization_impact &&
           user_token == other.user_token &&
           get_ranking_info == other.get_ranking_info &&
-          explain == other.explain &&
           synonyms == other.synonyms &&
           click_analytics == other.click_analytics &&
           analytics == other.analytics &&
@@ -426,7 +446,7 @@ module Algolia
       # @return [Integer] Hash code
       def hash
         [similar_query, filters, facet_filters, optional_filters, numeric_filters, tag_filters, sum_or_filters_scores, restrict_searchable_attributes, facets,
-         faceting_after_distinct, page, offset, length, around_lat_lng, around_lat_lng_via_ip, around_radius, around_precision, minimum_around_radius, inside_bounding_box, inside_polygon, natural_languages, rule_contexts, personalization_impact, user_token, get_ranking_info, explain, synonyms, click_analytics, analytics, analytics_tags, percentile_computation, enable_ab_test].hash
+         faceting_after_distinct, page, offset, length, around_lat_lng, around_lat_lng_via_ip, around_radius, around_precision, minimum_around_radius, inside_bounding_box, inside_polygon, natural_languages, rule_contexts, personalization_impact, user_token, get_ranking_info, synonyms, click_analytics, analytics, analytics_tags, percentile_computation, enable_ab_test].hash
       end
 
       # Builds the object from hash

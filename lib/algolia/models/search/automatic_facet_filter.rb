@@ -5,15 +5,15 @@ require 'time'
 
 module Algolia
   module Search
-    # Automatic facet Filter.
+    # Filter or optional filter to be applied to the search.
     class AutomaticFacetFilter
-      # Attribute to filter on. This must match a facet placeholder in the Rule's pattern.
+      # Facet name to be applied as filter. The name must match placeholders in the `pattern` parameter. For example, with `pattern: {facet:genre}`, `automaticFacetFilters` must be `genre`.
       attr_accessor :facet
 
-      # Score for the filter. Typically used for optional or disjunctive filters.
+      # Filter scores to give different weights to individual filters.
       attr_accessor :score
 
-      # Whether the filter is disjunctive (true) or conjunctive (false).
+      # Whether the filter is disjunctive or conjunctive.  If true the filter has multiple matches, multiple occurences are combined with the logical `OR` operation. If false, multiple occurences are combined with the logical `AND` operation.
       attr_accessor :disjunctive
 
       # Attribute mapping from ruby-style variable name to JSON key.

@@ -8,10 +8,10 @@ module Algolia
     class OperationIndexParams
       attr_accessor :operation
 
-      # Algolia index name.
+      # Index name.
       attr_accessor :destination
 
-      # **This only applies to the _copy_ operation.**  If you omit `scope`, the copy command copies all records, settings, synonyms, and rules.  If you specify `scope`, only the specified scopes are copied.
+      # **Only for copying.**  If you specify a scope, only the selected scopes are copied. Records and the other scopes are left unchanged. If you omit the `scope` parameter, everything is copied: records, settings, synonyms, and rules.
       attr_accessor :scope
 
       class EnumAttributeValidator

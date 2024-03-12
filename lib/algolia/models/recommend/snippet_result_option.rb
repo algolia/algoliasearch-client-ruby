@@ -5,9 +5,9 @@ require 'time'
 
 module Algolia
   module Recommend
-    # Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
+    # Snippets that show the context around a matching search query.
     class SnippetResultOption
-      # Markup text with `facetQuery` matches highlighted.
+      # Highlighted attribute value, including HTML tags.
       attr_accessor :value
 
       attr_accessor :match_level

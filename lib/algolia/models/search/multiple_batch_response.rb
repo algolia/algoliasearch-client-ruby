@@ -6,10 +6,10 @@ require 'time'
 module Algolia
   module Search
     class MultipleBatchResponse
-      # TaskIDs per index.
+      # Task IDs. One for each index.
       attr_accessor :task_id
 
-      # Unique object (record) identifiers.
+      # Unique record identifiers.
       attr_accessor :object_ids
 
       # Attribute mapping from ruby-style variable name to JSON key.

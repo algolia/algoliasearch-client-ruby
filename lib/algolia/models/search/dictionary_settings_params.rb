@@ -5,7 +5,7 @@ require 'time'
 
 module Algolia
   module Search
-    # Enable or turn off the built-in Algolia stop words for a specific language.
+    # Turn on or off the built-in Algolia stop words for a specific language.
     class DictionarySettingsParams
       attr_accessor :disable_standard_entries
 

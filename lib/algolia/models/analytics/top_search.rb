@@ -12,7 +12,7 @@ module Algolia
       # Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).
       attr_accessor :count
 
-      # Number of hits the search query matched.
+      # Number of results (hits).
       attr_accessor :nb_hits
 
       # Attribute mapping from ruby-style variable name to JSON key.

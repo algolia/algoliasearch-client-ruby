@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Recommend
     class SearchParamsQuery
-      # Text to search for in an index.
+      # Search query.
       attr_accessor :query
 
       # Attribute mapping from ruby-style variable name to JSON key.

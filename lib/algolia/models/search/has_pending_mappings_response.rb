@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Search
     class HasPendingMappingsResponse
-      # Indicates whether there are clusters undergoing migration, creation, or deletion.
+      # Whether there are clusters undergoing migration, creation, or deletion.
       attr_accessor :pending
 
       # Cluster pending mapping state: migrating, creating, deleting.

@@ -9,7 +9,7 @@ module Algolia
       # API key.
       attr_accessor :key
 
-      # Timestamp of creation in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
+      # Timestamp of creation in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
       attr_accessor :created_at
 
       # Attribute mapping from ruby-style variable name to JSON key.

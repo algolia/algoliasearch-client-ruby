@@ -6,10 +6,10 @@ require 'time'
 module Algolia
   module Search
     class SearchRulesResponse
-      # Fetched rules.
+      # Rules that matched the search criteria.
       attr_accessor :hits
 
-      # Number of fetched rules.
+      # Number of rules that matched the search criteria.
       attr_accessor :nb_hits
 
       # Current page.

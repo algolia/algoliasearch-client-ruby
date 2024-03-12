@@ -9,13 +9,13 @@ module Algolia
       # Fetched rules.
       attr_accessor :hits
 
-      # Number of hits the search query matched.
+      # Number of results (hits).
       attr_accessor :nb_hits
 
-      # Page to retrieve (the first page is `0`, not `1`).
+      # Page of search results to retrieve.
       attr_accessor :page
 
-      # Number of pages of results for the current query.
+      # Number of pages of results.
       attr_accessor :nb_pages
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -90,6 +90,20 @@ module Algolia
         else
           self.nb_pages = nil
         end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] page Value to be assigned
+      def page=(page)
+        if page.nil?
+          raise ArgumentError, 'page cannot be nil'
+        end
+
+        if page < 0
+          raise ArgumentError, 'invalid value for "page", must be greater than or equal to 0.'
+        end
+
+        @page = page
       end
 
       # Checks equality by comparing each attribute.

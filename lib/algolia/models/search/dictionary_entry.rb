@@ -7,19 +7,19 @@ module Algolia
   module Search
     # Dictionary entry.
     class DictionaryEntry
-      # Unique identifier for a dictionary object.
+      # Unique identifier for the dictionary entry.
       attr_accessor :object_id
 
-      # [Supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
+      # ISO code of a [supported language](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
       attr_accessor :language
 
-      # Dictionary entry word. Usage depends on the type of dictionary entry. **`stopwordEntry`** The stop word you want to add or update. If the entry already exists in Algolia's standard dictionary, you can override its behavior by adding it to the custom dictionary and setting its `state` to `disabled`. **`compoundEntry`** When `decomposition` is empty: adds `word` as a compound atom. For example, atom “kino” decomposes the query “kopfkino” into \"kopf\" and \"kino\". When `decomposition` isn't empty: creates a decomposition exception. For example, when decomposition is set to the [\"hund\", \"hutte\"] exception, \"hundehutte\" decomposes into “hund” and “hutte”, discarding the linking \"e\".
+      # Matching dictionary word for `stopwords` and `compounds` dictionaries.
       attr_accessor :word
 
-      # Compound dictionary [word declensions](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/). If the entry already exists in Algolia's standard dictionary, you can override its behavior by adding it to the custom dictionary and setting its `state` to `disabled`.
+      # Matching words in the `plurals` dictionary including declensions.
       attr_accessor :words
 
-      # For compound entries, governs the behavior of the `word` parameter.
+      # Invividual components of a compound word in the `compounds` dictionary.
       attr_accessor :decomposition
 
       attr_accessor :state

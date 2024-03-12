@@ -6,16 +6,19 @@ require 'time'
 module Algolia
   module Search
     class Condition
-      # Query pattern syntax.
+      # Query pattern that triggers the rule.  You can use either a literal string, or a special pattern `{facet:ATTRIBUTE}`, where `ATTRIBUTE` is a facet name. The rule is triggered if the query matches the literal string or a value of the specified facet. For example, with `pattern: {facet:genre}`, the rule is triggered when users search for a genre, such as \"comedy\".
       attr_accessor :pattern
 
       attr_accessor :anchoring
 
-      # Whether the pattern matches on plurals, synonyms, and typos.
+      # Whether the pattern should match plurals, synonyms, and typos.
       attr_accessor :alternatives
 
-      # Rule context format: [A-Za-z0-9_-]+).
+      # An additional restriction that only triggers the rule, when the search has the same value as `ruleContexts` parameter. For example, if `context: mobile`, the rule is only triggered when the search request has a matching `ruleContexts: mobile`. A rule context must only contain alphanumeric characters.
       attr_accessor :context
+
+      # Filters that trigger the rule.  You can add add filters using the syntax `facet:value` so that the rule is triggered, when the specific filter is selected. You can use `filters` on its own or combine it with the `pattern` parameter.
+      attr_accessor :filters
 
       class EnumAttributeValidator
         attr_reader :datatype
@@ -45,7 +48,8 @@ module Algolia
           :pattern => :pattern,
           :anchoring => :anchoring,
           :alternatives => :alternatives,
-          :context => :context
+          :context => :context,
+          :filters => :filters
         }
       end
 
@@ -60,7 +64,8 @@ module Algolia
           :pattern => :String,
           :anchoring => :Anchoring,
           :alternatives => :Boolean,
-          :context => :String
+          :context => :String,
+          :filters => :String
         }
       end
 
@@ -101,6 +106,25 @@ module Algolia
         if attributes.key?(:context)
           self.context = attributes[:context]
         end
+
+        if attributes.key?(:filters)
+          self.filters = attributes[:filters]
+        end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] context Value to be assigned
+      def context=(context)
+        if context.nil?
+          raise ArgumentError, 'context cannot be nil'
+        end
+
+        pattern = /[A-Za-z0-9_-]+/
+        if context !~ pattern
+          raise ArgumentError, "invalid value for \"context\", must conform to the pattern #{pattern}."
+        end
+
+        @context = context
       end
 
       # Checks equality by comparing each attribute.
@@ -112,7 +136,8 @@ module Algolia
           pattern == other.pattern &&
           anchoring == other.anchoring &&
           alternatives == other.alternatives &&
-          context == other.context
+          context == other.context &&
+          filters == other.filters
       end
 
       # @see the `==` method
@@ -124,7 +149,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [pattern, anchoring, alternatives, context].hash
+        [pattern, anchoring, alternatives, context, filters].hash
       end
 
       # Builds the object from hash

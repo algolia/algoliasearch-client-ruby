@@ -5,9 +5,9 @@ require 'time'
 
 module Algolia
   module Search
-    # Unique identifier of the record to hide.
+    # Object ID of the record to hide.
     class ConsequenceHide
-      # Unique object identifier.
+      # Unique record identifier.
       attr_accessor :object_id
 
       # Attribute mapping from ruby-style variable name to JSON key.

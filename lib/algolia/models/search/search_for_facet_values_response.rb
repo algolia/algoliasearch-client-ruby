@@ -6,6 +6,7 @@ require 'time'
 module Algolia
   module Search
     class SearchForFacetValuesResponse
+      # Matching facet values.
       attr_accessor :facet_hits
 
       # See the `facetsCount` field of the `exhaustive` object in the response.

@@ -7,13 +7,13 @@ module Algolia
   module Recommend
     # Recommend rules search parameters.
     class SearchRecommendRulesParams
-      # Full-text query.
+      # Search query.
       attr_accessor :query
 
       # Restricts responses to the specified [contextual rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
       attr_accessor :context
 
-      # Requested page (the first page is page 0).
+      # Requested page of the API response.
       attr_accessor :page
 
       # Maximum number of hits per page.

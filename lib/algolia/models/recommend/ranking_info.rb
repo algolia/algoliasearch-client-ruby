@@ -5,11 +5,12 @@ require 'time'
 
 module Algolia
   module Recommend
+    # Object with detailed information about the record's ranking.
     class RankingInfo
-      # This field is reserved for advanced usage.
+      # Whether a filter matched the query.
       attr_accessor :filters
 
-      # Position of the most important matched attribute in the attributes to index list.
+      # Position of the first matched word in the best matching attribute of the record.
       attr_accessor :first_matched_word
 
       # Distance between the geo location in the search query and the best matching geo location in the record, divided by the geo precision (in meters).
@@ -28,19 +29,19 @@ module Algolia
       # Number of typos encountered when matching the record.
       attr_accessor :nb_typos
 
-      # Present and set to true if a Rule promoted the hit.
+      # Whether the record was promoted by a rule.
       attr_accessor :promoted
 
-      # When the query contains more than one word, the sum of the distances between matched words (in meters).
+      # Number of words between multiple matches in the query plus 1. For single word queries, `proximityDistance` is 0.
       attr_accessor :proximity_distance
 
-      # Custom ranking for the object, expressed as a single integer value.
+      # Overall ranking of the record, expressed as a single integer. This attribute is internal.
       attr_accessor :user_score
 
-      # Number of matched words, including prefixes and typos.
+      # Number of matched words.
       attr_accessor :words
 
-      # Wether the record are promoted by the re-ranking strategy.
+      # Whether the record is re-ranked.
       attr_accessor :promoted_by_re_ranking
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -175,6 +176,118 @@ module Algolia
         if attributes.key?(:promoted_by_re_ranking)
           self.promoted_by_re_ranking = attributes[:promoted_by_re_ranking]
         end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] filters Value to be assigned
+      def filters=(filters)
+        if filters.nil?
+          raise ArgumentError, 'filters cannot be nil'
+        end
+
+        if filters < 0
+          raise ArgumentError, 'invalid value for "filters", must be greater than or equal to 0.'
+        end
+
+        @filters = filters
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] first_matched_word Value to be assigned
+      def first_matched_word=(first_matched_word)
+        if first_matched_word.nil?
+          raise ArgumentError, 'first_matched_word cannot be nil'
+        end
+
+        if first_matched_word < 0
+          raise ArgumentError, 'invalid value for "first_matched_word", must be greater than or equal to 0.'
+        end
+
+        @first_matched_word = first_matched_word
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] geo_distance Value to be assigned
+      def geo_distance=(geo_distance)
+        if geo_distance.nil?
+          raise ArgumentError, 'geo_distance cannot be nil'
+        end
+
+        if geo_distance < 0
+          raise ArgumentError, 'invalid value for "geo_distance", must be greater than or equal to 0.'
+        end
+
+        @geo_distance = geo_distance
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] geo_precision Value to be assigned
+      def geo_precision=(geo_precision)
+        if geo_precision.nil?
+          raise ArgumentError, 'geo_precision cannot be nil'
+        end
+
+        if geo_precision < 1
+          raise ArgumentError, 'invalid value for "geo_precision", must be greater than or equal to 1.'
+        end
+
+        @geo_precision = geo_precision
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] nb_exact_words Value to be assigned
+      def nb_exact_words=(nb_exact_words)
+        if nb_exact_words.nil?
+          raise ArgumentError, 'nb_exact_words cannot be nil'
+        end
+
+        if nb_exact_words < 0
+          raise ArgumentError, 'invalid value for "nb_exact_words", must be greater than or equal to 0.'
+        end
+
+        @nb_exact_words = nb_exact_words
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] nb_typos Value to be assigned
+      def nb_typos=(nb_typos)
+        if nb_typos.nil?
+          raise ArgumentError, 'nb_typos cannot be nil'
+        end
+
+        if nb_typos < 0
+          raise ArgumentError, 'invalid value for "nb_typos", must be greater than or equal to 0.'
+        end
+
+        @nb_typos = nb_typos
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] proximity_distance Value to be assigned
+      def proximity_distance=(proximity_distance)
+        if proximity_distance.nil?
+          raise ArgumentError, 'proximity_distance cannot be nil'
+        end
+
+        if proximity_distance < 0
+          raise ArgumentError, 'invalid value for "proximity_distance", must be greater than or equal to 0.'
+        end
+
+        @proximity_distance = proximity_distance
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] words Value to be assigned
+      def words=(words)
+        if words.nil?
+          raise ArgumentError, 'words cannot be nil'
+        end
+
+        if words < 1
+          raise ArgumentError, 'invalid value for "words", must be greater than or equal to 1.'
+        end
+
+        @words = words
       end
 
       # Checks equality by comparing each attribute.

@@ -15,7 +15,7 @@ module Algolia
       # Computed geographical location.
       attr_accessor :around_lat_lng
 
-      # Automatically-computed radius.
+      # Distance from a central coordinate provided by `aroundLatLng`.
       attr_accessor :automatic_radius
 
       attr_accessor :exhaustive
@@ -29,7 +29,7 @@ module Algolia
       # See the `typo` field of the `exhaustive` object in the response.
       attr_accessor :exhaustive_typo
 
-      # Mapping of each facet name to the corresponding facet counts.
+      # Facet counts.
       attr_accessor :facets
 
       # Statistics for numerical facets.
@@ -47,16 +47,16 @@ module Algolia
       # Warnings about the query.
       attr_accessor :message
 
-      # Number of hits the search query matched.
+      # Number of results (hits).
       attr_accessor :nb_hits
 
-      # Number of pages of results for the current query.
+      # Number of pages of results.
       attr_accessor :nb_pages
 
       # Number of hits selected and sorted by the relevant sort algorithm.
       attr_accessor :nb_sorted_hits
 
-      # Page to retrieve (the first page is `0`, not `1`).
+      # Page of search results to retrieve.
       attr_accessor :page
 
       # Post-[normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/#what-does-normalization-mean) query string that will be searched.
@@ -81,15 +81,16 @@ module Algolia
       # Host name of the server that processed the request.
       attr_accessor :server_used
 
-      # Lets you store custom data in your indices.
+      # An object with custom data.  You can store up to 32&nbsp;kB as custom data.
       attr_accessor :user_data
 
       # Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
       attr_accessor :query_id
 
+      # Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
       attr_accessor :hits
 
-      # Text to search for in an index.
+      # Search query.
       attr_accessor :query
 
       # URL-encoded string of all search parameters.
@@ -392,6 +393,20 @@ module Algolia
         end
 
         @hits_per_page = hits_per_page
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] page Value to be assigned
+      def page=(page)
+        if page.nil?
+          raise ArgumentError, 'page cannot be nil'
+        end
+
+        if page < 0
+          raise ArgumentError, 'invalid value for "page", must be greater than or equal to 0.'
+        end
+
+        @page = page
       end
 
       # Checks equality by comparing each attribute.

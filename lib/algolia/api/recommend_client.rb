@@ -209,9 +209,9 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - editSettings
-    # @param index_name [String] Index on which to perform the request. (required)
+    # @param index_name [String] Name of the index on which to perform the operation. (required)
     # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
-    # @param object_id [String] Unique record (object) identifier. (required)
+    # @param object_id [String] Unique record identifier. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def delete_recommend_rule_with_http_info(index_name, model, object_id, request_options = {})
@@ -253,9 +253,9 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - editSettings
-    # @param index_name [String] Index on which to perform the request. (required)
+    # @param index_name [String] Name of the index on which to perform the operation. (required)
     # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
-    # @param object_id [String] Unique record (object) identifier. (required)
+    # @param object_id [String] Unique record identifier. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeletedAtResponse]
     def delete_recommend_rule(index_name, model, object_id, request_options = {})
@@ -267,9 +267,9 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - settings
-    # @param index_name [String] Index on which to perform the request. (required)
+    # @param index_name [String] Name of the index on which to perform the operation. (required)
     # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
-    # @param object_id [String] Unique record (object) identifier. (required)
+    # @param object_id [String] Unique record identifier. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_recommend_rule_with_http_info(index_name, model, object_id, request_options = {})
@@ -311,9 +311,9 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - settings
-    # @param index_name [String] Index on which to perform the request. (required)
+    # @param index_name [String] Name of the index on which to perform the operation. (required)
     # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
-    # @param object_id [String] Unique record (object) identifier. (required)
+    # @param object_id [String] Unique record identifier. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [RuleResponse]
     def get_recommend_rule(index_name, model, object_id, request_options = {})
@@ -325,7 +325,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - editSettings
-    # @param index_name [String] Index on which to perform the request. (required)
+    # @param index_name [String] Name of the index on which to perform the operation. (required)
     # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
     # @param task_id [Integer] Unique identifier of a task. Numeric value (up to 64bits). (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -369,7 +369,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - editSettings
-    # @param index_name [String] Index on which to perform the request. (required)
+    # @param index_name [String] Name of the index on which to perform the operation. (required)
     # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
     # @param task_id [Integer] Unique identifier of a task. Numeric value (up to 64bits). (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -427,7 +427,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - settings
-    # @param index_name [String] Index on which to perform the request. (required)
+    # @param index_name [String] Name of the index on which to perform the operation. (required)
     # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
     # @param search_recommend_rules_params [SearchRecommendRulesParams]
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -466,7 +466,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - settings
-    # @param index_name [String] Index on which to perform the request. (required)
+    # @param index_name [String] Name of the index on which to perform the operation. (required)
     # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
     # @param search_recommend_rules_params [SearchRecommendRulesParams]
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)

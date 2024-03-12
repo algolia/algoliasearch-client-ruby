@@ -6,12 +6,12 @@ require 'time'
 module Algolia
   module Search
     class SearchSynonymsParams
-      # Text to search for in an index.
+      # Search query.
       attr_accessor :query
 
       attr_accessor :type
 
-      # Page to retrieve (the first page is `0`, not `1`).
+      # Page of search results to retrieve.
       attr_accessor :page
 
       # Number of hits per page.
@@ -101,6 +101,20 @@ module Algolia
         if attributes.key?(:hits_per_page)
           self.hits_per_page = attributes[:hits_per_page]
         end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] page Value to be assigned
+      def page=(page)
+        if page.nil?
+          raise ArgumentError, 'page cannot be nil'
+        end
+
+        if page < 0
+          raise ArgumentError, 'invalid value for "page", must be greater than or equal to 0.'
+        end
+
+        @page = page
       end
 
       # Custom attribute writer method with validation

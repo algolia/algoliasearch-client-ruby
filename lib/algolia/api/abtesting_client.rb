@@ -346,13 +346,17 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
-    # @param limit [Integer] Number of records to return (page size). (default to 10)
+    # @param offset [Integer] Position of the first item to return. (default to 0)
+    # @param limit [Integer] Number of items to return. (default to 10)
     # @param index_prefix [String] Only return A/B tests for indices starting with this prefix.
     # @param index_suffix [String] Only return A/B tests for indices ending with this suffix.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def list_ab_tests_with_http_info(offset = nil, limit = nil, index_prefix = nil, index_suffix = nil, request_options = {})
+      if @api_client.config.client_side_validation && !offset.nil? && offset < 0
+        raise ArgumentError, 'invalid value for ""offset"" when calling AbtestingClient.list_ab_tests, must be greater than or equal to 0.'
+      end
+
       path = '/2/abtests'
       query_params = {}
       query_params[:offset] = offset unless offset.nil?
@@ -380,8 +384,8 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
-    # @param limit [Integer] Number of records to return (page size). (default to 10)
+    # @param offset [Integer] Position of the first item to return. (default to 0)
+    # @param limit [Integer] Number of items to return. (default to 10)
     # @param index_prefix [String] Only return A/B tests for indices starting with this prefix.
     # @param index_suffix [String] Only return A/B tests for indices ending with this suffix.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)

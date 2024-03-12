@@ -7,21 +7,21 @@ module Algolia
   module Search
     # Rule object.
     class Rule
-      # Unique identifier for a rule object.
+      # Unique identifier of a rule object.
       attr_accessor :object_id
 
-      # [Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions) required to activate a rule. You can use up to 25 conditions per rule.
+      # Conditions that trigger a rule.  Some consequences require specific conditions or don't require any condition. For more information, see [Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions).
       attr_accessor :conditions
 
       attr_accessor :consequence
 
-      # Description of the rule's purpose. This can be helpful for display in the Algolia dashboard.
+      # Description of the rule's purpose to help you distinguish between different rules.
       attr_accessor :description
 
-      # Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time.
+      # Whether the rule is active.
       attr_accessor :enabled
 
-      # If you specify a validity period, the rule _only_ applies only during that period. If specified, the array must not be empty.
+      # Time periods when the rule is active.
       attr_accessor :validity
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -104,6 +104,24 @@ module Algolia
             self.validity = value
           end
         end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] conditions Value to be assigned
+      def conditions=(conditions)
+        if conditions.nil?
+          raise ArgumentError, 'conditions cannot be nil'
+        end
+
+        if conditions.length > 25
+          raise ArgumentError, 'invalid value for "conditions", number of items must be less than or equal to 25.'
+        end
+
+        if conditions.length < 0
+          raise ArgumentError, 'invalid value for "conditions", number of items must be greater than or equal to 0.'
+        end
+
+        @conditions = conditions
       end
 
       # Checks equality by comparing each attribute.

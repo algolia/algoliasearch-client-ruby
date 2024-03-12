@@ -6,10 +6,10 @@ require 'time'
 module Algolia
   module Search
     class TimeRange
-      # Lower bound of the time range (Unix timestamp).
+      # When the rule should start to be active, in Unix epoch time.
       attr_accessor :from
 
-      # Upper bound of the time range (Unix timestamp).
+      # When the rule should stop to be active, in Unix epoch time.
       attr_accessor :_until
 
       # Attribute mapping from ruby-style variable name to JSON key.

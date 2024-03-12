@@ -6,13 +6,13 @@ require 'time'
 module Algolia
   module Search
     class SaveObjectResponse
-      # Date of creation (ISO-8601 format).
+      # Timestamp when the record was added, in ISO 8601 format.
       attr_accessor :created_at
 
-      # Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the `task` operation and this `taskID`.
+      # Unique identifier of a task.  A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.
       attr_accessor :task_id
 
-      # Unique object identifier.
+      # Unique record identifier.
       attr_accessor :object_id
 
       # Attribute mapping from ruby-style variable name to JSON key.

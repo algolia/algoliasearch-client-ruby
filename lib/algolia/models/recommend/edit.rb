@@ -11,7 +11,7 @@ module Algolia
       # Text or patterns to remove from the query string.
       attr_accessor :delete
 
-      # Text that should be inserted in place of the removed text inside the query string.
+      # Text to be added in place of the deleted text inside the query string.
       attr_accessor :insert
 
       class EnumAttributeValidator

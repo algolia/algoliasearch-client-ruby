@@ -5,11 +5,11 @@ require 'time'
 
 module Algolia
   module Search
-    # To update an attribute without pushing the entire record, you can use these built-in operations.
+    # Update to perform on the attribute.
     class BuiltInOperation
       attr_accessor :_operation
 
-      # Value that corresponds to the operation, for example an `Increment` or `Decrement` step, `Add` or `Remove` value.
+      # Value that corresponds to the operation, for example an `Increment` or `Decrement` step, or an `Add` or `Remove` value.
       attr_accessor :value
 
       class EnumAttributeValidator

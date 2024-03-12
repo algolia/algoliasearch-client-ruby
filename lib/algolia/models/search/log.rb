@@ -6,37 +6,37 @@ require 'time'
 module Algolia
   module Search
     class Log
-      # Timestamp in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
+      # Timestamp of the API request in ISO 8601 format.
       attr_accessor :timestamp
 
-      # HTTP method of the performed request.
+      # HTTP method of the request.
       attr_accessor :method
 
-      # HTTP response code.
+      # HTTP status code of the response.
       attr_accessor :answer_code
 
-      # Request body. Truncated after 1,000 characters.
+      # Request body.
       attr_accessor :query_body
 
-      # Answer body. Truncated after 1,000 characters.
+      # Response body.
       attr_accessor :answer
 
-      # Request URL.
+      # URL of the API endpoint.
       attr_accessor :url
 
       # IP address of the client that performed the request.
       attr_accessor :ip
 
-      # Request headers (API key is obfuscated).
+      # Request headers (API keys are obfuscated).
       attr_accessor :query_headers
 
       # SHA1 signature of the log entry.
       attr_accessor :sha1
 
-      # Number of API calls.
+      # Number of API requests.
       attr_accessor :nb_api_calls
 
-      # Processing time for the query. Doesn't include network time.
+      # Processing time for the query in milliseconds. This doesn't include latency due to the network.
       attr_accessor :processing_time_ms
 
       # Index targeted by the query.
@@ -45,10 +45,10 @@ module Algolia
       # Query parameters sent with the request.
       attr_accessor :_query_params
 
-      # Number of hits returned for the query.
+      # Number of search results (hits) returned for the query.
       attr_accessor :query_nb_hits
 
-      # Performed queries for the given request.
+      # Queries performed for the given request.
       attr_accessor :inner_queries
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -203,6 +203,34 @@ module Algolia
             self.inner_queries = value
           end
         end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] query_body Value to be assigned
+      def query_body=(query_body)
+        if query_body.nil?
+          raise ArgumentError, 'query_body cannot be nil'
+        end
+
+        if query_body.to_s.length > 1000
+          raise ArgumentError, 'invalid value for "query_body", the character length must be smaller than or equal to 1000.'
+        end
+
+        @query_body = query_body
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] answer Value to be assigned
+      def answer=(answer)
+        if answer.nil?
+          raise ArgumentError, 'answer cannot be nil'
+        end
+
+        if answer.to_s.length > 1000
+          raise ArgumentError, 'invalid value for "answer", the character length must be smaller than or equal to 1000.'
+        end
+
+        @answer = answer
       end
 
       # Checks equality by comparing each attribute.

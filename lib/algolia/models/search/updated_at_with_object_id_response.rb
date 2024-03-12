@@ -7,13 +7,13 @@ module Algolia
   module Search
     # Response, taskID, unique object identifier, and an update timestamp.
     class UpdatedAtWithObjectIdResponse
-      # Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the `task` operation and this `taskID`.
+      # Unique identifier of a task.  A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.
       attr_accessor :task_id
 
       # Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
       attr_accessor :updated_at
 
-      # Unique object identifier.
+      # Unique record identifier.
       attr_accessor :object_id
 
       # Attribute mapping from ruby-style variable name to JSON key.

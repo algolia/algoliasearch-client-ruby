@@ -5,12 +5,12 @@ require 'time'
 
 module Algolia
   module Search
-    # `batchDictionaryEntries` parameters.
+    # Request body for updating dictionary entries.
     class BatchDictionaryEntriesParams
-      # Incidates whether to replace all custom entries in the dictionary with the ones sent with this request.
+      # Whether to replace all custom entries in the dictionary with the ones sent with this request.
       attr_accessor :clear_existing_dictionary_entries
 
-      # Operations to batch.
+      # List of additions and deletions to your dictionaries.
       attr_accessor :requests
 
       # Attribute mapping from ruby-style variable name to JSON key.

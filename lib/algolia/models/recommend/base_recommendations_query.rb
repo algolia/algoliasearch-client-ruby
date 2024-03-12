@@ -8,7 +8,7 @@ module Algolia
     class BaseRecommendationsQuery
       attr_accessor :model
 
-      # Unique object identifier.
+      # Unique record identifier.
       attr_accessor :object_id
 
       attr_accessor :query_parameters

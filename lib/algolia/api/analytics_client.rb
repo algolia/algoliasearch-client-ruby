@@ -214,9 +214,9 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -224,16 +224,6 @@ module Algolia
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_average_click_position`."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
-        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_average_click_position, must conform to the pattern #{pattern}."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
-        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_average_click_position, must conform to the pattern #{pattern}."
       end
 
       path = '/2/clicks/averageClickPosition'
@@ -263,9 +253,9 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetAverageClickPositionResponse]
@@ -278,9 +268,9 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -288,16 +278,6 @@ module Algolia
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_click_positions`."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
-        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_click_positions, must conform to the pattern #{pattern}."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
-        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_click_positions, must conform to the pattern #{pattern}."
       end
 
       path = '/2/clicks/positions'
@@ -327,9 +307,9 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetClickPositionsResponse]
@@ -342,9 +322,9 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -352,16 +332,6 @@ module Algolia
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_click_through_rate`."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
-        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_click_through_rate, must conform to the pattern #{pattern}."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
-        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_click_through_rate, must conform to the pattern #{pattern}."
       end
 
       path = '/2/clicks/clickThroughRate'
@@ -391,9 +361,9 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetClickThroughRateResponse]
@@ -406,9 +376,9 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -416,16 +386,6 @@ module Algolia
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_conversation_rate`."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
-        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_conversation_rate, must conform to the pattern #{pattern}."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
-        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_conversation_rate, must conform to the pattern #{pattern}."
       end
 
       path = '/2/conversions/conversionRate'
@@ -455,9 +415,9 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetConversationRateResponse]
@@ -470,9 +430,9 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -480,16 +440,6 @@ module Algolia
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_no_click_rate`."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
-        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_no_click_rate, must conform to the pattern #{pattern}."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
-        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_no_click_rate, must conform to the pattern #{pattern}."
       end
 
       path = '/2/searches/noClickRate'
@@ -519,9 +469,9 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetNoClickRateResponse]
@@ -534,9 +484,9 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -544,16 +494,6 @@ module Algolia
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_no_results_rate`."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
-        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_no_results_rate, must conform to the pattern #{pattern}."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
-        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_no_results_rate, must conform to the pattern #{pattern}."
       end
 
       path = '/2/searches/noResultRate'
@@ -583,9 +523,9 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetNoResultsRateResponse]
@@ -598,9 +538,9 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -608,16 +548,6 @@ module Algolia
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_searches_count`."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
-        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_searches_count, must conform to the pattern #{pattern}."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
-        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_searches_count, must conform to the pattern #{pattern}."
       end
 
       path = '/2/searches/count'
@@ -647,9 +577,9 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetSearchesCountResponse]
@@ -662,11 +592,11 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param limit [Integer] Number of records to return (page size). (default to 10)
-    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of items to return. (default to 10)
+    # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -675,15 +605,8 @@ module Algolia
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_searches_no_clicks`."
       end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
-        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_searches_no_clicks, must conform to the pattern #{pattern}."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
-        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_searches_no_clicks, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !offset.nil? && offset < 0
+        raise ArgumentError, 'invalid value for ""offset"" when calling AnalyticsClient.get_searches_no_clicks, must be greater than or equal to 0.'
       end
 
       path = '/2/searches/noClicks'
@@ -715,11 +638,11 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param limit [Integer] Number of records to return (page size). (default to 10)
-    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of items to return. (default to 10)
+    # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetSearchesNoClicksResponse]
@@ -732,11 +655,11 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param limit [Integer] Number of records to return (page size). (default to 10)
-    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of items to return. (default to 10)
+    # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -745,15 +668,8 @@ module Algolia
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_searches_no_results`."
       end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
-        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_searches_no_results, must conform to the pattern #{pattern}."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
-        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_searches_no_results, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !offset.nil? && offset < 0
+        raise ArgumentError, 'invalid value for ""offset"" when calling AnalyticsClient.get_searches_no_results, must be greater than or equal to 0.'
       end
 
       path = '/2/searches/noResults'
@@ -785,11 +701,11 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param limit [Integer] Number of records to return (page size). (default to 10)
-    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of items to return. (default to 10)
+    # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetSearchesNoResultsResponse]
@@ -802,7 +718,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
+    # @param index [String] Index name. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_status_with_http_info(index, request_options = {})
@@ -835,7 +751,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
+    # @param index [String] Index name. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetStatusResponse]
     def get_status(index, request_options = {})
@@ -847,11 +763,11 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param limit [Integer] Number of records to return (page size). (default to 10)
-    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of items to return. (default to 10)
+    # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -860,15 +776,8 @@ module Algolia
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_countries`."
       end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
-        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_top_countries, must conform to the pattern #{pattern}."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
-        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_top_countries, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !offset.nil? && offset < 0
+        raise ArgumentError, 'invalid value for ""offset"" when calling AnalyticsClient.get_top_countries, must be greater than or equal to 0.'
       end
 
       path = '/2/countries'
@@ -900,11 +809,11 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param limit [Integer] Number of records to return (page size). (default to 10)
-    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of items to return. (default to 10)
+    # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopCountriesResponse]
@@ -917,12 +826,12 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
+    # @param index [String] Index name. (required)
     # @param search [String] User query.
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param limit [Integer] Number of records to return (page size). (default to 10)
-    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of items to return. (default to 10)
+    # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -931,15 +840,8 @@ module Algolia
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_filter_attributes`."
       end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
-        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_top_filter_attributes, must conform to the pattern #{pattern}."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
-        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_top_filter_attributes, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !offset.nil? && offset < 0
+        raise ArgumentError, 'invalid value for ""offset"" when calling AnalyticsClient.get_top_filter_attributes, must be greater than or equal to 0.'
       end
 
       path = '/2/filters'
@@ -972,12 +874,12 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
+    # @param index [String] Index name. (required)
     # @param search [String] User query.
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param limit [Integer] Number of records to return (page size). (default to 10)
-    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of items to return. (default to 10)
+    # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopFilterAttributesResponse]
@@ -991,12 +893,12 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param attribute [String] Attribute name. (required)
-    # @param index [String] Index name to target. (required)
+    # @param index [String] Index name. (required)
     # @param search [String] User query.
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param limit [Integer] Number of records to return (page size). (default to 10)
-    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of items to return. (default to 10)
+    # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1009,15 +911,8 @@ module Algolia
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_filter_for_attribute`."
       end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
-        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_top_filter_for_attribute, must conform to the pattern #{pattern}."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
-        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_top_filter_for_attribute, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !offset.nil? && offset < 0
+        raise ArgumentError, 'invalid value for ""offset"" when calling AnalyticsClient.get_top_filter_for_attribute, must be greater than or equal to 0.'
       end
 
       path = '/2/filters/{attribute}'.sub('{' + 'attribute' + '}', Transport.encode_uri(attribute.to_s))
@@ -1051,12 +946,12 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param attribute [String] Attribute name. (required)
-    # @param index [String] Index name to target. (required)
+    # @param index [String] Index name. (required)
     # @param search [String] User query.
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param limit [Integer] Number of records to return (page size). (default to 10)
-    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of items to return. (default to 10)
+    # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopFilterForAttributeResponse]
@@ -1069,12 +964,12 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
+    # @param index [String] Index name. (required)
     # @param search [String] User query.
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param limit [Integer] Number of records to return (page size). (default to 10)
-    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of items to return. (default to 10)
+    # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1083,15 +978,8 @@ module Algolia
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_filters_no_results`."
       end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
-        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_top_filters_no_results, must conform to the pattern #{pattern}."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
-        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_top_filters_no_results, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !offset.nil? && offset < 0
+        raise ArgumentError, 'invalid value for ""offset"" when calling AnalyticsClient.get_top_filters_no_results, must be greater than or equal to 0.'
       end
 
       path = '/2/filters/noResults'
@@ -1124,12 +1012,12 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
+    # @param index [String] Index name. (required)
     # @param search [String] User query.
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param limit [Integer] Number of records to return (page size). (default to 10)
-    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of items to return. (default to 10)
+    # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopFiltersNoResultsResponse]
@@ -1142,13 +1030,13 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
+    # @param index [String] Index name. (required)
     # @param search [String] User query.
     # @param click_analytics [Boolean] Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search. (default to false)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param limit [Integer] Number of records to return (page size). (default to 10)
-    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of items to return. (default to 10)
+    # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1157,15 +1045,8 @@ module Algolia
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_hits`."
       end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
-        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_top_hits, must conform to the pattern #{pattern}."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
-        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_top_hits, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !offset.nil? && offset < 0
+        raise ArgumentError, 'invalid value for ""offset"" when calling AnalyticsClient.get_top_hits, must be greater than or equal to 0.'
       end
 
       path = '/2/hits'
@@ -1199,13 +1080,13 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
+    # @param index [String] Index name. (required)
     # @param search [String] User query.
     # @param click_analytics [Boolean] Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search. (default to false)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param limit [Integer] Number of records to return (page size). (default to 10)
-    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param limit [Integer] Number of items to return. (default to 10)
+    # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopHitsResponse]
@@ -1218,14 +1099,14 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
+    # @param index [String] Index name. (required)
     # @param click_analytics [Boolean] Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search. (default to false)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param order_by [OrderBy] Reorder the results. (default to 'searchCount')
     # @param direction [Direction] Sorting direction of the results: ascending or descending.  (default to 'asc')
-    # @param limit [Integer] Number of records to return (page size). (default to 10)
-    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param limit [Integer] Number of items to return. (default to 10)
+    # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1235,15 +1116,8 @@ module Algolia
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_searches`."
       end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
-        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_top_searches, must conform to the pattern #{pattern}."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
-        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_top_searches, must conform to the pattern #{pattern}."
+      if @api_client.config.client_side_validation && !offset.nil? && offset < 0
+        raise ArgumentError, 'invalid value for ""offset"" when calling AnalyticsClient.get_top_searches, must be greater than or equal to 0.'
       end
 
       path = '/2/searches'
@@ -1278,14 +1152,14 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
+    # @param index [String] Index name. (required)
     # @param click_analytics [Boolean] Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search. (default to false)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param order_by [OrderBy] Reorder the results. (default to 'searchCount')
     # @param direction [Direction] Sorting direction of the results: ascending or descending.  (default to 'asc')
-    # @param limit [Integer] Number of records to return (page size). (default to 10)
-    # @param offset [Integer] Position of the starting record. Used for paging. 0 is the first record. (default to 0)
+    # @param limit [Integer] Number of items to return. (default to 10)
+    # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopSearchesResponse]
@@ -1299,9 +1173,9 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1309,16 +1183,6 @@ module Algolia
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_users_count`."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !start_date.nil? && start_date !~ pattern
-        raise ArgumentError, "invalid value for '\"start_date\"' when calling AnalyticsClient.get_users_count, must conform to the pattern #{pattern}."
-      end
-
-      pattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-      if @api_client.config.client_side_validation && !end_date.nil? && end_date !~ pattern
-        raise ArgumentError, "invalid value for '\"end_date\"' when calling AnalyticsClient.get_users_count, must conform to the pattern #{pattern}."
       end
 
       path = '/2/users/count'
@@ -1348,9 +1212,9 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - analytics
-    # @param index [String] Index name to target. (required)
-    # @param start_date [String] Start date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (a string in the format &#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param index [String] Index name. (required)
+    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
     # @param tags [String] Filter analytics on the [&#x60;analyticsTags&#x60;](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetUsersCountResponse]

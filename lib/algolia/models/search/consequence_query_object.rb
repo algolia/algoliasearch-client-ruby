@@ -6,10 +6,10 @@ require 'time'
 module Algolia
   module Search
     class ConsequenceQueryObject
-      # Words to remove.
+      # Words to remove from the search query.
       attr_accessor :remove
 
-      # Edits to apply.
+      # Changes to make to the search query.
       attr_accessor :edits
 
       # Attribute mapping from ruby-style variable name to JSON key.

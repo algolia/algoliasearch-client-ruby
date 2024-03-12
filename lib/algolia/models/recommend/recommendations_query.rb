@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Recommend
     class RecommendationsQuery
-      # Algolia index name.
+      # Index name.
       attr_accessor :index_name
 
       # Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the recommendations are.
@@ -17,7 +17,7 @@ module Algolia
 
       attr_accessor :model
 
-      # Unique object identifier.
+      # Unique record identifier.
       attr_accessor :object_id
 
       attr_accessor :query_parameters

@@ -8,7 +8,7 @@ module Algolia
     class RecommendationsHits
       attr_accessor :hits
 
-      # Text to search for in an index.
+      # Search query.
       attr_accessor :query
 
       # URL-encoded string of all search parameters.

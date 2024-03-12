@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Search
     class GetObjectsResponse
-      # Retrieved results.
+      # Retrieved records.
       attr_accessor :results
 
       # Attribute mapping from ruby-style variable name to JSON key.
