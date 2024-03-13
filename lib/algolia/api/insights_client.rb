@@ -209,9 +209,9 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Delete all events related to a certain user token from events metrics and analytics. To delete a personalization user profile, see [Delete a user profile](https://www.algolia.com/doc/rest-api/personalization/#delete-a-user-profile).
+    # Deletes all events related to the specified user token from events metrics and analytics. To delete a personalization user profile, see [Delete a user profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
 
-    # @param user_token [String] The user token for which to delete all associated events. (required)
+    # @param user_token [String] User token for which to delete all associated events. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def delete_user_token_with_http_info(user_token, request_options = {})
@@ -227,7 +227,7 @@ module Algolia
         raise ArgumentError, 'invalid value for "user_token" when calling InsightsClient.delete_user_token, the character length must be great than or equal to 1.'
       end
 
-      pattern = %r{[a-zA-Z0-9_=/+]{1,129}}
+      pattern = %r{[a-zA-Z0-9_=/+-]{1,129}}
       if @api_client.config.client_side_validation && user_token !~ pattern
         raise ArgumentError, "invalid value for 'user_token' when calling InsightsClient.delete_user_token, must conform to the pattern #{pattern}."
       end
@@ -251,9 +251,9 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Delete all events related to a certain user token from events metrics and analytics. To delete a personalization user profile, see [Delete a user profile](https://www.algolia.com/doc/rest-api/personalization/#delete-a-user-profile).
+    # Deletes all events related to the specified user token from events metrics and analytics. To delete a personalization user profile, see [Delete a user profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
 
-    # @param user_token [String] The user token for which to delete all associated events. (required)
+    # @param user_token [String] User token for which to delete all associated events. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [nil]
     def delete_user_token(user_token, request_options = {})
@@ -261,7 +261,7 @@ module Algolia
       nil
     end
 
-    # Send a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&amp;nbsp;MB.
+    # Sends a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&amp;nbsp;MB.
 
     # @param insights_events [InsightsEvents]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -291,7 +291,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Send a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
+    # Sends a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
 
     # @param insights_events [InsightsEvents]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
