@@ -15,6 +15,7 @@ module Algolia
             :SourceCSV,
             :SourceCommercetools,
             :SourceDocker,
+            :SourceGA4BigQueryExport,
             :SourceJSON
           ]
         end

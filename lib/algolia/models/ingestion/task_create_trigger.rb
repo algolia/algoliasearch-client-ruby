@@ -12,6 +12,7 @@ module Algolia
           [
             :OnDemandTriggerInput,
             :ScheduleTriggerInput,
+            :StreamingTrigger,
             :SubscriptionTrigger
           ]
         end

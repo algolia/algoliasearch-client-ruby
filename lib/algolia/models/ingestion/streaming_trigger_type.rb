@@ -5,14 +5,11 @@ require 'time'
 
 module Algolia
   module Ingestion
-    class TriggerType
-      ON_DEMAND = "onDemand".freeze
-      SCHEDULE = "schedule".freeze
-      SUBSCRIPTION = "subscription".freeze
+    class StreamingTriggerType
       STREAMING = "streaming".freeze
 
       def self.all_vars
-        @all_vars ||= [ON_DEMAND, SCHEDULE, SUBSCRIPTION, STREAMING].freeze
+        @all_vars ||= [STREAMING].freeze
       end
 
       # Builds the enum from string
@@ -26,9 +23,9 @@ module Algolia
       # @param [String] The enum value in the form of the string
       # @return [String] The enum value
       def build_from_hash(value)
-        return value if TriggerType.all_vars.include?(value)
+        return value if StreamingTriggerType.all_vars.include?(value)
 
-        raise "Invalid ENUM value #{value} for class #TriggerType"
+        raise "Invalid ENUM value #{value} for class #StreamingTriggerType"
       end
     end
   end

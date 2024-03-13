@@ -12,9 +12,10 @@ module Algolia
       CSV = "csv".freeze
       BIGQUERY = "bigquery".freeze
       DOCKER = "docker".freeze
+      GA4_BIGQUERY_EXPORT = "ga4BigqueryExport".freeze
 
       def self.all_vars
-        @all_vars ||= [BIGCOMMERCE, COMMERCETOOLS, JSON, CSV, BIGQUERY, DOCKER].freeze
+        @all_vars ||= [BIGCOMMERCE, COMMERCETOOLS, JSON, CSV, BIGQUERY, DOCKER, GA4_BIGQUERY_EXPORT].freeze
       end
 
       # Builds the enum from string

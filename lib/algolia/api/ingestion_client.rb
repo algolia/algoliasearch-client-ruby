@@ -1340,8 +1340,8 @@ module Algolia
     # @param page [Integer] The page number to fetch, starting at 1.
     # @param action [Array<ActionType>] The action of the tasks to retrieve.
     # @param enabled [Boolean] Whether the task is enabled or not.
-    # @param source_id [Array<String>] The sourceIDs of the tasks to retrive.
-    # @param destination_id [Array<String>] The destinationIDs of the tasks to retrive.
+    # @param source_id [Array<String>] The sourceIDs of the tasks to retrieve.
+    # @param destination_id [Array<String>] The destinationIDs of the tasks to retrieve.
     # @param trigger_type [Array<TriggerType>] The trigger type of the task.
     # @param sort [TaskSortKeys] The key by which the list should be sorted.
     # @param order [OrderKeys] The order of the returned list.
@@ -1387,8 +1387,8 @@ module Algolia
     # @param page [Integer] The page number to fetch, starting at 1.
     # @param action [Array<ActionType>] The action of the tasks to retrieve.
     # @param enabled [Boolean] Whether the task is enabled or not.
-    # @param source_id [Array<String>] The sourceIDs of the tasks to retrive.
-    # @param destination_id [Array<String>] The destinationIDs of the tasks to retrive.
+    # @param source_id [Array<String>] The sourceIDs of the tasks to retrieve.
+    # @param destination_id [Array<String>] The destinationIDs of the tasks to retrieve.
     # @param trigger_type [Array<TriggerType>] The trigger type of the task.
     # @param sort [TaskSortKeys] The key by which the list should be sorted.
     # @param order [OrderKeys] The order of the returned list.

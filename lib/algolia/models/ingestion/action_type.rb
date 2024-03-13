@@ -9,9 +9,10 @@ module Algolia
       REPLACE = "replace".freeze
       SAVE = "save".freeze
       PARTIAL = "partial".freeze
+      APPEND = "append".freeze
 
       def self.all_vars
-        @all_vars ||= [REPLACE, SAVE, PARTIAL].freeze
+        @all_vars ||= [REPLACE, SAVE, PARTIAL, APPEND].freeze
       end
 
       # Builds the enum from string
