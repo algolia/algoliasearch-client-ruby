@@ -10,7 +10,6 @@ module Algolia
       # Unique identifier for the dictionary entry.
       attr_accessor :object_id
 
-      # ISO code of a [supported language](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
       attr_accessor :language
 
       # Matching dictionary word for `stopwords` and `compounds` dictionaries.
@@ -69,7 +68,7 @@ module Algolia
       def self.types_mapping
         {
           :object_id => :String,
-          :language => :String,
+          :language => :SupportedLanguage,
           :word => :String,
           :words => :'Array<String>',
           :decomposition => :'Array<String>',

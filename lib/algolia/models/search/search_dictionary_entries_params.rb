@@ -16,8 +16,29 @@ module Algolia
       # Number of hits per page.
       attr_accessor :hits_per_page
 
-      # ISO code of a [supported language](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
       attr_accessor :language
+
+      class EnumAttributeValidator
+        attr_reader :datatype
+        attr_reader :allowable_values
+
+        def initialize(datatype, allowable_values)
+          @allowable_values = allowable_values.map do |value|
+            case datatype.to_s
+            when /Integer/i
+              value.to_i
+            when /Float/i
+              value.to_f
+            else
+              value
+            end
+          end
+        end
+
+        def valid?(value)
+          !value || allowable_values.include?(value)
+        end
+      end
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
@@ -40,7 +61,7 @@ module Algolia
           :query => :String,
           :page => :Integer,
           :hits_per_page => :Integer,
-          :language => :String
+          :language => :SupportedLanguage
         }
       end
 

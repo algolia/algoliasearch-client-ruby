@@ -149,6 +149,7 @@ lib/algolia/models/search/snippet_result_option.rb
 lib/algolia/models/search/sort_remaining_by.rb
 lib/algolia/models/search/source.rb
 lib/algolia/models/search/standard_entries.rb
+lib/algolia/models/search/supported_language.rb
 lib/algolia/models/search/synonym_hit.rb
 lib/algolia/models/search/synonym_type.rb
 lib/algolia/models/search/tag_filters.rb
