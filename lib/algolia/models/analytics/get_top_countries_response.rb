@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Analytics
     class GetTopCountriesResponse
-      # Countries
+      # Countries and number of searches.
       attr_accessor :countries
 
       # Attribute mapping from ruby-style variable name to JSON key.

@@ -6,28 +6,31 @@ require 'time'
 module Algolia
   module Analytics
     class TopSearchWithAnalytics
-      # User query.
+      # Search query.
       attr_accessor :search
 
-      # Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).
+      # Number of searches.
       attr_accessor :count
 
-      # [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+      # Click-through rate, calculated as number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
       attr_accessor :click_through_rate
 
-      # Average [position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position) of clicked search result.
+      # Average position of a clicked search result in the list of search results. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
       attr_accessor :average_click_position
 
-      # [Conversion rate (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+      # List of positions in the search results and clicks associated with this search.
+      attr_accessor :click_positions
+
+      # Conversion rate, calculated as number of tracked searches with at least one conversion event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
       attr_accessor :conversion_rate
 
-      # Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
+      # Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
       attr_accessor :tracked_search_count
 
-      # Number of click events.
+      # Number of clicks associated with this search.
       attr_accessor :click_count
 
-      # Number of converted clicks.
+      # Number of conversions from this search.
       attr_accessor :conversion_count
 
       # Number of results (hits).
@@ -40,6 +43,7 @@ module Algolia
           :count => :count,
           :click_through_rate => :clickThroughRate,
           :average_click_position => :averageClickPosition,
+          :click_positions => :clickPositions,
           :conversion_rate => :conversionRate,
           :tracked_search_count => :trackedSearchCount,
           :click_count => :clickCount,
@@ -59,7 +63,8 @@ module Algolia
           :search => :String,
           :count => :Integer,
           :click_through_rate => :Float,
-          :average_click_position => :Integer,
+          :average_click_position => :Float,
+          :click_positions => :'Array<ClickPositionsInner>',
           :conversion_rate => :Float,
           :tracked_search_count => :Integer,
           :click_count => :Integer,
@@ -71,7 +76,9 @@ module Algolia
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new([
-                  :tracked_search_count
+                  :click_through_rate,
+                  :average_click_position,
+                  :conversion_rate
                 ])
       end
 
@@ -116,6 +123,14 @@ module Algolia
           self.average_click_position = nil
         end
 
+        if attributes.key?(:click_positions)
+          if (value = attributes[:click_positions]).is_a?(Array)
+            self.click_positions = value
+          end
+        else
+          self.click_positions = nil
+        end
+
         if attributes.key?(:conversion_rate)
           self.conversion_rate = attributes[:conversion_rate]
         else
@@ -150,19 +165,85 @@ module Algolia
       # Custom attribute writer method with validation
       # @param [Object] click_through_rate Value to be assigned
       def click_through_rate=(click_through_rate)
-        if click_through_rate.nil?
-          raise ArgumentError, 'click_through_rate cannot be nil'
-        end
-
-        if click_through_rate > 1
+        if !click_through_rate.nil? && click_through_rate > 1
           raise ArgumentError, 'invalid value for "click_through_rate", must be smaller than or equal to 1.'
         end
 
-        if click_through_rate < 0
+        if !click_through_rate.nil? && click_through_rate < 0
           raise ArgumentError, 'invalid value for "click_through_rate", must be greater than or equal to 0.'
         end
 
         @click_through_rate = click_through_rate
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] average_click_position Value to be assigned
+      def average_click_position=(average_click_position)
+        if !average_click_position.nil? && average_click_position < 1
+          raise ArgumentError, 'invalid value for "average_click_position", must be greater than or equal to 1.'
+        end
+
+        @average_click_position = average_click_position
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] click_positions Value to be assigned
+      def click_positions=(click_positions)
+        if click_positions.nil?
+          raise ArgumentError, 'click_positions cannot be nil'
+        end
+
+        if click_positions.length > 12
+          raise ArgumentError, 'invalid value for "click_positions", number of items must be less than or equal to 12.'
+        end
+
+        if click_positions.length < 12
+          raise ArgumentError, 'invalid value for "click_positions", number of items must be greater than or equal to 12.'
+        end
+
+        @click_positions = click_positions
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] conversion_rate Value to be assigned
+      def conversion_rate=(conversion_rate)
+        if !conversion_rate.nil? && conversion_rate > 1
+          raise ArgumentError, 'invalid value for "conversion_rate", must be smaller than or equal to 1.'
+        end
+
+        if !conversion_rate.nil? && conversion_rate < 0
+          raise ArgumentError, 'invalid value for "conversion_rate", must be greater than or equal to 0.'
+        end
+
+        @conversion_rate = conversion_rate
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] click_count Value to be assigned
+      def click_count=(click_count)
+        if click_count.nil?
+          raise ArgumentError, 'click_count cannot be nil'
+        end
+
+        if click_count < 0
+          raise ArgumentError, 'invalid value for "click_count", must be greater than or equal to 0.'
+        end
+
+        @click_count = click_count
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] conversion_count Value to be assigned
+      def conversion_count=(conversion_count)
+        if conversion_count.nil?
+          raise ArgumentError, 'conversion_count cannot be nil'
+        end
+
+        if conversion_count < 0
+          raise ArgumentError, 'invalid value for "conversion_count", must be greater than or equal to 0.'
+        end
+
+        @conversion_count = conversion_count
       end
 
       # Checks equality by comparing each attribute.
@@ -175,6 +256,7 @@ module Algolia
           count == other.count &&
           click_through_rate == other.click_through_rate &&
           average_click_position == other.average_click_position &&
+          click_positions == other.click_positions &&
           conversion_rate == other.conversion_rate &&
           tracked_search_count == other.tracked_search_count &&
           click_count == other.click_count &&
@@ -191,7 +273,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [search, count, click_through_rate, average_click_position, conversion_rate, tracked_search_count, click_count, conversion_count, nb_hits].hash
+        [search, count, click_through_rate, average_click_position, click_positions, conversion_rate, tracked_search_count, click_count, conversion_count, nb_hits].hash
       end
 
       # Builds the object from hash

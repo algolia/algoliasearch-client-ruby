@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Analytics
     class GetClickPositionsResponse
-      # Click positions.
+      # List of positions in the search results and clicks associated with this search.
       attr_accessor :positions
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -24,7 +24,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :positions => :'Array<ClickPosition>'
+          :positions => :'Array<ClickPositionsInner>'
         }
       end
 
@@ -66,12 +66,12 @@ module Algolia
           raise ArgumentError, 'positions cannot be nil'
         end
 
-        if positions.length > 2
-          raise ArgumentError, 'invalid value for "positions", number of items must be less than or equal to 2.'
+        if positions.length > 12
+          raise ArgumentError, 'invalid value for "positions", number of items must be less than or equal to 12.'
         end
 
-        if positions.length < 2
-          raise ArgumentError, 'invalid value for "positions", number of items must be greater than or equal to 2.'
+        if positions.length < 12
+          raise ArgumentError, 'invalid value for "positions", number of items must be greater than or equal to 12.'
         end
 
         @positions = positions

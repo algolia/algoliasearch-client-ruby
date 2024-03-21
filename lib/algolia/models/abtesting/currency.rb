@@ -4,23 +4,27 @@ require 'date'
 require 'time'
 
 module Algolia
-  module Analytics
-    class SearchNoClickEvent
-      # User query.
-      attr_accessor :search
+  module Abtesting
+    class Currency
+      # Currency code.
+      attr_accessor :currency
 
-      # Number of occurrences.
-      attr_accessor :count
+      # Revenue for this currency.
+      attr_accessor :revenue
 
-      # Number of occurrences.
-      attr_accessor :with_filter_count
+      # Mean for this currency.
+      attr_accessor :mean
+
+      # Standard deviation for this currency.
+      attr_accessor :standard_deviation
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :search => :search,
-          :count => :count,
-          :with_filter_count => :withFilterCount
+          :currency => :currency,
+          :revenue => :revenue,
+          :mean => :mean,
+          :standard_deviation => :standardDeviation
         }
       end
 
@@ -32,9 +36,10 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :search => :String,
-          :count => :Integer,
-          :with_filter_count => :Integer
+          :currency => :String,
+          :revenue => :Float,
+          :mean => :Float,
+          :standard_deviation => :Float
         }
       end
 
@@ -47,35 +52,33 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::SearchNoClickEvent` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Currency` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::SearchNoClickEvent`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::Currency`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:search)
-          self.search = attributes[:search]
-        else
-          self.search = nil
+        if attributes.key?(:currency)
+          self.currency = attributes[:currency]
         end
 
-        if attributes.key?(:count)
-          self.count = attributes[:count]
-        else
-          self.count = nil
+        if attributes.key?(:revenue)
+          self.revenue = attributes[:revenue]
         end
 
-        if attributes.key?(:with_filter_count)
-          self.with_filter_count = attributes[:with_filter_count]
-        else
-          self.with_filter_count = nil
+        if attributes.key?(:mean)
+          self.mean = attributes[:mean]
+        end
+
+        if attributes.key?(:standard_deviation)
+          self.standard_deviation = attributes[:standard_deviation]
         end
       end
 
@@ -85,9 +88,10 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          search == other.search &&
-          count == other.count &&
-          with_filter_count == other.with_filter_count
+          currency == other.currency &&
+          revenue == other.revenue &&
+          mean == other.mean &&
+          standard_deviation == other.standard_deviation
       end
 
       # @see the `==` method
@@ -99,7 +103,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [search, count, with_filter_count].hash
+        [currency, revenue, mean, standard_deviation].hash
       end
 
       # Builds the object from hash
@@ -164,7 +168,7 @@ module Algolia
           end
         else # model
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Analytics.const_get(type)
+          klass = Algolia::Abtesting.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass.build_from_hash(value)
         end
       end

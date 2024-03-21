@@ -5,7 +5,7 @@ require 'time'
 
 module Algolia
   module Analytics
-    class TopHitWithAnalytics
+    class TopHitWithRevenueAnalytics
       # Object ID of a record that's returned as a search result.
       attr_accessor :hit
 
@@ -27,6 +27,21 @@ module Algolia
       # Number of conversions from this search.
       attr_accessor :conversion_count
 
+      # Add-to-cart rate, calculated as number of tracked searches with at least one add-to-cart event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+      attr_accessor :add_to_cart_rate
+
+      # Number of add-to-cart events from this search.
+      attr_accessor :add_to_cart_count
+
+      # Purchase rate, calculated as number of tracked searches with at least one purchase event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+      attr_accessor :purchase_rate
+
+      # Number of purchase events from this search.
+      attr_accessor :purchase_count
+
+      # Revenue associated with this search, broken-down by currencies.
+      attr_accessor :currencies
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -36,7 +51,12 @@ module Algolia
           :conversion_rate => :conversionRate,
           :tracked_hit_count => :trackedHitCount,
           :click_count => :clickCount,
-          :conversion_count => :conversionCount
+          :conversion_count => :conversionCount,
+          :add_to_cart_rate => :addToCartRate,
+          :add_to_cart_count => :addToCartCount,
+          :purchase_rate => :purchaseRate,
+          :purchase_count => :purchaseCount,
+          :currencies => :currencies
         }
       end
 
@@ -54,7 +74,12 @@ module Algolia
           :conversion_rate => :Float,
           :tracked_hit_count => :Integer,
           :click_count => :Integer,
-          :conversion_count => :Integer
+          :conversion_count => :Integer,
+          :add_to_cart_rate => :Float,
+          :add_to_cart_count => :Integer,
+          :purchase_rate => :Float,
+          :purchase_count => :Integer,
+          :currencies => :'Hash<String, CurrenciesValue>'
         }
       end
 
@@ -62,7 +87,9 @@ module Algolia
       def self.openapi_nullable
         Set.new([
                   :click_through_rate,
-                  :conversion_rate
+                  :conversion_rate,
+                  :add_to_cart_rate,
+                  :purchase_rate
                 ])
       end
 
@@ -70,14 +97,14 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::TopHitWithAnalytics` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::TopHitWithRevenueAnalytics` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::TopHitWithAnalytics`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::TopHitWithRevenueAnalytics`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
@@ -123,6 +150,38 @@ module Algolia
           self.conversion_count = attributes[:conversion_count]
         else
           self.conversion_count = nil
+        end
+
+        if attributes.key?(:add_to_cart_rate)
+          self.add_to_cart_rate = attributes[:add_to_cart_rate]
+        else
+          self.add_to_cart_rate = nil
+        end
+
+        if attributes.key?(:add_to_cart_count)
+          self.add_to_cart_count = attributes[:add_to_cart_count]
+        else
+          self.add_to_cart_count = nil
+        end
+
+        if attributes.key?(:purchase_rate)
+          self.purchase_rate = attributes[:purchase_rate]
+        else
+          self.purchase_rate = nil
+        end
+
+        if attributes.key?(:purchase_count)
+          self.purchase_count = attributes[:purchase_count]
+        else
+          self.purchase_count = nil
+        end
+
+        if attributes.key?(:currencies)
+          if (value = attributes[:currencies]).is_a?(Hash)
+            self.currencies = value
+          end
+        else
+          self.currencies = nil
         end
       end
 
@@ -182,6 +241,48 @@ module Algolia
         @conversion_count = conversion_count
       end
 
+      # Custom attribute writer method with validation
+      # @param [Object] add_to_cart_rate Value to be assigned
+      def add_to_cart_rate=(add_to_cart_rate)
+        if !add_to_cart_rate.nil? && add_to_cart_rate > 1
+          raise ArgumentError, 'invalid value for "add_to_cart_rate", must be smaller than or equal to 1.'
+        end
+
+        if !add_to_cart_rate.nil? && add_to_cart_rate < 0
+          raise ArgumentError, 'invalid value for "add_to_cart_rate", must be greater than or equal to 0.'
+        end
+
+        @add_to_cart_rate = add_to_cart_rate
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] add_to_cart_count Value to be assigned
+      def add_to_cart_count=(add_to_cart_count)
+        if add_to_cart_count.nil?
+          raise ArgumentError, 'add_to_cart_count cannot be nil'
+        end
+
+        if add_to_cart_count < 0
+          raise ArgumentError, 'invalid value for "add_to_cart_count", must be greater than or equal to 0.'
+        end
+
+        @add_to_cart_count = add_to_cart_count
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] purchase_rate Value to be assigned
+      def purchase_rate=(purchase_rate)
+        if !purchase_rate.nil? && purchase_rate > 1
+          raise ArgumentError, 'invalid value for "purchase_rate", must be smaller than or equal to 1.'
+        end
+
+        if !purchase_rate.nil? && purchase_rate < 0
+          raise ArgumentError, 'invalid value for "purchase_rate", must be greater than or equal to 0.'
+        end
+
+        @purchase_rate = purchase_rate
+      end
+
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)
@@ -194,7 +295,12 @@ module Algolia
           conversion_rate == other.conversion_rate &&
           tracked_hit_count == other.tracked_hit_count &&
           click_count == other.click_count &&
-          conversion_count == other.conversion_count
+          conversion_count == other.conversion_count &&
+          add_to_cart_rate == other.add_to_cart_rate &&
+          add_to_cart_count == other.add_to_cart_count &&
+          purchase_rate == other.purchase_rate &&
+          purchase_count == other.purchase_count &&
+          currencies == other.currencies
       end
 
       # @see the `==` method
@@ -206,7 +312,8 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [hit, count, click_through_rate, conversion_rate, tracked_hit_count, click_count, conversion_count].hash
+        [hit, count, click_through_rate, conversion_rate, tracked_hit_count, click_count, conversion_count, add_to_cart_rate, add_to_cart_count, purchase_rate, purchase_count,
+         currencies].hash
       end
 
       # Builds the object from hash

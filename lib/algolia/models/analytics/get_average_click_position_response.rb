@@ -6,13 +6,13 @@ require 'time'
 module Algolia
   module Analytics
     class GetAverageClickPositionResponse
-      # Average count of all click events.
+      # Average position of a clicked search result in the list of search results. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
       attr_accessor :average
 
-      # Number of click events.
+      # Number of clicks associated with this search.
       attr_accessor :click_count
 
-      # Average click positions.
+      # Daily average click positions.
       attr_accessor :dates
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -34,13 +34,15 @@ module Algolia
         {
           :average => :Float,
           :click_count => :Integer,
-          :dates => :'Array<AverageClickEvent>'
+          :dates => :'Array<DailyAverageClicks>'
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([])
+        Set.new([
+                  :average
+                ])
       end
 
       # Initializes the object
@@ -79,6 +81,30 @@ module Algolia
         else
           self.dates = nil
         end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] average Value to be assigned
+      def average=(average)
+        if !average.nil? && average < 1
+          raise ArgumentError, 'invalid value for "average", must be greater than or equal to 1.'
+        end
+
+        @average = average
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] click_count Value to be assigned
+      def click_count=(click_count)
+        if click_count.nil?
+          raise ArgumentError, 'click_count cannot be nil'
+        end
+
+        if click_count < 0
+          raise ArgumentError, 'invalid value for "click_count", must be greater than or equal to 0.'
+        end
+
+        @click_count = click_count
       end
 
       # Checks equality by comparing each attribute.

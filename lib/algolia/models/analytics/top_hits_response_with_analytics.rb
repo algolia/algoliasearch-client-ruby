@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Analytics
     class TopHitsResponseWithAnalytics
-      # Top hits.
+      # Most frequent search results with click and conversion metrics.
       attr_accessor :hits
 
       # Attribute mapping from ruby-style variable name to JSON key.

@@ -6,10 +6,10 @@ require 'time'
 module Algolia
   module Analytics
     class GetUsersCountResponse
-      # Number of occurrences.
+      # Number of unique users.
       attr_accessor :count
 
-      # User count.
+      # Daily number of unique users.
       attr_accessor :dates
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -29,7 +29,7 @@ module Algolia
       def self.types_mapping
         {
           :count => :Integer,
-          :dates => :'Array<UserWithDate>'
+          :dates => :'Array<DailyUsers>'
         }
       end
 

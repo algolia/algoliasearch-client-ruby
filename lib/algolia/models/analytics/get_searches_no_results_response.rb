@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Analytics
     class GetSearchesNoResultsResponse
-      # Searches with no results.
+      # Searches without results.
       attr_accessor :searches
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -24,7 +24,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :searches => :'Array<SearchNoResultEvent>'
+          :searches => :'Array<DailySearchesNoResults>'
         }
       end
 

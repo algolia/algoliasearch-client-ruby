@@ -5,18 +5,18 @@ require 'time'
 
 module Algolia
   module Analytics
-    class ClickPosition
-      # Range of positions with the following pattern: - For positions 1 to 10, the number of click events are shown for each position - For positions 11 to 20, all click events are grouped - For positions 21 and up, all click events are grouped.
-      attr_accessor :position
+    class DailySearches
+      # Date in the format YYYY-MM-DD.
+      attr_accessor :date
 
-      # Number of click events.
-      attr_accessor :click_count
+      # Number of occurrences.
+      attr_accessor :count
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :position => :position,
-          :click_count => :clickCount
+          :date => :date,
+          :count => :count
         }
       end
 
@@ -28,8 +28,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :position => :'Array<Integer>',
-          :click_count => :Integer
+          :date => :String,
+          :count => :Integer
         }
       end
 
@@ -42,31 +42,29 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::ClickPosition` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::DailySearches` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::ClickPosition`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::DailySearches`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:position)
-          if (value = attributes[:position]).is_a?(Array)
-            self.position = value
-          end
+        if attributes.key?(:date)
+          self.date = attributes[:date]
         else
-          self.position = nil
+          self.date = nil
         end
 
-        if attributes.key?(:click_count)
-          self.click_count = attributes[:click_count]
+        if attributes.key?(:count)
+          self.count = attributes[:count]
         else
-          self.click_count = nil
+          self.count = nil
         end
       end
 
@@ -76,8 +74,8 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          position == other.position &&
-          click_count == other.click_count
+          date == other.date &&
+          count == other.count
       end
 
       # @see the `==` method
@@ -89,7 +87,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [position, click_count].hash
+        [date, count].hash
       end
 
       # Builds the object from hash

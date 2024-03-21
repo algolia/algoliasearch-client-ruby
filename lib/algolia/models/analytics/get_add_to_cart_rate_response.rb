@@ -5,22 +5,26 @@ require 'time'
 
 module Algolia
   module Analytics
-    class SearchNoResultEvent
-      # User query.
-      attr_accessor :search
+    class GetAddToCartRateResponse
+      # Add-to-cart rate, calculated as number of tracked searches with at least one add-to-cart event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+      attr_accessor :rate
 
-      # Number of occurrences.
-      attr_accessor :count
+      # Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
+      attr_accessor :tracked_search_count
 
-      # Number of results (hits).
-      attr_accessor :nb_hits
+      # Number of add-to-cart events from this search.
+      attr_accessor :add_to_cart_count
+
+      # Daily add-to-cart rates.
+      attr_accessor :dates
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :search => :search,
-          :count => :count,
-          :nb_hits => :nbHits
+          :rate => :rate,
+          :tracked_search_count => :trackedSearchCount,
+          :add_to_cart_count => :addToCartCount,
+          :dates => :dates
         }
       end
 
@@ -32,51 +36,90 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :search => :String,
-          :count => :Integer,
-          :nb_hits => :Integer
+          :rate => :Float,
+          :tracked_search_count => :Integer,
+          :add_to_cart_count => :Integer,
+          :dates => :'Array<DailyAddToCartRates>'
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([])
+        Set.new([
+                  :rate
+                ])
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::SearchNoResultEvent` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::GetAddToCartRateResponse` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::SearchNoResultEvent`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::GetAddToCartRateResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:search)
-          self.search = attributes[:search]
+        if attributes.key?(:rate)
+          self.rate = attributes[:rate]
         else
-          self.search = nil
+          self.rate = nil
         end
 
-        if attributes.key?(:count)
-          self.count = attributes[:count]
+        if attributes.key?(:tracked_search_count)
+          self.tracked_search_count = attributes[:tracked_search_count]
         else
-          self.count = nil
+          self.tracked_search_count = nil
         end
 
-        if attributes.key?(:nb_hits)
-          self.nb_hits = attributes[:nb_hits]
+        if attributes.key?(:add_to_cart_count)
+          self.add_to_cart_count = attributes[:add_to_cart_count]
         else
-          self.nb_hits = nil
+          self.add_to_cart_count = nil
         end
+
+        if attributes.key?(:dates)
+          if (value = attributes[:dates]).is_a?(Array)
+            self.dates = value
+          end
+        else
+          self.dates = nil
+        end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] rate Value to be assigned
+      def rate=(rate)
+        if !rate.nil? && rate > 1
+          raise ArgumentError, 'invalid value for "rate", must be smaller than or equal to 1.'
+        end
+
+        if !rate.nil? && rate < 0
+          raise ArgumentError, 'invalid value for "rate", must be greater than or equal to 0.'
+        end
+
+        @rate = rate
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] add_to_cart_count Value to be assigned
+      def add_to_cart_count=(add_to_cart_count)
+        if add_to_cart_count.nil?
+          raise ArgumentError, 'add_to_cart_count cannot be nil'
+        end
+
+        if add_to_cart_count < 0
+          raise ArgumentError, 'invalid value for "add_to_cart_count", must be greater than or equal to 0.'
+        end
+
+        @add_to_cart_count = add_to_cart_count
       end
 
       # Checks equality by comparing each attribute.
@@ -85,9 +128,10 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          search == other.search &&
-          count == other.count &&
-          nb_hits == other.nb_hits
+          rate == other.rate &&
+          tracked_search_count == other.tracked_search_count &&
+          add_to_cart_count == other.add_to_cart_count &&
+          dates == other.dates
       end
 
       # @see the `==` method
@@ -99,7 +143,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [search, count, nb_hits].hash
+        [rate, tracked_search_count, add_to_cart_count, dates].hash
       end
 
       # Builds the object from hash

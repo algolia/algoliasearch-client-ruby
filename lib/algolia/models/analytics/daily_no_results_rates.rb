@@ -5,26 +5,26 @@ require 'time'
 
 module Algolia
   module Analytics
-    class GetNoResultsRateResponse
-      # No results rate, calculated as number of searches with zero results divided by the total number of searches.
-      attr_accessor :rate
-
-      # Number of searches.
-      attr_accessor :count
+    class DailyNoResultsRates
+      # Date in the format YYYY-MM-DD.
+      attr_accessor :date
 
       # Number of searches without any results.
       attr_accessor :no_result_count
 
-      # Daily no results rates.
-      attr_accessor :dates
+      # Number of searches.
+      attr_accessor :count
+
+      # No results rate, calculated as number of searches with zero results divided by the total number of searches.
+      attr_accessor :rate
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :rate => :rate,
-          :count => :count,
+          :date => :date,
           :no_result_count => :noResultCount,
-          :dates => :dates
+          :count => :count,
+          :rate => :rate
         }
       end
 
@@ -36,10 +36,10 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :rate => :Float,
-          :count => :Integer,
+          :date => :String,
           :no_result_count => :Integer,
-          :dates => :'Array<DailyNoResultsRates>'
+          :count => :Integer,
+          :rate => :Float
         }
       end
 
@@ -52,29 +52,23 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::GetNoResultsRateResponse` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::DailyNoResultsRates` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::GetNoResultsRateResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::DailyNoResultsRates`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:rate)
-          self.rate = attributes[:rate]
+        if attributes.key?(:date)
+          self.date = attributes[:date]
         else
-          self.rate = nil
-        end
-
-        if attributes.key?(:count)
-          self.count = attributes[:count]
-        else
-          self.count = nil
+          self.date = nil
         end
 
         if attributes.key?(:no_result_count)
@@ -83,12 +77,16 @@ module Algolia
           self.no_result_count = nil
         end
 
-        if attributes.key?(:dates)
-          if (value = attributes[:dates]).is_a?(Array)
-            self.dates = value
-          end
+        if attributes.key?(:count)
+          self.count = attributes[:count]
         else
-          self.dates = nil
+          self.count = nil
+        end
+
+        if attributes.key?(:rate)
+          self.rate = attributes[:rate]
+        else
+          self.rate = nil
         end
       end
 
@@ -116,10 +114,10 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          rate == other.rate &&
-          count == other.count &&
+          date == other.date &&
           no_result_count == other.no_result_count &&
-          dates == other.dates
+          count == other.count &&
+          rate == other.rate
       end
 
       # @see the `==` method
@@ -131,7 +129,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [rate, count, no_result_count, dates].hash
+        [date, no_result_count, count, rate].hash
       end
 
       # Builds the object from hash

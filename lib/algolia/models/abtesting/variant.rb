@@ -53,7 +53,7 @@ module Algolia
       # Number of searches carried out during the A/B test.
       attr_accessor :search_count
 
-      # Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
+      # Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
       attr_accessor :tracked_search_count
 
       # A/B test traffic percentage.
@@ -106,7 +106,7 @@ module Algolia
           :click_through_rate => :Float,
           :conversion_count => :Integer,
           :conversion_rate => :Float,
-          :currencies => :'Hash<String, CurrenciesValue>',
+          :currencies => :'Hash<String, Currency>',
           :description => :String,
           :estimated_sample_size => :Integer,
           :filter_effects => :FilterEffects,
@@ -132,7 +132,6 @@ module Algolia
                   :no_result_count,
                   :purchase_rate,
                   :search_count,
-                  :tracked_search_count,
                   :user_count,
                   :tracked_user_count
                 ])
@@ -249,8 +248,6 @@ module Algolia
 
         if attributes.key?(:tracked_search_count)
           self.tracked_search_count = attributes[:tracked_search_count]
-        else
-          self.tracked_search_count = nil
         end
 
         if attributes.key?(:traffic_percentage)

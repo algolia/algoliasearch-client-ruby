@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Analytics
     class TopCountry
-      # Country.
+      # Country code.
       attr_accessor :country
 
       # Number of occurrences.

@@ -6,16 +6,16 @@ require 'time'
 module Algolia
   module Analytics
     class GetClickThroughRateResponse
-      # [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+      # Click-through rate, calculated as number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
       attr_accessor :rate
 
-      # Number of click events.
+      # Number of clicks associated with this search.
       attr_accessor :click_count
 
-      # Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
+      # Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
       attr_accessor :tracked_search_count
 
-      # Click-through rate events.
+      # Daily click-through rates.
       attr_accessor :dates
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -39,14 +39,14 @@ module Algolia
           :rate => :Float,
           :click_count => :Integer,
           :tracked_search_count => :Integer,
-          :dates => :'Array<ClickThroughRateEvent>'
+          :dates => :'Array<DailyClickThroughRates>'
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new([
-                  :tracked_search_count
+                  :rate
                 ])
       end
 
@@ -97,19 +97,29 @@ module Algolia
       # Custom attribute writer method with validation
       # @param [Object] rate Value to be assigned
       def rate=(rate)
-        if rate.nil?
-          raise ArgumentError, 'rate cannot be nil'
-        end
-
-        if rate > 1
+        if !rate.nil? && rate > 1
           raise ArgumentError, 'invalid value for "rate", must be smaller than or equal to 1.'
         end
 
-        if rate < 0
+        if !rate.nil? && rate < 0
           raise ArgumentError, 'invalid value for "rate", must be greater than or equal to 0.'
         end
 
         @rate = rate
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] click_count Value to be assigned
+      def click_count=(click_count)
+        if click_count.nil?
+          raise ArgumentError, 'click_count cannot be nil'
+        end
+
+        if click_count < 0
+          raise ArgumentError, 'invalid value for "click_count", must be greater than or equal to 0.'
+        end
+
+        @click_count = click_count
       end
 
       # Checks equality by comparing each attribute.

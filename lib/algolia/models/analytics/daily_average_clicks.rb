@@ -5,26 +5,22 @@ require 'time'
 
 module Algolia
   module Analytics
-    class GetConversationRateResponse
-      # [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
-      attr_accessor :rate
+    class DailyAverageClicks
+      # Average position of a clicked search result in the list of search results. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+      attr_accessor :average
 
-      # Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
-      attr_accessor :tracked_search_count
+      # Number of clicks associated with this search.
+      attr_accessor :click_count
 
-      # Number of converted clicks.
-      attr_accessor :conversion_count
-
-      # Conversion events.
-      attr_accessor :dates
+      # Date in the format YYYY-MM-DD.
+      attr_accessor :date
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :rate => :rate,
-          :tracked_search_count => :trackedSearchCount,
-          :conversion_count => :conversionCount,
-          :dates => :dates
+          :average => :average,
+          :click_count => :clickCount,
+          :date => :date
         }
       end
 
@@ -36,17 +32,16 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :rate => :Float,
-          :tracked_search_count => :Integer,
-          :conversion_count => :Integer,
-          :dates => :'Array<ConversionRateEvent>'
+          :average => :Float,
+          :click_count => :Integer,
+          :date => :String
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new([
-                  :tracked_search_count
+                  :average
                 ])
       end
 
@@ -54,62 +49,60 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::GetConversationRateResponse` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::DailyAverageClicks` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::GetConversationRateResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::DailyAverageClicks`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:rate)
-          self.rate = attributes[:rate]
+        if attributes.key?(:average)
+          self.average = attributes[:average]
         else
-          self.rate = nil
+          self.average = nil
         end
 
-        if attributes.key?(:tracked_search_count)
-          self.tracked_search_count = attributes[:tracked_search_count]
+        if attributes.key?(:click_count)
+          self.click_count = attributes[:click_count]
         else
-          self.tracked_search_count = nil
+          self.click_count = nil
         end
 
-        if attributes.key?(:conversion_count)
-          self.conversion_count = attributes[:conversion_count]
+        if attributes.key?(:date)
+          self.date = attributes[:date]
         else
-          self.conversion_count = nil
-        end
-
-        if attributes.key?(:dates)
-          if (value = attributes[:dates]).is_a?(Array)
-            self.dates = value
-          end
-        else
-          self.dates = nil
+          self.date = nil
         end
       end
 
       # Custom attribute writer method with validation
-      # @param [Object] rate Value to be assigned
-      def rate=(rate)
-        if rate.nil?
-          raise ArgumentError, 'rate cannot be nil'
+      # @param [Object] average Value to be assigned
+      def average=(average)
+        if !average.nil? && average < 1
+          raise ArgumentError, 'invalid value for "average", must be greater than or equal to 1.'
         end
 
-        if rate > 1
-          raise ArgumentError, 'invalid value for "rate", must be smaller than or equal to 1.'
+        @average = average
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] click_count Value to be assigned
+      def click_count=(click_count)
+        if click_count.nil?
+          raise ArgumentError, 'click_count cannot be nil'
         end
 
-        if rate < 0
-          raise ArgumentError, 'invalid value for "rate", must be greater than or equal to 0.'
+        if click_count < 0
+          raise ArgumentError, 'invalid value for "click_count", must be greater than or equal to 0.'
         end
 
-        @rate = rate
+        @click_count = click_count
       end
 
       # Checks equality by comparing each attribute.
@@ -118,10 +111,9 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          rate == other.rate &&
-          tracked_search_count == other.tracked_search_count &&
-          conversion_count == other.conversion_count &&
-          dates == other.dates
+          average == other.average &&
+          click_count == other.click_count &&
+          date == other.date
       end
 
       # @see the `==` method
@@ -133,7 +125,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [rate, tracked_search_count, conversion_count, dates].hash
+        [average, click_count, date].hash
       end
 
       # Builds the object from hash

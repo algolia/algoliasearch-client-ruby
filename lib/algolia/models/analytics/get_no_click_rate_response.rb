@@ -6,16 +6,16 @@ require 'time'
 module Algolia
   module Analytics
     class GetNoClickRateResponse
-      # [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+      # No click rate, calculated as number of tracked searches without any click divided by the number of tracked searches.
       attr_accessor :rate
 
-      # Number of click events.
+      # Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
       attr_accessor :count
 
-      # Number of click events.
+      # Number of times this search was returned as a result without any click.
       attr_accessor :no_click_count
 
-      # Overall count of searches without clicks plus a daily breakdown.
+      # Daily no click rates.
       attr_accessor :dates
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -39,7 +39,7 @@ module Algolia
           :rate => :Float,
           :count => :Integer,
           :no_click_count => :Integer,
-          :dates => :'Array<NoClickRateEvent>'
+          :dates => :'Array<DailyNoClickRates>'
         }
       end
 
@@ -108,6 +108,20 @@ module Algolia
         end
 
         @rate = rate
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] no_click_count Value to be assigned
+      def no_click_count=(no_click_count)
+        if no_click_count.nil?
+          raise ArgumentError, 'no_click_count cannot be nil'
+        end
+
+        if no_click_count < 1
+          raise ArgumentError, 'invalid value for "no_click_count", must be greater than or equal to 1.'
+        end
+
+        @no_click_count = no_click_count
       end
 
       # Checks equality by comparing each attribute.

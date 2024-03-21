@@ -9,7 +9,7 @@ module Algolia
       # Number of occurrences.
       attr_accessor :count
 
-      # Search events with their associated dates and hit counts.
+      # Daily number of searches.
       attr_accessor :dates
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -29,7 +29,7 @@ module Algolia
       def self.types_mapping
         {
           :count => :Integer,
-          :dates => :'Array<SearchEvent>'
+          :dates => :'Array<DailySearches>'
         }
       end
 

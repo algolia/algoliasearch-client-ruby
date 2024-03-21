@@ -5,18 +5,14 @@ require 'time'
 
 module Algolia
   module Analytics
-    class UserWithDate
-      # Date of the event in the format YYYY-MM-DD.
-      attr_accessor :date
-
-      # Number of occurrences.
-      attr_accessor :count
+    class TopSearchesResponseWithRevenueAnalytics
+      # Most popular searches, including their click and revenue metrics.
+      attr_accessor :searches
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :date => :date,
-          :count => :count
+          :searches => :searches
         }
       end
 
@@ -28,8 +24,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :date => :String,
-          :count => :Integer
+          :searches => :'Array<TopSearchWithRevenueAnalytics>'
         }
       end
 
@@ -42,29 +37,25 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::UserWithDate` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::TopSearchesResponseWithRevenueAnalytics` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::UserWithDate`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::TopSearchesResponseWithRevenueAnalytics`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:date)
-          self.date = attributes[:date]
+        if attributes.key?(:searches)
+          if (value = attributes[:searches]).is_a?(Array)
+            self.searches = value
+          end
         else
-          self.date = nil
-        end
-
-        if attributes.key?(:count)
-          self.count = attributes[:count]
-        else
-          self.count = nil
+          self.searches = nil
         end
       end
 
@@ -74,8 +65,7 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          date == other.date &&
-          count == other.count
+          searches == other.searches
       end
 
       # @see the `==` method
@@ -87,7 +77,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [date, count].hash
+        [searches].hash
       end
 
       # Builds the object from hash

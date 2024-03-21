@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Analytics
     class GetStatusResponse
-      # Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
+      # Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format. If null, no update was performed yet.
       attr_accessor :updated_at
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -30,7 +30,9 @@ module Algolia
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([])
+        Set.new([
+                  :updated_at
+                ])
       end
 
       # Initializes the object

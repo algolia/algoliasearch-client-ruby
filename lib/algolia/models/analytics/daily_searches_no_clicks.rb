@@ -5,18 +5,22 @@ require 'time'
 
 module Algolia
   module Analytics
-    class SearchEvent
-      # Date of the event in the format YYYY-MM-DD.
-      attr_accessor :date
+    class DailySearchesNoClicks
+      # Search query.
+      attr_accessor :search
 
-      # Number of occurrences.
+      # Number of tracked searches.
       attr_accessor :count
+
+      # Number of results (hits).
+      attr_accessor :nb_hits
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :date => :date,
-          :count => :count
+          :search => :search,
+          :count => :count,
+          :nb_hits => :nbHits
         }
       end
 
@@ -28,8 +32,9 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :date => :String,
-          :count => :Integer
+          :search => :String,
+          :count => :Integer,
+          :nb_hits => :Integer
         }
       end
 
@@ -42,23 +47,23 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::SearchEvent` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::DailySearchesNoClicks` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::SearchEvent`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::DailySearchesNoClicks`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:date)
-          self.date = attributes[:date]
+        if attributes.key?(:search)
+          self.search = attributes[:search]
         else
-          self.date = nil
+          self.search = nil
         end
 
         if attributes.key?(:count)
@@ -66,6 +71,26 @@ module Algolia
         else
           self.count = nil
         end
+
+        if attributes.key?(:nb_hits)
+          self.nb_hits = attributes[:nb_hits]
+        else
+          self.nb_hits = nil
+        end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] count Value to be assigned
+      def count=(count)
+        if count.nil?
+          raise ArgumentError, 'count cannot be nil'
+        end
+
+        if count < 1
+          raise ArgumentError, 'invalid value for "count", must be greater than or equal to 1.'
+        end
+
+        @count = count
       end
 
       # Checks equality by comparing each attribute.
@@ -74,8 +99,9 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          date == other.date &&
-          count == other.count
+          search == other.search &&
+          count == other.count &&
+          nb_hits == other.nb_hits
       end
 
       # @see the `==` method
@@ -87,7 +113,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [date, count].hash
+        [search, count, nb_hits].hash
       end
 
       # Builds the object from hash

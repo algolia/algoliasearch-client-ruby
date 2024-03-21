@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Analytics
     class GetTopFilterAttributesResponse
-      # Filterable attributes.
+      # Most frequent filters.
       attr_accessor :attributes
 
       # Attribute mapping from ruby-style variable name to JSON key.

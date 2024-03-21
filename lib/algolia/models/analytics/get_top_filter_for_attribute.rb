@@ -9,7 +9,6 @@ module Algolia
       # Attribute name.
       attr_accessor :attribute
 
-      # Operator.
       attr_accessor :operator
 
       # Attribute value.
@@ -17,6 +16,28 @@ module Algolia
 
       # Number of occurrences.
       attr_accessor :count
+
+      class EnumAttributeValidator
+        attr_reader :datatype
+        attr_reader :allowable_values
+
+        def initialize(datatype, allowable_values)
+          @allowable_values = allowable_values.map do |value|
+            case datatype.to_s
+            when /Integer/i
+              value.to_i
+            when /Float/i
+              value.to_f
+            else
+              value
+            end
+          end
+        end
+
+        def valid?(value)
+          !value || allowable_values.include?(value)
+        end
+      end
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
@@ -37,7 +58,7 @@ module Algolia
       def self.types_mapping
         {
           :attribute => :String,
-          :operator => :String,
+          :operator => :Operator,
           :value => :String,
           :count => :Integer
         }

@@ -5,21 +5,25 @@ require 'time'
 
 module Algolia
   module Analytics
-    class AverageClickEvent
-      # Average count of all click events.
-      attr_accessor :average
+    class DailyNoClickRates
+      # No click rate, calculated as number of tracked searches without any click divided by the number of tracked searches.
+      attr_accessor :rate
 
-      # Number of click events.
-      attr_accessor :click_count
+      # Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
+      attr_accessor :count
 
-      # Date of the event in the format YYYY-MM-DD.
+      # Number of times this search was returned as a result without any click.
+      attr_accessor :no_click_count
+
+      # Date in the format YYYY-MM-DD.
       attr_accessor :date
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :average => :average,
-          :click_count => :clickCount,
+          :rate => :rate,
+          :count => :count,
+          :no_click_count => :noClickCount,
           :date => :date
         }
       end
@@ -32,8 +36,9 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :average => :Float,
-          :click_count => :Integer,
+          :rate => :Float,
+          :count => :Integer,
+          :no_click_count => :Integer,
           :date => :String
         }
       end
@@ -47,29 +52,35 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::AverageClickEvent` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::DailyNoClickRates` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::AverageClickEvent`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::DailyNoClickRates`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:average)
-          self.average = attributes[:average]
+        if attributes.key?(:rate)
+          self.rate = attributes[:rate]
         else
-          self.average = nil
+          self.rate = nil
         end
 
-        if attributes.key?(:click_count)
-          self.click_count = attributes[:click_count]
+        if attributes.key?(:count)
+          self.count = attributes[:count]
         else
-          self.click_count = nil
+          self.count = nil
+        end
+
+        if attributes.key?(:no_click_count)
+          self.no_click_count = attributes[:no_click_count]
+        else
+          self.no_click_count = nil
         end
 
         if attributes.key?(:date)
@@ -79,14 +90,47 @@ module Algolia
         end
       end
 
+      # Custom attribute writer method with validation
+      # @param [Object] rate Value to be assigned
+      def rate=(rate)
+        if rate.nil?
+          raise ArgumentError, 'rate cannot be nil'
+        end
+
+        if rate > 1
+          raise ArgumentError, 'invalid value for "rate", must be smaller than or equal to 1.'
+        end
+
+        if rate < 0
+          raise ArgumentError, 'invalid value for "rate", must be greater than or equal to 0.'
+        end
+
+        @rate = rate
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] no_click_count Value to be assigned
+      def no_click_count=(no_click_count)
+        if no_click_count.nil?
+          raise ArgumentError, 'no_click_count cannot be nil'
+        end
+
+        if no_click_count < 1
+          raise ArgumentError, 'invalid value for "no_click_count", must be greater than or equal to 1.'
+        end
+
+        @no_click_count = no_click_count
+      end
+
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)
         return true if equal?(other)
 
         self.class == other.class &&
-          average == other.average &&
-          click_count == other.click_count &&
+          rate == other.rate &&
+          count == other.count &&
+          no_click_count == other.no_click_count &&
           date == other.date
       end
 
@@ -99,7 +143,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [average, click_count, date].hash
+        [rate, count, no_click_count, date].hash
       end
 
       # Builds the object from hash

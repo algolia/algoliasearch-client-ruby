@@ -4,27 +4,19 @@ require 'date'
 require 'time'
 
 module Algolia
-  module Abtesting
-    class CurrenciesValue
-      # Currency code.
-      attr_accessor :currency
+  module Analytics
+    class GetRevenue
+      # Revenue associated with this search, broken-down by currencies.
+      attr_accessor :currencies
 
-      # Revenue for this currency.
-      attr_accessor :revenue
-
-      # Mean for this currency.
-      attr_accessor :mean
-
-      # Standard deviation for this currency.
-      attr_accessor :standard_deviation
+      # Daily revenue.
+      attr_accessor :dates
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :currency => :currency,
-          :revenue => :revenue,
-          :mean => :mean,
-          :standard_deviation => :standardDeviation
+          :currencies => :currencies,
+          :dates => :dates
         }
       end
 
@@ -36,10 +28,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :currency => :String,
-          :revenue => :Float,
-          :mean => :Float,
-          :standard_deviation => :Float
+          :currencies => :'Hash<String, CurrenciesValue>',
+          :dates => :'Array<DailyRevenue>'
         }
       end
 
@@ -52,33 +42,33 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::CurrenciesValue` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::GetRevenue` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::CurrenciesValue`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::GetRevenue`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:currency)
-          self.currency = attributes[:currency]
+        if attributes.key?(:currencies)
+          if (value = attributes[:currencies]).is_a?(Hash)
+            self.currencies = value
+          end
+        else
+          self.currencies = nil
         end
 
-        if attributes.key?(:revenue)
-          self.revenue = attributes[:revenue]
-        end
-
-        if attributes.key?(:mean)
-          self.mean = attributes[:mean]
-        end
-
-        if attributes.key?(:standard_deviation)
-          self.standard_deviation = attributes[:standard_deviation]
+        if attributes.key?(:dates)
+          if (value = attributes[:dates]).is_a?(Array)
+            self.dates = value
+          end
+        else
+          self.dates = nil
         end
       end
 
@@ -88,10 +78,8 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          currency == other.currency &&
-          revenue == other.revenue &&
-          mean == other.mean &&
-          standard_deviation == other.standard_deviation
+          currencies == other.currencies &&
+          dates == other.dates
       end
 
       # @see the `==` method
@@ -103,7 +91,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [currency, revenue, mean, standard_deviation].hash
+        [currencies, dates].hash
       end
 
       # Builds the object from hash
@@ -168,7 +156,7 @@ module Algolia
           end
         else # model
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Abtesting.const_get(type)
+          klass = Algolia::Analytics.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass.build_from_hash(value)
         end
       end

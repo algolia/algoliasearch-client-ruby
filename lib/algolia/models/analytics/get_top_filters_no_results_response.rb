@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Analytics
     class GetTopFiltersNoResultsResponse
-      # Filters with no results.
+      # Filters for searches without any results. If null, the search term specified with the `search` parameter is not a search without results, or the `search` parameter is absent from the request.
       attr_accessor :values
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -30,7 +30,9 @@ module Algolia
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([])
+        Set.new([
+                  :values
+                ])
       end
 
       # Initializes the object

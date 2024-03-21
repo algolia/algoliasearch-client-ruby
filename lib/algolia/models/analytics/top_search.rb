@@ -6,10 +6,10 @@ require 'time'
 module Algolia
   module Analytics
     class TopSearch
-      # User query.
+      # Search query.
       attr_accessor :search
 
-      # Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).
+      # Number of searches.
       attr_accessor :count
 
       # Number of results (hits).

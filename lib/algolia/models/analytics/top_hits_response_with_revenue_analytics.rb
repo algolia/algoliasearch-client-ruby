@@ -5,26 +5,14 @@ require 'time'
 
 module Algolia
   module Analytics
-    class GetNoResultsRateResponse
-      # No results rate, calculated as number of searches with zero results divided by the total number of searches.
-      attr_accessor :rate
-
-      # Number of searches.
-      attr_accessor :count
-
-      # Number of searches without any results.
-      attr_accessor :no_result_count
-
-      # Daily no results rates.
-      attr_accessor :dates
+    class TopHitsResponseWithRevenueAnalytics
+      # Most frequent search results with click, conversion, and revenue metrics.
+      attr_accessor :hits
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :rate => :rate,
-          :count => :count,
-          :no_result_count => :noResultCount,
-          :dates => :dates
+          :hits => :hits
         }
       end
 
@@ -36,10 +24,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :rate => :Float,
-          :count => :Integer,
-          :no_result_count => :Integer,
-          :dates => :'Array<DailyNoResultsRates>'
+          :hits => :'Array<TopHitWithRevenueAnalytics>'
         }
       end
 
@@ -52,62 +37,26 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::GetNoResultsRateResponse` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::TopHitsResponseWithRevenueAnalytics` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::GetNoResultsRateResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::TopHitsResponseWithRevenueAnalytics`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:rate)
-          self.rate = attributes[:rate]
-        else
-          self.rate = nil
-        end
-
-        if attributes.key?(:count)
-          self.count = attributes[:count]
-        else
-          self.count = nil
-        end
-
-        if attributes.key?(:no_result_count)
-          self.no_result_count = attributes[:no_result_count]
-        else
-          self.no_result_count = nil
-        end
-
-        if attributes.key?(:dates)
-          if (value = attributes[:dates]).is_a?(Array)
-            self.dates = value
+        if attributes.key?(:hits)
+          if (value = attributes[:hits]).is_a?(Array)
+            self.hits = value
           end
         else
-          self.dates = nil
+          self.hits = nil
         end
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] rate Value to be assigned
-      def rate=(rate)
-        if rate.nil?
-          raise ArgumentError, 'rate cannot be nil'
-        end
-
-        if rate > 1
-          raise ArgumentError, 'invalid value for "rate", must be smaller than or equal to 1.'
-        end
-
-        if rate < 0
-          raise ArgumentError, 'invalid value for "rate", must be greater than or equal to 0.'
-        end
-
-        @rate = rate
       end
 
       # Checks equality by comparing each attribute.
@@ -116,10 +65,7 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          rate == other.rate &&
-          count == other.count &&
-          no_result_count == other.no_result_count &&
-          dates == other.dates
+          hits == other.hits
       end
 
       # @see the `==` method
@@ -131,7 +77,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [rate, count, no_result_count, dates].hash
+        [hits].hash
       end
 
       # Builds the object from hash

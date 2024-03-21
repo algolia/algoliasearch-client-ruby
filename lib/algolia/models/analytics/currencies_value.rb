@@ -5,26 +5,19 @@ require 'time'
 
 module Algolia
   module Analytics
-    class GetNoResultsRateResponse
-      # No results rate, calculated as number of searches with zero results divided by the total number of searches.
-      attr_accessor :rate
+    # Currency code.
+    class CurrenciesValue
+      # Currency code.
+      attr_accessor :currency
 
-      # Number of searches.
-      attr_accessor :count
-
-      # Number of searches without any results.
-      attr_accessor :no_result_count
-
-      # Daily no results rates.
-      attr_accessor :dates
+      # Revenue associated with this search in this currency.
+      attr_accessor :revenue
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :rate => :rate,
-          :count => :count,
-          :no_result_count => :noResultCount,
-          :dates => :dates
+          :currency => :currency,
+          :revenue => :revenue
         }
       end
 
@@ -36,10 +29,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :rate => :Float,
-          :count => :Integer,
-          :no_result_count => :Integer,
-          :dates => :'Array<DailyNoResultsRates>'
+          :currency => :String,
+          :revenue => :Float
         }
       end
 
@@ -52,62 +43,26 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::GetNoResultsRateResponse` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::CurrenciesValue` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::GetNoResultsRateResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::CurrenciesValue`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:rate)
-          self.rate = attributes[:rate]
-        else
-          self.rate = nil
+        if attributes.key?(:currency)
+          self.currency = attributes[:currency]
         end
 
-        if attributes.key?(:count)
-          self.count = attributes[:count]
-        else
-          self.count = nil
+        if attributes.key?(:revenue)
+          self.revenue = attributes[:revenue]
         end
-
-        if attributes.key?(:no_result_count)
-          self.no_result_count = attributes[:no_result_count]
-        else
-          self.no_result_count = nil
-        end
-
-        if attributes.key?(:dates)
-          if (value = attributes[:dates]).is_a?(Array)
-            self.dates = value
-          end
-        else
-          self.dates = nil
-        end
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] rate Value to be assigned
-      def rate=(rate)
-        if rate.nil?
-          raise ArgumentError, 'rate cannot be nil'
-        end
-
-        if rate > 1
-          raise ArgumentError, 'invalid value for "rate", must be smaller than or equal to 1.'
-        end
-
-        if rate < 0
-          raise ArgumentError, 'invalid value for "rate", must be greater than or equal to 0.'
-        end
-
-        @rate = rate
       end
 
       # Checks equality by comparing each attribute.
@@ -116,10 +71,8 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          rate == other.rate &&
-          count == other.count &&
-          no_result_count == other.no_result_count &&
-          dates == other.dates
+          currency == other.currency &&
+          revenue == other.revenue
       end
 
       # @see the `==` method
@@ -131,7 +84,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [rate, count, no_result_count, dates].hash
+        [currency, revenue].hash
       end
 
       # Builds the object from hash

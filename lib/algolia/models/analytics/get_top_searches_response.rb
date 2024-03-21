@@ -11,7 +11,8 @@ module Algolia
         def openapi_one_of
           [
             :TopSearchesResponse,
-            :TopSearchesResponseWithAnalytics
+            :TopSearchesResponseWithAnalytics,
+            :TopSearchesResponseWithRevenueAnalytics
           ]
         end
 

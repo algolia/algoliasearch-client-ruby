@@ -5,26 +5,26 @@ require 'time'
 
 module Algolia
   module Analytics
-    class GetNoResultsRateResponse
-      # No results rate, calculated as number of searches with zero results divided by the total number of searches.
+    class DailyConversionRates
+      # Conversion rate, calculated as number of tracked searches with at least one conversion event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
       attr_accessor :rate
 
-      # Number of searches.
-      attr_accessor :count
+      # Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
+      attr_accessor :tracked_search_count
 
-      # Number of searches without any results.
-      attr_accessor :no_result_count
+      # Number of conversions from this search.
+      attr_accessor :conversion_count
 
-      # Daily no results rates.
-      attr_accessor :dates
+      # Date in the format YYYY-MM-DD.
+      attr_accessor :date
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :rate => :rate,
-          :count => :count,
-          :no_result_count => :noResultCount,
-          :dates => :dates
+          :tracked_search_count => :trackedSearchCount,
+          :conversion_count => :conversionCount,
+          :date => :date
         }
       end
 
@@ -37,29 +37,31 @@ module Algolia
       def self.types_mapping
         {
           :rate => :Float,
-          :count => :Integer,
-          :no_result_count => :Integer,
-          :dates => :'Array<DailyNoResultsRates>'
+          :tracked_search_count => :Integer,
+          :conversion_count => :Integer,
+          :date => :String
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([])
+        Set.new([
+                  :rate
+                ])
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::GetNoResultsRateResponse` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::DailyConversionRates` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::GetNoResultsRateResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::DailyConversionRates`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
@@ -71,43 +73,51 @@ module Algolia
           self.rate = nil
         end
 
-        if attributes.key?(:count)
-          self.count = attributes[:count]
+        if attributes.key?(:tracked_search_count)
+          self.tracked_search_count = attributes[:tracked_search_count]
         else
-          self.count = nil
+          self.tracked_search_count = nil
         end
 
-        if attributes.key?(:no_result_count)
-          self.no_result_count = attributes[:no_result_count]
+        if attributes.key?(:conversion_count)
+          self.conversion_count = attributes[:conversion_count]
         else
-          self.no_result_count = nil
+          self.conversion_count = nil
         end
 
-        if attributes.key?(:dates)
-          if (value = attributes[:dates]).is_a?(Array)
-            self.dates = value
-          end
+        if attributes.key?(:date)
+          self.date = attributes[:date]
         else
-          self.dates = nil
+          self.date = nil
         end
       end
 
       # Custom attribute writer method with validation
       # @param [Object] rate Value to be assigned
       def rate=(rate)
-        if rate.nil?
-          raise ArgumentError, 'rate cannot be nil'
-        end
-
-        if rate > 1
+        if !rate.nil? && rate > 1
           raise ArgumentError, 'invalid value for "rate", must be smaller than or equal to 1.'
         end
 
-        if rate < 0
+        if !rate.nil? && rate < 0
           raise ArgumentError, 'invalid value for "rate", must be greater than or equal to 0.'
         end
 
         @rate = rate
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] conversion_count Value to be assigned
+      def conversion_count=(conversion_count)
+        if conversion_count.nil?
+          raise ArgumentError, 'conversion_count cannot be nil'
+        end
+
+        if conversion_count < 0
+          raise ArgumentError, 'invalid value for "conversion_count", must be greater than or equal to 0.'
+        end
+
+        @conversion_count = conversion_count
       end
 
       # Checks equality by comparing each attribute.
@@ -117,9 +127,9 @@ module Algolia
 
         self.class == other.class &&
           rate == other.rate &&
-          count == other.count &&
-          no_result_count == other.no_result_count &&
-          dates == other.dates
+          tracked_search_count == other.tracked_search_count &&
+          conversion_count == other.conversion_count &&
+          date == other.date
       end
 
       # @see the `==` method
@@ -131,7 +141,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [rate, count, no_result_count, dates].hash
+        [rate, tracked_search_count, conversion_count, date].hash
       end
 
       # Builds the object from hash
