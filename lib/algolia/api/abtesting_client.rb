@@ -90,7 +90,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
 
-      path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -133,7 +133,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
-      path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -177,7 +177,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
-      path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -222,7 +222,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
 
-      path = '/1{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
