@@ -5,7 +5,7 @@ require 'time'
 
 module Algolia
   module Monitoring
-    class GetInventory403Response
+    class GetServers403Response
       attr_accessor :reason
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -36,14 +36,14 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::GetInventory403Response` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::GetServers403Response` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::GetInventory403Response`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::GetServers403Response`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v

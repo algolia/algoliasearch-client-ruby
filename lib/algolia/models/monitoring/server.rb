@@ -11,10 +11,10 @@ module Algolia
 
       attr_accessor :region
 
-      # Included to support legacy applications. Do not rely on this attribute being present in the response. Use `is_replica` instead.
+      # Included to support legacy applications. Use `is_replica` instead.
       attr_accessor :is_slave
 
-      # Indicates whether this server is a replica of another server.
+      # Whether this server is a replica of another server.
       attr_accessor :is_replica
 
       # Name of the cluster to which this server belongs.
