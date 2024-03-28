@@ -6,10 +6,10 @@ require 'time'
 module Algolia
   module Ingestion
     class BigCommerceMetafield
-      # The namespace of the metafield.
+      # Namespace of the metafield.
       attr_accessor :namespace
 
-      # The key identifier of the metafield.
+      # Key identifier of the metafield.
       attr_accessor :key
 
       # Attribute mapping from ruby-style variable name to JSON key.

@@ -5,7 +5,7 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # The input for a `streaming` task whose source is of type `ga4BigqueryExport` and for which extracted data is continuously streamed.
+    # Input for a `streaming` task whose source is of type `ga4BigqueryExport` and for which extracted data is continuously streamed.
     class StreamingUtilsInput
       attr_accessor :mapping
 

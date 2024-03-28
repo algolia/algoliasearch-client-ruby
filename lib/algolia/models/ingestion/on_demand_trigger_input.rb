@@ -5,7 +5,7 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # The trigger information of a task of type `onDemand`.
+    # Trigger information for manually-triggered tasks.
     class OnDemandTriggerInput
       attr_accessor :type
 

@@ -5,11 +5,11 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # The trigger information of a task of type `onDemand`.
+    # Trigger information for manually-triggered tasks.
     class OnDemandTrigger
       attr_accessor :type
 
-      # The last time the scheduled task ran (RFC3339 format).
+      # The last time the scheduled task ran in RFC3339 format.
       attr_accessor :last_run
 
       class EnumAttributeValidator

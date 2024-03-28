@@ -5,11 +5,12 @@ require 'time'
 
 module Algolia
   module Ingestion
+    # Credentials for authenticating with Algolia.
     class AuthAlgoliaPartial
-      # Algolia Application ID.
+      # Algolia application ID.
       attr_accessor :app_id
 
-      # Algolia API Key, with the correct rights to push to an index and change settings.
+      # Algolia API key with the ACL: `addObject`, `deleteObject`, `settings`, `editSettings`, `listIndexes`, `deleteIndex`. This field is `null` in the API response.
       attr_accessor :api_key
 
       # Attribute mapping from ruby-style variable name to JSON key.

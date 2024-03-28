@@ -5,19 +5,11 @@ require 'time'
 
 module Algolia
   module Ingestion
-    class SourceType
-      BIGCOMMERCE = "bigcommerce".freeze
-      BIGQUERY = "bigquery".freeze
-      COMMERCETOOLS = "commercetools".freeze
-      CSV = "csv".freeze
-      DOCKER = "docker".freeze
-      GA4_BIGQUERY_EXPORT = "ga4BigqueryExport".freeze
-      JSON = "json".freeze
-      SHOPIFY = "shopify".freeze
-      SFCC = "sfcc".freeze
+    class MappingFormatSchema
+      MAPPINGKIT_V1 = "mappingkit/v1".freeze
 
       def self.all_vars
-        @all_vars ||= [BIGCOMMERCE, BIGQUERY, COMMERCETOOLS, CSV, DOCKER, GA4_BIGQUERY_EXPORT, JSON, SHOPIFY, SFCC].freeze
+        @all_vars ||= [MAPPINGKIT_V1].freeze
       end
 
       # Builds the enum from string
@@ -31,9 +23,9 @@ module Algolia
       # @param [String] The enum value in the form of the string
       # @return [String] The enum value
       def build_from_hash(value)
-        return value if SourceType.all_vars.include?(value)
+        return value if MappingFormatSchema.all_vars.include?(value)
 
-        raise "Invalid ENUM value #{value} for class #SourceType"
+        raise "Invalid ENUM value #{value} for class #MappingFormatSchema"
       end
     end
   end

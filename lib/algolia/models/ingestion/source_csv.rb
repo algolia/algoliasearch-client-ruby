@@ -6,13 +6,13 @@ require 'time'
 module Algolia
   module Ingestion
     class SourceCSV
-      # The URL of the file.
+      # URL of the file.
       attr_accessor :url
 
-      # The name of the column that contains the unique ID, used as `objectID` in Algolia.
+      # Name of a column that contains a unique ID which will be used as `objectID` in Algolia.
       attr_accessor :unique_id_column
 
-      # Mapping of type for every column. For example {\"myColumn\": \"boolean\", \"myOtherColumn\": \"json\"}.
+      # Key-value pairs of column names and their expected types.
       attr_accessor :mapping
 
       attr_accessor :method

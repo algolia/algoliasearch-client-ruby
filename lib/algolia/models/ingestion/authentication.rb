@@ -5,24 +5,24 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # An authentication is used to login into a Source or a Destination, with obfuscated input.
+    # Resource representing the information required to authenticate with a source or a destination.
     class Authentication
-      # The authentication UUID.
+      # Universally unique identifier (UUID) of an authentication resource.
       attr_accessor :authentication_id
 
       attr_accessor :type
 
-      # An human readable name describing the object.
+      # Descriptive name for the resource.
       attr_accessor :name
 
       attr_accessor :platform
 
       attr_accessor :input
 
-      # Date of creation (RFC3339 format).
+      # Date of creation in RFC3339 format.
       attr_accessor :created_at
 
-      # Date of last update (RFC3339 format).
+      # Date of last update in RFC3339 format.
       attr_accessor :updated_at
 
       class EnumAttributeValidator

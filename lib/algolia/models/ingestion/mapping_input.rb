@@ -5,12 +5,33 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # Transformations to apply to source, serialized as a JSON string.
+    # Transformations to apply to the source, serialized as a JSON string.
     class MappingInput
-      # Name of the mapping format schema, `mappingkit/v1` is currently the only supported format.
       attr_accessor :format
 
       attr_accessor :actions
+
+      class EnumAttributeValidator
+        attr_reader :datatype
+        attr_reader :allowable_values
+
+        def initialize(datatype, allowable_values)
+          @allowable_values = allowable_values.map do |value|
+            case datatype.to_s
+            when /Integer/i
+              value.to_i
+            when /Float/i
+              value.to_f
+            else
+              value
+            end
+          end
+        end
+
+        def valid?(value)
+          !value || allowable_values.include?(value)
+        end
+      end
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
@@ -28,7 +49,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :format => :String,
+          :format => :MappingFormatSchema,
           :actions => :'Array<MappingKitAction>'
         }
       end

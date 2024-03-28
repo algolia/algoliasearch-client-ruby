@@ -5,12 +5,12 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # The input for an `onDemand` task whose source is of type `bigquery` and for which extracted data spans a given time range.
+    # Input for a manually-triggered task whose source is of type `bigquery` and for which extracted data spans a given time range.
     class OnDemandDateUtilsInput
-      # The start date of the extraction (RFC3339 format).
+      # Earliest date in RFC3339 format of the extracted data from Big Query.
       attr_accessor :start_date
 
-      # The end date of the extraction (RFC3339 format).
+      # Latest date in RFC3339 format of the extracted data from Big Query.
       attr_accessor :end_date
 
       attr_accessor :mapping

@@ -5,7 +5,7 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # A list of tasks with pagination details.
+    # Configured tasks and pagination information.
     class ListTasksResponse
       attr_accessor :tasks
 

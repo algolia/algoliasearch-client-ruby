@@ -5,11 +5,11 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # Payload to partially update an Authentication.
+    # Request body for updating an authentication resource.
     class AuthenticationUpdate
       attr_accessor :type
 
-      # An human readable name describing the object.
+      # Descriptive name for the resource.
       attr_accessor :name
 
       attr_accessor :platform

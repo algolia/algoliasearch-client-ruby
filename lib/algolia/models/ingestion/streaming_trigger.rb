@@ -5,7 +5,7 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # The trigger input for a task of type 'streaming'.
+    # Trigger input for continuously running tasks.
     class StreamingTrigger
       attr_accessor :type
 

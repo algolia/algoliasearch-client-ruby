@@ -5,7 +5,7 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # Payload to search for multiple authentications, based on the given `authenticationIDs`.
+    # Request body for searching for authentication resources.
     class AuthenticationSearch
       attr_accessor :authentication_ids
 

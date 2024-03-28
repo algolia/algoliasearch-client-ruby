@@ -6,10 +6,10 @@ require 'time'
 module Algolia
   module Ingestion
     class BigCommerceChannel
-      # The ID of the bigcommerce channel.
+      # ID of the BigCommerce channel.
       attr_accessor :id
 
-      # An array of currencies for the given channel `ID`, a currency is a trigram string that represents the currency code.
+      # Currencies for the given channel.
       attr_accessor :currencies
 
       # Attribute mapping from ruby-style variable name to JSON key.

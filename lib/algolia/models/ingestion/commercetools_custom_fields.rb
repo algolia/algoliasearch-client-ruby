@@ -5,7 +5,7 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).
+    # Custom fields from commercetools to add to the records.  For more information, see [Using Custom Types and Custom Fields](https://docs.commercetools.com/tutorials/custom-types).
     class CommercetoolsCustomFields
       # Inventory custom fields.
       attr_accessor :inventory

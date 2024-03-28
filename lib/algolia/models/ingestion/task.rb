@@ -6,31 +6,31 @@ require 'time'
 module Algolia
   module Ingestion
     class Task
-      # The task UUID.
+      # Universally unique identifier (UUID) of a task.
       attr_accessor :task_id
 
-      # The source UUID.
+      # Universally uniqud identifier (UUID) of a source.
       attr_accessor :source_id
 
-      # The destination UUID.
+      # Universally unique identifier (UUID) of a destination resource.
       attr_accessor :destination_id
 
       attr_accessor :trigger
 
       attr_accessor :input
 
-      # Whether the task is enabled or not.
+      # Whether the task is enabled.
       attr_accessor :enabled
 
-      # A percentage representing the accepted failure threshold to determine if a `run` succeeded or not.
+      # Maximum accepted percentage of failures for a task run to finish successfully.
       attr_accessor :failure_threshold
 
       attr_accessor :action
 
-      # Date of creation (RFC3339 format).
+      # Date of creation in RFC3339 format.
       attr_accessor :created_at
 
-      # Date of last update (RFC3339 format).
+      # Date of last update in RFC3339 format.
       attr_accessor :updated_at
 
       class EnumAttributeValidator

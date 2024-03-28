@@ -7,10 +7,10 @@ module Algolia
   module Ingestion
     # An event describe a step of the task execution flow..
     class Event
-      # The event UUID.
+      # Universally unique identifier (UUID) of an event.
       attr_accessor :event_id
 
-      # The run UUID.
+      # Universally unique identifier (UUID) of a task run.
       attr_accessor :run_id
 
       # The parent event, the cause of this event.
@@ -25,7 +25,7 @@ module Algolia
 
       attr_accessor :data
 
-      # Date of publish (RFC3339 format).
+      # Date of publish RFC3339 format.
       attr_accessor :published_at
 
       class EnumAttributeValidator

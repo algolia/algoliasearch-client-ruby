@@ -5,25 +5,25 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # A destination describe how the data is indexed on the Algolia side.
+    # Destinations are Algolia resources like indices or event streams.
     class Destination
-      # The destination UUID.
+      # Universally unique identifier (UUID) of a destination resource.
       attr_accessor :destination_id
 
       attr_accessor :type
 
-      # An human readable name describing the object.
+      # Descriptive name for the resource.
       attr_accessor :name
 
       attr_accessor :input
 
-      # Date of creation (RFC3339 format).
+      # Date of creation in RFC3339 format.
       attr_accessor :created_at
 
-      # Date of last update (RFC3339 format).
+      # Date of last update in RFC3339 format.
       attr_accessor :updated_at
 
-      # The authentication UUID.
+      # Universally unique identifier (UUID) of an authentication resource.
       attr_accessor :authentication_id
 
       class EnumAttributeValidator

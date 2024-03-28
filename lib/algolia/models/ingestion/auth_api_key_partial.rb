@@ -5,8 +5,9 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # Authentication input used for token credentials.
+    # Credentials for authenticating with an API key.
     class AuthAPIKeyPartial
+      # API key. This field is `null` in the API response.
       attr_accessor :key
 
       # Attribute mapping from ruby-style variable name to JSON key.

@@ -5,16 +5,16 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # The payload when creating a destination.
+    # API request body for creating a new destination.
     class DestinationCreate
       attr_accessor :type
 
-      # An human readable name describing the object.
+      # Descriptive name for the resource.
       attr_accessor :name
 
       attr_accessor :input
 
-      # The authentication UUID.
+      # Universally unique identifier (UUID) of an authentication resource.
       attr_accessor :authentication_id
 
       class EnumAttributeValidator

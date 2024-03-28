@@ -5,12 +5,12 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # The window parameter represents the holds the dates used to query the Observability data from the database in a given window.
+    # Time window by which to filter the observability data.
     class Window
-      # A date in format RFC3339 representing the oldest possible data in query window.
+      # Date in RFC3339 format representing the oldest data in the time window.
       attr_accessor :start_date
 
-      # A date in format RFC3339 representing the newest possible data in query window.
+      # Date in RFC3339 format representing the newest data in the time window.
       attr_accessor :end_date
 
       # Attribute mapping from ruby-style variable name to JSON key.

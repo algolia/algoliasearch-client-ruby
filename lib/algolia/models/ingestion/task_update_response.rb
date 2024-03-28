@@ -5,12 +5,12 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # The response from the API after a task update.
+    # API response for updating a task.
     class TaskUpdateResponse
-      # The task UUID.
+      # Universally unique identifier (UUID) of a task.
       attr_accessor :task_id
 
-      # Date of last update (RFC3339 format).
+      # Date of last update in RFC3339 format.
       attr_accessor :updated_at
 
       # Attribute mapping from ruby-style variable name to JSON key.

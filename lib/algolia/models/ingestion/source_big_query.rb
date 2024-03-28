@@ -6,24 +6,24 @@ require 'time'
 module Algolia
   module Ingestion
     class SourceBigQuery
-      # Project ID of the BigQuery Source.
+      # Project ID of the BigQuery source.
       attr_accessor :project_id
 
-      # Dataset ID of the BigQuery Source.
+      # Dataset ID of the BigQuery source.
       attr_accessor :dataset_id
 
       attr_accessor :data_type
 
-      # Table name (for default BQ).
+      # Table name for the BigQuery export.
       attr_accessor :table
 
-      # Table prefix (for Google Analytics).
+      # Table prefix for a Google Analytics 4 data export to BigQuery.
       attr_accessor :table_prefix
 
       # Custom SQL request to extract data from the BigQuery table.
       attr_accessor :custom_sql_request
 
-      # The name of the column that contains the unique ID, used as `objectID` in Algolia.
+      # Name of a column that contains a unique ID which will be used as `objectID` in Algolia.
       attr_accessor :unique_id_column
 
       class EnumAttributeValidator

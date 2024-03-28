@@ -5,15 +5,15 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # Response from the API when the Destination is successfully created.
+    # API response for creating a new destination.
     class DestinationCreateResponse
-      # The destination UUID.
+      # Universally unique identifier (UUID) of a destination resource.
       attr_accessor :destination_id
 
-      # An human readable name describing the object.
+      # Descriptive name for the resource.
       attr_accessor :name
 
-      # Date of creation (RFC3339 format).
+      # Date of creation in RFC3339 format.
       attr_accessor :created_at
 
       # Attribute mapping from ruby-style variable name to JSON key.

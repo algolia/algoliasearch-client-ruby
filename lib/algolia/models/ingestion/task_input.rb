@@ -5,6 +5,7 @@ require 'time'
 
 module Algolia
   module Ingestion
+    # Configuration of the task, depending on its type.
     module TaskInput
       class << self
         # List of class defined in oneOf (OpenAPI v3)

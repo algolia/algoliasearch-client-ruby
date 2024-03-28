@@ -5,10 +5,12 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # Authentication input for Basic login with username and password.
+    # Credentials for authenticating with user name and password.
     class AuthBasic
+      # Username.
       attr_accessor :username
 
+      # Password. This field is `null` in the API response.
       attr_accessor :password
 
       # Attribute mapping from ruby-style variable name to JSON key.

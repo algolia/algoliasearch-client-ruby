@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Ingestion
     class Source
-      # The source UUID.
+      # Universally uniqud identifier (UUID) of a source.
       attr_accessor :source_id
 
       attr_accessor :type
@@ -15,13 +15,13 @@ module Algolia
 
       attr_accessor :input
 
-      # The authentication UUID.
+      # Universally unique identifier (UUID) of an authentication resource.
       attr_accessor :authentication_id
 
-      # Date of creation (RFC3339 format).
+      # Date of creation in RFC3339 format.
       attr_accessor :created_at
 
-      # Date of last update (RFC3339 format).
+      # Date of last update in RFC3339 format.
       attr_accessor :updated_at
 
       class EnumAttributeValidator

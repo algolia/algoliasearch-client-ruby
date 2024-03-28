@@ -5,22 +5,22 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # The payload for a task creation.
+    # API request body for creating a task.
     class TaskCreate
-      # The source UUID.
+      # Universally uniqud identifier (UUID) of a source.
       attr_accessor :source_id
 
-      # The destination UUID.
+      # Universally unique identifier (UUID) of a destination resource.
       attr_accessor :destination_id
 
       attr_accessor :trigger
 
       attr_accessor :action
 
-      # Whether the task is enabled or not.
+      # Whether the task is enabled.
       attr_accessor :enabled
 
-      # A percentage representing the accepted failure threshold to determine if a `run` succeeded or not.
+      # Maximum accepted percentage of failures for a task run to finish successfully.
       attr_accessor :failure_threshold
 
       attr_accessor :input

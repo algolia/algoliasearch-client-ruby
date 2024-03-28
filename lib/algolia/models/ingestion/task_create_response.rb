@@ -5,12 +5,12 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # The response from the API after a task creation.
+    # API response for creating a task.
     class TaskCreateResponse
-      # The task UUID.
+      # Universally unique identifier (UUID) of a task.
       attr_accessor :task_id
 
-      # Date of creation (RFC3339 format).
+      # Date of creation in RFC3339 format.
       attr_accessor :created_at
 
       # Attribute mapping from ruby-style variable name to JSON key.

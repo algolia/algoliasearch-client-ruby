@@ -5,7 +5,7 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # Payload to search for multiple destinations, based on the given `destinationIDs`.
+    # API request body for searching destinations.
     class DestinationSearch
       attr_accessor :destination_ids
 

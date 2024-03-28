@@ -33,7 +33,7 @@ module Algolia
       new(config)
     end
 
-    # Create a authentication.
+    # Creates a new authentication resource.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -67,7 +67,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Create a authentication.
+    # Creates a new authentication resource.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -81,7 +81,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::AuthenticationCreateResponse')
     end
 
-    # Create a destination.
+    # Creates a new destination.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -115,7 +115,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Create a destination.
+    # Creates a new destination.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -129,7 +129,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DestinationCreateResponse')
     end
 
-    # Create a source.
+    # Creates a new source.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -163,7 +163,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Create a source.
+    # Creates a new source.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -177,9 +177,9 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceCreateResponse')
     end
 
-    # Create a task.
+    # Creates a new task.
 
-    # @param task_create [TaskCreate]  (required)
+    # @param task_create [TaskCreate] Request body for creating a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def create_task_with_http_info(task_create, request_options = {})
@@ -207,9 +207,9 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Create a task.
+    # Creates a new task.
 
-    # @param task_create [TaskCreate]  (required)
+    # @param task_create [TaskCreate] Request body for creating a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [TaskCreateResponse]
     def create_task(task_create, request_options = {})
@@ -393,13 +393,13 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Soft delete the authentication of the given authenticationID.
+    # Deletes an authentication resource. You can&#39;t delete authentication resources that are used by a source or a destination.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param authentication_id [String] The authentication UUID. (required)
+    # @param authentication_id [String] Unique identifier of an authentication resource. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def delete_authentication_with_http_info(authentication_id, request_options = {})
@@ -427,13 +427,13 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Soft delete the authentication of the given authenticationID.
+    # Deletes an authentication resource. You can't delete authentication resources that are used by a source or a destination.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param authentication_id [String] The authentication UUID. (required)
+    # @param authentication_id [String] Unique identifier of an authentication resource. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeleteResponse]
     def delete_authentication(authentication_id, request_options = {})
@@ -441,13 +441,13 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
     end
 
-    # Soft delete the destination of the given destinationID.
+    # Deletes a destination by its ID. You can&#39;t delete destinations that are referenced in tasks.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param destination_id [String] The destination UUID. (required)
+    # @param destination_id [String] Unique identifier of a destination. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def delete_destination_with_http_info(destination_id, request_options = {})
@@ -475,13 +475,13 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Soft delete the destination of the given destinationID.
+    # Deletes a destination by its ID. You can't delete destinations that are referenced in tasks.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param destination_id [String] The destination UUID. (required)
+    # @param destination_id [String] Unique identifier of a destination. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeleteResponse]
     def delete_destination(destination_id, request_options = {})
@@ -489,13 +489,13 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
     end
 
-    # Soft delete the source of the given sourceID.
+    # Deletes a source by its ID. You can&#39;t delete sources that are referenced in tasks.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param source_id [String] The source UUID. (required)
+    # @param source_id [String] Unique identifier of a source. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def delete_source_with_http_info(source_id, request_options = {})
@@ -523,13 +523,13 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Soft delete the source of the given sourceID.
+    # Deletes a source by its ID. You can't delete sources that are referenced in tasks.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param source_id [String] The source UUID. (required)
+    # @param source_id [String] Unique identifier of a source. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeleteResponse]
     def delete_source(source_id, request_options = {})
@@ -537,9 +537,9 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
     end
 
-    # Soft delete the task of the given taskID.
+    # Deletes a task by its ID.
 
-    # @param task_id [String] The task UUID. (required)
+    # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def delete_task_with_http_info(task_id, request_options = {})
@@ -567,9 +567,9 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Soft delete the task of the given taskID.
+    # Deletes a task by its ID.
 
-    # @param task_id [String] The task UUID. (required)
+    # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeleteResponse]
     def delete_task(task_id, request_options = {})
@@ -577,13 +577,13 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
     end
 
-    # Disable the task of the given taskID.
+    # Disables a task.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param task_id [String] The task UUID. (required)
+    # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def disable_task_with_http_info(task_id, request_options = {})
@@ -611,13 +611,13 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # Disable the task of the given taskID.
+    # Disables a task.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param task_id [String] The task UUID. (required)
+    # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [TaskUpdateResponse]
     def disable_task(task_id, request_options = {})
@@ -625,13 +625,13 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskUpdateResponse')
     end
 
-    # Enable the task of the given taskID.
+    # Enables a task.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param task_id [String] The task UUID. (required)
+    # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def enable_task_with_http_info(task_id, request_options = {})
@@ -659,13 +659,13 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # Enable the task of the given taskID.
+    # Enables a task.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param task_id [String] The task UUID. (required)
+    # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [TaskUpdateResponse]
     def enable_task(task_id, request_options = {})
@@ -673,13 +673,13 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskUpdateResponse')
     end
 
-    # Get the authentication of the given authenticationID.
+    # Retrieves an authentication resource by its ID.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param authentication_id [String] The authentication UUID. (required)
+    # @param authentication_id [String] Unique identifier of an authentication resource. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_authentication_with_http_info(authentication_id, request_options = {})
@@ -707,13 +707,13 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get the authentication of the given authenticationID.
+    # Retrieves an authentication resource by its ID.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param authentication_id [String] The authentication UUID. (required)
+    # @param authentication_id [String] Unique identifier of an authentication resource. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Authentication]
     def get_authentication(authentication_id, request_options = {})
@@ -721,21 +721,33 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Authentication')
     end
 
-    # Get a list of authentications for the given query parameters, with pagination details.
+    # Retrieves a list of all authentication resources.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param items_per_page [Integer] The number of items per page to return.
-    # @param page [Integer] The page number to fetch, starting at 1.
-    # @param type [Array<AuthenticationType>] The type of the authentications to retrieve.
-    # @param platform [Array<PlatformWithNone>] The platform of the authentications to retrieve.
-    # @param sort [AuthenticationSortKeys] The key by which the list should be sorted.
-    # @param order [OrderKeys] The order of the returned list.
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param type [Array<AuthenticationType>] Type of authentication resource to retrieve.
+    # @param platform [Array<PlatformWithNone>] Ecommerce platform for which to retrieve authentication resources.
+    # @param sort [AuthenticationSortKeys] Property by which to sort the list of authentication resources. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_authentications_with_http_info(items_per_page = nil, page = nil, type = nil, platform = nil, sort = nil, order = nil, request_options = {})
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
+        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_authentications, must be smaller than or equal to 100.'
+      end
+
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
+        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_authentications, must be greater than or equal to 1.'
+      end
+
+      if @api_client.config.client_side_validation && !page.nil? && page < 1
+        raise ArgumentError, 'invalid value for ""page"" when calling IngestionClient.get_authentications, must be greater than or equal to 1.'
+      end
+
       path = '/1/authentications'
       query_params = {}
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
@@ -761,18 +773,18 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a list of authentications for the given query parameters, with pagination details.
+    # Retrieves a list of all authentication resources.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param items_per_page [Integer] The number of items per page to return.
-    # @param page [Integer] The page number to fetch, starting at 1.
-    # @param type [Array<AuthenticationType>] The type of the authentications to retrieve.
-    # @param platform [Array<PlatformWithNone>] The platform of the authentications to retrieve.
-    # @param sort [AuthenticationSortKeys] The key by which the list should be sorted.
-    # @param order [OrderKeys] The order of the returned list.
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param type [Array<AuthenticationType>] Type of authentication resource to retrieve.
+    # @param platform [Array<PlatformWithNone>] Ecommerce platform for which to retrieve authentication resources.
+    # @param sort [AuthenticationSortKeys] Property by which to sort the list of authentication resources. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListAuthenticationsResponse]
     def get_authentications(items_per_page = nil, page = nil, type = nil, platform = nil, sort = nil, order = nil, request_options = {})
@@ -780,13 +792,13 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListAuthenticationsResponse')
     end
 
-    # Get the destination of the given destinationID.
+    # Retrieves a destination by its ID.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param destination_id [String] The destination UUID. (required)
+    # @param destination_id [String] Unique identifier of a destination. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_destination_with_http_info(destination_id, request_options = {})
@@ -814,13 +826,13 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get the destination of the given destinationID.
+    # Retrieves a destination by its ID.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param destination_id [String] The destination UUID. (required)
+    # @param destination_id [String] Unique identifier of a destination. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Destination]
     def get_destination(destination_id, request_options = {})
@@ -828,21 +840,33 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Destination')
     end
 
-    # Get a list of destinations for the given query parameters, with pagination details.
+    # Retrieves a list of destinations.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param items_per_page [Integer] The number of items per page to return.
-    # @param page [Integer] The page number to fetch, starting at 1.
-    # @param type [Array<DestinationType>] The type of the destinations to retrive.
-    # @param authentication_id [Array<String>] The authenticationIDs of the destinations to retrive.
-    # @param sort [DestinationSortKeys] The key by which the list should be sorted.
-    # @param order [OrderKeys] The order of the returned list.
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param type [Array<DestinationType>] Destination type.
+    # @param authentication_id [Array<String>] Authentication ID used by destinations.
+    # @param sort [DestinationSortKeys] Property by which to sort the destinations. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_destinations_with_http_info(items_per_page = nil, page = nil, type = nil, authentication_id = nil, sort = nil, order = nil, request_options = {})
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
+        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_destinations, must be smaller than or equal to 100.'
+      end
+
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
+        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_destinations, must be greater than or equal to 1.'
+      end
+
+      if @api_client.config.client_side_validation && !page.nil? && page < 1
+        raise ArgumentError, 'invalid value for ""page"" when calling IngestionClient.get_destinations, must be greater than or equal to 1.'
+      end
+
       path = '/1/destinations'
       query_params = {}
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
@@ -868,18 +892,18 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a list of destinations for the given query parameters, with pagination details.
+    # Retrieves a list of destinations.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param items_per_page [Integer] The number of items per page to return.
-    # @param page [Integer] The page number to fetch, starting at 1.
-    # @param type [Array<DestinationType>] The type of the destinations to retrive.
-    # @param authentication_id [Array<String>] The authenticationIDs of the destinations to retrive.
-    # @param sort [DestinationSortKeys] The key by which the list should be sorted.
-    # @param order [OrderKeys] The order of the returned list.
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param type [Array<DestinationType>] Destination type.
+    # @param authentication_id [Array<String>] Authentication ID used by destinations.
+    # @param sort [DestinationSortKeys] Property by which to sort the destinations. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListDestinationsResponse]
     def get_destinations(items_per_page = nil, page = nil, type = nil, authentication_id = nil, sort = nil, order = nil, request_options = {})
@@ -887,13 +911,13 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListDestinationsResponse')
     end
 
-    # Retrieve a stream listing for a given Singer specification compatible docker type source ID.
+    # Retrieves a stream listing for a source.  Listing streams only works with sources with &#x60;type: docker&#x60; and &#x60;imageType: singer&#x60;.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param source_id [String] The source UUID. (required)
+    # @param source_id [String] Unique identifier of a source. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_docker_source_streams_with_http_info(source_id, request_options = {})
@@ -921,13 +945,13 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Retrieve a stream listing for a given Singer specification compatible docker type source ID.
+    # Retrieves a stream listing for a source.  Listing streams only works with sources with `type: docker` and `imageType: singer`.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param source_id [String] The source UUID. (required)
+    # @param source_id [String] Unique identifier of a source. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DockerSourceStreams]
     def get_docker_source_streams(source_id, request_options = {})
@@ -935,14 +959,14 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DockerSourceStreams')
     end
 
-    # Get a single event for a specific runID.
+    # Retrieves a single task run event by its ID.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param run_id [String] The run UUID. (required)
-    # @param event_id [String] The event UUID. (required)
+    # @param run_id [String] Unique identifier of a task run. (required)
+    # @param event_id [String] Unique identifier of an event. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_event_with_http_info(run_id, event_id, request_options = {})
@@ -974,14 +998,14 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a single event for a specific runID.
+    # Retrieves a single task run event by its ID.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param run_id [String] The run UUID. (required)
-    # @param event_id [String] The event UUID. (required)
+    # @param run_id [String] Unique identifier of a task run. (required)
+    # @param event_id [String] Unique identifier of an event. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Event]
     def get_event(run_id, event_id, request_options = {})
@@ -989,21 +1013,21 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Event')
     end
 
-    # Get a list of events associated to the given runID, for the given query parameters.
+    # Retrieves a list of events for a task run, identified by it&#39;s ID.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param run_id [String] The run UUID. (required)
-    # @param items_per_page [Integer] The number of items per page to return.
-    # @param page [Integer] The page number to fetch, starting at 1.
-    # @param status [Array<EventStatus>] Filter the status of the events.
-    # @param type [Array<EventType>] Filter the type of the events.
-    # @param sort [EventSortKeys] The key by which the list should be sorted.
-    # @param order [OrderKeys] The order of the returned list.
-    # @param start_date [String] The start date (in RFC3339 format) of the events fetching window. Defaults to &#39;now&#39;-3 hours if omitted.
-    # @param end_date [String] The end date (in RFC3339 format) of the events fetching window. Defaults to &#39;now&#39; days if omitted.
+    # @param run_id [String] Unique identifier of a task run. (required)
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param status [Array<EventStatus>] Event status for filtering the list of task runs.
+    # @param type [Array<EventType>] Event type for filtering the list of task runs.
+    # @param sort [EventSortKeys] Property by which to sort the list of task run events.
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param start_date [String] Date and time in RFC3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
+    # @param end_date [String] Date and time in RFC3339 format for the latest events to retrieve. By default, the current time is used.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_events_with_http_info(run_id, items_per_page = nil, page = nil, status = nil, type = nil, sort = nil, order = nil, start_date = nil, end_date = nil,
@@ -1011,6 +1035,17 @@ module Algolia
       # verify the required parameter 'run_id' is set
       if @api_client.config.client_side_validation && run_id.nil?
         raise ArgumentError, "Parameter `run_id` is required when calling `get_events`."
+      end
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
+        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_events, must be smaller than or equal to 100.'
+      end
+
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
+        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_events, must be greater than or equal to 1.'
+      end
+
+      if @api_client.config.client_side_validation && !page.nil? && page < 1
+        raise ArgumentError, 'invalid value for ""page"" when calling IngestionClient.get_events, must be greater than or equal to 1.'
       end
 
       path = '/1/runs/{runID}/events'.sub('{' + 'runID' + '}', Transport.encode_uri(run_id.to_s))
@@ -1040,21 +1075,21 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a list of events associated to the given runID, for the given query parameters.
+    # Retrieves a list of events for a task run, identified by it's ID.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param run_id [String] The run UUID. (required)
-    # @param items_per_page [Integer] The number of items per page to return.
-    # @param page [Integer] The page number to fetch, starting at 1.
-    # @param status [Array<EventStatus>] Filter the status of the events.
-    # @param type [Array<EventType>] Filter the type of the events.
-    # @param sort [EventSortKeys] The key by which the list should be sorted.
-    # @param order [OrderKeys] The order of the returned list.
-    # @param start_date [String] The start date (in RFC3339 format) of the events fetching window. Defaults to &#39;now&#39;-3 hours if omitted.
-    # @param end_date [String] The end date (in RFC3339 format) of the events fetching window. Defaults to &#39;now&#39; days if omitted.
+    # @param run_id [String] Unique identifier of a task run. (required)
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param status [Array<EventStatus>] Event status for filtering the list of task runs.
+    # @param type [Array<EventType>] Event type for filtering the list of task runs.
+    # @param sort [EventSortKeys] Property by which to sort the list of task run events.
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param start_date [String] Date and time in RFC3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
+    # @param end_date [String] Date and time in RFC3339 format for the latest events to retrieve. By default, the current time is used.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListEventsResponse]
     def get_events(run_id, items_per_page = nil, page = nil, status = nil, type = nil, sort = nil, order = nil, start_date = nil, end_date = nil, request_options = {})
@@ -1062,13 +1097,13 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListEventsResponse')
     end
 
-    # Get a single run for the given ID.
+    # Retrieve a single task run by its ID.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param run_id [String] The run UUID. (required)
+    # @param run_id [String] Unique identifier of a task run. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_run_with_http_info(run_id, request_options = {})
@@ -1096,13 +1131,13 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a single run for the given ID.
+    # Retrieve a single task run by its ID.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param run_id [String] The run UUID. (required)
+    # @param run_id [String] Unique identifier of a task run. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Run]
     def get_run(run_id, request_options = {})
@@ -1110,23 +1145,35 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Run')
     end
 
-    # Get a list of runs for the given query parameters, with pagination details.
+    # Retrieve a list of task runs.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param items_per_page [Integer] The number of items per page to return.
-    # @param page [Integer] The page number to fetch, starting at 1.
-    # @param status [Array<RunStatus>] Filter the status of the runs.
-    # @param task_id [String] Filter by taskID.
-    # @param sort [RunSortKeys] The key by which the list should be sorted.
-    # @param order [OrderKeys] The order of the returned list.
-    # @param start_date [String] The start date (in RFC3339 format) of the runs fetching window. Defaults to &#39;now&#39;-7 days if omitted.
-    # @param end_date [String] The end date (in RFC3339 format) of the runs fetching window. Defaults to &#39;now&#39; days if omitted.
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param status [Array<RunStatus>] Run status for filtering the list of task runs.
+    # @param task_id [String] Task ID for filtering the list of task runs.
+    # @param sort [RunSortKeys] Property by which to sort the list of task runs. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param start_date [String] Date in RFC3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+    # @param end_date [String] Date in RFC3339 format for the latest run to retrieve. By default, the current day is used.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_runs_with_http_info(items_per_page = nil, page = nil, status = nil, task_id = nil, sort = nil, order = nil, start_date = nil, end_date = nil, request_options = {})
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
+        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_runs, must be smaller than or equal to 100.'
+      end
+
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
+        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_runs, must be greater than or equal to 1.'
+      end
+
+      if @api_client.config.client_side_validation && !page.nil? && page < 1
+        raise ArgumentError, 'invalid value for ""page"" when calling IngestionClient.get_runs, must be greater than or equal to 1.'
+      end
+
       path = '/1/runs'
       query_params = {}
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
@@ -1154,20 +1201,20 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a list of runs for the given query parameters, with pagination details.
+    # Retrieve a list of task runs.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param items_per_page [Integer] The number of items per page to return.
-    # @param page [Integer] The page number to fetch, starting at 1.
-    # @param status [Array<RunStatus>] Filter the status of the runs.
-    # @param task_id [String] Filter by taskID.
-    # @param sort [RunSortKeys] The key by which the list should be sorted.
-    # @param order [OrderKeys] The order of the returned list.
-    # @param start_date [String] The start date (in RFC3339 format) of the runs fetching window. Defaults to &#39;now&#39;-7 days if omitted.
-    # @param end_date [String] The end date (in RFC3339 format) of the runs fetching window. Defaults to &#39;now&#39; days if omitted.
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param status [Array<RunStatus>] Run status for filtering the list of task runs.
+    # @param task_id [String] Task ID for filtering the list of task runs.
+    # @param sort [RunSortKeys] Property by which to sort the list of task runs. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param start_date [String] Date in RFC3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+    # @param end_date [String] Date in RFC3339 format for the latest run to retrieve. By default, the current day is used.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [RunListResponse]
     def get_runs(items_per_page = nil, page = nil, status = nil, task_id = nil, sort = nil, order = nil, start_date = nil, end_date = nil, request_options = {})
@@ -1175,13 +1222,13 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::RunListResponse')
     end
 
-    # Get the source of the given sourceID.
+    # Retrieve a source by its ID.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param source_id [String] The source UUID. (required)
+    # @param source_id [String] Unique identifier of a source. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_source_with_http_info(source_id, request_options = {})
@@ -1209,13 +1256,13 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get the source of the given sourceID.
+    # Retrieve a source by its ID.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param source_id [String] The source UUID. (required)
+    # @param source_id [String] Unique identifier of a source. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Source]
     def get_source(source_id, request_options = {})
@@ -1223,21 +1270,33 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Source')
     end
 
-    # Get a list of sources for the given query parameters, with pagination details.
+    # Retrieves a list of sources.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param items_per_page [Integer] The number of items per page to return.
-    # @param page [Integer] The page number to fetch, starting at 1.
-    # @param type [Array<SourceType>] The type of the sources to retrieve.
-    # @param authentication_id [Array<String>] The authenticationIDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication.
-    # @param sort [SourceSortKeys] The key by which the list should be sorted.
-    # @param order [OrderKeys] The order of the returned list.
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param type [Array<SourceType>] Source type. Some sources require authentication.
+    # @param authentication_id [Array<String>] Authentication IDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication resource.
+    # @param sort [SourceSortKeys] Property by which to sort the list of sources. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_sources_with_http_info(items_per_page = nil, page = nil, type = nil, authentication_id = nil, sort = nil, order = nil, request_options = {})
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
+        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_sources, must be smaller than or equal to 100.'
+      end
+
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
+        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_sources, must be greater than or equal to 1.'
+      end
+
+      if @api_client.config.client_side_validation && !page.nil? && page < 1
+        raise ArgumentError, 'invalid value for ""page"" when calling IngestionClient.get_sources, must be greater than or equal to 1.'
+      end
+
       path = '/1/sources'
       query_params = {}
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
@@ -1263,18 +1322,18 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a list of sources for the given query parameters, with pagination details.
+    # Retrieves a list of sources.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param items_per_page [Integer] The number of items per page to return.
-    # @param page [Integer] The page number to fetch, starting at 1.
-    # @param type [Array<SourceType>] The type of the sources to retrieve.
-    # @param authentication_id [Array<String>] The authenticationIDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication.
-    # @param sort [SourceSortKeys] The key by which the list should be sorted.
-    # @param order [OrderKeys] The order of the returned list.
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param type [Array<SourceType>] Source type. Some sources require authentication.
+    # @param authentication_id [Array<String>] Authentication IDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication resource.
+    # @param sort [SourceSortKeys] Property by which to sort the list of sources. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListSourcesResponse]
     def get_sources(items_per_page = nil, page = nil, type = nil, authentication_id = nil, sort = nil, order = nil, request_options = {})
@@ -1282,13 +1341,13 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListSourcesResponse')
     end
 
-    # Get the task of the given taskID.
+    # Retrieves a task by its ID.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param task_id [String] The task UUID. (required)
+    # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_task_with_http_info(task_id, request_options = {})
@@ -1316,13 +1375,13 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get the task of the given taskID.
+    # Retrieves a task by its ID.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param task_id [String] The task UUID. (required)
+    # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Task]
     def get_task(task_id, request_options = {})
@@ -1330,25 +1389,37 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Task')
     end
 
-    # Get a list of tasks for the given query parameters, with pagination details.
+    # Retrieves a list of tasks.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param items_per_page [Integer] The number of items per page to return.
-    # @param page [Integer] The page number to fetch, starting at 1.
-    # @param action [Array<ActionType>] The action of the tasks to retrieve.
-    # @param enabled [Boolean] Whether the task is enabled or not.
-    # @param source_id [Array<String>] The sourceIDs of the tasks to retrieve.
-    # @param destination_id [Array<String>] The destinationIDs of the tasks to retrieve.
-    # @param trigger_type [Array<TriggerType>] The trigger type of the task.
-    # @param sort [TaskSortKeys] The key by which the list should be sorted.
-    # @param order [OrderKeys] The order of the returned list.
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param action [Array<ActionType>] Actions for filtering the list of tasks.
+    # @param enabled [Boolean] Whether to filter the list of tasks by the &#x60;enabled&#x60; status.
+    # @param source_id [Array<String>] Source IDs for filtering the list of tasks.
+    # @param destination_id [Array<String>] Destination IDs for filtering the list of tasks.
+    # @param trigger_type [Array<TriggerType>] Type of task trigger for filtering the list of tasks.
+    # @param sort [TaskSortKeys] Property by which to sort the list of tasks. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_tasks_with_http_info(items_per_page = nil, page = nil, action = nil, enabled = nil, source_id = nil, destination_id = nil, trigger_type = nil, sort = nil, order = nil,
                                  request_options = {})
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
+        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_tasks, must be smaller than or equal to 100.'
+      end
+
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
+        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_tasks, must be greater than or equal to 1.'
+      end
+
+      if @api_client.config.client_side_validation && !page.nil? && page < 1
+        raise ArgumentError, 'invalid value for ""page"" when calling IngestionClient.get_tasks, must be greater than or equal to 1.'
+      end
+
       path = '/1/tasks'
       query_params = {}
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
@@ -1377,21 +1448,21 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a list of tasks for the given query parameters, with pagination details.
+    # Retrieves a list of tasks.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param items_per_page [Integer] The number of items per page to return.
-    # @param page [Integer] The page number to fetch, starting at 1.
-    # @param action [Array<ActionType>] The action of the tasks to retrieve.
-    # @param enabled [Boolean] Whether the task is enabled or not.
-    # @param source_id [Array<String>] The sourceIDs of the tasks to retrieve.
-    # @param destination_id [Array<String>] The destinationIDs of the tasks to retrieve.
-    # @param trigger_type [Array<TriggerType>] The trigger type of the task.
-    # @param sort [TaskSortKeys] The key by which the list should be sorted.
-    # @param order [OrderKeys] The order of the returned list.
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param action [Array<ActionType>] Actions for filtering the list of tasks.
+    # @param enabled [Boolean] Whether to filter the list of tasks by the &#x60;enabled&#x60; status.
+    # @param source_id [Array<String>] Source IDs for filtering the list of tasks.
+    # @param destination_id [Array<String>] Destination IDs for filtering the list of tasks.
+    # @param trigger_type [Array<TriggerType>] Type of task trigger for filtering the list of tasks.
+    # @param sort [TaskSortKeys] Property by which to sort the list of tasks. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListTasksResponse]
     def get_tasks(items_per_page = nil, page = nil, action = nil, enabled = nil, source_id = nil, destination_id = nil, trigger_type = nil, sort = nil, order = nil,
@@ -1400,13 +1471,13 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListTasksResponse')
     end
 
-    # Run the task of the given taskID.
+    # Runs a task. You can check the status of task runs with the observability endpoints.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param task_id [String] The task UUID. (required)
+    # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def run_task_with_http_info(task_id, request_options = {})
@@ -1434,13 +1505,13 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Run the task of the given taskID.
+    # Runs a task. You can check the status of task runs with the observability endpoints.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param task_id [String] The task UUID. (required)
+    # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [RunResponse]
     def run_task(task_id, request_options = {})
@@ -1448,7 +1519,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::RunResponse')
     end
 
-    # Search among authentications with a defined set of parameters.
+    # Searches for authentication resources.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -1482,7 +1553,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Search among authentications with a defined set of parameters.
+    # Searches for authentication resources.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -1496,7 +1567,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Authentication>')
     end
 
-    # Search among destinations with a defined set of parameters.
+    # Searches for destinations.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -1530,7 +1601,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Search among destinations with a defined set of parameters.
+    # Searches for destinations.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -1544,7 +1615,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Destination>')
     end
 
-    # Search among sources with a defined set of parameters.
+    # Searches for sources.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -1578,7 +1649,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Search among sources with a defined set of parameters.
+    # Searches for sources.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -1592,7 +1663,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Source>')
     end
 
-    # Search among tasks with a defined set of parameters.
+    # Searches for tasks.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -1626,7 +1697,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Search among tasks with a defined set of parameters.
+    # Searches for tasks.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -1640,13 +1711,13 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Task>')
     end
 
-    # Trigger a stream listing request for a Singer specification compatible docker type source.
+    # Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with &#x60;type: docker&#x60; and &#x60;imageType: singer&#x60;.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param source_id [String] The source UUID. (required)
+    # @param source_id [String] Unique identifier of a source. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def trigger_docker_source_discover_with_http_info(source_id, request_options = {})
@@ -1674,13 +1745,13 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Trigger a stream listing request for a Singer specification compatible docker type source.
+    # Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param source_id [String] The source UUID. (required)
+    # @param source_id [String] Unique identifier of a source. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DockerSourceDiscover]
     def trigger_docker_source_discover(source_id, request_options = {})
@@ -1688,13 +1759,13 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DockerSourceDiscover')
     end
 
-    # Update the authentication of the given authenticationID.
+    # Updates an authentication resource.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param authentication_id [String] The authentication UUID. (required)
+    # @param authentication_id [String] Unique identifier of an authentication resource. (required)
     # @param authentication_update [AuthenticationUpdate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1727,13 +1798,13 @@ module Algolia
       @api_client.call_api(:PATCH, path, new_options)
     end
 
-    # Update the authentication of the given authenticationID.
+    # Updates an authentication resource.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param authentication_id [String] The authentication UUID. (required)
+    # @param authentication_id [String] Unique identifier of an authentication resource. (required)
     # @param authentication_update [AuthenticationUpdate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [AuthenticationUpdateResponse]
@@ -1742,13 +1813,13 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::AuthenticationUpdateResponse')
     end
 
-    # Update the destination of the given destinationID.
+    # Updates the destination by its ID.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param destination_id [String] The destination UUID. (required)
+    # @param destination_id [String] Unique identifier of a destination. (required)
     # @param destination_update [DestinationUpdate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1781,13 +1852,13 @@ module Algolia
       @api_client.call_api(:PATCH, path, new_options)
     end
 
-    # Update the destination of the given destinationID.
+    # Updates the destination by its ID.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param destination_id [String] The destination UUID. (required)
+    # @param destination_id [String] Unique identifier of a destination. (required)
     # @param destination_update [DestinationUpdate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DestinationUpdateResponse]
@@ -1796,13 +1867,13 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DestinationUpdateResponse')
     end
 
-    # Update the source of the given sourceID.
+    # Updates a source by its ID.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param source_id [String] The source UUID. (required)
+    # @param source_id [String] Unique identifier of a source. (required)
     # @param source_update [SourceUpdate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1835,13 +1906,13 @@ module Algolia
       @api_client.call_api(:PATCH, path, new_options)
     end
 
-    # Update the source of the given sourceID.
+    # Updates a source by its ID.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param source_id [String] The source UUID. (required)
+    # @param source_id [String] Unique identifier of a source. (required)
     # @param source_update [SourceUpdate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [SourceUpdateResponse]
@@ -1850,9 +1921,9 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceUpdateResponse')
     end
 
-    # Update the task of the given taskID.
+    # Updates a task by its ID.
 
-    # @param task_id [String] The task UUID. (required)
+    # @param task_id [String] Unique identifier of a task. (required)
     # @param task_update [TaskUpdate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1885,9 +1956,9 @@ module Algolia
       @api_client.call_api(:PATCH, path, new_options)
     end
 
-    # Update the task of the given taskID.
+    # Updates a task by its ID.
 
-    # @param task_id [String] The task UUID. (required)
+    # @param task_id [String] Unique identifier of a task. (required)
     # @param task_update [TaskUpdate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [TaskUpdateResponse]

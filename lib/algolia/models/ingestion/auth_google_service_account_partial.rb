@@ -5,12 +5,12 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # Authentication input to connect to a Google service (e.g. BigQuery).
+    # Credentials for authenticating with a Google service account, such as BigQuery.
     class AuthGoogleServiceAccountPartial
-      # Email address of the Service Account.
+      # Email address of the Google service account.
       attr_accessor :client_email
 
-      # Private key of the Service Account.
+      # Private key of the Google service account. This field is `null` in the API response.
       attr_accessor :private_key
 
       # Attribute mapping from ruby-style variable name to JSON key.

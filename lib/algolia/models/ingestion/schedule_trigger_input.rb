@@ -5,11 +5,11 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # The trigger input for a task of type 'schedule'.
+    # Trigger input for scheduled tasks.
     class ScheduleTriggerInput
       attr_accessor :type
 
-      # A cron expression that represent at which regularity the task should run.
+      # Cron expression for the task's schedule.
       attr_accessor :cron
 
       class EnumAttributeValidator

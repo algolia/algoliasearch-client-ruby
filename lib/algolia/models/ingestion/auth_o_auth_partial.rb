@@ -5,23 +5,27 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # Authentication input for OAuth login.
+    # Credentials for authenticating with OAuth 2.0.
     class AuthOAuthPartial
-      # The OAuth endpoint URL.
+      # URL for the OAuth endpoint.
       attr_accessor :url
 
-      # The clientID.
+      # Client ID.
       attr_accessor :client_id
 
-      # The secret.
+      # Client secret. This field is `null` in the API response.
       attr_accessor :client_secret
+
+      # OAuth scope.
+      attr_accessor :scope
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :url => :url,
           :client_id => :client_id,
-          :client_secret => :client_secret
+          :client_secret => :client_secret,
+          :scope => :scope
         }
       end
 
@@ -35,7 +39,8 @@ module Algolia
         {
           :url => :String,
           :client_id => :String,
-          :client_secret => :String
+          :client_secret => :String,
+          :scope => :String
         }
       end
 
@@ -72,6 +77,10 @@ module Algolia
         if attributes.key?(:client_secret)
           self.client_secret = attributes[:client_secret]
         end
+
+        if attributes.key?(:scope)
+          self.scope = attributes[:scope]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -82,7 +91,8 @@ module Algolia
         self.class == other.class &&
           url == other.url &&
           client_id == other.client_id &&
-          client_secret == other.client_secret
+          client_secret == other.client_secret &&
+          scope == other.scope
       end
 
       # @see the `==` method
@@ -94,7 +104,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [url, client_id, client_secret].hash
+        [url, client_id, client_secret, scope].hash
       end
 
       # Builds the object from hash

@@ -8,10 +8,9 @@ module Algolia
     class DestinationType
       SEARCH = "search".freeze
       INSIGHTS = "insights".freeze
-      FLOW = "flow".freeze
 
       def self.all_vars
-        @all_vars ||= [SEARCH, INSIGHTS, FLOW].freeze
+        @all_vars ||= [SEARCH, INSIGHTS].freeze
       end
 
       # Builds the enum from string

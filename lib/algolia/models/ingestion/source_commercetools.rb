@@ -8,14 +8,14 @@ module Algolia
     class SourceCommercetools
       attr_accessor :store_keys
 
-      # Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example [\"fr-FR\", \"en\"].
+      # Locales for your commercetools stores.
       attr_accessor :locales
 
       attr_accessor :url
 
       attr_accessor :project_key
 
-      # Determines the value that will be stored in the Algolia record if there's no inventory information on the product.
+      # Whether a fallback value is stored in the Algolia record if there's no inventory information about the product.
       attr_accessor :fallback_is_in_stock_value
 
       attr_accessor :custom_fields

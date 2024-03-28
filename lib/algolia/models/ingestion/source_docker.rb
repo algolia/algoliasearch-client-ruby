@@ -10,13 +10,13 @@ module Algolia
 
       attr_accessor :registry
 
-      # The name of the image to pull.
+      # Docker image name.
       attr_accessor :image
 
-      # The version of the image, defaults to `latest`.
+      # Docker image version.
       attr_accessor :version
 
-      # The configuration of the spec.
+      # Configuration of the spec.
       attr_accessor :configuration
 
       class EnumAttributeValidator

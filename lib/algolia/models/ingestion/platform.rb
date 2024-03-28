@@ -8,9 +8,10 @@ module Algolia
     class Platform
       BIGCOMMERCE = "bigcommerce".freeze
       COMMERCETOOLS = "commercetools".freeze
+      SHOPIFY = "shopify".freeze
 
       def self.all_vars
-        @all_vars ||= [BIGCOMMERCE, COMMERCETOOLS].freeze
+        @all_vars ||= [BIGCOMMERCE, COMMERCETOOLS, SHOPIFY].freeze
       end
 
       # Builds the enum from string

@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Ingestion
     class DestinationIndexPrefix
-      # The prefix of the final index name.
+      # String added to the beginning of all indices created by this destination.
       attr_accessor :index_prefix
 
       # Attribute mapping from ruby-style variable name to JSON key.

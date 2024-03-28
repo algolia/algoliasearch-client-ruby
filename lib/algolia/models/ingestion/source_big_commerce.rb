@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Ingestion
     class SourceBigCommerce
-      # The store hash identifying the store the shopper is signing in to.
+      # Store hash identifying your BigCommerce store.
       attr_accessor :store_hash
 
       attr_accessor :channel

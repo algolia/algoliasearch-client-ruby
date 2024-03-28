@@ -6,11 +6,12 @@ require 'time'
 module Algolia
   module Ingestion
     class SourceUpdate
+      # Descriptive name of the source.
       attr_accessor :name
 
       attr_accessor :input
 
-      # The authentication UUID.
+      # Universally unique identifier (UUID) of an authentication resource.
       attr_accessor :authentication_id
 
       # Attribute mapping from ruby-style variable name to JSON key.

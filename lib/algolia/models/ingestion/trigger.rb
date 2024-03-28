@@ -5,6 +5,7 @@ require 'time'
 
 module Algolia
   module Ingestion
+    # Trigger that runs the task.
     module Trigger
       class << self
         # List of class defined in oneOf (OpenAPI v3)

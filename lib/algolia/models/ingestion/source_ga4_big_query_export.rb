@@ -6,13 +6,13 @@ require 'time'
 module Algolia
   module Ingestion
     class SourceGA4BigQueryExport
-      # GCP project ID that the BigQuery Export writes to.
+      # GCP project ID that the BigQuery export writes to.
       attr_accessor :project_id
 
-      # BigQuery dataset ID that the BigQuery Export writes to.
+      # BigQuery dataset ID that the BigQuery export writes to.
       attr_accessor :dataset_id
 
-      # Prefix of the tables that the BigQuery Export writes to (i.e. events_intraday_ for streaming, events_ for daily).
+      # Prefix of the tables that the BigQuery Export writes to.
       attr_accessor :table_prefix
 
       # Attribute mapping from ruby-style variable name to JSON key.

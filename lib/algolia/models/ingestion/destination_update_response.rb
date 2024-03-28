@@ -5,15 +5,15 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # Response from the API when the Destination is successfully updated.
+    # API response for updating a destination.
     class DestinationUpdateResponse
-      # The destination UUID.
+      # Universally unique identifier (UUID) of a destination resource.
       attr_accessor :destination_id
 
-      # An human readable name describing the object.
+      # Descriptive name for the resource.
       attr_accessor :name
 
-      # Date of last update (RFC3339 format).
+      # Date of last update in RFC3339 format.
       attr_accessor :updated_at
 
       # Attribute mapping from ruby-style variable name to JSON key.

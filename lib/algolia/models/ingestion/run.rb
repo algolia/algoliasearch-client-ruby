@@ -6,12 +6,12 @@ require 'time'
 module Algolia
   module Ingestion
     class Run
-      # The run UUID.
+      # Universally unique identifier (UUID) of a task run.
       attr_accessor :run_id
 
       attr_accessor :app_id
 
-      # The task UUID.
+      # Universally unique identifier (UUID) of a task.
       attr_accessor :task_id
 
       attr_accessor :status
@@ -20,23 +20,23 @@ module Algolia
 
       attr_accessor :outcome
 
-      # A percentage representing the accepted failure threshold to determine if a `run` succeeded or not.
+      # Maximum accepted percentage of failures for a task run to finish successfully.
       attr_accessor :failure_threshold
 
-      # Explains the result of outcome.
+      # More information about the task run's outcome.
       attr_accessor :reason
 
       attr_accessor :reason_code
 
       attr_accessor :type
 
-      # Date of creation (RFC3339 format).
+      # Date of creation in RFC3339 format.
       attr_accessor :created_at
 
-      # Date of start (RFC3339 format).
+      # Date of start in RFC3339 format.
       attr_accessor :started_at
 
-      # Date of finish (RFC3339 format).
+      # Date of finish in RFC3339 format.
       attr_accessor :finished_at
 
       class EnumAttributeValidator

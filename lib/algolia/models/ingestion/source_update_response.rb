@@ -6,12 +6,13 @@ require 'time'
 module Algolia
   module Ingestion
     class SourceUpdateResponse
-      # The source UUID.
+      # Universally uniqud identifier (UUID) of a source.
       attr_accessor :source_id
 
+      # Descriptive name of the source.
       attr_accessor :name
 
-      # Date of last update (RFC3339 format).
+      # Date of last update in RFC3339 format.
       attr_accessor :updated_at
 
       # Attribute mapping from ruby-style variable name to JSON key.

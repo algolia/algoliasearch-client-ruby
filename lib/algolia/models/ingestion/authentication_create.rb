@@ -5,11 +5,11 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # The payload when creating an authentication.
+    # Request body for creating a new authentication resource.
     class AuthenticationCreate
       attr_accessor :type
 
-      # An human readable name describing the object.
+      # Descriptive name for the resource.
       attr_accessor :name
 
       attr_accessor :platform

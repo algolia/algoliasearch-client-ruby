@@ -5,19 +5,19 @@ require 'time'
 
 module Algolia
   module Ingestion
-    # The payload for a task update.
+    # API request body for updating a task.
     class TaskUpdate
-      # The destination UUID.
+      # Universally unique identifier (UUID) of a destination resource.
       attr_accessor :destination_id
 
       attr_accessor :trigger
 
       attr_accessor :input
 
-      # Whether the task is enabled or not.
+      # Whether the task is enabled.
       attr_accessor :enabled
 
-      # A percentage representing the accepted failure threshold to determine if a `run` succeeded or not.
+      # Maximum accepted percentage of failures for a task run to finish successfully.
       attr_accessor :failure_threshold
 
       # Attribute mapping from ruby-style variable name to JSON key.
