@@ -5,17 +5,12 @@ require 'time'
 
 module Algolia
   module QuerySuggestions
+    # API response for retrieving Query Suggestions configurations.
     class QuerySuggestionsConfigurationResponse
-      # API key used to read from your source index.
-      attr_accessor :source_indices_api_key
+      # Algolia application ID to which this Query Suggestions configuration belongs.
+      attr_accessor :app_id
 
-      # API key used to write and configure your Query Suggestions index.
-      attr_accessor :suggestions_indices_api_key
-
-      # API key used to read from external Algolia indices.
-      attr_accessor :external_indices_api_key
-
-      # Query Suggestions index name.
+      # Name of the Query Suggestions index.
       attr_accessor :index_name
 
       # Algolia indices from which to get the popular searches for query suggestions.
@@ -23,21 +18,18 @@ module Algolia
 
       attr_accessor :languages
 
-      # Patterns to exclude from query suggestions.
       attr_accessor :exclude
 
-      # Turn on personalized query suggestions.
+      # Whether to turn on personalized query suggestions.
       attr_accessor :enable_personalization
 
-      # Allow suggestions with special characters.
+      # Whether to include suggestions with special characters.
       attr_accessor :allow_special_characters
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :source_indices_api_key => :sourceIndicesAPIKey,
-          :suggestions_indices_api_key => :suggestionsIndicesAPIKey,
-          :external_indices_api_key => :externalIndicesAPIKey,
+          :app_id => :appID,
           :index_name => :indexName,
           :source_indices => :sourceIndices,
           :languages => :languages,
@@ -55,9 +47,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :source_indices_api_key => :String,
-          :suggestions_indices_api_key => :String,
-          :external_indices_api_key => :String,
+          :app_id => :String,
           :index_name => :String,
           :source_indices => :'Array<SourceIndex>',
           :languages => :Languages,
@@ -77,7 +67,7 @@ module Algolia
       # List of class defined in allOf (OpenAPI v3)
       def self.openapi_all_of
         [
-          :BaseQuerySuggestionsConfigurationResponse,
+          :AppID,
           :QuerySuggestionsConfigurationWithIndex
         ]
       end
@@ -99,16 +89,10 @@ module Algolia
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:source_indices_api_key)
-          self.source_indices_api_key = attributes[:source_indices_api_key]
-        end
-
-        if attributes.key?(:suggestions_indices_api_key)
-          self.suggestions_indices_api_key = attributes[:suggestions_indices_api_key]
-        end
-
-        if attributes.key?(:external_indices_api_key)
-          self.external_indices_api_key = attributes[:external_indices_api_key]
+        if attributes.key?(:app_id)
+          self.app_id = attributes[:app_id]
+        else
+          self.app_id = nil
         end
 
         if attributes.key?(:index_name)
@@ -127,20 +111,28 @@ module Algolia
 
         if attributes.key?(:languages)
           self.languages = attributes[:languages]
+        else
+          self.languages = nil
         end
 
         if attributes.key?(:exclude)
           if (value = attributes[:exclude]).is_a?(Array)
             self.exclude = value
           end
+        else
+          self.exclude = nil
         end
 
         if attributes.key?(:enable_personalization)
           self.enable_personalization = attributes[:enable_personalization]
+        else
+          self.enable_personalization = nil
         end
 
         if attributes.key?(:allow_special_characters)
           self.allow_special_characters = attributes[:allow_special_characters]
+        else
+          self.allow_special_characters = nil
         end
       end
 
@@ -164,9 +156,7 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          source_indices_api_key == other.source_indices_api_key &&
-          suggestions_indices_api_key == other.suggestions_indices_api_key &&
-          external_indices_api_key == other.external_indices_api_key &&
+          app_id == other.app_id &&
           index_name == other.index_name &&
           source_indices == other.source_indices &&
           languages == other.languages &&
@@ -184,8 +174,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [source_indices_api_key, suggestions_indices_api_key, external_indices_api_key, index_name, source_indices, languages, exclude, enable_personalization,
-         allow_special_characters].hash
+        [app_id, index_name, source_indices, languages, exclude, enable_personalization, allow_special_characters].hash
       end
 
       # Builds the object from hash

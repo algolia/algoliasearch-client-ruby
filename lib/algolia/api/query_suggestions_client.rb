@@ -33,7 +33,7 @@ module Algolia
       new(config)
     end
 
-    # Create a new Query Suggestions configuration.  You can have up to 100 configurations per Algolia application.
+    # Creates a new Query Suggestions configuration.  You can have up to 100 configurations per Algolia application.
     #
     # Required API Key ACLs:
     #   - editSettings
@@ -65,7 +65,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Create a new Query Suggestions configuration.  You can have up to 100 configurations per Algolia application.
+    # Creates a new Query Suggestions configuration.  You can have up to 100 configurations per Algolia application.
     #
     # Required API Key ACLs:
     #   - editSettings
@@ -253,7 +253,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Delete a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the Query Suggestions index. The Query Suggestions index itself is not deleted.
+    # Deletes a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the Query Suggestions index. To delete the Query Suggestions index itself, use the Search API and the [Delete an index](/specs/search#tag/Indices/operation/deleteIndex) operation.
     #
     # Required API Key ACLs:
     #   - editSettings
@@ -285,7 +285,7 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Delete a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the Query Suggestions index. The Query Suggestions index itself is not deleted.
+    # Deletes a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the Query Suggestions index. To delete the Query Suggestions index itself, use the Search API and the [Delete an index](/specs/search#tag/Indices/operation/deleteIndex) operation.
     #
     # Required API Key ACLs:
     #   - editSettings
@@ -297,7 +297,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::BaseResponse')
     end
 
-    # List all Query Suggestions configurations of your Algolia application.
+    # Retrieves all Query Suggestions configurations of your Algolia application.
     #
     # Required API Key ACLs:
     #   - settings
@@ -323,7 +323,7 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # List all Query Suggestions configurations of your Algolia application.
+    # Retrieves all Query Suggestions configurations of your Algolia application.
     #
     # Required API Key ACLs:
     #   - settings
@@ -334,7 +334,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<QuerySuggestions::QuerySuggestionsConfigurationResponse>')
     end
 
-    # Get a single Query Suggestions configuration.
+    # Retrieves a single Query Suggestions configuration by its index name.
     #
     # Required API Key ACLs:
     #   - settings
@@ -366,7 +366,7 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get a single Query Suggestions configuration.
+    # Retrieves a single Query Suggestions configuration by its index name.
     #
     # Required API Key ACLs:
     #   - settings
@@ -378,7 +378,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::QuerySuggestionsConfigurationResponse')
     end
 
-    # Report the status of a Query Suggestions index.
+    # Reports the status of a Query Suggestions index.
     #
     # Required API Key ACLs:
     #   - settings
@@ -410,7 +410,7 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Report the status of a Query Suggestions index.
+    # Reports the status of a Query Suggestions index.
     #
     # Required API Key ACLs:
     #   - settings
@@ -422,7 +422,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::GetConfigStatus200Response')
     end
 
-    # Get the logs for a single Query Suggestions index.
+    # Retrieves the logs for a single Query Suggestions index.
     #
     # Required API Key ACLs:
     #   - settings
@@ -454,7 +454,7 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get the logs for a single Query Suggestions index.
+    # Retrieves the logs for a single Query Suggestions index.
     #
     # Required API Key ACLs:
     #   - settings
@@ -466,7 +466,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::GetLogFile200Response')
     end
 
-    # Update a QuerySuggestions configuration.
+    # Updates a QuerySuggestions configuration.
     #
     # Required API Key ACLs:
     #   - editSettings
@@ -503,7 +503,7 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # Update a QuerySuggestions configuration.
+    # Updates a QuerySuggestions configuration.
     #
     # Required API Key ACLs:
     #   - editSettings

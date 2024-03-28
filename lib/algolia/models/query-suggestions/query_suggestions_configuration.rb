@@ -12,13 +12,12 @@ module Algolia
 
       attr_accessor :languages
 
-      # Patterns to exclude from query suggestions.
       attr_accessor :exclude
 
-      # Turn on personalized query suggestions.
+      # Whether to turn on personalized query suggestions.
       attr_accessor :enable_personalization
 
-      # Allow suggestions with special characters.
+      # Whether to include suggestions with special characters.
       attr_accessor :allow_special_characters
 
       # Attribute mapping from ruby-style variable name to JSON key.

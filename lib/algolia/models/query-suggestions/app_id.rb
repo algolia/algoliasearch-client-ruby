@@ -5,30 +5,14 @@ require 'time'
 
 module Algolia
   module QuerySuggestions
-    class GetConfigStatus200Response
-      # Name of the Query Suggestions index.
-      attr_accessor :index_name
-
-      # Whether the creation or update of the Query Suggestions index is in progress.
-      attr_accessor :is_running
-
-      # Timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format when the Query Suggestions index was last built.
-      attr_accessor :last_built_at
-
-      # Timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format when the Query Suggestions index was last updated successfully.
-      attr_accessor :last_successful_built_at
-
-      # Duration of the last successful build in seconds.
-      attr_accessor :last_successful_build_duration
+    class AppID
+      # Algolia application ID to which this Query Suggestions configuration belongs.
+      attr_accessor :app_id
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :index_name => :indexName,
-          :is_running => :isRunning,
-          :last_built_at => :lastBuiltAt,
-          :last_successful_built_at => :lastSuccessfulBuiltAt,
-          :last_successful_build_duration => :lastSuccessfulBuildDuration
+          :app_id => :appID
         }
       end
 
@@ -40,11 +24,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :index_name => :String,
-          :is_running => :Boolean,
-          :last_built_at => :String,
-          :last_successful_built_at => :String,
-          :last_successful_build_duration => :String
+          :app_id => :String
         }
       end
 
@@ -57,37 +37,21 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::GetConfigStatus200Response` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::AppID` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::GetConfigStatus200Response`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::AppID`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:index_name)
-          self.index_name = attributes[:index_name]
-        end
-
-        if attributes.key?(:is_running)
-          self.is_running = attributes[:is_running]
-        end
-
-        if attributes.key?(:last_built_at)
-          self.last_built_at = attributes[:last_built_at]
-        end
-
-        if attributes.key?(:last_successful_built_at)
-          self.last_successful_built_at = attributes[:last_successful_built_at]
-        end
-
-        if attributes.key?(:last_successful_build_duration)
-          self.last_successful_build_duration = attributes[:last_successful_build_duration]
+        if attributes.key?(:app_id)
+          self.app_id = attributes[:app_id]
         end
       end
 
@@ -97,11 +61,7 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          index_name == other.index_name &&
-          is_running == other.is_running &&
-          last_built_at == other.last_built_at &&
-          last_successful_built_at == other.last_successful_built_at &&
-          last_successful_build_duration == other.last_successful_build_duration
+          app_id == other.app_id
       end
 
       # @see the `==` method
@@ -113,7 +73,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [index_name, is_running, last_built_at, last_successful_built_at, last_successful_build_duration].hash
+        [app_id].hash
       end
 
       # Builds the object from hash

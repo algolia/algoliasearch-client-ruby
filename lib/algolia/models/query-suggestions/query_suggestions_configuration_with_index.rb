@@ -7,32 +7,31 @@ module Algolia
   module QuerySuggestions
     # Query Suggestions configuration.
     class QuerySuggestionsConfigurationWithIndex
-      # Query Suggestions index name.
-      attr_accessor :index_name
-
       # Algolia indices from which to get the popular searches for query suggestions.
       attr_accessor :source_indices
 
       attr_accessor :languages
 
-      # Patterns to exclude from query suggestions.
       attr_accessor :exclude
 
-      # Turn on personalized query suggestions.
+      # Whether to turn on personalized query suggestions.
       attr_accessor :enable_personalization
 
-      # Allow suggestions with special characters.
+      # Whether to include suggestions with special characters.
       attr_accessor :allow_special_characters
+
+      # Name of the Query Suggestions index.
+      attr_accessor :index_name
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :index_name => :indexName,
           :source_indices => :sourceIndices,
           :languages => :languages,
           :exclude => :exclude,
           :enable_personalization => :enablePersonalization,
-          :allow_special_characters => :allowSpecialCharacters
+          :allow_special_characters => :allowSpecialCharacters,
+          :index_name => :indexName
         }
       end
 
@@ -44,12 +43,12 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :index_name => :String,
           :source_indices => :'Array<SourceIndex>',
           :languages => :Languages,
           :exclude => :'Array<String>',
           :enable_personalization => :Boolean,
-          :allow_special_characters => :Boolean
+          :allow_special_characters => :Boolean,
+          :index_name => :String
         }
       end
 
@@ -63,7 +62,6 @@ module Algolia
       # List of class defined in allOf (OpenAPI v3)
       def self.openapi_all_of
         [
-          :BaseQuerySuggestionsConfigurationWithIndex,
           :QuerySuggestionsConfiguration
         ]
       end
@@ -83,12 +81,6 @@ module Algolia
           end
 
           h[k.to_sym] = v
-        end
-
-        if attributes.key?(:index_name)
-          self.index_name = attributes[:index_name]
-        else
-          self.index_name = nil
         end
 
         if attributes.key?(:source_indices)
@@ -116,6 +108,12 @@ module Algolia
         if attributes.key?(:allow_special_characters)
           self.allow_special_characters = attributes[:allow_special_characters]
         end
+
+        if attributes.key?(:index_name)
+          self.index_name = attributes[:index_name]
+        else
+          self.index_name = nil
+        end
       end
 
       # Custom attribute writer method with validation
@@ -138,12 +136,12 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          index_name == other.index_name &&
           source_indices == other.source_indices &&
           languages == other.languages &&
           exclude == other.exclude &&
           enable_personalization == other.enable_personalization &&
-          allow_special_characters == other.allow_special_characters
+          allow_special_characters == other.allow_special_characters &&
+          index_name == other.index_name
       end
 
       # @see the `==` method
@@ -155,7 +153,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [index_name, source_indices, languages, exclude, enable_personalization, allow_special_characters].hash
+        [source_indices, languages, exclude, enable_personalization, allow_special_characters, index_name].hash
       end
 
       # Builds the object from hash

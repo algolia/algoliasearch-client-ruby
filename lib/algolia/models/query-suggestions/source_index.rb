@@ -10,16 +10,14 @@ module Algolia
       # Name of the Algolia index to use as source for query suggestions.
       attr_accessor :index_name
 
-      # If true, Query Suggestions uses all replicas of the primary index to find popular searches. If false, only the primary index is used.
+      # If true, Query Suggestions uses all replica indices to find popular searches. If false, only the primary index is used.
       attr_accessor :replicas
 
-      # [Analytics tags](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) for filtering the popular searches.
       attr_accessor :analytics_tags
 
-      # Facets to use as top categories with your suggestions.  If provided, Query Suggestions adds the top facet values to each suggestion.
       attr_accessor :facets
 
-      # Minimum number of hits required to be included as a suggestion.  A search query must at least generate `minHits` hits to be included in the Query Suggestions index.
+      # Minimum number of hits required to be included as a suggestion.  A search query must at least generate `minHits` search results to be included in the Query Suggestions index.
       attr_accessor :min_hits
 
       # Minimum letters required to be included as a suggestion.  A search query must be at least `minLetters` long to be included in the Query Suggestions index.
@@ -27,7 +25,6 @@ module Algolia
 
       attr_accessor :generate
 
-      # Algolia indices with popular searches to use as query suggestions.  Records of these indices must have these attributes:    - `query`: search query which will be added as a suggestion   - `count`: measure of popularity of that search query  For example, you can export popular searches from an external analytics tool, such as Google Analytics or Adobe Analytics, and feed this data into an external Algolia index. You can use this external index to generate query suggestions until your Algolia analytics has collected enough data.
       attr_accessor :external
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -68,6 +65,7 @@ module Algolia
         Set.new([
                   :analytics_tags,
                   :facets,
+                  :generate,
                   :external
                 ])
       end

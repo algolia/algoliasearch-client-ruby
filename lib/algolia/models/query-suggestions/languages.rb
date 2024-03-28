@@ -5,7 +5,7 @@ require 'time'
 
 module Algolia
   module QuerySuggestions
-    # Set the language for deduplicating singular and plural suggestions. If specified, only the more popular form is included.
+    # Languages for deduplicating singular and plural suggestions. If specified, only the more popular form is included.
     module Languages
       class << self
         # List of class defined in oneOf (OpenAPI v3)

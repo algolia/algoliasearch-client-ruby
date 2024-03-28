@@ -14,7 +14,7 @@ module Algolia
       # Details about this log entry.
       attr_accessor :message
 
-      # Level indicating the position of a suggestion in a hierarchy of records.   For example, a `contextLevel` of 1 indicates that this suggestion belongs to a previous suggestion with `contextLevel` 0.
+      # Level indicating the position of a suggestion in a hierarchy of records.  For example, a `contextLevel` of 1 indicates that this suggestion belongs to a previous suggestion with `contextLevel` 0.
       attr_accessor :context_level
 
       class EnumAttributeValidator
