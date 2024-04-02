@@ -170,6 +170,8 @@ module Algolia
           if (value = attributes[:object_data]).is_a?(Array)
             self.object_data = value
           end
+        else
+          self.object_data = nil
         end
 
         if attributes.key?(:timestamp)
