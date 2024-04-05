@@ -12,6 +12,7 @@ module Algolia
           [
             :AuthAPIKey,
             :AuthAlgolia,
+            :AuthAlgoliaInsights,
             :AuthBasic,
             :AuthGoogleServiceAccount,
             :AuthOAuth

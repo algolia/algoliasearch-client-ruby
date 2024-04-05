@@ -11,6 +11,7 @@ module Algolia
         def openapi_one_of
           [
             :AuthAPIKeyPartial,
+            :AuthAlgoliaInsightsPartial,
             :AuthAlgoliaPartial,
             :AuthBasicPartial,
             :AuthGoogleServiceAccountPartial,
