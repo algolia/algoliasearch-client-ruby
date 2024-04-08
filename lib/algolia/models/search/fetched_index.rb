@@ -12,7 +12,7 @@ module Algolia
       # Index creation date. An empty string means that the index has no records.
       attr_accessor :created_at
 
-      # Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
+      # Date and time when the object was updated, in RFC 3339 format.
       attr_accessor :updated_at
 
       # Number of records contained in the index.

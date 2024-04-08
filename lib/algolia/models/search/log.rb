@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Search
     class Log
-      # Timestamp of the API request in ISO 8601 format.
+      # Date and time of the API request, in RFC 3339 format.
       attr_accessor :timestamp
 
       # HTTP method of the request.

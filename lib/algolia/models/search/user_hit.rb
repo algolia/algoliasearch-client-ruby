@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Search
     class UserHit
-      # User ID.
+      # Unique identifier of the user who makes the search request.
       attr_accessor :user_id
 
       # Cluster name.

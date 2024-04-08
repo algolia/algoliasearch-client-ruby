@@ -215,8 +215,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -254,8 +254,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetAddToCartRateResponse]
@@ -269,8 +269,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -308,8 +308,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetAverageClickPositionResponse]
@@ -323,8 +323,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -362,8 +362,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetClickPositionsResponse]
@@ -377,8 +377,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -416,8 +416,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetClickThroughRateResponse]
@@ -431,8 +431,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -470,8 +470,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetConversionRateResponse]
@@ -485,8 +485,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -524,8 +524,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetNoClickRateResponse]
@@ -539,8 +539,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -578,8 +578,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetNoResultsRateResponse]
@@ -593,8 +593,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -632,8 +632,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetPurchaseRateResponse]
@@ -647,8 +647,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -686,8 +686,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetRevenue]
@@ -701,8 +701,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -740,8 +740,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetSearchesCountResponse]
@@ -755,8 +755,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param limit [Integer] Number of items to return. (default to 10)
     # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -801,8 +801,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param limit [Integer] Number of items to return. (default to 10)
     # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -818,8 +818,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param limit [Integer] Number of items to return. (default to 10)
     # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -864,8 +864,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param limit [Integer] Number of items to return. (default to 10)
     # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -926,8 +926,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param limit [Integer] Number of items to return. (default to 10)
     # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -972,8 +972,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param limit [Integer] Number of items to return. (default to 10)
     # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -990,8 +990,8 @@ module Algolia
     #   - analytics
     # @param index [String] Index name. (required)
     # @param search [String] Search query.
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param limit [Integer] Number of items to return. (default to 10)
     # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -1038,8 +1038,8 @@ module Algolia
     #   - analytics
     # @param index [String] Index name. (required)
     # @param search [String] Search query.
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param limit [Integer] Number of items to return. (default to 10)
     # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -1057,8 +1057,8 @@ module Algolia
     # @param attribute [String] Attribute name. (required)
     # @param index [String] Index name. (required)
     # @param search [String] Search query.
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param limit [Integer] Number of items to return. (default to 10)
     # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -1110,8 +1110,8 @@ module Algolia
     # @param attribute [String] Attribute name. (required)
     # @param index [String] Index name. (required)
     # @param search [String] Search query.
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param limit [Integer] Number of items to return. (default to 10)
     # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -1128,8 +1128,8 @@ module Algolia
     #   - analytics
     # @param index [String] Index name. (required)
     # @param search [String] Search query.
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param limit [Integer] Number of items to return. (default to 10)
     # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -1176,8 +1176,8 @@ module Algolia
     #   - analytics
     # @param index [String] Index name. (required)
     # @param search [String] Search query.
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param limit [Integer] Number of items to return. (default to 10)
     # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -1196,8 +1196,8 @@ module Algolia
     # @param search [String] Search query.
     # @param click_analytics [Boolean] Whether to include metrics related to click and conversion events in the response. (default to false)
     # @param revenue_analytics [Boolean] Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.  (default to false)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param limit [Integer] Number of items to return. (default to 10)
     # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -1249,8 +1249,8 @@ module Algolia
     # @param search [String] Search query.
     # @param click_analytics [Boolean] Whether to include metrics related to click and conversion events in the response. (default to false)
     # @param revenue_analytics [Boolean] Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.  (default to false)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param limit [Integer] Number of items to return. (default to 10)
     # @param offset [Integer] Position of the first item to return. (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -1269,8 +1269,8 @@ module Algolia
     # @param index [String] Index name. (required)
     # @param click_analytics [Boolean] Whether to include metrics related to click and conversion events in the response. (default to false)
     # @param revenue_analytics [Boolean] Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.  (default to false)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param order_by [OrderBy] Attribute by which to order the response items.  If the &#x60;clickAnalytics&#x60; parameter is false, only &#x60;searchCount&#x60; is available.  (default to 'searchCount')
     # @param direction [Direction] Sorting direction of the results: ascending or descending.  (default to 'asc')
     # @param limit [Integer] Number of items to return. (default to 10)
@@ -1324,8 +1324,8 @@ module Algolia
     # @param index [String] Index name. (required)
     # @param click_analytics [Boolean] Whether to include metrics related to click and conversion events in the response. (default to false)
     # @param revenue_analytics [Boolean] Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.  (default to false)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param order_by [OrderBy] Attribute by which to order the response items.  If the &#x60;clickAnalytics&#x60; parameter is false, only &#x60;searchCount&#x60; is available.  (default to 'searchCount')
     # @param direction [Direction] Sorting direction of the results: ascending or descending.  (default to 'asc')
     # @param limit [Integer] Number of items to return. (default to 10)
@@ -1344,8 +1344,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1383,8 +1383,8 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
-    # @param start_date [String] Start date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
-    # @param end_date [String] End date (&#x60;YYYY-MM-DD&#x60;) of the period to analyze.
+    # @param start_date [String] Start date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
+    # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format.
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetUsersCountResponse]

@@ -9,7 +9,7 @@ module Algolia
       # API key.
       attr_accessor :value
 
-      # Timestamp of creation in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
+      # Timestamp when the object was created, in milliseconds since the Unix epoch.
       attr_accessor :created_at
 
       # Permissions that determine the type of API requests this key can make. The required ACL is listed in each endpoint's reference. For more information, see [access control list](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl).

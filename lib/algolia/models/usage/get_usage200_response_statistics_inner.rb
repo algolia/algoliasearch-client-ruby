@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Usage
     class GetUsage200ResponseStatisticsInner
-      # Timestamp in milliseconds in Unix epoch time.
+      # Timestamp, measured in milliseconds since the Unix epoch.
       attr_accessor :t
 
       attr_accessor :v

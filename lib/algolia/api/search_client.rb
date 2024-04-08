@@ -178,7 +178,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
-    # @param x_algolia_user_id [String] User ID to assign. (required)
+    # @param x_algolia_user_id [String] Unique identifier of the user who makes the search request. (required)
     # @param assign_user_id_params [AssignUserIdParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -222,7 +222,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
-    # @param x_algolia_user_id [String] User ID to assign. (required)
+    # @param x_algolia_user_id [String] Unique identifier of the user who makes the search request. (required)
     # @param assign_user_id_params [AssignUserIdParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [CreatedAtResponse]
@@ -281,7 +281,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
-    # @param x_algolia_user_id [String] User ID to assign. (required)
+    # @param x_algolia_user_id [String] Unique identifier of the user who makes the search request. (required)
     # @param batch_assign_user_ids_params [BatchAssignUserIdsParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -325,7 +325,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
-    # @param x_algolia_user_id [String] User ID to assign. (required)
+    # @param x_algolia_user_id [String] Unique identifier of the user who makes the search request. (required)
     # @param batch_assign_user_ids_params [BatchAssignUserIdsParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [CreatedAtResponse]
@@ -1625,7 +1625,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
-    # @param user_id [String] User ID to assign. (required)
+    # @param user_id [String] Unique identifier of the user who makes the search request. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_user_id_with_http_info(user_id, request_options = {})
@@ -1662,7 +1662,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
-    # @param user_id [String] User ID to assign. (required)
+    # @param user_id [String] Unique identifier of the user who makes the search request. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [UserId]
     def get_user_id(user_id, request_options = {})
@@ -2032,7 +2032,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
-    # @param user_id [String] User ID to assign. (required)
+    # @param user_id [String] Unique identifier of the user who makes the search request. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def remove_user_id_with_http_info(user_id, request_options = {})
@@ -2069,7 +2069,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
-    # @param user_id [String] User ID to assign. (required)
+    # @param user_id [String] Unique identifier of the user who makes the search request. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [RemoveUserIdResponse]
     def remove_user_id(user_id, request_options = {})

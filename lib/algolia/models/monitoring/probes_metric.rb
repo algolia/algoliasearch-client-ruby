@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Monitoring
     class ProbesMetric
-      # Timestamp in [Unix epoch time](https://wikipedia.org/wiki/Unix_time) in milliseconds.
+      # Timestamp, measured in milliseconds since the Unix epoch.
       attr_accessor :t
 
       # Value of the metric.

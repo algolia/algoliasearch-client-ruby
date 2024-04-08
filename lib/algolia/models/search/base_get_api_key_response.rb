@@ -9,7 +9,7 @@ module Algolia
       # API key.
       attr_accessor :value
 
-      # Timestamp of creation in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
+      # Timestamp when the object was created, in milliseconds since the Unix epoch.
       attr_accessor :created_at
 
       # Attribute mapping from ruby-style variable name to JSON key.

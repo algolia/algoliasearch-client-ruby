@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module QuerySuggestions
     class GetLogFile200Response
-      # Timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
+      # Date and time of the log entry, in RFC 3339 format.
       attr_accessor :timestamp
 
       attr_accessor :level

@@ -12,10 +12,10 @@ module Algolia
       # Whether the creation or update of the Query Suggestions index is in progress.
       attr_accessor :is_running
 
-      # Timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format when the Query Suggestions index was last built.
+      # Date and time when the Query Suggestions index was last built, in RFC 3339 format.
       attr_accessor :last_built_at
 
-      # Timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format when the Query Suggestions index was last updated successfully.
+      # Date and time when the Query Suggestions index was last updated successfully.
       attr_accessor :last_successful_built_at
 
       # Duration of the last successful build in seconds.

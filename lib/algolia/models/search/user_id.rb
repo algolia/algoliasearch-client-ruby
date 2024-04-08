@@ -7,7 +7,7 @@ module Algolia
   module Search
     # Unique user ID.
     class UserId
-      # User ID.
+      # Unique identifier of the user who makes the search request.
       attr_accessor :user_id
 
       # Cluster to which the user is assigned.
