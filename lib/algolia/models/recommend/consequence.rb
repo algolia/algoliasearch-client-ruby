@@ -5,30 +5,22 @@ require 'time'
 
 module Algolia
   module Recommend
-    # Effect of the rule.  For more information, see [Consequences](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#consequences).
+    # Effect of the rule.
     class Consequence
-      attr_accessor :params
-
-      # Records you want to pin to a specific position in the search results.  You can promote up to 300 records, either individually, or as groups of up to 100 records each.
-      attr_accessor :promote
-
-      # Whether promoted records must match an active filter for the consequence to be applied.  This ensures that user actions (filtering the search) are given a higher precendence. For example, if you promote a record with the `color: red` attribute, and the user filters the search for `color: blue`, the \"red\" record won't be shown.
-      attr_accessor :filter_promotes
-
-      # Records you want to hide from the search results.
+      # Exclude items from recommendations.
       attr_accessor :hide
 
-      # A JSON object with custom data that will be appended to the `userData` array in the response. This object isn't interpreted by the API and is limited to 1&nbsp;kB of minified JSON.
-      attr_accessor :user_data
+      # Place items at specific positions in the list of recommendations.
+      attr_accessor :promote
+
+      attr_accessor :params
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :params => :params,
-          :promote => :promote,
-          :filter_promotes => :filterPromotes,
           :hide => :hide,
-          :user_data => :userData
+          :promote => :promote,
+          :params => :params
         }
       end
 
@@ -40,19 +32,15 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :params => :ConsequenceParams,
-          :promote => :'Array<Promote>',
-          :filter_promotes => :Boolean,
-          :hide => :'Array<ConsequenceHide>',
-          :user_data => :Object
+          :hide => :'Array<HideConsequenceObject>',
+          :promote => :'Array<PromoteConsequenceObject>',
+          :params => :ParamsConsequence
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([
-                  :user_data
-                ])
+        Set.new([])
       end
 
       # Initializes the object
@@ -72,8 +60,10 @@ module Algolia
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:params)
-          self.params = attributes[:params]
+        if attributes.key?(:hide)
+          if (value = attributes[:hide]).is_a?(Array)
+            self.hide = value
+          end
         end
 
         if attributes.key?(:promote)
@@ -82,33 +72,9 @@ module Algolia
           end
         end
 
-        if attributes.key?(:filter_promotes)
-          self.filter_promotes = attributes[:filter_promotes]
+        if attributes.key?(:params)
+          self.params = attributes[:params]
         end
-
-        if attributes.key?(:hide)
-          if (value = attributes[:hide]).is_a?(Array)
-            self.hide = value
-          end
-        end
-
-        if attributes.key?(:user_data)
-          self.user_data = attributes[:user_data]
-        end
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] promote Value to be assigned
-      def promote=(promote)
-        if promote.nil?
-          raise ArgumentError, 'promote cannot be nil'
-        end
-
-        if promote.length > 300
-          raise ArgumentError, 'invalid value for "promote", number of items must be less than or equal to 300.'
-        end
-
-        @promote = promote
       end
 
       # Custom attribute writer method with validation
@@ -118,11 +84,25 @@ module Algolia
           raise ArgumentError, 'hide cannot be nil'
         end
 
-        if hide.length > 50
-          raise ArgumentError, 'invalid value for "hide", number of items must be less than or equal to 50.'
+        if hide.length < 1
+          raise ArgumentError, 'invalid value for "hide", number of items must be greater than or equal to 1.'
         end
 
         @hide = hide
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] promote Value to be assigned
+      def promote=(promote)
+        if promote.nil?
+          raise ArgumentError, 'promote cannot be nil'
+        end
+
+        if promote.length < 1
+          raise ArgumentError, 'invalid value for "promote", number of items must be greater than or equal to 1.'
+        end
+
+        @promote = promote
       end
 
       # Checks equality by comparing each attribute.
@@ -131,11 +111,9 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          params == other.params &&
-          promote == other.promote &&
-          filter_promotes == other.filter_promotes &&
           hide == other.hide &&
-          user_data == other.user_data
+          promote == other.promote &&
+          params == other.params
       end
 
       # @see the `==` method
@@ -147,7 +125,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [params, promote, filter_promotes, hide, user_data].hash
+        [hide, promote, params].hash
       end
 
       # Builds the object from hash

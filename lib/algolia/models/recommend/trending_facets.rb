@@ -5,18 +5,42 @@ require 'time'
 
 module Algolia
   module Recommend
-    class ConsequenceQueryObject
-      # Words to remove from the search query.
-      attr_accessor :remove
+    class TrendingFacets
+      # Facet attribute for which to retrieve trending facet values.
+      attr_accessor :facet_name
 
-      # Changes to make to the search query.
-      attr_accessor :edits
+      attr_accessor :model
+
+      attr_accessor :fallback_parameters
+
+      class EnumAttributeValidator
+        attr_reader :datatype
+        attr_reader :allowable_values
+
+        def initialize(datatype, allowable_values)
+          @allowable_values = allowable_values.map do |value|
+            case datatype.to_s
+            when /Integer/i
+              value.to_i
+            when /Float/i
+              value.to_f
+            else
+              value
+            end
+          end
+        end
+
+        def valid?(value)
+          !value || allowable_values.include?(value)
+        end
+      end
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :remove => :remove,
-          :edits => :edits
+          :facet_name => :facetName,
+          :model => :model,
+          :fallback_parameters => :fallbackParameters
         }
       end
 
@@ -28,43 +52,50 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :remove => :'Array<String>',
-          :edits => :'Array<Edit>'
+          :facet_name => :Object,
+          :model => :TrendingFacetsModel,
+          :fallback_parameters => :FallbackParams
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([])
+        Set.new([
+                  :facet_name
+                ])
       end
 
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::ConsequenceQueryObject` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::TrendingFacets` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::ConsequenceQueryObject`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::TrendingFacets`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:remove)
-          if (value = attributes[:remove]).is_a?(Array)
-            self.remove = value
-          end
+        if attributes.key?(:facet_name)
+          self.facet_name = attributes[:facet_name]
+        else
+          self.facet_name = nil
         end
 
-        if attributes.key?(:edits)
-          if (value = attributes[:edits]).is_a?(Array)
-            self.edits = value
-          end
+        if attributes.key?(:model)
+          self.model = attributes[:model]
+        else
+          self.model = nil
+        end
+
+        if attributes.key?(:fallback_parameters)
+          self.fallback_parameters = attributes[:fallback_parameters]
         end
       end
 
@@ -74,8 +105,9 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          remove == other.remove &&
-          edits == other.edits
+          facet_name == other.facet_name &&
+          model == other.model &&
+          fallback_parameters == other.fallback_parameters
       end
 
       # @see the `==` method
@@ -87,7 +119,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [remove, edits].hash
+        [facet_name, model, fallback_parameters].hash
       end
 
       # Builds the object from hash

@@ -10,10 +10,10 @@ module Algolia
       # Recommendation score.
       attr_accessor :_score
 
-      # Facet name for trending models.
+      # Facet attribute. To be used in combination with `facetValue`. If specified, only recommendations matching the facet filter will be returned.
       attr_accessor :facet_name
 
-      # Facet value for trending models.
+      # Facet value. To be used in combination with `facetName`. If specified, only recommendations matching the facet filter will be returned.
       attr_accessor :facet_value
 
       # Attribute mapping from ruby-style variable name to JSON key.

@@ -5,11 +5,14 @@ require 'time'
 
 module Algolia
   module Recommend
-    class ConsequenceParams
+    class FallbackParams
+      # Search query.
+      attr_accessor :query
+
       # Keywords to be used instead of the search query to conduct a more broader search.  Using the `similarQuery` parameter changes other settings:  - `queryType` is set to `prefixNone`. - `removeStopWords` is set to true. - `words` is set as the first ranking criterion. - All remaining words are treated as `optionalWords`.  Since the `similarQuery` is supposed to do a broad search, they usually return many results. Combine it with `filters` to narrow down the list of results.
       attr_accessor :similar_query
 
-      # Filter the search so that only records with matching values are included in the results.  These filters are supported:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
+      # Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
       attr_accessor :filters
 
       attr_accessor :facet_filters
@@ -214,12 +217,6 @@ module Algolia
 
       attr_accessor :re_ranking_apply_filter
 
-      attr_accessor :query
-
-      attr_accessor :automatic_facet_filters
-
-      attr_accessor :automatic_optional_facet_filters
-
       class EnumAttributeValidator
         attr_reader :datatype
         attr_reader :allowable_values
@@ -245,6 +242,7 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
+          :query => :query,
           :similar_query => :similarQuery,
           :filters => :filters,
           :facet_filters => :facetFilters,
@@ -319,10 +317,7 @@ module Algolia
           :attribute_criteria_computed_by_min_proximity => :attributeCriteriaComputedByMinProximity,
           :rendering_content => :renderingContent,
           :enable_re_ranking => :enableReRanking,
-          :re_ranking_apply_filter => :reRankingApplyFilter,
-          :query => :query,
-          :automatic_facet_filters => :automaticFacetFilters,
-          :automatic_optional_facet_filters => :automaticOptionalFacetFilters
+          :re_ranking_apply_filter => :reRankingApplyFilter
         }
       end
 
@@ -334,6 +329,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
+          :query => :String,
           :similar_query => :String,
           :filters => :String,
           :facet_filters => :FacetFilters,
@@ -408,10 +404,7 @@ module Algolia
           :attribute_criteria_computed_by_min_proximity => :Boolean,
           :rendering_content => :RenderingContent,
           :enable_re_ranking => :Boolean,
-          :re_ranking_apply_filter => :ReRankingApplyFilter,
-          :query => :ConsequenceQuery,
-          :automatic_facet_filters => :AutomaticFacetFilters,
-          :automatic_optional_facet_filters => :AutomaticFacetFilters
+          :re_ranking_apply_filter => :ReRankingApplyFilter
         }
       end
 
@@ -425,9 +418,7 @@ module Algolia
       # List of class defined in allOf (OpenAPI v3)
       def self.openapi_all_of
         [
-          :BaseSearchParamsWithoutQuery,
-          :IndexSettingsAsSearchParams,
-          :Params
+          :SearchParamsObject
         ]
       end
 
@@ -435,17 +426,21 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::ConsequenceParams` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::FallbackParams` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::ConsequenceParams`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::FallbackParams`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
+        end
+
+        if attributes.key?(:query)
+          self.query = attributes[:query]
         end
 
         if attributes.key?(:similar_query)
@@ -785,18 +780,6 @@ module Algolia
         if attributes.key?(:re_ranking_apply_filter)
           self.re_ranking_apply_filter = attributes[:re_ranking_apply_filter]
         end
-
-        if attributes.key?(:query)
-          self.query = attributes[:query]
-        end
-
-        if attributes.key?(:automatic_facet_filters)
-          self.automatic_facet_filters = attributes[:automatic_facet_filters]
-        end
-
-        if attributes.key?(:automatic_optional_facet_filters)
-          self.automatic_optional_facet_filters = attributes[:automatic_optional_facet_filters]
-        end
       end
 
       # Custom attribute writer method with validation
@@ -933,6 +916,7 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
+          query == other.query &&
           similar_query == other.similar_query &&
           filters == other.filters &&
           facet_filters == other.facet_filters &&
@@ -1007,10 +991,7 @@ module Algolia
           attribute_criteria_computed_by_min_proximity == other.attribute_criteria_computed_by_min_proximity &&
           rendering_content == other.rendering_content &&
           enable_re_ranking == other.enable_re_ranking &&
-          re_ranking_apply_filter == other.re_ranking_apply_filter &&
-          query == other.query &&
-          automatic_facet_filters == other.automatic_facet_filters &&
-          automatic_optional_facet_filters == other.automatic_optional_facet_filters
+          re_ranking_apply_filter == other.re_ranking_apply_filter
       end
 
       # @see the `==` method
@@ -1022,8 +1003,8 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [similar_query, filters, facet_filters, optional_filters, numeric_filters, tag_filters, sum_or_filters_scores, restrict_searchable_attributes, facets,
-         faceting_after_distinct, page, offset, length, around_lat_lng, around_lat_lng_via_ip, around_radius, around_precision, minimum_around_radius, inside_bounding_box, inside_polygon, natural_languages, rule_contexts, personalization_impact, user_token, get_ranking_info, synonyms, click_analytics, analytics, analytics_tags, percentile_computation, enable_ab_test, attributes_to_retrieve, ranking, custom_ranking, relevancy_strictness, attributes_to_highlight, attributes_to_snippet, highlight_pre_tag, highlight_post_tag, snippet_ellipsis_text, restrict_highlight_and_snippet_arrays, hits_per_page, min_word_sizefor1_typo, min_word_sizefor2_typos, typo_tolerance, allow_typos_on_numeric_tokens, disable_typo_tolerance_on_attributes, ignore_plurals, remove_stop_words, keep_diacritics_on_characters, query_languages, decompound_query, enable_rules, enable_personalization, query_type, remove_words_if_no_results, mode, semantic_search, advanced_syntax, optional_words, disable_exact_on_attributes, exact_on_single_word_query, alternatives_as_exact, advanced_syntax_features, distinct, replace_synonyms_in_highlight, min_proximity, response_fields, max_facet_hits, max_values_per_facet, sort_facet_values_by, attribute_criteria_computed_by_min_proximity, rendering_content, enable_re_ranking, re_ranking_apply_filter, query, automatic_facet_filters, automatic_optional_facet_filters].hash
+        [query, similar_query, filters, facet_filters, optional_filters, numeric_filters, tag_filters, sum_or_filters_scores, restrict_searchable_attributes, facets,
+         faceting_after_distinct, page, offset, length, around_lat_lng, around_lat_lng_via_ip, around_radius, around_precision, minimum_around_radius, inside_bounding_box, inside_polygon, natural_languages, rule_contexts, personalization_impact, user_token, get_ranking_info, synonyms, click_analytics, analytics, analytics_tags, percentile_computation, enable_ab_test, attributes_to_retrieve, ranking, custom_ranking, relevancy_strictness, attributes_to_highlight, attributes_to_snippet, highlight_pre_tag, highlight_post_tag, snippet_ellipsis_text, restrict_highlight_and_snippet_arrays, hits_per_page, min_word_sizefor1_typo, min_word_sizefor2_typos, typo_tolerance, allow_typos_on_numeric_tokens, disable_typo_tolerance_on_attributes, ignore_plurals, remove_stop_words, keep_diacritics_on_characters, query_languages, decompound_query, enable_rules, enable_personalization, query_type, remove_words_if_no_results, mode, semantic_search, advanced_syntax, optional_words, disable_exact_on_attributes, exact_on_single_word_query, alternatives_as_exact, advanced_syntax_features, distinct, replace_synonyms_in_highlight, min_proximity, response_fields, max_facet_hits, max_values_per_facet, sort_facet_values_by, attribute_criteria_computed_by_min_proximity, rendering_content, enable_re_ranking, re_ranking_apply_filter].hash
       end
 
       # Builds the object from hash

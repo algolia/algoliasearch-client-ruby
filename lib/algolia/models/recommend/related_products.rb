@@ -5,15 +5,42 @@ require 'time'
 
 module Algolia
   module Recommend
-    # Object ID of the record to hide.
-    class ConsequenceHide
+    class RelatedProducts
+      attr_accessor :model
+
       # Unique record identifier.
       attr_accessor :object_id
+
+      attr_accessor :fallback_parameters
+
+      class EnumAttributeValidator
+        attr_reader :datatype
+        attr_reader :allowable_values
+
+        def initialize(datatype, allowable_values)
+          @allowable_values = allowable_values.map do |value|
+            case datatype.to_s
+            when /Integer/i
+              value.to_i
+            when /Float/i
+              value.to_f
+            else
+              value
+            end
+          end
+        end
+
+        def valid?(value)
+          !value || allowable_values.include?(value)
+        end
+      end
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :object_id => :objectID
+          :model => :model,
+          :object_id => :objectID,
+          :fallback_parameters => :fallbackParameters
         }
       end
 
@@ -25,7 +52,9 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :object_id => :String
+          :model => :RelatedModel,
+          :object_id => :String,
+          :fallback_parameters => :FallbackParams
         }
       end
 
@@ -38,23 +67,33 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::ConsequenceHide` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::RelatedProducts` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::ConsequenceHide`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::RelatedProducts`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
+        end
+
+        if attributes.key?(:model)
+          self.model = attributes[:model]
+        else
+          self.model = nil
         end
 
         if attributes.key?(:object_id)
           self.object_id = attributes[:object_id]
         else
           self.object_id = nil
+        end
+
+        if attributes.key?(:fallback_parameters)
+          self.fallback_parameters = attributes[:fallback_parameters]
         end
       end
 
@@ -64,7 +103,9 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          object_id == other.object_id
+          model == other.model &&
+          object_id == other.object_id &&
+          fallback_parameters == other.fallback_parameters
       end
 
       # @see the `==` method
@@ -76,7 +117,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [object_id].hash
+        [model, object_id, fallback_parameters].hash
       end
 
       # Builds the object from hash

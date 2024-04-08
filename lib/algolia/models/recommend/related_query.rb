@@ -5,23 +5,57 @@ require 'time'
 
 module Algolia
   module Recommend
-    # Filter or optional filter to be applied to the search.
-    class AutomaticFacetFilter
-      # Facet name to be applied as filter. The name must match placeholders in the `pattern` parameter. For example, with `pattern: {facet:genre}`, `automaticFacetFilters` must be `genre`.
-      attr_accessor :facet
+    class RelatedQuery
+      # Index name.
+      attr_accessor :index_name
 
-      # Filter scores to give different weights to individual filters.
-      attr_accessor :score
+      # Minimum score a recommendation must have to be included in the response.
+      attr_accessor :threshold
 
-      # Whether the filter is disjunctive or conjunctive.  If true the filter has multiple matches, multiple occurences are combined with the logical `OR` operation. If false, multiple occurences are combined with the logical `AND` operation.
-      attr_accessor :disjunctive
+      # Maximum number of recommendations to retrieve. By default, all recommendations are returned and no fallback request is made. Depending on the available recommendations and the other request parameters, the actual number of recommendations may be lower than this value.
+      attr_accessor :max_recommendations
+
+      attr_accessor :query_parameters
+
+      attr_accessor :model
+
+      # Unique record identifier.
+      attr_accessor :object_id
+
+      attr_accessor :fallback_parameters
+
+      class EnumAttributeValidator
+        attr_reader :datatype
+        attr_reader :allowable_values
+
+        def initialize(datatype, allowable_values)
+          @allowable_values = allowable_values.map do |value|
+            case datatype.to_s
+            when /Integer/i
+              value.to_i
+            when /Float/i
+              value.to_f
+            else
+              value
+            end
+          end
+        end
+
+        def valid?(value)
+          !value || allowable_values.include?(value)
+        end
+      end
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :facet => :facet,
-          :score => :score,
-          :disjunctive => :disjunctive
+          :index_name => :indexName,
+          :threshold => :threshold,
+          :max_recommendations => :maxRecommendations,
+          :query_parameters => :queryParameters,
+          :model => :model,
+          :object_id => :objectID,
+          :fallback_parameters => :fallbackParameters
         }
       end
 
@@ -33,9 +67,13 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :facet => :String,
-          :score => :Integer,
-          :disjunctive => :Boolean
+          :index_name => :String,
+          :threshold => :Float,
+          :max_recommendations => :Integer,
+          :query_parameters => :SearchParams,
+          :model => :RelatedModel,
+          :object_id => :String,
+          :fallback_parameters => :FallbackParams
         }
       end
 
@@ -44,36 +82,102 @@ module Algolia
         Set.new([])
       end
 
+      # List of class defined in allOf (OpenAPI v3)
+      def self.openapi_all_of
+        [
+          :BaseRecommendRequest,
+          :RelatedProducts
+        ]
+      end
+
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::AutomaticFacetFilter` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::RelatedQuery` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::AutomaticFacetFilter`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::RelatedQuery`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:facet)
-          self.facet = attributes[:facet]
+        if attributes.key?(:index_name)
+          self.index_name = attributes[:index_name]
         else
-          self.facet = nil
+          self.index_name = nil
         end
 
-        if attributes.key?(:score)
-          self.score = attributes[:score]
+        if attributes.key?(:threshold)
+          self.threshold = attributes[:threshold]
+        else
+          self.threshold = nil
         end
 
-        if attributes.key?(:disjunctive)
-          self.disjunctive = attributes[:disjunctive]
+        if attributes.key?(:max_recommendations)
+          self.max_recommendations = attributes[:max_recommendations]
         end
+
+        if attributes.key?(:query_parameters)
+          self.query_parameters = attributes[:query_parameters]
+        end
+
+        if attributes.key?(:model)
+          self.model = attributes[:model]
+        else
+          self.model = nil
+        end
+
+        if attributes.key?(:object_id)
+          self.object_id = attributes[:object_id]
+        else
+          self.object_id = nil
+        end
+
+        if attributes.key?(:fallback_parameters)
+          self.fallback_parameters = attributes[:fallback_parameters]
+        end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] threshold Value to be assigned
+      def threshold=(threshold)
+        if threshold.nil?
+          raise ArgumentError, 'threshold cannot be nil'
+        end
+
+        if threshold > 100
+          raise ArgumentError, 'invalid value for "threshold", must be smaller than or equal to 100.'
+        end
+
+        if threshold < 0
+          raise ArgumentError, 'invalid value for "threshold", must be greater than or equal to 0.'
+        end
+
+        @threshold = threshold
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] max_recommendations Value to be assigned
+      def max_recommendations=(max_recommendations)
+        if max_recommendations.nil?
+          raise ArgumentError, 'max_recommendations cannot be nil'
+        end
+
+        if max_recommendations > 1000
+          raise ArgumentError, 'invalid value for "max_recommendations", must be smaller than or equal to 1000.'
+        end
+
+        if max_recommendations < 1
+          raise ArgumentError, 'invalid value for "max_recommendations", must be greater than or equal to 1.'
+        end
+
+        @max_recommendations = max_recommendations
       end
 
       # Checks equality by comparing each attribute.
@@ -82,9 +186,13 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          facet == other.facet &&
-          score == other.score &&
-          disjunctive == other.disjunctive
+          index_name == other.index_name &&
+          threshold == other.threshold &&
+          max_recommendations == other.max_recommendations &&
+          query_parameters == other.query_parameters &&
+          model == other.model &&
+          object_id == other.object_id &&
+          fallback_parameters == other.fallback_parameters
       end
 
       # @see the `==` method
@@ -96,7 +204,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [facet, score, disjunctive].hash
+        [index_name, threshold, max_recommendations, query_parameters, model, object_id, fallback_parameters].hash
       end
 
       # Builds the object from hash

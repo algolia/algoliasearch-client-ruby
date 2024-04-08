@@ -9,15 +9,15 @@ module Algolia
       # Index name.
       attr_accessor :index_name
 
-      # Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the recommendations are.
+      # Minimum score a recommendation must have to be included in the response.
       attr_accessor :threshold
 
-      # Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.
+      # Maximum number of recommendations to retrieve. By default, all recommendations are returned and no fallback request is made. Depending on the available recommendations and the other request parameters, the actual number of recommendations may be lower than this value.
       attr_accessor :max_recommendations
 
-      attr_accessor :model
-
       attr_accessor :query_parameters
+
+      attr_accessor :model
 
       attr_accessor :fallback_parameters
 
@@ -49,8 +49,8 @@ module Algolia
           :index_name => :indexName,
           :threshold => :threshold,
           :max_recommendations => :maxRecommendations,
-          :model => :model,
           :query_parameters => :queryParameters,
+          :model => :model,
           :fallback_parameters => :fallbackParameters
         }
       end
@@ -64,11 +64,11 @@ module Algolia
       def self.types_mapping
         {
           :index_name => :String,
-          :threshold => :Integer,
+          :threshold => :Float,
           :max_recommendations => :Integer,
+          :query_parameters => :SearchParams,
           :model => :RecommendedForYouModel,
-          :query_parameters => :RecommendedForYouQueryParameters,
-          :fallback_parameters => :RecommendedForYouQueryParameters
+          :fallback_parameters => :FallbackParams
         }
       end
 
@@ -81,7 +81,7 @@ module Algolia
       def self.openapi_all_of
         [
           :BaseRecommendRequest,
-          :BaseRecommendedForYouQuery
+          :RecommendedForYou
         ]
       end
 
@@ -110,20 +110,22 @@ module Algolia
 
         if attributes.key?(:threshold)
           self.threshold = attributes[:threshold]
+        else
+          self.threshold = nil
         end
 
         if attributes.key?(:max_recommendations)
           self.max_recommendations = attributes[:max_recommendations]
         end
 
+        if attributes.key?(:query_parameters)
+          self.query_parameters = attributes[:query_parameters]
+        end
+
         if attributes.key?(:model)
           self.model = attributes[:model]
         else
           self.model = nil
-        end
-
-        if attributes.key?(:query_parameters)
-          self.query_parameters = attributes[:query_parameters]
         end
 
         if attributes.key?(:fallback_parameters)
@@ -149,6 +151,24 @@ module Algolia
         @threshold = threshold
       end
 
+      # Custom attribute writer method with validation
+      # @param [Object] max_recommendations Value to be assigned
+      def max_recommendations=(max_recommendations)
+        if max_recommendations.nil?
+          raise ArgumentError, 'max_recommendations cannot be nil'
+        end
+
+        if max_recommendations > 1000
+          raise ArgumentError, 'invalid value for "max_recommendations", must be smaller than or equal to 1000.'
+        end
+
+        if max_recommendations < 1
+          raise ArgumentError, 'invalid value for "max_recommendations", must be greater than or equal to 1.'
+        end
+
+        @max_recommendations = max_recommendations
+      end
+
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)
@@ -158,8 +178,8 @@ module Algolia
           index_name == other.index_name &&
           threshold == other.threshold &&
           max_recommendations == other.max_recommendations &&
-          model == other.model &&
           query_parameters == other.query_parameters &&
+          model == other.model &&
           fallback_parameters == other.fallback_parameters
       end
 
@@ -172,7 +192,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [index_name, threshold, max_recommendations, model, query_parameters, fallback_parameters].hash
+        [index_name, threshold, max_recommendations, query_parameters, model, fallback_parameters].hash
       end
 
       # Builds the object from hash

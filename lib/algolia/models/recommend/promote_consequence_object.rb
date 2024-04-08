@@ -5,43 +5,19 @@ require 'time'
 
 module Algolia
   module Recommend
-    class Edit
-      attr_accessor :type
+    # Object ID and position of the recommendation you want to pin.
+    class PromoteConsequenceObject
+      # Unique record identifier.
+      attr_accessor :object_id
 
-      # Text or patterns to remove from the query string.
-      attr_accessor :delete
-
-      # Text to be added in place of the deleted text inside the query string.
-      attr_accessor :insert
-
-      class EnumAttributeValidator
-        attr_reader :datatype
-        attr_reader :allowable_values
-
-        def initialize(datatype, allowable_values)
-          @allowable_values = allowable_values.map do |value|
-            case datatype.to_s
-            when /Integer/i
-              value.to_i
-            when /Float/i
-              value.to_f
-            else
-              value
-            end
-          end
-        end
-
-        def valid?(value)
-          !value || allowable_values.include?(value)
-        end
-      end
+      # Index in the list of recommendations where to place this item.
+      attr_accessor :position
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :type => :type,
-          :delete => :delete,
-          :insert => :insert
+          :object_id => :objectID,
+          :position => :position
         }
       end
 
@@ -53,9 +29,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :type => :EditType,
-          :delete => :String,
-          :insert => :String
+          :object_id => :String,
+          :position => :Integer
         }
       end
 
@@ -68,30 +43,40 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Edit` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::PromoteConsequenceObject` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::Edit`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::PromoteConsequenceObject`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:type)
-          self.type = attributes[:type]
+        if attributes.key?(:object_id)
+          self.object_id = attributes[:object_id]
         end
 
-        if attributes.key?(:delete)
-          self.delete = attributes[:delete]
+        if attributes.key?(:position)
+          self.position = attributes[:position]
+        end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] position Value to be assigned
+      def position=(position)
+        if position.nil?
+          raise ArgumentError, 'position cannot be nil'
         end
 
-        if attributes.key?(:insert)
-          self.insert = attributes[:insert]
+        if position < 0
+          raise ArgumentError, 'invalid value for "position", must be greater than or equal to 0.'
         end
+
+        @position = position
       end
 
       # Checks equality by comparing each attribute.
@@ -100,9 +85,8 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          type == other.type &&
-          delete == other.delete &&
-          insert == other.insert
+          object_id == other.object_id &&
+          position == other.position
       end
 
       # @see the `==` method
@@ -114,7 +98,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [type, delete, insert].hash
+        [object_id, position].hash
       end
 
       # Builds the object from hash

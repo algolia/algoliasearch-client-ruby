@@ -5,12 +5,12 @@ require 'time'
 
 module Algolia
   module Recommend
-    # Recommend rules search parameters.
+    # Recommend rules parameters.
     class SearchRecommendRulesParams
       # Search query.
       attr_accessor :query
 
-      # Restricts responses to the specified [contextual rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
+      # Only search for rules with matching context.
       attr_accessor :context
 
       # Requested page of the API response.
@@ -19,8 +19,17 @@ module Algolia
       # Maximum number of hits per page.
       attr_accessor :hits_per_page
 
-      # Restricts responses to enabled rules. When absent (default), _all_ rules are retrieved.
+      # Whether to only show rules where the value of their `enabled` property matches this parameter. If absent, show all rules, regardless of their `enabled` property.
       attr_accessor :enabled
+
+      # Filter expression. This only searches for rules matching the filter expression.
+      attr_accessor :filters
+
+      # Include facets and facet values in the response. Use `['*']` to include all facets.
+      attr_accessor :facets
+
+      # Maximum number of values to return for each facet.
+      attr_accessor :max_values_per_facet
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
@@ -29,7 +38,10 @@ module Algolia
           :context => :context,
           :page => :page,
           :hits_per_page => :hitsPerPage,
-          :enabled => :enabled
+          :enabled => :enabled,
+          :filters => :filters,
+          :facets => :facets,
+          :max_values_per_facet => :maxValuesPerFacet
         }
       end
 
@@ -45,15 +57,16 @@ module Algolia
           :context => :String,
           :page => :Integer,
           :hits_per_page => :Integer,
-          :enabled => :Boolean
+          :enabled => :Boolean,
+          :filters => :String,
+          :facets => :'Array<String>',
+          :max_values_per_facet => :Integer
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([
-                  :enabled
-                ])
+        Set.new([])
       end
 
       # Initializes the object
@@ -92,6 +105,20 @@ module Algolia
         if attributes.key?(:enabled)
           self.enabled = attributes[:enabled]
         end
+
+        if attributes.key?(:filters)
+          self.filters = attributes[:filters]
+        end
+
+        if attributes.key?(:facets)
+          if (value = attributes[:facets]).is_a?(Array)
+            self.facets = value
+          end
+        end
+
+        if attributes.key?(:max_values_per_facet)
+          self.max_values_per_facet = attributes[:max_values_per_facet]
+        end
       end
 
       # Custom attribute writer method with validation
@@ -126,6 +153,24 @@ module Algolia
         @hits_per_page = hits_per_page
       end
 
+      # Custom attribute writer method with validation
+      # @param [Object] max_values_per_facet Value to be assigned
+      def max_values_per_facet=(max_values_per_facet)
+        if max_values_per_facet.nil?
+          raise ArgumentError, 'max_values_per_facet cannot be nil'
+        end
+
+        if max_values_per_facet > 1000
+          raise ArgumentError, 'invalid value for "max_values_per_facet", must be smaller than or equal to 1000.'
+        end
+
+        if max_values_per_facet < 1
+          raise ArgumentError, 'invalid value for "max_values_per_facet", must be greater than or equal to 1.'
+        end
+
+        @max_values_per_facet = max_values_per_facet
+      end
+
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)
@@ -136,7 +181,10 @@ module Algolia
           context == other.context &&
           page == other.page &&
           hits_per_page == other.hits_per_page &&
-          enabled == other.enabled
+          enabled == other.enabled &&
+          filters == other.filters &&
+          facets == other.facets &&
+          max_values_per_facet == other.max_values_per_facet
       end
 
       # @see the `==` method
@@ -148,7 +196,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [query, context, page, hits_per_page, enabled].hash
+        [query, context, page, hits_per_page, enabled, filters, facets, max_values_per_facet].hash
       end
 
       # Builds the object from hash

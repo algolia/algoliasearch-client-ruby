@@ -5,14 +5,11 @@ require 'time'
 
 module Algolia
   module Recommend
-    class Anchoring
-      IS = "is".freeze
-      STARTS_WITH = "startsWith".freeze
-      ENDS_WITH = "endsWith".freeze
-      CONTAINS = "contains".freeze
+    class RelatedModel
+      RELATED_PRODUCTS = "related-products".freeze
 
       def self.all_vars
-        @all_vars ||= [IS, STARTS_WITH, ENDS_WITH, CONTAINS].freeze
+        @all_vars ||= [RELATED_PRODUCTS].freeze
       end
 
       # Builds the enum from string
@@ -26,9 +23,9 @@ module Algolia
       # @param [String] The enum value in the form of the string
       # @return [String] The enum value
       def build_from_hash(value)
-        return value if Anchoring.all_vars.include?(value)
+        return value if RelatedModel.all_vars.include?(value)
 
-        raise "Invalid ENUM value #{value} for class #Anchoring"
+        raise "Invalid ENUM value #{value} for class #RelatedModel"
       end
     end
   end

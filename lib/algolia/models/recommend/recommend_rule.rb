@@ -5,14 +5,32 @@ require 'time'
 
 module Algolia
   module Recommend
-    class RuleResponseMetadata
-      # Date and time when the object was updated, in RFC 3339 format.
-      attr_accessor :last_update
+    # Recommend rule.
+    class RecommendRule
+      attr_accessor :_metadata
+
+      # Unique identifier of a rule object.
+      attr_accessor :object_id
+
+      attr_accessor :condition
+
+      attr_accessor :consequence
+
+      # Description of the rule's purpose. This can be helpful for display in the Algolia dashboard.
+      attr_accessor :description
+
+      # Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time.
+      attr_accessor :enabled
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :last_update => :lastUpdate
+          :_metadata => :_metadata,
+          :object_id => :objectID,
+          :condition => :condition,
+          :consequence => :consequence,
+          :description => :description,
+          :enabled => :enabled
         }
       end
 
@@ -24,7 +42,12 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :last_update => :String
+          :_metadata => :RecommendRuleMetadata,
+          :object_id => :String,
+          :condition => :Condition,
+          :consequence => :Consequence,
+          :description => :String,
+          :enabled => :Boolean
         }
       end
 
@@ -37,21 +60,41 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::RuleResponseMetadata` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::RecommendRule` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::RuleResponseMetadata`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::RecommendRule`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:last_update)
-          self.last_update = attributes[:last_update]
+        if attributes.key?(:_metadata)
+          self._metadata = attributes[:_metadata]
+        end
+
+        if attributes.key?(:object_id)
+          self.object_id = attributes[:object_id]
+        end
+
+        if attributes.key?(:condition)
+          self.condition = attributes[:condition]
+        end
+
+        if attributes.key?(:consequence)
+          self.consequence = attributes[:consequence]
+        end
+
+        if attributes.key?(:description)
+          self.description = attributes[:description]
+        end
+
+        if attributes.key?(:enabled)
+          self.enabled = attributes[:enabled]
         end
       end
 
@@ -61,7 +104,12 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          last_update == other.last_update
+          _metadata == other._metadata &&
+          object_id == other.object_id &&
+          condition == other.condition &&
+          consequence == other.consequence &&
+          description == other.description &&
+          enabled == other.enabled
       end
 
       # @see the `==` method
@@ -73,7 +121,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [last_update].hash
+        [_metadata, object_id, condition, consequence, description, enabled].hash
       end
 
       # Builds the object from hash

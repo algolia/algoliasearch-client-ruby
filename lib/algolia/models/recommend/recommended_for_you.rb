@@ -5,14 +5,38 @@ require 'time'
 
 module Algolia
   module Recommend
-    class BaseRecommendedForYouQueryParameters
-      # Unique pseudonymous or anonymous user identifier.  This helps with analytics and click and conversion events. For more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
-      attr_accessor :user_token
+    class RecommendedForYou
+      attr_accessor :model
+
+      attr_accessor :fallback_parameters
+
+      class EnumAttributeValidator
+        attr_reader :datatype
+        attr_reader :allowable_values
+
+        def initialize(datatype, allowable_values)
+          @allowable_values = allowable_values.map do |value|
+            case datatype.to_s
+            when /Integer/i
+              value.to_i
+            when /Float/i
+              value.to_f
+            else
+              value
+            end
+          end
+        end
+
+        def valid?(value)
+          !value || allowable_values.include?(value)
+        end
+      end
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :user_token => :userToken
+          :model => :model,
+          :fallback_parameters => :fallbackParameters
         }
       end
 
@@ -24,7 +48,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :user_token => :String
+          :model => :RecommendedForYouModel,
+          :fallback_parameters => :FallbackParams
         }
       end
 
@@ -37,23 +62,27 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::BaseRecommendedForYouQueryParameters` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::RecommendedForYou` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::BaseRecommendedForYouQueryParameters`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::RecommendedForYou`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:user_token)
-          self.user_token = attributes[:user_token]
+        if attributes.key?(:model)
+          self.model = attributes[:model]
         else
-          self.user_token = nil
+          self.model = nil
+        end
+
+        if attributes.key?(:fallback_parameters)
+          self.fallback_parameters = attributes[:fallback_parameters]
         end
       end
 
@@ -63,7 +92,8 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          user_token == other.user_token
+          model == other.model &&
+          fallback_parameters == other.fallback_parameters
       end
 
       # @see the `==` method
@@ -75,7 +105,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [user_token].hash
+        [model, fallback_parameters].hash
       end
 
       # Builds the object from hash

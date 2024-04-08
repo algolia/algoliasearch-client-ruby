@@ -5,19 +5,39 @@ require 'time'
 
 module Algolia
   module Recommend
-    # Records to promote.
-    class PromoteObjectIDs
-      # Object IDs of the records you want to promote.  The records are placed as a group at the `position`. For example, if you want to promote four records to position `0`, they will be the first four search results.
-      attr_accessor :object_ids
+    class FrequentlyBoughtTogether
+      attr_accessor :model
 
-      # Position in the search results where you want to show the promoted records.
-      attr_accessor :position
+      # Unique record identifier.
+      attr_accessor :object_id
+
+      class EnumAttributeValidator
+        attr_reader :datatype
+        attr_reader :allowable_values
+
+        def initialize(datatype, allowable_values)
+          @allowable_values = allowable_values.map do |value|
+            case datatype.to_s
+            when /Integer/i
+              value.to_i
+            when /Float/i
+              value.to_f
+            else
+              value
+            end
+          end
+        end
+
+        def valid?(value)
+          !value || allowable_values.include?(value)
+        end
+      end
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :object_ids => :objectIDs,
-          :position => :position
+          :model => :model,
+          :object_id => :objectID
         }
       end
 
@@ -29,8 +49,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :object_ids => :'Array<String>',
-          :position => :Integer
+          :model => :FbtModel,
+          :object_id => :String
         }
       end
 
@@ -43,46 +63,30 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::PromoteObjectIDs` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::FrequentlyBoughtTogether` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::PromoteObjectIDs`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::FrequentlyBoughtTogether`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:object_ids)
-          if (value = attributes[:object_ids]).is_a?(Array)
-            self.object_ids = value
-          end
+        if attributes.key?(:model)
+          self.model = attributes[:model]
         else
-          self.object_ids = nil
+          self.model = nil
         end
 
-        if attributes.key?(:position)
-          self.position = attributes[:position]
+        if attributes.key?(:object_id)
+          self.object_id = attributes[:object_id]
         else
-          self.position = nil
+          self.object_id = nil
         end
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] object_ids Value to be assigned
-      def object_ids=(object_ids)
-        if object_ids.nil?
-          raise ArgumentError, 'object_ids cannot be nil'
-        end
-
-        if object_ids.length > 100
-          raise ArgumentError, 'invalid value for "object_ids", number of items must be less than or equal to 100.'
-        end
-
-        @object_ids = object_ids
       end
 
       # Checks equality by comparing each attribute.
@@ -91,8 +95,8 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          object_ids == other.object_ids &&
-          position == other.position
+          model == other.model &&
+          object_id == other.object_id
       end
 
       # @see the `==` method
@@ -104,7 +108,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [object_ids, position].hash
+        [model, object_id].hash
       end
 
       # Builds the object from hash

@@ -5,12 +5,11 @@ require 'time'
 
 module Algolia
   module Recommend
-    class RecommendationModels
-      RELATED_PRODUCTS = "related-products".freeze
-      BOUGHT_TOGETHER = "bought-together".freeze
+    class LookingSimilarModel
+      LOOKING_SIMILAR = "looking-similar".freeze
 
       def self.all_vars
-        @all_vars ||= [RELATED_PRODUCTS, BOUGHT_TOGETHER].freeze
+        @all_vars ||= [LOOKING_SIMILAR].freeze
       end
 
       # Builds the enum from string
@@ -24,9 +23,9 @@ module Algolia
       # @param [String] The enum value in the form of the string
       # @return [String] The enum value
       def build_from_hash(value)
-        return value if RecommendationModels.all_vars.include?(value)
+        return value if LookingSimilarModel.all_vars.include?(value)
 
-        raise "Invalid ENUM value #{value} for class #RecommendationModels"
+        raise "Invalid ENUM value #{value} for class #LookingSimilarModel"
       end
     end
   end

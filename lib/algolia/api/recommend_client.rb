@@ -205,12 +205,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+    # Deletes a Recommend rule from a recommendation scenario.
     #
     # Required API Key ACLs:
     #   - editSettings
     # @param index_name [String] Name of the index on which to perform the operation. (required)
-    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
+    # @param model [RecommendModels] [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
     # @param object_id [String] Unique record identifier. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -249,12 +249,12 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+    # Deletes a Recommend rule from a recommendation scenario.
     #
     # Required API Key ACLs:
     #   - editSettings
     # @param index_name [String] Name of the index on which to perform the operation. (required)
-    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
+    # @param model [RecommendModels] [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
     # @param object_id [String] Unique record identifier. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeletedAtResponse]
@@ -263,12 +263,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Recommend::DeletedAtResponse')
     end
 
-    # Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+    # Retrieves a Recommend rule that you previously created in the Algolia dashboard.
     #
     # Required API Key ACLs:
     #   - settings
     # @param index_name [String] Name of the index on which to perform the operation. (required)
-    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
+    # @param model [RecommendModels] [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
     # @param object_id [String] Unique record identifier. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -307,27 +307,27 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+    # Retrieves a Recommend rule that you previously created in the Algolia dashboard.
     #
     # Required API Key ACLs:
     #   - settings
     # @param index_name [String] Name of the index on which to perform the operation. (required)
-    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
+    # @param model [RecommendModels] [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
     # @param object_id [String] Unique record identifier. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [RuleResponse]
+    # @return [RecommendRule]
     def get_recommend_rule(index_name, model, object_id, request_options = {})
       response = get_recommend_rule_with_http_info(index_name, model, object_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Recommend::RuleResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Recommend::RecommendRule')
     end
 
-    # Some operations, such as deleting a Recommend rule, will respond with a &#x60;taskID&#x60; value. Use this value here to check the status of that task.
+    # Checks the status of a given task.  Deleting a Recommend rule is asynchronous. When you delete a rule, a task is created on a queue and completed depending on the load on the server. The API response includes a task ID that you can use to check the status.
     #
     # Required API Key ACLs:
     #   - editSettings
     # @param index_name [String] Name of the index on which to perform the operation. (required)
-    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
-    # @param task_id [Integer] Unique identifier of a task. Numeric value (up to 64bits). (required)
+    # @param model [RecommendModels] [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
+    # @param task_id [Integer] Unique task identifier. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_recommend_status_with_http_info(index_name, model, task_id, request_options = {})
@@ -365,13 +365,13 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Some operations, such as deleting a Recommend rule, will respond with a `taskID` value. Use this value here to check the status of that task.
+    # Checks the status of a given task.  Deleting a Recommend rule is asynchronous. When you delete a rule, a task is created on a queue and completed depending on the load on the server. The API response includes a task ID that you can use to check the status.
     #
     # Required API Key ACLs:
     #   - editSettings
     # @param index_name [String] Name of the index on which to perform the operation. (required)
-    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
-    # @param task_id [Integer] Unique identifier of a task. Numeric value (up to 64bits). (required)
+    # @param model [RecommendModels] [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
+    # @param task_id [Integer] Unique task identifier. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetRecommendTaskResponse]
     def get_recommend_status(index_name, model, task_id, request_options = {})
@@ -379,7 +379,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Recommend::GetRecommendTaskResponse')
     end
 
-    # Returns results from either recommendation or trending models:    - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models   - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
+    # Retrieves recommendations from selected AI models.
     #
     # Required API Key ACLs:
     #   - search
@@ -411,7 +411,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Returns results from either recommendation or trending models:    - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models   - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
+    # Retrieves recommendations from selected AI models.
     #
     # Required API Key ACLs:
     #   - search
@@ -423,12 +423,12 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Recommend::GetRecommendationsResponse')
     end
 
-    # List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+    # Searches for Recommend rules.  Use an empty query to list all rules for this recommendation scenario.
     #
     # Required API Key ACLs:
     #   - settings
     # @param index_name [String] Name of the index on which to perform the operation. (required)
-    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
+    # @param model [RecommendModels] [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
     # @param search_recommend_rules_params [SearchRecommendRulesParams]
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -462,12 +462,12 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+    # Searches for Recommend rules.  Use an empty query to list all rules for this recommendation scenario.
     #
     # Required API Key ACLs:
     #   - settings
     # @param index_name [String] Name of the index on which to perform the operation. (required)
-    # @param model [RecommendModels] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
+    # @param model [RecommendModels] [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
     # @param search_recommend_rules_params [SearchRecommendRulesParams]
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [SearchRecommendRulesResponse]

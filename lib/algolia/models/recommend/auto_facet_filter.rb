@@ -5,33 +5,19 @@ require 'time'
 
 module Algolia
   module Recommend
-    # Rule object.
-    class RuleResponse
-      attr_accessor :_metadata
+    # Facet attribute. Only recommendations with the same value (or only recommendations with a different value) as the original viewed item are included.
+    class AutoFacetFilter
+      # Facet attribute.
+      attr_accessor :facet
 
-      # Unique identifier for a rule object.
-      attr_accessor :object_id
-
-      # [Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions) required to activate a rule. You can use up to 25 conditions per rule.
-      attr_accessor :conditions
-
-      attr_accessor :consequence
-
-      # Description of the rule's purpose. This can be helpful for display in the Algolia dashboard.
-      attr_accessor :description
-
-      # Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time.
-      attr_accessor :enabled
+      # Whether the filter is negative. If true, recommendations must not have the same value for the `facet` attribute. If false, recommendations must have the same value for the `facet` attribute.
+      attr_accessor :negative
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :_metadata => :_metadata,
-          :object_id => :objectID,
-          :conditions => :conditions,
-          :consequence => :consequence,
-          :description => :description,
-          :enabled => :enabled
+          :facet => :facet,
+          :negative => :negative
         }
       end
 
@@ -43,12 +29,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :_metadata => :RuleResponseMetadata,
-          :object_id => :String,
-          :conditions => :'Array<Condition>',
-          :consequence => :Consequence,
-          :description => :String,
-          :enabled => :Boolean
+          :facet => :String,
+          :negative => :Boolean
         }
       end
 
@@ -61,45 +43,25 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::RuleResponse` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::AutoFacetFilter` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::RuleResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::AutoFacetFilter`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:_metadata)
-          self._metadata = attributes[:_metadata]
+        if attributes.key?(:facet)
+          self.facet = attributes[:facet]
         end
 
-        if attributes.key?(:object_id)
-          self.object_id = attributes[:object_id]
-        else
-          self.object_id = nil
-        end
-
-        if attributes.key?(:conditions)
-          if (value = attributes[:conditions]).is_a?(Array)
-            self.conditions = value
-          end
-        end
-
-        if attributes.key?(:consequence)
-          self.consequence = attributes[:consequence]
-        end
-
-        if attributes.key?(:description)
-          self.description = attributes[:description]
-        end
-
-        if attributes.key?(:enabled)
-          self.enabled = attributes[:enabled]
+        if attributes.key?(:negative)
+          self.negative = attributes[:negative]
         end
       end
 
@@ -109,12 +71,8 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          _metadata == other._metadata &&
-          object_id == other.object_id &&
-          conditions == other.conditions &&
-          consequence == other.consequence &&
-          description == other.description &&
-          enabled == other.enabled
+          facet == other.facet &&
+          negative == other.negative
       end
 
       # @see the `==` method
@@ -126,7 +84,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [_metadata, object_id, conditions, consequence, description, enabled].hash
+        [facet, negative].hash
       end
 
       # Builds the object from hash

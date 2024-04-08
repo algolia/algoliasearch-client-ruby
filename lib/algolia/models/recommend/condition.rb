@@ -5,51 +5,19 @@ require 'time'
 
 module Algolia
   module Recommend
+    # Condition that triggers the rule. If not specified, the rule is triggered for all recommendations.
     class Condition
-      # Query pattern that triggers the rule.  You can use either a literal string, or a special pattern `{facet:ATTRIBUTE}`, where `ATTRIBUTE` is a facet name. The rule is triggered if the query matches the literal string or a value of the specified facet. For example, with `pattern: {facet:genre}`, the rule is triggered when users search for a genre, such as \"comedy\".
-      attr_accessor :pattern
-
-      attr_accessor :anchoring
-
-      # Whether the pattern should match plurals, synonyms, and typos.
-      attr_accessor :alternatives
+      # Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
+      attr_accessor :filters
 
       # An additional restriction that only triggers the rule, when the search has the same value as `ruleContexts` parameter. For example, if `context: mobile`, the rule is only triggered when the search request has a matching `ruleContexts: mobile`. A rule context must only contain alphanumeric characters.
       attr_accessor :context
 
-      # Filters that trigger the rule.  You can add add filters using the syntax `facet:value` so that the rule is triggered, when the specific filter is selected. You can use `filters` on its own or combine it with the `pattern` parameter.
-      attr_accessor :filters
-
-      class EnumAttributeValidator
-        attr_reader :datatype
-        attr_reader :allowable_values
-
-        def initialize(datatype, allowable_values)
-          @allowable_values = allowable_values.map do |value|
-            case datatype.to_s
-            when /Integer/i
-              value.to_i
-            when /Float/i
-              value.to_f
-            else
-              value
-            end
-          end
-        end
-
-        def valid?(value)
-          !value || allowable_values.include?(value)
-        end
-      end
-
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :pattern => :pattern,
-          :anchoring => :anchoring,
-          :alternatives => :alternatives,
-          :context => :context,
-          :filters => :filters
+          :filters => :filters,
+          :context => :context
         }
       end
 
@@ -61,11 +29,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :pattern => :String,
-          :anchoring => :Anchoring,
-          :alternatives => :Boolean,
-          :context => :String,
-          :filters => :String
+          :filters => :String,
+          :context => :String
         }
       end
 
@@ -91,24 +56,12 @@ module Algolia
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:pattern)
-          self.pattern = attributes[:pattern]
-        end
-
-        if attributes.key?(:anchoring)
-          self.anchoring = attributes[:anchoring]
-        end
-
-        if attributes.key?(:alternatives)
-          self.alternatives = attributes[:alternatives]
+        if attributes.key?(:filters)
+          self.filters = attributes[:filters]
         end
 
         if attributes.key?(:context)
           self.context = attributes[:context]
-        end
-
-        if attributes.key?(:filters)
-          self.filters = attributes[:filters]
         end
       end
 
@@ -133,11 +86,8 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          pattern == other.pattern &&
-          anchoring == other.anchoring &&
-          alternatives == other.alternatives &&
-          context == other.context &&
-          filters == other.filters
+          filters == other.filters &&
+          context == other.context
       end
 
       # @see the `==` method
@@ -149,7 +99,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [pattern, anchoring, alternatives, context, filters].hash
+        [filters, context].hash
       end
 
       # Builds the object from hash

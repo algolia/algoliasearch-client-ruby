@@ -5,45 +5,23 @@ require 'time'
 
 module Algolia
   module Recommend
-    class BaseRecommendationsQuery
-      attr_accessor :model
+    # Filter or boost recommendations matching a facet filter.
+    class ParamsConsequence
+      # Filter recommendations that match or don't match the same `facet:facet_value` combination as the viewed item.
+      attr_accessor :automatic_facet_filters
 
-      # Unique record identifier.
-      attr_accessor :object_id
+      # Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
+      attr_accessor :filters
 
-      attr_accessor :query_parameters
-
-      attr_accessor :fallback_parameters
-
-      class EnumAttributeValidator
-        attr_reader :datatype
-        attr_reader :allowable_values
-
-        def initialize(datatype, allowable_values)
-          @allowable_values = allowable_values.map do |value|
-            case datatype.to_s
-            when /Integer/i
-              value.to_i
-            when /Float/i
-              value.to_f
-            else
-              value
-            end
-          end
-        end
-
-        def valid?(value)
-          !value || allowable_values.include?(value)
-        end
-      end
+      # Filters to promote or demote records in the search results.  Optional filters work like facet filters, but they don't exclude records from the search results. Records that match the optional filter rank before records that don't match. Matches with higher weights (`<score=N>`) rank before matches with lower weights. If you're using a negative filter `facet:-value`, matching records rank after records that don't match.
+      attr_accessor :optional_filters
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :model => :model,
-          :object_id => :objectID,
-          :query_parameters => :queryParameters,
-          :fallback_parameters => :fallbackParameters
+          :automatic_facet_filters => :automaticFacetFilters,
+          :filters => :filters,
+          :optional_filters => :optionalFilters
         }
       end
 
@@ -55,10 +33,9 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :model => :RecommendationModels,
-          :object_id => :String,
-          :query_parameters => :SearchParamsObject,
-          :fallback_parameters => :SearchParamsObject
+          :automatic_facet_filters => :'Array<AutoFacetFilter>',
+          :filters => :String,
+          :optional_filters => :'Array<String>'
         }
       end
 
@@ -71,37 +48,33 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::BaseRecommendationsQuery` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::ParamsConsequence` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::BaseRecommendationsQuery`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::ParamsConsequence`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:model)
-          self.model = attributes[:model]
-        else
-          self.model = nil
+        if attributes.key?(:automatic_facet_filters)
+          if (value = attributes[:automatic_facet_filters]).is_a?(Array)
+            self.automatic_facet_filters = value
+          end
         end
 
-        if attributes.key?(:object_id)
-          self.object_id = attributes[:object_id]
-        else
-          self.object_id = nil
+        if attributes.key?(:filters)
+          self.filters = attributes[:filters]
         end
 
-        if attributes.key?(:query_parameters)
-          self.query_parameters = attributes[:query_parameters]
-        end
-
-        if attributes.key?(:fallback_parameters)
-          self.fallback_parameters = attributes[:fallback_parameters]
+        if attributes.key?(:optional_filters)
+          if (value = attributes[:optional_filters]).is_a?(Array)
+            self.optional_filters = value
+          end
         end
       end
 
@@ -111,10 +84,9 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          model == other.model &&
-          object_id == other.object_id &&
-          query_parameters == other.query_parameters &&
-          fallback_parameters == other.fallback_parameters
+          automatic_facet_filters == other.automatic_facet_filters &&
+          filters == other.filters &&
+          optional_filters == other.optional_filters
       end
 
       # @see the `==` method
@@ -126,7 +98,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [model, object_id, query_parameters, fallback_parameters].hash
+        [automatic_facet_filters, filters, optional_filters].hash
       end
 
       # Builds the object from hash

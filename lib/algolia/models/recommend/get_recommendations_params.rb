@@ -5,9 +5,9 @@ require 'time'
 
 module Algolia
   module Recommend
-    # Recommend parameters.
+    # Recommend request body.
     class GetRecommendationsParams
-      # Request parameters depend on the model (recommendations or trending).
+      # Recommendation request with parameters depending on the requested model.
       attr_accessor :requests
 
       # Attribute mapping from ruby-style variable name to JSON key.

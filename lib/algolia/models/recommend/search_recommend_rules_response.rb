@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Recommend
     class SearchRecommendRulesResponse
-      # Fetched rules.
+      # Recommend rules that match the search criteria.
       attr_accessor :hits
 
       # Number of results (hits).
@@ -36,7 +36,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :hits => :'Array<RuleResponse>',
+          :hits => :'Array<RecommendRule>',
           :nb_hits => :Integer,
           :page => :Integer,
           :nb_pages => :Integer

@@ -5,12 +5,11 @@ require 'time'
 
 module Algolia
   module Recommend
-    class EditType
-      REMOVE = "remove".freeze
-      REPLACE = "replace".freeze
+    class FbtModel
+      BOUGHT_TOGETHER = "bought-together".freeze
 
       def self.all_vars
-        @all_vars ||= [REMOVE, REPLACE].freeze
+        @all_vars ||= [BOUGHT_TOGETHER].freeze
       end
 
       # Builds the enum from string
@@ -24,9 +23,9 @@ module Algolia
       # @param [String] The enum value in the form of the string
       # @return [String] The enum value
       def build_from_hash(value)
-        return value if EditType.all_vars.include?(value)
+        return value if FbtModel.all_vars.include?(value)
 
-        raise "Invalid ENUM value #{value} for class #EditType"
+        raise "Invalid ENUM value #{value} for class #FbtModel"
       end
     end
   end

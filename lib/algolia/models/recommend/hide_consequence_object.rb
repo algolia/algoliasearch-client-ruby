@@ -5,19 +5,15 @@ require 'time'
 
 module Algolia
   module Recommend
-    # Record to promote.
-    class PromoteObjectID
+    # Object ID of the recommendation you want to exclude.
+    class HideConsequenceObject
       # Unique record identifier.
       attr_accessor :object_id
-
-      # Position in the search results where you want to show the promoted records.
-      attr_accessor :position
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :object_id => :objectID,
-          :position => :position
+          :object_id => :objectID
         }
       end
 
@@ -29,8 +25,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :object_id => :String,
-          :position => :Integer
+          :object_id => :String
         }
       end
 
@@ -43,14 +38,14 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::PromoteObjectID` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::HideConsequenceObject` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::PromoteObjectID`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::HideConsequenceObject`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
@@ -58,14 +53,6 @@ module Algolia
 
         if attributes.key?(:object_id)
           self.object_id = attributes[:object_id]
-        else
-          self.object_id = nil
-        end
-
-        if attributes.key?(:position)
-          self.position = attributes[:position]
-        else
-          self.position = nil
         end
       end
 
@@ -75,8 +62,7 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          object_id == other.object_id &&
-          position == other.position
+          object_id == other.object_id
       end
 
       # @see the `==` method
@@ -88,7 +74,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [object_id, position].hash
+        [object_id].hash
       end
 
       # Builds the object from hash

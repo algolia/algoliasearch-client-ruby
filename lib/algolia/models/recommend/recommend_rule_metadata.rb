@@ -5,23 +5,15 @@ require 'time'
 
 module Algolia
   module Recommend
-    # Parameters to apply to this search.  You can use all search parameters, plus special `automaticFacetFilters`, `automaticOptionalFacetFilters`, and `query`.
-    class Params
-      attr_accessor :query
-
-      attr_accessor :automatic_facet_filters
-
-      attr_accessor :automatic_optional_facet_filters
-
-      attr_accessor :rendering_content
+    # Rule metadata.
+    class RecommendRuleMetadata
+      # Date and time when the object was updated, in RFC 3339 format.
+      attr_accessor :last_update
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :query => :query,
-          :automatic_facet_filters => :automaticFacetFilters,
-          :automatic_optional_facet_filters => :automaticOptionalFacetFilters,
-          :rendering_content => :renderingContent
+          :last_update => :lastUpdate
         }
       end
 
@@ -33,10 +25,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :query => :ConsequenceQuery,
-          :automatic_facet_filters => :AutomaticFacetFilters,
-          :automatic_optional_facet_filters => :AutomaticFacetFilters,
-          :rendering_content => :RenderingContent
+          :last_update => :String
         }
       end
 
@@ -49,33 +38,21 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Params` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::RecommendRuleMetadata` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::Params`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::RecommendRuleMetadata`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:query)
-          self.query = attributes[:query]
-        end
-
-        if attributes.key?(:automatic_facet_filters)
-          self.automatic_facet_filters = attributes[:automatic_facet_filters]
-        end
-
-        if attributes.key?(:automatic_optional_facet_filters)
-          self.automatic_optional_facet_filters = attributes[:automatic_optional_facet_filters]
-        end
-
-        if attributes.key?(:rendering_content)
-          self.rendering_content = attributes[:rendering_content]
+        if attributes.key?(:last_update)
+          self.last_update = attributes[:last_update]
         end
       end
 
@@ -85,10 +62,7 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          query == other.query &&
-          automatic_facet_filters == other.automatic_facet_filters &&
-          automatic_optional_facet_filters == other.automatic_optional_facet_filters &&
-          rendering_content == other.rendering_content
+          last_update == other.last_update
       end
 
       # @see the `==` method
@@ -100,7 +74,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [query, automatic_facet_filters, automatic_optional_facet_filters, rendering_content].hash
+        [last_update].hash
       end
 
       # Builds the object from hash

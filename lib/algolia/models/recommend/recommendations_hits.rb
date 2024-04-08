@@ -8,18 +8,10 @@ module Algolia
     class RecommendationsHits
       attr_accessor :hits
 
-      # Search query.
-      attr_accessor :query
-
-      # URL-encoded string of all search parameters.
-      attr_accessor :params
-
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :hits => :hits,
-          :query => :query,
-          :params => :params
+          :hits => :hits
         }
       end
 
@@ -31,9 +23,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :hits => :'Array<RecommendationsHit>',
-          :query => :String,
-          :params => :String
+          :hits => :'Array<RecommendationsHit>'
         }
       end
 
@@ -66,14 +56,6 @@ module Algolia
         else
           self.hits = nil
         end
-
-        if attributes.key?(:query)
-          self.query = attributes[:query]
-        end
-
-        if attributes.key?(:params)
-          self.params = attributes[:params]
-        end
       end
 
       # Checks equality by comparing each attribute.
@@ -82,9 +64,7 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          hits == other.hits &&
-          query == other.query &&
-          params == other.params
+          hits == other.hits
       end
 
       # @see the `==` method
@@ -96,7 +76,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [hits, query, params].hash
+        [hits].hash
       end
 
       # Builds the object from hash
