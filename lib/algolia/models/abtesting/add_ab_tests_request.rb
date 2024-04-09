@@ -12,7 +12,7 @@ module Algolia
       # A/B test variants.
       attr_accessor :variants
 
-      # End date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
+      # End date and time of the A/B test, in RFC 3339 format.
       attr_accessor :end_at
 
       # Attribute mapping from ruby-style variable name to JSON key.

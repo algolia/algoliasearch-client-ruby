@@ -5,22 +5,40 @@ require 'time'
 
 module Algolia
   module Abtesting
-    class ABTestResponse
-      # A/B test index.
-      attr_accessor :index
+    # Configuration for the smallest difference between test variants you want to detect.
+    class MinimumDetectableEffect
+      # Smallest difference in an observable metric between variants. For example, to detect a 10% difference between variants, set this value to 0.1.
+      attr_accessor :size
 
-      # Unique A/B test identifier.
-      attr_accessor :ab_test_id
+      attr_accessor :effect
 
-      # Unique identifier of a task.  A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.
-      attr_accessor :task_id
+      class EnumAttributeValidator
+        attr_reader :datatype
+        attr_reader :allowable_values
+
+        def initialize(datatype, allowable_values)
+          @allowable_values = allowable_values.map do |value|
+            case datatype.to_s
+            when /Integer/i
+              value.to_i
+            when /Float/i
+              value.to_f
+            else
+              value
+            end
+          end
+        end
+
+        def valid?(value)
+          !value || allowable_values.include?(value)
+        end
+      end
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :index => :index,
-          :ab_test_id => :abTestID,
-          :task_id => :taskID
+          :size => :size,
+          :effect => :effect
         }
       end
 
@@ -32,9 +50,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :index => :String,
-          :ab_test_id => :Integer,
-          :task_id => :Integer
+          :size => :Float,
+          :effect => :Effect
         }
       end
 
@@ -47,36 +64,44 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::ABTestResponse` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::MinimumDetectableEffect` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::ABTestResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::MinimumDetectableEffect`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:index)
-          self.index = attributes[:index]
-        else
-          self.index = nil
+        if attributes.key?(:size)
+          self.size = attributes[:size]
         end
 
-        if attributes.key?(:ab_test_id)
-          self.ab_test_id = attributes[:ab_test_id]
-        else
-          self.ab_test_id = nil
+        if attributes.key?(:effect)
+          self.effect = attributes[:effect]
+        end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] size Value to be assigned
+      def size=(size)
+        if size.nil?
+          raise ArgumentError, 'size cannot be nil'
         end
 
-        if attributes.key?(:task_id)
-          self.task_id = attributes[:task_id]
-        else
-          self.task_id = nil
+        if size > 1
+          raise ArgumentError, 'invalid value for "size", must be smaller than or equal to 1.'
         end
+
+        if size < 0
+          raise ArgumentError, 'invalid value for "size", must be greater than or equal to 0.'
+        end
+
+        @size = size
       end
 
       # Checks equality by comparing each attribute.
@@ -85,9 +110,8 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          index == other.index &&
-          ab_test_id == other.ab_test_id &&
-          task_id == other.task_id
+          size == other.size &&
+          effect == other.effect
       end
 
       # @see the `==` method
@@ -99,7 +123,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [index, ab_test_id, task_id].hash
+        [size, effect].hash
       end
 
       # Builds the object from hash

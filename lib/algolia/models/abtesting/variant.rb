@@ -9,31 +9,31 @@ module Algolia
       # Number of add-to-cart events for this variant.
       attr_accessor :add_to_cart_count
 
-      # Variant's [add-to-cart rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#add-to-cart-rate).
+      # [Add-to-cart rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#add-to-cart-rate) for this variant.
       attr_accessor :add_to_cart_rate
 
-      # Variant's [average click position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position).
+      # [Average click position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position) for this variant.
       attr_accessor :average_click_position
 
       # Number of click events for this variant.
       attr_accessor :click_count
 
-      # Variant's [click-through rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+      # [Click-through rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate) for this variant.
       attr_accessor :click_through_rate
 
       # Number of click events for this variant.
       attr_accessor :conversion_count
 
-      # Variant's [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+      # [Conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate) for this variant.
       attr_accessor :conversion_rate
 
       # A/B test currencies.
       attr_accessor :currencies
 
-      # A/B test description.
+      # Description for this variant.
       attr_accessor :description
 
-      # The estimated number of searches that will need to be run to achieve the desired confidence level and statistical power. A `minimumDetectableEffect` must be set in the `configuration` object for this to be used.
+      # Estimated number of searches required to achieve the desired statistical significance.  The A/B test configuration must include a `mininmumDetectableEffect` setting for this number to be included in the response.
       attr_accessor :estimated_sample_size
 
       attr_accessor :filter_effects
@@ -41,28 +41,28 @@ module Algolia
       # A/B test index.
       attr_accessor :index
 
-      # Number of [searches without results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results) for that variant.
+      # Number of [searches without results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results) for this variant.
       attr_accessor :no_result_count
 
       # Number of purchase events for this variant.
       attr_accessor :purchase_count
 
-      # Variant's [purchase rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#purchase-rate).
+      # [Purchase rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#purchase-rate) for this variant.
       attr_accessor :purchase_rate
 
-      # Number of searches carried out during the A/B test.
+      # Number of searches for this variant.
       attr_accessor :search_count
 
       # Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
       attr_accessor :tracked_search_count
 
-      # A/B test traffic percentage.
+      # Percentage of search requests each variant receives.
       attr_accessor :traffic_percentage
 
-      # Number of users during the A/B test.
+      # Number of users that made searches to this variant.
       attr_accessor :user_count
 
-      # Number of users that performed a tracked search during the A/B test.
+      # Number of users that made tracked searches to this variant.
       attr_accessor :tracked_user_count
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -267,6 +267,24 @@ module Algolia
         else
           self.tracked_user_count = nil
         end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] traffic_percentage Value to be assigned
+      def traffic_percentage=(traffic_percentage)
+        if traffic_percentage.nil?
+          raise ArgumentError, 'traffic_percentage cannot be nil'
+        end
+
+        if traffic_percentage > 100
+          raise ArgumentError, 'invalid value for "traffic_percentage", must be smaller than or equal to 100.'
+        end
+
+        if traffic_percentage < 0
+          raise ArgumentError, 'invalid value for "traffic_percentage", must be greater than or equal to 0.'
+        end
+
+        @traffic_percentage = traffic_percentage
       end
 
       # Checks equality by comparing each attribute.

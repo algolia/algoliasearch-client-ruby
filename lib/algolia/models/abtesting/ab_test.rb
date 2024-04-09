@@ -6,41 +6,59 @@ require 'time'
 module Algolia
   module Abtesting
     class ABTest
-      # Unique A/B test ID.
+      # Unique A/B test identifier.
       attr_accessor :ab_test_id
 
-      # [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on click data. A value of 0.95 or over is considered to be _significant_.
       attr_accessor :click_significance
 
-      # [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on conversion. A value of 0.95 or over is considered to be _significant_.
       attr_accessor :conversion_significance
 
-      # [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on add-to-cart data. A value of 0.95 or over is considered to be _significant_.
       attr_accessor :add_to_cart_significance
 
-      # [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on purchase data. A value of 0.95 or over is considered to be _significant_.
       attr_accessor :purchase_significance
 
-      # [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on revenue data. A value of 0.95 or over is considered to be _significant_.
       attr_accessor :revenue_significance
 
-      # Update date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
+      # Date and time when the A/B test was last updated, in RFC 3339 format.
       attr_accessor :updated_at
 
-      # Creation date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
+      # Date and time when the A/B test was created, in RFC 3339 format.
       attr_accessor :created_at
 
-      # End date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
+      # End date and time of the A/B test, in RFC 3339 format.
       attr_accessor :end_at
 
       # A/B test name.
       attr_accessor :name
 
-      # A/B test status.
       attr_accessor :status
 
-      # A/B test variants.
+      # A/B test variants.  The first variant is your _control_ index, typically your production index. The second variant is an index with changed settings that you want to test against the control.
       attr_accessor :variants
+
+      attr_accessor :configuration
+
+      class EnumAttributeValidator
+        attr_reader :datatype
+        attr_reader :allowable_values
+
+        def initialize(datatype, allowable_values)
+          @allowable_values = allowable_values.map do |value|
+            case datatype.to_s
+            when /Integer/i
+              value.to_i
+            when /Float/i
+              value.to_f
+            else
+              value
+            end
+          end
+        end
+
+        def valid?(value)
+          !value || allowable_values.include?(value)
+        end
+      end
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
@@ -56,7 +74,8 @@ module Algolia
           :end_at => :endAt,
           :name => :name,
           :status => :status,
-          :variants => :variants
+          :variants => :variants,
+          :configuration => :configuration
         }
       end
 
@@ -78,8 +97,9 @@ module Algolia
           :created_at => :String,
           :end_at => :String,
           :name => :String,
-          :status => :String,
-          :variants => :'Array<Variant>'
+          :status => :Status,
+          :variants => :'Array<Variant>',
+          :configuration => :ABTestConfiguration
         }
       end
 
@@ -186,6 +206,10 @@ module Algolia
         else
           self.variants = nil
         end
+
+        if attributes.key?(:configuration)
+          self.configuration = attributes[:configuration]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -205,7 +229,8 @@ module Algolia
           end_at == other.end_at &&
           name == other.name &&
           status == other.status &&
-          variants == other.variants
+          variants == other.variants &&
+          configuration == other.configuration
       end
 
       # @see the `==` method
@@ -218,7 +243,7 @@ module Algolia
       # @return [Integer] Hash code
       def hash
         [ab_test_id, click_significance, conversion_significance, add_to_cart_significance, purchase_significance, revenue_significance, updated_at, created_at, end_at, name,
-         status, variants].hash
+         status, variants, configuration].hash
       end
 
       # Builds the object from hash

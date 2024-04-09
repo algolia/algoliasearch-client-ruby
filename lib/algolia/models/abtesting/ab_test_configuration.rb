@@ -5,22 +5,20 @@ require 'time'
 
 module Algolia
   module Abtesting
-    class ABTestResponse
-      # A/B test index.
-      attr_accessor :index
+    # A/B test configuration.
+    class ABTestConfiguration
+      attr_accessor :outliers
 
-      # Unique A/B test identifier.
-      attr_accessor :ab_test_id
+      attr_accessor :empty_search
 
-      # Unique identifier of a task.  A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.
-      attr_accessor :task_id
+      attr_accessor :minimum_detectable_effect
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :index => :index,
-          :ab_test_id => :abTestID,
-          :task_id => :taskID
+          :outliers => :outliers,
+          :empty_search => :emptySearch,
+          :minimum_detectable_effect => :minimumDetectableEffect
         }
       end
 
@@ -32,9 +30,9 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :index => :String,
-          :ab_test_id => :Integer,
-          :task_id => :Integer
+          :outliers => :Outliers,
+          :empty_search => :EmptySearch,
+          :minimum_detectable_effect => :MinimumDetectableEffect
         }
       end
 
@@ -47,35 +45,31 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::ABTestResponse` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::ABTestConfiguration` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::ABTestResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::ABTestConfiguration`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:index)
-          self.index = attributes[:index]
+        if attributes.key?(:outliers)
+          self.outliers = attributes[:outliers]
         else
-          self.index = nil
+          self.outliers = nil
         end
 
-        if attributes.key?(:ab_test_id)
-          self.ab_test_id = attributes[:ab_test_id]
-        else
-          self.ab_test_id = nil
+        if attributes.key?(:empty_search)
+          self.empty_search = attributes[:empty_search]
         end
 
-        if attributes.key?(:task_id)
-          self.task_id = attributes[:task_id]
-        else
-          self.task_id = nil
+        if attributes.key?(:minimum_detectable_effect)
+          self.minimum_detectable_effect = attributes[:minimum_detectable_effect]
         end
       end
 
@@ -85,9 +79,9 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          index == other.index &&
-          ab_test_id == other.ab_test_id &&
-          task_id == other.task_id
+          outliers == other.outliers &&
+          empty_search == other.empty_search &&
+          minimum_detectable_effect == other.minimum_detectable_effect
       end
 
       # @see the `==` method
@@ -99,7 +93,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [index, ab_test_id, task_id].hash
+        [outliers, empty_search, minimum_detectable_effect].hash
       end
 
       # Builds the object from hash

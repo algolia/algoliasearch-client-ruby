@@ -9,7 +9,7 @@ module Algolia
       # A/B tests.
       attr_accessor :abtests
 
-      # Number of A/B tests implemented.
+      # Number of A/B tests.
       attr_accessor :count
 
       # Number of retrievable A/B tests.

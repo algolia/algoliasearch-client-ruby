@@ -9,10 +9,10 @@ module Algolia
       # A/B test index.
       attr_accessor :index
 
-      # A/B test traffic percentage.
+      # Percentage of search requests each variant receives.
       attr_accessor :traffic_percentage
 
-      # A/B test description.
+      # Description for this variant.
       attr_accessor :description
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -75,6 +75,24 @@ module Algolia
         if attributes.key?(:description)
           self.description = attributes[:description]
         end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] traffic_percentage Value to be assigned
+      def traffic_percentage=(traffic_percentage)
+        if traffic_percentage.nil?
+          raise ArgumentError, 'traffic_percentage cannot be nil'
+        end
+
+        if traffic_percentage > 100
+          raise ArgumentError, 'invalid value for "traffic_percentage", must be smaller than or equal to 100.'
+        end
+
+        if traffic_percentage < 0
+          raise ArgumentError, 'invalid value for "traffic_percentage", must be greater than or equal to 0.'
+        end
+
+        @traffic_percentage = traffic_percentage
       end
 
       # Checks equality by comparing each attribute.
