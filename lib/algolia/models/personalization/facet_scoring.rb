@@ -6,10 +6,10 @@ require 'time'
 module Algolia
   module Personalization
     class FacetScoring
-      # The score for the event.
+      # Event score.
       attr_accessor :score
 
-      # The name of the facet.
+      # Facet attribute name.
       attr_accessor :facet_name
 
       # Attribute mapping from ruby-style variable name to JSON key.

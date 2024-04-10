@@ -209,11 +209,11 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
     end
 
-    # Delete the user profile and all its associated data.  Returns, as part of the response, a date until which the data can safely be considered as deleted for the given user. This means if you send events for the given user before this date, they will be ignored. Any data received after the deletedUntil date will start building a new user profile.  It might take a couple hours for the deletion request to be fully processed.
+    # Deletes a user profile.  The response includes a date and time when the user profile can safely be considered deleted.
     #
     # Required API Key ACLs:
     #   - recommendation
-    # @param user_token [String] userToken representing the user for which to fetch the Personalization profile. (required)
+    # @param user_token [String] Unique identifier representing a user for which to fetch the personalization profile. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def delete_user_profile_with_http_info(user_token, request_options = {})
@@ -241,11 +241,11 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Delete the user profile and all its associated data.  Returns, as part of the response, a date until which the data can safely be considered as deleted for the given user. This means if you send events for the given user before this date, they will be ignored. Any data received after the deletedUntil date will start building a new user profile.  It might take a couple hours for the deletion request to be fully processed.
+    # Deletes a user profile.  The response includes a date and time when the user profile can safely be considered deleted.
     #
     # Required API Key ACLs:
     #   - recommendation
-    # @param user_token [String] userToken representing the user for which to fetch the Personalization profile. (required)
+    # @param user_token [String] Unique identifier representing a user for which to fetch the personalization profile. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeleteUserProfileResponse]
     def delete_user_profile(user_token, request_options = {})
@@ -253,7 +253,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Personalization::DeleteUserProfileResponse')
     end
 
-    # The strategy contains information on the events and facets that impact user profiles and personalized search results.
+    # Retrieves the current personalization strategy.
     #
     # Required API Key ACLs:
     #   - recommendation
@@ -279,7 +279,7 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # The strategy contains information on the events and facets that impact user profiles and personalized search results.
+    # Retrieves the current personalization strategy.
     #
     # Required API Key ACLs:
     #   - recommendation
@@ -290,11 +290,11 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Personalization::PersonalizationStrategyParams')
     end
 
-    # Get the user profile built from Personalization strategy.  The profile is structured by facet name used in the strategy. Each facet value is mapped to its score. Each score represents the user affinity for a specific facet value given the userToken past events and the Personalization strategy defined. Scores are bounded to 20. The last processed event timestamp is provided using the ISO 8601 format for debugging purposes.
+    # Retrieves a user profile and their affinities for different facets.
     #
     # Required API Key ACLs:
     #   - recommendation
-    # @param user_token [String] userToken representing the user for which to fetch the Personalization profile. (required)
+    # @param user_token [String] Unique identifier representing a user for which to fetch the personalization profile. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_user_token_profile_with_http_info(user_token, request_options = {})
@@ -322,11 +322,11 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Get the user profile built from Personalization strategy.  The profile is structured by facet name used in the strategy. Each facet value is mapped to its score. Each score represents the user affinity for a specific facet value given the userToken past events and the Personalization strategy defined. Scores are bounded to 20. The last processed event timestamp is provided using the ISO 8601 format for debugging purposes.
+    # Retrieves a user profile and their affinities for different facets.
     #
     # Required API Key ACLs:
     #   - recommendation
-    # @param user_token [String] userToken representing the user for which to fetch the Personalization profile. (required)
+    # @param user_token [String] Unique identifier representing a user for which to fetch the personalization profile. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetUserTokenResponse]
     def get_user_token_profile(user_token, request_options = {})
@@ -334,7 +334,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Personalization::GetUserTokenResponse')
     end
 
-    # A strategy defines the events and facets that impact user profiles and personalized search results.
+    # Creates a new personalization strategy.
     #
     # Required API Key ACLs:
     #   - recommendation
@@ -366,7 +366,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # A strategy defines the events and facets that impact user profiles and personalized search results.
+    # Creates a new personalization strategy.
     #
     # Required API Key ACLs:
     #   - recommendation

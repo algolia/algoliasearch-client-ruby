@@ -6,14 +6,35 @@ require 'time'
 module Algolia
   module Personalization
     class EventScoring
-      # The score for the event.
+      # Event score.
       attr_accessor :score
 
-      # The name of the event.
+      # Event name.
       attr_accessor :event_name
 
-      # The type of the event.
       attr_accessor :event_type
+
+      class EnumAttributeValidator
+        attr_reader :datatype
+        attr_reader :allowable_values
+
+        def initialize(datatype, allowable_values)
+          @allowable_values = allowable_values.map do |value|
+            case datatype.to_s
+            when /Integer/i
+              value.to_i
+            when /Float/i
+              value.to_f
+            else
+              value
+            end
+          end
+        end
+
+        def valid?(value)
+          !value || allowable_values.include?(value)
+        end
+      end
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
@@ -34,7 +55,7 @@ module Algolia
         {
           :score => :Integer,
           :event_name => :String,
-          :event_type => :String
+          :event_type => :EventType
         }
       end
 

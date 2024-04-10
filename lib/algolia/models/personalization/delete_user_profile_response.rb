@@ -6,10 +6,10 @@ require 'time'
 module Algolia
   module Personalization
     class DeleteUserProfileResponse
-      # userToken representing the user for which to fetch the Personalization profile.
+      # Unique pseudonymous or anonymous user identifier.  This helps with analytics and click and conversion events. For more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
       attr_accessor :user_token
 
-      # A date until which the data can safely be considered as deleted for the given user. Any data received after the `deletedUntil` date will start building a new user profile.
+      # Date and time when the user profile can be safely considered to be deleted. Any events received after the `deletedUntil` date start a new user profile.
       attr_accessor :deleted_until
 
       # Attribute mapping from ruby-style variable name to JSON key.

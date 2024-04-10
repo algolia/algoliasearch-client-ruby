@@ -6,13 +6,13 @@ require 'time'
 module Algolia
   module Personalization
     class PersonalizationStrategyParams
-      # Scores associated with the events.
+      # Scores associated with each event.  The higher the scores, the higher the impact of those events on the personalization of search results.
       attr_accessor :event_scoring
 
-      # Scores associated with the facets.
+      # Scores associated with each facet.  The higher the scores, the higher the impact of those events on the personalization of search results.
       attr_accessor :facet_scoring
 
-      # The impact that personalization has on search results: a number between 0 (personalization disabled) and 100 (personalization fully enabled).
+      # Impact of personalization on the search results.  If set to 0, personalization has no impact on the search results.
       attr_accessor :personalization_impact
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -81,6 +81,24 @@ module Algolia
         else
           self.personalization_impact = nil
         end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] personalization_impact Value to be assigned
+      def personalization_impact=(personalization_impact)
+        if personalization_impact.nil?
+          raise ArgumentError, 'personalization_impact cannot be nil'
+        end
+
+        if personalization_impact > 100
+          raise ArgumentError, 'invalid value for "personalization_impact", must be smaller than or equal to 100.'
+        end
+
+        if personalization_impact < 0
+          raise ArgumentError, 'invalid value for "personalization_impact", must be greater than or equal to 0.'
+        end
+
+        @personalization_impact = personalization_impact
       end
 
       # Checks equality by comparing each attribute.
