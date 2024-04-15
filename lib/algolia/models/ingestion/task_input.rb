@@ -13,6 +13,7 @@ module Algolia
           [
             :OnDemandDateUtilsInput,
             :ScheduleDateUtilsInput,
+            :ShopifyInput,
             :StreamingUtilsInput
           ]
         end

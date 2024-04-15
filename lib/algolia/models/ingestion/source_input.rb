@@ -16,7 +16,8 @@ module Algolia
             :SourceCommercetools,
             :SourceDocker,
             :SourceGA4BigQueryExport,
-            :SourceJSON
+            :SourceJSON,
+            :SourceShopify
           ]
         end
 

@@ -15,7 +15,8 @@ module Algolia
             :SourceGA4BigQueryExport,
             :SourceJSON,
             :SourceUpdateCommercetools,
-            :SourceUpdateDocker
+            :SourceUpdateDocker,
+            :SourceUpdateShopify
           ]
         end
 
