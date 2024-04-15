@@ -9,7 +9,7 @@ module Algolia
       # Facet name.
       attr_accessor :facet
 
-      # Index name.
+      # Index name (case-sensitive).
       attr_accessor :index_name
 
       # Text to search inside the facet's values.

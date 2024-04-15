@@ -26,7 +26,7 @@ module Algolia
       # Whether to sum all filter scores.  If true, all filter scores are summed. Otherwise, the maximum filter score is kept. For more information, see [filter scores](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#accumulating-scores-with-sumorfiltersscores).
       attr_accessor :sum_or_filters_scores
 
-      # Restricts a search to a subset of your searchable attributes.
+      # Restricts a search to a subset of your searchable attributes. Attribute names are case-sensitive.
       attr_accessor :restrict_searchable_attributes
 
       # Facets for which to retrieve facet values that match the search criteria and the number of matching facet values.  To retrieve all facets, use the wildcard character `*`. For more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
@@ -60,7 +60,7 @@ module Algolia
       # Coordinates for a rectangular area in which to search.  Each bounding box is defined by the two opposite points of its diagonal, and expressed as latitude and longitude pair: `[p1 lat, p1 long, p2 lat, p2 long]`. Provide multiple bounding boxes as nested arrays. For more information, see [rectangular area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
       attr_accessor :inside_bounding_box
 
-      # Coordinates of a polygon in which to search.  Polygons are defined by 3 to 10,000 points. Each point is represented by its latitude and longitude. Provide multiple polygons as nested arrays. For more information, see [filtering inside polygons](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas). This parameter is ignored, if you also specify `insideBoundingBox`.
+      # Coordinates of a polygon in which to search.  Polygons are defined by 3 to 10,000 points. Each point is represented by its latitude and longitude. Provide multiple polygons as nested arrays. For more information, see [filtering inside polygons](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas). This parameter is ignored if you also specify `insideBoundingBox`.
       attr_accessor :inside_polygon
 
       # ISO language codes that adjust settings that are useful for processing natural language queries (as opposed to keyword searches):  - Sets `removeStopWords` and `ignorePlurals` to the list of provided languages. - Sets `removeWordsIfNoResults` to `allOptional`. - Adds a `natural_language` attribute to `ruleContexts` and `analyticsTags`.
@@ -163,7 +163,7 @@ module Algolia
           :minimum_around_radius => :Integer,
           :inside_bounding_box => :'Array<Array<Float>>',
           :inside_polygon => :'Array<Array<Float>>',
-          :natural_languages => :'Array<String>',
+          :natural_languages => :'Array<SupportedLanguage>',
           :rule_contexts => :'Array<String>',
           :personalization_impact => :Integer,
           :user_token => :String,

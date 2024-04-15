@@ -7,7 +7,7 @@ module Algolia
   module QuerySuggestions
     # Configuration of an Algolia index for Query Suggestions.
     class SourceIndex
-      # Name of the Algolia index to use as source for query suggestions.
+      # Name of the Algolia index (case-sensitive) to use as source for query suggestions.
       attr_accessor :index_name
 
       # If true, Query Suggestions uses all replica indices to find popular searches. If false, only the primary index is used.

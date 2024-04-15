@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Recommend
     class TrendingItemsQuery
-      # Index name.
+      # Index name (case-sensitive).
       attr_accessor :index_name
 
       # Minimum score a recommendation must have to be included in the response.

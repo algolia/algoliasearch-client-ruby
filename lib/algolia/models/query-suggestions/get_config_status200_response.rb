@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module QuerySuggestions
     class GetConfigStatus200Response
-      # Name of the Query Suggestions index.
+      # Name of the Query Suggestions index (case-sensitive).
       attr_accessor :index_name
 
       # Whether the creation or update of the Query Suggestions index is in progress.

@@ -11,7 +11,7 @@ module Algolia
       # Operation arguments (varies with specified `action`).
       attr_accessor :body
 
-      # Index to target for this operation.
+      # Index name (case-sensitive).
       attr_accessor :index_name
 
       class EnumAttributeValidator

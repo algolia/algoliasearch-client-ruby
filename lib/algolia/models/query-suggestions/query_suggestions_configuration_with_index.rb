@@ -20,7 +20,7 @@ module Algolia
       # Whether to include suggestions with special characters.
       attr_accessor :allow_special_characters
 
-      # Name of the Query Suggestions index.
+      # Name of the Query Suggestions index (case-sensitive).
       attr_accessor :index_name
 
       # Attribute mapping from ruby-style variable name to JSON key.

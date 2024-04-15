@@ -12,7 +12,7 @@ module Algolia
 
       attr_accessor :event_type
 
-      # Index name to which the event's items belong.
+      # Index name (case-sensitive) to which the event's items belong.
       attr_accessor :index
 
       # Applied facet filters.  Facet filters are `facet:value` pairs. Facet values must be URL-encoded, such as, `discount:10%25`.

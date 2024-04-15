@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Search
     class SearchForHitsOptions
-      # Index name.
+      # Index name (case-sensitive).
       attr_accessor :index_name
 
       attr_accessor :type

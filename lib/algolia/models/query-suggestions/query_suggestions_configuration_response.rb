@@ -10,7 +10,7 @@ module Algolia
       # Algolia application ID to which this Query Suggestions configuration belongs.
       attr_accessor :app_id
 
-      # Name of the Query Suggestions index.
+      # Name of the Query Suggestions index (case-sensitive).
       attr_accessor :index_name
 
       # Algolia indices from which to get the popular searches for query suggestions.

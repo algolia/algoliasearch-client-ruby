@@ -38,7 +38,7 @@ module Algolia
 
       attr_accessor :filter_effects
 
-      # A/B test index.
+      # Index name of the A/B test variant (case-sensitive).
       attr_accessor :index
 
       # Number of [searches without results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results) for this variant.

@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Ingestion
     class DestinationIndexName
-      # Algolia index name.
+      # Algolia index name (case-sensitive).
       attr_accessor :index_name
 
       attr_accessor :record_type

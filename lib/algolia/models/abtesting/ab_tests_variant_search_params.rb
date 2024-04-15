@@ -6,7 +6,7 @@ require 'time'
 module Algolia
   module Abtesting
     class AbTestsVariantSearchParams
-      # A/B test index.
+      # Index name of the A/B test variant (case-sensitive).
       attr_accessor :index
 
       # Percentage of search requests each variant receives.

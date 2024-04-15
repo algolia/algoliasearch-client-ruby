@@ -12,7 +12,7 @@ module Algolia
 
       attr_accessor :event_type
 
-      # Index name to which the event's items belong.
+      # Index name (case-sensitive) to which the event's items belong.
       attr_accessor :index
 
       # Object IDs of the records that are part of the event.
