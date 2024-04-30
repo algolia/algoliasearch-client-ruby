@@ -173,12 +173,8 @@ module Algolia
           end
         end
 
-        # merge additional_properties into transformed_hash
-        unless @additional_properties.nil?
-          @additional_properties.each_pair do |k, v|
-            transformed_hash[k.to_sym] = v
-          end
-        end
+        # add extra attribute to transformed_hash
+        transformed_hash.merge!(attributes.reject { |k, _| attribute_map.key?(k.to_sym) })
         new(transformed_hash)
       end
 

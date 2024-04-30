@@ -415,9 +415,7 @@ module Algolia
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([
-                  :re_ranking_apply_filter
-                ])
+        Set.new([])
       end
 
       # List of class defined in allOf (OpenAPI v3)
