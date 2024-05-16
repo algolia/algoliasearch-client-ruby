@@ -9,7 +9,7 @@ module Algolia
       # Matching facet values.
       attr_accessor :facet_hits
 
-      # See the `facetsCount` field of the `exhaustive` object in the response.
+      # Whether the facet count is exhaustive (true) or approximate (false). For more information, see [Why are my facet and hit counts not accurate](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
       attr_accessor :exhaustive_facets_count
 
       # Time the server took to process the request, in milliseconds.
