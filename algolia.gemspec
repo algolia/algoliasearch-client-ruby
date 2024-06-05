@@ -8,8 +8,7 @@ Gem::Specification.new do |s|
   s.name        = 'algolia'
   s.version     = Algolia::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ['Algolia']
-  s.email       = ['support@algolia.com']
+  s.authors     = ['https://alg.li/support']
   s.homepage    = 'https://github.com/algolia/algoliasearch-client-ruby'
   s.summary     = 'A simple Ruby client for the algolia.com REST API'
   s.description = 'A simple Ruby client for the algolia.com REST API'
