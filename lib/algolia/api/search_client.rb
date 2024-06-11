@@ -1125,6 +1125,50 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::GetApiKeyResponse')
     end
 
+    # Checks the status of a given application task.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param task_id [Integer] Unique task identifier. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_app_task_with_http_info(task_id, request_options = {})
+      # verify the required parameter 'task_id' is set
+      if @api_client.config.client_side_validation && task_id.nil?
+        raise ArgumentError, "Parameter `task_id` is required when calling `get_app_task`."
+      end
+
+      path = '/1/task/{taskID}'.sub('{' + 'taskID' + '}', Transport.encode_uri(task_id.to_s))
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :'SearchClient.get_app_task',
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Checks the status of a given application task.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param task_id [Integer] Unique task identifier. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [GetTaskResponse]
+    def get_app_task(task_id, request_options = {})
+      response = get_app_task_with_http_info(task_id, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Search::GetTaskResponse')
+    end
+
     # Lists supported languages with their supported dictionary types and number of custom entries.
     #
     # Required API Key ACLs:
