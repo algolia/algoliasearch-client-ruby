@@ -2989,6 +2989,27 @@ module Algolia
       raise ApiError, "The maximum number of retries exceeded. (#{max_retries})"
     end
 
+    # Helper: Wait for an application-level task to be published (completed) for a given `task_id`.
+    #
+    # @param task_id [Integer] the `task_id` returned in the method response. (required)
+    # @param max_retries [Integer] the maximum number of retries. (optional, default to 50)
+    # @param timeout [Proc] the function to decide how long to wait between retries. (optional)
+    # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `get_task` method.
+    # @return [Http::Response] the last get_task response
+    def wait_for_app_task(task_id, max_retries = 50, timeout = ->(retry_count) { [retry_count * 200, 5000].min }, request_options = {})
+      retries = 0
+      while retries < max_retries
+        res = get_app_task(task_id, request_options)
+        if res.status == 'published'
+          return res
+        end
+
+        retries += 1
+        sleep(timeout.call(retries) / 1000.0)
+      end
+      raise ApiError, "The maximum number of retries exceeded. (#{max_retries})"
+    end
+
     # Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
     #
     # @param operation [String] the `operation` that was done on a `key`.
