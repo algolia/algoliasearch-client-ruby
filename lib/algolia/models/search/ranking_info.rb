@@ -111,8 +111,6 @@ module Algolia
 
         if attributes.key?(:filters)
           self.filters = attributes[:filters]
-        else
-          self.filters = nil
         end
 
         if attributes.key?(:first_matched_word)
@@ -153,8 +151,6 @@ module Algolia
 
         if attributes.key?(:promoted)
           self.promoted = attributes[:promoted]
-        else
-          self.promoted = nil
         end
 
         if attributes.key?(:proximity_distance)
@@ -169,8 +165,6 @@ module Algolia
 
         if attributes.key?(:words)
           self.words = attributes[:words]
-        else
-          self.words = nil
         end
 
         if attributes.key?(:promoted_by_re_ranking)
