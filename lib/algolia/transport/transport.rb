@@ -9,6 +9,13 @@ module Algolia
       CGI.escape(uri).gsub('+', '%20')
     end
 
+    def self.stringify_query_params(query_params)
+      query_params.to_h do |key, value|
+        value = value.join(',') if value.is_a?(Array)
+        [encode_uri(key.to_s).to_sym, encode_uri(value.to_s)]
+      end
+    end
+
     class Transport
       include RetryOutcomeType
       include CallType
@@ -79,7 +86,7 @@ module Algolia
         request[:method]          = method.downcase
         request[:path]            = path
         request[:body]            = build_body(body, request_options)
-        request[:query_params]    = stringify_query_params(request_options.query_params)
+        request[:query_params]    = Algolia::Transport.stringify_query_params(request_options.query_params)
         request[:header_params]   = generate_header_params(body, request_options)
         request[:timeout]         = request_options.timeout
         request[:connect_timeout] = request_options.connect_timeout
@@ -126,13 +133,6 @@ module Algolia
           @config.read_timeout
         else
           @config.write_timeout
-        end
-      end
-
-      def stringify_query_params(query_params)
-        query_params.to_h do |key, value|
-          value = value.join(',') if value.is_a?(Array)
-          [Algolia::Transport.encode_uri(key.to_s).to_sym, Algolia::Transport.encode_uri(value.to_s)]
         end
       end
     end
