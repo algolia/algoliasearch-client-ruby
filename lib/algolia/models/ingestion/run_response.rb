@@ -10,7 +10,7 @@ module Algolia
       # Universally unique identifier (UUID) of a task run.
       attr_accessor :run_id
 
-      # Date of creation in RFC3339 format.
+      # Date of creation in RFC 3339 format.
       attr_accessor :created_at
 
       # Attribute mapping from ruby-style variable name to JSON key.

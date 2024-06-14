@@ -25,7 +25,7 @@ module Algolia
 
       attr_accessor :data
 
-      # Date of publish RFC3339 format.
+      # Date of publish RFC 3339 format.
       attr_accessor :published_at
 
       class EnumAttributeValidator

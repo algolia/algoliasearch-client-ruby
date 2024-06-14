@@ -30,13 +30,13 @@ module Algolia
 
       attr_accessor :type
 
-      # Date of creation in RFC3339 format.
+      # Date of creation in RFC 3339 format.
       attr_accessor :created_at
 
-      # Date of start in RFC3339 format.
+      # Date of start in RFC 3339 format.
       attr_accessor :started_at
 
-      # Date of finish in RFC3339 format.
+      # Date of finish in RFC 3339 format.
       attr_accessor :finished_at
 
       class EnumAttributeValidator

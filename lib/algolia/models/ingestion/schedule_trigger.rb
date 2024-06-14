@@ -12,10 +12,10 @@ module Algolia
       # Cron expression for the task's schedule.
       attr_accessor :cron
 
-      # The last time the scheduled task ran in RFC3339 format.
+      # The last time the scheduled task ran in RFC 3339 format.
       attr_accessor :last_run
 
-      # The next scheduled run of the task in RFC3339 format.
+      # The next scheduled run of the task in RFC 3339 format.
       attr_accessor :next_run
 
       class EnumAttributeValidator

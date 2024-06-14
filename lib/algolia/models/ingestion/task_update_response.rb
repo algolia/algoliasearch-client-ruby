@@ -10,7 +10,7 @@ module Algolia
       # Universally unique identifier (UUID) of a task.
       attr_accessor :task_id
 
-      # Date of last update in RFC3339 format.
+      # Date of last update in RFC 3339 format.
       attr_accessor :updated_at
 
       # Attribute mapping from ruby-style variable name to JSON key.

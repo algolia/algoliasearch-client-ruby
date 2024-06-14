@@ -1026,8 +1026,8 @@ module Algolia
     # @param type [Array<EventType>] Event type for filtering the list of task runs.
     # @param sort [EventSortKeys] Property by which to sort the list of task run events.
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
-    # @param start_date [String] Date and time in RFC3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
-    # @param end_date [String] Date and time in RFC3339 format for the latest events to retrieve. By default, the current time is used.
+    # @param start_date [String] Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
+    # @param end_date [String] Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_events_with_http_info(run_id, items_per_page = nil, page = nil, status = nil, type = nil, sort = nil, order = nil, start_date = nil, end_date = nil,
@@ -1088,8 +1088,8 @@ module Algolia
     # @param type [Array<EventType>] Event type for filtering the list of task runs.
     # @param sort [EventSortKeys] Property by which to sort the list of task run events.
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
-    # @param start_date [String] Date and time in RFC3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
-    # @param end_date [String] Date and time in RFC3339 format for the latest events to retrieve. By default, the current time is used.
+    # @param start_date [String] Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
+    # @param end_date [String] Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListEventsResponse]
     def get_events(run_id, items_per_page = nil, page = nil, status = nil, type = nil, sort = nil, order = nil, start_date = nil, end_date = nil, request_options = {})
@@ -1157,8 +1157,8 @@ module Algolia
     # @param task_id [String] Task ID for filtering the list of task runs.
     # @param sort [RunSortKeys] Property by which to sort the list of task runs. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
-    # @param start_date [String] Date in RFC3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
-    # @param end_date [String] Date in RFC3339 format for the latest run to retrieve. By default, the current day is used.
+    # @param start_date [String] Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+    # @param end_date [String] Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_runs_with_http_info(items_per_page = nil, page = nil, status = nil, task_id = nil, sort = nil, order = nil, start_date = nil, end_date = nil, request_options = {})
@@ -1213,8 +1213,8 @@ module Algolia
     # @param task_id [String] Task ID for filtering the list of task runs.
     # @param sort [RunSortKeys] Property by which to sort the list of task runs. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
-    # @param start_date [String] Date in RFC3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
-    # @param end_date [String] Date in RFC3339 format for the latest run to retrieve. By default, the current day is used.
+    # @param start_date [String] Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+    # @param end_date [String] Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [RunListResponse]
     def get_runs(items_per_page = nil, page = nil, status = nil, task_id = nil, sort = nil, order = nil, start_date = nil, end_date = nil, request_options = {})

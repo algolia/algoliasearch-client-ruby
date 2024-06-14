@@ -27,10 +27,10 @@ module Algolia
 
       attr_accessor :action
 
-      # Date of creation in RFC3339 format.
+      # Date of creation in RFC 3339 format.
       attr_accessor :created_at
 
-      # Date of last update in RFC3339 format.
+      # Date of last update in RFC 3339 format.
       attr_accessor :updated_at
 
       class EnumAttributeValidator

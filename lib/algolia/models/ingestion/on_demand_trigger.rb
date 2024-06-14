@@ -9,7 +9,7 @@ module Algolia
     class OnDemandTrigger
       attr_accessor :type
 
-      # The last time the scheduled task ran in RFC3339 format.
+      # The last time the scheduled task ran in RFC 3339 format.
       attr_accessor :last_run
 
       class EnumAttributeValidator
