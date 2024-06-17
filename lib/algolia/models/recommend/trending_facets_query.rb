@@ -79,7 +79,9 @@ module Algolia
 
       # List of attributes with nullable: true
       def self.openapi_nullable
-        Set.new([])
+        Set.new([
+                  :facet_name
+                ])
       end
 
       # List of class defined in allOf (OpenAPI v3)

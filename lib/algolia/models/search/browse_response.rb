@@ -81,7 +81,7 @@ module Algolia
       # Host name of the server that processed the request.
       attr_accessor :server_used
 
-      # An object with custom data.  You can store up to 32&nbsp;kB as custom data.
+      # An object with custom data.  You can store up to 32kB as custom data.
       attr_accessor :user_data
 
       # Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
