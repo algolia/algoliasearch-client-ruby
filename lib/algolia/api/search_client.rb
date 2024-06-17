@@ -3154,9 +3154,6 @@ module Algolia
       end.join('&')
 
       hmac = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), parent_api_key, url_encoded_restrictions)
-
-      puts "hmac: #{hmac}"
-      puts "url_encoded_restrictions: #{url_encoded_restrictions}"
       Base64.encode64("#{hmac}#{url_encoded_restrictions}").gsub("\n", '')
     end
 

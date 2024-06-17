@@ -5,7 +5,7 @@ require 'time'
 
 module Algolia
   module Search
-    class SecuredAPIKeyRestrictions
+    class SecuredApiKeyRestrictions
       attr_accessor :search_params
 
       # Filters that apply to every search made with the secured API key. Extra filters added at search time will be combined with `AND`. For example, if you set `group:admin` as fixed filter on your generated API key, and add `groups:visitors` to the search query, the complete set of filters will be `group:admin AND groups:visitors`.
@@ -61,14 +61,14 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::SecuredAPIKeyRestrictions` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::SecuredApiKeyRestrictions` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::SecuredAPIKeyRestrictions`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::SecuredApiKeyRestrictions`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
