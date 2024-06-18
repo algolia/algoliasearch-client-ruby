@@ -3177,5 +3177,105 @@ module Algolia
 
       valid_until - now
     end
+
+    # Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
+    #
+    # @param index_name [String] the `index_name` where the operation will be performed.
+    # @param objects [Array] The array of `objects` to store in the given Algolia `index_name`.
+    # @param action [Action] The `batch` `action` to perform on the given array of `objects`, defaults to `addObject`.
+    # @param wait_for_tasks [Boolean] Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+    # @param batch_size [int] The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    #
+    # @return [Array<BatchResponse>]
+    #
+    def chunked_batch(index_name, objects, action = Action::ADD_OBJECT, wait_for_tasks = false, batch_size = 1000, request_options = {})
+      responses = []
+      objects.each_slice(batch_size) do |chunk|
+        requests = chunk.map do |object|
+          Search::BatchRequest.new(action: action, body: object)
+        end
+
+        responses.append(batch(index_name, Search::BatchWriteParams.new(requests: requests), request_options))
+      end
+
+      if wait_for_tasks
+        responses.each do |response|
+          wait_for_task(index_name, response.task_id)
+        end
+      end
+
+      responses
+    end
+
+    # Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
+    #
+    # @param index_name [String] The `index_name` to replace `objects` in.
+    # @param objects [Array] The array of `objects` to store in the given Algolia `index_name`.
+    # @param batch_size [int] The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    #
+    # @return [Array<ReplaceAllObjectsResponse>]
+    def replace_all_objects(index_name, objects, batch_size = 1000, request_options = {})
+      tmp_index_name = index_name + '_tmp_' + rand(10_000_000).to_s
+
+      copy_operation_response = operation_index(
+        index_name,
+        Search::OperationIndexParams.new(
+          operation: Search::OperationType::COPY,
+          destination: tmp_index_name,
+          scope: [
+            Search::ScopeType::SETTINGS,
+            Search::ScopeType::SYNONYMS,
+            Search::ScopeType::RULES
+          ]
+        ),
+        request_options
+      )
+
+      batch_responses = chunked_batch(
+        tmp_index_name,
+        objects,
+        Search::Action::ADD_OBJECT,
+        true,
+        batch_size,
+        request_options
+      )
+
+      wait_for_task(tmp_index_name, copy_operation_response.task_id)
+
+      copy_operation_response = operation_index(
+        index_name,
+        Search::OperationIndexParams.new(
+          operation: Search::OperationType::COPY,
+          destination: tmp_index_name,
+          scope: [
+            Search::ScopeType::SETTINGS,
+            Search::ScopeType::SYNONYMS,
+            Search::ScopeType::RULES
+          ]
+        ),
+        request_options
+      )
+
+      wait_for_task(tmp_index_name, copy_operation_response.task_id)
+
+      move_operation_response = operation_index(
+        tmp_index_name,
+        Search::OperationIndexParams.new(
+          operation: Search::OperationType::MOVE,
+          destination: index_name
+        ),
+        request_options
+      )
+
+      wait_for_task(tmp_index_name, move_operation_response.task_id)
+
+      Search::ReplaceAllObjectsResponse.new(
+        copy_operation_response: copy_operation_response,
+        batch_responses: batch_responses,
+        move_operation_response: move_operation_response
+      )
+    end
   end
 end
