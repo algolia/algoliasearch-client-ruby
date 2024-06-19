@@ -1966,5 +1966,102 @@ module Algolia
       response = update_task_with_http_info(task_id, task_update, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskUpdateResponse')
     end
+
+    # Validates a source payload to ensure it can be created and that the data source can be reached by Algolia.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param source_create [SourceCreate]
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def validate_source_with_http_info(source_create = nil, request_options = {})
+      path = '/1/sources/validate'
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(source_create)
+
+      new_options = request_options.merge(
+        :operation => :'IngestionClient.validate_source',
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Validates a source payload to ensure it can be created and that the data source can be reached by Algolia.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param source_create [SourceCreate]
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [SourceValidateResponse]
+    def validate_source(source_create = nil, request_options = {})
+      response = validate_source_with_http_info(source_create, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceValidateResponse')
+    end
+
+    # Validates an update of a source payload to ensure it can be created and that the data source can be reached by Algolia.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param source_id [String] Unique identifier of a source. (required)
+    # @param source_update [SourceUpdate]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def validate_source_before_update_with_http_info(source_id, source_update, request_options = {})
+      # verify the required parameter 'source_id' is set
+      if @api_client.config.client_side_validation && source_id.nil?
+        raise ArgumentError, "Parameter `source_id` is required when calling `validate_source_before_update`."
+      end
+      # verify the required parameter 'source_update' is set
+      if @api_client.config.client_side_validation && source_update.nil?
+        raise ArgumentError, "Parameter `source_update` is required when calling `validate_source_before_update`."
+      end
+
+      path = '/1/sources/{sourceID}/validate'.sub('{' + 'sourceID' + '}', Transport.encode_uri(source_id.to_s))
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(source_update)
+
+      new_options = request_options.merge(
+        :operation => :'IngestionClient.validate_source_before_update',
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Validates an update of a source payload to ensure it can be created and that the data source can be reached by Algolia.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param source_id [String] Unique identifier of a source. (required)
+    # @param source_update [SourceUpdate]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [SourceValidateResponse]
+    def validate_source_before_update(source_id, source_update, request_options = {})
+      response = validate_source_before_update_with_http_info(source_id, source_update, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceValidateResponse')
+    end
   end
 end
