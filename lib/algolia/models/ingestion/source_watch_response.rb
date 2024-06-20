@@ -5,13 +5,26 @@ require 'time'
 
 module Algolia
   module Ingestion
-    class DockerSourceStreams
-      attr_accessor :streams
+    class SourceWatchResponse
+      # Universally unique identifier (UUID) of a task run.
+      attr_accessor :run_id
+
+      # depending on the source type, the validation returns sampling data of your source (JSON, CSV, BigQuery).
+      attr_accessor :data
+
+      # in case of error, observability events will be added to the response, if any.
+      attr_accessor :events
+
+      # a message describing the outcome of a validate run.
+      attr_accessor :message
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :streams => :streams
+          :run_id => :runID,
+          :data => :data,
+          :events => :events,
+          :message => :message
         }
       end
 
@@ -23,7 +36,10 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :streams => :'Array<Object>'
+          :run_id => :String,
+          :data => :'Array<Object>',
+          :events => :'Array<Event>',
+          :message => :String
         }
       end
 
@@ -36,25 +52,39 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::DockerSourceStreams` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::SourceWatchResponse` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::DockerSourceStreams`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::SourceWatchResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:streams)
-          if (value = attributes[:streams]).is_a?(Array)
-            self.streams = value
+        if attributes.key?(:run_id)
+          self.run_id = attributes[:run_id]
+        end
+
+        if attributes.key?(:data)
+          if (value = attributes[:data]).is_a?(Array)
+            self.data = value
           end
+        end
+
+        if attributes.key?(:events)
+          if (value = attributes[:events]).is_a?(Array)
+            self.events = value
+          end
+        end
+
+        if attributes.key?(:message)
+          self.message = attributes[:message]
         else
-          self.streams = nil
+          self.message = nil
         end
       end
 
@@ -64,7 +94,10 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          streams == other.streams
+          run_id == other.run_id &&
+          data == other.data &&
+          events == other.events &&
+          message == other.message
       end
 
       # @see the `==` method
@@ -76,7 +109,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [streams].hash
+        [run_id, data, events, message].hash
       end
 
       # Builds the object from hash

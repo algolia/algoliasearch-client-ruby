@@ -911,54 +911,6 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListDestinationsResponse')
     end
 
-    # Retrieves a stream listing for a source.  Listing streams only works with sources with &#x60;type: docker&#x60; and &#x60;imageType: singer&#x60;.
-    #
-    # Required API Key ACLs:
-    #   - addObject
-    #   - deleteIndex
-    #   - editSettings
-    # @param source_id [String] Unique identifier of a source. (required)
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [Http::Response] the response
-    def get_docker_source_streams_with_http_info(source_id, request_options = {})
-      # verify the required parameter 'source_id' is set
-      if @api_client.config.client_side_validation && source_id.nil?
-        raise ArgumentError, "Parameter `source_id` is required when calling `get_docker_source_streams`."
-      end
-
-      path = '/1/sources/{sourceID}/discover'.sub('{' + 'sourceID' + '}', Transport.encode_uri(source_id.to_s))
-      query_params = {}
-      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
-      header_params = {}
-      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
-
-      post_body = request_options[:debug_body]
-
-      new_options = request_options.merge(
-        :operation => :'IngestionClient.get_docker_source_streams',
-        :header_params => header_params,
-        :query_params => query_params,
-        :body => post_body,
-        :use_read_transporter => false
-      )
-
-      @api_client.call_api(:GET, path, new_options)
-    end
-
-    # Retrieves a stream listing for a source.  Listing streams only works with sources with `type: docker` and `imageType: singer`.
-    #
-    # Required API Key ACLs:
-    #   - addObject
-    #   - deleteIndex
-    #   - editSettings
-    # @param source_id [String] Unique identifier of a source. (required)
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [DockerSourceStreams]
-    def get_docker_source_streams(source_id, request_options = {})
-      response = get_docker_source_streams_with_http_info(source_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DockerSourceStreams')
-    end
-
     # Retrieves a single task run event by its ID.
     #
     # Required API Key ACLs:
@@ -1753,10 +1705,10 @@ module Algolia
     #   - editSettings
     # @param source_id [String] Unique identifier of a source. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [DockerSourceDiscover]
+    # @return [SourceWatchResponse]
     def trigger_docker_source_discover(source_id, request_options = {})
       response = trigger_docker_source_discover_with_http_info(source_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DockerSourceDiscover')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceWatchResponse')
     end
 
     # Updates an authentication resource.
@@ -2004,10 +1956,10 @@ module Algolia
     #   - editSettings
     # @param source_create [SourceCreate]
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [SourceValidateResponse]
+    # @return [SourceWatchResponse]
     def validate_source(source_create = nil, request_options = {})
       response = validate_source_with_http_info(source_create, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceValidateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceWatchResponse')
     end
 
     # Validates an update of a source payload to ensure it can be created and that the data source can be reached by Algolia.
@@ -2058,10 +2010,10 @@ module Algolia
     # @param source_id [String] Unique identifier of a source. (required)
     # @param source_update [SourceUpdate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [SourceValidateResponse]
+    # @return [SourceWatchResponse]
     def validate_source_before_update(source_id, source_update, request_options = {})
       response = validate_source_before_update_with_http_info(source_id, source_update, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceValidateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceWatchResponse')
     end
   end
 end
