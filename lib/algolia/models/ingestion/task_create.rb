@@ -25,6 +25,9 @@ module Algolia
 
       attr_accessor :input
 
+      # Date of the last cursor in RFC 3339 format.
+      attr_accessor :cursor
+
       class EnumAttributeValidator
         attr_reader :datatype
         attr_reader :allowable_values
@@ -56,7 +59,8 @@ module Algolia
           :action => :action,
           :enabled => :enabled,
           :failure_threshold => :failureThreshold,
-          :input => :input
+          :input => :input,
+          :cursor => :cursor
         }
       end
 
@@ -74,7 +78,8 @@ module Algolia
           :action => :ActionType,
           :enabled => :Boolean,
           :failure_threshold => :Integer,
-          :input => :TaskInput
+          :input => :TaskInput,
+          :cursor => :String
         }
       end
 
@@ -135,6 +140,10 @@ module Algolia
         if attributes.key?(:input)
           self.input = attributes[:input]
         end
+
+        if attributes.key?(:cursor)
+          self.cursor = attributes[:cursor]
+        end
       end
 
       # Custom attribute writer method with validation
@@ -167,7 +176,8 @@ module Algolia
           action == other.action &&
           enabled == other.enabled &&
           failure_threshold == other.failure_threshold &&
-          input == other.input
+          input == other.input &&
+          cursor == other.cursor
       end
 
       # @see the `==` method
@@ -179,7 +189,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [source_id, destination_id, trigger, action, enabled, failure_threshold, input].hash
+        [source_id, destination_id, trigger, action, enabled, failure_threshold, input, cursor].hash
       end
 
       # Builds the object from hash

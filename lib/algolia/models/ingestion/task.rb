@@ -27,6 +27,9 @@ module Algolia
 
       attr_accessor :action
 
+      # Date of the last cursor in RFC 3339 format.
+      attr_accessor :cursor
+
       # Date of creation in RFC 3339 format.
       attr_accessor :created_at
 
@@ -66,6 +69,7 @@ module Algolia
           :enabled => :enabled,
           :failure_threshold => :failureThreshold,
           :action => :action,
+          :cursor => :cursor,
           :created_at => :createdAt,
           :updated_at => :updatedAt
         }
@@ -87,6 +91,7 @@ module Algolia
           :enabled => :Boolean,
           :failure_threshold => :Integer,
           :action => :ActionType,
+          :cursor => :String,
           :created_at => :String,
           :updated_at => :String
         }
@@ -158,6 +163,10 @@ module Algolia
           self.action = nil
         end
 
+        if attributes.key?(:cursor)
+          self.cursor = attributes[:cursor]
+        end
+
         if attributes.key?(:created_at)
           self.created_at = attributes[:created_at]
         else
@@ -201,6 +210,7 @@ module Algolia
           enabled == other.enabled &&
           failure_threshold == other.failure_threshold &&
           action == other.action &&
+          cursor == other.cursor &&
           created_at == other.created_at &&
           updated_at == other.updated_at
       end
@@ -214,7 +224,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [task_id, source_id, destination_id, trigger, input, enabled, failure_threshold, action, created_at, updated_at].hash
+        [task_id, source_id, destination_id, trigger, input, enabled, failure_threshold, action, cursor, created_at, updated_at].hash
       end
 
       # Builds the object from hash
