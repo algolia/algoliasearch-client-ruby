@@ -11,6 +11,9 @@ module Algolia
 
       attr_accessor :sort_remaining_by
 
+      # Hide facet values.
+      attr_accessor :hide
+
       class EnumAttributeValidator
         attr_reader :datatype
         attr_reader :allowable_values
@@ -37,7 +40,8 @@ module Algolia
       def self.attribute_map
         {
           :order => :order,
-          :sort_remaining_by => :sortRemainingBy
+          :sort_remaining_by => :sortRemainingBy,
+          :hide => :hide
         }
       end
 
@@ -50,7 +54,8 @@ module Algolia
       def self.types_mapping
         {
           :order => :'Array<String>',
-          :sort_remaining_by => :SortRemainingBy
+          :sort_remaining_by => :SortRemainingBy,
+          :hide => :'Array<String>'
         }
       end
 
@@ -85,6 +90,12 @@ module Algolia
         if attributes.key?(:sort_remaining_by)
           self.sort_remaining_by = attributes[:sort_remaining_by]
         end
+
+        if attributes.key?(:hide)
+          if (value = attributes[:hide]).is_a?(Array)
+            self.hide = value
+          end
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -94,7 +105,8 @@ module Algolia
 
         self.class == other.class &&
           order == other.order &&
-          sort_remaining_by == other.sort_remaining_by
+          sort_remaining_by == other.sort_remaining_by &&
+          hide == other.hide
       end
 
       # @see the `==` method
@@ -106,7 +118,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [order, sort_remaining_by].hash
+        [order, sort_remaining_by, hide].hash
       end
 
       # Builds the object from hash

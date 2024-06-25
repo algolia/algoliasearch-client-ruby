@@ -12,6 +12,9 @@ module Algolia
       # Creates [replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/).  Replicas are copies of a primary index with the same records but different settings, synonyms, or rules. If you want to offer a different ranking or sorting of your search results, you'll use replica indices. All index operations on a primary index are automatically forwarded to its replicas. To add a replica index, you must provide the complete set of replicas to this parameter. If you omit a replica from this list, the replica turns into a regular, standalone index that will no longer by synced with the primary index.  **Modifier**  - `virtual(\"REPLICA\")`.   Create a virtual replica,   Virtual replicas don't increase the number of records and are optimized for [Relevant sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort/).
       attr_accessor :replicas
 
+      # Only present if the index is a [virtual replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
+      attr_accessor :virtual
+
       # Maximum number of search results that can be obtained through pagination.  Higher pagination limits might slow down your search. For pagination limits above 1,000, the sorting of results beyond the 1,000th hit can't be guaranteed.
       attr_accessor :pagination_limited_to
 
@@ -62,6 +65,7 @@ module Algolia
         {
           :attributes_for_faceting => :attributesForFaceting,
           :replicas => :replicas,
+          :virtual => :virtual,
           :pagination_limited_to => :paginationLimitedTo,
           :unretrievable_attributes => :unretrievableAttributes,
           :disable_typo_tolerance_on_words => :disableTypoToleranceOnWords,
@@ -90,6 +94,7 @@ module Algolia
         {
           :attributes_for_faceting => :'Array<String>',
           :replicas => :'Array<String>',
+          :virtual => :Boolean,
           :pagination_limited_to => :Integer,
           :unretrievable_attributes => :'Array<String>',
           :disable_typo_tolerance_on_words => :'Array<String>',
@@ -140,6 +145,10 @@ module Algolia
           if (value = attributes[:replicas]).is_a?(Array)
             self.replicas = value
           end
+        end
+
+        if attributes.key?(:virtual)
+          self.virtual = attributes[:virtual]
         end
 
         if attributes.key?(:pagination_limited_to)
@@ -243,6 +252,7 @@ module Algolia
         self.class == other.class &&
           attributes_for_faceting == other.attributes_for_faceting &&
           replicas == other.replicas &&
+          virtual == other.virtual &&
           pagination_limited_to == other.pagination_limited_to &&
           unretrievable_attributes == other.unretrievable_attributes &&
           disable_typo_tolerance_on_words == other.disable_typo_tolerance_on_words &&
@@ -269,8 +279,8 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [attributes_for_faceting, replicas, pagination_limited_to, unretrievable_attributes, disable_typo_tolerance_on_words, attributes_to_transliterate, camel_case_attributes,
-         decompounded_attributes, index_languages, disable_prefix_on_attributes, allow_compression_of_integer_array, numeric_attributes_for_filtering, separators_to_index, searchable_attributes, user_data, custom_normalization, attribute_for_distinct].hash
+        [attributes_for_faceting, replicas, virtual, pagination_limited_to, unretrievable_attributes, disable_typo_tolerance_on_words, attributes_to_transliterate,
+         camel_case_attributes, decompounded_attributes, index_languages, disable_prefix_on_attributes, allow_compression_of_integer_array, numeric_attributes_for_filtering, separators_to_index, searchable_attributes, user_data, custom_normalization, attribute_for_distinct].hash
       end
 
       # Builds the object from hash
