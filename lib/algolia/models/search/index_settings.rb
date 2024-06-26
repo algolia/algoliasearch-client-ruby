@@ -13,9 +13,6 @@ module Algolia
       # Creates [replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/).  Replicas are copies of a primary index with the same records but different settings, synonyms, or rules. If you want to offer a different ranking or sorting of your search results, you'll use replica indices. All index operations on a primary index are automatically forwarded to its replicas. To add a replica index, you must provide the complete set of replicas to this parameter. If you omit a replica from this list, the replica turns into a regular, standalone index that will no longer by synced with the primary index.  **Modifier**  - `virtual(\"REPLICA\")`.   Create a virtual replica,   Virtual replicas don't increase the number of records and are optimized for [Relevant sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort/).
       attr_accessor :replicas
 
-      # Only present if the index is a [virtual replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
-      attr_accessor :virtual
-
       # Maximum number of search results that can be obtained through pagination.  Higher pagination limits might slow down your search. For pagination limits above 1,000, the sorting of results beyond the 1,000th hit can't be guaranteed.
       attr_accessor :pagination_limited_to
 
@@ -209,7 +206,6 @@ module Algolia
         {
           :attributes_for_faceting => :attributesForFaceting,
           :replicas => :replicas,
-          :virtual => :virtual,
           :pagination_limited_to => :paginationLimitedTo,
           :unretrievable_attributes => :unretrievableAttributes,
           :disable_typo_tolerance_on_words => :disableTypoToleranceOnWords,
@@ -282,7 +278,6 @@ module Algolia
         {
           :attributes_for_faceting => :'Array<String>',
           :replicas => :'Array<String>',
-          :virtual => :Boolean,
           :pagination_limited_to => :Integer,
           :unretrievable_attributes => :'Array<String>',
           :disable_typo_tolerance_on_words => :'Array<String>',
@@ -387,10 +382,6 @@ module Algolia
           if (value = attributes[:replicas]).is_a?(Array)
             self.replicas = value
           end
-        end
-
-        if attributes.key?(:virtual)
-          self.virtual = attributes[:virtual]
         end
 
         if attributes.key?(:pagination_limited_to)
@@ -758,7 +749,6 @@ module Algolia
         self.class == other.class &&
           attributes_for_faceting == other.attributes_for_faceting &&
           replicas == other.replicas &&
-          virtual == other.virtual &&
           pagination_limited_to == other.pagination_limited_to &&
           unretrievable_attributes == other.unretrievable_attributes &&
           disable_typo_tolerance_on_words == other.disable_typo_tolerance_on_words &&
@@ -829,8 +819,8 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [attributes_for_faceting, replicas, virtual, pagination_limited_to, unretrievable_attributes, disable_typo_tolerance_on_words, attributes_to_transliterate,
-         camel_case_attributes, decompounded_attributes, index_languages, disable_prefix_on_attributes, allow_compression_of_integer_array, numeric_attributes_for_filtering, separators_to_index, searchable_attributes, user_data, custom_normalization, attribute_for_distinct, attributes_to_retrieve, ranking, custom_ranking, relevancy_strictness, attributes_to_highlight, attributes_to_snippet, highlight_pre_tag, highlight_post_tag, snippet_ellipsis_text, restrict_highlight_and_snippet_arrays, hits_per_page, min_word_sizefor1_typo, min_word_sizefor2_typos, typo_tolerance, allow_typos_on_numeric_tokens, disable_typo_tolerance_on_attributes, ignore_plurals, remove_stop_words, keep_diacritics_on_characters, query_languages, decompound_query, enable_rules, enable_personalization, query_type, remove_words_if_no_results, mode, semantic_search, advanced_syntax, optional_words, disable_exact_on_attributes, exact_on_single_word_query, alternatives_as_exact, advanced_syntax_features, distinct, replace_synonyms_in_highlight, min_proximity, response_fields, max_facet_hits, max_values_per_facet, sort_facet_values_by, attribute_criteria_computed_by_min_proximity, rendering_content, enable_re_ranking, re_ranking_apply_filter].hash
+        [attributes_for_faceting, replicas, pagination_limited_to, unretrievable_attributes, disable_typo_tolerance_on_words, attributes_to_transliterate, camel_case_attributes,
+         decompounded_attributes, index_languages, disable_prefix_on_attributes, allow_compression_of_integer_array, numeric_attributes_for_filtering, separators_to_index, searchable_attributes, user_data, custom_normalization, attribute_for_distinct, attributes_to_retrieve, ranking, custom_ranking, relevancy_strictness, attributes_to_highlight, attributes_to_snippet, highlight_pre_tag, highlight_post_tag, snippet_ellipsis_text, restrict_highlight_and_snippet_arrays, hits_per_page, min_word_sizefor1_typo, min_word_sizefor2_typos, typo_tolerance, allow_typos_on_numeric_tokens, disable_typo_tolerance_on_attributes, ignore_plurals, remove_stop_words, keep_diacritics_on_characters, query_languages, decompound_query, enable_rules, enable_personalization, query_type, remove_words_if_no_results, mode, semantic_search, advanced_syntax, optional_words, disable_exact_on_attributes, exact_on_single_word_query, alternatives_as_exact, advanced_syntax_features, distinct, replace_synonyms_in_highlight, min_proximity, response_fields, max_facet_hits, max_values_per_facet, sort_facet_values_by, attribute_criteria_computed_by_min_proximity, rendering_content, enable_re_ranking, re_ranking_apply_filter].hash
       end
 
       # Builds the object from hash

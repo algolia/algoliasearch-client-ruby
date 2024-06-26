@@ -39,6 +39,9 @@ module Algolia
       # Only present if the index is a primary index with replicas. Contains the names of all linked replicas.
       attr_accessor :replicas
 
+      # Only present if the index is a [virtual replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
+      attr_accessor :virtual
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -52,7 +55,8 @@ module Algolia
           :number_of_pending_tasks => :numberOfPendingTasks,
           :pending_task => :pendingTask,
           :primary => :primary,
-          :replicas => :replicas
+          :replicas => :replicas,
+          :virtual => :virtual
         }
       end
 
@@ -74,7 +78,8 @@ module Algolia
           :number_of_pending_tasks => :Integer,
           :pending_task => :Boolean,
           :primary => :String,
-          :replicas => :'Array<String>'
+          :replicas => :'Array<String>',
+          :virtual => :Boolean
         }
       end
 
@@ -163,6 +168,10 @@ module Algolia
             self.replicas = value
           end
         end
+
+        if attributes.key?(:virtual)
+          self.virtual = attributes[:virtual]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -181,7 +190,8 @@ module Algolia
           number_of_pending_tasks == other.number_of_pending_tasks &&
           pending_task == other.pending_task &&
           primary == other.primary &&
-          replicas == other.replicas
+          replicas == other.replicas &&
+          virtual == other.virtual
       end
 
       # @see the `==` method
@@ -193,7 +203,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [name, created_at, updated_at, entries, data_size, file_size, last_build_time_s, number_of_pending_tasks, pending_task, primary, replicas].hash
+        [name, created_at, updated_at, entries, data_size, file_size, last_build_time_s, number_of_pending_tasks, pending_task, primary, replicas, virtual].hash
       end
 
       # Builds the object from hash
