@@ -3178,64 +3178,6 @@ module Algolia
       valid_until - now
     end
 
-    # Helper: Saves the given array of objects in the given index. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
-    #
-    # @param index_name [String]: The `index_name` to save `objects` in.
-    # @param objects [Array]: The array of `objects` to store in the given Algolia `indexName`.
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    #
-    # @return [BatchResponse]
-    #
-    def save_objects(index_name, objects, request_options = {})
-      chunked_batch(
-        index_name,
-        objects,
-        Search::Action::ADD_OBJECT,
-        false,
-        1000,
-        request_options
-      )
-    end
-
-    # Helper: Deletes every records for the given objectIDs. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
-    #
-    # @param index_name [String]: The `index_name` to delete `object_ids` from.
-    # @param object_ids [Array]: The object_ids to delete.
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    #
-    # @return [BatchResponse]
-    #
-    def delete_objects(index_name, object_ids, request_options = {})
-      chunked_batch(
-        index_name,
-        object_ids.map { |id| { "objectID" => id } },
-        Search::Action::DELETE_OBJECT,
-        false,
-        1000,
-        request_options
-      )
-    end
-
-    # Helper: Replaces object content of all the given objects according to their respective `object_id` field. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
-    #
-    # @param index_name [String]: The `index_name` to delete `object_ids` from.
-    # @param objects [Array]: The objects to partially update.
-    # @param create_if_not_exists [Boolean]: To be provided if non-existing objects are passed, otherwise, the call will fail.
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    #
-    # @return [BatchResponse]
-    #
-    def partial_update_objects(index_name, objects, create_if_not_exists, request_options = {})
-      chunked_batch(
-        index_name,
-        objects,
-        create_if_not_exists ? Search::Action::PARTIAL_UPDATE_OBJECT : Search::Action::PARTIAL_UPDATE_OBJECT_NO_CREATE,
-        false,
-        1000,
-        request_options
-      )
-    end
-
     # Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
     #
     # @param index_name [String] the `index_name` where the operation will be performed.
