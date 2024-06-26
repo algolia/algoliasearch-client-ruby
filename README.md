@@ -51,12 +51,12 @@ For full documentation, visit the **[Algolia Ruby API Client](https://www.algoli
 
 ## ❓ Troubleshooting
 
-Encountering an issue? Before reaching out to support, we recommend heading to our [FAQ](https://www.algolia.com/doc/api-client/troubleshooting/faq/ruby/) where you will find answers for the most common issues and gotchas with the client.
+Encountering an issue? Before reaching out to support, we recommend heading to our [FAQ](https://www.algolia.com/doc/api-client/troubleshooting/faq/ruby/) where you will find answers for the most common issues and gotchas with the client. You can also open [a GitHub issue](https://github.com/algolia/api-clients-automation/issues/new?assignees=&labels=&projects=&template=Bug_report.md)
 
-## Upgrade from V1 to V2
+## Contributing
 
-If you were using the v1 and wish to update to v2, please follow our [Upgrade Guide](upgrade_guide.md)
+This repository hosts the code of the generated Algolia API client for Ruby, if you'd like to contribute, head over to the [main repository](https://github.com/algolia/api-clients-automation). You can also find contributing guides on [our documentation website](https://api-clients-automation.netlify.app/docs/contributing/introduction).
 
 ## 📄 License
 
-Algolia Ruby API Client is an open-sourced software licensed under the [MIT license](LICENSE.md).
+The Algolia Ruby API Client is an open-sourced software licensed under the [MIT license](LICENSE).
