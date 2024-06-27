@@ -1934,7 +1934,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceWatchResponse')
     end
 
-    # Searches for transformations.
+    # Try a transformation.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -1968,7 +1968,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Searches for transformations.
+    # Try a transformation.
     #
     # Required API Key ACLs:
     #   - addObject
