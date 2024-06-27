@@ -24,4 +24,4 @@ jobs:
           ruby-version: 3.2.2
           bundler-cache: true
 
-      - uses: rubygems/release-gem@v1
+      - uses: rubygems/release-gem@612653d273a73bdae1df8453e090060bb4db5f31
