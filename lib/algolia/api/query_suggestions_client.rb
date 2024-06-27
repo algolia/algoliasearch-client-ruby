@@ -37,13 +37,13 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - editSettings
-    # @param query_suggestions_configuration_with_index [QuerySuggestionsConfigurationWithIndex]  (required)
+    # @param configuration_with_index [ConfigurationWithIndex]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def create_config_with_http_info(query_suggestions_configuration_with_index, request_options = {})
-      # verify the required parameter 'query_suggestions_configuration_with_index' is set
-      if @api_client.config.client_side_validation && query_suggestions_configuration_with_index.nil?
-        raise ArgumentError, "Parameter `query_suggestions_configuration_with_index` is required when calling `create_config`."
+    def create_config_with_http_info(configuration_with_index, request_options = {})
+      # verify the required parameter 'configuration_with_index' is set
+      if @api_client.config.client_side_validation && configuration_with_index.nil?
+        raise ArgumentError, "Parameter `configuration_with_index` is required when calling `create_config`."
       end
 
       path = '/1/configs'
@@ -52,7 +52,7 @@ module Algolia
       header_params = {}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = request_options[:debug_body] || @api_client.object_to_http_body(query_suggestions_configuration_with_index)
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(configuration_with_index)
 
       new_options = request_options.merge(
         :operation => :'QuerySuggestionsClient.create_config',
@@ -69,11 +69,11 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - editSettings
-    # @param query_suggestions_configuration_with_index [QuerySuggestionsConfigurationWithIndex]  (required)
+    # @param configuration_with_index [ConfigurationWithIndex]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [BaseResponse]
-    def create_config(query_suggestions_configuration_with_index, request_options = {})
-      response = create_config_with_http_info(query_suggestions_configuration_with_index, request_options)
+    def create_config(configuration_with_index, request_options = {})
+      response = create_config_with_http_info(configuration_with_index, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::BaseResponse')
     end
 
@@ -328,10 +328,10 @@ module Algolia
     # Required API Key ACLs:
     #   - settings
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [Array<QuerySuggestionsConfigurationResponse>]
+    # @return [Array<ConfigurationResponse>]
     def get_all_configs(request_options = {})
       response = get_all_configs_with_http_info(request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<QuerySuggestions::QuerySuggestionsConfigurationResponse>')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<QuerySuggestions::ConfigurationResponse>')
     end
 
     # Retrieves a single Query Suggestions configuration by its index name.
@@ -372,10 +372,10 @@ module Algolia
     #   - settings
     # @param index_name [String] Query Suggestions index name. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [QuerySuggestionsConfigurationResponse]
+    # @return [ConfigurationResponse]
     def get_config(index_name, request_options = {})
       response = get_config_with_http_info(index_name, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::QuerySuggestionsConfigurationResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::ConfigurationResponse')
     end
 
     # Reports the status of a Query Suggestions index.
@@ -471,17 +471,17 @@ module Algolia
     # Required API Key ACLs:
     #   - editSettings
     # @param index_name [String] Query Suggestions index name. (required)
-    # @param query_suggestions_configuration [QuerySuggestionsConfiguration]  (required)
+    # @param configuration [Configuration]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def update_config_with_http_info(index_name, query_suggestions_configuration, request_options = {})
+    def update_config_with_http_info(index_name, configuration, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `update_config`."
       end
-      # verify the required parameter 'query_suggestions_configuration' is set
-      if @api_client.config.client_side_validation && query_suggestions_configuration.nil?
-        raise ArgumentError, "Parameter `query_suggestions_configuration` is required when calling `update_config`."
+      # verify the required parameter 'configuration' is set
+      if @api_client.config.client_side_validation && configuration.nil?
+        raise ArgumentError, "Parameter `configuration` is required when calling `update_config`."
       end
 
       path = '/1/configs/{indexName}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s))
@@ -490,7 +490,7 @@ module Algolia
       header_params = {}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = request_options[:debug_body] || @api_client.object_to_http_body(query_suggestions_configuration)
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(configuration)
 
       new_options = request_options.merge(
         :operation => :'QuerySuggestionsClient.update_config',
@@ -508,11 +508,11 @@ module Algolia
     # Required API Key ACLs:
     #   - editSettings
     # @param index_name [String] Query Suggestions index name. (required)
-    # @param query_suggestions_configuration [QuerySuggestionsConfiguration]  (required)
+    # @param configuration [Configuration]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [BaseResponse]
-    def update_config(index_name, query_suggestions_configuration, request_options = {})
-      response = update_config_with_http_info(index_name, query_suggestions_configuration, request_options)
+    def update_config(index_name, configuration, request_options = {})
+      response = update_config_with_http_info(index_name, configuration, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || 'QuerySuggestions::BaseResponse')
     end
   end
