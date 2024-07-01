@@ -4,18 +4,15 @@ require 'date'
 require 'time'
 
 module Algolia
-  module Search
-    # Extra data that can be used in the search UI.  You can use this to control aspects of your search UI, such as, the order of facet names and values without changing your frontend code.
-    class RenderingContent
-      attr_accessor :facet_ordering
-
-      attr_accessor :redirect
+  module Recommend
+    # The redirect rule container.
+    class RedirectURL
+      attr_accessor :url
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :facet_ordering => :facetOrdering,
-          :redirect => :redirect
+          :url => :url
         }
       end
 
@@ -27,8 +24,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :facet_ordering => :FacetOrdering,
-          :redirect => :RedirectURL
+          :url => :String
         }
       end
 
@@ -41,25 +37,21 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         unless attributes.is_a?(Hash)
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::RenderingContent` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::RedirectURL` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
         attributes = attributes.each_with_object({}) do |(k, v), h|
           unless self.class.attribute_map.key?(k.to_sym)
             raise ArgumentError,
-                  "`#{k}` is not a valid attribute in `Algolia::RenderingContent`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+                  "`#{k}` is not a valid attribute in `Algolia::RedirectURL`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
           end
 
           h[k.to_sym] = v
         end
 
-        if attributes.key?(:facet_ordering)
-          self.facet_ordering = attributes[:facet_ordering]
-        end
-
-        if attributes.key?(:redirect)
-          self.redirect = attributes[:redirect]
+        if attributes.key?(:url)
+          self.url = attributes[:url]
         end
       end
 
@@ -69,8 +61,7 @@ module Algolia
         return true if equal?(other)
 
         self.class == other.class &&
-          facet_ordering == other.facet_ordering &&
-          redirect == other.redirect
+          url == other.url
       end
 
       # @see the `==` method
@@ -82,7 +73,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [facet_ordering, redirect].hash
+        [url].hash
       end
 
       # Builds the object from hash
@@ -147,7 +138,7 @@ module Algolia
           end
         else # model
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Search.const_get(type)
+          klass = Algolia::Recommend.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass.build_from_hash(value)
         end
       end
