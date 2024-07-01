@@ -1,3 +1,7 @@
+## [3.0.0.beta.8](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.beta.7...3.0.0.beta.8)
+
+- [9776cb3ba](https://github.com/algolia/api-clients-automation/commit/9776cb3ba) feat(specs): add redirect to renderingContent ([#3296](https://github.com/algolia/api-clients-automation/pull/3296)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [3.0.0.beta.7](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.beta.6...3.0.0.beta.7)
 
 - [95e4c1e17](https://github.com/algolia/api-clients-automation/commit/95e4c1e17) chore(ruby): scope to last commit ([#3266](https://github.com/algolia/api-clients-automation/pull/3266)) by [@shortcuts](https://github.com/shortcuts/)
