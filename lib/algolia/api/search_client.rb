@@ -3284,8 +3284,8 @@ module Algolia
           destination: tmp_index_name,
           scope: [
             Search::ScopeType::SETTINGS,
-            Search::ScopeType::SYNONYMS,
-            Search::ScopeType::RULES
+            Search::ScopeType::RULES,
+            Search::ScopeType::SYNONYMS
           ]
         ),
         request_options
@@ -3309,8 +3309,8 @@ module Algolia
           destination: tmp_index_name,
           scope: [
             Search::ScopeType::SETTINGS,
-            Search::ScopeType::SYNONYMS,
-            Search::ScopeType::RULES
+            Search::ScopeType::RULES,
+            Search::ScopeType::SYNONYMS
           ]
         ),
         request_options
