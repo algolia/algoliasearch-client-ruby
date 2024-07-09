@@ -5,9 +5,9 @@ module Algolia
     attr_accessor :api_client
 
     def initialize(config = nil)
-      raise '`config` is missing.' if config.nil?
-      raise '`app_id` is missing.' if config.app_id.nil? || config.app_id == ''
-      raise '`api_key` is missing.' if config.api_key.nil? || config.api_key == ''
+      raise "`config` is missing." if config.nil?
+      raise "`app_id` is missing." if config.app_id.nil? || config.app_id == ""
+      raise "`api_key` is missing." if config.api_key.nil? || config.api_key == ""
 
       @api_client = Algolia::ApiClient.new(config)
     end
@@ -17,11 +17,14 @@ module Algolia
       hosts << Transport::StatefulHost.new("#{app_id}-dsn.algolia.net", accept: CallType::READ)
       hosts << Transport::StatefulHost.new("#{app_id}.algolia.net", accept: CallType::WRITE)
 
-      hosts += 1.upto(3).map do |i|
-        Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", accept: CallType::READ | CallType::WRITE)
-      end.shuffle
+      hosts += 1
+        .upto(3)
+        .map do |i|
+          Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", accept: CallType::READ | CallType::WRITE)
+        end
+        .shuffle
 
-      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Usage', opts)
+      config = Algolia::Configuration.new(app_id, api_key, hosts, "Usage", opts)
       create_with_config(config)
     end
 
@@ -41,7 +44,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -51,7 +54,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'UsageClient.custom_delete',
+        :operation => :"UsageClient.custom_delete",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -69,7 +72,7 @@ module Algolia
     # @return [Object]
     def custom_delete(path, parameters = nil, request_options = {})
       response = custom_delete_with_http_info(path, parameters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -84,7 +87,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -94,7 +97,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'UsageClient.custom_get',
+        :operation => :"UsageClient.custom_get",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -112,7 +115,7 @@ module Algolia
     # @return [Object]
     def custom_get(path, parameters = nil, request_options = {})
       response = custom_get_with_http_info(path, parameters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -128,7 +131,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -138,7 +141,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
       new_options = request_options.merge(
-        :operation => :'UsageClient.custom_post',
+        :operation => :"UsageClient.custom_post",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -157,7 +160,7 @@ module Algolia
     # @return [Object]
     def custom_post(path, parameters = nil, body = nil, request_options = {})
       response = custom_post_with_http_info(path, parameters, body, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -173,7 +176,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -183,7 +186,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
       new_options = request_options.merge(
-        :operation => :'UsageClient.custom_put',
+        :operation => :"UsageClient.custom_put",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -202,7 +205,7 @@ module Algolia
     # @return [Object]
     def custom_put(path, parameters = nil, body = nil, request_options = {})
       response = custom_put_with_http_info(path, parameters, body, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # Retrieves the selected usage statistics for one index.
@@ -214,7 +217,14 @@ module Algolia
     # @param granularity [Granularity] Granularity of the aggregated metrics.  - &#x60;hourly&#x60;: the maximum time range for hourly metrics is 7 days. - &#x60;daily&#x60;: the maximum time range for daily metrics is 365 days.  (default to 'daily')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_index_usage_with_http_info(statistic, index_name, start_date, end_date, granularity = nil, request_options = {})
+    def get_index_usage_with_http_info(
+      statistic,
+      index_name,
+      start_date,
+      end_date,
+      granularity = nil,
+      request_options = {}
+    )
       # verify the required parameter 'statistic' is set
       if @api_client.config.client_side_validation && statistic.nil?
         raise ArgumentError, "Parameter `statistic` is required when calling `get_index_usage`."
@@ -232,8 +242,10 @@ module Algolia
         raise ArgumentError, "Parameter `end_date` is required when calling `get_index_usage`."
       end
 
-      path = '/1/usage/{statistic}/{indexName}'.sub('{' + 'statistic' + '}', Transport.encode_uri(statistic.to_s)).sub('{' + 'indexName' + '}',
-                                                                                                                       Transport.encode_uri(index_name.to_s))
+      path = "/1/usage/{statistic}/{indexName}".sub("{" + "statistic" + "}", Transport.encode_uri(statistic.to_s)).sub(
+        "{" + "indexName" + "}",
+        Transport.encode_uri(index_name.to_s)
+      )
       query_params = {}
       query_params[:startDate] = start_date
       query_params[:endDate] = end_date
@@ -245,7 +257,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'UsageClient.get_index_usage',
+        :operation => :"UsageClient.get_index_usage",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -265,8 +277,15 @@ module Algolia
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetUsage200Response]
     def get_index_usage(statistic, index_name, start_date, end_date, granularity = nil, request_options = {})
-      response = get_index_usage_with_http_info(statistic, index_name, start_date, end_date, granularity, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Usage::GetUsage200Response')
+      response = get_index_usage_with_http_info(
+        statistic,
+        index_name,
+        start_date,
+        end_date,
+        granularity,
+        request_options
+      )
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Usage::GetUsage200Response")
     end
 
     # Retrieves usage statistics evaluated over a specified period.
@@ -291,7 +310,7 @@ module Algolia
         raise ArgumentError, "Parameter `end_date` is required when calling `get_usage`."
       end
 
-      path = '/1/usage/{statistic}'.sub('{' + 'statistic' + '}', Transport.encode_uri(statistic.to_s))
+      path = "/1/usage/{statistic}".sub("{" + "statistic" + "}", Transport.encode_uri(statistic.to_s))
       query_params = {}
       query_params[:startDate] = start_date
       query_params[:endDate] = end_date
@@ -303,7 +322,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'UsageClient.get_usage',
+        :operation => :"UsageClient.get_usage",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -323,7 +342,8 @@ module Algolia
     # @return [GetUsage200Response]
     def get_usage(statistic, start_date, end_date, granularity = nil, request_options = {})
       response = get_usage_with_http_info(statistic, start_date, end_date, granularity, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Usage::GetUsage200Response')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Usage::GetUsage200Response")
     end
+
   end
 end

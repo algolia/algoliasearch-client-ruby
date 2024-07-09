@@ -5,28 +5,33 @@ module Algolia
     attr_accessor :api_client
 
     def initialize(config = nil)
-      raise '`config` is missing.' if config.nil?
-      raise '`app_id` is missing.' if config.app_id.nil? || config.app_id == ''
-      raise '`api_key` is missing.' if config.api_key.nil? || config.api_key == ''
+      raise "`config` is missing." if config.nil?
+      raise "`app_id` is missing." if config.app_id.nil? || config.app_id == ""
+      raise "`api_key` is missing." if config.api_key.nil? || config.api_key == ""
 
       @api_client = Algolia::ApiClient.new(config)
     end
 
     def self.create(app_id, api_key, region = nil, opts = {})
       hosts = []
-      regions = ['de', 'us']
+      regions = ["de", "us"]
 
       if region.is_a?(Hash) && (opts.nil? || opts.empty?)
         opts = region
         region = nil
       end
 
-      raise "`region` must be one of the following: #{regions.join(', ')}" if !region.nil? && (!region.is_a?(String) || !regions.include?(region))
+      if !region.nil? && (!region.is_a?(String) || !regions.include?(region))
+        raise "`region` must be one of the following: #{regions.join(", ")}"
+      end
 
-      hosts << Transport::StatefulHost.new(region.nil? ? 'analytics.algolia.com' : 'analytics.{region}.algolia.com'.sub!('{region}', region),
-                                           accept: CallType::READ | CallType::WRITE)
+      hosts <<
+        Transport::StatefulHost.new(
+          region.nil? ? "analytics.algolia.com" : "analytics.{region}.algolia.com".sub!("{region}", region),
+          accept: CallType::READ | CallType::WRITE
+        )
 
-      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Abtesting', opts)
+      config = Algolia::Configuration.new(app_id, api_key, hosts, "Abtesting", opts)
       create_with_config(config)
     end
 
@@ -47,7 +52,7 @@ module Algolia
         raise ArgumentError, "Parameter `add_ab_tests_request` is required when calling `add_ab_tests`."
       end
 
-      path = '/2/abtests'
+      path = "/2/abtests"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -56,7 +61,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(add_ab_tests_request)
 
       new_options = request_options.merge(
-        :operation => :'AbtestingClient.add_ab_tests',
+        :operation => :"AbtestingClient.add_ab_tests",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -75,7 +80,7 @@ module Algolia
     # @return [ABTestResponse]
     def add_ab_tests(add_ab_tests_request, request_options = {})
       response = add_ab_tests_with_http_info(add_ab_tests_request, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Abtesting::ABTestResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Abtesting::ABTestResponse")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -90,7 +95,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -100,7 +105,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AbtestingClient.custom_delete',
+        :operation => :"AbtestingClient.custom_delete",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -118,7 +123,7 @@ module Algolia
     # @return [Object]
     def custom_delete(path, parameters = nil, request_options = {})
       response = custom_delete_with_http_info(path, parameters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -133,7 +138,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -143,7 +148,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AbtestingClient.custom_get',
+        :operation => :"AbtestingClient.custom_get",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -161,7 +166,7 @@ module Algolia
     # @return [Object]
     def custom_get(path, parameters = nil, request_options = {})
       response = custom_get_with_http_info(path, parameters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -177,7 +182,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -187,7 +192,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
       new_options = request_options.merge(
-        :operation => :'AbtestingClient.custom_post',
+        :operation => :"AbtestingClient.custom_post",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -206,7 +211,7 @@ module Algolia
     # @return [Object]
     def custom_post(path, parameters = nil, body = nil, request_options = {})
       response = custom_post_with_http_info(path, parameters, body, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -222,7 +227,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -232,7 +237,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
       new_options = request_options.merge(
-        :operation => :'AbtestingClient.custom_put',
+        :operation => :"AbtestingClient.custom_put",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -251,7 +256,7 @@ module Algolia
     # @return [Object]
     def custom_put(path, parameters = nil, body = nil, request_options = {})
       response = custom_put_with_http_info(path, parameters, body, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # Deletes an A/B test by its ID.
@@ -267,7 +272,7 @@ module Algolia
         raise ArgumentError, "Parameter `id` is required when calling `delete_ab_test`."
       end
 
-      path = '/2/abtests/{id}'.sub('{' + 'id' + '}', Transport.encode_uri(id.to_s))
+      path = "/2/abtests/{id}".sub("{" + "id" + "}", Transport.encode_uri(id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -276,7 +281,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AbtestingClient.delete_ab_test',
+        :operation => :"AbtestingClient.delete_ab_test",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -295,7 +300,7 @@ module Algolia
     # @return [ABTestResponse]
     def delete_ab_test(id, request_options = {})
       response = delete_ab_test_with_http_info(id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Abtesting::ABTestResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Abtesting::ABTestResponse")
     end
 
     # Retrieves the details for an A/B test by its ID.
@@ -311,7 +316,7 @@ module Algolia
         raise ArgumentError, "Parameter `id` is required when calling `get_ab_test`."
       end
 
-      path = '/2/abtests/{id}'.sub('{' + 'id' + '}', Transport.encode_uri(id.to_s))
+      path = "/2/abtests/{id}".sub("{" + "id" + "}", Transport.encode_uri(id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -320,7 +325,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AbtestingClient.get_ab_test',
+        :operation => :"AbtestingClient.get_ab_test",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -339,7 +344,7 @@ module Algolia
     # @return [ABTest]
     def get_ab_test(id, request_options = {})
       response = get_ab_test_with_http_info(id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Abtesting::ABTest')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Abtesting::ABTest")
     end
 
     # Lists all A/B tests you configured for this application.
@@ -352,12 +357,21 @@ module Algolia
     # @param index_suffix [String] Index name suffix. Only A/B tests for indices ending with this string are included in the response.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def list_ab_tests_with_http_info(offset = nil, limit = nil, index_prefix = nil, index_suffix = nil, request_options = {})
+    def list_ab_tests_with_http_info(
+      offset = nil,
+      limit = nil,
+      index_prefix = nil,
+      index_suffix = nil,
+      request_options = {}
+    )
       if @api_client.config.client_side_validation && !offset.nil? && offset < 0
-        raise ArgumentError, 'invalid value for ""offset"" when calling AbtestingClient.list_ab_tests, must be greater than or equal to 0.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"offset\"\" when calling AbtestingClient.list_ab_tests, must be greater than or equal to 0."
+        )
       end
 
-      path = '/2/abtests'
+      path = "/2/abtests"
       query_params = {}
       query_params[:offset] = offset unless offset.nil?
       query_params[:limit] = limit unless limit.nil?
@@ -370,7 +384,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AbtestingClient.list_ab_tests',
+        :operation => :"AbtestingClient.list_ab_tests",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -392,7 +406,7 @@ module Algolia
     # @return [ListABTestsResponse]
     def list_ab_tests(offset = nil, limit = nil, index_prefix = nil, index_suffix = nil, request_options = {})
       response = list_ab_tests_with_http_info(offset, limit, index_prefix, index_suffix, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Abtesting::ListABTestsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Abtesting::ListABTestsResponse")
     end
 
     # Stops an A/B test by its ID.  You can&#39;t restart stopped A/B tests.
@@ -408,7 +422,7 @@ module Algolia
         raise ArgumentError, "Parameter `id` is required when calling `stop_ab_test`."
       end
 
-      path = '/2/abtests/{id}/stop'.sub('{' + 'id' + '}', Transport.encode_uri(id.to_s))
+      path = "/2/abtests/{id}/stop".sub("{" + "id" + "}", Transport.encode_uri(id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -417,7 +431,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AbtestingClient.stop_ab_test',
+        :operation => :"AbtestingClient.stop_ab_test",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -436,7 +450,8 @@ module Algolia
     # @return [ABTestResponse]
     def stop_ab_test(id, request_options = {})
       response = stop_ab_test_with_http_info(id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Abtesting::ABTestResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Abtesting::ABTestResponse")
     end
+
   end
 end

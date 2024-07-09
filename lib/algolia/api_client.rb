@@ -1,5 +1,5 @@
-require 'cgi'
-require 'json'
+require "cgi"
+require "json"
 
 module Algolia
   class ApiClient
@@ -12,7 +12,7 @@ module Algolia
     # @option config [Configuration] Configuration for initializing the object, default to Configuration.default
     def initialize(config = Configuration.default)
       @config = config
-      @requester = config.requester || Http::HttpRequester.new('net_http_persistent', LoggerHelper.create)
+      @requester = config.requester || Http::HttpRequester.new("net_http_persistent", LoggerHelper.create)
       @transporter = Transport::Transport.new(config, @requester)
     end
 
@@ -28,9 +28,9 @@ module Algolia
         call_type = opts[:use_read_transporter] || http_method == :GET ? CallType::READ : CallType::WRITE
         response = transporter.request(call_type, http_method, path, opts[:body], opts)
       rescue Faraday::TimeoutError
-        raise ApiError, 'Connection timed out'
+        raise ApiError, "Connection timed out"
       rescue Faraday::ConnectionFailed
-        raise ApiError, 'Connection failed'
+        raise ApiError, "Connection failed"
       end
 
       response
@@ -44,7 +44,7 @@ module Algolia
       return nil if body.nil? || body.empty?
 
       # return response body directly for String return type
-      return body.to_s if return_type == 'String'
+      return body.to_s if return_type == "String"
 
       begin
         data = JSON.parse("[#{body}]", :symbolize_names => true)[0]
@@ -54,7 +54,7 @@ module Algolia
         data = body
       end
 
-      convert_to_type data, return_type
+      convert_to_type(data, return_type)
     end
 
     # Convert data to the given return type.
@@ -65,21 +65,21 @@ module Algolia
       return nil if data.nil?
 
       case return_type
-      when 'String'
+      when "String"
         data.to_s
-      when 'Integer'
+      when "Integer"
         data.to_i
-      when 'Float'
+      when "Float"
         data.to_f
-      when 'Boolean'
+      when "Boolean"
         data == true
-      when 'Time'
+      when "Time"
         # parse date time (expecting ISO 8601 format)
-        Time.parse data
-      when 'Date'
+        Time.parse(data)
+      when "Date"
         # parse date time (expecting ISO 8601 format)
-        Date.parse data
-      when 'Object'
+        Date.parse(data)
+      when "Object"
         # generic object (usually a Hash), return directly
         data
       when /\AArray<(.+)>\z/
@@ -103,14 +103,15 @@ module Algolia
     # @param [Object] model object to be converted into JSON string
     # @return [String] JSON string representation of the object
     def object_to_http_body(model)
-      return '{}' if model.nil?
+      return "{}" if model.nil?
       return model if model.is_a?(String)
 
       body = if model.is_a?(Array)
-               model.map { |m| object_to_hash(m) }
-             else
-               object_to_hash(model)
-             end
+        model.map { |m| object_to_hash(m) }
+      else
+        object_to_hash(model)
+      end
+
       body.to_json
     end
 
@@ -132,13 +133,13 @@ module Algolia
     def build_collection_param(param, collection_format)
       case collection_format
       when :csv
-        param.join(',')
+        param.join(",")
       when :ssv
-        param.join(' ')
+        param.join(" ")
       when :tsv
         param.join("\t")
       when :pipes
-        param.join('|')
+        param.join("|")
       when :multi
         # return the array directly as typhoeus will handle it as expected
         param

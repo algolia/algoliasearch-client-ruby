@@ -5,27 +5,33 @@ module Algolia
     attr_accessor :api_client
 
     def initialize(config = nil)
-      raise '`config` is missing.' if config.nil?
-      raise '`app_id` is missing.' if config.app_id.nil? || config.app_id == ''
-      raise '`api_key` is missing.' if config.api_key.nil? || config.api_key == ''
+      raise "`config` is missing." if config.nil?
+      raise "`app_id` is missing." if config.app_id.nil? || config.app_id == ""
+      raise "`api_key` is missing." if config.api_key.nil? || config.api_key == ""
 
       @api_client = Algolia::ApiClient.new(config)
     end
 
     def self.create(app_id, api_key, region = nil, opts = {})
       hosts = []
-      regions = ['eu', 'us']
+      regions = ["eu", "us"]
 
       if region.is_a?(Hash) && (opts.nil? || opts.empty?)
         opts = region
         region = nil
       end
 
-      raise "`region` is required and must be one of the following: #{regions.join(', ')}" if region.nil? || !region.is_a?(String) || !regions.include?(region)
+      if region.nil? || !region.is_a?(String) || !regions.include?(region)
+        raise "`region` is required and must be one of the following: #{regions.join(", ")}"
+      end
 
-      hosts << Transport::StatefulHost.new('personalization.{region}.algolia.com'.sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
+      hosts <<
+        Transport::StatefulHost.new(
+          "personalization.{region}.algolia.com".sub!("{region}", region),
+          accept: CallType::READ | CallType::WRITE
+        )
 
-      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Personalization', opts)
+      config = Algolia::Configuration.new(app_id, api_key, hosts, "Personalization", opts)
       create_with_config(config)
     end
 
@@ -45,7 +51,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -55,7 +61,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'PersonalizationClient.custom_delete',
+        :operation => :"PersonalizationClient.custom_delete",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -73,7 +79,7 @@ module Algolia
     # @return [Object]
     def custom_delete(path, parameters = nil, request_options = {})
       response = custom_delete_with_http_info(path, parameters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -88,7 +94,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -98,7 +104,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'PersonalizationClient.custom_get',
+        :operation => :"PersonalizationClient.custom_get",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -116,7 +122,7 @@ module Algolia
     # @return [Object]
     def custom_get(path, parameters = nil, request_options = {})
       response = custom_get_with_http_info(path, parameters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -132,7 +138,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -142,7 +148,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
       new_options = request_options.merge(
-        :operation => :'PersonalizationClient.custom_post',
+        :operation => :"PersonalizationClient.custom_post",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -161,7 +167,7 @@ module Algolia
     # @return [Object]
     def custom_post(path, parameters = nil, body = nil, request_options = {})
       response = custom_post_with_http_info(path, parameters, body, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -177,7 +183,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -187,7 +193,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
       new_options = request_options.merge(
-        :operation => :'PersonalizationClient.custom_put',
+        :operation => :"PersonalizationClient.custom_put",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -206,7 +212,7 @@ module Algolia
     # @return [Object]
     def custom_put(path, parameters = nil, body = nil, request_options = {})
       response = custom_put_with_http_info(path, parameters, body, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # Deletes a user profile.  The response includes a date and time when the user profile can safely be considered deleted.
@@ -222,7 +228,7 @@ module Algolia
         raise ArgumentError, "Parameter `user_token` is required when calling `delete_user_profile`."
       end
 
-      path = '/1/profiles/{userToken}'.sub('{' + 'userToken' + '}', Transport.encode_uri(user_token.to_s))
+      path = "/1/profiles/{userToken}".sub("{" + "userToken" + "}", Transport.encode_uri(user_token.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -231,7 +237,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'PersonalizationClient.delete_user_profile',
+        :operation => :"PersonalizationClient.delete_user_profile",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -250,7 +256,10 @@ module Algolia
     # @return [DeleteUserProfileResponse]
     def delete_user_profile(user_token, request_options = {})
       response = delete_user_profile_with_http_info(user_token, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Personalization::DeleteUserProfileResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Personalization::DeleteUserProfileResponse"
+      )
     end
 
     # Retrieves the current personalization strategy.
@@ -260,7 +269,7 @@ module Algolia
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_personalization_strategy_with_http_info(request_options = {})
-      path = '/1/strategies/personalization'
+      path = "/1/strategies/personalization"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -269,7 +278,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'PersonalizationClient.get_personalization_strategy',
+        :operation => :"PersonalizationClient.get_personalization_strategy",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -287,7 +296,10 @@ module Algolia
     # @return [PersonalizationStrategyParams]
     def get_personalization_strategy(request_options = {})
       response = get_personalization_strategy_with_http_info(request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Personalization::PersonalizationStrategyParams')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Personalization::PersonalizationStrategyParams"
+      )
     end
 
     # Retrieves a user profile and their affinities for different facets.
@@ -303,7 +315,10 @@ module Algolia
         raise ArgumentError, "Parameter `user_token` is required when calling `get_user_token_profile`."
       end
 
-      path = '/1/profiles/personalization/{userToken}'.sub('{' + 'userToken' + '}', Transport.encode_uri(user_token.to_s))
+      path = "/1/profiles/personalization/{userToken}".sub(
+        "{" + "userToken" + "}",
+        Transport.encode_uri(user_token.to_s)
+      )
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -312,7 +327,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'PersonalizationClient.get_user_token_profile',
+        :operation => :"PersonalizationClient.get_user_token_profile",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -331,7 +346,10 @@ module Algolia
     # @return [GetUserTokenResponse]
     def get_user_token_profile(user_token, request_options = {})
       response = get_user_token_profile_with_http_info(user_token, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Personalization::GetUserTokenResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Personalization::GetUserTokenResponse"
+      )
     end
 
     # Creates a new personalization strategy.
@@ -344,10 +362,13 @@ module Algolia
     def set_personalization_strategy_with_http_info(personalization_strategy_params, request_options = {})
       # verify the required parameter 'personalization_strategy_params' is set
       if @api_client.config.client_side_validation && personalization_strategy_params.nil?
-        raise ArgumentError, "Parameter `personalization_strategy_params` is required when calling `set_personalization_strategy`."
+        raise(
+          ArgumentError,
+          "Parameter `personalization_strategy_params` is required when calling `set_personalization_strategy`."
+        )
       end
 
-      path = '/1/strategies/personalization'
+      path = "/1/strategies/personalization"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -356,7 +377,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(personalization_strategy_params)
 
       new_options = request_options.merge(
-        :operation => :'PersonalizationClient.set_personalization_strategy',
+        :operation => :"PersonalizationClient.set_personalization_strategy",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -375,7 +396,11 @@ module Algolia
     # @return [SetPersonalizationStrategyResponse]
     def set_personalization_strategy(personalization_strategy_params, request_options = {})
       response = set_personalization_strategy_with_http_info(personalization_strategy_params, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Personalization::SetPersonalizationStrategyResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Personalization::SetPersonalizationStrategyResponse"
+      )
     end
+
   end
 end

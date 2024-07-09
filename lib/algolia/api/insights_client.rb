@@ -5,27 +5,33 @@ module Algolia
     attr_accessor :api_client
 
     def initialize(config = nil)
-      raise '`config` is missing.' if config.nil?
-      raise '`app_id` is missing.' if config.app_id.nil? || config.app_id == ''
-      raise '`api_key` is missing.' if config.api_key.nil? || config.api_key == ''
+      raise "`config` is missing." if config.nil?
+      raise "`app_id` is missing." if config.app_id.nil? || config.app_id == ""
+      raise "`api_key` is missing." if config.api_key.nil? || config.api_key == ""
 
       @api_client = Algolia::ApiClient.new(config)
     end
 
     def self.create(app_id, api_key, region = nil, opts = {})
       hosts = []
-      regions = ['de', 'us']
+      regions = ["de", "us"]
 
       if region.is_a?(Hash) && (opts.nil? || opts.empty?)
         opts = region
         region = nil
       end
 
-      raise "`region` must be one of the following: #{regions.join(', ')}" if !region.nil? && (!region.is_a?(String) || !regions.include?(region))
+      if !region.nil? && (!region.is_a?(String) || !regions.include?(region))
+        raise "`region` must be one of the following: #{regions.join(", ")}"
+      end
 
-      hosts << Transport::StatefulHost.new(region.nil? ? 'insights.algolia.io' : 'insights.{region}.algolia.io'.sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
+      hosts <<
+        Transport::StatefulHost.new(
+          region.nil? ? "insights.algolia.io" : "insights.{region}.algolia.io".sub!("{region}", region),
+          accept: CallType::READ | CallType::WRITE
+        )
 
-      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Insights', opts)
+      config = Algolia::Configuration.new(app_id, api_key, hosts, "Insights", opts)
       create_with_config(config)
     end
 
@@ -45,7 +51,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -55,7 +61,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'InsightsClient.custom_delete',
+        :operation => :"InsightsClient.custom_delete",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -73,7 +79,7 @@ module Algolia
     # @return [Object]
     def custom_delete(path, parameters = nil, request_options = {})
       response = custom_delete_with_http_info(path, parameters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -88,7 +94,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -98,7 +104,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'InsightsClient.custom_get',
+        :operation => :"InsightsClient.custom_get",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -116,7 +122,7 @@ module Algolia
     # @return [Object]
     def custom_get(path, parameters = nil, request_options = {})
       response = custom_get_with_http_info(path, parameters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -132,7 +138,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -142,7 +148,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
       new_options = request_options.merge(
-        :operation => :'InsightsClient.custom_post',
+        :operation => :"InsightsClient.custom_post",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -161,7 +167,7 @@ module Algolia
     # @return [Object]
     def custom_post(path, parameters = nil, body = nil, request_options = {})
       response = custom_post_with_http_info(path, parameters, body, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -177,7 +183,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -187,7 +193,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
       new_options = request_options.merge(
-        :operation => :'InsightsClient.custom_put',
+        :operation => :"InsightsClient.custom_put",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -206,7 +212,7 @@ module Algolia
     # @return [Object]
     def custom_put(path, parameters = nil, body = nil, request_options = {})
       response = custom_put_with_http_info(path, parameters, body, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # Deletes all events related to the specified user token from events metrics and analytics. To delete a personalization user profile, see [Delete a user profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
@@ -219,20 +225,30 @@ module Algolia
       if @api_client.config.client_side_validation && user_token.nil?
         raise ArgumentError, "Parameter `user_token` is required when calling `delete_user_token`."
       end
+
       if @api_client.config.client_side_validation && user_token.to_s.length > 129
-        raise ArgumentError, 'invalid value for "user_token" when calling InsightsClient.delete_user_token, the character length must be smaller than or equal to 129.'
+        raise(
+          ArgumentError,
+          "invalid value for \"user_token\" when calling InsightsClient.delete_user_token, the character length must be smaller than or equal to 129."
+        )
       end
 
       if @api_client.config.client_side_validation && user_token.to_s.length < 1
-        raise ArgumentError, 'invalid value for "user_token" when calling InsightsClient.delete_user_token, the character length must be great than or equal to 1.'
+        raise(
+          ArgumentError,
+          "invalid value for \"user_token\" when calling InsightsClient.delete_user_token, the character length must be great than or equal to 1."
+        )
       end
 
-      pattern = %r{[a-zA-Z0-9_=/+-]{1,129}}
+      pattern = /[a-zA-Z0-9_=\/+-]{1,129}/
       if @api_client.config.client_side_validation && user_token !~ pattern
-        raise ArgumentError, "invalid value for 'user_token' when calling InsightsClient.delete_user_token, must conform to the pattern #{pattern}."
+        raise(
+          ArgumentError,
+          "invalid value for 'user_token' when calling InsightsClient.delete_user_token, must conform to the pattern #{pattern}."
+        )
       end
 
-      path = '/1/usertokens/{userToken}'.sub('{' + 'userToken' + '}', Transport.encode_uri(user_token.to_s))
+      path = "/1/usertokens/{userToken}".sub("{" + "userToken" + "}", Transport.encode_uri(user_token.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -241,7 +257,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'InsightsClient.delete_user_token',
+        :operation => :"InsightsClient.delete_user_token",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -272,7 +288,7 @@ module Algolia
         raise ArgumentError, "Parameter `insights_events` is required when calling `push_events`."
       end
 
-      path = '/1/events'
+      path = "/1/events"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -281,7 +297,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(insights_events)
 
       new_options = request_options.merge(
-        :operation => :'InsightsClient.push_events',
+        :operation => :"InsightsClient.push_events",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -298,7 +314,8 @@ module Algolia
     # @return [EventsResponse]
     def push_events(insights_events, request_options = {})
       response = push_events_with_http_info(insights_events, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Insights::EventsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Insights::EventsResponse")
     end
+
   end
 end

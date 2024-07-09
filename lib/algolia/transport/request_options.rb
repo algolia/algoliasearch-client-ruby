@@ -6,10 +6,10 @@ module Algolia
       # @param [Search::Config] config
       #
       def initialize(config)
-        @header_params    = {}
-        @query_params     = {}
-        @timeout          = nil
-        @connect_timeout  = nil
+        @header_params = {}
+        @query_params = {}
+        @timeout = nil
+        @connect_timeout = nil
         @compression_type = config.compression_type
       end
 
@@ -35,6 +35,7 @@ module Algolia
         opts[:header_params].each do |opt, value|
           @header_params[opt.to_s] = value
         end
+
         opts.delete(:header_params)
       end
 
@@ -48,6 +49,7 @@ module Algolia
         opts[:query_params].each do |opt, value|
           @query_params[opt.to_sym] = value
         end
+
         opts.delete(:query_params)
       end
 

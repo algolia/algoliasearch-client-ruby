@@ -5,9 +5,9 @@ module Algolia
     attr_accessor :api_client
 
     def initialize(config = nil)
-      raise '`config` is missing.' if config.nil?
-      raise '`app_id` is missing.' if config.app_id.nil? || config.app_id == ''
-      raise '`api_key` is missing.' if config.api_key.nil? || config.api_key == ''
+      raise "`config` is missing." if config.nil?
+      raise "`app_id` is missing." if config.app_id.nil? || config.app_id == ""
+      raise "`api_key` is missing." if config.api_key.nil? || config.api_key == ""
 
       @api_client = Algolia::ApiClient.new(config)
     end
@@ -17,11 +17,14 @@ module Algolia
       hosts << Transport::StatefulHost.new("#{app_id}-dsn.algolia.net", accept: CallType::READ)
       hosts << Transport::StatefulHost.new("#{app_id}.algolia.net", accept: CallType::WRITE)
 
-      hosts += 1.upto(3).map do |i|
-        Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", accept: CallType::READ | CallType::WRITE)
-      end.shuffle
+      hosts += 1
+        .upto(3)
+        .map do |i|
+          Transport::StatefulHost.new("#{app_id}-#{i}.algolianet.com", accept: CallType::READ | CallType::WRITE)
+        end
+        .shuffle
 
-      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Recommend', opts)
+      config = Algolia::Configuration.new(app_id, api_key, hosts, "Recommend", opts)
       create_with_config(config)
     end
 
@@ -41,7 +44,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -51,7 +54,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'RecommendClient.custom_delete',
+        :operation => :"RecommendClient.custom_delete",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -69,7 +72,7 @@ module Algolia
     # @return [Object]
     def custom_delete(path, parameters = nil, request_options = {})
       response = custom_delete_with_http_info(path, parameters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -84,7 +87,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -94,7 +97,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'RecommendClient.custom_get',
+        :operation => :"RecommendClient.custom_get",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -112,7 +115,7 @@ module Algolia
     # @return [Object]
     def custom_get(path, parameters = nil, request_options = {})
       response = custom_get_with_http_info(path, parameters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -128,7 +131,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -138,7 +141,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
       new_options = request_options.merge(
-        :operation => :'RecommendClient.custom_post',
+        :operation => :"RecommendClient.custom_post",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -157,7 +160,7 @@ module Algolia
     # @return [Object]
     def custom_post(path, parameters = nil, body = nil, request_options = {})
       response = custom_post_with_http_info(path, parameters, body, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -173,7 +176,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -183,7 +186,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
       new_options = request_options.merge(
-        :operation => :'RecommendClient.custom_put',
+        :operation => :"RecommendClient.custom_put",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -202,7 +205,7 @@ module Algolia
     # @return [Object]
     def custom_put(path, parameters = nil, body = nil, request_options = {})
       response = custom_put_with_http_info(path, parameters, body, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # Deletes a Recommend rule from a recommendation scenario.
@@ -228,9 +231,10 @@ module Algolia
         raise ArgumentError, "Parameter `object_id` is required when calling `delete_recommend_rule`."
       end
 
-      path = '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s)).sub('{' + 'model' + '}', Transport.encode_uri(model.to_s)).sub(
-        '{' + 'objectID' + '}', Transport.encode_uri(object_id.to_s)
-      )
+      path = "/1/indexes/{indexName}/{model}/recommend/rules/{objectID}"
+        .sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
+        .sub("{" + "model" + "}", Transport.encode_uri(model.to_s))
+        .sub("{" + "objectID" + "}", Transport.encode_uri(object_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -239,7 +243,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'RecommendClient.delete_recommend_rule',
+        :operation => :"RecommendClient.delete_recommend_rule",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -260,7 +264,7 @@ module Algolia
     # @return [DeletedAtResponse]
     def delete_recommend_rule(index_name, model, object_id, request_options = {})
       response = delete_recommend_rule_with_http_info(index_name, model, object_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Recommend::DeletedAtResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Recommend::DeletedAtResponse")
     end
 
     # Retrieves a Recommend rule that you previously created in the Algolia dashboard.
@@ -286,9 +290,10 @@ module Algolia
         raise ArgumentError, "Parameter `object_id` is required when calling `get_recommend_rule`."
       end
 
-      path = '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s)).sub('{' + 'model' + '}', Transport.encode_uri(model.to_s)).sub(
-        '{' + 'objectID' + '}', Transport.encode_uri(object_id.to_s)
-      )
+      path = "/1/indexes/{indexName}/{model}/recommend/rules/{objectID}"
+        .sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
+        .sub("{" + "model" + "}", Transport.encode_uri(model.to_s))
+        .sub("{" + "objectID" + "}", Transport.encode_uri(object_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -297,7 +302,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'RecommendClient.get_recommend_rule',
+        :operation => :"RecommendClient.get_recommend_rule",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -318,7 +323,7 @@ module Algolia
     # @return [RecommendRule]
     def get_recommend_rule(index_name, model, object_id, request_options = {})
       response = get_recommend_rule_with_http_info(index_name, model, object_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Recommend::RecommendRule')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Recommend::RecommendRule")
     end
 
     # Checks the status of a given task.  Deleting a Recommend rule is asynchronous. When you delete a rule, a task is created on a queue and completed depending on the load on the server. The API response includes a task ID that you can use to check the status.
@@ -344,9 +349,10 @@ module Algolia
         raise ArgumentError, "Parameter `task_id` is required when calling `get_recommend_status`."
       end
 
-      path = '/1/indexes/{indexName}/{model}/task/{taskID}'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s)).sub('{' + 'model' + '}', Transport.encode_uri(model.to_s)).sub(
-        '{' + 'taskID' + '}', Transport.encode_uri(task_id.to_s)
-      )
+      path = "/1/indexes/{indexName}/{model}/task/{taskID}"
+        .sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
+        .sub("{" + "model" + "}", Transport.encode_uri(model.to_s))
+        .sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -355,7 +361,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'RecommendClient.get_recommend_status',
+        :operation => :"RecommendClient.get_recommend_status",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -376,7 +382,10 @@ module Algolia
     # @return [GetRecommendTaskResponse]
     def get_recommend_status(index_name, model, task_id, request_options = {})
       response = get_recommend_status_with_http_info(index_name, model, task_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Recommend::GetRecommendTaskResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Recommend::GetRecommendTaskResponse"
+      )
     end
 
     # Retrieves recommendations from selected AI models.
@@ -392,7 +401,7 @@ module Algolia
         raise ArgumentError, "Parameter `get_recommendations_params` is required when calling `get_recommendations`."
       end
 
-      path = '/1/indexes/*/recommendations'
+      path = "/1/indexes/*/recommendations"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -401,7 +410,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(get_recommendations_params)
 
       new_options = request_options.merge(
-        :operation => :'RecommendClient.get_recommendations',
+        :operation => :"RecommendClient.get_recommendations",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -420,7 +429,10 @@ module Algolia
     # @return [GetRecommendationsResponse]
     def get_recommendations(get_recommendations_params, request_options = {})
       response = get_recommendations_with_http_info(get_recommendations_params, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Recommend::GetRecommendationsResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Recommend::GetRecommendationsResponse"
+      )
     end
 
     # Searches for Recommend rules.  Use an empty query to list all rules for this recommendation scenario.
@@ -432,7 +444,12 @@ module Algolia
     # @param search_recommend_rules_params [SearchRecommendRulesParams]
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def search_recommend_rules_with_http_info(index_name, model, search_recommend_rules_params = nil, request_options = {})
+    def search_recommend_rules_with_http_info(
+      index_name,
+      model,
+      search_recommend_rules_params = nil,
+      request_options = {}
+    )
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `search_recommend_rules`."
@@ -442,8 +459,9 @@ module Algolia
         raise ArgumentError, "Parameter `model` is required when calling `search_recommend_rules`."
       end
 
-      path = '/1/indexes/{indexName}/{model}/recommend/rules/search'.sub('{' + 'indexName' + '}', Transport.encode_uri(index_name.to_s)).sub('{' + 'model' + '}',
-                                                                                                                                             Transport.encode_uri(model.to_s))
+      path = "/1/indexes/{indexName}/{model}/recommend/rules/search"
+        .sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
+        .sub("{" + "model" + "}", Transport.encode_uri(model.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -452,7 +470,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(search_recommend_rules_params)
 
       new_options = request_options.merge(
-        :operation => :'RecommendClient.search_recommend_rules',
+        :operation => :"RecommendClient.search_recommend_rules",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -472,8 +490,17 @@ module Algolia
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [SearchRecommendRulesResponse]
     def search_recommend_rules(index_name, model, search_recommend_rules_params = nil, request_options = {})
-      response = search_recommend_rules_with_http_info(index_name, model, search_recommend_rules_params, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Recommend::SearchRecommendRulesResponse')
+      response = search_recommend_rules_with_http_info(
+        index_name,
+        model,
+        search_recommend_rules_params,
+        request_options
+      )
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Recommend::SearchRecommendRulesResponse"
+      )
     end
+
   end
 end

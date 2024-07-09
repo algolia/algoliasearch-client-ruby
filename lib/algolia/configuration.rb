@@ -2,7 +2,18 @@
 
 module Algolia
   class Configuration
-    attr_accessor :hosts, :app_id, :api_key, :user_agent, :header_params, :read_timeout, :write_timeout, :connect_timeout, :compression_type, :requester
+    attr_accessor(
+      :hosts,
+      :app_id,
+      :api_key,
+      :user_agent,
+      :header_params,
+      :read_timeout,
+      :write_timeout,
+      :connect_timeout,
+      :compression_type,
+      :requester
+    )
 
     # Set this to false to skip client side validation in the operation.
     # Default to true.
@@ -17,16 +28,16 @@ module Algolia
       @write_timeout = opts[:write_timeout] || 30_000
       @read_timeout = opts[:read_timeout] || 5_000
       @connect_timeout = opts[:connect_timeout] || 2_000
-      @compression_type = opts[:compression_type] || 'none'
+      @compression_type = opts[:compression_type] || "none"
       @requester = opts[:requester]
 
       @user_agent = UserAgent.new.add(client_name, VERSION)
 
       @header_params = {
-        'X-Algolia-Application-Id' => app_id,
-        'X-Algolia-API-Key' => api_key,
-        'Content-Type' => 'application/json',
-        'User-Agent' => @user_agent
+        "X-Algolia-Application-Id" => app_id,
+        "X-Algolia-API-Key" => api_key,
+        "Content-Type" => "application/json",
+        "User-Agent" => @user_agent
       }
       @header_params.transform_keys!(&:downcase)
 

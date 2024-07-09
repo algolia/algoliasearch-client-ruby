@@ -14,16 +14,16 @@ module Algolia
       # @option has_timed_out    [String]  If the request has timed out
       #
       def initialize(opts = {})
-        @status          = opts[:status]
-        @body            = opts[:body]
-        @error           = opts[:error] || ''
-        @headers         = opts[:headers] || ''
-        @has_timed_out   = opts[:has_timed_out] || false
+        @status = opts[:status]
+        @body = opts[:body]
+        @error = opts[:error] || ""
+        @headers = opts[:headers] || ""
+        @has_timed_out = opts[:has_timed_out] || false
         @network_failure = opts[:network_failure] || false
 
-        @method = opts[:method] || ''
-        @path = opts[:path] || ''
-        @host = opts[:host] || ''
+        @method = opts[:method] || ""
+        @path = opts[:path] || ""
+        @host = opts[:host] || ""
         @timeout = opts[:timeout] || 0
         @connect_timeout = opts[:connect_timeout] || 0
         @query_params = opts[:query_params] || {}

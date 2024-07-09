@@ -5,18 +5,18 @@ module Algolia
     attr_accessor :api_client
 
     def initialize(config = nil)
-      raise '`config` is missing.' if config.nil?
-      raise '`app_id` is missing.' if config.app_id.nil? || config.app_id == ''
-      raise '`api_key` is missing.' if config.api_key.nil? || config.api_key == ''
+      raise "`config` is missing." if config.nil?
+      raise "`app_id` is missing." if config.app_id.nil? || config.app_id == ""
+      raise "`api_key` is missing." if config.api_key.nil? || config.api_key == ""
 
       @api_client = Algolia::ApiClient.new(config)
     end
 
     def self.create(app_id, api_key, opts = {})
       hosts = []
-      hosts << Transport::StatefulHost.new('status.algolia.com', accept: CallType::READ | CallType::WRITE)
+      hosts << Transport::StatefulHost.new("status.algolia.com", accept: CallType::READ | CallType::WRITE)
 
-      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Monitoring', opts)
+      config = Algolia::Configuration.new(app_id, api_key, hosts, "Monitoring", opts)
       create_with_config(config)
     end
 
@@ -36,7 +36,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -46,7 +46,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'MonitoringClient.custom_delete',
+        :operation => :"MonitoringClient.custom_delete",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -64,7 +64,7 @@ module Algolia
     # @return [Object]
     def custom_delete(path, parameters = nil, request_options = {})
       response = custom_delete_with_http_info(path, parameters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -79,7 +79,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -89,7 +89,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'MonitoringClient.custom_get',
+        :operation => :"MonitoringClient.custom_get",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -107,7 +107,7 @@ module Algolia
     # @return [Object]
     def custom_get(path, parameters = nil, request_options = {})
       response = custom_get_with_http_info(path, parameters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -123,7 +123,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -133,7 +133,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
       new_options = request_options.merge(
-        :operation => :'MonitoringClient.custom_post',
+        :operation => :"MonitoringClient.custom_post",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -152,7 +152,7 @@ module Algolia
     # @return [Object]
     def custom_post(path, parameters = nil, body = nil, request_options = {})
       response = custom_post_with_http_info(path, parameters, body, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -168,7 +168,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -178,7 +178,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
       new_options = request_options.merge(
-        :operation => :'MonitoringClient.custom_put',
+        :operation => :"MonitoringClient.custom_put",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -197,7 +197,7 @@ module Algolia
     # @return [Object]
     def custom_put(path, parameters = nil, body = nil, request_options = {})
       response = custom_put_with_http_info(path, parameters, body, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # Retrieves known incidents for the selected clusters.
@@ -211,7 +211,7 @@ module Algolia
         raise ArgumentError, "Parameter `clusters` is required when calling `get_cluster_incidents`."
       end
 
-      path = '/1/incidents/{clusters}'.sub('{' + 'clusters' + '}', Transport.encode_uri(clusters.to_s))
+      path = "/1/incidents/{clusters}".sub("{" + "clusters" + "}", Transport.encode_uri(clusters.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -220,7 +220,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'MonitoringClient.get_cluster_incidents',
+        :operation => :"MonitoringClient.get_cluster_incidents",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -237,7 +237,7 @@ module Algolia
     # @return [IncidentsResponse]
     def get_cluster_incidents(clusters, request_options = {})
       response = get_cluster_incidents_with_http_info(clusters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::IncidentsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Monitoring::IncidentsResponse")
     end
 
     # Retrieves the status of selected clusters.
@@ -251,7 +251,7 @@ module Algolia
         raise ArgumentError, "Parameter `clusters` is required when calling `get_cluster_status`."
       end
 
-      path = '/1/status/{clusters}'.sub('{' + 'clusters' + '}', Transport.encode_uri(clusters.to_s))
+      path = "/1/status/{clusters}".sub("{" + "clusters" + "}", Transport.encode_uri(clusters.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -260,7 +260,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'MonitoringClient.get_cluster_status',
+        :operation => :"MonitoringClient.get_cluster_status",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -277,7 +277,7 @@ module Algolia
     # @return [StatusResponse]
     def get_cluster_status(clusters, request_options = {})
       response = get_cluster_status_with_http_info(clusters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::StatusResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Monitoring::StatusResponse")
     end
 
     # Retrieves known incidents for all clusters.
@@ -285,7 +285,7 @@ module Algolia
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_incidents_with_http_info(request_options = {})
-      path = '/1/incidents'
+      path = "/1/incidents"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -294,7 +294,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'MonitoringClient.get_incidents',
+        :operation => :"MonitoringClient.get_incidents",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -310,7 +310,7 @@ module Algolia
     # @return [IncidentsResponse]
     def get_incidents(request_options = {})
       response = get_incidents_with_http_info(request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::IncidentsResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Monitoring::IncidentsResponse")
     end
 
     # Retrieves average times for indexing operations for selected clusters.
@@ -324,7 +324,7 @@ module Algolia
         raise ArgumentError, "Parameter `clusters` is required when calling `get_indexing_time`."
       end
 
-      path = '/1/indexing/{clusters}'.sub('{' + 'clusters' + '}', Transport.encode_uri(clusters.to_s))
+      path = "/1/indexing/{clusters}".sub("{" + "clusters" + "}", Transport.encode_uri(clusters.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -333,7 +333,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'MonitoringClient.get_indexing_time',
+        :operation => :"MonitoringClient.get_indexing_time",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -350,7 +350,7 @@ module Algolia
     # @return [IndexingTimeResponse]
     def get_indexing_time(clusters, request_options = {})
       response = get_indexing_time_with_http_info(clusters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::IndexingTimeResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Monitoring::IndexingTimeResponse")
     end
 
     # Retrieves the average latency for search requests for selected clusters.
@@ -364,7 +364,7 @@ module Algolia
         raise ArgumentError, "Parameter `clusters` is required when calling `get_latency`."
       end
 
-      path = '/1/latency/{clusters}'.sub('{' + 'clusters' + '}', Transport.encode_uri(clusters.to_s))
+      path = "/1/latency/{clusters}".sub("{" + "clusters" + "}", Transport.encode_uri(clusters.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -373,7 +373,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'MonitoringClient.get_latency',
+        :operation => :"MonitoringClient.get_latency",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -390,7 +390,7 @@ module Algolia
     # @return [LatencyResponse]
     def get_latency(clusters, request_options = {})
       response = get_latency_with_http_info(clusters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::LatencyResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Monitoring::LatencyResponse")
     end
 
     # Retrieves metrics related to your Algolia infrastructure, aggregated over a selected time window.  Access to this API is available as part of the [Premium or Elevate plans](https://www.algolia.com/pricing). You must authenticate requests with the &#x60;x-algolia-application-id&#x60; and &#x60;x-algolia-api-key&#x60; headers (using the Monitoring API key).
@@ -409,7 +409,9 @@ module Algolia
         raise ArgumentError, "Parameter `period` is required when calling `get_metrics`."
       end
 
-      path = '/1/infrastructure/{metric}/period/{period}'.sub('{' + 'metric' + '}', Transport.encode_uri(metric.to_s)).sub('{' + 'period' + '}', Transport.encode_uri(period.to_s))
+      path = "/1/infrastructure/{metric}/period/{period}"
+        .sub("{" + "metric" + "}", Transport.encode_uri(metric.to_s))
+        .sub("{" + "period" + "}", Transport.encode_uri(period.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -418,7 +420,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'MonitoringClient.get_metrics',
+        :operation => :"MonitoringClient.get_metrics",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -436,7 +438,10 @@ module Algolia
     # @return [InfrastructureResponse]
     def get_metrics(metric, period, request_options = {})
       response = get_metrics_with_http_info(metric, period, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::InfrastructureResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Monitoring::InfrastructureResponse"
+      )
     end
 
     # Test whether clusters are reachable or not.
@@ -450,7 +455,7 @@ module Algolia
         raise ArgumentError, "Parameter `clusters` is required when calling `get_reachability`."
       end
 
-      path = '/1/reachability/{clusters}/probes'.sub('{' + 'clusters' + '}', Transport.encode_uri(clusters.to_s))
+      path = "/1/reachability/{clusters}/probes".sub("{" + "clusters" + "}", Transport.encode_uri(clusters.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -459,7 +464,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'MonitoringClient.get_reachability',
+        :operation => :"MonitoringClient.get_reachability",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -476,7 +481,7 @@ module Algolia
     # @return [Hash<String, Hash>]
     def get_reachability(clusters, request_options = {})
       response = get_reachability_with_http_info(clusters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::Hash<String, Hash>')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Monitoring::Hash<String, Hash>")
     end
 
     # Retrieves the servers that belong to clusters.  The response depends on whether you authenticate your API request:  - With authentication, the response lists the servers assigned to your Algolia application&#39;s cluster.  - Without authentication, the response lists the servers for all Algolia clusters.
@@ -484,7 +489,7 @@ module Algolia
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_servers_with_http_info(request_options = {})
-      path = '/1/inventory/servers'
+      path = "/1/inventory/servers"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -493,7 +498,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'MonitoringClient.get_servers',
+        :operation => :"MonitoringClient.get_servers",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -509,7 +514,7 @@ module Algolia
     # @return [InventoryResponse]
     def get_servers(request_options = {})
       response = get_servers_with_http_info(request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::InventoryResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Monitoring::InventoryResponse")
     end
 
     # Retrieves the status of all Algolia clusters and instances.
@@ -517,7 +522,7 @@ module Algolia
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_status_with_http_info(request_options = {})
-      path = '/1/status'
+      path = "/1/status"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -526,7 +531,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'MonitoringClient.get_status',
+        :operation => :"MonitoringClient.get_status",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -542,7 +547,8 @@ module Algolia
     # @return [StatusResponse]
     def get_status(request_options = {})
       response = get_status_with_http_info(request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Monitoring::StatusResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Monitoring::StatusResponse")
     end
+
   end
 end

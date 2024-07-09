@@ -9,7 +9,7 @@ module Algolia
     # Adds a segment to the UserAgent
     #
     def add(segment, version)
-      @value += format('; %<segment>s (%<version>s)', segment: segment, version: version)
+      @value += format("; %<segment>s (%<version>s)", segment: segment, version: version)
     end
   end
 end

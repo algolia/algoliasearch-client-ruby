@@ -10,15 +10,15 @@ module Algolia
     #   ApiError.new(:code => 500, :response_headers => {}, :response_body => "")
     #   ApiError.new(:code => 404, :message => "Not Found")
     def initialize(arg = nil)
-      if arg.is_a? Hash
-        if arg.key?(:message) || arg.key?('message')
-          super(arg[:message] || arg['message'])
+      if arg.is_a?(Hash)
+        if arg.key?(:message) || arg.key?("message")
+          super(arg[:message] || arg["message"])
         else
           super
         end
 
         arg.each do |k, v|
-          instance_variable_set "@#{k}", v
+          instance_variable_set("@#{k}", v)
         end
       else
         super
@@ -33,10 +33,10 @@ module Algolia
 
     def message
       msg = if @message.nil?
-              'Error message: the server returns an error'
-            else
-              @message
-            end
+        "Error message: the server returns an error"
+      else
+        @message
+      end
 
       msg += "\nHTTP status code: #{code}" if code
       msg += "\nResponse headers: #{response_headers}" if response_headers

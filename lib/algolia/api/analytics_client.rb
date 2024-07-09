@@ -5,28 +5,33 @@ module Algolia
     attr_accessor :api_client
 
     def initialize(config = nil)
-      raise '`config` is missing.' if config.nil?
-      raise '`app_id` is missing.' if config.app_id.nil? || config.app_id == ''
-      raise '`api_key` is missing.' if config.api_key.nil? || config.api_key == ''
+      raise "`config` is missing." if config.nil?
+      raise "`app_id` is missing." if config.app_id.nil? || config.app_id == ""
+      raise "`api_key` is missing." if config.api_key.nil? || config.api_key == ""
 
       @api_client = Algolia::ApiClient.new(config)
     end
 
     def self.create(app_id, api_key, region = nil, opts = {})
       hosts = []
-      regions = ['de', 'us']
+      regions = ["de", "us"]
 
       if region.is_a?(Hash) && (opts.nil? || opts.empty?)
         opts = region
         region = nil
       end
 
-      raise "`region` must be one of the following: #{regions.join(', ')}" if !region.nil? && (!region.is_a?(String) || !regions.include?(region))
+      if !region.nil? && (!region.is_a?(String) || !regions.include?(region))
+        raise "`region` must be one of the following: #{regions.join(", ")}"
+      end
 
-      hosts << Transport::StatefulHost.new(region.nil? ? 'analytics.algolia.com' : 'analytics.{region}.algolia.com'.sub!('{region}', region),
-                                           accept: CallType::READ | CallType::WRITE)
+      hosts <<
+        Transport::StatefulHost.new(
+          region.nil? ? "analytics.algolia.com" : "analytics.{region}.algolia.com".sub!("{region}", region),
+          accept: CallType::READ | CallType::WRITE
+        )
 
-      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Analytics', opts)
+      config = Algolia::Configuration.new(app_id, api_key, hosts, "Analytics", opts)
       create_with_config(config)
     end
 
@@ -46,7 +51,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -56,7 +61,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.custom_delete',
+        :operation => :"AnalyticsClient.custom_delete",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -74,7 +79,7 @@ module Algolia
     # @return [Object]
     def custom_delete(path, parameters = nil, request_options = {})
       response = custom_delete_with_http_info(path, parameters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -89,7 +94,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -99,7 +104,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.custom_get',
+        :operation => :"AnalyticsClient.custom_get",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -117,7 +122,7 @@ module Algolia
     # @return [Object]
     def custom_get(path, parameters = nil, request_options = {})
       response = custom_get_with_http_info(path, parameters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -133,7 +138,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -143,7 +148,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.custom_post',
+        :operation => :"AnalyticsClient.custom_post",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -162,7 +167,7 @@ module Algolia
     # @return [Object]
     def custom_post(path, parameters = nil, body = nil, request_options = {})
       response = custom_post_with_http_info(path, parameters, body, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -178,7 +183,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -188,7 +193,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.custom_put',
+        :operation => :"AnalyticsClient.custom_put",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -207,7 +212,7 @@ module Algolia
     # @return [Object]
     def custom_put(path, parameters = nil, body = nil, request_options = {})
       response = custom_put_with_http_info(path, parameters, body, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # Retrieves the add-to-cart rate for all of your searches with at least one add-to-cart event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.
@@ -226,7 +231,7 @@ module Algolia
         raise ArgumentError, "Parameter `index` is required when calling `get_add_to_cart_rate`."
       end
 
-      path = '/2/conversions/addToCartRate'
+      path = "/2/conversions/addToCartRate"
       query_params = {}
       query_params[:index] = index
       query_params[:startDate] = start_date unless start_date.nil?
@@ -239,7 +244,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.get_add_to_cart_rate',
+        :operation => :"AnalyticsClient.get_add_to_cart_rate",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -261,7 +266,10 @@ module Algolia
     # @return [GetAddToCartRateResponse]
     def get_add_to_cart_rate(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       response = get_add_to_cart_rate_with_http_info(index, start_date, end_date, tags, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetAddToCartRateResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Analytics::GetAddToCartRateResponse"
+      )
     end
 
     # Retrieves the average click position of your search results, including a daily breakdown.  The average click position is the average of all clicked search results&#39; positions. For example, if users only ever click on the first result for any search, the average click position is 1. By default, the analyzed period includes the last eight days including the current day.
@@ -274,13 +282,19 @@ module Algolia
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_average_click_position_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
+    def get_average_click_position_with_http_info(
+      index,
+      start_date = nil,
+      end_date = nil,
+      tags = nil,
+      request_options = {}
+    )
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_average_click_position`."
       end
 
-      path = '/2/clicks/averageClickPosition'
+      path = "/2/clicks/averageClickPosition"
       query_params = {}
       query_params[:index] = index
       query_params[:startDate] = start_date unless start_date.nil?
@@ -293,7 +307,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.get_average_click_position',
+        :operation => :"AnalyticsClient.get_average_click_position",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -315,7 +329,10 @@ module Algolia
     # @return [GetAverageClickPositionResponse]
     def get_average_click_position(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       response = get_average_click_position_with_http_info(index, start_date, end_date, tags, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetAverageClickPositionResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Analytics::GetAverageClickPositionResponse"
+      )
     end
 
     # Retrieves the positions in the search results and their associated number of clicks.  This lets you check how many clicks the first, second, or tenth search results receive.
@@ -334,7 +351,7 @@ module Algolia
         raise ArgumentError, "Parameter `index` is required when calling `get_click_positions`."
       end
 
-      path = '/2/clicks/positions'
+      path = "/2/clicks/positions"
       query_params = {}
       query_params[:index] = index
       query_params[:startDate] = start_date unless start_date.nil?
@@ -347,7 +364,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.get_click_positions',
+        :operation => :"AnalyticsClient.get_click_positions",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -369,7 +386,10 @@ module Algolia
     # @return [GetClickPositionsResponse]
     def get_click_positions(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       response = get_click_positions_with_http_info(index, start_date, end_date, tags, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetClickPositionsResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Analytics::GetClickPositionsResponse"
+      )
     end
 
     # Retrieves the click-through rate for all of your searches with at least one click event, including a daily breakdown  By default, the analyzed period includes the last eight days including the current day.
@@ -388,7 +408,7 @@ module Algolia
         raise ArgumentError, "Parameter `index` is required when calling `get_click_through_rate`."
       end
 
-      path = '/2/clicks/clickThroughRate'
+      path = "/2/clicks/clickThroughRate"
       query_params = {}
       query_params[:index] = index
       query_params[:startDate] = start_date unless start_date.nil?
@@ -401,7 +421,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.get_click_through_rate',
+        :operation => :"AnalyticsClient.get_click_through_rate",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -423,7 +443,10 @@ module Algolia
     # @return [GetClickThroughRateResponse]
     def get_click_through_rate(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       response = get_click_through_rate_with_http_info(index, start_date, end_date, tags, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetClickThroughRateResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Analytics::GetClickThroughRateResponse"
+      )
     end
 
     # Retrieves the conversion rate for all of your searches with at least one conversion event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.
@@ -442,7 +465,7 @@ module Algolia
         raise ArgumentError, "Parameter `index` is required when calling `get_conversion_rate`."
       end
 
-      path = '/2/conversions/conversionRate'
+      path = "/2/conversions/conversionRate"
       query_params = {}
       query_params[:index] = index
       query_params[:startDate] = start_date unless start_date.nil?
@@ -455,7 +478,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.get_conversion_rate',
+        :operation => :"AnalyticsClient.get_conversion_rate",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -477,7 +500,10 @@ module Algolia
     # @return [GetConversionRateResponse]
     def get_conversion_rate(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       response = get_conversion_rate_with_http_info(index, start_date, end_date, tags, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetConversionRateResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Analytics::GetConversionRateResponse"
+      )
     end
 
     # Retrieves the fraction of searches that didn&#39;t lead to any click within a time range, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.
@@ -496,7 +522,7 @@ module Algolia
         raise ArgumentError, "Parameter `index` is required when calling `get_no_click_rate`."
       end
 
-      path = '/2/searches/noClickRate'
+      path = "/2/searches/noClickRate"
       query_params = {}
       query_params[:index] = index
       query_params[:startDate] = start_date unless start_date.nil?
@@ -509,7 +535,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.get_no_click_rate',
+        :operation => :"AnalyticsClient.get_no_click_rate",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -531,7 +557,7 @@ module Algolia
     # @return [GetNoClickRateResponse]
     def get_no_click_rate(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       response = get_no_click_rate_with_http_info(index, start_date, end_date, tags, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetNoClickRateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Analytics::GetNoClickRateResponse")
     end
 
     # Retrieves the fraction of searches that didn&#39;t return any results within a time range, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.
@@ -550,7 +576,7 @@ module Algolia
         raise ArgumentError, "Parameter `index` is required when calling `get_no_results_rate`."
       end
 
-      path = '/2/searches/noResultRate'
+      path = "/2/searches/noResultRate"
       query_params = {}
       query_params[:index] = index
       query_params[:startDate] = start_date unless start_date.nil?
@@ -563,7 +589,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.get_no_results_rate',
+        :operation => :"AnalyticsClient.get_no_results_rate",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -585,7 +611,10 @@ module Algolia
     # @return [GetNoResultsRateResponse]
     def get_no_results_rate(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       response = get_no_results_rate_with_http_info(index, start_date, end_date, tags, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetNoResultsRateResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Analytics::GetNoResultsRateResponse"
+      )
     end
 
     # Retrieves the purchase rate for all of your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.
@@ -604,7 +633,7 @@ module Algolia
         raise ArgumentError, "Parameter `index` is required when calling `get_purchase_rate`."
       end
 
-      path = '/2/conversions/purchaseRate'
+      path = "/2/conversions/purchaseRate"
       query_params = {}
       query_params[:index] = index
       query_params[:startDate] = start_date unless start_date.nil?
@@ -617,7 +646,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.get_purchase_rate',
+        :operation => :"AnalyticsClient.get_purchase_rate",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -639,7 +668,10 @@ module Algolia
     # @return [GetPurchaseRateResponse]
     def get_purchase_rate(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       response = get_purchase_rate_with_http_info(index, start_date, end_date, tags, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetPurchaseRateResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Analytics::GetPurchaseRateResponse"
+      )
     end
 
     # Retrieves revenue-related metrics, such as the total revenue or the average order value.  To retrieve revenue-related metrics, sent purchase events. By default, the analyzed period includes the last eight days including the current day.
@@ -658,7 +690,7 @@ module Algolia
         raise ArgumentError, "Parameter `index` is required when calling `get_revenue`."
       end
 
-      path = '/2/conversions/revenue'
+      path = "/2/conversions/revenue"
       query_params = {}
       query_params[:index] = index
       query_params[:startDate] = start_date unless start_date.nil?
@@ -671,7 +703,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.get_revenue',
+        :operation => :"AnalyticsClient.get_revenue",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -693,7 +725,7 @@ module Algolia
     # @return [GetRevenue]
     def get_revenue(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       response = get_revenue_with_http_info(index, start_date, end_date, tags, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetRevenue')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Analytics::GetRevenue")
     end
 
     # Retrieves the number of searches within a time range, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.
@@ -712,7 +744,7 @@ module Algolia
         raise ArgumentError, "Parameter `index` is required when calling `get_searches_count`."
       end
 
-      path = '/2/searches/count'
+      path = "/2/searches/count"
       query_params = {}
       query_params[:index] = index
       query_params[:startDate] = start_date unless start_date.nil?
@@ -725,7 +757,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.get_searches_count',
+        :operation => :"AnalyticsClient.get_searches_count",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -747,7 +779,10 @@ module Algolia
     # @return [GetSearchesCountResponse]
     def get_searches_count(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       response = get_searches_count_with_http_info(index, start_date, end_date, tags, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetSearchesCountResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Analytics::GetSearchesCountResponse"
+      )
     end
 
     # Retrieves the most popular searches that didn&#39;t lead to any clicks, from the 1,000 most frequent searches.
@@ -762,16 +797,28 @@ module Algolia
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_searches_no_clicks_with_http_info(index, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
+    def get_searches_no_clicks_with_http_info(
+      index,
+      start_date = nil,
+      end_date = nil,
+      limit = nil,
+      offset = nil,
+      tags = nil,
+      request_options = {}
+    )
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_searches_no_clicks`."
       end
+
       if @api_client.config.client_side_validation && !offset.nil? && offset < 0
-        raise ArgumentError, 'invalid value for ""offset"" when calling AnalyticsClient.get_searches_no_clicks, must be greater than or equal to 0.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_searches_no_clicks, must be greater than or equal to 0."
+        )
       end
 
-      path = '/2/searches/noClicks'
+      path = "/2/searches/noClicks"
       query_params = {}
       query_params[:index] = index
       query_params[:startDate] = start_date unless start_date.nil?
@@ -786,7 +833,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.get_searches_no_clicks',
+        :operation => :"AnalyticsClient.get_searches_no_clicks",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -808,9 +855,28 @@ module Algolia
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetSearchesNoClicksResponse]
-    def get_searches_no_clicks(index, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
-      response = get_searches_no_clicks_with_http_info(index, start_date, end_date, limit, offset, tags, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetSearchesNoClicksResponse')
+    def get_searches_no_clicks(
+      index,
+      start_date = nil,
+      end_date = nil,
+      limit = nil,
+      offset = nil,
+      tags = nil,
+      request_options = {}
+    )
+      response = get_searches_no_clicks_with_http_info(
+        index,
+        start_date,
+        end_date,
+        limit,
+        offset,
+        tags,
+        request_options
+      )
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Analytics::GetSearchesNoClicksResponse"
+      )
     end
 
     # Retrieves the most popular searches that didn&#39;t return any results.
@@ -825,16 +891,28 @@ module Algolia
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_searches_no_results_with_http_info(index, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
+    def get_searches_no_results_with_http_info(
+      index,
+      start_date = nil,
+      end_date = nil,
+      limit = nil,
+      offset = nil,
+      tags = nil,
+      request_options = {}
+    )
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_searches_no_results`."
       end
+
       if @api_client.config.client_side_validation && !offset.nil? && offset < 0
-        raise ArgumentError, 'invalid value for ""offset"" when calling AnalyticsClient.get_searches_no_results, must be greater than or equal to 0.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_searches_no_results, must be greater than or equal to 0."
+        )
       end
 
-      path = '/2/searches/noResults'
+      path = "/2/searches/noResults"
       query_params = {}
       query_params[:index] = index
       query_params[:startDate] = start_date unless start_date.nil?
@@ -849,7 +927,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.get_searches_no_results',
+        :operation => :"AnalyticsClient.get_searches_no_results",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -871,9 +949,28 @@ module Algolia
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetSearchesNoResultsResponse]
-    def get_searches_no_results(index, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
-      response = get_searches_no_results_with_http_info(index, start_date, end_date, limit, offset, tags, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetSearchesNoResultsResponse')
+    def get_searches_no_results(
+      index,
+      start_date = nil,
+      end_date = nil,
+      limit = nil,
+      offset = nil,
+      tags = nil,
+      request_options = {}
+    )
+      response = get_searches_no_results_with_http_info(
+        index,
+        start_date,
+        end_date,
+        limit,
+        offset,
+        tags,
+        request_options
+      )
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Analytics::GetSearchesNoResultsResponse"
+      )
     end
 
     # Retrieves the time when the Analytics data for the specified index was last updated.  The Analytics data is updated every 5 minutes.
@@ -889,7 +986,7 @@ module Algolia
         raise ArgumentError, "Parameter `index` is required when calling `get_status`."
       end
 
-      path = '/2/status'
+      path = "/2/status"
       query_params = {}
       query_params[:index] = index
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -899,7 +996,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.get_status',
+        :operation => :"AnalyticsClient.get_status",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -918,7 +1015,7 @@ module Algolia
     # @return [GetStatusResponse]
     def get_status(index, request_options = {})
       response = get_status_with_http_info(index, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetStatusResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Analytics::GetStatusResponse")
     end
 
     # Retrieves the countries with the most searches to your index.
@@ -933,16 +1030,28 @@ module Algolia
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_top_countries_with_http_info(index, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
+    def get_top_countries_with_http_info(
+      index,
+      start_date = nil,
+      end_date = nil,
+      limit = nil,
+      offset = nil,
+      tags = nil,
+      request_options = {}
+    )
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_countries`."
       end
+
       if @api_client.config.client_side_validation && !offset.nil? && offset < 0
-        raise ArgumentError, 'invalid value for ""offset"" when calling AnalyticsClient.get_top_countries, must be greater than or equal to 0.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_top_countries, must be greater than or equal to 0."
+        )
       end
 
-      path = '/2/countries'
+      path = "/2/countries"
       query_params = {}
       query_params[:index] = index
       query_params[:startDate] = start_date unless start_date.nil?
@@ -957,7 +1066,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.get_top_countries',
+        :operation => :"AnalyticsClient.get_top_countries",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -979,9 +1088,20 @@ module Algolia
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopCountriesResponse]
-    def get_top_countries(index, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
+    def get_top_countries(
+      index,
+      start_date = nil,
+      end_date = nil,
+      limit = nil,
+      offset = nil,
+      tags = nil,
+      request_options = {}
+    )
       response = get_top_countries_with_http_info(index, start_date, end_date, limit, offset, tags, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopCountriesResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Analytics::GetTopCountriesResponse"
+      )
     end
 
     # Retrieves the most frequently used filter attributes.  These are attributes of your records that you included in the &#x60;attributesForFaceting&#x60; setting.
@@ -997,16 +1117,29 @@ module Algolia
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_top_filter_attributes_with_http_info(index, search = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
+    def get_top_filter_attributes_with_http_info(
+      index,
+      search = nil,
+      start_date = nil,
+      end_date = nil,
+      limit = nil,
+      offset = nil,
+      tags = nil,
+      request_options = {}
+    )
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_filter_attributes`."
       end
+
       if @api_client.config.client_side_validation && !offset.nil? && offset < 0
-        raise ArgumentError, 'invalid value for ""offset"" when calling AnalyticsClient.get_top_filter_attributes, must be greater than or equal to 0.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_top_filter_attributes, must be greater than or equal to 0."
+        )
       end
 
-      path = '/2/filters'
+      path = "/2/filters"
       query_params = {}
       query_params[:index] = index
       query_params[:search] = search unless search.nil?
@@ -1022,7 +1155,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.get_top_filter_attributes',
+        :operation => :"AnalyticsClient.get_top_filter_attributes",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1045,9 +1178,30 @@ module Algolia
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopFilterAttributesResponse]
-    def get_top_filter_attributes(index, search = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
-      response = get_top_filter_attributes_with_http_info(index, search, start_date, end_date, limit, offset, tags, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopFilterAttributesResponse')
+    def get_top_filter_attributes(
+      index,
+      search = nil,
+      start_date = nil,
+      end_date = nil,
+      limit = nil,
+      offset = nil,
+      tags = nil,
+      request_options = {}
+    )
+      response = get_top_filter_attributes_with_http_info(
+        index,
+        search,
+        start_date,
+        end_date,
+        limit,
+        offset,
+        tags,
+        request_options
+      )
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Analytics::GetTopFilterAttributesResponse"
+      )
     end
 
     # Retrieves the most frequent filter (facet) values for a filter attribute.  These are attributes of your records that you included in the &#x60;attributesForFaceting&#x60; setting.
@@ -1064,7 +1218,17 @@ module Algolia
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_top_filter_for_attribute_with_http_info(attribute, index, search = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
+    def get_top_filter_for_attribute_with_http_info(
+      attribute,
+      index,
+      search = nil,
+      start_date = nil,
+      end_date = nil,
+      limit = nil,
+      offset = nil,
+      tags = nil,
+      request_options = {}
+    )
       # verify the required parameter 'attribute' is set
       if @api_client.config.client_side_validation && attribute.nil?
         raise ArgumentError, "Parameter `attribute` is required when calling `get_top_filter_for_attribute`."
@@ -1073,11 +1237,15 @@ module Algolia
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_filter_for_attribute`."
       end
+
       if @api_client.config.client_side_validation && !offset.nil? && offset < 0
-        raise ArgumentError, 'invalid value for ""offset"" when calling AnalyticsClient.get_top_filter_for_attribute, must be greater than or equal to 0.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_top_filter_for_attribute, must be greater than or equal to 0."
+        )
       end
 
-      path = '/2/filters/{attribute}'.sub('{' + 'attribute' + '}', Transport.encode_uri(attribute.to_s))
+      path = "/2/filters/{attribute}".sub("{" + "attribute" + "}", Transport.encode_uri(attribute.to_s))
       query_params = {}
       query_params[:index] = index
       query_params[:search] = search unless search.nil?
@@ -1093,7 +1261,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.get_top_filter_for_attribute',
+        :operation => :"AnalyticsClient.get_top_filter_for_attribute",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1117,9 +1285,32 @@ module Algolia
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopFilterForAttributeResponse]
-    def get_top_filter_for_attribute(attribute, index, search = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
-      response = get_top_filter_for_attribute_with_http_info(attribute, index, search, start_date, end_date, limit, offset, tags, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopFilterForAttributeResponse')
+    def get_top_filter_for_attribute(
+      attribute,
+      index,
+      search = nil,
+      start_date = nil,
+      end_date = nil,
+      limit = nil,
+      offset = nil,
+      tags = nil,
+      request_options = {}
+    )
+      response = get_top_filter_for_attribute_with_http_info(
+        attribute,
+        index,
+        search,
+        start_date,
+        end_date,
+        limit,
+        offset,
+        tags,
+        request_options
+      )
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Analytics::GetTopFilterForAttributeResponse"
+      )
     end
 
     # Retrieves the most frequently used filters for a search that didn&#39;t return any results.  To get the most frequent searches without results, use the [Retrieve searches without results](#tag/search/operation/getSearchesNoResults) operation.
@@ -1135,16 +1326,29 @@ module Algolia
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_top_filters_no_results_with_http_info(index, search = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
+    def get_top_filters_no_results_with_http_info(
+      index,
+      search = nil,
+      start_date = nil,
+      end_date = nil,
+      limit = nil,
+      offset = nil,
+      tags = nil,
+      request_options = {}
+    )
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_filters_no_results`."
       end
+
       if @api_client.config.client_side_validation && !offset.nil? && offset < 0
-        raise ArgumentError, 'invalid value for ""offset"" when calling AnalyticsClient.get_top_filters_no_results, must be greater than or equal to 0.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_top_filters_no_results, must be greater than or equal to 0."
+        )
       end
 
-      path = '/2/filters/noResults'
+      path = "/2/filters/noResults"
       query_params = {}
       query_params[:index] = index
       query_params[:search] = search unless search.nil?
@@ -1160,7 +1364,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.get_top_filters_no_results',
+        :operation => :"AnalyticsClient.get_top_filters_no_results",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1183,9 +1387,30 @@ module Algolia
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopFiltersNoResultsResponse]
-    def get_top_filters_no_results(index, search = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil, request_options = {})
-      response = get_top_filters_no_results_with_http_info(index, search, start_date, end_date, limit, offset, tags, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopFiltersNoResultsResponse')
+    def get_top_filters_no_results(
+      index,
+      search = nil,
+      start_date = nil,
+      end_date = nil,
+      limit = nil,
+      offset = nil,
+      tags = nil,
+      request_options = {}
+    )
+      response = get_top_filters_no_results_with_http_info(
+        index,
+        search,
+        start_date,
+        end_date,
+        limit,
+        offset,
+        tags,
+        request_options
+      )
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Analytics::GetTopFiltersNoResultsResponse"
+      )
     end
 
     # Retrieves the object IDs of the most frequent search results.
@@ -1203,17 +1428,31 @@ module Algolia
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_top_hits_with_http_info(index, search = nil, click_analytics = nil, revenue_analytics = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil,
-                                    request_options = {})
+    def get_top_hits_with_http_info(
+      index,
+      search = nil,
+      click_analytics = nil,
+      revenue_analytics = nil,
+      start_date = nil,
+      end_date = nil,
+      limit = nil,
+      offset = nil,
+      tags = nil,
+      request_options = {}
+    )
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_hits`."
       end
+
       if @api_client.config.client_side_validation && !offset.nil? && offset < 0
-        raise ArgumentError, 'invalid value for ""offset"" when calling AnalyticsClient.get_top_hits, must be greater than or equal to 0.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_top_hits, must be greater than or equal to 0."
+        )
       end
 
-      path = '/2/hits'
+      path = "/2/hits"
       query_params = {}
       query_params[:index] = index
       query_params[:search] = search unless search.nil?
@@ -1231,7 +1470,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.get_top_hits',
+        :operation => :"AnalyticsClient.get_top_hits",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1256,10 +1495,31 @@ module Algolia
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopHitsResponse]
-    def get_top_hits(index, search = nil, click_analytics = nil, revenue_analytics = nil, start_date = nil, end_date = nil, limit = nil, offset = nil, tags = nil,
-                     request_options = {})
-      response = get_top_hits_with_http_info(index, search, click_analytics, revenue_analytics, start_date, end_date, limit, offset, tags, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopHitsResponse')
+    def get_top_hits(
+      index,
+      search = nil,
+      click_analytics = nil,
+      revenue_analytics = nil,
+      start_date = nil,
+      end_date = nil,
+      limit = nil,
+      offset = nil,
+      tags = nil,
+      request_options = {}
+    )
+      response = get_top_hits_with_http_info(
+        index,
+        search,
+        click_analytics,
+        revenue_analytics,
+        start_date,
+        end_date,
+        limit,
+        offset,
+        tags,
+        request_options
+      )
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Analytics::GetTopHitsResponse")
     end
 
     # Returns the most popular search terms.
@@ -1278,17 +1538,32 @@ module Algolia
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_top_searches_with_http_info(index, click_analytics = nil, revenue_analytics = nil, start_date = nil, end_date = nil, order_by = nil, direction = nil, limit = nil, offset = nil,
-                                        tags = nil, request_options = {})
+    def get_top_searches_with_http_info(
+      index,
+      click_analytics = nil,
+      revenue_analytics = nil,
+      start_date = nil,
+      end_date = nil,
+      order_by = nil,
+      direction = nil,
+      limit = nil,
+      offset = nil,
+      tags = nil,
+      request_options = {}
+    )
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_searches`."
       end
+
       if @api_client.config.client_side_validation && !offset.nil? && offset < 0
-        raise ArgumentError, 'invalid value for ""offset"" when calling AnalyticsClient.get_top_searches, must be greater than or equal to 0.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_top_searches, must be greater than or equal to 0."
+        )
       end
 
-      path = '/2/searches'
+      path = "/2/searches"
       query_params = {}
       query_params[:index] = index
       query_params[:clickAnalytics] = click_analytics unless click_analytics.nil?
@@ -1307,7 +1582,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.get_top_searches',
+        :operation => :"AnalyticsClient.get_top_searches",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1333,10 +1608,33 @@ module Algolia
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with &#x60;OR&#x60; and &#x60;AND&#x60;. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopSearchesResponse]
-    def get_top_searches(index, click_analytics = nil, revenue_analytics = nil, start_date = nil, end_date = nil, order_by = nil, direction = nil, limit = nil, offset = nil, tags = nil,
-                         request_options = {})
-      response = get_top_searches_with_http_info(index, click_analytics, revenue_analytics, start_date, end_date, order_by, direction, limit, offset, tags, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetTopSearchesResponse')
+    def get_top_searches(
+      index,
+      click_analytics = nil,
+      revenue_analytics = nil,
+      start_date = nil,
+      end_date = nil,
+      order_by = nil,
+      direction = nil,
+      limit = nil,
+      offset = nil,
+      tags = nil,
+      request_options = {}
+    )
+      response = get_top_searches_with_http_info(
+        index,
+        click_analytics,
+        revenue_analytics,
+        start_date,
+        end_date,
+        order_by,
+        direction,
+        limit,
+        offset,
+        tags,
+        request_options
+      )
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Analytics::GetTopSearchesResponse")
     end
 
     # Retrieves the number of unique users within a time range, including a daily breakdown.  Since this endpoint returns the number of unique users, the sum of the daily values might be different from the total number.  By default, Algolia distinguishes search users by their IP address, _unless_ you include a pseudonymous user identifier in your search requests with the &#x60;userToken&#x60; API parameter or &#x60;x-algolia-usertoken&#x60; request header. By default, the analyzed period includes the last eight days including the current day.
@@ -1355,7 +1653,7 @@ module Algolia
         raise ArgumentError, "Parameter `index` is required when calling `get_users_count`."
       end
 
-      path = '/2/users/count'
+      path = "/2/users/count"
       query_params = {}
       query_params[:index] = index
       query_params[:startDate] = start_date unless start_date.nil?
@@ -1368,7 +1666,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'AnalyticsClient.get_users_count',
+        :operation => :"AnalyticsClient.get_users_count",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1390,7 +1688,8 @@ module Algolia
     # @return [GetUsersCountResponse]
     def get_users_count(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       response = get_users_count_with_http_info(index, start_date, end_date, tags, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Analytics::GetUsersCountResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Analytics::GetUsersCountResponse")
     end
+
   end
 end

@@ -5,27 +5,33 @@ module Algolia
     attr_accessor :api_client
 
     def initialize(config = nil)
-      raise '`config` is missing.' if config.nil?
-      raise '`app_id` is missing.' if config.app_id.nil? || config.app_id == ''
-      raise '`api_key` is missing.' if config.api_key.nil? || config.api_key == ''
+      raise "`config` is missing." if config.nil?
+      raise "`app_id` is missing." if config.app_id.nil? || config.app_id == ""
+      raise "`api_key` is missing." if config.api_key.nil? || config.api_key == ""
 
       @api_client = Algolia::ApiClient.new(config)
     end
 
     def self.create(app_id, api_key, region = nil, opts = {})
       hosts = []
-      regions = ['eu', 'us']
+      regions = ["eu", "us"]
 
       if region.is_a?(Hash) && (opts.nil? || opts.empty?)
         opts = region
         region = nil
       end
 
-      raise "`region` is required and must be one of the following: #{regions.join(', ')}" if region.nil? || !region.is_a?(String) || !regions.include?(region)
+      if region.nil? || !region.is_a?(String) || !regions.include?(region)
+        raise "`region` is required and must be one of the following: #{regions.join(", ")}"
+      end
 
-      hosts << Transport::StatefulHost.new('data.{region}.algolia.com'.sub!('{region}', region), accept: CallType::READ | CallType::WRITE)
+      hosts <<
+        Transport::StatefulHost.new(
+          "data.{region}.algolia.com".sub!("{region}", region),
+          accept: CallType::READ | CallType::WRITE
+        )
 
-      config = Algolia::Configuration.new(app_id, api_key, hosts, 'Ingestion', opts)
+      config = Algolia::Configuration.new(app_id, api_key, hosts, "Ingestion", opts)
       create_with_config(config)
     end
 
@@ -48,7 +54,7 @@ module Algolia
         raise ArgumentError, "Parameter `authentication_create` is required when calling `create_authentication`."
       end
 
-      path = '/1/authentications'
+      path = "/1/authentications"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -57,7 +63,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(authentication_create)
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.create_authentication',
+        :operation => :"IngestionClient.create_authentication",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -78,7 +84,10 @@ module Algolia
     # @return [AuthenticationCreateResponse]
     def create_authentication(authentication_create, request_options = {})
       response = create_authentication_with_http_info(authentication_create, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::AuthenticationCreateResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Ingestion::AuthenticationCreateResponse"
+      )
     end
 
     # Creates a new destination.
@@ -96,7 +105,7 @@ module Algolia
         raise ArgumentError, "Parameter `destination_create` is required when calling `create_destination`."
       end
 
-      path = '/1/destinations'
+      path = "/1/destinations"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -105,7 +114,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(destination_create)
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.create_destination',
+        :operation => :"IngestionClient.create_destination",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -126,7 +135,10 @@ module Algolia
     # @return [DestinationCreateResponse]
     def create_destination(destination_create, request_options = {})
       response = create_destination_with_http_info(destination_create, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DestinationCreateResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Ingestion::DestinationCreateResponse"
+      )
     end
 
     # Creates a new source.
@@ -144,7 +156,7 @@ module Algolia
         raise ArgumentError, "Parameter `source_create` is required when calling `create_source`."
       end
 
-      path = '/1/sources'
+      path = "/1/sources"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -153,7 +165,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(source_create)
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.create_source',
+        :operation => :"IngestionClient.create_source",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -174,7 +186,7 @@ module Algolia
     # @return [SourceCreateResponse]
     def create_source(source_create, request_options = {})
       response = create_source_with_http_info(source_create, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceCreateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::SourceCreateResponse")
     end
 
     # Creates a new task.
@@ -188,7 +200,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_create` is required when calling `create_task`."
       end
 
-      path = '/1/tasks'
+      path = "/1/tasks"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -197,7 +209,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(task_create)
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.create_task',
+        :operation => :"IngestionClient.create_task",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -214,7 +226,7 @@ module Algolia
     # @return [TaskCreateResponse]
     def create_task(task_create, request_options = {})
       response = create_task_with_http_info(task_create, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskCreateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskCreateResponse")
     end
 
     # Creates a new transformation.
@@ -228,7 +240,7 @@ module Algolia
         raise ArgumentError, "Parameter `transformation_create` is required when calling `create_transformation`."
       end
 
-      path = '/1/transformations'
+      path = "/1/transformations"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -237,7 +249,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(transformation_create)
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.create_transformation',
+        :operation => :"IngestionClient.create_transformation",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -254,7 +266,10 @@ module Algolia
     # @return [TransformationCreateResponse]
     def create_transformation(transformation_create, request_options = {})
       response = create_transformation_with_http_info(transformation_create, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TransformationCreateResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Ingestion::TransformationCreateResponse"
+      )
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -269,7 +284,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -279,7 +294,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.custom_delete',
+        :operation => :"IngestionClient.custom_delete",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -297,7 +312,7 @@ module Algolia
     # @return [Object]
     def custom_delete(path, parameters = nil, request_options = {})
       response = custom_delete_with_http_info(path, parameters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -312,7 +327,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -322,7 +337,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.custom_get',
+        :operation => :"IngestionClient.custom_get",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -340,7 +355,7 @@ module Algolia
     # @return [Object]
     def custom_get(path, parameters = nil, request_options = {})
       response = custom_get_with_http_info(path, parameters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -356,7 +371,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -366,7 +381,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.custom_post',
+        :operation => :"IngestionClient.custom_post",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -385,7 +400,7 @@ module Algolia
     # @return [Object]
     def custom_post(path, parameters = nil, body = nil, request_options = {})
       response = custom_post_with_http_info(path, parameters, body, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # This method allow you to send requests to the Algolia REST API.
@@ -401,7 +416,7 @@ module Algolia
         raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
 
-      path = '/{path}'.sub('{' + 'path' + '}', path.to_s)
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
       query_params = query_params.merge(parameters) unless parameters.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -411,7 +426,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.custom_put',
+        :operation => :"IngestionClient.custom_put",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -430,7 +445,7 @@ module Algolia
     # @return [Object]
     def custom_put(path, parameters = nil, body = nil, request_options = {})
       response = custom_put_with_http_info(path, parameters, body, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Object')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # Deletes an authentication resource. You can&#39;t delete authentication resources that are used by a source or a destination.
@@ -448,7 +463,10 @@ module Algolia
         raise ArgumentError, "Parameter `authentication_id` is required when calling `delete_authentication`."
       end
 
-      path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', Transport.encode_uri(authentication_id.to_s))
+      path = "/1/authentications/{authenticationID}".sub(
+        "{" + "authenticationID" + "}",
+        Transport.encode_uri(authentication_id.to_s)
+      )
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -457,7 +475,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.delete_authentication',
+        :operation => :"IngestionClient.delete_authentication",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -478,7 +496,7 @@ module Algolia
     # @return [DeleteResponse]
     def delete_authentication(authentication_id, request_options = {})
       response = delete_authentication_with_http_info(authentication_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::DeleteResponse")
     end
 
     # Deletes a destination by its ID. You can&#39;t delete destinations that are referenced in tasks.
@@ -496,7 +514,10 @@ module Algolia
         raise ArgumentError, "Parameter `destination_id` is required when calling `delete_destination`."
       end
 
-      path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', Transport.encode_uri(destination_id.to_s))
+      path = "/1/destinations/{destinationID}".sub(
+        "{" + "destinationID" + "}",
+        Transport.encode_uri(destination_id.to_s)
+      )
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -505,7 +526,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.delete_destination',
+        :operation => :"IngestionClient.delete_destination",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -526,7 +547,7 @@ module Algolia
     # @return [DeleteResponse]
     def delete_destination(destination_id, request_options = {})
       response = delete_destination_with_http_info(destination_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::DeleteResponse")
     end
 
     # Deletes a source by its ID. You can&#39;t delete sources that are referenced in tasks.
@@ -544,7 +565,7 @@ module Algolia
         raise ArgumentError, "Parameter `source_id` is required when calling `delete_source`."
       end
 
-      path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', Transport.encode_uri(source_id.to_s))
+      path = "/1/sources/{sourceID}".sub("{" + "sourceID" + "}", Transport.encode_uri(source_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -553,7 +574,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.delete_source',
+        :operation => :"IngestionClient.delete_source",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -574,7 +595,7 @@ module Algolia
     # @return [DeleteResponse]
     def delete_source(source_id, request_options = {})
       response = delete_source_with_http_info(source_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::DeleteResponse")
     end
 
     # Deletes a task by its ID.
@@ -588,7 +609,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_id` is required when calling `delete_task`."
       end
 
-      path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', Transport.encode_uri(task_id.to_s))
+      path = "/1/tasks/{taskID}".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -597,7 +618,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.delete_task',
+        :operation => :"IngestionClient.delete_task",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -614,7 +635,7 @@ module Algolia
     # @return [DeleteResponse]
     def delete_task(task_id, request_options = {})
       response = delete_task_with_http_info(task_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::DeleteResponse")
     end
 
     # Deletes a transformation by its ID.
@@ -628,7 +649,10 @@ module Algolia
         raise ArgumentError, "Parameter `transformation_id` is required when calling `delete_transformation`."
       end
 
-      path = '/1/transformations/{transformationID}'.sub('{' + 'transformationID' + '}', Transport.encode_uri(transformation_id.to_s))
+      path = "/1/transformations/{transformationID}".sub(
+        "{" + "transformationID" + "}",
+        Transport.encode_uri(transformation_id.to_s)
+      )
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -637,7 +661,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.delete_transformation',
+        :operation => :"IngestionClient.delete_transformation",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -654,7 +678,7 @@ module Algolia
     # @return [DeleteResponse]
     def delete_transformation(transformation_id, request_options = {})
       response = delete_transformation_with_http_info(transformation_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DeleteResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::DeleteResponse")
     end
 
     # Disables a task.
@@ -672,7 +696,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_id` is required when calling `disable_task`."
       end
 
-      path = '/1/tasks/{taskID}/disable'.sub('{' + 'taskID' + '}', Transport.encode_uri(task_id.to_s))
+      path = "/1/tasks/{taskID}/disable".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -681,7 +705,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.disable_task',
+        :operation => :"IngestionClient.disable_task",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -702,7 +726,7 @@ module Algolia
     # @return [TaskUpdateResponse]
     def disable_task(task_id, request_options = {})
       response = disable_task_with_http_info(task_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskUpdateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskUpdateResponse")
     end
 
     # Enables a task.
@@ -720,7 +744,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_id` is required when calling `enable_task`."
       end
 
-      path = '/1/tasks/{taskID}/enable'.sub('{' + 'taskID' + '}', Transport.encode_uri(task_id.to_s))
+      path = "/1/tasks/{taskID}/enable".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -729,7 +753,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.enable_task',
+        :operation => :"IngestionClient.enable_task",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -750,7 +774,7 @@ module Algolia
     # @return [TaskUpdateResponse]
     def enable_task(task_id, request_options = {})
       response = enable_task_with_http_info(task_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskUpdateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskUpdateResponse")
     end
 
     # Retrieves an authentication resource by its ID.
@@ -768,7 +792,10 @@ module Algolia
         raise ArgumentError, "Parameter `authentication_id` is required when calling `get_authentication`."
       end
 
-      path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', Transport.encode_uri(authentication_id.to_s))
+      path = "/1/authentications/{authenticationID}".sub(
+        "{" + "authenticationID" + "}",
+        Transport.encode_uri(authentication_id.to_s)
+      )
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -777,7 +804,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.get_authentication',
+        :operation => :"IngestionClient.get_authentication",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -798,7 +825,7 @@ module Algolia
     # @return [Authentication]
     def get_authentication(authentication_id, request_options = {})
       response = get_authentication_with_http_info(authentication_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Authentication')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::Authentication")
     end
 
     # Retrieves a list of all authentication resources.
@@ -815,20 +842,37 @@ module Algolia
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_authentications_with_http_info(items_per_page = nil, page = nil, type = nil, platform = nil, sort = nil, order = nil, request_options = {})
+    def get_authentications_with_http_info(
+      items_per_page = nil,
+      page = nil,
+      type = nil,
+      platform = nil,
+      sort = nil,
+      order = nil,
+      request_options = {}
+    )
       if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
-        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_authentications, must be smaller than or equal to 100.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_authentications, must be smaller than or equal to 100."
+        )
       end
 
       if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
-        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_authentications, must be greater than or equal to 1.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_authentications, must be greater than or equal to 1."
+        )
       end
 
       if @api_client.config.client_side_validation && !page.nil? && page < 1
-        raise ArgumentError, 'invalid value for ""page"" when calling IngestionClient.get_authentications, must be greater than or equal to 1.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"page\"\" when calling IngestionClient.get_authentications, must be greater than or equal to 1."
+        )
       end
 
-      path = '/1/authentications'
+      path = "/1/authentications"
       query_params = {}
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
       query_params[:page] = page unless page.nil?
@@ -843,7 +887,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.get_authentications',
+        :operation => :"IngestionClient.get_authentications",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -867,9 +911,20 @@ module Algolia
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListAuthenticationsResponse]
-    def get_authentications(items_per_page = nil, page = nil, type = nil, platform = nil, sort = nil, order = nil, request_options = {})
+    def get_authentications(
+      items_per_page = nil,
+      page = nil,
+      type = nil,
+      platform = nil,
+      sort = nil,
+      order = nil,
+      request_options = {}
+    )
       response = get_authentications_with_http_info(items_per_page, page, type, platform, sort, order, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListAuthenticationsResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Ingestion::ListAuthenticationsResponse"
+      )
     end
 
     # Retrieves a destination by its ID.
@@ -887,7 +942,10 @@ module Algolia
         raise ArgumentError, "Parameter `destination_id` is required when calling `get_destination`."
       end
 
-      path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', Transport.encode_uri(destination_id.to_s))
+      path = "/1/destinations/{destinationID}".sub(
+        "{" + "destinationID" + "}",
+        Transport.encode_uri(destination_id.to_s)
+      )
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -896,7 +954,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.get_destination',
+        :operation => :"IngestionClient.get_destination",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -917,7 +975,7 @@ module Algolia
     # @return [Destination]
     def get_destination(destination_id, request_options = {})
       response = get_destination_with_http_info(destination_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Destination')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::Destination")
     end
 
     # Retrieves a list of destinations.
@@ -934,25 +992,45 @@ module Algolia
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_destinations_with_http_info(items_per_page = nil, page = nil, type = nil, authentication_id = nil, sort = nil, order = nil, request_options = {})
+    def get_destinations_with_http_info(
+      items_per_page = nil,
+      page = nil,
+      type = nil,
+      authentication_id = nil,
+      sort = nil,
+      order = nil,
+      request_options = {}
+    )
       if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
-        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_destinations, must be smaller than or equal to 100.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_destinations, must be smaller than or equal to 100."
+        )
       end
 
       if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
-        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_destinations, must be greater than or equal to 1.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_destinations, must be greater than or equal to 1."
+        )
       end
 
       if @api_client.config.client_side_validation && !page.nil? && page < 1
-        raise ArgumentError, 'invalid value for ""page"" when calling IngestionClient.get_destinations, must be greater than or equal to 1.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"page\"\" when calling IngestionClient.get_destinations, must be greater than or equal to 1."
+        )
       end
 
-      path = '/1/destinations'
+      path = "/1/destinations"
       query_params = {}
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
       query_params[:page] = page unless page.nil?
       query_params[:type] = @api_client.build_collection_param(type, :csv) unless type.nil?
-      query_params[:authenticationID] = @api_client.build_collection_param(authentication_id, :csv) unless authentication_id.nil?
+      unless authentication_id.nil?
+        query_params[:authenticationID] = @api_client.build_collection_param(authentication_id, :csv)
+      end
+
       query_params[:sort] = sort unless sort.nil?
       query_params[:order] = order unless order.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -962,7 +1040,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.get_destinations',
+        :operation => :"IngestionClient.get_destinations",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -986,9 +1064,28 @@ module Algolia
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListDestinationsResponse]
-    def get_destinations(items_per_page = nil, page = nil, type = nil, authentication_id = nil, sort = nil, order = nil, request_options = {})
-      response = get_destinations_with_http_info(items_per_page, page, type, authentication_id, sort, order, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListDestinationsResponse')
+    def get_destinations(
+      items_per_page = nil,
+      page = nil,
+      type = nil,
+      authentication_id = nil,
+      sort = nil,
+      order = nil,
+      request_options = {}
+    )
+      response = get_destinations_with_http_info(
+        items_per_page,
+        page,
+        type,
+        authentication_id,
+        sort,
+        order,
+        request_options
+      )
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Ingestion::ListDestinationsResponse"
+      )
     end
 
     # Retrieves a single task run event by its ID.
@@ -1011,7 +1108,10 @@ module Algolia
         raise ArgumentError, "Parameter `event_id` is required when calling `get_event`."
       end
 
-      path = '/1/runs/{runID}/events/{eventID}'.sub('{' + 'runID' + '}', Transport.encode_uri(run_id.to_s)).sub('{' + 'eventID' + '}', Transport.encode_uri(event_id.to_s))
+      path = "/1/runs/{runID}/events/{eventID}".sub("{" + "runID" + "}", Transport.encode_uri(run_id.to_s)).sub(
+        "{" + "eventID" + "}",
+        Transport.encode_uri(event_id.to_s)
+      )
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1020,7 +1120,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.get_event',
+        :operation => :"IngestionClient.get_event",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1042,7 +1142,7 @@ module Algolia
     # @return [Event]
     def get_event(run_id, event_id, request_options = {})
       response = get_event_with_http_info(run_id, event_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Event')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::Event")
     end
 
     # Retrieves a list of events for a task run, identified by it&#39;s ID.
@@ -1062,25 +1162,45 @@ module Algolia
     # @param end_date [String] Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_events_with_http_info(run_id, items_per_page = nil, page = nil, status = nil, type = nil, sort = nil, order = nil, start_date = nil, end_date = nil,
-                                  request_options = {})
+    def get_events_with_http_info(
+      run_id,
+      items_per_page = nil,
+      page = nil,
+      status = nil,
+      type = nil,
+      sort = nil,
+      order = nil,
+      start_date = nil,
+      end_date = nil,
+      request_options = {}
+    )
       # verify the required parameter 'run_id' is set
       if @api_client.config.client_side_validation && run_id.nil?
         raise ArgumentError, "Parameter `run_id` is required when calling `get_events`."
       end
+
       if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
-        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_events, must be smaller than or equal to 100.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_events, must be smaller than or equal to 100."
+        )
       end
 
       if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
-        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_events, must be greater than or equal to 1.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_events, must be greater than or equal to 1."
+        )
       end
 
       if @api_client.config.client_side_validation && !page.nil? && page < 1
-        raise ArgumentError, 'invalid value for ""page"" when calling IngestionClient.get_events, must be greater than or equal to 1.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"page\"\" when calling IngestionClient.get_events, must be greater than or equal to 1."
+        )
       end
 
-      path = '/1/runs/{runID}/events'.sub('{' + 'runID' + '}', Transport.encode_uri(run_id.to_s))
+      path = "/1/runs/{runID}/events".sub("{" + "runID" + "}", Transport.encode_uri(run_id.to_s))
       query_params = {}
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
       query_params[:page] = page unless page.nil?
@@ -1097,7 +1217,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.get_events',
+        :operation => :"IngestionClient.get_events",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1124,9 +1244,31 @@ module Algolia
     # @param end_date [String] Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListEventsResponse]
-    def get_events(run_id, items_per_page = nil, page = nil, status = nil, type = nil, sort = nil, order = nil, start_date = nil, end_date = nil, request_options = {})
-      response = get_events_with_http_info(run_id, items_per_page, page, status, type, sort, order, start_date, end_date, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListEventsResponse')
+    def get_events(
+      run_id,
+      items_per_page = nil,
+      page = nil,
+      status = nil,
+      type = nil,
+      sort = nil,
+      order = nil,
+      start_date = nil,
+      end_date = nil,
+      request_options = {}
+    )
+      response = get_events_with_http_info(
+        run_id,
+        items_per_page,
+        page,
+        status,
+        type,
+        sort,
+        order,
+        start_date,
+        end_date,
+        request_options
+      )
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::ListEventsResponse")
     end
 
     # Retrieve a single task run by its ID.
@@ -1144,7 +1286,7 @@ module Algolia
         raise ArgumentError, "Parameter `run_id` is required when calling `get_run`."
       end
 
-      path = '/1/runs/{runID}'.sub('{' + 'runID' + '}', Transport.encode_uri(run_id.to_s))
+      path = "/1/runs/{runID}".sub("{" + "runID" + "}", Transport.encode_uri(run_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1153,7 +1295,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.get_run',
+        :operation => :"IngestionClient.get_run",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1174,7 +1316,7 @@ module Algolia
     # @return [Run]
     def get_run(run_id, request_options = {})
       response = get_run_with_http_info(run_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Run')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::Run")
     end
 
     # Retrieve a list of task runs.
@@ -1193,20 +1335,39 @@ module Algolia
     # @param end_date [String] Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_runs_with_http_info(items_per_page = nil, page = nil, status = nil, task_id = nil, sort = nil, order = nil, start_date = nil, end_date = nil, request_options = {})
+    def get_runs_with_http_info(
+      items_per_page = nil,
+      page = nil,
+      status = nil,
+      task_id = nil,
+      sort = nil,
+      order = nil,
+      start_date = nil,
+      end_date = nil,
+      request_options = {}
+    )
       if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
-        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_runs, must be smaller than or equal to 100.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_runs, must be smaller than or equal to 100."
+        )
       end
 
       if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
-        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_runs, must be greater than or equal to 1.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_runs, must be greater than or equal to 1."
+        )
       end
 
       if @api_client.config.client_side_validation && !page.nil? && page < 1
-        raise ArgumentError, 'invalid value for ""page"" when calling IngestionClient.get_runs, must be greater than or equal to 1.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"page\"\" when calling IngestionClient.get_runs, must be greater than or equal to 1."
+        )
       end
 
-      path = '/1/runs'
+      path = "/1/runs"
       query_params = {}
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
       query_params[:page] = page unless page.nil?
@@ -1223,7 +1384,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.get_runs',
+        :operation => :"IngestionClient.get_runs",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1249,9 +1410,29 @@ module Algolia
     # @param end_date [String] Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [RunListResponse]
-    def get_runs(items_per_page = nil, page = nil, status = nil, task_id = nil, sort = nil, order = nil, start_date = nil, end_date = nil, request_options = {})
-      response = get_runs_with_http_info(items_per_page, page, status, task_id, sort, order, start_date, end_date, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::RunListResponse')
+    def get_runs(
+      items_per_page = nil,
+      page = nil,
+      status = nil,
+      task_id = nil,
+      sort = nil,
+      order = nil,
+      start_date = nil,
+      end_date = nil,
+      request_options = {}
+    )
+      response = get_runs_with_http_info(
+        items_per_page,
+        page,
+        status,
+        task_id,
+        sort,
+        order,
+        start_date,
+        end_date,
+        request_options
+      )
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::RunListResponse")
     end
 
     # Retrieve a source by its ID.
@@ -1269,7 +1450,7 @@ module Algolia
         raise ArgumentError, "Parameter `source_id` is required when calling `get_source`."
       end
 
-      path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', Transport.encode_uri(source_id.to_s))
+      path = "/1/sources/{sourceID}".sub("{" + "sourceID" + "}", Transport.encode_uri(source_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1278,7 +1459,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.get_source',
+        :operation => :"IngestionClient.get_source",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1299,7 +1480,7 @@ module Algolia
     # @return [Source]
     def get_source(source_id, request_options = {})
       response = get_source_with_http_info(source_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Source')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::Source")
     end
 
     # Retrieves a list of sources.
@@ -1316,25 +1497,45 @@ module Algolia
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_sources_with_http_info(items_per_page = nil, page = nil, type = nil, authentication_id = nil, sort = nil, order = nil, request_options = {})
+    def get_sources_with_http_info(
+      items_per_page = nil,
+      page = nil,
+      type = nil,
+      authentication_id = nil,
+      sort = nil,
+      order = nil,
+      request_options = {}
+    )
       if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
-        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_sources, must be smaller than or equal to 100.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_sources, must be smaller than or equal to 100."
+        )
       end
 
       if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
-        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_sources, must be greater than or equal to 1.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_sources, must be greater than or equal to 1."
+        )
       end
 
       if @api_client.config.client_side_validation && !page.nil? && page < 1
-        raise ArgumentError, 'invalid value for ""page"" when calling IngestionClient.get_sources, must be greater than or equal to 1.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"page\"\" when calling IngestionClient.get_sources, must be greater than or equal to 1."
+        )
       end
 
-      path = '/1/sources'
+      path = "/1/sources"
       query_params = {}
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
       query_params[:page] = page unless page.nil?
       query_params[:type] = @api_client.build_collection_param(type, :csv) unless type.nil?
-      query_params[:authenticationID] = @api_client.build_collection_param(authentication_id, :csv) unless authentication_id.nil?
+      unless authentication_id.nil?
+        query_params[:authenticationID] = @api_client.build_collection_param(authentication_id, :csv)
+      end
+
       query_params[:sort] = sort unless sort.nil?
       query_params[:order] = order unless order.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -1344,7 +1545,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.get_sources',
+        :operation => :"IngestionClient.get_sources",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1368,9 +1569,17 @@ module Algolia
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListSourcesResponse]
-    def get_sources(items_per_page = nil, page = nil, type = nil, authentication_id = nil, sort = nil, order = nil, request_options = {})
+    def get_sources(
+      items_per_page = nil,
+      page = nil,
+      type = nil,
+      authentication_id = nil,
+      sort = nil,
+      order = nil,
+      request_options = {}
+    )
       response = get_sources_with_http_info(items_per_page, page, type, authentication_id, sort, order, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListSourcesResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::ListSourcesResponse")
     end
 
     # Retrieves a task by its ID.
@@ -1388,7 +1597,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_id` is required when calling `get_task`."
       end
 
-      path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', Transport.encode_uri(task_id.to_s))
+      path = "/1/tasks/{taskID}".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1397,7 +1606,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.get_task',
+        :operation => :"IngestionClient.get_task",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1418,7 +1627,7 @@ module Algolia
     # @return [Task]
     def get_task(task_id, request_options = {})
       response = get_task_with_http_info(task_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Task')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::Task")
     end
 
     # Retrieves a list of tasks.
@@ -1438,28 +1647,50 @@ module Algolia
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_tasks_with_http_info(items_per_page = nil, page = nil, action = nil, enabled = nil, source_id = nil, destination_id = nil, trigger_type = nil, sort = nil, order = nil,
-                                 request_options = {})
+    def get_tasks_with_http_info(
+      items_per_page = nil,
+      page = nil,
+      action = nil,
+      enabled = nil,
+      source_id = nil,
+      destination_id = nil,
+      trigger_type = nil,
+      sort = nil,
+      order = nil,
+      request_options = {}
+    )
       if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
-        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_tasks, must be smaller than or equal to 100.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_tasks, must be smaller than or equal to 100."
+        )
       end
 
       if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
-        raise ArgumentError, 'invalid value for ""items_per_page"" when calling IngestionClient.get_tasks, must be greater than or equal to 1.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_tasks, must be greater than or equal to 1."
+        )
       end
 
       if @api_client.config.client_side_validation && !page.nil? && page < 1
-        raise ArgumentError, 'invalid value for ""page"" when calling IngestionClient.get_tasks, must be greater than or equal to 1.'
+        raise(
+          ArgumentError,
+          "invalid value for \"\"page\"\" when calling IngestionClient.get_tasks, must be greater than or equal to 1."
+        )
       end
 
-      path = '/1/tasks'
+      path = "/1/tasks"
       query_params = {}
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
       query_params[:page] = page unless page.nil?
       query_params[:action] = @api_client.build_collection_param(action, :csv) unless action.nil?
       query_params[:enabled] = enabled unless enabled.nil?
       query_params[:sourceID] = @api_client.build_collection_param(source_id, :csv) unless source_id.nil?
-      query_params[:destinationID] = @api_client.build_collection_param(destination_id, :csv) unless destination_id.nil?
+      unless destination_id.nil?
+        query_params[:destinationID] = @api_client.build_collection_param(destination_id, :csv)
+      end
+
       query_params[:triggerType] = @api_client.build_collection_param(trigger_type, :csv) unless trigger_type.nil?
       query_params[:sort] = sort unless sort.nil?
       query_params[:order] = order unless order.nil?
@@ -1470,7 +1701,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.get_tasks',
+        :operation => :"IngestionClient.get_tasks",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1497,10 +1728,31 @@ module Algolia
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListTasksResponse]
-    def get_tasks(items_per_page = nil, page = nil, action = nil, enabled = nil, source_id = nil, destination_id = nil, trigger_type = nil, sort = nil, order = nil,
-                  request_options = {})
-      response = get_tasks_with_http_info(items_per_page, page, action, enabled, source_id, destination_id, trigger_type, sort, order, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListTasksResponse')
+    def get_tasks(
+      items_per_page = nil,
+      page = nil,
+      action = nil,
+      enabled = nil,
+      source_id = nil,
+      destination_id = nil,
+      trigger_type = nil,
+      sort = nil,
+      order = nil,
+      request_options = {}
+    )
+      response = get_tasks_with_http_info(
+        items_per_page,
+        page,
+        action,
+        enabled,
+        source_id,
+        destination_id,
+        trigger_type,
+        sort,
+        order,
+        request_options
+      )
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::ListTasksResponse")
     end
 
     # Retrieves a transformation by its ID.
@@ -1518,7 +1770,10 @@ module Algolia
         raise ArgumentError, "Parameter `transformation_id` is required when calling `get_transformation`."
       end
 
-      path = '/1/transformations/{transformationID}'.sub('{' + 'transformationID' + '}', Transport.encode_uri(transformation_id.to_s))
+      path = "/1/transformations/{transformationID}".sub(
+        "{" + "transformationID" + "}",
+        Transport.encode_uri(transformation_id.to_s)
+      )
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1527,7 +1782,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.get_transformation',
+        :operation => :"IngestionClient.get_transformation",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1548,7 +1803,7 @@ module Algolia
     # @return [Transformation]
     def get_transformation(transformation_id, request_options = {})
       response = get_transformation_with_http_info(transformation_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::Transformation')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::Transformation")
     end
 
     # Retrieves a list of transformations.
@@ -1562,7 +1817,7 @@ module Algolia
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_transformations_with_http_info(sort = nil, order = nil, request_options = {})
-      path = '/1/transformations'
+      path = "/1/transformations"
       query_params = {}
       query_params[:sort] = sort unless sort.nil?
       query_params[:order] = order unless order.nil?
@@ -1573,7 +1828,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.get_transformations',
+        :operation => :"IngestionClient.get_transformations",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1595,7 +1850,10 @@ module Algolia
     # @return [ListTransformationsResponse]
     def get_transformations(sort = nil, order = nil, request_options = {})
       response = get_transformations_with_http_info(sort, order, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::ListTransformationsResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Ingestion::ListTransformationsResponse"
+      )
     end
 
     # Runs a task. You can check the status of task runs with the observability endpoints.
@@ -1613,7 +1871,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_id` is required when calling `run_task`."
       end
 
-      path = '/1/tasks/{taskID}/run'.sub('{' + 'taskID' + '}', Transport.encode_uri(task_id.to_s))
+      path = "/1/tasks/{taskID}/run".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1622,7 +1880,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.run_task',
+        :operation => :"IngestionClient.run_task",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1643,7 +1901,7 @@ module Algolia
     # @return [RunResponse]
     def run_task(task_id, request_options = {})
       response = run_task_with_http_info(task_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::RunResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::RunResponse")
     end
 
     # Searches for authentication resources.
@@ -1661,7 +1919,7 @@ module Algolia
         raise ArgumentError, "Parameter `authentication_search` is required when calling `search_authentications`."
       end
 
-      path = '/1/authentications/search'
+      path = "/1/authentications/search"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1670,7 +1928,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(authentication_search)
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.search_authentications',
+        :operation => :"IngestionClient.search_authentications",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1691,7 +1949,7 @@ module Algolia
     # @return [Array<Authentication>]
     def search_authentications(authentication_search, request_options = {})
       response = search_authentications_with_http_info(authentication_search, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Authentication>')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Array<Ingestion::Authentication>")
     end
 
     # Searches for destinations.
@@ -1709,7 +1967,7 @@ module Algolia
         raise ArgumentError, "Parameter `destination_search` is required when calling `search_destinations`."
       end
 
-      path = '/1/destinations/search'
+      path = "/1/destinations/search"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1718,7 +1976,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(destination_search)
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.search_destinations',
+        :operation => :"IngestionClient.search_destinations",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1739,7 +1997,7 @@ module Algolia
     # @return [Array<Destination>]
     def search_destinations(destination_search, request_options = {})
       response = search_destinations_with_http_info(destination_search, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Destination>')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Array<Ingestion::Destination>")
     end
 
     # Searches for sources.
@@ -1757,7 +2015,7 @@ module Algolia
         raise ArgumentError, "Parameter `source_search` is required when calling `search_sources`."
       end
 
-      path = '/1/sources/search'
+      path = "/1/sources/search"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1766,7 +2024,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(source_search)
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.search_sources',
+        :operation => :"IngestionClient.search_sources",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1787,7 +2045,7 @@ module Algolia
     # @return [Array<Source>]
     def search_sources(source_search, request_options = {})
       response = search_sources_with_http_info(source_search, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Source>')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Array<Ingestion::Source>")
     end
 
     # Searches for tasks.
@@ -1805,7 +2063,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_search` is required when calling `search_tasks`."
       end
 
-      path = '/1/tasks/search'
+      path = "/1/tasks/search"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1814,7 +2072,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(task_search)
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.search_tasks',
+        :operation => :"IngestionClient.search_tasks",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1835,7 +2093,7 @@ module Algolia
     # @return [Array<Task>]
     def search_tasks(task_search, request_options = {})
       response = search_tasks_with_http_info(task_search, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Task>')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Array<Ingestion::Task>")
     end
 
     # Searches for transformations.
@@ -1853,7 +2111,7 @@ module Algolia
         raise ArgumentError, "Parameter `transformation_search` is required when calling `search_transformations`."
       end
 
-      path = '/1/transformations/search'
+      path = "/1/transformations/search"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1862,7 +2120,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(transformation_search)
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.search_transformations',
+        :operation => :"IngestionClient.search_transformations",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1883,7 +2141,7 @@ module Algolia
     # @return [Array<Transformation>]
     def search_transformations(transformation_search, request_options = {})
       response = search_transformations_with_http_info(transformation_search, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Array<Ingestion::Transformation>')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Array<Ingestion::Transformation>")
     end
 
     # Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with &#x60;type: docker&#x60; and &#x60;imageType: singer&#x60;.
@@ -1901,7 +2159,7 @@ module Algolia
         raise ArgumentError, "Parameter `source_id` is required when calling `trigger_docker_source_discover`."
       end
 
-      path = '/1/sources/{sourceID}/discover'.sub('{' + 'sourceID' + '}', Transport.encode_uri(source_id.to_s))
+      path = "/1/sources/{sourceID}/discover".sub("{" + "sourceID" + "}", Transport.encode_uri(source_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1910,7 +2168,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.trigger_docker_source_discover',
+        :operation => :"IngestionClient.trigger_docker_source_discover",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1931,7 +2189,7 @@ module Algolia
     # @return [SourceWatchResponse]
     def trigger_docker_source_discover(source_id, request_options = {})
       response = trigger_docker_source_discover_with_http_info(source_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceWatchResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::SourceWatchResponse")
     end
 
     # Try a transformation.
@@ -1949,7 +2207,7 @@ module Algolia
         raise ArgumentError, "Parameter `transformation_try` is required when calling `try_transformations`."
       end
 
-      path = '/1/transformations/try'
+      path = "/1/transformations/try"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1958,7 +2216,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(transformation_try)
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.try_transformations',
+        :operation => :"IngestionClient.try_transformations",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1979,7 +2237,10 @@ module Algolia
     # @return [TransformationTryResponse]
     def try_transformations(transformation_try, request_options = {})
       response = try_transformations_with_http_info(transformation_try, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TransformationTryResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Ingestion::TransformationTryResponse"
+      )
     end
 
     # Updates an authentication resource.
@@ -2002,7 +2263,10 @@ module Algolia
         raise ArgumentError, "Parameter `authentication_update` is required when calling `update_authentication`."
       end
 
-      path = '/1/authentications/{authenticationID}'.sub('{' + 'authenticationID' + '}', Transport.encode_uri(authentication_id.to_s))
+      path = "/1/authentications/{authenticationID}".sub(
+        "{" + "authenticationID" + "}",
+        Transport.encode_uri(authentication_id.to_s)
+      )
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -2011,7 +2275,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(authentication_update)
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.update_authentication',
+        :operation => :"IngestionClient.update_authentication",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -2033,7 +2297,10 @@ module Algolia
     # @return [AuthenticationUpdateResponse]
     def update_authentication(authentication_id, authentication_update, request_options = {})
       response = update_authentication_with_http_info(authentication_id, authentication_update, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::AuthenticationUpdateResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Ingestion::AuthenticationUpdateResponse"
+      )
     end
 
     # Updates the destination by its ID.
@@ -2056,7 +2323,10 @@ module Algolia
         raise ArgumentError, "Parameter `destination_update` is required when calling `update_destination`."
       end
 
-      path = '/1/destinations/{destinationID}'.sub('{' + 'destinationID' + '}', Transport.encode_uri(destination_id.to_s))
+      path = "/1/destinations/{destinationID}".sub(
+        "{" + "destinationID" + "}",
+        Transport.encode_uri(destination_id.to_s)
+      )
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -2065,7 +2335,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(destination_update)
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.update_destination',
+        :operation => :"IngestionClient.update_destination",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -2087,7 +2357,10 @@ module Algolia
     # @return [DestinationUpdateResponse]
     def update_destination(destination_id, destination_update, request_options = {})
       response = update_destination_with_http_info(destination_id, destination_update, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::DestinationUpdateResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Ingestion::DestinationUpdateResponse"
+      )
     end
 
     # Updates a source by its ID.
@@ -2110,7 +2383,7 @@ module Algolia
         raise ArgumentError, "Parameter `source_update` is required when calling `update_source`."
       end
 
-      path = '/1/sources/{sourceID}'.sub('{' + 'sourceID' + '}', Transport.encode_uri(source_id.to_s))
+      path = "/1/sources/{sourceID}".sub("{" + "sourceID" + "}", Transport.encode_uri(source_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -2119,7 +2392,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(source_update)
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.update_source',
+        :operation => :"IngestionClient.update_source",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -2141,7 +2414,7 @@ module Algolia
     # @return [SourceUpdateResponse]
     def update_source(source_id, source_update, request_options = {})
       response = update_source_with_http_info(source_id, source_update, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceUpdateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::SourceUpdateResponse")
     end
 
     # Updates a task by its ID.
@@ -2160,7 +2433,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_update` is required when calling `update_task`."
       end
 
-      path = '/1/tasks/{taskID}'.sub('{' + 'taskID' + '}', Transport.encode_uri(task_id.to_s))
+      path = "/1/tasks/{taskID}".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -2169,7 +2442,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(task_update)
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.update_task',
+        :operation => :"IngestionClient.update_task",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -2187,7 +2460,7 @@ module Algolia
     # @return [TaskUpdateResponse]
     def update_task(task_id, task_update, request_options = {})
       response = update_task_with_http_info(task_id, task_update, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TaskUpdateResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskUpdateResponse")
     end
 
     # Updates a transformation by its ID.
@@ -2206,7 +2479,10 @@ module Algolia
         raise ArgumentError, "Parameter `transformation_create` is required when calling `update_transformation`."
       end
 
-      path = '/1/transformations/{transformationID}'.sub('{' + 'transformationID' + '}', Transport.encode_uri(transformation_id.to_s))
+      path = "/1/transformations/{transformationID}".sub(
+        "{" + "transformationID" + "}",
+        Transport.encode_uri(transformation_id.to_s)
+      )
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -2215,7 +2491,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(transformation_create)
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.update_transformation',
+        :operation => :"IngestionClient.update_transformation",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -2233,7 +2509,10 @@ module Algolia
     # @return [TransformationUpdateResponse]
     def update_transformation(transformation_id, transformation_create, request_options = {})
       response = update_transformation_with_http_info(transformation_id, transformation_create, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::TransformationUpdateResponse')
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Ingestion::TransformationUpdateResponse"
+      )
     end
 
     # Validates a source payload to ensure it can be created and that the data source can be reached by Algolia.
@@ -2246,7 +2525,7 @@ module Algolia
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def validate_source_with_http_info(source_create = nil, request_options = {})
-      path = '/1/sources/validate'
+      path = "/1/sources/validate"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -2255,7 +2534,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(source_create)
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.validate_source',
+        :operation => :"IngestionClient.validate_source",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -2276,7 +2555,7 @@ module Algolia
     # @return [SourceWatchResponse]
     def validate_source(source_create = nil, request_options = {})
       response = validate_source_with_http_info(source_create, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceWatchResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::SourceWatchResponse")
     end
 
     # Validates an update of a source payload to ensure it can be created and that the data source can be reached by Algolia.
@@ -2299,7 +2578,7 @@ module Algolia
         raise ArgumentError, "Parameter `source_update` is required when calling `validate_source_before_update`."
       end
 
-      path = '/1/sources/{sourceID}/validate'.sub('{' + 'sourceID' + '}', Transport.encode_uri(source_id.to_s))
+      path = "/1/sources/{sourceID}/validate".sub("{" + "sourceID" + "}", Transport.encode_uri(source_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -2308,7 +2587,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(source_update)
 
       new_options = request_options.merge(
-        :operation => :'IngestionClient.validate_source_before_update',
+        :operation => :"IngestionClient.validate_source_before_update",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -2330,7 +2609,8 @@ module Algolia
     # @return [SourceWatchResponse]
     def validate_source_before_update(source_id, source_update, request_options = {})
       response = validate_source_before_update_with_http_info(source_id, source_update, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || 'Ingestion::SourceWatchResponse')
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::SourceWatchResponse")
     end
+
   end
 end

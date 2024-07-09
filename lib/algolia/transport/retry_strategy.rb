@@ -7,7 +7,7 @@ module Algolia
       #
       def initialize(hosts)
         @hosts = hosts
-        @lock  = Mutex.new
+        @lock = Mutex.new
       end
 
       # Retrieves the tryable hosts
@@ -26,6 +26,7 @@ module Algolia
             @hosts.each do |host|
               reset(host) if flag?(host.accept, call_type)
             end
+
             @hosts
           end
         end
@@ -42,16 +43,16 @@ module Algolia
       def decide(tryable_host, http_response_code: nil, is_timed_out: false, network_failure: false)
         @lock.synchronize do
           if !is_timed_out && success?(http_response_code)
-            tryable_host.up       = true
+            tryable_host.up = true
             tryable_host.last_use = Time.now.utc
             SUCCESS
           elsif !is_timed_out && retryable?(http_response_code, network_failure)
-            tryable_host.up       = false
+            tryable_host.up = false
             tryable_host.last_use = Time.now.utc
             RETRY
           elsif is_timed_out
-            tryable_host.up           = true
-            tryable_host.last_use     = Time.now.utc
+            tryable_host.up = true
+            tryable_host.last_use = Time.now.utc
             tryable_host.retry_count += 1
             RETRY
           else
@@ -94,9 +95,9 @@ module Algolia
       # @param host [StatefulHost]
       #
       def reset(host)
-        host.up          = true
+        host.up = true
         host.retry_count = 0
-        host.last_use    = Time.now.utc
+        host.last_use = Time.now.utc
       end
 
       # Make a binary check to know whether the item contains the flag

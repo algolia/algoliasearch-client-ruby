@@ -1,17 +1,18 @@
-require 'faraday'
+require "faraday"
+
 # this is the default adapter and it needs to be required to be registered.
-require 'faraday/net_http_persistent' unless Faraday::VERSION < '1'
-require 'zlib'
+require "faraday/net_http_persistent" unless Faraday::VERSION < "1"
+require "zlib"
 
 module Algolia
   module Transport
     def self.encode_uri(uri)
-      CGI.escape(uri).gsub('+', '%20')
+      CGI.escape(uri).gsub("+", "%20")
     end
 
     def self.stringify_query_params(query_params)
       query_params.to_h do |key, value|
-        value = value.join(',') if value.is_a?(Array)
+        value = value.join(",") if value.is_a?(Array)
         [encode_uri(key.to_s).to_sym, encode_uri(value.to_s)]
       end
     end
@@ -39,7 +40,7 @@ module Algolia
       #
       def request(call_type, method, path, body, opts = {})
         @retry_strategy.get_tryable_hosts(call_type).each do |host|
-          opts[:timeout]         ||= get_timeout(call_type) * (host.retry_count + 1)
+          opts[:timeout] ||= get_timeout(call_type) * (host.retry_count + 1)
           opts[:connect_timeout] ||= @config.connect_timeout * (host.retry_count + 1)
 
           request_options = RequestOptions.new(@config)
@@ -47,7 +48,7 @@ module Algolia
           # TODO: what is this merge for ?
           # request_options.query_params.merge!(request_options.data) if method == :GET
 
-          request  = build_request(method, path, body, request_options)
+          request = build_request(method, path, body, request_options)
           response = @requester.send_request(
             host,
             request[:method],
@@ -59,15 +60,21 @@ module Algolia
             request[:connect_timeout]
           )
 
-          outcome = @retry_strategy.decide(host, http_response_code: response.status, is_timed_out: response.has_timed_out, network_failure: response.network_failure)
+          outcome = @retry_strategy.decide(
+            host,
+            http_response_code: response.status,
+            is_timed_out: response.has_timed_out,
+            network_failure: response.network_failure
+          )
           if outcome == FAILURE
             decoded_error = JSON.parse(response.error, :symbolize_names => true)
             raise Algolia::AlgoliaHttpError.new(decoded_error[:status], decoded_error[:message])
           end
+
           return response unless outcome == RETRY
         end
 
-        raise Algolia::AlgoliaUnreachableHostError, 'Unreachable hosts'
+        raise Algolia::AlgoliaUnreachableHostError, "Unreachable hosts"
       end
 
       private
@@ -82,13 +89,13 @@ module Algolia
       # @return [Hash]
       #
       def build_request(method, path, body, request_options)
-        request                   = {}
-        request[:method]          = method.downcase
-        request[:path]            = path
-        request[:body]            = build_body(body, request_options)
-        request[:query_params]    = Algolia::Transport.stringify_query_params(request_options.query_params)
-        request[:header_params]   = generate_header_params(body, request_options)
-        request[:timeout]         = request_options.timeout
+        request = {}
+        request[:method] = method.downcase
+        request[:path] = path
+        request[:body] = build_body(body, request_options)
+        request[:query_params] = Algolia::Transport.stringify_query_params(request_options.query_params)
+        request[:header_params] = generate_header_params(body, request_options)
+        request[:timeout] = request_options.timeout
         request[:connect_timeout] = request_options.connect_timeout
         request
       end
@@ -97,7 +104,7 @@ module Algolia
       def build_body(body, request_options)
         return nil if body.nil?
 
-        if request_options.compression_type == 'gzip'
+        if request_options.compression_type == "gzip"
           body = Zlib.gzip(body)
         end
 
@@ -113,9 +120,9 @@ module Algolia
       def generate_header_params(body, request_options)
         header_params = request_options.header_params.transform_keys(&:downcase)
         header_params = @config.header_params.merge(header_params)
-        header_params['accept-encoding'] = 'gzip' if request_options.compression_type == 'gzip'
-        if request_options.compression_type == 'gzip' && body.is_a?(String) && !body.to_s.strip.empty?
-          header_params['content-encoding'] = 'gzip'
+        header_params["accept-encoding"] = "gzip" if request_options.compression_type == "gzip"
+        if request_options.compression_type == "gzip" && body.is_a?(String) && !body.to_s.strip.empty?
+          header_params["content-encoding"] = "gzip"
         end
 
         header_params
