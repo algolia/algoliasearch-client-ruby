@@ -199,7 +199,7 @@ module Algolia
       def get_objects(object_ids, opts = {})
         request_options        = symbolize_hash(opts)
         attributes_to_retrieve = get_option(request_options, 'attributesToRetrieve')
-        request_options.delete(:attributesToRetrieve)
+        opts.delete(:attributesToRetrieve)
 
         requests = []
         object_ids.each do |object_id|
