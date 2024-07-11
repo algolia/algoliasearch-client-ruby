@@ -8,8 +8,6 @@ Gem::Specification.new do |spec|
   spec.name          = 'algolia'
   spec.version       = Algolia::VERSION
   spec.authors       = ['Algolia']
-  spec.email         = ['support@algolia.com']
-
   spec.date        = Date.today
   spec.licenses    = ['MIT']
   spec.summary     = 'A simple Ruby client for the algolia.com REST API'
