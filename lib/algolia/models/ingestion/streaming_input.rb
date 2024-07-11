@@ -5,21 +5,13 @@ require "time"
 
 module Algolia
   module Ingestion
-    # Input for a manually-triggered task whose source is of type `bigquery` and for which extracted data spans a given time range.
-    class OnDemandDateUtilsInput
-      # Earliest date in RFC 3339 format of the extracted data from Big Query.
-      attr_accessor :start_date
-
-      # Latest date in RFC 3339 format of the extracted data from Big Query.
-      attr_accessor :end_date
-
+    # Input for a `streaming` task whose source is of type `ga4BigqueryExport` and for which extracted data is continuously streamed.
+    class StreamingInput
       attr_accessor :mapping
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :start_date => :startDate,
-          :end_date => :endDate,
           :mapping => :mapping
         }
       end
@@ -32,8 +24,6 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :start_date => :"String",
-          :end_date => :"String",
           :mapping => :"MappingInput"
         }
       end
@@ -51,7 +41,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::OnDemandDateUtilsInput` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::StreamingInput` initialize method"
           )
         end
 
@@ -60,7 +50,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::OnDemandDateUtilsInput`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::StreamingInput`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -68,20 +58,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:start_date)
-          self.start_date = attributes[:start_date]
-        else
-          self.start_date = nil
-        end
-
-        if attributes.key?(:end_date)
-          self.end_date = attributes[:end_date]
-        else
-          self.end_date = nil
-        end
-
         if attributes.key?(:mapping)
           self.mapping = attributes[:mapping]
+        else
+          self.mapping = nil
         end
       end
 
@@ -90,8 +70,6 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          start_date == other.start_date &&
-          end_date == other.end_date &&
           mapping == other.mapping
       end
 
@@ -104,7 +82,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [start_date, end_date, mapping].hash
+        [mapping].hash
       end
 
       # Builds the object from hash

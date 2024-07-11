@@ -103,8 +103,6 @@ module Algolia
 
         if attributes.key?(:description)
           self.description = attributes[:description]
-        else
-          self.description = nil
         end
 
         if attributes.key?(:created_at)

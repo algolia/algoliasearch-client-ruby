@@ -83,8 +83,6 @@ module Algolia
 
         if attributes.key?(:description)
           self.description = attributes[:description]
-        else
-          self.description = nil
         end
       end
 

@@ -5,18 +5,13 @@ require "time"
 
 module Algolia
   module Ingestion
-    # Input for scheduled tasks whose source is of type `bigquery` and for which extracted data spans a fixed number of days.
-    class ScheduleDateUtilsInput
-      # Number of days in the past until the current day for which to extract Big Query data.
-      attr_accessor :timeframe
-
-      attr_accessor :mapping
+    class DockerStreamsInput
+      attr_accessor :streams
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :timeframe => :timeframe,
-          :mapping => :mapping
+          :streams => :streams
         }
       end
 
@@ -28,8 +23,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :timeframe => :"Integer",
-          :mapping => :"MappingInput"
+          :streams => :"Object"
         }
       end
 
@@ -46,7 +40,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::ScheduleDateUtilsInput` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::DockerStreamsInput` initialize method"
           )
         end
 
@@ -55,7 +49,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::ScheduleDateUtilsInput`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::DockerStreamsInput`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -63,33 +57,11 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:timeframe)
-          self.timeframe = attributes[:timeframe]
+        if attributes.key?(:streams)
+          self.streams = attributes[:streams]
         else
-          self.timeframe = nil
+          self.streams = nil
         end
-
-        if attributes.key?(:mapping)
-          self.mapping = attributes[:mapping]
-        end
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] timeframe Value to be assigned
-      def timeframe=(timeframe)
-        if timeframe.nil?
-          raise ArgumentError, "timeframe cannot be nil"
-        end
-
-        if timeframe > 30
-          raise ArgumentError, "invalid value for \"timeframe\", must be smaller than or equal to 30."
-        end
-
-        if timeframe < 1
-          raise ArgumentError, "invalid value for \"timeframe\", must be greater than or equal to 1."
-        end
-
-        @timeframe = timeframe
       end
 
       # Checks equality by comparing each attribute.
@@ -97,8 +69,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          timeframe == other.timeframe &&
-          mapping == other.mapping
+          streams == other.streams
       end
 
       # @see the `==` method
@@ -110,7 +81,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [timeframe, mapping].hash
+        [streams].hash
       end
 
       # Builds the object from hash
