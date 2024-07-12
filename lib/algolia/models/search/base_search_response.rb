@@ -35,9 +35,6 @@ module Algolia
       # Statistics for numerical facets.
       attr_accessor :facets_stats
 
-      # Number of hits per page.
-      attr_accessor :hits_per_page
-
       # Index name used for the query.
       attr_accessor :index
 
@@ -47,17 +44,8 @@ module Algolia
       # Warnings about the query.
       attr_accessor :message
 
-      # Number of results (hits).
-      attr_accessor :nb_hits
-
-      # Number of pages of results.
-      attr_accessor :nb_pages
-
       # Number of hits selected and sorted by the relevant sort algorithm.
       attr_accessor :nb_sorted_hits
-
-      # Page of search results to retrieve.
-      attr_accessor :page
 
       # Post-[normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/#what-does-normalization-mean) query string that will be searched.
       attr_accessor :parsed_query
@@ -102,14 +90,10 @@ module Algolia
           :exhaustive_typo => :exhaustiveTypo,
           :facets => :facets,
           :facets_stats => :facets_stats,
-          :hits_per_page => :hitsPerPage,
           :index => :index,
           :index_used => :indexUsed,
           :message => :message,
-          :nb_hits => :nbHits,
-          :nb_pages => :nbPages,
           :nb_sorted_hits => :nbSortedHits,
-          :page => :page,
           :parsed_query => :parsedQuery,
           :processing_time_ms => :processingTimeMS,
           :processing_timings_ms => :processingTimingsMS,
@@ -141,14 +125,10 @@ module Algolia
           :exhaustive_typo => :"Boolean",
           :facets => :"Hash<String, Hash<String, Integer>>",
           :facets_stats => :"Hash<String, FacetsStats>",
-          :hits_per_page => :"Integer",
           :index => :"String",
           :index_used => :"String",
           :message => :"String",
-          :nb_hits => :"Integer",
-          :nb_pages => :"Integer",
           :nb_sorted_hits => :"Integer",
-          :page => :"Integer",
           :parsed_query => :"String",
           :processing_time_ms => :"Integer",
           :processing_timings_ms => :"Object",
@@ -223,12 +203,6 @@ module Algolia
           end
         end
 
-        if attributes.key?(:hits_per_page)
-          self.hits_per_page = attributes[:hits_per_page]
-        else
-          self.hits_per_page = nil
-        end
-
         if attributes.key?(:index)
           self.index = attributes[:index]
         end
@@ -241,26 +215,8 @@ module Algolia
           self.message = attributes[:message]
         end
 
-        if attributes.key?(:nb_hits)
-          self.nb_hits = attributes[:nb_hits]
-        else
-          self.nb_hits = nil
-        end
-
-        if attributes.key?(:nb_pages)
-          self.nb_pages = attributes[:nb_pages]
-        else
-          self.nb_pages = nil
-        end
-
         if attributes.key?(:nb_sorted_hits)
           self.nb_sorted_hits = attributes[:nb_sorted_hits]
-        end
-
-        if attributes.key?(:page)
-          self.page = attributes[:page]
-        else
-          self.page = nil
         end
 
         if attributes.key?(:parsed_query)
@@ -339,38 +295,6 @@ module Algolia
         @around_lat_lng = around_lat_lng
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] hits_per_page Value to be assigned
-      def hits_per_page=(hits_per_page)
-        if hits_per_page.nil?
-          raise ArgumentError, "hits_per_page cannot be nil"
-        end
-
-        if hits_per_page > 1000
-          raise ArgumentError, "invalid value for \"hits_per_page\", must be smaller than or equal to 1000."
-        end
-
-        if hits_per_page < 1
-          raise ArgumentError, "invalid value for \"hits_per_page\", must be greater than or equal to 1."
-        end
-
-        @hits_per_page = hits_per_page
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] page Value to be assigned
-      def page=(page)
-        if page.nil?
-          raise ArgumentError, "page cannot be nil"
-        end
-
-        if page < 0
-          raise ArgumentError, "invalid value for \"page\", must be greater than or equal to 0."
-        end
-
-        @page = page
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)
@@ -386,14 +310,10 @@ module Algolia
           exhaustive_typo == other.exhaustive_typo &&
           facets == other.facets &&
           facets_stats == other.facets_stats &&
-          hits_per_page == other.hits_per_page &&
           index == other.index &&
           index_used == other.index_used &&
           message == other.message &&
-          nb_hits == other.nb_hits &&
-          nb_pages == other.nb_pages &&
           nb_sorted_hits == other.nb_sorted_hits &&
-          page == other.page &&
           parsed_query == other.parsed_query &&
           processing_time_ms == other.processing_time_ms &&
           processing_timings_ms == other.processing_timings_ms &&
@@ -426,14 +346,10 @@ module Algolia
           exhaustive_typo,
           facets,
           facets_stats,
-          hits_per_page,
           index,
           index_used,
           message,
-          nb_hits,
-          nb_pages,
           nb_sorted_hits,
-          page,
           parsed_query,
           processing_time_ms,
           processing_timings_ms,
