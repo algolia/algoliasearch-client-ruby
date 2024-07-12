@@ -1,3 +1,11 @@
+## [3.0.0.beta.9](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.beta.8...3.0.0.beta.9)
+
+- [a009967f6](https://github.com/algolia/api-clients-automation/commit/a009967f6) fix(specs): browse response required properties ([#3348](https://github.com/algolia/api-clients-automation/pull/3348)) by [@millotp](https://github.com/millotp/)
+- [04a799417](https://github.com/algolia/api-clients-automation/commit/04a799417) fix(specs): ingestion task and transformation ([#3347](https://github.com/algolia/api-clients-automation/pull/3347)) by [@shortcuts](https://github.com/shortcuts/)
+- [83badf20c](https://github.com/algolia/api-clients-automation/commit/83badf20c) fix(ruby): add the base64 dependency ([#3345](https://github.com/algolia/api-clients-automation/pull/3345)) by [@millotp](https://github.com/millotp/)
+- [586e13a54](https://github.com/algolia/api-clients-automation/commit/586e13a54) fix(ruby): use rubyfmt instead of rubocop ([#3334](https://github.com/algolia/api-clients-automation/pull/3334)) by [@millotp](https://github.com/millotp/)
+- [dcb1b59dc](https://github.com/algolia/api-clients-automation/commit/dcb1b59dc) fix(specs): clarify browse parameters ([#3333](https://github.com/algolia/api-clients-automation/pull/3333)) by [@kai687](https://github.com/kai687/)
+
 ## [3.0.0.beta.8](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.beta.7...3.0.0.beta.8)
 
 - [9776cb3ba](https://github.com/algolia/api-clients-automation/commit/9776cb3ba) feat(specs): add redirect to renderingContent ([#3296](https://github.com/algolia/api-clients-automation/pull/3296)) by [@shortcuts](https://github.com/shortcuts/)
