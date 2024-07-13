@@ -95,14 +95,10 @@ module Algolia
 
         if attributes.key?(:facet_name)
           self.facet_name = attributes[:facet_name]
-        else
-          self.facet_name = nil
         end
 
         if attributes.key?(:facet_value)
           self.facet_value = attributes[:facet_value]
-        else
-          self.facet_value = nil
         end
 
         if attributes.key?(:model)
