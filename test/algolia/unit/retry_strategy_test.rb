@@ -86,7 +86,7 @@ class RetryStrategyTest
     end
   end
 
-  describe 'retry stategy decisions' do
+  describe 'retry strategy decisions' do
     def before_all
       super
       @app_id         = 'app_id'
