@@ -82,7 +82,7 @@ class RetryStrategyTest
         index.save_object({ objectID: 'one' })
       end
 
-      assert_includes exception.message, 'Unreachable hosts. Last error: SSL_connect'
+      assert_includes exception.message, 'Unreachable hosts. Last error for 0.0.0.0: SSL_connect'
     end
   end
 
