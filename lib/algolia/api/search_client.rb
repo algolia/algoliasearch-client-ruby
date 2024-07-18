@@ -3179,16 +3179,16 @@ module Algolia
 
     # Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
     #
-    # @param operation [String] the `operation` that was done on a `key`.
     # @param key [String] the `key` that has been added, deleted or updated.
+    # @param operation [String] the `operation` that was done on a `key`.
     # @param api_key [Hash] necessary to know if an `update` operation has been processed, compare fields of the response with it.
     # @param max_retries [Integer] the maximum number of retries.
     # @param timeout [Proc] the function to decide how long to wait between retries.
     # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `getApikey` method and merged with the transporter requestOptions.
     # @return [Http::Response] the last get_api_key response
     def wait_for_api_key(
-      operation,
       key,
+      operation,
       api_key = {},
       max_retries = 50,
       timeout = -> (retry_count) { [retry_count * 200, 5000].min },
@@ -3198,18 +3198,14 @@ module Algolia
       if operation == "update"
         raise ArgumentError, "`api_key` is required when waiting for an `update` operation." if api_key.nil?
         while retries < max_retries
-          begin
-            updatad_key = get_api_key(key, request_options)
-            updated_key_hash = updatad_key.to_hash
-            equals = true
-            api_key.to_hash.each do |k, v|
-              equals &&= updated_key_hash[k] == v
-            end
-
-            return updatad_key if equals
-          rescue AlgoliaError => e
-            raise e unless e.code == 404
+          updated_key = get_api_key(key, request_options)
+          updated_key_hash = updated_key.to_hash
+          equals = true
+          api_key.to_hash.each do |k, v|
+            equals &&= updated_key_hash[k] == v
           end
+
+          return updated_key if equals
 
           retries += 1
           sleep(timeout.call(retries) / 1000.0)
@@ -3222,8 +3218,12 @@ module Algolia
         begin
           res = get_api_key(key, request_options)
           return res if operation == "add"
-        rescue AlgoliaError => e
-          return res if operation == "delete" && e.code == 404
+        rescue AlgoliaHttpError => e
+          if e.code == 404
+            return nil if operation == "delete"
+          else
+            raise e
+          end
         end
 
         retries += 1

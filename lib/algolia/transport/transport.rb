@@ -68,7 +68,7 @@ module Algolia
           )
           if outcome == FAILURE
             decoded_error = JSON.parse(response.error, :symbolize_names => true)
-            raise Algolia::AlgoliaHttpError.new(decoded_error[:status], decoded_error[:message])
+            raise Algolia::AlgoliaHttpError.new(response.status, decoded_error[:message])
           end
 
           return response unless outcome == RETRY
