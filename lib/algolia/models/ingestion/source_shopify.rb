@@ -6,26 +6,8 @@ require "time"
 module Algolia
   module Ingestion
     class SourceShopify
-      # Whether to index collection IDs.   If your store has `has_collection_search_page` set to true, collection IDs will be indexed even if `collectionIDIndexing` is false.
-      attr_accessor :collection_id_indexing
-
-      # Whether to increase the number of indexed collections per product. If true, Algolia indexes 200 collections per product. If false, 100 collections per product are indexed.
-      attr_accessor :increase_product_collection_limit
-
-      # Whether to set the default price ratio to 1 if no sale price is present.  The price ratio is determined by the ratio: `sale_price` / `regular_price`. If no sale price is present, the price ratio would be 0. If `defaultPriceRatioAsOne` is true, the price ratio is indexed as 1 instead.
-      attr_accessor :default_price_ratio_as_one
-
-      # Whether to exclude out-of-stock variants when determining the `max_variant_price` and `min_variant_price` attributes.
-      attr_accessor :exclude_oos_variants_for_price_at_trs
-
-      # Whether to include an inventory with every variant for every product record.
-      attr_accessor :include_variants_inventory
-
-      # Whether to include collection IDs and handles in the product records.
-      attr_accessor :has_collection_search_page
-
-      # Whether to convert tags on products to named tags.  To learn more, see [Named tags](https://www.algolia.com/doc/integration/shopify/sending-and-managing-data/named-tags).
-      attr_accessor :product_named_tags
+      # Feature flags for the Shopify source.
+      attr_accessor :feature_flags
 
       # URL of the Shopify store.
       attr_accessor :shop_url
@@ -33,13 +15,7 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :collection_id_indexing => :collectionIDIndexing,
-          :increase_product_collection_limit => :increaseProductCollectionLimit,
-          :default_price_ratio_as_one => :defaultPriceRatioAsOne,
-          :exclude_oos_variants_for_price_at_trs => :excludeOOSVariantsForPriceAtTRS,
-          :include_variants_inventory => :includeVariantsInventory,
-          :has_collection_search_page => :hasCollectionSearchPage,
-          :product_named_tags => :productNamedTags,
+          :feature_flags => :featureFlags,
           :shop_url => :shopURL
         }
       end
@@ -52,13 +28,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :collection_id_indexing => :"Boolean",
-          :increase_product_collection_limit => :"Boolean",
-          :default_price_ratio_as_one => :"Boolean",
-          :exclude_oos_variants_for_price_at_trs => :"Boolean",
-          :include_variants_inventory => :"Boolean",
-          :has_collection_search_page => :"Boolean",
-          :product_named_tags => :"Boolean",
+          :feature_flags => :"Hash<String, Object>",
           :shop_url => :"String"
         }
       end
@@ -101,32 +71,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:collection_id_indexing)
-          self.collection_id_indexing = attributes[:collection_id_indexing]
-        end
-
-        if attributes.key?(:increase_product_collection_limit)
-          self.increase_product_collection_limit = attributes[:increase_product_collection_limit]
-        end
-
-        if attributes.key?(:default_price_ratio_as_one)
-          self.default_price_ratio_as_one = attributes[:default_price_ratio_as_one]
-        end
-
-        if attributes.key?(:exclude_oos_variants_for_price_at_trs)
-          self.exclude_oos_variants_for_price_at_trs = attributes[:exclude_oos_variants_for_price_at_trs]
-        end
-
-        if attributes.key?(:include_variants_inventory)
-          self.include_variants_inventory = attributes[:include_variants_inventory]
-        end
-
-        if attributes.key?(:has_collection_search_page)
-          self.has_collection_search_page = attributes[:has_collection_search_page]
-        end
-
-        if attributes.key?(:product_named_tags)
-          self.product_named_tags = attributes[:product_named_tags]
+        if attributes.key?(:feature_flags)
+          if (value = attributes[:feature_flags]).is_a?(Hash)
+            self.feature_flags = value
+          end
         end
 
         if attributes.key?(:shop_url)
@@ -141,13 +89,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          collection_id_indexing == other.collection_id_indexing &&
-          increase_product_collection_limit == other.increase_product_collection_limit &&
-          default_price_ratio_as_one == other.default_price_ratio_as_one &&
-          exclude_oos_variants_for_price_at_trs == other.exclude_oos_variants_for_price_at_trs &&
-          include_variants_inventory == other.include_variants_inventory &&
-          has_collection_search_page == other.has_collection_search_page &&
-          product_named_tags == other.product_named_tags &&
+          feature_flags == other.feature_flags &&
           shop_url == other.shop_url
       end
 
@@ -160,16 +102,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [
-          collection_id_indexing,
-          increase_product_collection_limit,
-          default_price_ratio_as_one,
-          exclude_oos_variants_for_price_at_trs,
-          include_variants_inventory,
-          has_collection_search_page,
-          product_named_tags,
-          shop_url
-        ].hash
+        [feature_flags, shop_url].hash
       end
 
       # Builds the object from hash
