@@ -10,6 +10,12 @@ module Algolia
   # Used when hosts are unreachable
   #
   class AlgoliaUnreachableHostError < AlgoliaError
+    attr_reader :errors
+
+    def initialize(message, errors = [])
+      super(message)
+      @errors = errors
+    end
   end
 
   # An exception class raised when the REST API returns an error.

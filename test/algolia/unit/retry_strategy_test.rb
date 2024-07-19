@@ -73,7 +73,7 @@ class RetryStrategyTest
 
   describe 'All hosts are unreachable' do
     def test_failure_when_all_hosts_are_down
-      stateful_hosts = ['0.0.0.0']
+      stateful_hosts = ['0.0.0.0', '1.0.0.0']
       @config        = Algolia::Search::Config.new(application_id: 'foo', api_key: 'bar', custom_hosts: stateful_hosts)
       client         = Algolia::Search::Client.create_with_config(@config)
       index          = client.init_index(get_test_index_name('failure'))
@@ -82,7 +82,11 @@ class RetryStrategyTest
         index.save_object({ objectID: 'one' })
       end
 
-      assert_includes exception.message, 'Unreachable hosts. Last error for 0.0.0.0: SSL_connect'
+      assert_includes exception.message, 'Unreachable hosts. Last error for 1.0.0.0: SSL_connect'
+      assert_equal exception.errors, [
+        {:host=>"0.0.0.0", :error=>"SSL_connect SYSCALL returned=5 errno=0 peeraddr=127.0.0.1:443 state=error: certificate verify failed"},
+        {:host=>"1.0.0.0", :error=>"SSL_connect returned=1 errno=0 peeraddr=1.0.0.0:443 state=error: ssl/tls alert handshake failure"}
+      ]
     end
   end
 
