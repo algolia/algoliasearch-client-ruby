@@ -39,6 +39,8 @@ module Algolia
       # @return [Response] response of the request
       #
       def request(call_type, method, path, body, opts = {})
+        retry_errors = []
+
         @retry_strategy.get_tryable_hosts(call_type).each do |host|
           opts[:timeout] ||= get_timeout(call_type) * (host.retry_count + 1)
           opts[:connect_timeout] ||= @config.connect_timeout * (host.retry_count + 1)
@@ -71,10 +73,14 @@ module Algolia
             raise Algolia::AlgoliaHttpError.new(response.status, decoded_error[:message])
           end
 
-          return response unless outcome == RETRY
+          if outcome == RETRY
+            retry_errors << {host: host.url, error: response.error}
+          else
+            return response
+          end
         end
 
-        raise Algolia::AlgoliaUnreachableHostError, "Unreachable hosts"
+        raise Algolia::AlgoliaUnreachableHostError.new("Unreachable hosts.", retry_errors)
       end
 
       private
