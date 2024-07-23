@@ -13,6 +13,9 @@ module Algolia
     attr_reader :errors
 
     def initialize(message, errors = [])
+      errors.last&.tap do |last_error|
+        message += " Last error for #{last_error[:host]}: #{last_error[:error]}"
+      end
       super(message)
       @errors = errors
     end
