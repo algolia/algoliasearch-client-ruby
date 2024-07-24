@@ -13,9 +13,10 @@ module Algolia
       # Universally unique identifier (UUID) of a destination resource.
       attr_accessor :destination_id
 
-      attr_accessor :trigger
-
       attr_accessor :action
+
+      # Cron expression for the task's schedule.
+      attr_accessor :cron
 
       # Whether the task is enabled.
       attr_accessor :enabled
@@ -55,8 +56,8 @@ module Algolia
         {
           :source_id => :sourceID,
           :destination_id => :destinationID,
-          :trigger => :trigger,
           :action => :action,
+          :cron => :cron,
           :enabled => :enabled,
           :failure_threshold => :failureThreshold,
           :input => :input,
@@ -74,8 +75,8 @@ module Algolia
         {
           :source_id => :"String",
           :destination_id => :"String",
-          :trigger => :"TaskCreateTrigger",
           :action => :"ActionType",
+          :cron => :"String",
           :enabled => :"Boolean",
           :failure_threshold => :"Integer",
           :input => :"TaskInput",
@@ -125,16 +126,14 @@ module Algolia
           self.destination_id = nil
         end
 
-        if attributes.key?(:trigger)
-          self.trigger = attributes[:trigger]
-        else
-          self.trigger = nil
-        end
-
         if attributes.key?(:action)
           self.action = attributes[:action]
         else
           self.action = nil
+        end
+
+        if attributes.key?(:cron)
+          self.cron = attributes[:cron]
         end
 
         if attributes.key?(:enabled)
@@ -179,8 +178,8 @@ module Algolia
         self.class == other.class &&
           source_id == other.source_id &&
           destination_id == other.destination_id &&
-          trigger == other.trigger &&
           action == other.action &&
+          cron == other.cron &&
           enabled == other.enabled &&
           failure_threshold == other.failure_threshold &&
           input == other.input &&
@@ -196,7 +195,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [source_id, destination_id, trigger, action, enabled, failure_threshold, input, cursor].hash
+        [source_id, destination_id, action, cron, enabled, failure_threshold, input, cursor].hash
       end
 
       # Builds the object from hash

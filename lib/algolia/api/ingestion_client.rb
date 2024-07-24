@@ -200,7 +200,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_create` is required when calling `create_task`."
       end
 
-      path = "/1/tasks"
+      path = "/2/tasks"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -226,6 +226,46 @@ module Algolia
     # @return [TaskCreateResponse]
     def create_task(task_create, request_options = {})
       response = create_task_with_http_info(task_create, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskCreateResponse")
+    end
+
+    # Creates a new task using the v1 endpoint, please use &#x60;createTask&#x60; instead.
+
+    # @param task_create [TaskCreateV1] Request body for creating a task. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def create_task_v1_with_http_info(task_create, request_options = {})
+      # verify the required parameter 'task_create' is set
+      if @api_client.config.client_side_validation && task_create.nil?
+        raise ArgumentError, "Parameter `task_create` is required when calling `create_task_v1`."
+      end
+
+      path = "/1/tasks"
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(task_create)
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.create_task_v1",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Creates a new task using the v1 endpoint, please use `createTask` instead.
+
+    # @param task_create [TaskCreateV1] Request body for creating a task. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [TaskCreateResponse]
+    def create_task_v1(task_create, request_options = {})
+      response = create_task_v1_with_http_info(task_create, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskCreateResponse")
     end
 
@@ -609,7 +649,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_id` is required when calling `delete_task`."
       end
 
-      path = "/1/tasks/{taskID}".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
+      path = "/2/tasks/{taskID}".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -635,6 +675,46 @@ module Algolia
     # @return [DeleteResponse]
     def delete_task(task_id, request_options = {})
       response = delete_task_with_http_info(task_id, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::DeleteResponse")
+    end
+
+    # Deletes a task by its ID using the v1 endpoint, please use &#x60;deleteTask&#x60; instead.
+
+    # @param task_id [String] Unique identifier of a task. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def delete_task_v1_with_http_info(task_id, request_options = {})
+      # verify the required parameter 'task_id' is set
+      if @api_client.config.client_side_validation && task_id.nil?
+        raise ArgumentError, "Parameter `task_id` is required when calling `delete_task_v1`."
+      end
+
+      path = "/1/tasks/{taskID}".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.delete_task_v1",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:DELETE, path, new_options)
+    end
+
+    # Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+
+    # @param task_id [String] Unique identifier of a task. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [DeleteResponse]
+    def delete_task_v1(task_id, request_options = {})
+      response = delete_task_v1_with_http_info(task_id, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::DeleteResponse")
     end
 
@@ -696,7 +776,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_id` is required when calling `disable_task`."
       end
 
-      path = "/1/tasks/{taskID}/disable".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
+      path = "/2/tasks/{taskID}/disable".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -729,6 +809,54 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskUpdateResponse")
     end
 
+    # Disables a task using the v1 endpoint, please use &#x60;disableTask&#x60; instead.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param task_id [String] Unique identifier of a task. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def disable_task_v1_with_http_info(task_id, request_options = {})
+      # verify the required parameter 'task_id' is set
+      if @api_client.config.client_side_validation && task_id.nil?
+        raise ArgumentError, "Parameter `task_id` is required when calling `disable_task_v1`."
+      end
+
+      path = "/1/tasks/{taskID}/disable".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.disable_task_v1",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:PUT, path, new_options)
+    end
+
+    # Disables a task using the v1 endpoint, please use `disableTask` instead.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param task_id [String] Unique identifier of a task. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [TaskUpdateResponse]
+    def disable_task_v1(task_id, request_options = {})
+      response = disable_task_v1_with_http_info(task_id, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskUpdateResponse")
+    end
+
     # Enables a task.
     #
     # Required API Key ACLs:
@@ -744,7 +872,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_id` is required when calling `enable_task`."
       end
 
-      path = "/1/tasks/{taskID}/enable".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
+      path = "/2/tasks/{taskID}/enable".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -774,6 +902,54 @@ module Algolia
     # @return [TaskUpdateResponse]
     def enable_task(task_id, request_options = {})
       response = enable_task_with_http_info(task_id, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskUpdateResponse")
+    end
+
+    # Enables a task using the v1 endpoint, please use &#x60;enableTask&#x60; instead.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param task_id [String] Unique identifier of a task. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def enable_task_v1_with_http_info(task_id, request_options = {})
+      # verify the required parameter 'task_id' is set
+      if @api_client.config.client_side_validation && task_id.nil?
+        raise ArgumentError, "Parameter `task_id` is required when calling `enable_task_v1`."
+      end
+
+      path = "/1/tasks/{taskID}/enable".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.enable_task_v1",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:PUT, path, new_options)
+    end
+
+    # Enables a task using the v1 endpoint, please use `enableTask` instead.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param task_id [String] Unique identifier of a task. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [TaskUpdateResponse]
+    def enable_task_v1(task_id, request_options = {})
+      response = enable_task_v1_with_http_info(task_id, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskUpdateResponse")
     end
 
@@ -828,105 +1004,6 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::Authentication")
     end
 
-    # Retrieves a list of all authentication resources.
-    #
-    # Required API Key ACLs:
-    #   - addObject
-    #   - deleteIndex
-    #   - editSettings
-    # @param items_per_page [Integer] Number of items per page. (default to 10)
-    # @param page [Integer] Page number of the paginated API response.
-    # @param type [Array<AuthenticationType>] Type of authentication resource to retrieve.
-    # @param platform [Array<PlatformWithNone>] Ecommerce platform for which to retrieve authentication resources.
-    # @param sort [AuthenticationSortKeys] Property by which to sort the list of authentication resources. (default to 'createdAt')
-    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [Http::Response] the response
-    def get_authentications_with_http_info(
-      items_per_page = nil,
-      page = nil,
-      type = nil,
-      platform = nil,
-      sort = nil,
-      order = nil,
-      request_options = {}
-    )
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_authentications, must be smaller than or equal to 100."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_authentications, must be greater than or equal to 1."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !page.nil? && page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"page\"\" when calling IngestionClient.get_authentications, must be greater than or equal to 1."
-        )
-      end
-
-      path = "/1/authentications"
-      query_params = {}
-      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
-      query_params[:page] = page unless page.nil?
-      query_params[:type] = @api_client.build_collection_param(type, :csv) unless type.nil?
-      query_params[:platform] = @api_client.build_collection_param(platform, :csv) unless platform.nil?
-      query_params[:sort] = sort unless sort.nil?
-      query_params[:order] = order unless order.nil?
-      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
-      header_params = {}
-      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
-
-      post_body = request_options[:debug_body]
-
-      new_options = request_options.merge(
-        :operation => :"IngestionClient.get_authentications",
-        :header_params => header_params,
-        :query_params => query_params,
-        :body => post_body,
-        :use_read_transporter => false
-      )
-
-      @api_client.call_api(:GET, path, new_options)
-    end
-
-    # Retrieves a list of all authentication resources.
-    #
-    # Required API Key ACLs:
-    #   - addObject
-    #   - deleteIndex
-    #   - editSettings
-    # @param items_per_page [Integer] Number of items per page. (default to 10)
-    # @param page [Integer] Page number of the paginated API response.
-    # @param type [Array<AuthenticationType>] Type of authentication resource to retrieve.
-    # @param platform [Array<PlatformWithNone>] Ecommerce platform for which to retrieve authentication resources.
-    # @param sort [AuthenticationSortKeys] Property by which to sort the list of authentication resources. (default to 'createdAt')
-    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [ListAuthenticationsResponse]
-    def get_authentications(
-      items_per_page = nil,
-      page = nil,
-      type = nil,
-      platform = nil,
-      sort = nil,
-      order = nil,
-      request_options = {}
-    )
-      response = get_authentications_with_http_info(items_per_page, page, type, platform, sort, order, request_options)
-      @api_client.deserialize(
-        response.body,
-        request_options[:debug_return_type] || "Ingestion::ListAuthenticationsResponse"
-      )
-    end
-
     # Retrieves a destination by its ID.
     #
     # Required API Key ACLs:
@@ -976,116 +1053,6 @@ module Algolia
     def get_destination(destination_id, request_options = {})
       response = get_destination_with_http_info(destination_id, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::Destination")
-    end
-
-    # Retrieves a list of destinations.
-    #
-    # Required API Key ACLs:
-    #   - addObject
-    #   - deleteIndex
-    #   - editSettings
-    # @param items_per_page [Integer] Number of items per page. (default to 10)
-    # @param page [Integer] Page number of the paginated API response.
-    # @param type [Array<DestinationType>] Destination type.
-    # @param authentication_id [Array<String>] Authentication ID used by destinations.
-    # @param sort [DestinationSortKeys] Property by which to sort the destinations. (default to 'createdAt')
-    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [Http::Response] the response
-    def get_destinations_with_http_info(
-      items_per_page = nil,
-      page = nil,
-      type = nil,
-      authentication_id = nil,
-      sort = nil,
-      order = nil,
-      request_options = {}
-    )
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_destinations, must be smaller than or equal to 100."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_destinations, must be greater than or equal to 1."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !page.nil? && page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"page\"\" when calling IngestionClient.get_destinations, must be greater than or equal to 1."
-        )
-      end
-
-      path = "/1/destinations"
-      query_params = {}
-      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
-      query_params[:page] = page unless page.nil?
-      query_params[:type] = @api_client.build_collection_param(type, :csv) unless type.nil?
-      unless authentication_id.nil?
-        query_params[:authenticationID] = @api_client.build_collection_param(authentication_id, :csv)
-      end
-
-      query_params[:sort] = sort unless sort.nil?
-      query_params[:order] = order unless order.nil?
-      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
-      header_params = {}
-      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
-
-      post_body = request_options[:debug_body]
-
-      new_options = request_options.merge(
-        :operation => :"IngestionClient.get_destinations",
-        :header_params => header_params,
-        :query_params => query_params,
-        :body => post_body,
-        :use_read_transporter => false
-      )
-
-      @api_client.call_api(:GET, path, new_options)
-    end
-
-    # Retrieves a list of destinations.
-    #
-    # Required API Key ACLs:
-    #   - addObject
-    #   - deleteIndex
-    #   - editSettings
-    # @param items_per_page [Integer] Number of items per page. (default to 10)
-    # @param page [Integer] Page number of the paginated API response.
-    # @param type [Array<DestinationType>] Destination type.
-    # @param authentication_id [Array<String>] Authentication ID used by destinations.
-    # @param sort [DestinationSortKeys] Property by which to sort the destinations. (default to 'createdAt')
-    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [ListDestinationsResponse]
-    def get_destinations(
-      items_per_page = nil,
-      page = nil,
-      type = nil,
-      authentication_id = nil,
-      sort = nil,
-      order = nil,
-      request_options = {}
-    )
-      response = get_destinations_with_http_info(
-        items_per_page,
-        page,
-        type,
-        authentication_id,
-        sort,
-        order,
-        request_options
-      )
-      @api_client.deserialize(
-        response.body,
-        request_options[:debug_return_type] || "Ingestion::ListDestinationsResponse"
-      )
     end
 
     # Retrieves a single task run event by its ID.
@@ -1145,132 +1112,6 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::Event")
     end
 
-    # Retrieves a list of events for a task run, identified by it&#39;s ID.
-    #
-    # Required API Key ACLs:
-    #   - addObject
-    #   - deleteIndex
-    #   - editSettings
-    # @param run_id [String] Unique identifier of a task run. (required)
-    # @param items_per_page [Integer] Number of items per page. (default to 10)
-    # @param page [Integer] Page number of the paginated API response.
-    # @param status [Array<EventStatus>] Event status for filtering the list of task runs.
-    # @param type [Array<EventType>] Event type for filtering the list of task runs.
-    # @param sort [EventSortKeys] Property by which to sort the list of task run events.
-    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
-    # @param start_date [String] Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
-    # @param end_date [String] Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [Http::Response] the response
-    def get_events_with_http_info(
-      run_id,
-      items_per_page = nil,
-      page = nil,
-      status = nil,
-      type = nil,
-      sort = nil,
-      order = nil,
-      start_date = nil,
-      end_date = nil,
-      request_options = {}
-    )
-      # verify the required parameter 'run_id' is set
-      if @api_client.config.client_side_validation && run_id.nil?
-        raise ArgumentError, "Parameter `run_id` is required when calling `get_events`."
-      end
-
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_events, must be smaller than or equal to 100."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_events, must be greater than or equal to 1."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !page.nil? && page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"page\"\" when calling IngestionClient.get_events, must be greater than or equal to 1."
-        )
-      end
-
-      path = "/1/runs/{runID}/events".sub("{" + "runID" + "}", Transport.encode_uri(run_id.to_s))
-      query_params = {}
-      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
-      query_params[:page] = page unless page.nil?
-      query_params[:status] = @api_client.build_collection_param(status, :multi) unless status.nil?
-      query_params[:type] = @api_client.build_collection_param(type, :multi) unless type.nil?
-      query_params[:sort] = sort unless sort.nil?
-      query_params[:order] = order unless order.nil?
-      query_params[:startDate] = start_date unless start_date.nil?
-      query_params[:endDate] = end_date unless end_date.nil?
-      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
-      header_params = {}
-      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
-
-      post_body = request_options[:debug_body]
-
-      new_options = request_options.merge(
-        :operation => :"IngestionClient.get_events",
-        :header_params => header_params,
-        :query_params => query_params,
-        :body => post_body,
-        :use_read_transporter => false
-      )
-
-      @api_client.call_api(:GET, path, new_options)
-    end
-
-    # Retrieves a list of events for a task run, identified by it's ID.
-    #
-    # Required API Key ACLs:
-    #   - addObject
-    #   - deleteIndex
-    #   - editSettings
-    # @param run_id [String] Unique identifier of a task run. (required)
-    # @param items_per_page [Integer] Number of items per page. (default to 10)
-    # @param page [Integer] Page number of the paginated API response.
-    # @param status [Array<EventStatus>] Event status for filtering the list of task runs.
-    # @param type [Array<EventType>] Event type for filtering the list of task runs.
-    # @param sort [EventSortKeys] Property by which to sort the list of task run events.
-    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
-    # @param start_date [String] Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
-    # @param end_date [String] Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [ListEventsResponse]
-    def get_events(
-      run_id,
-      items_per_page = nil,
-      page = nil,
-      status = nil,
-      type = nil,
-      sort = nil,
-      order = nil,
-      start_date = nil,
-      end_date = nil,
-      request_options = {}
-    )
-      response = get_events_with_http_info(
-        run_id,
-        items_per_page,
-        page,
-        status,
-        type,
-        sort,
-        order,
-        start_date,
-        end_date,
-        request_options
-      )
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::ListEventsResponse")
-    end
-
     # Retrieve a single task run by its ID.
     #
     # Required API Key ACLs:
@@ -1317,122 +1158,6 @@ module Algolia
     def get_run(run_id, request_options = {})
       response = get_run_with_http_info(run_id, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::Run")
-    end
-
-    # Retrieve a list of task runs.
-    #
-    # Required API Key ACLs:
-    #   - addObject
-    #   - deleteIndex
-    #   - editSettings
-    # @param items_per_page [Integer] Number of items per page. (default to 10)
-    # @param page [Integer] Page number of the paginated API response.
-    # @param status [Array<RunStatus>] Run status for filtering the list of task runs.
-    # @param task_id [String] Task ID for filtering the list of task runs.
-    # @param sort [RunSortKeys] Property by which to sort the list of task runs. (default to 'createdAt')
-    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
-    # @param start_date [String] Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
-    # @param end_date [String] Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [Http::Response] the response
-    def get_runs_with_http_info(
-      items_per_page = nil,
-      page = nil,
-      status = nil,
-      task_id = nil,
-      sort = nil,
-      order = nil,
-      start_date = nil,
-      end_date = nil,
-      request_options = {}
-    )
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_runs, must be smaller than or equal to 100."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_runs, must be greater than or equal to 1."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !page.nil? && page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"page\"\" when calling IngestionClient.get_runs, must be greater than or equal to 1."
-        )
-      end
-
-      path = "/1/runs"
-      query_params = {}
-      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
-      query_params[:page] = page unless page.nil?
-      query_params[:status] = @api_client.build_collection_param(status, :multi) unless status.nil?
-      query_params[:taskID] = task_id unless task_id.nil?
-      query_params[:sort] = sort unless sort.nil?
-      query_params[:order] = order unless order.nil?
-      query_params[:startDate] = start_date unless start_date.nil?
-      query_params[:endDate] = end_date unless end_date.nil?
-      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
-      header_params = {}
-      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
-
-      post_body = request_options[:debug_body]
-
-      new_options = request_options.merge(
-        :operation => :"IngestionClient.get_runs",
-        :header_params => header_params,
-        :query_params => query_params,
-        :body => post_body,
-        :use_read_transporter => false
-      )
-
-      @api_client.call_api(:GET, path, new_options)
-    end
-
-    # Retrieve a list of task runs.
-    #
-    # Required API Key ACLs:
-    #   - addObject
-    #   - deleteIndex
-    #   - editSettings
-    # @param items_per_page [Integer] Number of items per page. (default to 10)
-    # @param page [Integer] Page number of the paginated API response.
-    # @param status [Array<RunStatus>] Run status for filtering the list of task runs.
-    # @param task_id [String] Task ID for filtering the list of task runs.
-    # @param sort [RunSortKeys] Property by which to sort the list of task runs. (default to 'createdAt')
-    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
-    # @param start_date [String] Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
-    # @param end_date [String] Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [RunListResponse]
-    def get_runs(
-      items_per_page = nil,
-      page = nil,
-      status = nil,
-      task_id = nil,
-      sort = nil,
-      order = nil,
-      start_date = nil,
-      end_date = nil,
-      request_options = {}
-    )
-      response = get_runs_with_http_info(
-        items_per_page,
-        page,
-        status,
-        task_id,
-        sort,
-        order,
-        start_date,
-        end_date,
-        request_options
-      )
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::RunListResponse")
     end
 
     # Retrieve a source by its ID.
@@ -1483,105 +1208,6 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::Source")
     end
 
-    # Retrieves a list of sources.
-    #
-    # Required API Key ACLs:
-    #   - addObject
-    #   - deleteIndex
-    #   - editSettings
-    # @param items_per_page [Integer] Number of items per page. (default to 10)
-    # @param page [Integer] Page number of the paginated API response.
-    # @param type [Array<SourceType>] Source type. Some sources require authentication.
-    # @param authentication_id [Array<String>] Authentication IDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication resource.
-    # @param sort [SourceSortKeys] Property by which to sort the list of sources. (default to 'createdAt')
-    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [Http::Response] the response
-    def get_sources_with_http_info(
-      items_per_page = nil,
-      page = nil,
-      type = nil,
-      authentication_id = nil,
-      sort = nil,
-      order = nil,
-      request_options = {}
-    )
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_sources, must be smaller than or equal to 100."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_sources, must be greater than or equal to 1."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !page.nil? && page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"page\"\" when calling IngestionClient.get_sources, must be greater than or equal to 1."
-        )
-      end
-
-      path = "/1/sources"
-      query_params = {}
-      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
-      query_params[:page] = page unless page.nil?
-      query_params[:type] = @api_client.build_collection_param(type, :csv) unless type.nil?
-      unless authentication_id.nil?
-        query_params[:authenticationID] = @api_client.build_collection_param(authentication_id, :csv)
-      end
-
-      query_params[:sort] = sort unless sort.nil?
-      query_params[:order] = order unless order.nil?
-      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
-      header_params = {}
-      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
-
-      post_body = request_options[:debug_body]
-
-      new_options = request_options.merge(
-        :operation => :"IngestionClient.get_sources",
-        :header_params => header_params,
-        :query_params => query_params,
-        :body => post_body,
-        :use_read_transporter => false
-      )
-
-      @api_client.call_api(:GET, path, new_options)
-    end
-
-    # Retrieves a list of sources.
-    #
-    # Required API Key ACLs:
-    #   - addObject
-    #   - deleteIndex
-    #   - editSettings
-    # @param items_per_page [Integer] Number of items per page. (default to 10)
-    # @param page [Integer] Page number of the paginated API response.
-    # @param type [Array<SourceType>] Source type. Some sources require authentication.
-    # @param authentication_id [Array<String>] Authentication IDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication resource.
-    # @param sort [SourceSortKeys] Property by which to sort the list of sources. (default to 'createdAt')
-    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
-    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [ListSourcesResponse]
-    def get_sources(
-      items_per_page = nil,
-      page = nil,
-      type = nil,
-      authentication_id = nil,
-      sort = nil,
-      order = nil,
-      request_options = {}
-    )
-      response = get_sources_with_http_info(items_per_page, page, type, authentication_id, sort, order, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::ListSourcesResponse")
-    end
-
     # Retrieves a task by its ID.
     #
     # Required API Key ACLs:
@@ -1597,7 +1223,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_id` is required when calling `get_task`."
       end
 
-      path = "/1/tasks/{taskID}".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
+      path = "/2/tasks/{taskID}".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1630,70 +1256,23 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::Task")
     end
 
-    # Retrieves a list of tasks.
+    # Retrieves a task by its ID using the v1 endpoint, please use &#x60;getTask&#x60; instead.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param items_per_page [Integer] Number of items per page. (default to 10)
-    # @param page [Integer] Page number of the paginated API response.
-    # @param action [Array<ActionType>] Actions for filtering the list of tasks.
-    # @param enabled [Boolean] Whether to filter the list of tasks by the &#x60;enabled&#x60; status.
-    # @param source_id [Array<String>] Source IDs for filtering the list of tasks.
-    # @param destination_id [Array<String>] Destination IDs for filtering the list of tasks.
-    # @param trigger_type [Array<TriggerType>] Type of task trigger for filtering the list of tasks.
-    # @param sort [TaskSortKeys] Property by which to sort the list of tasks. (default to 'createdAt')
-    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_tasks_with_http_info(
-      items_per_page = nil,
-      page = nil,
-      action = nil,
-      enabled = nil,
-      source_id = nil,
-      destination_id = nil,
-      trigger_type = nil,
-      sort = nil,
-      order = nil,
-      request_options = {}
-    )
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_tasks, must be smaller than or equal to 100."
-        )
+    def get_task_v1_with_http_info(task_id, request_options = {})
+      # verify the required parameter 'task_id' is set
+      if @api_client.config.client_side_validation && task_id.nil?
+        raise ArgumentError, "Parameter `task_id` is required when calling `get_task_v1`."
       end
 
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.get_tasks, must be greater than or equal to 1."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !page.nil? && page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"page\"\" when calling IngestionClient.get_tasks, must be greater than or equal to 1."
-        )
-      end
-
-      path = "/1/tasks"
+      path = "/1/tasks/{taskID}".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
       query_params = {}
-      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
-      query_params[:page] = page unless page.nil?
-      query_params[:action] = @api_client.build_collection_param(action, :csv) unless action.nil?
-      query_params[:enabled] = enabled unless enabled.nil?
-      query_params[:sourceID] = @api_client.build_collection_param(source_id, :csv) unless source_id.nil?
-      unless destination_id.nil?
-        query_params[:destinationID] = @api_client.build_collection_param(destination_id, :csv)
-      end
-
-      query_params[:triggerType] = @api_client.build_collection_param(trigger_type, :csv) unless trigger_type.nil?
-      query_params[:sort] = sort unless sort.nil?
-      query_params[:order] = order unless order.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
@@ -1701,7 +1280,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :"IngestionClient.get_tasks",
+        :operation => :"IngestionClient.get_task_v1",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1711,48 +1290,18 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Retrieves a list of tasks.
+    # Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
-    # @param items_per_page [Integer] Number of items per page. (default to 10)
-    # @param page [Integer] Page number of the paginated API response.
-    # @param action [Array<ActionType>] Actions for filtering the list of tasks.
-    # @param enabled [Boolean] Whether to filter the list of tasks by the &#x60;enabled&#x60; status.
-    # @param source_id [Array<String>] Source IDs for filtering the list of tasks.
-    # @param destination_id [Array<String>] Destination IDs for filtering the list of tasks.
-    # @param trigger_type [Array<TriggerType>] Type of task trigger for filtering the list of tasks.
-    # @param sort [TaskSortKeys] Property by which to sort the list of tasks. (default to 'createdAt')
-    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [ListTasksResponse]
-    def get_tasks(
-      items_per_page = nil,
-      page = nil,
-      action = nil,
-      enabled = nil,
-      source_id = nil,
-      destination_id = nil,
-      trigger_type = nil,
-      sort = nil,
-      order = nil,
-      request_options = {}
-    )
-      response = get_tasks_with_http_info(
-        items_per_page,
-        page,
-        action,
-        enabled,
-        source_id,
-        destination_id,
-        trigger_type,
-        sort,
-        order,
-        request_options
-      )
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::ListTasksResponse")
+    # @return [TaskV1]
+    def get_task_v1(task_id, request_options = {})
+      response = get_task_v1_with_http_info(task_id, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskV1")
     end
 
     # Retrieves a transformation by its ID.
@@ -1806,6 +1355,814 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::Transformation")
     end
 
+    # Retrieves a list of all authentication resources.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param type [Array<AuthenticationType>] Type of authentication resource to retrieve.
+    # @param platform [Array<PlatformWithNone>] Ecommerce platform for which to retrieve authentication resources.
+    # @param sort [AuthenticationSortKeys] Property by which to sort the list of authentication resources. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def list_authentications_with_http_info(
+      items_per_page = nil,
+      page = nil,
+      type = nil,
+      platform = nil,
+      sort = nil,
+      order = nil,
+      request_options = {}
+    )
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_authentications, must be smaller than or equal to 100."
+        )
+      end
+
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_authentications, must be greater than or equal to 1."
+        )
+      end
+
+      if @api_client.config.client_side_validation && !page.nil? && page < 1
+        raise(
+          ArgumentError,
+          "invalid value for \"\"page\"\" when calling IngestionClient.list_authentications, must be greater than or equal to 1."
+        )
+      end
+
+      path = "/1/authentications"
+      query_params = {}
+      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
+      query_params[:page] = page unless page.nil?
+      query_params[:type] = @api_client.build_collection_param(type, :csv) unless type.nil?
+      query_params[:platform] = @api_client.build_collection_param(platform, :csv) unless platform.nil?
+      query_params[:sort] = sort unless sort.nil?
+      query_params[:order] = order unless order.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.list_authentications",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Retrieves a list of all authentication resources.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param type [Array<AuthenticationType>] Type of authentication resource to retrieve.
+    # @param platform [Array<PlatformWithNone>] Ecommerce platform for which to retrieve authentication resources.
+    # @param sort [AuthenticationSortKeys] Property by which to sort the list of authentication resources. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [ListAuthenticationsResponse]
+    def list_authentications(
+      items_per_page = nil,
+      page = nil,
+      type = nil,
+      platform = nil,
+      sort = nil,
+      order = nil,
+      request_options = {}
+    )
+      response = list_authentications_with_http_info(items_per_page, page, type, platform, sort, order, request_options)
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Ingestion::ListAuthenticationsResponse"
+      )
+    end
+
+    # Retrieves a list of destinations.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param type [Array<DestinationType>] Destination type.
+    # @param authentication_id [Array<String>] Authentication ID used by destinations.
+    # @param sort [DestinationSortKeys] Property by which to sort the destinations. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def list_destinations_with_http_info(
+      items_per_page = nil,
+      page = nil,
+      type = nil,
+      authentication_id = nil,
+      sort = nil,
+      order = nil,
+      request_options = {}
+    )
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_destinations, must be smaller than or equal to 100."
+        )
+      end
+
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_destinations, must be greater than or equal to 1."
+        )
+      end
+
+      if @api_client.config.client_side_validation && !page.nil? && page < 1
+        raise(
+          ArgumentError,
+          "invalid value for \"\"page\"\" when calling IngestionClient.list_destinations, must be greater than or equal to 1."
+        )
+      end
+
+      path = "/1/destinations"
+      query_params = {}
+      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
+      query_params[:page] = page unless page.nil?
+      query_params[:type] = @api_client.build_collection_param(type, :csv) unless type.nil?
+      unless authentication_id.nil?
+        query_params[:authenticationID] = @api_client.build_collection_param(authentication_id, :csv)
+      end
+
+      query_params[:sort] = sort unless sort.nil?
+      query_params[:order] = order unless order.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.list_destinations",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Retrieves a list of destinations.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param type [Array<DestinationType>] Destination type.
+    # @param authentication_id [Array<String>] Authentication ID used by destinations.
+    # @param sort [DestinationSortKeys] Property by which to sort the destinations. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [ListDestinationsResponse]
+    def list_destinations(
+      items_per_page = nil,
+      page = nil,
+      type = nil,
+      authentication_id = nil,
+      sort = nil,
+      order = nil,
+      request_options = {}
+    )
+      response = list_destinations_with_http_info(
+        items_per_page,
+        page,
+        type,
+        authentication_id,
+        sort,
+        order,
+        request_options
+      )
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Ingestion::ListDestinationsResponse"
+      )
+    end
+
+    # Retrieves a list of events for a task run, identified by it&#39;s ID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param run_id [String] Unique identifier of a task run. (required)
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param status [Array<EventStatus>] Event status for filtering the list of task runs.
+    # @param type [Array<EventType>] Event type for filtering the list of task runs.
+    # @param sort [EventSortKeys] Property by which to sort the list of task run events.
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param start_date [String] Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
+    # @param end_date [String] Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def list_events_with_http_info(
+      run_id,
+      items_per_page = nil,
+      page = nil,
+      status = nil,
+      type = nil,
+      sort = nil,
+      order = nil,
+      start_date = nil,
+      end_date = nil,
+      request_options = {}
+    )
+      # verify the required parameter 'run_id' is set
+      if @api_client.config.client_side_validation && run_id.nil?
+        raise ArgumentError, "Parameter `run_id` is required when calling `list_events`."
+      end
+
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_events, must be smaller than or equal to 100."
+        )
+      end
+
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_events, must be greater than or equal to 1."
+        )
+      end
+
+      if @api_client.config.client_side_validation && !page.nil? && page < 1
+        raise(
+          ArgumentError,
+          "invalid value for \"\"page\"\" when calling IngestionClient.list_events, must be greater than or equal to 1."
+        )
+      end
+
+      path = "/1/runs/{runID}/events".sub("{" + "runID" + "}", Transport.encode_uri(run_id.to_s))
+      query_params = {}
+      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
+      query_params[:page] = page unless page.nil?
+      query_params[:status] = @api_client.build_collection_param(status, :multi) unless status.nil?
+      query_params[:type] = @api_client.build_collection_param(type, :multi) unless type.nil?
+      query_params[:sort] = sort unless sort.nil?
+      query_params[:order] = order unless order.nil?
+      query_params[:startDate] = start_date unless start_date.nil?
+      query_params[:endDate] = end_date unless end_date.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.list_events",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Retrieves a list of events for a task run, identified by it's ID.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param run_id [String] Unique identifier of a task run. (required)
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param status [Array<EventStatus>] Event status for filtering the list of task runs.
+    # @param type [Array<EventType>] Event type for filtering the list of task runs.
+    # @param sort [EventSortKeys] Property by which to sort the list of task run events.
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param start_date [String] Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
+    # @param end_date [String] Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [ListEventsResponse]
+    def list_events(
+      run_id,
+      items_per_page = nil,
+      page = nil,
+      status = nil,
+      type = nil,
+      sort = nil,
+      order = nil,
+      start_date = nil,
+      end_date = nil,
+      request_options = {}
+    )
+      response = list_events_with_http_info(
+        run_id,
+        items_per_page,
+        page,
+        status,
+        type,
+        sort,
+        order,
+        start_date,
+        end_date,
+        request_options
+      )
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::ListEventsResponse")
+    end
+
+    # Retrieve a list of task runs.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param status [Array<RunStatus>] Run status for filtering the list of task runs.
+    # @param task_id [String] Task ID for filtering the list of task runs.
+    # @param sort [RunSortKeys] Property by which to sort the list of task runs. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param start_date [String] Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+    # @param end_date [String] Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def list_runs_with_http_info(
+      items_per_page = nil,
+      page = nil,
+      status = nil,
+      task_id = nil,
+      sort = nil,
+      order = nil,
+      start_date = nil,
+      end_date = nil,
+      request_options = {}
+    )
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_runs, must be smaller than or equal to 100."
+        )
+      end
+
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_runs, must be greater than or equal to 1."
+        )
+      end
+
+      if @api_client.config.client_side_validation && !page.nil? && page < 1
+        raise(
+          ArgumentError,
+          "invalid value for \"\"page\"\" when calling IngestionClient.list_runs, must be greater than or equal to 1."
+        )
+      end
+
+      path = "/1/runs"
+      query_params = {}
+      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
+      query_params[:page] = page unless page.nil?
+      query_params[:status] = @api_client.build_collection_param(status, :multi) unless status.nil?
+      query_params[:taskID] = task_id unless task_id.nil?
+      query_params[:sort] = sort unless sort.nil?
+      query_params[:order] = order unless order.nil?
+      query_params[:startDate] = start_date unless start_date.nil?
+      query_params[:endDate] = end_date unless end_date.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.list_runs",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Retrieve a list of task runs.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param status [Array<RunStatus>] Run status for filtering the list of task runs.
+    # @param task_id [String] Task ID for filtering the list of task runs.
+    # @param sort [RunSortKeys] Property by which to sort the list of task runs. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param start_date [String] Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+    # @param end_date [String] Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [RunListResponse]
+    def list_runs(
+      items_per_page = nil,
+      page = nil,
+      status = nil,
+      task_id = nil,
+      sort = nil,
+      order = nil,
+      start_date = nil,
+      end_date = nil,
+      request_options = {}
+    )
+      response = list_runs_with_http_info(
+        items_per_page,
+        page,
+        status,
+        task_id,
+        sort,
+        order,
+        start_date,
+        end_date,
+        request_options
+      )
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::RunListResponse")
+    end
+
+    # Retrieves a list of sources.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param type [Array<SourceType>] Source type. Some sources require authentication.
+    # @param authentication_id [Array<String>] Authentication IDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication resource.
+    # @param sort [SourceSortKeys] Property by which to sort the list of sources. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def list_sources_with_http_info(
+      items_per_page = nil,
+      page = nil,
+      type = nil,
+      authentication_id = nil,
+      sort = nil,
+      order = nil,
+      request_options = {}
+    )
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_sources, must be smaller than or equal to 100."
+        )
+      end
+
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_sources, must be greater than or equal to 1."
+        )
+      end
+
+      if @api_client.config.client_side_validation && !page.nil? && page < 1
+        raise(
+          ArgumentError,
+          "invalid value for \"\"page\"\" when calling IngestionClient.list_sources, must be greater than or equal to 1."
+        )
+      end
+
+      path = "/1/sources"
+      query_params = {}
+      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
+      query_params[:page] = page unless page.nil?
+      query_params[:type] = @api_client.build_collection_param(type, :csv) unless type.nil?
+      unless authentication_id.nil?
+        query_params[:authenticationID] = @api_client.build_collection_param(authentication_id, :csv)
+      end
+
+      query_params[:sort] = sort unless sort.nil?
+      query_params[:order] = order unless order.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.list_sources",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Retrieves a list of sources.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param type [Array<SourceType>] Source type. Some sources require authentication.
+    # @param authentication_id [Array<String>] Authentication IDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication resource.
+    # @param sort [SourceSortKeys] Property by which to sort the list of sources. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [ListSourcesResponse]
+    def list_sources(
+      items_per_page = nil,
+      page = nil,
+      type = nil,
+      authentication_id = nil,
+      sort = nil,
+      order = nil,
+      request_options = {}
+    )
+      response = list_sources_with_http_info(
+        items_per_page,
+        page,
+        type,
+        authentication_id,
+        sort,
+        order,
+        request_options
+      )
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::ListSourcesResponse")
+    end
+
+    # Retrieves a list of tasks.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param action [Array<ActionType>] Actions for filtering the list of tasks.
+    # @param enabled [Boolean] Whether to filter the list of tasks by the &#x60;enabled&#x60; status.
+    # @param source_id [Array<String>] Source IDs for filtering the list of tasks.
+    # @param destination_id [Array<String>] Destination IDs for filtering the list of tasks.
+    # @param trigger_type [Array<TriggerType>] Type of task trigger for filtering the list of tasks.
+    # @param sort [TaskSortKeys] Property by which to sort the list of tasks. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def list_tasks_with_http_info(
+      items_per_page = nil,
+      page = nil,
+      action = nil,
+      enabled = nil,
+      source_id = nil,
+      destination_id = nil,
+      trigger_type = nil,
+      sort = nil,
+      order = nil,
+      request_options = {}
+    )
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_tasks, must be smaller than or equal to 100."
+        )
+      end
+
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_tasks, must be greater than or equal to 1."
+        )
+      end
+
+      if @api_client.config.client_side_validation && !page.nil? && page < 1
+        raise(
+          ArgumentError,
+          "invalid value for \"\"page\"\" when calling IngestionClient.list_tasks, must be greater than or equal to 1."
+        )
+      end
+
+      path = "/2/tasks"
+      query_params = {}
+      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
+      query_params[:page] = page unless page.nil?
+      query_params[:action] = @api_client.build_collection_param(action, :csv) unless action.nil?
+      query_params[:enabled] = enabled unless enabled.nil?
+      query_params[:sourceID] = @api_client.build_collection_param(source_id, :csv) unless source_id.nil?
+      unless destination_id.nil?
+        query_params[:destinationID] = @api_client.build_collection_param(destination_id, :csv)
+      end
+
+      query_params[:triggerType] = @api_client.build_collection_param(trigger_type, :csv) unless trigger_type.nil?
+      query_params[:sort] = sort unless sort.nil?
+      query_params[:order] = order unless order.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.list_tasks",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Retrieves a list of tasks.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param action [Array<ActionType>] Actions for filtering the list of tasks.
+    # @param enabled [Boolean] Whether to filter the list of tasks by the &#x60;enabled&#x60; status.
+    # @param source_id [Array<String>] Source IDs for filtering the list of tasks.
+    # @param destination_id [Array<String>] Destination IDs for filtering the list of tasks.
+    # @param trigger_type [Array<TriggerType>] Type of task trigger for filtering the list of tasks.
+    # @param sort [TaskSortKeys] Property by which to sort the list of tasks. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [ListTasksResponse]
+    def list_tasks(
+      items_per_page = nil,
+      page = nil,
+      action = nil,
+      enabled = nil,
+      source_id = nil,
+      destination_id = nil,
+      trigger_type = nil,
+      sort = nil,
+      order = nil,
+      request_options = {}
+    )
+      response = list_tasks_with_http_info(
+        items_per_page,
+        page,
+        action,
+        enabled,
+        source_id,
+        destination_id,
+        trigger_type,
+        sort,
+        order,
+        request_options
+      )
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::ListTasksResponse")
+    end
+
+    # Retrieves a list of tasks using the v1 endpoint, please use &#x60;getTasks&#x60; instead.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param action [Array<ActionType>] Actions for filtering the list of tasks.
+    # @param enabled [Boolean] Whether to filter the list of tasks by the &#x60;enabled&#x60; status.
+    # @param source_id [Array<String>] Source IDs for filtering the list of tasks.
+    # @param destination_id [Array<String>] Destination IDs for filtering the list of tasks.
+    # @param trigger_type [Array<TriggerType>] Type of task trigger for filtering the list of tasks.
+    # @param sort [TaskSortKeys] Property by which to sort the list of tasks. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def list_tasks_v1_with_http_info(
+      items_per_page = nil,
+      page = nil,
+      action = nil,
+      enabled = nil,
+      source_id = nil,
+      destination_id = nil,
+      trigger_type = nil,
+      sort = nil,
+      order = nil,
+      request_options = {}
+    )
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_tasks_v1, must be smaller than or equal to 100."
+        )
+      end
+
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_tasks_v1, must be greater than or equal to 1."
+        )
+      end
+
+      if @api_client.config.client_side_validation && !page.nil? && page < 1
+        raise(
+          ArgumentError,
+          "invalid value for \"\"page\"\" when calling IngestionClient.list_tasks_v1, must be greater than or equal to 1."
+        )
+      end
+
+      path = "/1/tasks"
+      query_params = {}
+      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
+      query_params[:page] = page unless page.nil?
+      query_params[:action] = @api_client.build_collection_param(action, :csv) unless action.nil?
+      query_params[:enabled] = enabled unless enabled.nil?
+      query_params[:sourceID] = @api_client.build_collection_param(source_id, :csv) unless source_id.nil?
+      unless destination_id.nil?
+        query_params[:destinationID] = @api_client.build_collection_param(destination_id, :csv)
+      end
+
+      query_params[:triggerType] = @api_client.build_collection_param(trigger_type, :csv) unless trigger_type.nil?
+      query_params[:sort] = sort unless sort.nil?
+      query_params[:order] = order unless order.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.list_tasks_v1",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
+    # @param action [Array<ActionType>] Actions for filtering the list of tasks.
+    # @param enabled [Boolean] Whether to filter the list of tasks by the &#x60;enabled&#x60; status.
+    # @param source_id [Array<String>] Source IDs for filtering the list of tasks.
+    # @param destination_id [Array<String>] Destination IDs for filtering the list of tasks.
+    # @param trigger_type [Array<TriggerType>] Type of task trigger for filtering the list of tasks.
+    # @param sort [TaskSortKeys] Property by which to sort the list of tasks. (default to 'createdAt')
+    # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [ListTasksResponseV1]
+    def list_tasks_v1(
+      items_per_page = nil,
+      page = nil,
+      action = nil,
+      enabled = nil,
+      source_id = nil,
+      destination_id = nil,
+      trigger_type = nil,
+      sort = nil,
+      order = nil,
+      request_options = {}
+    )
+      response = list_tasks_v1_with_http_info(
+        items_per_page,
+        page,
+        action,
+        enabled,
+        source_id,
+        destination_id,
+        trigger_type,
+        sort,
+        order,
+        request_options
+      )
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::ListTasksResponseV1")
+    end
+
     # Retrieves a list of transformations.
     #
     # Required API Key ACLs:
@@ -1816,7 +2173,7 @@ module Algolia
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_transformations_with_http_info(sort = nil, order = nil, request_options = {})
+    def list_transformations_with_http_info(sort = nil, order = nil, request_options = {})
       path = "/1/transformations"
       query_params = {}
       query_params[:sort] = sort unless sort.nil?
@@ -1828,7 +2185,7 @@ module Algolia
       post_body = request_options[:debug_body]
 
       new_options = request_options.merge(
-        :operation => :"IngestionClient.get_transformations",
+        :operation => :"IngestionClient.list_transformations",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -1848,8 +2205,8 @@ module Algolia
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListTransformationsResponse]
-    def get_transformations(sort = nil, order = nil, request_options = {})
-      response = get_transformations_with_http_info(sort, order, request_options)
+    def list_transformations(sort = nil, order = nil, request_options = {})
+      response = list_transformations_with_http_info(sort, order, request_options)
       @api_client.deserialize(
         response.body,
         request_options[:debug_return_type] || "Ingestion::ListTransformationsResponse"
@@ -1871,7 +2228,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_id` is required when calling `run_task`."
       end
 
-      path = "/1/tasks/{taskID}/run".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
+      path = "/2/tasks/{taskID}/run".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1901,6 +2258,54 @@ module Algolia
     # @return [RunResponse]
     def run_task(task_id, request_options = {})
       response = run_task_with_http_info(task_id, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::RunResponse")
+    end
+
+    # Runs a task using the v1 endpoint, please use &#x60;runTask&#x60; instead. You can check the status of task runs with the observability endpoints.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param task_id [String] Unique identifier of a task. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def run_task_v1_with_http_info(task_id, request_options = {})
+      # verify the required parameter 'task_id' is set
+      if @api_client.config.client_side_validation && task_id.nil?
+        raise ArgumentError, "Parameter `task_id` is required when calling `run_task_v1`."
+      end
+
+      path = "/1/tasks/{taskID}/run".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.run_task_v1",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of task runs with the observability endpoints.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param task_id [String] Unique identifier of a task. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [RunResponse]
+    def run_task_v1(task_id, request_options = {})
+      response = run_task_v1_with_http_info(task_id, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::RunResponse")
     end
 
@@ -2063,7 +2468,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_search` is required when calling `search_tasks`."
       end
 
-      path = "/1/tasks/search"
+      path = "/2/tasks/search"
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -2094,6 +2499,54 @@ module Algolia
     def search_tasks(task_search, request_options = {})
       response = search_tasks_with_http_info(task_search, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Array<Ingestion::Task>")
+    end
+
+    # Searches for tasks using the v1 endpoint, please use &#x60;searchTasks&#x60; instead.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param task_search [TaskSearch]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def search_tasks_v1_with_http_info(task_search, request_options = {})
+      # verify the required parameter 'task_search' is set
+      if @api_client.config.client_side_validation && task_search.nil?
+        raise ArgumentError, "Parameter `task_search` is required when calling `search_tasks_v1`."
+      end
+
+      path = "/1/tasks/search"
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(task_search)
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.search_tasks_v1",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param task_search [TaskSearch]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Array<TaskV1>]
+    def search_tasks_v1(task_search, request_options = {})
+      response = search_tasks_v1_with_http_info(task_search, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Array<Ingestion::TaskV1>")
     end
 
     # Searches for transformations.
@@ -2433,7 +2886,7 @@ module Algolia
         raise ArgumentError, "Parameter `task_update` is required when calling `update_task`."
       end
 
-      path = "/1/tasks/{taskID}".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
+      path = "/2/tasks/{taskID}".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -2460,6 +2913,52 @@ module Algolia
     # @return [TaskUpdateResponse]
     def update_task(task_id, task_update, request_options = {})
       response = update_task_with_http_info(task_id, task_update, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskUpdateResponse")
+    end
+
+    # Updates a task by its ID using the v1 endpoint, please use &#x60;updateTask&#x60; instead.
+
+    # @param task_id [String] Unique identifier of a task. (required)
+    # @param task_update [TaskUpdateV1]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def update_task_v1_with_http_info(task_id, task_update, request_options = {})
+      # verify the required parameter 'task_id' is set
+      if @api_client.config.client_side_validation && task_id.nil?
+        raise ArgumentError, "Parameter `task_id` is required when calling `update_task_v1`."
+      end
+      # verify the required parameter 'task_update' is set
+      if @api_client.config.client_side_validation && task_update.nil?
+        raise ArgumentError, "Parameter `task_update` is required when calling `update_task_v1`."
+      end
+
+      path = "/1/tasks/{taskID}".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(task_update)
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.update_task_v1",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:PATCH, path, new_options)
+    end
+
+    # Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+
+    # @param task_id [String] Unique identifier of a task. (required)
+    # @param task_update [TaskUpdateV1]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [TaskUpdateResponse]
+    def update_task_v1(task_id, task_update, request_options = {})
+      response = update_task_v1_with_http_info(task_id, task_update, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskUpdateResponse")
     end
 

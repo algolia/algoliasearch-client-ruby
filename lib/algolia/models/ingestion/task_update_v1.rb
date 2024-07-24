@@ -5,24 +5,12 @@ require "time"
 
 module Algolia
   module Ingestion
-    class Task
-      # Universally unique identifier (UUID) of a task.
-      attr_accessor :task_id
-
-      # Universally uniqud identifier (UUID) of a source.
-      attr_accessor :source_id
-
+    # API request body for updating a task using the V1 shape, please use methods and types that don't contain the V1 suffix.
+    class TaskUpdateV1
       # Universally unique identifier (UUID) of a destination resource.
       attr_accessor :destination_id
 
-      # Cron expression for the task's schedule.
-      attr_accessor :cron
-
-      # The last time the scheduled task ran in RFC 3339 format.
-      attr_accessor :last_run
-
-      # The next scheduled run of the task in RFC 3339 format.
-      attr_accessor :next_run
+      attr_accessor :trigger
 
       attr_accessor :input
 
@@ -32,55 +20,14 @@ module Algolia
       # Maximum accepted percentage of failures for a task run to finish successfully.
       attr_accessor :failure_threshold
 
-      attr_accessor :action
-
-      # Date of the last cursor in RFC 3339 format.
-      attr_accessor :cursor
-
-      # Date of creation in RFC 3339 format.
-      attr_accessor :created_at
-
-      # Date of last update in RFC 3339 format.
-      attr_accessor :updated_at
-
-      class EnumAttributeValidator
-        attr_reader :datatype
-        attr_reader :allowable_values
-
-        def initialize(datatype, allowable_values)
-          @allowable_values = allowable_values.map do |value|
-            case datatype.to_s
-            when /Integer/i
-              value.to_i
-            when /Float/i
-              value.to_f
-            else
-              value
-            end
-          end
-        end
-
-        def valid?(value)
-          !value || allowable_values.include?(value)
-        end
-      end
-
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :task_id => :taskID,
-          :source_id => :sourceID,
           :destination_id => :destinationID,
-          :cron => :cron,
-          :last_run => :lastRun,
-          :next_run => :nextRun,
+          :trigger => :trigger,
           :input => :input,
           :enabled => :enabled,
-          :failure_threshold => :failureThreshold,
-          :action => :action,
-          :cursor => :cursor,
-          :created_at => :createdAt,
-          :updated_at => :updatedAt
+          :failure_threshold => :failureThreshold
         }
       end
 
@@ -92,19 +39,11 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :task_id => :"String",
-          :source_id => :"String",
           :destination_id => :"String",
-          :cron => :"String",
-          :last_run => :"String",
-          :next_run => :"String",
+          :trigger => :"TriggerUpdateInput",
           :input => :"TaskInput",
           :enabled => :"Boolean",
-          :failure_threshold => :"Integer",
-          :action => :"ActionType",
-          :cursor => :"String",
-          :created_at => :"String",
-          :updated_at => :"String"
+          :failure_threshold => :"Integer"
         }
       end
 
@@ -119,7 +58,10 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         if (!attributes.is_a?(Hash))
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Task` initialize method"
+          raise(
+            ArgumentError,
+            "The input argument (attributes) must be a hash in `Algolia::TaskUpdateV1` initialize method"
+          )
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
@@ -127,7 +69,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::Task`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::TaskUpdateV1`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -135,34 +77,12 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:task_id)
-          self.task_id = attributes[:task_id]
-        else
-          self.task_id = nil
-        end
-
-        if attributes.key?(:source_id)
-          self.source_id = attributes[:source_id]
-        else
-          self.source_id = nil
-        end
-
         if attributes.key?(:destination_id)
           self.destination_id = attributes[:destination_id]
-        else
-          self.destination_id = nil
         end
 
-        if attributes.key?(:cron)
-          self.cron = attributes[:cron]
-        end
-
-        if attributes.key?(:last_run)
-          self.last_run = attributes[:last_run]
-        end
-
-        if attributes.key?(:next_run)
-          self.next_run = attributes[:next_run]
+        if attributes.key?(:trigger)
+          self.trigger = attributes[:trigger]
         end
 
         if attributes.key?(:input)
@@ -171,32 +91,10 @@ module Algolia
 
         if attributes.key?(:enabled)
           self.enabled = attributes[:enabled]
-        else
-          self.enabled = nil
         end
 
         if attributes.key?(:failure_threshold)
           self.failure_threshold = attributes[:failure_threshold]
-        end
-
-        if attributes.key?(:action)
-          self.action = attributes[:action]
-        else
-          self.action = nil
-        end
-
-        if attributes.key?(:cursor)
-          self.cursor = attributes[:cursor]
-        end
-
-        if attributes.key?(:created_at)
-          self.created_at = attributes[:created_at]
-        else
-          self.created_at = nil
-        end
-
-        if attributes.key?(:updated_at)
-          self.updated_at = attributes[:updated_at]
         end
       end
 
@@ -223,19 +121,11 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          task_id == other.task_id &&
-          source_id == other.source_id &&
           destination_id == other.destination_id &&
-          cron == other.cron &&
-          last_run == other.last_run &&
-          next_run == other.next_run &&
+          trigger == other.trigger &&
           input == other.input &&
           enabled == other.enabled &&
-          failure_threshold == other.failure_threshold &&
-          action == other.action &&
-          cursor == other.cursor &&
-          created_at == other.created_at &&
-          updated_at == other.updated_at
+          failure_threshold == other.failure_threshold
       end
 
       # @see the `==` method
@@ -247,21 +137,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [
-          task_id,
-          source_id,
-          destination_id,
-          cron,
-          last_run,
-          next_run,
-          input,
-          enabled,
-          failure_threshold,
-          action,
-          cursor,
-          created_at,
-          updated_at
-        ].hash
+        [destination_id, trigger, input, enabled, failure_threshold].hash
       end
 
       # Builds the object from hash

@@ -10,7 +10,8 @@ module Algolia
       # Universally unique identifier (UUID) of a destination resource.
       attr_accessor :destination_id
 
-      attr_accessor :trigger
+      # Cron expression for the task's schedule.
+      attr_accessor :cron
 
       attr_accessor :input
 
@@ -24,7 +25,7 @@ module Algolia
       def self.attribute_map
         {
           :destination_id => :destinationID,
-          :trigger => :trigger,
+          :cron => :cron,
           :input => :input,
           :enabled => :enabled,
           :failure_threshold => :failureThreshold
@@ -40,7 +41,7 @@ module Algolia
       def self.types_mapping
         {
           :destination_id => :"String",
-          :trigger => :"TriggerUpdateInput",
+          :cron => :"String",
           :input => :"TaskInput",
           :enabled => :"Boolean",
           :failure_threshold => :"Integer"
@@ -81,8 +82,8 @@ module Algolia
           self.destination_id = attributes[:destination_id]
         end
 
-        if attributes.key?(:trigger)
-          self.trigger = attributes[:trigger]
+        if attributes.key?(:cron)
+          self.cron = attributes[:cron]
         end
 
         if attributes.key?(:input)
@@ -122,7 +123,7 @@ module Algolia
         return true if self.equal?(other)
         self.class == other.class &&
           destination_id == other.destination_id &&
-          trigger == other.trigger &&
+          cron == other.cron &&
           input == other.input &&
           enabled == other.enabled &&
           failure_threshold == other.failure_threshold
@@ -137,7 +138,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [destination_id, trigger, input, enabled, failure_threshold].hash
+        [destination_id, cron, input, enabled, failure_threshold].hash
       end
 
       # Builds the object from hash
