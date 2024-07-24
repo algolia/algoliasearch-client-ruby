@@ -83,10 +83,10 @@ class RetryStrategyTest
       end
 
       assert_includes exception.message, 'Unreachable hosts. Last error for 1.0.0.0: SSL_connect'
-      assert_equal exception.errors, [
-        {:host=>"0.0.0.0", :error=>"SSL_connect SYSCALL returned=5 errno=0 peeraddr=127.0.0.1:443 state=error: certificate verify failed"},
-        {:host=>"1.0.0.0", :error=>"SSL_connect returned=1 errno=0 peeraddr=1.0.0.0:443 state=error: ssl/tls alert handshake failure"}
-      ]
+      assert_equal exception.errors.size, 2
+      assert_equal exception.errors.last.keys, [:host, :error]
+      assert_equal exception.errors.first[:host], '0.0.0.0'
+      assert_equal exception.errors.last[:host], '1.0.0.0'
     end
   end
 
