@@ -1529,10 +1529,10 @@ module Algolia
     #   - search
     # @param index_name [String] Name of the index on which to perform the operation. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [IndexSettings]
+    # @return [SettingsResponse]
     def get_settings(index_name, request_options = {})
       response = get_settings_with_http_info(index_name, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::IndexSettings")
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::SettingsResponse")
     end
 
     # Retrieves all allowed IP addresses with access to your application.
