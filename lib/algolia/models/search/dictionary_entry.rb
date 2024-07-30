@@ -101,8 +101,6 @@ module Algolia
 
         if attributes.key?(:language)
           self.language = attributes[:language]
-        else
-          self.language = nil
         end
 
         if attributes.key?(:word)
