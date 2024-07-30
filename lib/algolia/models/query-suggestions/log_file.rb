@@ -4,14 +4,48 @@ require "date"
 require "time"
 
 module Algolia
-  module Monitoring
-    class IndexingTimeResponse
-      attr_accessor :metrics
+  module QuerySuggestions
+    class LogFile
+      # Date and time of the log entry, in RFC 3339 format.
+      attr_accessor :timestamp
+
+      attr_accessor :level
+
+      # Details about this log entry.
+      attr_accessor :message
+
+      # Level indicating the position of a suggestion in a hierarchy of records.  For example, a `contextLevel` of 1 indicates that this suggestion belongs to a previous suggestion with `contextLevel` 0.
+      attr_accessor :context_level
+
+      class EnumAttributeValidator
+        attr_reader :datatype
+        attr_reader :allowable_values
+
+        def initialize(datatype, allowable_values)
+          @allowable_values = allowable_values.map do |value|
+            case datatype.to_s
+            when /Integer/i
+              value.to_i
+            when /Float/i
+              value.to_f
+            else
+              value
+            end
+          end
+        end
+
+        def valid?(value)
+          !value || allowable_values.include?(value)
+        end
+      end
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :metrics => :metrics
+          :timestamp => :timestamp,
+          :level => :level,
+          :message => :message,
+          :context_level => :contextLevel
         }
       end
 
@@ -23,7 +57,10 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :metrics => :"IndexingMetric"
+          :timestamp => :"String",
+          :level => :"LogLevel",
+          :message => :"String",
+          :context_level => :"Integer"
         }
       end
 
@@ -38,10 +75,7 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         if (!attributes.is_a?(Hash))
-          raise(
-            ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::IndexingTimeResponse` initialize method"
-          )
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::LogFile` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
@@ -49,7 +83,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::IndexingTimeResponse`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::LogFile`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -57,8 +91,20 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:metrics)
-          self.metrics = attributes[:metrics]
+        if attributes.key?(:timestamp)
+          self.timestamp = attributes[:timestamp]
+        end
+
+        if attributes.key?(:level)
+          self.level = attributes[:level]
+        end
+
+        if attributes.key?(:message)
+          self.message = attributes[:message]
+        end
+
+        if attributes.key?(:context_level)
+          self.context_level = attributes[:context_level]
         end
       end
 
@@ -67,7 +113,10 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          metrics == other.metrics
+          timestamp == other.timestamp &&
+          level == other.level &&
+          message == other.message &&
+          context_level == other.context_level
       end
 
       # @see the `==` method
@@ -79,7 +128,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [metrics].hash
+        [timestamp, level, message, context_level].hash
       end
 
       # Builds the object from hash
@@ -148,7 +197,7 @@ module Algolia
           # model
         else
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Monitoring.const_get(type)
+          klass = Algolia::QuerySuggestions.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass
             .build_from_hash(value)
         end

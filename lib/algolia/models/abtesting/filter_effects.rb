@@ -27,8 +27,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :outliers => :"FilterEffectsOutliers",
-          :empty_search => :"FilterEffectsEmptySearch"
+          :outliers => :"OutliersFilter",
+          :empty_search => :"EmptySearchFilter"
         }
       end
 

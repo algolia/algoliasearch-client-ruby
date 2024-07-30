@@ -5,8 +5,8 @@ require "time"
 
 module Algolia
   module Abtesting
-    # Empty searches removed from the A/B test as a result of configuration settings.
-    class FilterEffectsEmptySearch
+    # Outliers removed from the A/B test as a result of configuration settings.
+    class OutliersFilter
       # Number of users removed from the A/B test.
       attr_accessor :users_count
 
@@ -47,7 +47,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::FilterEffectsEmptySearch` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::OutliersFilter` initialize method"
           )
         end
 
@@ -56,7 +56,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::FilterEffectsEmptySearch`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::OutliersFilter`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end

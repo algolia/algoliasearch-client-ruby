@@ -6,7 +6,7 @@ require "time"
 module Algolia
   module Ingestion
     # The error if the transformation failed.
-    class TransformationTryResponseError
+    class TransformationError
       # The error status code.
       attr_accessor :code
 
@@ -47,7 +47,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::TransformationTryResponseError` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::TransformationError` initialize method"
           )
         end
 
@@ -56,7 +56,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::TransformationTryResponseError`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::TransformationError`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end

@@ -5,13 +5,30 @@ require "time"
 
 module Algolia
   module Monitoring
-    class IndexingTimeResponse
-      attr_accessor :metrics
+    class Metrics
+      # CPU idleness in %.
+      attr_accessor :cpu_usage
+
+      # RAM used for indexing in MB.
+      attr_accessor :ram_indexing_usage
+
+      # RAM used for search in MB.
+      attr_accessor :ram_search_usage
+
+      # Solid-state disk (SSD) usage expressed as % of RAM.  0% means no SSD usage. A value of 50% indicates 32&nbsp;GB SSD usage for a machine with 64&nbsp;RAM.
+      attr_accessor :ssd_usage
+
+      # Average build time of the indices in seconds.
+      attr_accessor :avg_build_time
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :metrics => :metrics
+          :cpu_usage => :cpu_usage,
+          :ram_indexing_usage => :ram_indexing_usage,
+          :ram_search_usage => :ram_search_usage,
+          :ssd_usage => :ssd_usage,
+          :avg_build_time => :avg_build_time
         }
       end
 
@@ -23,7 +40,11 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :metrics => :"IndexingMetric"
+          :cpu_usage => :"Hash<String, Array>",
+          :ram_indexing_usage => :"Hash<String, Array>",
+          :ram_search_usage => :"Hash<String, Array>",
+          :ssd_usage => :"Hash<String, Array>",
+          :avg_build_time => :"Hash<String, Array>"
         }
       end
 
@@ -38,10 +59,7 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         if (!attributes.is_a?(Hash))
-          raise(
-            ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::IndexingTimeResponse` initialize method"
-          )
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Metrics` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
@@ -49,7 +67,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::IndexingTimeResponse`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::Metrics`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -57,8 +75,34 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:metrics)
-          self.metrics = attributes[:metrics]
+        if attributes.key?(:cpu_usage)
+          if (value = attributes[:cpu_usage]).is_a?(Hash)
+            self.cpu_usage = value
+          end
+        end
+
+        if attributes.key?(:ram_indexing_usage)
+          if (value = attributes[:ram_indexing_usage]).is_a?(Hash)
+            self.ram_indexing_usage = value
+          end
+        end
+
+        if attributes.key?(:ram_search_usage)
+          if (value = attributes[:ram_search_usage]).is_a?(Hash)
+            self.ram_search_usage = value
+          end
+        end
+
+        if attributes.key?(:ssd_usage)
+          if (value = attributes[:ssd_usage]).is_a?(Hash)
+            self.ssd_usage = value
+          end
+        end
+
+        if attributes.key?(:avg_build_time)
+          if (value = attributes[:avg_build_time]).is_a?(Hash)
+            self.avg_build_time = value
+          end
         end
       end
 
@@ -67,7 +111,11 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          metrics == other.metrics
+          cpu_usage == other.cpu_usage &&
+          ram_indexing_usage == other.ram_indexing_usage &&
+          ram_search_usage == other.ram_search_usage &&
+          ssd_usage == other.ssd_usage &&
+          avg_build_time == other.avg_build_time
       end
 
       # @see the `==` method
@@ -79,7 +127,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [metrics].hash
+        [cpu_usage, ram_indexing_usage, ram_search_usage, ssd_usage, avg_build_time].hash
       end
 
       # Builds the object from hash

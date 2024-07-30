@@ -5,6 +5,7 @@ require "time"
 
 module Algolia
   module Ingestion
+    # The selected streams of a singer or airbyte connector.
     class DockerStreamsInput
       attr_accessor :streams
 

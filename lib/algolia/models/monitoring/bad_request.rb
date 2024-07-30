@@ -5,30 +5,13 @@ require "time"
 
 module Algolia
   module Monitoring
-    class InfrastructureResponseMetrics
-      # CPU idleness in %.
-      attr_accessor :cpu_usage
-
-      # RAM used for indexing in MB.
-      attr_accessor :ram_indexing_usage
-
-      # RAM used for search in MB.
-      attr_accessor :ram_search_usage
-
-      # Solid-state disk (SSD) usage expressed as % of RAM.  0% means no SSD usage. A value of 50% indicates 32&nbsp;GB SSD usage for a machine with 64&nbsp;RAM.
-      attr_accessor :ssd_usage
-
-      # Average build time of the indices in seconds.
-      attr_accessor :avg_build_time
+    class BadRequest
+      attr_accessor :reason
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :cpu_usage => :cpu_usage,
-          :ram_indexing_usage => :ram_indexing_usage,
-          :ram_search_usage => :ram_search_usage,
-          :ssd_usage => :ssd_usage,
-          :avg_build_time => :avg_build_time
+          :reason => :reason
         }
       end
 
@@ -40,11 +23,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :cpu_usage => :"Hash<String, Array>",
-          :ram_indexing_usage => :"Hash<String, Array>",
-          :ram_search_usage => :"Hash<String, Array>",
-          :ssd_usage => :"Hash<String, Array>",
-          :avg_build_time => :"Hash<String, Array>"
+          :reason => :"String"
         }
       end
 
@@ -61,7 +40,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::InfrastructureResponseMetrics` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::BadRequest` initialize method"
           )
         end
 
@@ -70,7 +49,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::InfrastructureResponseMetrics`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::BadRequest`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -78,34 +57,8 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:cpu_usage)
-          if (value = attributes[:cpu_usage]).is_a?(Hash)
-            self.cpu_usage = value
-          end
-        end
-
-        if attributes.key?(:ram_indexing_usage)
-          if (value = attributes[:ram_indexing_usage]).is_a?(Hash)
-            self.ram_indexing_usage = value
-          end
-        end
-
-        if attributes.key?(:ram_search_usage)
-          if (value = attributes[:ram_search_usage]).is_a?(Hash)
-            self.ram_search_usage = value
-          end
-        end
-
-        if attributes.key?(:ssd_usage)
-          if (value = attributes[:ssd_usage]).is_a?(Hash)
-            self.ssd_usage = value
-          end
-        end
-
-        if attributes.key?(:avg_build_time)
-          if (value = attributes[:avg_build_time]).is_a?(Hash)
-            self.avg_build_time = value
-          end
+        if attributes.key?(:reason)
+          self.reason = attributes[:reason]
         end
       end
 
@@ -114,11 +67,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          cpu_usage == other.cpu_usage &&
-          ram_indexing_usage == other.ram_indexing_usage &&
-          ram_search_usage == other.ram_search_usage &&
-          ssd_usage == other.ssd_usage &&
-          avg_build_time == other.avg_build_time
+          reason == other.reason
       end
 
       # @see the `==` method
@@ -130,7 +79,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [cpu_usage, ram_indexing_usage, ram_search_usage, ssd_usage, avg_build_time].hash
+        [reason].hash
       end
 
       # Builds the object from hash

@@ -23,7 +23,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :metrics => :"InfrastructureResponseMetrics"
+          :metrics => :"Metrics"
         }
       end
 

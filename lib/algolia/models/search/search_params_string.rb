@@ -5,6 +5,7 @@ require "time"
 
 module Algolia
   module Search
+    # Search parameters as query string.
     class SearchParamsString
       # Search parameters as a URL-encoded query string.
       attr_accessor :params

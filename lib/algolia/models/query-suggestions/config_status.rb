@@ -4,20 +4,31 @@ require "date"
 require "time"
 
 module Algolia
-  module Usage
-    class GetUsage400ResponseError
-      attr_accessor :code
+  module QuerySuggestions
+    class ConfigStatus
+      # Name of the Query Suggestions index (case-sensitive).
+      attr_accessor :index_name
 
-      attr_accessor :message
+      # Whether the creation or update of the Query Suggestions index is in progress.
+      attr_accessor :is_running
 
-      attr_accessor :errors
+      # Date and time when the Query Suggestions index was last built, in RFC 3339 format.
+      attr_accessor :last_built_at
+
+      # Date and time when the Query Suggestions index was last updated successfully.
+      attr_accessor :last_successful_built_at
+
+      # Duration of the last successful build in seconds.
+      attr_accessor :last_successful_build_duration
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :code => :code,
-          :message => :message,
-          :errors => :errors
+          :index_name => :indexName,
+          :is_running => :isRunning,
+          :last_built_at => :lastBuiltAt,
+          :last_successful_built_at => :lastSuccessfulBuiltAt,
+          :last_successful_build_duration => :lastSuccessfulBuildDuration
         }
       end
 
@@ -29,9 +40,11 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :code => :"String",
-          :message => :"String",
-          :errors => :"Array<GetUsage400ResponseErrorErrorsInner>"
+          :index_name => :"String",
+          :is_running => :"Boolean",
+          :last_built_at => :"String",
+          :last_successful_built_at => :"String",
+          :last_successful_build_duration => :"String"
         }
       end
 
@@ -48,7 +61,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::GetUsage400ResponseError` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::ConfigStatus` initialize method"
           )
         end
 
@@ -57,7 +70,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::GetUsage400ResponseError`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::ConfigStatus`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -65,18 +78,24 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:code)
-          self.code = attributes[:code]
+        if attributes.key?(:index_name)
+          self.index_name = attributes[:index_name]
         end
 
-        if attributes.key?(:message)
-          self.message = attributes[:message]
+        if attributes.key?(:is_running)
+          self.is_running = attributes[:is_running]
         end
 
-        if attributes.key?(:errors)
-          if (value = attributes[:errors]).is_a?(Array)
-            self.errors = value
-          end
+        if attributes.key?(:last_built_at)
+          self.last_built_at = attributes[:last_built_at]
+        end
+
+        if attributes.key?(:last_successful_built_at)
+          self.last_successful_built_at = attributes[:last_successful_built_at]
+        end
+
+        if attributes.key?(:last_successful_build_duration)
+          self.last_successful_build_duration = attributes[:last_successful_build_duration]
         end
       end
 
@@ -85,9 +104,11 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          code == other.code &&
-          message == other.message &&
-          errors == other.errors
+          index_name == other.index_name &&
+          is_running == other.is_running &&
+          last_built_at == other.last_built_at &&
+          last_successful_built_at == other.last_successful_built_at &&
+          last_successful_build_duration == other.last_successful_build_duration
       end
 
       # @see the `==` method
@@ -99,7 +120,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [code, message, errors].hash
+        [index_name, is_running, last_built_at, last_successful_built_at, last_successful_build_duration].hash
       end
 
       # Builds the object from hash
@@ -168,7 +189,7 @@ module Algolia
           # model
         else
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Usage.const_get(type)
+          klass = Algolia::QuerySuggestions.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass
             .build_from_hash(value)
         end

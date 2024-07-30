@@ -4,18 +4,20 @@ require "date"
 require "time"
 
 module Algolia
-  module Monitoring
-    class IncidentsInner
-      # Timestamp, measured in milliseconds since the Unix epoch.
-      attr_accessor :t
+  module Abtesting
+    # Empty searches removed from the A/B test as a result of configuration settings.
+    class EmptySearchFilter
+      # Number of users removed from the A/B test.
+      attr_accessor :users_count
 
-      attr_accessor :v
+      # Number of tracked searches removed from the A/B test.
+      attr_accessor :tracked_searches_count
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :t => :t,
-          :v => :v
+          :users_count => :usersCount,
+          :tracked_searches_count => :trackedSearchesCount
         }
       end
 
@@ -27,8 +29,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :t => :"Integer",
-          :v => :"Incident"
+          :users_count => :"Integer",
+          :tracked_searches_count => :"Integer"
         }
       end
 
@@ -45,7 +47,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::IncidentsInner` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::EmptySearchFilter` initialize method"
           )
         end
 
@@ -54,7 +56,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::IncidentsInner`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::EmptySearchFilter`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -62,12 +64,12 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:t)
-          self.t = attributes[:t]
+        if attributes.key?(:users_count)
+          self.users_count = attributes[:users_count]
         end
 
-        if attributes.key?(:v)
-          self.v = attributes[:v]
+        if attributes.key?(:tracked_searches_count)
+          self.tracked_searches_count = attributes[:tracked_searches_count]
         end
       end
 
@@ -76,8 +78,8 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          t == other.t &&
-          v == other.v
+          users_count == other.users_count &&
+          tracked_searches_count == other.tracked_searches_count
       end
 
       # @see the `==` method
@@ -89,7 +91,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [t, v].hash
+        [users_count, tracked_searches_count].hash
       end
 
       # Builds the object from hash
@@ -158,7 +160,7 @@ module Algolia
           # model
         else
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Monitoring.const_get(type)
+          klass = Algolia::Abtesting.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass
             .build_from_hash(value)
         end

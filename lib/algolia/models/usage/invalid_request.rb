@@ -5,17 +5,13 @@ require "time"
 
 module Algolia
   module Usage
-    class GetUsage200ResponseStatisticsInner
-      # Timestamp, measured in milliseconds since the Unix epoch.
-      attr_accessor :t
-
-      attr_accessor :v
+    class InvalidRequest
+      attr_accessor :error
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :t => :t,
-          :v => :v
+          :error => :error
         }
       end
 
@@ -27,8 +23,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :t => :"Integer",
-          :v => :"StatisticValue"
+          :error => :"InvalidRequestError"
         }
       end
 
@@ -45,7 +40,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::GetUsage200ResponseStatisticsInner` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::InvalidRequest` initialize method"
           )
         end
 
@@ -54,7 +49,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::GetUsage200ResponseStatisticsInner`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::InvalidRequest`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -62,12 +57,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:t)
-          self.t = attributes[:t]
-        end
-
-        if attributes.key?(:v)
-          self.v = attributes[:v]
+        if attributes.key?(:error)
+          self.error = attributes[:error]
+        else
+          self.error = nil
         end
       end
 
@@ -76,8 +69,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          t == other.t &&
-          v == other.v
+          error == other.error
       end
 
       # @see the `==` method
@@ -89,7 +81,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [t, v].hash
+        [error].hash
       end
 
       # Builds the object from hash

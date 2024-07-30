@@ -4,20 +4,14 @@ require "date"
 require "time"
 
 module Algolia
-  module Search
-    # Range object with lower and upper values in meters to define custom ranges.
-    class AroundPrecisionFromValueInner
-      # Lower boundary of a range in meters. The Geo ranking criterion considers all records within the range to be equal.
-      attr_accessor :from
-
-      # Upper boundary of a range in meters. The Geo ranking criterion considers all records within the range to be equal.
-      attr_accessor :value
+  module Monitoring
+    class Forbidden
+      attr_accessor :reason
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :from => :from,
-          :value => :value
+          :reason => :reason
         }
       end
 
@@ -29,8 +23,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :from => :"Integer",
-          :value => :"Integer"
+          :reason => :"String"
         }
       end
 
@@ -47,7 +40,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::AroundPrecisionFromValueInner` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::Forbidden` initialize method"
           )
         end
 
@@ -56,7 +49,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::AroundPrecisionFromValueInner`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::Forbidden`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -64,12 +57,8 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:from)
-          self.from = attributes[:from]
-        end
-
-        if attributes.key?(:value)
-          self.value = attributes[:value]
+        if attributes.key?(:reason)
+          self.reason = attributes[:reason]
         end
       end
 
@@ -78,8 +67,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          from == other.from &&
-          value == other.value
+          reason == other.reason
       end
 
       # @see the `==` method
@@ -91,7 +79,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [from, value].hash
+        [reason].hash
       end
 
       # Builds the object from hash
@@ -160,7 +148,7 @@ module Algolia
           # model
         else
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Search.const_get(type)
+          klass = Algolia::Monitoring.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass
             .build_from_hash(value)
         end

@@ -5,13 +5,19 @@ require "time"
 
 module Algolia
   module Usage
-    class GetUsage200Response
-      attr_accessor :statistics
+    class ForbiddenError
+      attr_accessor :code
+
+      attr_accessor :message
+
+      attr_accessor :errors
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :statistics => :statistics
+          :code => :code,
+          :message => :message,
+          :errors => :errors
         }
       end
 
@@ -23,7 +29,9 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :statistics => :"Array<GetUsage200ResponseStatisticsInner>"
+          :code => :"String",
+          :message => :"String",
+          :errors => :"Array<ErrorItem>"
         }
       end
 
@@ -40,7 +48,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::GetUsage200Response` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::ForbiddenError` initialize method"
           )
         end
 
@@ -49,7 +57,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::GetUsage200Response`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::ForbiddenError`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -57,9 +65,17 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:statistics)
-          if (value = attributes[:statistics]).is_a?(Array)
-            self.statistics = value
+        if attributes.key?(:code)
+          self.code = attributes[:code]
+        end
+
+        if attributes.key?(:message)
+          self.message = attributes[:message]
+        end
+
+        if attributes.key?(:errors)
+          if (value = attributes[:errors]).is_a?(Array)
+            self.errors = value
           end
         end
       end
@@ -69,7 +85,9 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          statistics == other.statistics
+          code == other.code &&
+          message == other.message &&
+          errors == other.errors
       end
 
       # @see the `==` method
@@ -81,7 +99,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [statistics].hash
+        [code, message, errors].hash
       end
 
       # Builds the object from hash

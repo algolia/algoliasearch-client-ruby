@@ -428,13 +428,10 @@ module Algolia
     #   - settings
     # @param index_name [String] Query Suggestions index name. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [GetConfigStatus200Response]
+    # @return [ConfigStatus]
     def get_config_status(index_name, request_options = {})
       response = get_config_status_with_http_info(index_name, request_options)
-      @api_client.deserialize(
-        response.body,
-        request_options[:debug_return_type] || "QuerySuggestions::GetConfigStatus200Response"
-      )
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "QuerySuggestions::ConfigStatus")
     end
 
     # Retrieves the logs for a single Query Suggestions index.
@@ -475,13 +472,10 @@ module Algolia
     #   - settings
     # @param index_name [String] Query Suggestions index name. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [GetLogFile200Response]
+    # @return [LogFile]
     def get_log_file(index_name, request_options = {})
       response = get_log_file_with_http_info(index_name, request_options)
-      @api_client.deserialize(
-        response.body,
-        request_options[:debug_return_type] || "QuerySuggestions::GetLogFile200Response"
-      )
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "QuerySuggestions::LogFile")
     end
 
     # Updates a QuerySuggestions configuration.

@@ -4,14 +4,14 @@ require "date"
 require "time"
 
 module Algolia
-  module Monitoring
-    class IndexingTimeResponseMetrics
-      attr_accessor :indexing
+  module Usage
+    class IndexUsage
+      attr_accessor :statistics
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :indexing => :indexing
+          :statistics => :statistics
         }
       end
 
@@ -23,7 +23,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :indexing => :"Hash<String, Array>"
+          :statistics => :"Array<StatisticEntry>"
         }
       end
 
@@ -40,7 +40,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::IndexingTimeResponseMetrics` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::IndexUsage` initialize method"
           )
         end
 
@@ -49,7 +49,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::IndexingTimeResponseMetrics`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::IndexUsage`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -57,9 +57,9 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:indexing)
-          if (value = attributes[:indexing]).is_a?(Hash)
-            self.indexing = value
+        if attributes.key?(:statistics)
+          if (value = attributes[:statistics]).is_a?(Array)
+            self.statistics = value
           end
         end
       end
@@ -69,7 +69,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          indexing == other.indexing
+          statistics == other.statistics
       end
 
       # @see the `==` method
@@ -81,7 +81,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [indexing].hash
+        [statistics].hash
       end
 
       # Builds the object from hash
@@ -150,7 +150,7 @@ module Algolia
           # model
         else
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Monitoring.const_get(type)
+          klass = Algolia::Usage.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass
             .build_from_hash(value)
         end

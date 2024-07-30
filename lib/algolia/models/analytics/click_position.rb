@@ -4,23 +4,20 @@ require "date"
 require "time"
 
 module Algolia
-  module Usage
-    class GetUsage400ResponseErrorErrorsInner
-      attr_accessor :code
-
-      attr_accessor :message
-
-      attr_accessor :line
-
+  module Analytics
+    # Click position.
+    class ClickPosition
+      # Range of positions in the search results, using the pattern `[start,end]`.  For positions 11 and up, click events are summed over the specified range. `-1` indicates the end of the list of search results.
       attr_accessor :position
+
+      # Number of times this search has been clicked at that position.
+      attr_accessor :click_count
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :code => :code,
-          :message => :message,
-          :line => :line,
-          :position => :position
+          :position => :position,
+          :click_count => :clickCount
         }
       end
 
@@ -32,10 +29,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :code => :"String",
-          :message => :"String",
-          :line => :"Integer",
-          :position => :"Integer"
+          :position => :"Array<Integer>",
+          :click_count => :"Integer"
         }
       end
 
@@ -52,7 +47,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::GetUsage400ResponseErrorErrorsInner` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::ClickPosition` initialize method"
           )
         end
 
@@ -61,7 +56,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::GetUsage400ResponseErrorErrorsInner`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::ClickPosition`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -69,23 +64,47 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:code)
-          self.code = attributes[:code]
-        end
-
-        if attributes.key?(:message)
-          self.message = attributes[:message]
-        else
-          self.message = nil
-        end
-
-        if attributes.key?(:line)
-          self.line = attributes[:line]
-        end
-
         if attributes.key?(:position)
-          self.position = attributes[:position]
+          if (value = attributes[:position]).is_a?(Array)
+            self.position = value
+          end
         end
+
+        if attributes.key?(:click_count)
+          self.click_count = attributes[:click_count]
+        end
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] position Value to be assigned
+      def position=(position)
+        if position.nil?
+          raise ArgumentError, "position cannot be nil"
+        end
+
+        if position.length > 2
+          raise ArgumentError, "invalid value for \"position\", number of items must be less than or equal to 2."
+        end
+
+        if position.length < 2
+          raise ArgumentError, "invalid value for \"position\", number of items must be greater than or equal to 2."
+        end
+
+        @position = position
+      end
+
+      # Custom attribute writer method with validation
+      # @param [Object] click_count Value to be assigned
+      def click_count=(click_count)
+        if click_count.nil?
+          raise ArgumentError, "click_count cannot be nil"
+        end
+
+        if click_count < 0
+          raise ArgumentError, "invalid value for \"click_count\", must be greater than or equal to 0."
+        end
+
+        @click_count = click_count
       end
 
       # Checks equality by comparing each attribute.
@@ -93,10 +112,8 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          code == other.code &&
-          message == other.message &&
-          line == other.line &&
-          position == other.position
+          position == other.position &&
+          click_count == other.click_count
       end
 
       # @see the `==` method
@@ -108,7 +125,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [code, message, line, position].hash
+        [position, click_count].hash
       end
 
       # Builds the object from hash
@@ -177,7 +194,7 @@ module Algolia
           # model
         else
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Usage.const_get(type)
+          klass = Algolia::Analytics.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass
             .build_from_hash(value)
         end

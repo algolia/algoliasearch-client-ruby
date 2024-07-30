@@ -4,14 +4,20 @@ require "date"
 require "time"
 
 module Algolia
-  module Monitoring
-    class LatencyResponseMetrics
-      attr_accessor :latency
+  module Search
+    # Range object with lower and upper values in meters to define custom ranges.
+    class Range
+      # Lower boundary of a range in meters. The Geo ranking criterion considers all records within the range to be equal.
+      attr_accessor :from
+
+      # Upper boundary of a range in meters. The Geo ranking criterion considers all records within the range to be equal.
+      attr_accessor :value
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :latency => :latency
+          :from => :from,
+          :value => :value
         }
       end
 
@@ -23,7 +29,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :latency => :"Hash<String, Array>"
+          :from => :"Integer",
+          :value => :"Integer"
         }
       end
 
@@ -38,10 +45,7 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         if (!attributes.is_a?(Hash))
-          raise(
-            ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::LatencyResponseMetrics` initialize method"
-          )
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Range` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
@@ -49,7 +53,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::LatencyResponseMetrics`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::Range`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -57,10 +61,12 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:latency)
-          if (value = attributes[:latency]).is_a?(Hash)
-            self.latency = value
-          end
+        if attributes.key?(:from)
+          self.from = attributes[:from]
+        end
+
+        if attributes.key?(:value)
+          self.value = attributes[:value]
         end
       end
 
@@ -69,7 +75,8 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          latency == other.latency
+          from == other.from &&
+          value == other.value
       end
 
       # @see the `==` method
@@ -81,7 +88,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [latency].hash
+        [from, value].hash
       end
 
       # Builds the object from hash
@@ -150,7 +157,7 @@ module Algolia
           # model
         else
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Monitoring.const_get(type)
+          klass = Algolia::Search.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass
             .build_from_hash(value)
         end

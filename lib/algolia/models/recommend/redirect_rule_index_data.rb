@@ -6,7 +6,7 @@ require "time"
 module Algolia
   module Recommend
     # Redirect rule data.
-    class RedirectRuleIndexMetadataData
+    class RedirectRuleIndexData
       attr_accessor :rule_object_id
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -41,7 +41,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::RedirectRuleIndexMetadataData` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::RedirectRuleIndexData` initialize method"
           )
         end
 
@@ -50,7 +50,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::RedirectRuleIndexMetadataData`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::RedirectRuleIndexData`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end

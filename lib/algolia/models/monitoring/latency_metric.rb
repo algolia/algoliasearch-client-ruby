@@ -5,13 +5,13 @@ require "time"
 
 module Algolia
   module Monitoring
-    class IndexingTimeResponse
-      attr_accessor :metrics
+    class LatencyMetric
+      attr_accessor :latency
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :metrics => :metrics
+          :latency => :latency
         }
       end
 
@@ -23,7 +23,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :metrics => :"IndexingMetric"
+          :latency => :"Hash<String, Array>"
         }
       end
 
@@ -40,7 +40,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::IndexingTimeResponse` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::LatencyMetric` initialize method"
           )
         end
 
@@ -49,7 +49,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::IndexingTimeResponse`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::LatencyMetric`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -57,8 +57,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:metrics)
-          self.metrics = attributes[:metrics]
+        if attributes.key?(:latency)
+          if (value = attributes[:latency]).is_a?(Hash)
+            self.latency = value
+          end
         end
       end
 
@@ -67,7 +69,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          metrics == other.metrics
+          latency == other.latency
       end
 
       # @see the `==` method
@@ -79,7 +81,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [metrics].hash
+        [latency].hash
       end
 
       # Builds the object from hash

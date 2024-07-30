@@ -4,20 +4,14 @@ require "date"
 require "time"
 
 module Algolia
-  module Analytics
-    # Click position.
-    class ClickPositionsInner
-      # Range of positions in the search results, using the pattern `[start,end]`.  For positions 11 and up, click events are summed over the specified range. `-1` indicates the end of the list of search results.
-      attr_accessor :position
-
-      # Number of times this search has been clicked at that position.
-      attr_accessor :click_count
+  module Usage
+    class Forbidden
+      attr_accessor :error
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :position => :position,
-          :click_count => :clickCount
+          :error => :error
         }
       end
 
@@ -29,8 +23,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :position => :"Array<Integer>",
-          :click_count => :"Integer"
+          :error => :"ForbiddenError"
         }
       end
 
@@ -47,7 +40,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::ClickPositionsInner` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::Forbidden` initialize method"
           )
         end
 
@@ -56,7 +49,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::ClickPositionsInner`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::Forbidden`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -64,47 +57,11 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:position)
-          if (value = attributes[:position]).is_a?(Array)
-            self.position = value
-          end
+        if attributes.key?(:error)
+          self.error = attributes[:error]
+        else
+          self.error = nil
         end
-
-        if attributes.key?(:click_count)
-          self.click_count = attributes[:click_count]
-        end
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] position Value to be assigned
-      def position=(position)
-        if position.nil?
-          raise ArgumentError, "position cannot be nil"
-        end
-
-        if position.length > 2
-          raise ArgumentError, "invalid value for \"position\", number of items must be less than or equal to 2."
-        end
-
-        if position.length < 2
-          raise ArgumentError, "invalid value for \"position\", number of items must be greater than or equal to 2."
-        end
-
-        @position = position
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] click_count Value to be assigned
-      def click_count=(click_count)
-        if click_count.nil?
-          raise ArgumentError, "click_count cannot be nil"
-        end
-
-        if click_count < 0
-          raise ArgumentError, "invalid value for \"click_count\", must be greater than or equal to 0."
-        end
-
-        @click_count = click_count
       end
 
       # Checks equality by comparing each attribute.
@@ -112,8 +69,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          position == other.position &&
-          click_count == other.click_count
+          error == other.error
       end
 
       # @see the `==` method
@@ -125,7 +81,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [position, click_count].hash
+        [error].hash
       end
 
       # Builds the object from hash
@@ -194,7 +150,7 @@ module Algolia
           # model
         else
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Analytics.const_get(type)
+          klass = Algolia::Usage.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass
             .build_from_hash(value)
         end

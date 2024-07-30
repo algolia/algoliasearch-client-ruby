@@ -4,20 +4,23 @@ require "date"
 require "time"
 
 module Algolia
-  module Recommend
-    # Range object with lower and upper values in meters to define custom ranges.
-    class AroundPrecisionFromValueInner
-      # Lower boundary of a range in meters. The Geo ranking criterion considers all records within the range to be equal.
-      attr_accessor :from
+  module Usage
+    class ErrorItem
+      attr_accessor :code
 
-      # Upper boundary of a range in meters. The Geo ranking criterion considers all records within the range to be equal.
-      attr_accessor :value
+      attr_accessor :message
+
+      attr_accessor :line
+
+      attr_accessor :position
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :from => :from,
-          :value => :value
+          :code => :code,
+          :message => :message,
+          :line => :line,
+          :position => :position
         }
       end
 
@@ -29,8 +32,10 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :from => :"Integer",
-          :value => :"Integer"
+          :code => :"String",
+          :message => :"String",
+          :line => :"Integer",
+          :position => :"Integer"
         }
       end
 
@@ -47,7 +52,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::AroundPrecisionFromValueInner` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::ErrorItem` initialize method"
           )
         end
 
@@ -56,7 +61,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::AroundPrecisionFromValueInner`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::ErrorItem`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -64,12 +69,22 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:from)
-          self.from = attributes[:from]
+        if attributes.key?(:code)
+          self.code = attributes[:code]
         end
 
-        if attributes.key?(:value)
-          self.value = attributes[:value]
+        if attributes.key?(:message)
+          self.message = attributes[:message]
+        else
+          self.message = nil
+        end
+
+        if attributes.key?(:line)
+          self.line = attributes[:line]
+        end
+
+        if attributes.key?(:position)
+          self.position = attributes[:position]
         end
       end
 
@@ -78,8 +93,10 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          from == other.from &&
-          value == other.value
+          code == other.code &&
+          message == other.message &&
+          line == other.line &&
+          position == other.position
       end
 
       # @see the `==` method
@@ -91,7 +108,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [from, value].hash
+        [code, message, line, position].hash
       end
 
       # Builds the object from hash
@@ -160,7 +177,7 @@ module Algolia
           # model
         else
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Recommend.const_get(type)
+          klass = Algolia::Usage.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass
             .build_from_hash(value)
         end

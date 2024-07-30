@@ -43,7 +43,7 @@ module Algolia
           :dest => :"String",
           :reason => :"String",
           :succeed => :"Boolean",
-          :data => :"RedirectRuleIndexMetadataData"
+          :data => :"RedirectRuleIndexData"
         }
       end
 

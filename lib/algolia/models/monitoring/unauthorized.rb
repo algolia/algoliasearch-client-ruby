@@ -5,18 +5,13 @@ require "time"
 
 module Algolia
   module Monitoring
-    class TimeInner
-      # Timestamp, measured in milliseconds since the Unix epoch.
-      attr_accessor :t
-
-      # Time in ms.
-      attr_accessor :v
+    class Unauthorized
+      attr_accessor :reason
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :t => :t,
-          :v => :v
+          :reason => :reason
         }
       end
 
@@ -28,8 +23,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :t => :"Integer",
-          :v => :"Integer"
+          :reason => :"String"
         }
       end
 
@@ -46,7 +40,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::TimeInner` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::Unauthorized` initialize method"
           )
         end
 
@@ -55,7 +49,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::TimeInner`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::Unauthorized`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -63,12 +57,8 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:t)
-          self.t = attributes[:t]
-        end
-
-        if attributes.key?(:v)
-          self.v = attributes[:v]
+        if attributes.key?(:reason)
+          self.reason = attributes[:reason]
         end
       end
 
@@ -77,8 +67,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          t == other.t &&
-          v == other.v
+          reason == other.reason
       end
 
       # @see the `==` method
@@ -90,7 +79,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [t, v].hash
+        [reason].hash
       end
 
       # Builds the object from hash

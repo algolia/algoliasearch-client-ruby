@@ -4,15 +4,20 @@ require "date"
 require "time"
 
 module Algolia
-  module Search
-    # Redirect rule data.
-    class RedirectRuleIndexMetadataData
-      attr_accessor :rule_object_id
+  module Usage
+    class InvalidRequestError
+      attr_accessor :code
+
+      attr_accessor :message
+
+      attr_accessor :errors
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :rule_object_id => :ruleObjectID
+          :code => :code,
+          :message => :message,
+          :errors => :errors
         }
       end
 
@@ -24,7 +29,9 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :rule_object_id => :"String"
+          :code => :"String",
+          :message => :"String",
+          :errors => :"Array<ErrorItem>"
         }
       end
 
@@ -41,7 +48,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::RedirectRuleIndexMetadataData` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::InvalidRequestError` initialize method"
           )
         end
 
@@ -50,7 +57,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::RedirectRuleIndexMetadataData`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::InvalidRequestError`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -58,10 +65,18 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:rule_object_id)
-          self.rule_object_id = attributes[:rule_object_id]
-        else
-          self.rule_object_id = nil
+        if attributes.key?(:code)
+          self.code = attributes[:code]
+        end
+
+        if attributes.key?(:message)
+          self.message = attributes[:message]
+        end
+
+        if attributes.key?(:errors)
+          if (value = attributes[:errors]).is_a?(Array)
+            self.errors = value
+          end
         end
       end
 
@@ -70,7 +85,9 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          rule_object_id == other.rule_object_id
+          code == other.code &&
+          message == other.message &&
+          errors == other.errors
       end
 
       # @see the `==` method
@@ -82,7 +99,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [rule_object_id].hash
+        [code, message, errors].hash
       end
 
       # Builds the object from hash
@@ -151,7 +168,7 @@ module Algolia
           # model
         else
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Search.const_get(type)
+          klass = Algolia::Usage.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass
             .build_from_hash(value)
         end

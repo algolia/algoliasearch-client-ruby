@@ -275,7 +275,7 @@ module Algolia
     # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (required)
     # @param granularity [Granularity] Granularity of the aggregated metrics.  - &#x60;hourly&#x60;: the maximum time range for hourly metrics is 7 days. - &#x60;daily&#x60;: the maximum time range for daily metrics is 365 days.  (default to 'daily')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [GetUsage200Response]
+    # @return [IndexUsage]
     def get_index_usage(statistic, index_name, start_date, end_date, granularity = nil, request_options = {})
       response = get_index_usage_with_http_info(
         statistic,
@@ -285,7 +285,7 @@ module Algolia
         granularity,
         request_options
       )
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Usage::GetUsage200Response")
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Usage::IndexUsage")
     end
 
     # Retrieves usage statistics evaluated over a specified period.
@@ -339,10 +339,10 @@ module Algolia
     # @param end_date [String] End date of the period to analyze, in &#x60;YYYY-MM-DD&#x60; format. (required)
     # @param granularity [Granularity] Granularity of the aggregated metrics.  - &#x60;hourly&#x60;: the maximum time range for hourly metrics is 7 days. - &#x60;daily&#x60;: the maximum time range for daily metrics is 365 days.  (default to 'daily')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [GetUsage200Response]
+    # @return [IndexUsage]
     def get_usage(statistic, start_date, end_date, granularity = nil, request_options = {})
       response = get_usage_with_http_info(statistic, start_date, end_date, granularity, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Usage::GetUsage200Response")
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Usage::IndexUsage")
     end
 
   end

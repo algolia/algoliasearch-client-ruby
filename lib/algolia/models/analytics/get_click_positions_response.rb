@@ -24,7 +24,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :positions => :"Array<ClickPositionsInner>"
+          :positions => :"Array<ClickPosition>"
         }
       end
 

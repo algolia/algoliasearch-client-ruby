@@ -42,7 +42,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :_metadata => :"RecommendRuleMetadata",
+          :_metadata => :"RuleMetadata",
           :object_id => :"String",
           :condition => :"Condition",
           :consequence => :"Consequence",

@@ -4,16 +4,14 @@ require "date"
 require "time"
 
 module Algolia
-  module Recommend
-    # Rule metadata.
-    class RecommendRuleMetadata
-      # Date and time when the object was updated, in RFC 3339 format.
-      attr_accessor :last_update
+  module Monitoring
+    class IndexingMetric
+      attr_accessor :indexing
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :last_update => :lastUpdate
+          :indexing => :indexing
         }
       end
 
@@ -25,7 +23,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :last_update => :"String"
+          :indexing => :"Hash<String, Array>"
         }
       end
 
@@ -42,7 +40,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::RecommendRuleMetadata` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::IndexingMetric` initialize method"
           )
         end
 
@@ -51,7 +49,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::RecommendRuleMetadata`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::IndexingMetric`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -59,8 +57,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:last_update)
-          self.last_update = attributes[:last_update]
+        if attributes.key?(:indexing)
+          if (value = attributes[:indexing]).is_a?(Hash)
+            self.indexing = value
+          end
         end
       end
 
@@ -69,7 +69,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          last_update == other.last_update
+          indexing == other.indexing
       end
 
       # @see the `==` method
@@ -81,7 +81,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [last_update].hash
+        [indexing].hash
       end
 
       # Builds the object from hash
@@ -150,7 +150,7 @@ module Algolia
           # model
         else
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Recommend.const_get(type)
+          klass = Algolia::Monitoring.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass
             .build_from_hash(value)
         end

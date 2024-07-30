@@ -4,14 +4,15 @@ require "date"
 require "time"
 
 module Algolia
-  module Monitoring
-    class GetServers403Response
-      attr_accessor :reason
+  module Search
+    # Redirect rule data.
+    class RedirectRuleIndexData
+      attr_accessor :rule_object_id
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :reason => :reason
+          :rule_object_id => :ruleObjectID
         }
       end
 
@@ -23,7 +24,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :reason => :"String"
+          :rule_object_id => :"String"
         }
       end
 
@@ -40,7 +41,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::GetServers403Response` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::RedirectRuleIndexData` initialize method"
           )
         end
 
@@ -49,7 +50,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::GetServers403Response`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::RedirectRuleIndexData`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -57,8 +58,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:reason)
-          self.reason = attributes[:reason]
+        if attributes.key?(:rule_object_id)
+          self.rule_object_id = attributes[:rule_object_id]
+        else
+          self.rule_object_id = nil
         end
       end
 
@@ -67,7 +70,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          reason == other.reason
+          rule_object_id == other.rule_object_id
       end
 
       # @see the `==` method
@@ -79,7 +82,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [reason].hash
+        [rule_object_id].hash
       end
 
       # Builds the object from hash
@@ -148,7 +151,7 @@ module Algolia
           # model
         else
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Monitoring.const_get(type)
+          klass = Algolia::Search.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass
             .build_from_hash(value)
         end

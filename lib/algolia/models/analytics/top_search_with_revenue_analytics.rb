@@ -84,7 +84,7 @@ module Algolia
           :count => :"Integer",
           :click_through_rate => :"Float",
           :average_click_position => :"Float",
-          :click_positions => :"Array<ClickPositionsInner>",
+          :click_positions => :"Array<ClickPosition>",
           :conversion_rate => :"Float",
           :tracked_search_count => :"Integer",
           :click_count => :"Integer",

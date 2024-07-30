@@ -28,7 +28,7 @@ module Algolia
       def self.types_mapping
         {
           :payloads => :"Array<Object>",
-          :error => :"TransformationTryResponseError"
+          :error => :"TransformationError"
         }
       end
 
