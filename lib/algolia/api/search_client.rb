@@ -1389,10 +1389,10 @@ module Algolia
     # @param object_id [String] Unique record identifier. (required)
     # @param attributes_to_retrieve [Array<String>] Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned.  &#x60;objectID&#x60; is always retrieved.  Attributes included in &#x60;unretrievableAttributes&#x60; won&#39;t be retrieved unless the request is authenticated with the admin API key.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [Hash<String, String>]
+    # @return [Object]
     def get_object(index_name, object_id, attributes_to_retrieve = nil, request_options = {})
       response = get_object_with_http_info(index_name, object_id, attributes_to_retrieve, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::Hash<String, String>")
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::Object")
     end
 
     # Retrieves one or more records, potentially from different indices.  Records are returned in the same order as the requests.
