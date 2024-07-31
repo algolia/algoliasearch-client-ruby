@@ -9,7 +9,6 @@ module Algolia
     class BuiltInOperation
       attr_accessor :_operation
 
-      # Value that corresponds to the operation, for example an `Increment` or `Decrement` step, or an `Add` or `Remove` value.
       attr_accessor :value
 
       class EnumAttributeValidator
@@ -51,7 +50,7 @@ module Algolia
       def self.types_mapping
         {
           :_operation => :"BuiltInOperationType",
-          :value => :"String"
+          :value => :"BuiltInOperationValue"
         }
       end
 
