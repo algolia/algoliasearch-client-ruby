@@ -2267,6 +2267,56 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::RunResponse")
     end
 
+    # Runs all tasks linked to a source, only available for Shopify sources. It will create 1 run per task.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param source_id [String] Unique identifier of a source. (required)
+    # @param run_source_payload [RunSourcePayload]
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def run_source_with_http_info(source_id, run_source_payload = nil, request_options = {})
+      # verify the required parameter 'source_id' is set
+      if @api_client.config.client_side_validation && source_id.nil?
+        raise ArgumentError, "Parameter `source_id` is required when calling `run_source`."
+      end
+
+      path = "/1/sources/{sourceID}/run".sub("{" + "sourceID" + "}", Transport.encode_uri(source_id.to_s))
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(run_source_payload)
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.run_source",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Runs all tasks linked to a source, only available for Shopify sources. It will create 1 run per task.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param source_id [String] Unique identifier of a source. (required)
+    # @param run_source_payload [RunSourcePayload]
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [RunSourceResponse]
+    def run_source(source_id, run_source_payload = nil, request_options = {})
+      response = run_source_with_http_info(source_id, run_source_payload, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::RunSourceResponse")
+    end
+
     # Runs a task. You can check the status of task runs with the observability endpoints.
     #
     # Required API Key ACLs:
