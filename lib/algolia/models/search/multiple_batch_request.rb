@@ -97,8 +97,6 @@ module Algolia
 
         if attributes.key?(:body)
           self.body = attributes[:body]
-        else
-          self.body = nil
         end
 
         if attributes.key?(:index_name)
