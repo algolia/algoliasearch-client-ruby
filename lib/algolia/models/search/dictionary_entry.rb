@@ -23,6 +23,8 @@ module Algolia
 
       attr_accessor :state
 
+      attr_accessor :type
+
       attr_accessor :additional_properties
 
       class EnumAttributeValidator
@@ -55,7 +57,8 @@ module Algolia
           :word => :word,
           :words => :words,
           :decomposition => :decomposition,
-          :state => :state
+          :state => :state,
+          :type => :type
         }
       end
 
@@ -72,7 +75,8 @@ module Algolia
           :word => :"String",
           :words => :"Array<String>",
           :decomposition => :"Array<String>",
-          :state => :"DictionaryEntryState"
+          :state => :"DictionaryEntryState",
+          :type => :"DictionaryEntryType"
         }
       end
 
@@ -123,6 +127,10 @@ module Algolia
           self.state = attributes[:state]
         end
 
+        if attributes.key?(:type)
+          self.type = attributes[:type]
+        end
+
         # add extra attribute to additional_properties
         self.additional_properties ||= {}
         self.additional_properties.merge!(attributes.reject { |k, _| self.class.attribute_map.key?(k.to_sym) })
@@ -138,7 +146,8 @@ module Algolia
           word == other.word &&
           words == other.words &&
           decomposition == other.decomposition &&
-          state == other.state
+          state == other.state &&
+          type == other.type
       end
 
       # @see the `==` method
@@ -150,7 +159,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [object_id, language, word, words, decomposition, state].hash
+        [object_id, language, word, words, decomposition, state, type].hash
       end
 
       # Builds the object from hash
