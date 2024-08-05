@@ -2169,13 +2169,44 @@ module Algolia
     #   - addObject
     #   - deleteIndex
     #   - editSettings
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
     # @param sort [SortKeys] Property by which to sort the list. (default to 'desc')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def list_transformations_with_http_info(sort = nil, order = nil, request_options = {})
+    def list_transformations_with_http_info(
+      items_per_page = nil,
+      page = nil,
+      sort = nil,
+      order = nil,
+      request_options = {}
+    )
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_transformations, must be smaller than or equal to 100."
+        )
+      end
+
+      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
+        raise(
+          ArgumentError,
+          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_transformations, must be greater than or equal to 1."
+        )
+      end
+
+      if @api_client.config.client_side_validation && !page.nil? && page < 1
+        raise(
+          ArgumentError,
+          "invalid value for \"\"page\"\" when calling IngestionClient.list_transformations, must be greater than or equal to 1."
+        )
+      end
+
       path = "/1/transformations"
       query_params = {}
+      query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
+      query_params[:page] = page unless page.nil?
       query_params[:sort] = sort unless sort.nil?
       query_params[:order] = order unless order.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -2201,12 +2232,14 @@ module Algolia
     #   - addObject
     #   - deleteIndex
     #   - editSettings
+    # @param items_per_page [Integer] Number of items per page. (default to 10)
+    # @param page [Integer] Page number of the paginated API response.
     # @param sort [SortKeys] Property by which to sort the list. (default to 'desc')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListTransformationsResponse]
-    def list_transformations(sort = nil, order = nil, request_options = {})
-      response = list_transformations_with_http_info(sort, order, request_options)
+    def list_transformations(items_per_page = nil, page = nil, sort = nil, order = nil, request_options = {})
+      response = list_transformations_with_http_info(items_per_page, page, sort, order, request_options)
       @api_client.deserialize(
         response.body,
         request_options[:debug_return_type] || "Ingestion::ListTransformationsResponse"

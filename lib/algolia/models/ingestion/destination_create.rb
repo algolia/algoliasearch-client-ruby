@@ -17,6 +17,8 @@ module Algolia
       # Universally unique identifier (UUID) of an authentication resource.
       attr_accessor :authentication_id
 
+      attr_accessor :transformation_ids
+
       class EnumAttributeValidator
         attr_reader :datatype
         attr_reader :allowable_values
@@ -45,7 +47,8 @@ module Algolia
           :type => :type,
           :name => :name,
           :input => :input,
-          :authentication_id => :authenticationID
+          :authentication_id => :authenticationID,
+          :transformation_ids => :transformationIDs
         }
       end
 
@@ -60,7 +63,8 @@ module Algolia
           :type => :"DestinationType",
           :name => :"String",
           :input => :"DestinationInput",
-          :authentication_id => :"String"
+          :authentication_id => :"String",
+          :transformation_ids => :"Array<String>"
         }
       end
 
@@ -115,6 +119,12 @@ module Algolia
         if attributes.key?(:authentication_id)
           self.authentication_id = attributes[:authentication_id]
         end
+
+        if attributes.key?(:transformation_ids)
+          if (value = attributes[:transformation_ids]).is_a?(Array)
+            self.transformation_ids = value
+          end
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -125,7 +135,8 @@ module Algolia
           type == other.type &&
           name == other.name &&
           input == other.input &&
-          authentication_id == other.authentication_id
+          authentication_id == other.authentication_id &&
+          transformation_ids == other.transformation_ids
       end
 
       # @see the `==` method
@@ -137,7 +148,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [type, name, input, authentication_id].hash
+        [type, name, input, authentication_id, transformation_ids].hash
       end
 
       # Builds the object from hash

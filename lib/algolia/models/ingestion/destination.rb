@@ -26,6 +26,8 @@ module Algolia
       # Universally unique identifier (UUID) of an authentication resource.
       attr_accessor :authentication_id
 
+      attr_accessor :transformation_ids
+
       class EnumAttributeValidator
         attr_reader :datatype
         attr_reader :allowable_values
@@ -57,7 +59,8 @@ module Algolia
           :input => :input,
           :created_at => :createdAt,
           :updated_at => :updatedAt,
-          :authentication_id => :authenticationID
+          :authentication_id => :authenticationID,
+          :transformation_ids => :transformationIDs
         }
       end
 
@@ -75,7 +78,8 @@ module Algolia
           :input => :"DestinationInput",
           :created_at => :"String",
           :updated_at => :"String",
-          :authentication_id => :"String"
+          :authentication_id => :"String",
+          :transformation_ids => :"Array<String>"
         }
       end
 
@@ -146,6 +150,12 @@ module Algolia
         if attributes.key?(:authentication_id)
           self.authentication_id = attributes[:authentication_id]
         end
+
+        if attributes.key?(:transformation_ids)
+          if (value = attributes[:transformation_ids]).is_a?(Array)
+            self.transformation_ids = value
+          end
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -159,7 +169,8 @@ module Algolia
           input == other.input &&
           created_at == other.created_at &&
           updated_at == other.updated_at &&
-          authentication_id == other.authentication_id
+          authentication_id == other.authentication_id &&
+          transformation_ids == other.transformation_ids
       end
 
       # @see the `==` method
@@ -171,7 +182,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [destination_id, type, name, input, created_at, updated_at, authentication_id].hash
+        [destination_id, type, name, input, created_at, updated_at, authentication_id, transformation_ids].hash
       end
 
       # Builds the object from hash
