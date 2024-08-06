@@ -2163,6 +2163,47 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::ListTasksResponseV1")
     end
 
+    # Retrieves a list of existing LLM transformation helpers.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def list_transformation_models_with_http_info(request_options = {})
+      path = "/1/transformations/copilot"
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.list_transformation_models",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Retrieves a list of existing LLM transformation helpers.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [TransformationModels]
+    def list_transformation_models(request_options = {})
+      response = list_transformation_models_with_http_info(request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TransformationModels")
+    end
+
     # Retrieves a list of transformations.
     #
     # Required API Key ACLs:
