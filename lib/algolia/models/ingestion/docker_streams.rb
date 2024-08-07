@@ -5,14 +5,43 @@ require "time"
 
 module Algolia
   module Ingestion
-    # The selected streams of a singer or airbyte connector.
-    class DockerStreamsInput
-      attr_accessor :streams
+    class DockerStreams
+      # The name of the stream to fetch the data from (e.g. table name).
+      attr_accessor :name
+
+      # The properties of the stream to select (e.g. column).
+      attr_accessor :properties
+
+      attr_accessor :sync_mode
+
+      class EnumAttributeValidator
+        attr_reader :datatype
+        attr_reader :allowable_values
+
+        def initialize(datatype, allowable_values)
+          @allowable_values = allowable_values.map do |value|
+            case datatype.to_s
+            when /Integer/i
+              value.to_i
+            when /Float/i
+              value.to_f
+            else
+              value
+            end
+          end
+        end
+
+        def valid?(value)
+          !value || allowable_values.include?(value)
+        end
+      end
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :streams => :streams
+          :name => :name,
+          :properties => :properties,
+          :sync_mode => :syncMode
         }
       end
 
@@ -24,7 +53,9 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :streams => :"Array<DockerStreams>"
+          :name => :"String",
+          :properties => :"Array<String>",
+          :sync_mode => :"DockerStreamsSyncMode"
         }
       end
 
@@ -41,7 +72,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::DockerStreamsInput` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::DockerStreams` initialize method"
           )
         end
 
@@ -50,7 +81,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::DockerStreamsInput`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::DockerStreams`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -58,12 +89,22 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:streams)
-          if (value = attributes[:streams]).is_a?(Array)
-            self.streams = value
-          end
+        if attributes.key?(:name)
+          self.name = attributes[:name]
         else
-          self.streams = nil
+          self.name = nil
+        end
+
+        if attributes.key?(:properties)
+          if (value = attributes[:properties]).is_a?(Array)
+            self.properties = value
+          end
+        end
+
+        if attributes.key?(:sync_mode)
+          self.sync_mode = attributes[:sync_mode]
+        else
+          self.sync_mode = nil
         end
       end
 
@@ -72,7 +113,9 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          streams == other.streams
+          name == other.name &&
+          properties == other.properties &&
+          sync_mode == other.sync_mode
       end
 
       # @see the `==` method
@@ -84,7 +127,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [streams].hash
+        [name, properties, sync_mode].hash
       end
 
       # Builds the object from hash

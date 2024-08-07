@@ -2832,10 +2832,10 @@ module Algolia
     # @param transformation_try [TransformationTry]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def try_transformations_with_http_info(transformation_try, request_options = {})
+    def try_transformation_with_http_info(transformation_try, request_options = {})
       # verify the required parameter 'transformation_try' is set
       if @api_client.config.client_side_validation && transformation_try.nil?
-        raise ArgumentError, "Parameter `transformation_try` is required when calling `try_transformations`."
+        raise ArgumentError, "Parameter `transformation_try` is required when calling `try_transformation`."
       end
 
       path = "/1/transformations/try"
@@ -2847,7 +2847,7 @@ module Algolia
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(transformation_try)
 
       new_options = request_options.merge(
-        :operation => :"IngestionClient.try_transformations",
+        :operation => :"IngestionClient.try_transformation",
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
@@ -2866,8 +2866,8 @@ module Algolia
     # @param transformation_try [TransformationTry]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [TransformationTryResponse]
-    def try_transformations(transformation_try, request_options = {})
-      response = try_transformations_with_http_info(transformation_try, request_options)
+    def try_transformation(transformation_try, request_options = {})
+      response = try_transformation_with_http_info(transformation_try, request_options)
       @api_client.deserialize(
         response.body,
         request_options[:debug_return_type] || "Ingestion::TransformationTryResponse"
