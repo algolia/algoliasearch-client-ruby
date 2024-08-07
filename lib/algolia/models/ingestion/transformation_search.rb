@@ -6,12 +6,12 @@ require "time"
 module Algolia
   module Ingestion
     class TransformationSearch
-      attr_accessor :transformations_ids
+      attr_accessor :transformation_ids
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :transformations_ids => :transformationsIDs
+          :transformation_ids => :transformationIDs
         }
       end
 
@@ -23,7 +23,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :transformations_ids => :"Array<String>"
+          :transformation_ids => :"Array<String>"
         }
       end
 
@@ -57,12 +57,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:transformations_ids)
-          if (value = attributes[:transformations_ids]).is_a?(Array)
-            self.transformations_ids = value
+        if attributes.key?(:transformation_ids)
+          if (value = attributes[:transformation_ids]).is_a?(Array)
+            self.transformation_ids = value
           end
-        else
-          self.transformations_ids = nil
         end
       end
 
@@ -71,7 +69,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          transformations_ids == other.transformations_ids
+          transformation_ids == other.transformation_ids
       end
 
       # @see the `==` method
@@ -83,7 +81,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [transformations_ids].hash
+        [transformation_ids].hash
       end
 
       # Builds the object from hash
