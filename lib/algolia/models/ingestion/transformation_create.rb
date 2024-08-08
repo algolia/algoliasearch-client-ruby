@@ -16,12 +16,16 @@ module Algolia
       # A descriptive name for your transformation of what it does.
       attr_accessor :description
 
+      # The authentications associated for the current transformation.
+      attr_accessor :authentication_ids
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :code => :code,
           :name => :name,
-          :description => :description
+          :description => :description,
+          :authentication_ids => :authenticationIDs
         }
       end
 
@@ -35,7 +39,8 @@ module Algolia
         {
           :code => :"String",
           :name => :"String",
-          :description => :"String"
+          :description => :"String",
+          :authentication_ids => :"Array<String>"
         }
       end
 
@@ -84,6 +89,12 @@ module Algolia
         if attributes.key?(:description)
           self.description = attributes[:description]
         end
+
+        if attributes.key?(:authentication_ids)
+          if (value = attributes[:authentication_ids]).is_a?(Array)
+            self.authentication_ids = value
+          end
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -93,7 +104,8 @@ module Algolia
         self.class == other.class &&
           code == other.code &&
           name == other.name &&
-          description == other.description
+          description == other.description &&
+          authentication_ids == other.authentication_ids
       end
 
       # @see the `==` method
@@ -105,7 +117,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [code, name, description].hash
+        [code, name, description, authentication_ids].hash
       end
 
       # Builds the object from hash

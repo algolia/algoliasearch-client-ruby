@@ -9,6 +9,9 @@ module Algolia
       # Universally unique identifier (UUID) of a transformation.
       attr_accessor :transformation_id
 
+      # The authentications associated for the current transformation.
+      attr_accessor :authentication_ids
+
       # The source code of the transformation.
       attr_accessor :code
 
@@ -28,6 +31,7 @@ module Algolia
       def self.attribute_map
         {
           :transformation_id => :transformationID,
+          :authentication_ids => :authenticationIDs,
           :code => :code,
           :name => :name,
           :description => :description,
@@ -45,6 +49,7 @@ module Algolia
       def self.types_mapping
         {
           :transformation_id => :"String",
+          :authentication_ids => :"Array<String>",
           :code => :"String",
           :name => :"String",
           :description => :"String",
@@ -89,6 +94,12 @@ module Algolia
           self.transformation_id = nil
         end
 
+        if attributes.key?(:authentication_ids)
+          if (value = attributes[:authentication_ids]).is_a?(Array)
+            self.authentication_ids = value
+          end
+        end
+
         if attributes.key?(:code)
           self.code = attributes[:code]
         else
@@ -122,6 +133,7 @@ module Algolia
         return true if self.equal?(other)
         self.class == other.class &&
           transformation_id == other.transformation_id &&
+          authentication_ids == other.authentication_ids &&
           code == other.code &&
           name == other.name &&
           description == other.description &&
@@ -138,7 +150,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [transformation_id, code, name, description, created_at, updated_at].hash
+        [transformation_id, authentication_ids, code, name, description, created_at, updated_at].hash
       end
 
       # Builds the object from hash

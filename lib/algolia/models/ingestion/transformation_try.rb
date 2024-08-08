@@ -12,11 +12,14 @@ module Algolia
       # The record to apply the given code to.
       attr_accessor :sample_record
 
+      attr_accessor :authentications
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :code => :code,
-          :sample_record => :sampleRecord
+          :sample_record => :sampleRecord,
+          :authentications => :authentications
         }
       end
 
@@ -29,7 +32,8 @@ module Algolia
       def self.types_mapping
         {
           :code => :"String",
-          :sample_record => :"Object"
+          :sample_record => :"Object",
+          :authentications => :"Array<AuthenticationCreate>"
         }
       end
 
@@ -74,6 +78,12 @@ module Algolia
         else
           self.sample_record = nil
         end
+
+        if attributes.key?(:authentications)
+          if (value = attributes[:authentications]).is_a?(Array)
+            self.authentications = value
+          end
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -82,7 +92,8 @@ module Algolia
         return true if self.equal?(other)
         self.class == other.class &&
           code == other.code &&
-          sample_record == other.sample_record
+          sample_record == other.sample_record &&
+          authentications == other.authentications
       end
 
       # @see the `==` method
@@ -94,7 +105,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [code, sample_record].hash
+        [code, sample_record, authentications].hash
       end
 
       # Builds the object from hash

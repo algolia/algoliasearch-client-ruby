@@ -2877,7 +2877,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::SourceWatchResponse")
     end
 
-    # Try a transformation.
+    # Try a transformation before creating it.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2911,7 +2911,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Try a transformation.
+    # Try a transformation before creating it.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2922,6 +2922,72 @@ module Algolia
     # @return [TransformationTryResponse]
     def try_transformation(transformation_try, request_options = {})
       response = try_transformation_with_http_info(transformation_try, request_options)
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Ingestion::TransformationTryResponse"
+      )
+    end
+
+    # Try a transformation before updating it.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param transformation_id [String] Unique identifier of a transformation. (required)
+    # @param transformation_try [TransformationTry]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def try_transformation_before_update_with_http_info(transformation_id, transformation_try, request_options = {})
+      # verify the required parameter 'transformation_id' is set
+      if @api_client.config.client_side_validation && transformation_id.nil?
+        raise(
+          ArgumentError,
+          "Parameter `transformation_id` is required when calling `try_transformation_before_update`."
+        )
+      end
+      # verify the required parameter 'transformation_try' is set
+      if @api_client.config.client_side_validation && transformation_try.nil?
+        raise(
+          ArgumentError,
+          "Parameter `transformation_try` is required when calling `try_transformation_before_update`."
+        )
+      end
+
+      path = "/1/transformations/{transformationID}/try".sub(
+        "{" + "transformationID" + "}",
+        Transport.encode_uri(transformation_id.to_s)
+      )
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(transformation_try)
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.try_transformation_before_update",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Try a transformation before updating it.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param transformation_id [String] Unique identifier of a transformation. (required)
+    # @param transformation_try [TransformationTry]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [TransformationTryResponse]
+    def try_transformation_before_update(transformation_id, transformation_try, request_options = {})
+      response = try_transformation_before_update_with_http_info(transformation_id, transformation_try, request_options)
       @api_client.deserialize(
         response.body,
         request_options[:debug_return_type] || "Ingestion::TransformationTryResponse"
