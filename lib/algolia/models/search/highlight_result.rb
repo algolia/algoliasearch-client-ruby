@@ -11,6 +11,7 @@ module Algolia
         def openapi_one_of
           [
             :"Array<HighlightResultOption>",
+            :"Hash<String, HighlightResult>",
             :"Hash<String, HighlightResultOption>",
             :"HighlightResultOption"
           ]

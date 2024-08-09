@@ -11,6 +11,7 @@ module Algolia
         def openapi_one_of
           [
             :"Array<SnippetResultOption>",
+            :"Hash<String, SnippetResult>",
             :"Hash<String, SnippetResultOption>",
             :"SnippetResultOption"
           ]
