@@ -61,6 +61,8 @@ module Algolia
           if (value = attributes[:transformation_ids]).is_a?(Array)
             self.transformation_ids = value
           end
+        else
+          self.transformation_ids = nil
         end
       end
 
