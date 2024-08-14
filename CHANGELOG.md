@@ -1,3 +1,9 @@
+## [3.0.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.beta.16...3.0.0)
+
+New major version released! Browse [our documentation](https://www.algolia.com/doc/libraries/ruby)
+
+- [22348001a](https://github.com/algolia/api-clients-automation/commit/22348001a) fix(specs): required ingestion search params ([#3516](https://github.com/algolia/api-clients-automation/pull/3516)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [3.0.0.beta.16](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.beta.15...3.0.0.beta.16)
 
 - [4c052002e](https://github.com/algolia/api-clients-automation/commit/4c052002e) feat(specs): recursive snippets and highlights result ([#3497](https://github.com/algolia/api-clients-automation/pull/3497)) by [@shortcuts](https://github.com/shortcuts/)
