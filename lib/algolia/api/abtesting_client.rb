@@ -409,6 +409,50 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Abtesting::ListABTestsResponse")
     end
 
+    # Schedule an A/B test to be started at a later time.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param schedule_ab_tests_request [ScheduleABTestsRequest]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def schedule_ab_test_with_http_info(schedule_ab_tests_request, request_options = {})
+      # verify the required parameter 'schedule_ab_tests_request' is set
+      if @api_client.config.client_side_validation && schedule_ab_tests_request.nil?
+        raise ArgumentError, "Parameter `schedule_ab_tests_request` is required when calling `schedule_ab_test`."
+      end
+
+      path = "/2/abtests/schedule"
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(schedule_ab_tests_request)
+
+      new_options = request_options.merge(
+        :operation => :"AbtestingClient.schedule_ab_test",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Schedule an A/B test to be started at a later time.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param schedule_ab_tests_request [ScheduleABTestsRequest]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [ScheduleABTestResponse]
+    def schedule_ab_test(schedule_ab_tests_request, request_options = {})
+      response = schedule_ab_test_with_http_info(schedule_ab_tests_request, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Abtesting::ScheduleABTestResponse")
+    end
+
     # Stops an A/B test by its ID.  You can&#39;t restart stopped A/B tests.
     #
     # Required API Key ACLs:
