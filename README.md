@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <a href="https://www.algolia.com/doc/api-client/getting-started/install/ruby/" target="_blank">Documentation</a>  •
+  <a href="https://www.algolia.com/doc/libraries/ruby/" target="_blank">Documentation</a>  •
   <a href="https://github.com/algolia/algoliasearch-rails" target="_blank">Rails</a>  •
   <a href="https://discourse.algolia.com" target="_blank">Community Forum</a>  •
   <a href="http://stackoverflow.com/questions/tagged/algolia" target="_blank">Stack Overflow</a>  •
@@ -47,7 +47,7 @@ Finally, you may begin searching a object using the `search` method:
 objects = client.search_single_index('your_index_name', 'Foo')
 ```
 
-For full documentation, visit the **[Algolia Ruby API Client](https://www.algolia.com/doc/api-client/getting-started/install/ruby/)**.
+For full documentation, visit the **[Algolia Ruby API Client](https://www.algolia.com/doc/libraries/ruby/)**.
 
 ## ❓ Troubleshooting
 
