@@ -818,7 +818,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::DeleteApiKeyResponse")
     end
 
-    # This operation doesn&#39;t accept empty queries or filters.  It&#39;s more efficient to get a list of object IDs with the [&#x60;browse&#x60; operation](#tag/Search/operation/browse), and then delete the records using the [&#x60;batch&#x60; operation](tag/Records/operation/batch).
+    # This operation doesn&#39;t accept empty queries or filters.  It&#39;s more efficient to get a list of object IDs with the [&#x60;browse&#x60; operation](#tag/Search/operation/browse), and then delete the records using the [&#x60;batch&#x60; operation](#tag/Records/operation/batch).
     #
     # Required API Key ACLs:
     #   - deleteIndex
@@ -855,7 +855,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # This operation doesn't accept empty queries or filters.  It's more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch` operation](tag/Records/operation/batch).
+    # This operation doesn't accept empty queries or filters.  It's more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the records using the [`batch` operation](#tag/Records/operation/batch).
     #
     # Required API Key ACLs:
     #   - deleteIndex
