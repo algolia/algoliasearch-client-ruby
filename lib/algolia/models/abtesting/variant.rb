@@ -167,14 +167,10 @@ module Algolia
 
         if attributes.key?(:add_to_cart_rate)
           self.add_to_cart_rate = attributes[:add_to_cart_rate]
-        else
-          self.add_to_cart_rate = nil
         end
 
         if attributes.key?(:average_click_position)
           self.average_click_position = attributes[:average_click_position]
-        else
-          self.average_click_position = nil
         end
 
         if attributes.key?(:click_count)
@@ -185,8 +181,6 @@ module Algolia
 
         if attributes.key?(:click_through_rate)
           self.click_through_rate = attributes[:click_through_rate]
-        else
-          self.click_through_rate = nil
         end
 
         if attributes.key?(:conversion_count)
@@ -197,8 +191,6 @@ module Algolia
 
         if attributes.key?(:conversion_rate)
           self.conversion_rate = attributes[:conversion_rate]
-        else
-          self.conversion_rate = nil
         end
 
         if attributes.key?(:currencies)
@@ -241,8 +233,6 @@ module Algolia
 
         if attributes.key?(:purchase_rate)
           self.purchase_rate = attributes[:purchase_rate]
-        else
-          self.purchase_rate = nil
         end
 
         if attributes.key?(:search_count)

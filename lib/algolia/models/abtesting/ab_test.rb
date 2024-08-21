@@ -144,34 +144,24 @@ module Algolia
 
         if attributes.key?(:click_significance)
           self.click_significance = attributes[:click_significance]
-        else
-          self.click_significance = nil
         end
 
         if attributes.key?(:conversion_significance)
           self.conversion_significance = attributes[:conversion_significance]
-        else
-          self.conversion_significance = nil
         end
 
         if attributes.key?(:add_to_cart_significance)
           self.add_to_cart_significance = attributes[:add_to_cart_significance]
-        else
-          self.add_to_cart_significance = nil
         end
 
         if attributes.key?(:purchase_significance)
           self.purchase_significance = attributes[:purchase_significance]
-        else
-          self.purchase_significance = nil
         end
 
         if attributes.key?(:revenue_significance)
           if (value = attributes[:revenue_significance]).is_a?(Hash)
             self.revenue_significance = value
           end
-        else
-          self.revenue_significance = nil
         end
 
         if attributes.key?(:updated_at)
