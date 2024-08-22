@@ -815,8 +815,8 @@ module Algolia
           raise ArgumentError, "invalid value for \"length\", must be smaller than or equal to 1000."
         end
 
-        if length < 1
-          raise ArgumentError, "invalid value for \"length\", must be greater than or equal to 1."
+        if length < 0
+          raise ArgumentError, "invalid value for \"length\", must be greater than or equal to 0."
         end
 
         @length = length
