@@ -4,20 +4,27 @@ require "date"
 require "time"
 
 module Algolia
-  module Analytics
-    # Currency code.
-    class CurrenciesValue
-      # Currency code.
-      attr_accessor :currency
+  module Search
+    class FacetStats
+      # Minimum value in the results.
+      attr_accessor :min
 
-      # Revenue associated with this search in this currency.
-      attr_accessor :revenue
+      # Maximum value in the results.
+      attr_accessor :max
+
+      # Average facet value in the results.
+      attr_accessor :avg
+
+      # Sum of all values in the results.
+      attr_accessor :sum
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :currency => :currency,
-          :revenue => :revenue
+          :min => :min,
+          :max => :max,
+          :avg => :avg,
+          :sum => :sum
         }
       end
 
@@ -29,8 +36,10 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :currency => :"String",
-          :revenue => :"Float"
+          :min => :"Float",
+          :max => :"Float",
+          :avg => :"Float",
+          :sum => :"Float"
         }
       end
 
@@ -47,7 +56,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::CurrenciesValue` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::FacetStats` initialize method"
           )
         end
 
@@ -56,7 +65,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::CurrenciesValue`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::FacetStats`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -64,12 +73,20 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:currency)
-          self.currency = attributes[:currency]
+        if attributes.key?(:min)
+          self.min = attributes[:min]
         end
 
-        if attributes.key?(:revenue)
-          self.revenue = attributes[:revenue]
+        if attributes.key?(:max)
+          self.max = attributes[:max]
+        end
+
+        if attributes.key?(:avg)
+          self.avg = attributes[:avg]
+        end
+
+        if attributes.key?(:sum)
+          self.sum = attributes[:sum]
         end
       end
 
@@ -78,8 +95,10 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          currency == other.currency &&
-          revenue == other.revenue
+          min == other.min &&
+          max == other.max &&
+          avg == other.avg &&
+          sum == other.sum
       end
 
       # @see the `==` method
@@ -91,7 +110,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [currency, revenue].hash
+        [min, max, avg, sum].hash
       end
 
       # Builds the object from hash
@@ -160,7 +179,7 @@ module Algolia
           # model
         else
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Analytics.const_get(type)
+          klass = Algolia::Search.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass
             .build_from_hash(value)
         end

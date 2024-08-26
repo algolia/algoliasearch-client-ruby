@@ -141,7 +141,7 @@ module Algolia
           :exhaustive_nb_hits => :"Boolean",
           :exhaustive_typo => :"Boolean",
           :facets => :"Hash<String, Hash<String, Integer>>",
-          :facets_stats => :"Hash<String, FacetsStats>",
+          :facets_stats => :"Hash<String, FacetStats>",
           :index => :"String",
           :index_used => :"String",
           :message => :"String",

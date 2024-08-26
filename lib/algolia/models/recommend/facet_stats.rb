@@ -4,8 +4,8 @@ require "date"
 require "time"
 
 module Algolia
-  module Search
-    class FacetsStats
+  module Recommend
+    class FacetStats
       # Minimum value in the results.
       attr_accessor :min
 
@@ -56,7 +56,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::FacetsStats` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::FacetStats` initialize method"
           )
         end
 
@@ -65,7 +65,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::FacetsStats`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::FacetStats`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -179,7 +179,7 @@ module Algolia
           # model
         else
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Search.const_get(type)
+          klass = Algolia::Recommend.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass
             .build_from_hash(value)
         end

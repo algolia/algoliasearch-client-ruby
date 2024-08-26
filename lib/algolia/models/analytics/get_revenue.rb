@@ -28,7 +28,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :currencies => :"Hash<String, CurrenciesValue>",
+          :currencies => :"Hash<String, CurrencyCode>",
           :dates => :"Array<DailyRevenue>"
         }
       end

@@ -79,7 +79,7 @@ module Algolia
           :add_to_cart_count => :"Integer",
           :purchase_rate => :"Float",
           :purchase_count => :"Integer",
-          :currencies => :"Hash<String, CurrenciesValue>"
+          :currencies => :"Hash<String, CurrencyCode>"
         }
       end
 

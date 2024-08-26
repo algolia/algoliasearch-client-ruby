@@ -90,7 +90,7 @@ module Algolia
           :click_count => :"Integer",
           :conversion_count => :"Integer",
           :nb_hits => :"Integer",
-          :currencies => :"Hash<String, CurrenciesValue>",
+          :currencies => :"Hash<String, CurrencyCode>",
           :add_to_cart_rate => :"Float",
           :add_to_cart_count => :"Integer",
           :purchase_rate => :"Float",
