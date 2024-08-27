@@ -9,9 +9,11 @@ module Algolia
       REINDEX = "reindex".freeze
       UPDATE = "update".freeze
       DISCOVER = "discover".freeze
+      VALIDATE = "validate".freeze
+      PUSH = "push".freeze
 
       def self.all_vars
-        @all_vars ||= [REINDEX, UPDATE, DISCOVER].freeze
+        @all_vars ||= [REINDEX, UPDATE, DISCOVER, VALIDATE, PUSH].freeze
       end
 
       # Builds the enum from string

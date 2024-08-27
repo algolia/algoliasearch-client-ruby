@@ -1753,6 +1753,7 @@ module Algolia
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
     # @param status [Array<RunStatus>] Run status for filtering the list of task runs.
+    # @param type [Array<RunType>] Run type for filtering the list of task runs.
     # @param task_id [String] Task ID for filtering the list of task runs.
     # @param sort [RunSortKeys] Property by which to sort the list of task runs. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
@@ -1764,6 +1765,7 @@ module Algolia
       items_per_page = nil,
       page = nil,
       status = nil,
+      type = nil,
       task_id = nil,
       sort = nil,
       order = nil,
@@ -1797,6 +1799,7 @@ module Algolia
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
       query_params[:page] = page unless page.nil?
       query_params[:status] = @api_client.build_collection_param(status, :multi) unless status.nil?
+      query_params[:type] = @api_client.build_collection_param(type, :multi) unless type.nil?
       query_params[:taskID] = task_id unless task_id.nil?
       query_params[:sort] = sort unless sort.nil?
       query_params[:order] = order unless order.nil?
@@ -1828,6 +1831,7 @@ module Algolia
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
     # @param status [Array<RunStatus>] Run status for filtering the list of task runs.
+    # @param type [Array<RunType>] Run type for filtering the list of task runs.
     # @param task_id [String] Task ID for filtering the list of task runs.
     # @param sort [RunSortKeys] Property by which to sort the list of task runs. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
@@ -1839,6 +1843,7 @@ module Algolia
       items_per_page = nil,
       page = nil,
       status = nil,
+      type = nil,
       task_id = nil,
       sort = nil,
       order = nil,
@@ -1850,6 +1855,7 @@ module Algolia
         items_per_page,
         page,
         status,
+        type,
         task_id,
         sort,
         order,
