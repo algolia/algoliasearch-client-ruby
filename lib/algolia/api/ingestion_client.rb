@@ -2354,17 +2354,17 @@ module Algolia
     #   - deleteIndex
     #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
-    # @param batch_write_params [BatchWriteParams] Request body of a Search API &#x60;batch&#x60; request that will be pushed in the Connectors pipeline. (required)
+    # @param push_task_payload [PushTaskPayload] Request body of a Search API &#x60;batch&#x60; request that will be pushed in the Connectors pipeline. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def push_task_with_http_info(task_id, batch_write_params, request_options = {})
+    def push_task_with_http_info(task_id, push_task_payload, request_options = {})
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
         raise ArgumentError, "Parameter `task_id` is required when calling `push_task`."
       end
-      # verify the required parameter 'batch_write_params' is set
-      if @api_client.config.client_side_validation && batch_write_params.nil?
-        raise ArgumentError, "Parameter `batch_write_params` is required when calling `push_task`."
+      # verify the required parameter 'push_task_payload' is set
+      if @api_client.config.client_side_validation && push_task_payload.nil?
+        raise ArgumentError, "Parameter `push_task_payload` is required when calling `push_task`."
       end
 
       path = "/2/tasks/{taskID}/push".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
@@ -2373,7 +2373,7 @@ module Algolia
       header_params = {}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = request_options[:debug_body] || @api_client.object_to_http_body(batch_write_params)
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(push_task_payload)
 
       new_options = request_options.merge(
         :operation => :"IngestionClient.push_task",
@@ -2393,11 +2393,11 @@ module Algolia
     #   - deleteIndex
     #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
-    # @param batch_write_params [BatchWriteParams] Request body of a Search API &#x60;batch&#x60; request that will be pushed in the Connectors pipeline. (required)
+    # @param push_task_payload [PushTaskPayload] Request body of a Search API &#x60;batch&#x60; request that will be pushed in the Connectors pipeline. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [RunResponse]
-    def push_task(task_id, batch_write_params, request_options = {})
-      response = push_task_with_http_info(task_id, batch_write_params, request_options)
+    def push_task(task_id, push_task_payload, request_options = {})
+      response = push_task_with_http_info(task_id, push_task_payload, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::RunResponse")
     end
 

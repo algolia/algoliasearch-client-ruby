@@ -5,39 +5,16 @@ require "time"
 
 module Algolia
   module Ingestion
-    class BatchRequest
-      attr_accessor :action
+    class PushTaskRecords
+      # Unique record identifier.
+      attr_accessor :object_id
 
-      # Operation arguments (varies with specified `action`).
-      attr_accessor :body
-
-      class EnumAttributeValidator
-        attr_reader :datatype
-        attr_reader :allowable_values
-
-        def initialize(datatype, allowable_values)
-          @allowable_values = allowable_values.map do |value|
-            case datatype.to_s
-            when /Integer/i
-              value.to_i
-            when /Float/i
-              value.to_f
-            else
-              value
-            end
-          end
-        end
-
-        def valid?(value)
-          !value || allowable_values.include?(value)
-        end
-      end
+      attr_accessor :additional_properties
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :action => :action,
-          :body => :body
+          :object_id => :objectID
         }
       end
 
@@ -49,8 +26,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :action => :"Action",
-          :body => :"Object"
+          :object_id => :"String"
         }
       end
 
@@ -67,34 +43,19 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::BatchRequest` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::PushTaskRecords` initialize method"
           )
         end
 
-        # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            raise(
-              ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::BatchRequest`. Please check the name to make sure it's valid. List of attributes: " +
-                self.class.attribute_map.keys.inspect
-            )
-          end
-
-          h[k.to_sym] = v
-        }
-
-        if attributes.key?(:action)
-          self.action = attributes[:action]
+        if attributes.key?(:object_id)
+          self.object_id = attributes[:object_id]
         else
-          self.action = nil
+          self.object_id = nil
         end
 
-        if attributes.key?(:body)
-          self.body = attributes[:body]
-        else
-          self.body = nil
-        end
+        # add extra attribute to additional_properties
+        self.additional_properties ||= {}
+        self.additional_properties.merge!(attributes.reject { |k, _| self.class.attribute_map.key?(k.to_sym) })
       end
 
       # Checks equality by comparing each attribute.
@@ -102,8 +63,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          action == other.action &&
-          body == other.body
+          object_id == other.object_id
       end
 
       # @see the `==` method
@@ -115,7 +75,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [action, body].hash
+        [object_id].hash
       end
 
       # Builds the object from hash
@@ -141,6 +101,8 @@ module Algolia
           end
         end
 
+        # add extra attribute to transformed_hash
+        transformed_hash.merge!(attributes.reject { |k, _| attribute_map.key?(k.to_sym) })
         new(transformed_hash)
       end
 
@@ -218,6 +180,11 @@ module Algolia
           end
 
           hash[param] = _to_hash(value)
+        end
+
+        # also add attributes from additional_properties to hash
+        self.additional_properties&.each_pair do |k, v|
+          hash[k.to_sym] = _to_hash(v)
         end
 
         hash

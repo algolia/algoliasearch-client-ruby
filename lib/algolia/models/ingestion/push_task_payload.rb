@@ -5,14 +5,38 @@ require "time"
 
 module Algolia
   module Ingestion
-    # Batch parameters.
-    class BatchWriteParams
-      attr_accessor :requests
+    class PushTaskPayload
+      attr_accessor :action
+
+      attr_accessor :records
+
+      class EnumAttributeValidator
+        attr_reader :datatype
+        attr_reader :allowable_values
+
+        def initialize(datatype, allowable_values)
+          @allowable_values = allowable_values.map do |value|
+            case datatype.to_s
+            when /Integer/i
+              value.to_i
+            when /Float/i
+              value.to_f
+            else
+              value
+            end
+          end
+        end
+
+        def valid?(value)
+          !value || allowable_values.include?(value)
+        end
+      end
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :requests => :requests
+          :action => :action,
+          :records => :records
         }
       end
 
@@ -24,7 +48,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :requests => :"Array<BatchRequest>"
+          :action => :"Action",
+          :records => :"Array<PushTaskRecords>"
         }
       end
 
@@ -41,7 +66,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::BatchWriteParams` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::PushTaskPayload` initialize method"
           )
         end
 
@@ -50,7 +75,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::BatchWriteParams`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::PushTaskPayload`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -58,12 +83,18 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:requests)
-          if (value = attributes[:requests]).is_a?(Array)
-            self.requests = value
+        if attributes.key?(:action)
+          self.action = attributes[:action]
+        else
+          self.action = nil
+        end
+
+        if attributes.key?(:records)
+          if (value = attributes[:records]).is_a?(Array)
+            self.records = value
           end
         else
-          self.requests = nil
+          self.records = nil
         end
       end
 
@@ -72,7 +103,8 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          requests == other.requests
+          action == other.action &&
+          records == other.records
       end
 
       # @see the `==` method
@@ -84,7 +116,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [requests].hash
+        [action, records].hash
       end
 
       # Builds the object from hash
