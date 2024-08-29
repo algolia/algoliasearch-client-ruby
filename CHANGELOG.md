@@ -1,3 +1,7 @@
+## [3.2.2](https://github.com/algolia/algoliasearch-client-ruby/compare/3.2.1...3.2.2)
+
+- [327e08d4e](https://github.com/algolia/api-clients-automation/commit/327e08d4e) fix(specs): ingestion push task payload [skip-bc] ([#3607](https://github.com/algolia/api-clients-automation/pull/3607)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [3.2.1](https://github.com/algolia/algoliasearch-client-ruby/compare/3.2.0...3.2.1)
 
 - [41f849e41](https://github.com/algolia/api-clients-automation/commit/41f849e41) fix(specs): partial update operation ([#3486](https://github.com/algolia/api-clients-automation/pull/3486)) by [@kai687](https://github.com/kai687/)
