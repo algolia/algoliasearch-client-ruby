@@ -14,28 +14,6 @@ module Algolia
       # **Only for copying.**  If you specify a scope, only the selected scopes are copied. Records and the other scopes are left unchanged. If you omit the `scope` parameter, everything is copied: records, settings, synonyms, and rules.
       attr_accessor :scope
 
-      class EnumAttributeValidator
-        attr_reader :datatype
-        attr_reader :allowable_values
-
-        def initialize(datatype, allowable_values)
-          @allowable_values = allowable_values.map do |value|
-            case datatype.to_s
-            when /Integer/i
-              value.to_i
-            when /Float/i
-              value.to_f
-            else
-              value
-            end
-          end
-        end
-
-        def valid?(value)
-          !value || allowable_values.include?(value)
-        end
-      end
-
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {

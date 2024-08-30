@@ -20,28 +20,6 @@ module Algolia
       # Filters that trigger the rule.  You can add add filters using the syntax `facet:value` so that the rule is triggered, when the specific filter is selected. You can use `filters` on its own or combine it with the `pattern` parameter.
       attr_accessor :filters
 
-      class EnumAttributeValidator
-        attr_reader :datatype
-        attr_reader :allowable_values
-
-        def initialize(datatype, allowable_values)
-          @allowable_values = allowable_values.map do |value|
-            case datatype.to_s
-            when /Integer/i
-              value.to_i
-            when /Float/i
-              value.to_f
-            else
-              value
-            end
-          end
-        end
-
-        def valid?(value)
-          !value || allowable_values.include?(value)
-        end
-      end
-
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {

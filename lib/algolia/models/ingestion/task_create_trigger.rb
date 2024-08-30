@@ -82,12 +82,15 @@ module Algolia
           else
             const = Algolia::Ingestion.const_get(klass)
             if const
-              # nested oneOf model
               if const.respond_to?(:openapi_one_of)
+                # nested oneOf model
                 model = const.build(data)
-              else
+              elsif const.respond_to?(:acceptable_attributes)
                 # raise if data contains keys that are not known to the model
                 raise unless (data.keys - const.acceptable_attributes).empty?
+                model = const.build_from_hash(data)
+              else
+                # maybe it's an enum
                 model = const.build_from_hash(data)
               end
 

@@ -14,28 +14,6 @@ module Algolia
       # Attributes from your source to exclude from Algolia records.  Not all your data attributes will be useful for searching. Keeping your Algolia records small increases indexing and search performance.  - Exclude nested attributes with `.` notation. For example, `foo.bar` indexes the `foo` attribute and all its children **except** the `bar` attribute. - Exclude attributes from arrays with `[i]`, where `i` is the index of the array element.   For example, `foo.[0].bar` only excludes the `bar` attribute from the first element of the `foo` array, but indexes the complete `foo` attribute for all other elements.   Use `*` as wildcard: `foo.[*].bar` excludes `bar` from all elements of the `foo` array.
       attr_accessor :attributes_to_exclude
 
-      class EnumAttributeValidator
-        attr_reader :datatype
-        attr_reader :allowable_values
-
-        def initialize(datatype, allowable_values)
-          @allowable_values = allowable_values.map do |value|
-            case datatype.to_s
-            when /Integer/i
-              value.to_i
-            when /Float/i
-              value.to_f
-            else
-              value
-            end
-          end
-        end
-
-        def valid?(value)
-          !value || allowable_values.include?(value)
-        end
-      end
-
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
