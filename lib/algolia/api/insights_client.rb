@@ -215,7 +215,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
-    # Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see [Delete a user profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
+    # Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see &#x60;Delete a user profile&#x60; in the Personalization API.
 
     # @param user_token [String] User token for which to delete all associated events. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -267,7 +267,7 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see [Delete a user profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
+    # Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
 
     # @param user_token [String] User token for which to delete all associated events. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
