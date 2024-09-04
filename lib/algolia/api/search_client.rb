@@ -3532,5 +3532,17 @@ module Algolia
         move_operation_response: move_operation_response
       )
     end
+
+    def index_exists?(index_name)
+      begin
+        get_settings(index_name)
+      rescue AlgoliaHttpError => e
+        return false if e.code == 404
+
+        raise e
+      end
+
+      true
+    end
   end
 end
