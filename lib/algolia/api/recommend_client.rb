@@ -32,6 +32,14 @@ module Algolia
       new(config)
     end
 
+    # Helper method to switch the API key used to authenticate the requests.
+    #
+    # @param api_key [String] the new API key to use.
+    # @return [void]
+    def set_client_api_key(api_key)
+      @api_client.set_client_api_key(api_key)
+    end
+
     # This method allow you to send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)

@@ -39,6 +39,14 @@ module Algolia
       new(config)
     end
 
+    # Helper method to switch the API key used to authenticate the requests.
+    #
+    # @param api_key [String] the new API key to use.
+    # @return [void]
+    def set_client_api_key(api_key)
+      @api_client.set_client_api_key(api_key)
+    end
+
     # Creates a new A/B test.
     #
     # Required API Key ACLs:
