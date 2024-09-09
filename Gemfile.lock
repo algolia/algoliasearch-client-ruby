@@ -12,21 +12,21 @@ GEM
   specs:
     base64 (0.2.0)
     connection_pool (2.4.1)
-    faraday (2.10.0)
-      faraday-net_http (>= 2.0, < 3.2)
+    faraday (2.11.0)
+      faraday-net_http (>= 2.0, < 3.4)
       logger
-    faraday-net_http (3.1.1)
+    faraday-net_http (3.3.0)
       net-http
     faraday-net_http_persistent (2.1.0)
       faraday (~> 2.5)
       net-http-persistent (~> 4.0)
-    logger (1.6.0)
+    logger (1.6.1)
     net-http (0.4.1)
       uri
     net-http-persistent (4.0.2)
       connection_pool (~> 2.2)
     rake (13.2.1)
-    uri (0.13.0)
+    uri (0.13.1)
 
 PLATFORMS
   aarch64-linux
