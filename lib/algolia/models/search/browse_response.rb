@@ -75,6 +75,9 @@ module Algolia
       # Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
       attr_accessor :query_id
 
+      # Whether automatic events collection is enabled for the application.
+      attr_accessor :_automatic_insights
+
       # Page of search results to retrieve.
       attr_accessor :page
 
@@ -126,6 +129,7 @@ module Algolia
           :server_used => :serverUsed,
           :user_data => :userData,
           :query_id => :queryID,
+          :_automatic_insights => :_automaticInsights,
           :page => :page,
           :nb_hits => :nbHits,
           :nb_pages => :nbPages,
@@ -169,6 +173,7 @@ module Algolia
           :server_used => :"String",
           :user_data => :"Object",
           :query_id => :"String",
+          :_automatic_insights => :"Boolean",
           :page => :"Integer",
           :nb_hits => :"Integer",
           :nb_pages => :"Integer",
@@ -322,6 +327,10 @@ module Algolia
           self.query_id = attributes[:query_id]
         end
 
+        if attributes.key?(:_automatic_insights)
+          self._automatic_insights = attributes[:_automatic_insights]
+        end
+
         if attributes.key?(:page)
           self.page = attributes[:page]
         end
@@ -453,6 +462,7 @@ module Algolia
           server_used == other.server_used &&
           user_data == other.user_data &&
           query_id == other.query_id &&
+          _automatic_insights == other._automatic_insights &&
           page == other.page &&
           nb_hits == other.nb_hits &&
           nb_pages == other.nb_pages &&
@@ -497,6 +507,7 @@ module Algolia
           server_used,
           user_data,
           query_id,
+          _automatic_insights,
           page,
           nb_hits,
           nb_pages,
