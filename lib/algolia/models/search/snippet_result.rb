@@ -10,9 +10,8 @@ module Algolia
       # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
-            :"Array<SnippetResultOption>",
+            :"Array<SnippetResult>",
             :"Hash<String, SnippetResult>",
-            :"Hash<String, SnippetResultOption>",
             :"SnippetResultOption"
           ]
         end
