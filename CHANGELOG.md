@@ -1,3 +1,8 @@
+## [3.3.2](https://github.com/algolia/algoliasearch-client-ruby/compare/3.3.1...3.3.2)
+
+- [638058eae](https://github.com/algolia/api-clients-automation/commit/638058eae) fix(specs): update search api specs [skip-bc] ([#3760](https://github.com/algolia/api-clients-automation/pull/3760)) by [@Fluf22](https://github.com/Fluf22/)
+- [08d8ee6de](https://github.com/algolia/api-clients-automation/commit/08d8ee6de) chore(deps): dependencies 2024-09-16 [skip-bc] ([#3704](https://github.com/algolia/api-clients-automation/pull/3704)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [3.3.1](https://github.com/algolia/algoliasearch-client-ruby/compare/3.3.0...3.3.1)
 
 - [d4df544d6](https://github.com/algolia/api-clients-automation/commit/d4df544d6) fix(specs): remove usage [skip-bc] ([#3691](https://github.com/algolia/api-clients-automation/pull/3691)) by [@kai687](https://github.com/kai687/)
