@@ -4,15 +4,16 @@ require "date"
 require "time"
 
 module Algolia
-  module Ingestion
-    # List of available AI models for transformation purposes.
-    class TransformationModels
-      attr_accessor :llms
+  module Recommend
+    # Order of facet names.
+    class IndexSettingsFacets
+      # Explicit order of facets or facet values.  This setting lets you always show specific facets or facet values at the top of the list.
+      attr_accessor :order
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :llms => :llms
+          :order => :order
         }
       end
 
@@ -24,7 +25,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :llms => :"Array<Model>"
+          :order => :"Array<String>"
         }
       end
 
@@ -41,7 +42,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::TransformationModels` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::IndexSettingsFacets` initialize method"
           )
         end
 
@@ -50,7 +51,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::TransformationModels`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::IndexSettingsFacets`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -58,12 +59,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:llms)
-          if (value = attributes[:llms]).is_a?(Array)
-            self.llms = value
+        if attributes.key?(:order)
+          if (value = attributes[:order]).is_a?(Array)
+            self.order = value
           end
-        else
-          self.llms = nil
         end
       end
 
@@ -72,7 +71,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          llms == other.llms
+          order == other.order
       end
 
       # @see the `==` method
@@ -84,7 +83,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [llms].hash
+        [order].hash
       end
 
       # Builds the object from hash
@@ -153,7 +152,7 @@ module Algolia
           # model
         else
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Ingestion.const_get(type)
+          klass = Algolia::Recommend.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass
             .build_from_hash(value)
         end

@@ -5,10 +5,8 @@ require "time"
 
 module Algolia
   module Recommend
-    class SearchParams
-      # Search query.
-      attr_accessor :query
-
+    # Search parameters for filtering the recommendations.
+    class RecommendSearchParams
       # Keywords to be used instead of the search query to conduct a more broader search.  Using the `similarQuery` parameter changes other settings:  - `queryType` is set to `prefixNone`. - `removeStopWords` is set to true. - `words` is set as the first ranking criterion. - All remaining words are treated as `optionalWords`.  Since the `similarQuery` is supposed to do a broad search, they usually return many results. Combine it with `filters` to narrow down the list of results.
       attr_accessor :similar_query
 
@@ -34,15 +32,6 @@ module Algolia
 
       # Whether faceting should be applied after deduplication with `distinct`.  This leads to accurate facet counts when using faceting in combination with `distinct`. It's usually better to use `afterDistinct` modifiers in the `attributesForFaceting` setting, as `facetingAfterDistinct` only computes correct facet counts if all records have the same facet values for the `attributeForDistinct`.
       attr_accessor :faceting_after_distinct
-
-      # Page of search results to retrieve.
-      attr_accessor :page
-
-      # Position of the first hit to retrieve.
-      attr_accessor :offset
-
-      # Number of hits to retrieve (used in combination with `offset`).
-      attr_accessor :length
 
       # Coordinates for the center of a circle, expressed as a comma-separated string of latitude and longitude.  Only records included within circle around this central location are included in the results. The radius of the circle is determined by the `aroundRadius` and `minimumAroundRadius` settings. This parameter is ignored if you also specify `insidePolygon` or `insideBoundingBox`.
       attr_accessor :around_lat_lng
@@ -96,14 +85,65 @@ module Algolia
       # Whether to enable A/B testing for this search.
       attr_accessor :enable_ab_test
 
+      # Search query.
+      attr_accessor :query
+
+      # Attributes used for [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/).  Facets are attributes that let you categorize search results. They can be used for filtering search results. By default, no attribute is used for faceting. Attribute names are case-sensitive.  **Modifiers**  - `filterOnly(\"ATTRIBUTE\")`.   Allows using this attribute as a filter, but doesn't evalue the facet values.  - `searchable(\"ATTRIBUTE\")`.   Allows searching for facet values.  - `afterDistinct(\"ATTRIBUTE\")`.   Evaluates the facet count _after_ deduplication with `distinct`.   This ensures accurate facet counts.   You can apply this modifier to searchable facets: `afterDistinct(searchable(ATTRIBUTE))`.
+      attr_accessor :attributes_for_faceting
+
+      # Creates [replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/).  Replicas are copies of a primary index with the same records but different settings, synonyms, or rules. If you want to offer a different ranking or sorting of your search results, you'll use replica indices. All index operations on a primary index are automatically forwarded to its replicas. To add a replica index, you must provide the complete set of replicas to this parameter. If you omit a replica from this list, the replica turns into a regular, standalone index that will no longer by synced with the primary index.  **Modifier**  - `virtual(\"REPLICA\")`.   Create a virtual replica,   Virtual replicas don't increase the number of records and are optimized for [Relevant sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort/).
+      attr_accessor :replicas
+
+      # Maximum number of search results that can be obtained through pagination.  Higher pagination limits might slow down your search. For pagination limits above 1,000, the sorting of results beyond the 1,000th hit can't be guaranteed.
+      attr_accessor :pagination_limited_to
+
+      # Attributes that can't be retrieved at query time.  This can be useful if you want to use an attribute for ranking or to [restrict access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data/), but don't want to include it in the search results. Attribute names are case-sensitive.
+      attr_accessor :unretrievable_attributes
+
+      # Words for which you want to turn off [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/). This also turns off [word splitting and concatenation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/splitting-and-concatenation/) for the specified words.
+      attr_accessor :disable_typo_tolerance_on_words
+
+      # Attributes, for which you want to support [Japanese transliteration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#japanese-transliteration-and-type-ahead).  Transliteration supports searching in any of the Japanese writing systems. To support transliteration, you must set the indexing language to Japanese. Attribute names are case-sensitive.
+      attr_accessor :attributes_to_transliterate
+
+      # Attributes for which to split [camel case](https://wikipedia.org/wiki/Camel_case) words. Attribute names are case-sensitive.
+      attr_accessor :camel_case_attributes
+
+      # Searchable attributes to which Algolia should apply [word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) (decompounding). Attribute names are case-sensitive.  Compound words are formed by combining two or more individual words, and are particularly prevalent in Germanic languages—for example, \"firefighter\". With decompounding, the individual components are indexed separately.  You can specify different lists for different languages. Decompounding is supported for these languages: Dutch (`nl`), German (`de`), Finnish (`fi`), Danish (`da`), Swedish (`sv`), and Norwegian (`no`). Decompounding doesn't work for words with [non-spacing mark Unicode characters](https://www.charactercodes.net/category/non-spacing_mark). For example, `Gartenstühle` won't be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).
+      attr_accessor :decompounded_attributes
+
+      # Languages for language-specific processing steps, such as word detection and dictionary settings.  **You should always specify an indexing language.** If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/), or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
+      attr_accessor :index_languages
+
+      # Searchable attributes for which you want to turn off [prefix matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjusting-prefix-search). Attribute names are case-sensitive.
+      attr_accessor :disable_prefix_on_attributes
+
+      # Whether arrays with exclusively non-negative integers should be compressed for better performance. If true, the compressed arrays may be reordered.
+      attr_accessor :allow_compression_of_integer_array
+
+      # Numeric attributes that can be used as [numerical filters](https://www.algolia.com/doc/guides/managing-results/rules/detecting-intent/how-to/applying-a-custom-filter-for-a-specific-query/#numerical-filters). Attribute names are case-sensitive.  By default, all numeric attributes are available as numerical filters. For faster indexing, reduce the number of numeric attributes.  If you want to turn off filtering for all numeric attributes, specifiy an attribute that doesn't exist in your index, such as `NO_NUMERIC_FILTERING`.  **Modifier**  - `equalOnly(\"ATTRIBUTE\")`.   Support only filtering based on equality comparisons `=` and `!=`.
+      attr_accessor :numeric_attributes_for_filtering
+
+      # Controls which separators are indexed.  Separators are all non-letter characters except spaces and currency characters, such as $€£¥. By default, separator characters aren't indexed. With `separatorsToIndex`, Algolia treats separator characters as separate words. For example, a search for `C#` would report two matches.
+      attr_accessor :separators_to_index
+
+      # Attributes used for searching. Attribute names are case-sensitive.  By default, all attributes are searchable and the [Attribute](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#attribute) ranking criterion is turned off. With a non-empty list, Algolia only returns results with matches in the selected attributes. In addition, the Attribute ranking criterion is turned on: matches in attributes that are higher in the list of `searchableAttributes` rank first. To make matches in two attributes rank equally, include them in a comma-separated string, such as `\"title,alternate_title\"`. Attributes with the same priority are always unordered.  For more information, see [Searchable attributes](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/setting-searchable-attributes/).  **Modifier**  - `unordered(\"ATTRIBUTE\")`.   Ignore the position of a match within the attribute.  Without modifier, matches at the beginning of an attribute rank higer than matches at the end.
+      attr_accessor :searchable_attributes
+
+      # An object with custom data.  You can store up to 32kB as custom data.
+      attr_accessor :user_data
+
+      # Characters and their normalized replacements. This overrides Algolia's default [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).
+      attr_accessor :custom_normalization
+
+      # Attribute that should be used to establish groups of results. Attribute names are case-sensitive.  All records with the same value for this attribute are considered a group. You can combine `attributeForDistinct` with the `distinct` search parameter to control how many items per group are included in the search results.  If you want to use the same attribute also for faceting, use the `afterDistinct` modifier of the `attributesForFaceting` setting. This applies faceting _after_ deduplication, which will result in accurate facet counts.
+      attr_accessor :attribute_for_distinct
+
       # Attributes to include in the API response.  To reduce the size of your response, you can retrieve only some of the attributes. Attribute names are case-sensitive.  - `*` retrieves all attributes, except attributes included in the `customRanking` and `unretrievableAttributes` settings. - To retrieve all attributes except a specific one, prefix the attribute with a dash and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`. - The `objectID` attribute is always included.
       attr_accessor :attributes_to_retrieve
 
       # Determines the order in which Algolia returns your results.  By default, each entry corresponds to a [ranking criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/). The tie-breaking algorithm sequentially applies each criterion in the order they're specified. If you configure a replica index for [sorting by an attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute/), you put the sorting attribute at the top of the list.  **Modifiers**  - `asc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in ascending order. - `desc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in descending order.  Before you modify the default setting, you should test your changes in the dashboard, and by [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/).
       attr_accessor :ranking
-
-      # Attributes to use as [custom ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/). Attribute names are case-sensitive.  The custom ranking attributes decide which items are shown first if the other ranking criteria are equal.  Records with missing values for your selected custom ranking attributes are always sorted last. Boolean attributes are sorted based on their alphabetical order.  **Modifiers**  - `asc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in ascending order.  - `desc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in descending order.  If you use two or more custom ranking attributes, [reduce the precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/) of your first attributes, or the other attributes will never be applied.
-      attr_accessor :custom_ranking
 
       # Relevancy threshold below which less relevant results aren't included in the results.  You can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas). Use this setting to strike a balance between the relevance and number of returned results.
       attr_accessor :relevancy_strictness
@@ -126,9 +166,6 @@ module Algolia
       # Whether to restrict highlighting and snippeting to items that at least partially matched the search query. By default, all items are highlighted and snippeted.
       attr_accessor :restrict_highlight_and_snippet_arrays
 
-      # Number of hits per page.
-      attr_accessor :hits_per_page
-
       # Minimum number of characters a word in the search query must contain to accept matches with [one typo](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).
       attr_accessor :min_word_sizefor1_typo
 
@@ -147,9 +184,6 @@ module Algolia
 
       attr_accessor :remove_stop_words
 
-      # Characters for which diacritics should be preserved.  By default, Algolia removes diacritics from letters. For example, `é` becomes `e`. If this causes issues in your search, you can specify characters that should keep their diacritics.
-      attr_accessor :keep_diacritics_on_characters
-
       # Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries.  This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings. This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages. To support this, you must place the CJK language **first**.  **You should always specify a query language.** If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/), or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
       attr_accessor :query_languages
 
@@ -165,10 +199,6 @@ module Algolia
       attr_accessor :query_type
 
       attr_accessor :remove_words_if_no_results
-
-      attr_accessor :mode
-
-      attr_accessor :semantic_search
 
       # Whether to support phrase matching and excluding words from search queries.  Use the `advancedSyntaxFeatures` parameter to control which feature is supported.
       attr_accessor :advanced_syntax
@@ -220,7 +250,6 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :query => :query,
           :similar_query => :similarQuery,
           :filters => :filters,
           :facet_filters => :facetFilters,
@@ -231,9 +260,6 @@ module Algolia
           :restrict_searchable_attributes => :restrictSearchableAttributes,
           :facets => :facets,
           :faceting_after_distinct => :facetingAfterDistinct,
-          :page => :page,
-          :offset => :offset,
-          :length => :length,
           :around_lat_lng => :aroundLatLng,
           :around_lat_lng_via_ip => :aroundLatLngViaIP,
           :around_radius => :aroundRadius,
@@ -252,9 +278,26 @@ module Algolia
           :analytics_tags => :analyticsTags,
           :percentile_computation => :percentileComputation,
           :enable_ab_test => :enableABTest,
+          :query => :query,
+          :attributes_for_faceting => :attributesForFaceting,
+          :replicas => :replicas,
+          :pagination_limited_to => :paginationLimitedTo,
+          :unretrievable_attributes => :unretrievableAttributes,
+          :disable_typo_tolerance_on_words => :disableTypoToleranceOnWords,
+          :attributes_to_transliterate => :attributesToTransliterate,
+          :camel_case_attributes => :camelCaseAttributes,
+          :decompounded_attributes => :decompoundedAttributes,
+          :index_languages => :indexLanguages,
+          :disable_prefix_on_attributes => :disablePrefixOnAttributes,
+          :allow_compression_of_integer_array => :allowCompressionOfIntegerArray,
+          :numeric_attributes_for_filtering => :numericAttributesForFiltering,
+          :separators_to_index => :separatorsToIndex,
+          :searchable_attributes => :searchableAttributes,
+          :user_data => :userData,
+          :custom_normalization => :customNormalization,
+          :attribute_for_distinct => :attributeForDistinct,
           :attributes_to_retrieve => :attributesToRetrieve,
           :ranking => :ranking,
-          :custom_ranking => :customRanking,
           :relevancy_strictness => :relevancyStrictness,
           :attributes_to_highlight => :attributesToHighlight,
           :attributes_to_snippet => :attributesToSnippet,
@@ -262,7 +305,6 @@ module Algolia
           :highlight_post_tag => :highlightPostTag,
           :snippet_ellipsis_text => :snippetEllipsisText,
           :restrict_highlight_and_snippet_arrays => :restrictHighlightAndSnippetArrays,
-          :hits_per_page => :hitsPerPage,
           :min_word_sizefor1_typo => :minWordSizefor1Typo,
           :min_word_sizefor2_typos => :minWordSizefor2Typos,
           :typo_tolerance => :typoTolerance,
@@ -270,15 +312,12 @@ module Algolia
           :disable_typo_tolerance_on_attributes => :disableTypoToleranceOnAttributes,
           :ignore_plurals => :ignorePlurals,
           :remove_stop_words => :removeStopWords,
-          :keep_diacritics_on_characters => :keepDiacriticsOnCharacters,
           :query_languages => :queryLanguages,
           :decompound_query => :decompoundQuery,
           :enable_rules => :enableRules,
           :enable_personalization => :enablePersonalization,
           :query_type => :queryType,
           :remove_words_if_no_results => :removeWordsIfNoResults,
-          :mode => :mode,
-          :semantic_search => :semanticSearch,
           :advanced_syntax => :advancedSyntax,
           :optional_words => :optionalWords,
           :disable_exact_on_attributes => :disableExactOnAttributes,
@@ -307,7 +346,6 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :query => :"String",
           :similar_query => :"String",
           :filters => :"String",
           :facet_filters => :"FacetFilters",
@@ -318,9 +356,6 @@ module Algolia
           :restrict_searchable_attributes => :"Array<String>",
           :facets => :"Array<String>",
           :faceting_after_distinct => :"Boolean",
-          :page => :"Integer",
-          :offset => :"Integer",
-          :length => :"Integer",
           :around_lat_lng => :"String",
           :around_lat_lng_via_ip => :"Boolean",
           :around_radius => :"AroundRadius",
@@ -339,9 +374,26 @@ module Algolia
           :analytics_tags => :"Array<String>",
           :percentile_computation => :"Boolean",
           :enable_ab_test => :"Boolean",
+          :query => :"String",
+          :attributes_for_faceting => :"Array<String>",
+          :replicas => :"Array<String>",
+          :pagination_limited_to => :"Integer",
+          :unretrievable_attributes => :"Array<String>",
+          :disable_typo_tolerance_on_words => :"Array<String>",
+          :attributes_to_transliterate => :"Array<String>",
+          :camel_case_attributes => :"Array<String>",
+          :decompounded_attributes => :"Object",
+          :index_languages => :"Array<SupportedLanguage>",
+          :disable_prefix_on_attributes => :"Array<String>",
+          :allow_compression_of_integer_array => :"Boolean",
+          :numeric_attributes_for_filtering => :"Array<String>",
+          :separators_to_index => :"String",
+          :searchable_attributes => :"Array<String>",
+          :user_data => :"Object",
+          :custom_normalization => :"Hash<String, Hash<String, String>>",
+          :attribute_for_distinct => :"String",
           :attributes_to_retrieve => :"Array<String>",
           :ranking => :"Array<String>",
-          :custom_ranking => :"Array<String>",
           :relevancy_strictness => :"Integer",
           :attributes_to_highlight => :"Array<String>",
           :attributes_to_snippet => :"Array<String>",
@@ -349,7 +401,6 @@ module Algolia
           :highlight_post_tag => :"String",
           :snippet_ellipsis_text => :"String",
           :restrict_highlight_and_snippet_arrays => :"Boolean",
-          :hits_per_page => :"Integer",
           :min_word_sizefor1_typo => :"Integer",
           :min_word_sizefor2_typos => :"Integer",
           :typo_tolerance => :"TypoTolerance",
@@ -357,15 +408,12 @@ module Algolia
           :disable_typo_tolerance_on_attributes => :"Array<String>",
           :ignore_plurals => :"IgnorePlurals",
           :remove_stop_words => :"RemoveStopWords",
-          :keep_diacritics_on_characters => :"String",
           :query_languages => :"Array<SupportedLanguage>",
           :decompound_query => :"Boolean",
           :enable_rules => :"Boolean",
           :enable_personalization => :"Boolean",
           :query_type => :"QueryType",
           :remove_words_if_no_results => :"RemoveWordsIfNoResults",
-          :mode => :"Mode",
-          :semantic_search => :"SemanticSearch",
           :advanced_syntax => :"Boolean",
           :optional_words => :"Array<String>",
           :disable_exact_on_attributes => :"Array<String>",
@@ -396,7 +444,9 @@ module Algolia
       # List of class defined in allOf (OpenAPI v3)
       def self.openapi_all_of
         [
-          :"SearchParamsObject"
+          :"BaseRecommendSearchParams",
+          :"RecommendIndexSettings",
+          :"SearchParamsQuery"
         ]
       end
 
@@ -406,7 +456,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::SearchParams` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::RecommendSearchParams` initialize method"
           )
         end
 
@@ -415,17 +465,13 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::SearchParams`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::RecommendSearchParams`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
 
           h[k.to_sym] = v
         }
-
-        if attributes.key?(:query)
-          self.query = attributes[:query]
-        end
 
         if attributes.key?(:similar_query)
           self.similar_query = attributes[:similar_query]
@@ -469,18 +515,6 @@ module Algolia
 
         if attributes.key?(:faceting_after_distinct)
           self.faceting_after_distinct = attributes[:faceting_after_distinct]
-        end
-
-        if attributes.key?(:page)
-          self.page = attributes[:page]
-        end
-
-        if attributes.key?(:offset)
-          self.offset = attributes[:offset]
-        end
-
-        if attributes.key?(:length)
-          self.length = attributes[:length]
         end
 
         if attributes.key?(:around_lat_lng)
@@ -565,6 +599,100 @@ module Algolia
           self.enable_ab_test = attributes[:enable_ab_test]
         end
 
+        if attributes.key?(:query)
+          self.query = attributes[:query]
+        end
+
+        if attributes.key?(:attributes_for_faceting)
+          if (value = attributes[:attributes_for_faceting]).is_a?(Array)
+            self.attributes_for_faceting = value
+          end
+        end
+
+        if attributes.key?(:replicas)
+          if (value = attributes[:replicas]).is_a?(Array)
+            self.replicas = value
+          end
+        end
+
+        if attributes.key?(:pagination_limited_to)
+          self.pagination_limited_to = attributes[:pagination_limited_to]
+        end
+
+        if attributes.key?(:unretrievable_attributes)
+          if (value = attributes[:unretrievable_attributes]).is_a?(Array)
+            self.unretrievable_attributes = value
+          end
+        end
+
+        if attributes.key?(:disable_typo_tolerance_on_words)
+          if (value = attributes[:disable_typo_tolerance_on_words]).is_a?(Array)
+            self.disable_typo_tolerance_on_words = value
+          end
+        end
+
+        if attributes.key?(:attributes_to_transliterate)
+          if (value = attributes[:attributes_to_transliterate]).is_a?(Array)
+            self.attributes_to_transliterate = value
+          end
+        end
+
+        if attributes.key?(:camel_case_attributes)
+          if (value = attributes[:camel_case_attributes]).is_a?(Array)
+            self.camel_case_attributes = value
+          end
+        end
+
+        if attributes.key?(:decompounded_attributes)
+          self.decompounded_attributes = attributes[:decompounded_attributes]
+        end
+
+        if attributes.key?(:index_languages)
+          if (value = attributes[:index_languages]).is_a?(Array)
+            self.index_languages = value
+          end
+        end
+
+        if attributes.key?(:disable_prefix_on_attributes)
+          if (value = attributes[:disable_prefix_on_attributes]).is_a?(Array)
+            self.disable_prefix_on_attributes = value
+          end
+        end
+
+        if attributes.key?(:allow_compression_of_integer_array)
+          self.allow_compression_of_integer_array = attributes[:allow_compression_of_integer_array]
+        end
+
+        if attributes.key?(:numeric_attributes_for_filtering)
+          if (value = attributes[:numeric_attributes_for_filtering]).is_a?(Array)
+            self.numeric_attributes_for_filtering = value
+          end
+        end
+
+        if attributes.key?(:separators_to_index)
+          self.separators_to_index = attributes[:separators_to_index]
+        end
+
+        if attributes.key?(:searchable_attributes)
+          if (value = attributes[:searchable_attributes]).is_a?(Array)
+            self.searchable_attributes = value
+          end
+        end
+
+        if attributes.key?(:user_data)
+          self.user_data = attributes[:user_data]
+        end
+
+        if attributes.key?(:custom_normalization)
+          if (value = attributes[:custom_normalization]).is_a?(Hash)
+            self.custom_normalization = value
+          end
+        end
+
+        if attributes.key?(:attribute_for_distinct)
+          self.attribute_for_distinct = attributes[:attribute_for_distinct]
+        end
+
         if attributes.key?(:attributes_to_retrieve)
           if (value = attributes[:attributes_to_retrieve]).is_a?(Array)
             self.attributes_to_retrieve = value
@@ -574,12 +702,6 @@ module Algolia
         if attributes.key?(:ranking)
           if (value = attributes[:ranking]).is_a?(Array)
             self.ranking = value
-          end
-        end
-
-        if attributes.key?(:custom_ranking)
-          if (value = attributes[:custom_ranking]).is_a?(Array)
-            self.custom_ranking = value
           end
         end
 
@@ -615,10 +737,6 @@ module Algolia
           self.restrict_highlight_and_snippet_arrays = attributes[:restrict_highlight_and_snippet_arrays]
         end
 
-        if attributes.key?(:hits_per_page)
-          self.hits_per_page = attributes[:hits_per_page]
-        end
-
         if attributes.key?(:min_word_sizefor1_typo)
           self.min_word_sizefor1_typo = attributes[:min_word_sizefor1_typo]
         end
@@ -649,10 +767,6 @@ module Algolia
           self.remove_stop_words = attributes[:remove_stop_words]
         end
 
-        if attributes.key?(:keep_diacritics_on_characters)
-          self.keep_diacritics_on_characters = attributes[:keep_diacritics_on_characters]
-        end
-
         if attributes.key?(:query_languages)
           if (value = attributes[:query_languages]).is_a?(Array)
             self.query_languages = value
@@ -677,14 +791,6 @@ module Algolia
 
         if attributes.key?(:remove_words_if_no_results)
           self.remove_words_if_no_results = attributes[:remove_words_if_no_results]
-        end
-
-        if attributes.key?(:mode)
-          self.mode = attributes[:mode]
-        end
-
-        if attributes.key?(:semantic_search)
-          self.semantic_search = attributes[:semantic_search]
         end
 
         if attributes.key?(:advanced_syntax)
@@ -767,38 +873,6 @@ module Algolia
       end
 
       # Custom attribute writer method with validation
-      # @param [Object] page Value to be assigned
-      def page=(page)
-        if page.nil?
-          raise ArgumentError, "page cannot be nil"
-        end
-
-        if page < 0
-          raise ArgumentError, "invalid value for \"page\", must be greater than or equal to 0."
-        end
-
-        @page = page
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] length Value to be assigned
-      def length=(length)
-        if length.nil?
-          raise ArgumentError, "length cannot be nil"
-        end
-
-        if length > 1000
-          raise ArgumentError, "invalid value for \"length\", must be smaller than or equal to 1000."
-        end
-
-        if length < 0
-          raise ArgumentError, "invalid value for \"length\", must be greater than or equal to 0."
-        end
-
-        @length = length
-      end
-
-      # Custom attribute writer method with validation
       # @param [Object] minimum_around_radius Value to be assigned
       def minimum_around_radius=(minimum_around_radius)
         if minimum_around_radius.nil?
@@ -831,21 +905,17 @@ module Algolia
       end
 
       # Custom attribute writer method with validation
-      # @param [Object] hits_per_page Value to be assigned
-      def hits_per_page=(hits_per_page)
-        if hits_per_page.nil?
-          raise ArgumentError, "hits_per_page cannot be nil"
+      # @param [Object] pagination_limited_to Value to be assigned
+      def pagination_limited_to=(pagination_limited_to)
+        if pagination_limited_to.nil?
+          raise ArgumentError, "pagination_limited_to cannot be nil"
         end
 
-        if hits_per_page > 1000
-          raise ArgumentError, "invalid value for \"hits_per_page\", must be smaller than or equal to 1000."
+        if pagination_limited_to > 20000
+          raise ArgumentError, "invalid value for \"pagination_limited_to\", must be smaller than or equal to 20000."
         end
 
-        if hits_per_page < 1
-          raise ArgumentError, "invalid value for \"hits_per_page\", must be greater than or equal to 1."
-        end
-
-        @hits_per_page = hits_per_page
+        @pagination_limited_to = pagination_limited_to
       end
 
       # Custom attribute writer method with validation
@@ -899,7 +969,6 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          query == other.query &&
           similar_query == other.similar_query &&
           filters == other.filters &&
           facet_filters == other.facet_filters &&
@@ -910,9 +979,6 @@ module Algolia
           restrict_searchable_attributes == other.restrict_searchable_attributes &&
           facets == other.facets &&
           faceting_after_distinct == other.faceting_after_distinct &&
-          page == other.page &&
-          offset == other.offset &&
-          length == other.length &&
           around_lat_lng == other.around_lat_lng &&
           around_lat_lng_via_ip == other.around_lat_lng_via_ip &&
           around_radius == other.around_radius &&
@@ -931,9 +997,26 @@ module Algolia
           analytics_tags == other.analytics_tags &&
           percentile_computation == other.percentile_computation &&
           enable_ab_test == other.enable_ab_test &&
+          query == other.query &&
+          attributes_for_faceting == other.attributes_for_faceting &&
+          replicas == other.replicas &&
+          pagination_limited_to == other.pagination_limited_to &&
+          unretrievable_attributes == other.unretrievable_attributes &&
+          disable_typo_tolerance_on_words == other.disable_typo_tolerance_on_words &&
+          attributes_to_transliterate == other.attributes_to_transliterate &&
+          camel_case_attributes == other.camel_case_attributes &&
+          decompounded_attributes == other.decompounded_attributes &&
+          index_languages == other.index_languages &&
+          disable_prefix_on_attributes == other.disable_prefix_on_attributes &&
+          allow_compression_of_integer_array == other.allow_compression_of_integer_array &&
+          numeric_attributes_for_filtering == other.numeric_attributes_for_filtering &&
+          separators_to_index == other.separators_to_index &&
+          searchable_attributes == other.searchable_attributes &&
+          user_data == other.user_data &&
+          custom_normalization == other.custom_normalization &&
+          attribute_for_distinct == other.attribute_for_distinct &&
           attributes_to_retrieve == other.attributes_to_retrieve &&
           ranking == other.ranking &&
-          custom_ranking == other.custom_ranking &&
           relevancy_strictness == other.relevancy_strictness &&
           attributes_to_highlight == other.attributes_to_highlight &&
           attributes_to_snippet == other.attributes_to_snippet &&
@@ -941,7 +1024,6 @@ module Algolia
           highlight_post_tag == other.highlight_post_tag &&
           snippet_ellipsis_text == other.snippet_ellipsis_text &&
           restrict_highlight_and_snippet_arrays == other.restrict_highlight_and_snippet_arrays &&
-          hits_per_page == other.hits_per_page &&
           min_word_sizefor1_typo == other.min_word_sizefor1_typo &&
           min_word_sizefor2_typos == other.min_word_sizefor2_typos &&
           typo_tolerance == other.typo_tolerance &&
@@ -949,15 +1031,12 @@ module Algolia
           disable_typo_tolerance_on_attributes == other.disable_typo_tolerance_on_attributes &&
           ignore_plurals == other.ignore_plurals &&
           remove_stop_words == other.remove_stop_words &&
-          keep_diacritics_on_characters == other.keep_diacritics_on_characters &&
           query_languages == other.query_languages &&
           decompound_query == other.decompound_query &&
           enable_rules == other.enable_rules &&
           enable_personalization == other.enable_personalization &&
           query_type == other.query_type &&
           remove_words_if_no_results == other.remove_words_if_no_results &&
-          mode == other.mode &&
-          semantic_search == other.semantic_search &&
           advanced_syntax == other.advanced_syntax &&
           optional_words == other.optional_words &&
           disable_exact_on_attributes == other.disable_exact_on_attributes &&
@@ -987,7 +1066,6 @@ module Algolia
       # @return [Integer] Hash code
       def hash
         [
-          query,
           similar_query,
           filters,
           facet_filters,
@@ -998,9 +1076,6 @@ module Algolia
           restrict_searchable_attributes,
           facets,
           faceting_after_distinct,
-          page,
-          offset,
-          length,
           around_lat_lng,
           around_lat_lng_via_ip,
           around_radius,
@@ -1019,9 +1094,26 @@ module Algolia
           analytics_tags,
           percentile_computation,
           enable_ab_test,
+          query,
+          attributes_for_faceting,
+          replicas,
+          pagination_limited_to,
+          unretrievable_attributes,
+          disable_typo_tolerance_on_words,
+          attributes_to_transliterate,
+          camel_case_attributes,
+          decompounded_attributes,
+          index_languages,
+          disable_prefix_on_attributes,
+          allow_compression_of_integer_array,
+          numeric_attributes_for_filtering,
+          separators_to_index,
+          searchable_attributes,
+          user_data,
+          custom_normalization,
+          attribute_for_distinct,
           attributes_to_retrieve,
           ranking,
-          custom_ranking,
           relevancy_strictness,
           attributes_to_highlight,
           attributes_to_snippet,
@@ -1029,7 +1121,6 @@ module Algolia
           highlight_post_tag,
           snippet_ellipsis_text,
           restrict_highlight_and_snippet_arrays,
-          hits_per_page,
           min_word_sizefor1_typo,
           min_word_sizefor2_typos,
           typo_tolerance,
@@ -1037,15 +1128,12 @@ module Algolia
           disable_typo_tolerance_on_attributes,
           ignore_plurals,
           remove_stop_words,
-          keep_diacritics_on_characters,
           query_languages,
           decompound_query,
           enable_rules,
           enable_personalization,
           query_type,
           remove_words_if_no_results,
-          mode,
-          semantic_search,
           advanced_syntax,
           optional_words,
           disable_exact_on_attributes,

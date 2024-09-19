@@ -45,7 +45,7 @@ module Algolia
           :index_name => :"String",
           :threshold => :"Float",
           :max_recommendations => :"Integer",
-          :query_parameters => :"SearchParams",
+          :query_parameters => :"RecommendSearchParams",
           :model => :"FbtModel",
           :object_id => :"String"
         }

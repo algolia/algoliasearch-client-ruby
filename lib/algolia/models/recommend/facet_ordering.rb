@@ -28,7 +28,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :facets => :"Facets",
+          :facets => :"IndexSettingsFacets",
           :values => :"Hash<String, Value>"
         }
       end

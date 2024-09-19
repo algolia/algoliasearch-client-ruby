@@ -48,7 +48,7 @@ module Algolia
           :index_name => :"String",
           :threshold => :"Float",
           :max_recommendations => :"Integer",
-          :query_parameters => :"SearchParams",
+          :query_parameters => :"RecommendSearchParams",
           :model => :"LookingSimilarModel",
           :object_id => :"String",
           :fallback_parameters => :"FallbackParams"

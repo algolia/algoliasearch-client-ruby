@@ -48,7 +48,7 @@ module Algolia
           :index_name => :"String",
           :threshold => :"Float",
           :max_recommendations => :"Integer",
-          :query_parameters => :"SearchParams",
+          :query_parameters => :"RecommendSearchParams",
           :facet_name => :"Object",
           :model => :"TrendingFacetsModel",
           :fallback_parameters => :"FallbackParams"
