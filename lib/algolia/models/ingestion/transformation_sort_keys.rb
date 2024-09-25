@@ -5,14 +5,13 @@ require "time"
 
 module Algolia
   module Ingestion
-    class SortKeys
+    class TransformationSortKeys
       NAME = "name".freeze
-      TYPE = "type".freeze
       UPDATED_AT = "updatedAt".freeze
       CREATED_AT = "createdAt".freeze
 
       def self.all_vars
-        @all_vars ||= [NAME, TYPE, UPDATED_AT, CREATED_AT].freeze
+        @all_vars ||= [NAME, UPDATED_AT, CREATED_AT].freeze
       end
 
       # Builds the enum from string
@@ -26,8 +25,8 @@ module Algolia
       # @param [String] The enum value in the form of the string
       # @return [String] The enum value
       def build_from_hash(value)
-        return value if SortKeys.all_vars.include?(value)
-        raise "Invalid ENUM value #{value} for class #SortKeys"
+        return value if TransformationSortKeys.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #TransformationSortKeys"
       end
     end
   end

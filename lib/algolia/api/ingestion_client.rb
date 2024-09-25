@@ -1372,8 +1372,8 @@ module Algolia
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
     # @param type [Array<AuthenticationType>] Type of authentication resource to retrieve.
-    # @param platform [Array<PlatformWithNone>] Ecommerce platform for which to retrieve authentication resources.
-    # @param sort [AuthenticationSortKeys] Property by which to sort the list of authentication resources. (default to 'createdAt')
+    # @param platform [Array<PlatformWithNone>] Ecommerce platform for which to retrieve authentications.
+    # @param sort [AuthenticationSortKeys] Property by which to sort the list of authentications. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1441,8 +1441,8 @@ module Algolia
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
     # @param type [Array<AuthenticationType>] Type of authentication resource to retrieve.
-    # @param platform [Array<PlatformWithNone>] Ecommerce platform for which to retrieve authentication resources.
-    # @param sort [AuthenticationSortKeys] Property by which to sort the list of authentication resources. (default to 'createdAt')
+    # @param platform [Array<PlatformWithNone>] Ecommerce platform for which to retrieve authentications.
+    # @param sort [AuthenticationSortKeys] Property by which to sort the list of authentications. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListAuthenticationsResponse]
@@ -1472,6 +1472,7 @@ module Algolia
     # @param page [Integer] Page number of the paginated API response.
     # @param type [Array<DestinationType>] Destination type.
     # @param authentication_id [Array<String>] Authentication ID used by destinations.
+    # @param transformation_id [String] Get the list of destinations used by a transformation.
     # @param sort [DestinationSortKeys] Property by which to sort the destinations. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1481,6 +1482,7 @@ module Algolia
       page = nil,
       type = nil,
       authentication_id = nil,
+      transformation_id = nil,
       sort = nil,
       order = nil,
       request_options = {}
@@ -1515,6 +1517,7 @@ module Algolia
         query_params[:authenticationID] = @api_client.build_collection_param(authentication_id, :csv)
       end
 
+      query_params[:transformationID] = transformation_id unless transformation_id.nil?
       query_params[:sort] = sort unless sort.nil?
       query_params[:order] = order unless order.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -1544,6 +1547,7 @@ module Algolia
     # @param page [Integer] Page number of the paginated API response.
     # @param type [Array<DestinationType>] Destination type.
     # @param authentication_id [Array<String>] Authentication ID used by destinations.
+    # @param transformation_id [String] Get the list of destinations used by a transformation.
     # @param sort [DestinationSortKeys] Property by which to sort the destinations. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1553,6 +1557,7 @@ module Algolia
       page = nil,
       type = nil,
       authentication_id = nil,
+      transformation_id = nil,
       sort = nil,
       order = nil,
       request_options = {}
@@ -1562,6 +1567,7 @@ module Algolia
         page,
         type,
         authentication_id,
+        transformation_id,
         sort,
         order,
         request_options
@@ -1829,7 +1835,7 @@ module Algolia
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
     # @param type [Array<SourceType>] Source type. Some sources require authentication.
-    # @param authentication_id [Array<String>] Authentication IDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication resource.
+    # @param authentication_id [Array<String>] Authentication IDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication.
     # @param sort [SourceSortKeys] Property by which to sort the list of sources. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1901,7 +1907,7 @@ module Algolia
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
     # @param type [Array<SourceType>] Source type. Some sources require authentication.
-    # @param authentication_id [Array<String>] Authentication IDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication resource.
+    # @param authentication_id [Array<String>] Authentication IDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication.
     # @param sort [SourceSortKeys] Property by which to sort the list of sources. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -2185,7 +2191,7 @@ module Algolia
     #   - editSettings
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
-    # @param sort [SortKeys] Property by which to sort the list. (default to 'desc')
+    # @param sort [TransformationSortKeys] Property by which to sort the list of transformations. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -2248,7 +2254,7 @@ module Algolia
     #   - editSettings
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
-    # @param sort [SortKeys] Property by which to sort the list. (default to 'desc')
+    # @param sort [TransformationSortKeys] Property by which to sort the list of transformations. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListTransformationsResponse]
