@@ -1127,7 +1127,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::DeletedAtResponse")
     end
 
-    # Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application&#39;s keys. When authenticating with other API keys, you can only retrieve information for that key.
+    # Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application&#39;s keys. When authenticating with other API keys, you can only retrieve information for that key, with the description replaced by &#x60;&lt;redacted&gt;&#x60;.
 
     # @param key [String] API key. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1157,7 +1157,7 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key.
+    # Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application's keys. When authenticating with other API keys, you can only retrieve information for that key, with the description replaced by `<redacted>`.
 
     # @param key [String] API key. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
