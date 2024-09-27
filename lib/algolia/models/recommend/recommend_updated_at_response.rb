@@ -5,36 +5,19 @@ require "time"
 
 module Algolia
   module Recommend
-    # Recommend rule.
-    class RecommendRule
-      attr_accessor :_metadata
+    # Response, taskID, and update timestamp.
+    class RecommendUpdatedAtResponse
+      # Unique identifier of a task.  A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.
+      attr_accessor :task_id
 
-      # Unique identifier of a rule object.
-      attr_accessor :object_id
-
-      attr_accessor :condition
-
-      attr_accessor :consequence
-
-      # Description of the rule's purpose. This can be helpful for display in the Algolia dashboard.
-      attr_accessor :description
-
-      # Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time.
-      attr_accessor :enabled
-
-      # Time periods when the rule is active.
-      attr_accessor :validity
+      # Date and time when the object was updated, in RFC 3339 format.
+      attr_accessor :updated_at
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :_metadata => :_metadata,
-          :object_id => :objectID,
-          :condition => :condition,
-          :consequence => :consequence,
-          :description => :description,
-          :enabled => :enabled,
-          :validity => :validity
+          :task_id => :taskID,
+          :updated_at => :updatedAt
         }
       end
 
@@ -46,13 +29,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :_metadata => :"RuleMetadata",
-          :object_id => :"String",
-          :condition => :"Condition",
-          :consequence => :"Consequence",
-          :description => :"String",
-          :enabled => :"Boolean",
-          :validity => :"Array<TimeRange>"
+          :task_id => :"Integer",
+          :updated_at => :"String"
         }
       end
 
@@ -69,7 +47,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::RecommendRule` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::RecommendUpdatedAtResponse` initialize method"
           )
         end
 
@@ -78,7 +56,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::RecommendRule`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::RecommendUpdatedAtResponse`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -86,34 +64,16 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:_metadata)
-          self._metadata = attributes[:_metadata]
+        if attributes.key?(:task_id)
+          self.task_id = attributes[:task_id]
+        else
+          self.task_id = nil
         end
 
-        if attributes.key?(:object_id)
-          self.object_id = attributes[:object_id]
-        end
-
-        if attributes.key?(:condition)
-          self.condition = attributes[:condition]
-        end
-
-        if attributes.key?(:consequence)
-          self.consequence = attributes[:consequence]
-        end
-
-        if attributes.key?(:description)
-          self.description = attributes[:description]
-        end
-
-        if attributes.key?(:enabled)
-          self.enabled = attributes[:enabled]
-        end
-
-        if attributes.key?(:validity)
-          if (value = attributes[:validity]).is_a?(Array)
-            self.validity = value
-          end
+        if attributes.key?(:updated_at)
+          self.updated_at = attributes[:updated_at]
+        else
+          self.updated_at = nil
         end
       end
 
@@ -122,13 +82,8 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          _metadata == other._metadata &&
-          object_id == other.object_id &&
-          condition == other.condition &&
-          consequence == other.consequence &&
-          description == other.description &&
-          enabled == other.enabled &&
-          validity == other.validity
+          task_id == other.task_id &&
+          updated_at == other.updated_at
       end
 
       # @see the `==` method
@@ -140,7 +95,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [_metadata, object_id, condition, consequence, description, enabled, validity].hash
+        [task_id, updated_at].hash
       end
 
       # Builds the object from hash

@@ -40,6 +40,63 @@ module Algolia
       @api_client.set_client_api_key(api_key)
     end
 
+    # Create or update a batch of Recommend Rules  Each Recommend Rule is created or updated, depending on whether a Recommend Rule with the same &#x60;objectID&#x60; already exists. You may also specify &#x60;true&#x60; for &#x60;clearExistingRules&#x60;, in which case the batch will atomically replace all the existing Recommend Rules.  Recommend Rules are similar to Search Rules, except that the conditions and consequences apply to a [source item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main differences are the following: - Conditions &#x60;pattern&#x60; and &#x60;anchoring&#x60; are unavailable. - Condition &#x60;filters&#x60; triggers if the source item matches the specified filters. - Condition &#x60;filters&#x60; accepts numeric filters. - Consequence &#x60;params&#x60; only covers filtering parameters. - Consequence &#x60;automaticFacetFilters&#x60; doesn&#39;t require a facet value placeholder (it tries to match the data source item&#39;s attributes instead).
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param index_name [String] Name of the index on which to perform the operation. (required)
+    # @param model [RecommendModels] [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
+    # @param recommend_rule [Array<RecommendRule>]
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def batch_recommend_rules_with_http_info(index_name, model, recommend_rule = nil, request_options = {})
+      # verify the required parameter 'index_name' is set
+      if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `batch_recommend_rules`."
+      end
+      # verify the required parameter 'model' is set
+      if @api_client.config.client_side_validation && model.nil?
+        raise ArgumentError, "Parameter `model` is required when calling `batch_recommend_rules`."
+      end
+
+      path = "/1/indexes/{indexName}/{model}/recommend/rules/batch"
+        .sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
+        .sub("{" + "model" + "}", Transport.encode_uri(model.to_s))
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(recommend_rule)
+
+      new_options = request_options.merge(
+        :operation => :"RecommendClient.batch_recommend_rules",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Create or update a batch of Recommend Rules  Each Recommend Rule is created or updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may also specify `true` for `clearExistingRules`, in which case the batch will atomically replace all the existing Recommend Rules.  Recommend Rules are similar to Search Rules, except that the conditions and consequences apply to a [source item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main differences are the following: - Conditions `pattern` and `anchoring` are unavailable. - Condition `filters` triggers if the source item matches the specified filters. - Condition `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. - Consequence `automaticFacetFilters` doesn't require a facet value placeholder (it tries to match the data source item's attributes instead).
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param index_name [String] Name of the index on which to perform the operation. (required)
+    # @param model [RecommendModels] [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).  (required)
+    # @param recommend_rule [Array<RecommendRule>]
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [RecommendUpdatedAtResponse]
+    def batch_recommend_rules(index_name, model, recommend_rule = nil, request_options = {})
+      response = batch_recommend_rules_with_http_info(index_name, model, recommend_rule, request_options)
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Recommend::RecommendUpdatedAtResponse"
+      )
+    end
+
     # This method allow you to send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)

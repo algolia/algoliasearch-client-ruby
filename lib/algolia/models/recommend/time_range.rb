@@ -5,36 +5,18 @@ require "time"
 
 module Algolia
   module Recommend
-    # Recommend rule.
-    class RecommendRule
-      attr_accessor :_metadata
+    class TimeRange
+      # When the rule should start to be active, in Unix epoch time.
+      attr_accessor :from
 
-      # Unique identifier of a rule object.
-      attr_accessor :object_id
-
-      attr_accessor :condition
-
-      attr_accessor :consequence
-
-      # Description of the rule's purpose. This can be helpful for display in the Algolia dashboard.
-      attr_accessor :description
-
-      # Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time.
-      attr_accessor :enabled
-
-      # Time periods when the rule is active.
-      attr_accessor :validity
+      # When the rule should stop to be active, in Unix epoch time.
+      attr_accessor :_until
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :_metadata => :_metadata,
-          :object_id => :objectID,
-          :condition => :condition,
-          :consequence => :consequence,
-          :description => :description,
-          :enabled => :enabled,
-          :validity => :validity
+          :from => :from,
+          :_until => :until
         }
       end
 
@@ -46,13 +28,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :_metadata => :"RuleMetadata",
-          :object_id => :"String",
-          :condition => :"Condition",
-          :consequence => :"Consequence",
-          :description => :"String",
-          :enabled => :"Boolean",
-          :validity => :"Array<TimeRange>"
+          :from => :"Integer",
+          :_until => :"Integer"
         }
       end
 
@@ -69,7 +46,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::RecommendRule` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::TimeRange` initialize method"
           )
         end
 
@@ -78,7 +55,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::RecommendRule`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::TimeRange`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -86,34 +63,16 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:_metadata)
-          self._metadata = attributes[:_metadata]
+        if attributes.key?(:from)
+          self.from = attributes[:from]
+        else
+          self.from = nil
         end
 
-        if attributes.key?(:object_id)
-          self.object_id = attributes[:object_id]
-        end
-
-        if attributes.key?(:condition)
-          self.condition = attributes[:condition]
-        end
-
-        if attributes.key?(:consequence)
-          self.consequence = attributes[:consequence]
-        end
-
-        if attributes.key?(:description)
-          self.description = attributes[:description]
-        end
-
-        if attributes.key?(:enabled)
-          self.enabled = attributes[:enabled]
-        end
-
-        if attributes.key?(:validity)
-          if (value = attributes[:validity]).is_a?(Array)
-            self.validity = value
-          end
+        if attributes.key?(:_until)
+          self._until = attributes[:_until]
+        else
+          self._until = nil
         end
       end
 
@@ -122,13 +81,8 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          _metadata == other._metadata &&
-          object_id == other.object_id &&
-          condition == other.condition &&
-          consequence == other.consequence &&
-          description == other.description &&
-          enabled == other.enabled &&
-          validity == other.validity
+          from == other.from &&
+          _until == other._until
       end
 
       # @see the `==` method
@@ -140,7 +94,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [_metadata, object_id, condition, consequence, description, enabled, validity].hash
+        [from, _until].hash
       end
 
       # Builds the object from hash
