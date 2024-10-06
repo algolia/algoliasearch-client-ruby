@@ -11,11 +11,14 @@ module Algolia
 
       attr_accessor :redirect
 
+      attr_accessor :widgets
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :facet_ordering => :facetOrdering,
-          :redirect => :redirect
+          :redirect => :redirect,
+          :widgets => :widgets
         }
       end
 
@@ -28,7 +31,8 @@ module Algolia
       def self.types_mapping
         {
           :facet_ordering => :"FacetOrdering",
-          :redirect => :"RedirectURL"
+          :redirect => :"RedirectURL",
+          :widgets => :"Widgets"
         }
       end
 
@@ -69,6 +73,10 @@ module Algolia
         if attributes.key?(:redirect)
           self.redirect = attributes[:redirect]
         end
+
+        if attributes.key?(:widgets)
+          self.widgets = attributes[:widgets]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -77,7 +85,8 @@ module Algolia
         return true if self.equal?(other)
         self.class == other.class &&
           facet_ordering == other.facet_ordering &&
-          redirect == other.redirect
+          redirect == other.redirect &&
+          widgets == other.widgets
       end
 
       # @see the `==` method
@@ -89,7 +98,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [facet_ordering, redirect].hash
+        [facet_ordering, redirect, widgets].hash
       end
 
       # Builds the object from hash

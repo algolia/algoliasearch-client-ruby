@@ -4,21 +4,15 @@ require "date"
 require "time"
 
 module Algolia
-  module Search
-    # Extra data that can be used in the search UI.  You can use this to control aspects of your search UI, such as, the order of facet names and values without changing your frontend code.
-    class RenderingContent
-      attr_accessor :facet_ordering
-
-      attr_accessor :redirect
-
-      attr_accessor :widgets
+  module Recommend
+    # banners defined in the merchandising studio for the given search.
+    class Banners
+      attr_accessor :banners
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :facet_ordering => :facetOrdering,
-          :redirect => :redirect,
-          :widgets => :widgets
+          :banners => :banners
         }
       end
 
@@ -30,9 +24,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :facet_ordering => :"FacetOrdering",
-          :redirect => :"RedirectURL",
-          :widgets => :"Widgets"
+          :banners => :"Banner"
         }
       end
 
@@ -47,10 +39,7 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         if (!attributes.is_a?(Hash))
-          raise(
-            ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::RenderingContent` initialize method"
-          )
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Banners` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
@@ -58,7 +47,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::RenderingContent`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::Banners`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -66,16 +55,8 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:facet_ordering)
-          self.facet_ordering = attributes[:facet_ordering]
-        end
-
-        if attributes.key?(:redirect)
-          self.redirect = attributes[:redirect]
-        end
-
-        if attributes.key?(:widgets)
-          self.widgets = attributes[:widgets]
+        if attributes.key?(:banners)
+          self.banners = attributes[:banners]
         end
       end
 
@@ -84,9 +65,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          facet_ordering == other.facet_ordering &&
-          redirect == other.redirect &&
-          widgets == other.widgets
+          banners == other.banners
       end
 
       # @see the `==` method
@@ -98,7 +77,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [facet_ordering, redirect, widgets].hash
+        [banners].hash
       end
 
       # Builds the object from hash
@@ -167,7 +146,7 @@ module Algolia
           # model
         else
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Search.const_get(type)
+          klass = Algolia::Recommend.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass
             .build_from_hash(value)
         end
