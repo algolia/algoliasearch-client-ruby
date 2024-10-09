@@ -100,20 +100,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] page Value to be assigned
-      def page=(page)
-        if page.nil?
-          raise ArgumentError, "page cannot be nil"
-        end
-
-        if page < 0
-          raise ArgumentError, "invalid value for \"page\", must be greater than or equal to 0."
-        end
-
-        @page = page
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

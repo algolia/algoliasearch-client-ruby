@@ -210,40 +210,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] query_body Value to be assigned
-      def query_body=(query_body)
-        if query_body.nil?
-          raise ArgumentError, "query_body cannot be nil"
-        end
-
-        if query_body.to_s.length > 1000
-          raise(
-            ArgumentError,
-            "invalid value for \"query_body\", the character length must be smaller than or equal to 1000."
-          )
-        end
-
-        @query_body = query_body
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] answer Value to be assigned
-      def answer=(answer)
-        if answer.nil?
-          raise ArgumentError, "answer cannot be nil"
-        end
-
-        if answer.to_s.length > 1000
-          raise(
-            ArgumentError,
-            "invalid value for \"answer\", the character length must be smaller than or equal to 1000."
-          )
-        end
-
-        @answer = answer
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

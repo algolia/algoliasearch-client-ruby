@@ -234,28 +234,6 @@ module Algolia
         raise ArgumentError, "Parameter `user_token` is required when calling `delete_user_token`."
       end
 
-      if @api_client.config.client_side_validation && user_token.to_s.length > 129
-        raise(
-          ArgumentError,
-          "invalid value for \"user_token\" when calling InsightsClient.delete_user_token, the character length must be smaller than or equal to 129."
-        )
-      end
-
-      if @api_client.config.client_side_validation && user_token.to_s.length < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"user_token\" when calling InsightsClient.delete_user_token, the character length must be great than or equal to 1."
-        )
-      end
-
-      pattern = /[a-zA-Z0-9_=\/+-]{1,129}/
-      if @api_client.config.client_side_validation && user_token !~ pattern
-        raise(
-          ArgumentError,
-          "invalid value for 'user_token' when calling InsightsClient.delete_user_token, must conform to the pattern #{pattern}."
-        )
-      end
-
       path = "/1/usertokens/{userToken}".sub("{" + "userToken" + "}", Transport.encode_uri(user_token.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?

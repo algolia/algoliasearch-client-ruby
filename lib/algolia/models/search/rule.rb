@@ -111,24 +111,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] conditions Value to be assigned
-      def conditions=(conditions)
-        if conditions.nil?
-          raise ArgumentError, "conditions cannot be nil"
-        end
-
-        if conditions.length > 25
-          raise ArgumentError, "invalid value for \"conditions\", number of items must be less than or equal to 25."
-        end
-
-        if conditions.length < 0
-          raise ArgumentError, "invalid value for \"conditions\", number of items must be greater than or equal to 0."
-        end
-
-        @conditions = conditions
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

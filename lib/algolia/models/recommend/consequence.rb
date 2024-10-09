@@ -85,34 +85,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] hide Value to be assigned
-      def hide=(hide)
-        if hide.nil?
-          raise ArgumentError, "hide cannot be nil"
-        end
-
-        if hide.length < 1
-          raise ArgumentError, "invalid value for \"hide\", number of items must be greater than or equal to 1."
-        end
-
-        @hide = hide
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] promote Value to be assigned
-      def promote=(promote)
-        if promote.nil?
-          raise ArgumentError, "promote cannot be nil"
-        end
-
-        if promote.length < 1
-          raise ArgumentError, "invalid value for \"promote\", number of items must be greater than or equal to 1."
-        end
-
-        @promote = promote
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

@@ -372,13 +372,6 @@ module Algolia
       index_suffix = nil,
       request_options = {}
     )
-      if @api_client.config.client_side_validation && !offset.nil? && offset < 0
-        raise(
-          ArgumentError,
-          "invalid value for \"\"offset\"\" when calling AbtestingClient.list_ab_tests, must be greater than or equal to 0."
-        )
-      end
-
       path = "/2/abtests"
       query_params = {}
       query_params[:offset] = offset unless offset.nil?

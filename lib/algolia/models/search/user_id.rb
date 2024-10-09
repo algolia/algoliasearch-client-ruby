@@ -96,21 +96,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] user_id Value to be assigned
-      def user_id=(user_id)
-        if user_id.nil?
-          raise ArgumentError, "user_id cannot be nil"
-        end
-
-        pattern = /^[a-zA-Z0-9 \-*.]+$/
-        if user_id !~ pattern
-          raise ArgumentError, "invalid value for \"user_id\", must conform to the pattern #{pattern}."
-        end
-
-        @user_id = user_id
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

@@ -72,24 +72,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] size Value to be assigned
-      def size=(size)
-        if size.nil?
-          raise ArgumentError, "size cannot be nil"
-        end
-
-        if size > 1
-          raise ArgumentError, "invalid value for \"size\", must be smaller than or equal to 1."
-        end
-
-        if size < 0
-          raise ArgumentError, "invalid value for \"size\", must be greater than or equal to 0."
-        end
-
-        @size = size
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

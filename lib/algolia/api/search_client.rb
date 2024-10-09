@@ -206,15 +206,6 @@ module Algolia
       if @api_client.config.client_side_validation && x_algolia_user_id.nil?
         raise ArgumentError, "Parameter `x_algolia_user_id` is required when calling `assign_user_id`."
       end
-
-      pattern = /^[a-zA-Z0-9 \-*.]+$/
-      if @api_client.config.client_side_validation && x_algolia_user_id !~ pattern
-        raise(
-          ArgumentError,
-          "invalid value for 'x_algolia_user_id' when calling SearchClient.assign_user_id, must conform to the pattern #{pattern}."
-        )
-      end
-
       # verify the required parameter 'assign_user_id_params' is set
       if @api_client.config.client_side_validation && assign_user_id_params.nil?
         raise ArgumentError, "Parameter `assign_user_id_params` is required when calling `assign_user_id`."
@@ -312,15 +303,6 @@ module Algolia
       if @api_client.config.client_side_validation && x_algolia_user_id.nil?
         raise ArgumentError, "Parameter `x_algolia_user_id` is required when calling `batch_assign_user_ids`."
       end
-
-      pattern = /^[a-zA-Z0-9 \-*.]+$/
-      if @api_client.config.client_side_validation && x_algolia_user_id !~ pattern
-        raise(
-          ArgumentError,
-          "invalid value for 'x_algolia_user_id' when calling SearchClient.batch_assign_user_ids, must conform to the pattern #{pattern}."
-        )
-      end
-
       # verify the required parameter 'batch_assign_user_ids_params' is set
       if @api_client.config.client_side_validation && batch_assign_user_ids_params.nil?
         raise(
@@ -1299,13 +1281,6 @@ module Algolia
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_logs_with_http_info(offset = nil, length = nil, index_name = nil, type = nil, request_options = {})
-      if @api_client.config.client_side_validation && !length.nil? && length > 1000
-        raise(
-          ArgumentError,
-          "invalid value for \"\"length\"\" when calling SearchClient.get_logs, must be smaller than or equal to 1000."
-        )
-      end
-
       path = "/1/logs"
       query_params = {}
       query_params[:offset] = offset unless offset.nil?
@@ -1734,14 +1709,6 @@ module Algolia
         raise ArgumentError, "Parameter `user_id` is required when calling `get_user_id`."
       end
 
-      pattern = /^[a-zA-Z0-9 \-*.]+$/
-      if @api_client.config.client_side_validation && user_id !~ pattern
-        raise(
-          ArgumentError,
-          "invalid value for 'user_id' when calling SearchClient.get_user_id, must conform to the pattern #{pattern}."
-        )
-      end
-
       path = "/1/clusters/mapping/{userID}".sub("{" + "userID" + "}", Transport.encode_uri(user_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -1899,13 +1866,6 @@ module Algolia
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def list_indices_with_http_info(page = nil, hits_per_page = nil, request_options = {})
-      if @api_client.config.client_side_validation && !page.nil? && page < 0
-        raise(
-          ArgumentError,
-          "invalid value for \"\"page\"\" when calling SearchClient.list_indices, must be greater than or equal to 0."
-        )
-      end
-
       path = "/1/indexes"
       query_params = {}
       query_params[:page] = page unless page.nil?
@@ -1949,13 +1909,6 @@ module Algolia
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def list_user_ids_with_http_info(page = nil, hits_per_page = nil, request_options = {})
-      if @api_client.config.client_side_validation && !page.nil? && page < 0
-        raise(
-          ArgumentError,
-          "invalid value for \"\"page\"\" when calling SearchClient.list_user_ids, must be greater than or equal to 0."
-        )
-      end
-
       path = "/1/clusters/mapping"
       query_params = {}
       query_params[:page] = page unless page.nil?
@@ -2173,14 +2126,6 @@ module Algolia
       # verify the required parameter 'user_id' is set
       if @api_client.config.client_side_validation && user_id.nil?
         raise ArgumentError, "Parameter `user_id` is required when calling `remove_user_id`."
-      end
-
-      pattern = /^[a-zA-Z0-9 \-*.]+$/
-      if @api_client.config.client_side_validation && user_id !~ pattern
-        raise(
-          ArgumentError,
-          "invalid value for 'user_id' when calling SearchClient.remove_user_id, must conform to the pattern #{pattern}."
-        )
       end
 
       path = "/1/clusters/mapping/{userID}".sub("{" + "userID" + "}", Transport.encode_uri(user_id.to_s))

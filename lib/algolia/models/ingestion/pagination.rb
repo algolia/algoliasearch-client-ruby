@@ -99,66 +99,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] nb_pages Value to be assigned
-      def nb_pages=(nb_pages)
-        if nb_pages.nil?
-          raise ArgumentError, "nb_pages cannot be nil"
-        end
-
-        if nb_pages < 1
-          raise ArgumentError, "invalid value for \"nb_pages\", must be greater than or equal to 1."
-        end
-
-        @nb_pages = nb_pages
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] page Value to be assigned
-      def page=(page)
-        if page.nil?
-          raise ArgumentError, "page cannot be nil"
-        end
-
-        if page < 1
-          raise ArgumentError, "invalid value for \"page\", must be greater than or equal to 1."
-        end
-
-        @page = page
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] nb_items Value to be assigned
-      def nb_items=(nb_items)
-        if nb_items.nil?
-          raise ArgumentError, "nb_items cannot be nil"
-        end
-
-        if nb_items < 0
-          raise ArgumentError, "invalid value for \"nb_items\", must be greater than or equal to 0."
-        end
-
-        @nb_items = nb_items
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] items_per_page Value to be assigned
-      def items_per_page=(items_per_page)
-        if items_per_page.nil?
-          raise ArgumentError, "items_per_page cannot be nil"
-        end
-
-        if items_per_page > 100
-          raise ArgumentError, "invalid value for \"items_per_page\", must be smaller than or equal to 100."
-        end
-
-        if items_per_page < 1
-          raise ArgumentError, "invalid value for \"items_per_page\", must be greater than or equal to 1."
-        end
-
-        @items_per_page = items_per_page
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

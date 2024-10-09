@@ -81,20 +81,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] max_facet_hits Value to be assigned
-      def max_facet_hits=(max_facet_hits)
-        if max_facet_hits.nil?
-          raise ArgumentError, "max_facet_hits cannot be nil"
-        end
-
-        if max_facet_hits > 100
-          raise ArgumentError, "invalid value for \"max_facet_hits\", must be smaller than or equal to 100."
-        end
-
-        @max_facet_hits = max_facet_hits
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

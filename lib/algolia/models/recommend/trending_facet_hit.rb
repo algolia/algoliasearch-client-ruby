@@ -88,24 +88,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] _score Value to be assigned
-      def _score=(_score)
-        if _score.nil?
-          raise ArgumentError, "_score cannot be nil"
-        end
-
-        if _score > 100
-          raise ArgumentError, "invalid value for \"_score\", must be smaller than or equal to 100."
-        end
-
-        if _score < 0
-          raise ArgumentError, "invalid value for \"_score\", must be greater than or equal to 0."
-        end
-
-        @_score = _score
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

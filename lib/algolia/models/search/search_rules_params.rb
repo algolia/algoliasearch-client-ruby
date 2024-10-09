@@ -110,38 +110,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] page Value to be assigned
-      def page=(page)
-        if page.nil?
-          raise ArgumentError, "page cannot be nil"
-        end
-
-        if page < 0
-          raise ArgumentError, "invalid value for \"page\", must be greater than or equal to 0."
-        end
-
-        @page = page
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] hits_per_page Value to be assigned
-      def hits_per_page=(hits_per_page)
-        if hits_per_page.nil?
-          raise ArgumentError, "hits_per_page cannot be nil"
-        end
-
-        if hits_per_page > 1000
-          raise ArgumentError, "invalid value for \"hits_per_page\", must be smaller than or equal to 1000."
-        end
-
-        if hits_per_page < 1
-          raise ArgumentError, "invalid value for \"hits_per_page\", must be greater than or equal to 1."
-        end
-
-        @hits_per_page = hits_per_page
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

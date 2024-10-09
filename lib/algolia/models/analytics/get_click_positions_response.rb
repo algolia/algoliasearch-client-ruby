@@ -67,24 +67,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] positions Value to be assigned
-      def positions=(positions)
-        if positions.nil?
-          raise ArgumentError, "positions cannot be nil"
-        end
-
-        if positions.length > 12
-          raise ArgumentError, "invalid value for \"positions\", number of items must be less than or equal to 12."
-        end
-
-        if positions.length < 12
-          raise ArgumentError, "invalid value for \"positions\", number of items must be greater than or equal to 12."
-        end
-
-        @positions = positions
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

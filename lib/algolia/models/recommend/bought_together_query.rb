@@ -122,42 +122,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] threshold Value to be assigned
-      def threshold=(threshold)
-        if threshold.nil?
-          raise ArgumentError, "threshold cannot be nil"
-        end
-
-        if threshold > 100
-          raise ArgumentError, "invalid value for \"threshold\", must be smaller than or equal to 100."
-        end
-
-        if threshold < 0
-          raise ArgumentError, "invalid value for \"threshold\", must be greater than or equal to 0."
-        end
-
-        @threshold = threshold
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] max_recommendations Value to be assigned
-      def max_recommendations=(max_recommendations)
-        if max_recommendations.nil?
-          raise ArgumentError, "max_recommendations cannot be nil"
-        end
-
-        if max_recommendations > 1000
-          raise ArgumentError, "invalid value for \"max_recommendations\", must be smaller than or equal to 1000."
-        end
-
-        if max_recommendations < 1
-          raise ArgumentError, "invalid value for \"max_recommendations\", must be greater than or equal to 1."
-        end
-
-        @max_recommendations = max_recommendations
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

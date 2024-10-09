@@ -91,24 +91,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] personalization_impact Value to be assigned
-      def personalization_impact=(personalization_impact)
-        if personalization_impact.nil?
-          raise ArgumentError, "personalization_impact cannot be nil"
-        end
-
-        if personalization_impact > 100
-          raise ArgumentError, "invalid value for \"personalization_impact\", must be smaller than or equal to 100."
-        end
-
-        if personalization_impact < 0
-          raise ArgumentError, "invalid value for \"personalization_impact\", must be greater than or equal to 0."
-        end
-
-        @personalization_impact = personalization_impact
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

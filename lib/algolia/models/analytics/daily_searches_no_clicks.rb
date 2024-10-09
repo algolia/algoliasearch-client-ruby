@@ -87,20 +87,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] count Value to be assigned
-      def count=(count)
-        if count.nil?
-          raise ArgumentError, "count cannot be nil"
-        end
-
-        if count < 1
-          raise ArgumentError, "invalid value for \"count\", must be greater than or equal to 1."
-        end
-
-        @count = count
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

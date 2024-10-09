@@ -100,24 +100,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] rate Value to be assigned
-      def rate=(rate)
-        if rate.nil?
-          raise ArgumentError, "rate cannot be nil"
-        end
-
-        if rate > 1
-          raise ArgumentError, "invalid value for \"rate\", must be smaller than or equal to 1."
-        end
-
-        if rate < 0
-          raise ArgumentError, "invalid value for \"rate\", must be greater than or equal to 0."
-        end
-
-        @rate = rate
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

@@ -264,24 +264,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] traffic_percentage Value to be assigned
-      def traffic_percentage=(traffic_percentage)
-        if traffic_percentage.nil?
-          raise ArgumentError, "traffic_percentage cannot be nil"
-        end
-
-        if traffic_percentage > 100
-          raise ArgumentError, "invalid value for \"traffic_percentage\", must be smaller than or equal to 100."
-        end
-
-        if traffic_percentage < 0
-          raise ArgumentError, "invalid value for \"traffic_percentage\", must be greater than or equal to 0."
-        end
-
-        @traffic_percentage = traffic_percentage
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

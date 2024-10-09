@@ -73,20 +73,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] position Value to be assigned
-      def position=(position)
-        if position.nil?
-          raise ArgumentError, "position cannot be nil"
-        end
-
-        if position < 0
-          raise ArgumentError, "invalid value for \"position\", must be greater than or equal to 0."
-        end
-
-        @position = position
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

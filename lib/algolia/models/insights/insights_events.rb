@@ -67,24 +67,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] events Value to be assigned
-      def events=(events)
-        if events.nil?
-          raise ArgumentError, "events cannot be nil"
-        end
-
-        if events.length > 1000
-          raise ArgumentError, "invalid value for \"events\", number of items must be less than or equal to 1000."
-        end
-
-        if events.length < 1
-          raise ArgumentError, "invalid value for \"events\", number of items must be greater than or equal to 1."
-        end
-
-        @events = events
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

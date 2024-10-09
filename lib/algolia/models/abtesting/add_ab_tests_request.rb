@@ -89,24 +89,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] variants Value to be assigned
-      def variants=(variants)
-        if variants.nil?
-          raise ArgumentError, "variants cannot be nil"
-        end
-
-        if variants.length > 2
-          raise ArgumentError, "invalid value for \"variants\", number of items must be less than or equal to 2."
-        end
-
-        if variants.length < 2
-          raise ArgumentError, "invalid value for \"variants\", number of items must be greater than or equal to 2."
-        end
-
-        @variants = variants
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

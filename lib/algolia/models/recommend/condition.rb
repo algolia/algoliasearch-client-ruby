@@ -73,21 +73,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] context Value to be assigned
-      def context=(context)
-        if context.nil?
-          raise ArgumentError, "context cannot be nil"
-        end
-
-        pattern = /[A-Za-z0-9_-]+/
-        if context !~ pattern
-          raise ArgumentError, "invalid value for \"context\", must conform to the pattern #{pattern}."
-        end
-
-        @context = context
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

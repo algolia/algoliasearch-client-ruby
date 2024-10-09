@@ -98,24 +98,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] failure_threshold Value to be assigned
-      def failure_threshold=(failure_threshold)
-        if failure_threshold.nil?
-          raise ArgumentError, "failure_threshold cannot be nil"
-        end
-
-        if failure_threshold > 100
-          raise ArgumentError, "invalid value for \"failure_threshold\", must be smaller than or equal to 100."
-        end
-
-        if failure_threshold < 0
-          raise ArgumentError, "invalid value for \"failure_threshold\", must be greater than or equal to 0."
-        end
-
-        @failure_threshold = failure_threshold
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

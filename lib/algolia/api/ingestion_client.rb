@@ -1386,27 +1386,6 @@ module Algolia
       order = nil,
       request_options = {}
     )
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_authentications, must be smaller than or equal to 100."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_authentications, must be greater than or equal to 1."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !page.nil? && page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"page\"\" when calling IngestionClient.list_authentications, must be greater than or equal to 1."
-        )
-      end
-
       path = "/1/authentications"
       query_params = {}
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
@@ -1487,27 +1466,6 @@ module Algolia
       order = nil,
       request_options = {}
     )
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_destinations, must be smaller than or equal to 100."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_destinations, must be greater than or equal to 1."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !page.nil? && page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"page\"\" when calling IngestionClient.list_destinations, must be greater than or equal to 1."
-        )
-      end
-
       path = "/1/destinations"
       query_params = {}
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
@@ -1612,27 +1570,6 @@ module Algolia
         raise ArgumentError, "Parameter `run_id` is required when calling `list_events`."
       end
 
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_events, must be smaller than or equal to 100."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_events, must be greater than or equal to 1."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !page.nil? && page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"page\"\" when calling IngestionClient.list_events, must be greater than or equal to 1."
-        )
-      end
-
       path = "/1/runs/{runID}/events".sub("{" + "runID" + "}", Transport.encode_uri(run_id.to_s))
       query_params = {}
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
@@ -1733,27 +1670,6 @@ module Algolia
       end_date = nil,
       request_options = {}
     )
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_runs, must be smaller than or equal to 100."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_runs, must be greater than or equal to 1."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !page.nil? && page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"page\"\" when calling IngestionClient.list_runs, must be greater than or equal to 1."
-        )
-      end
-
       path = "/1/runs"
       query_params = {}
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
@@ -1849,27 +1765,6 @@ module Algolia
       order = nil,
       request_options = {}
     )
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_sources, must be smaller than or equal to 100."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_sources, must be greater than or equal to 1."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !page.nil? && page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"page\"\" when calling IngestionClient.list_sources, must be greater than or equal to 1."
-        )
-      end
-
       path = "/1/sources"
       query_params = {}
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
@@ -1962,27 +1857,6 @@ module Algolia
       order = nil,
       request_options = {}
     )
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_tasks, must be smaller than or equal to 100."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_tasks, must be greater than or equal to 1."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !page.nil? && page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"page\"\" when calling IngestionClient.list_tasks, must be greater than or equal to 1."
-        )
-      end
-
       path = "/2/tasks"
       query_params = {}
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
@@ -2087,27 +1961,6 @@ module Algolia
       order = nil,
       request_options = {}
     )
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_tasks_v1, must be smaller than or equal to 100."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_tasks_v1, must be greater than or equal to 1."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !page.nil? && page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"page\"\" when calling IngestionClient.list_tasks_v1, must be greater than or equal to 1."
-        )
-      end
-
       path = "/1/tasks"
       query_params = {}
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?
@@ -2202,27 +2055,6 @@ module Algolia
       order = nil,
       request_options = {}
     )
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page > 100
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_transformations, must be smaller than or equal to 100."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !items_per_page.nil? && items_per_page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"items_per_page\"\" when calling IngestionClient.list_transformations, must be greater than or equal to 1."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !page.nil? && page < 1
-        raise(
-          ArgumentError,
-          "invalid value for \"\"page\"\" when calling IngestionClient.list_transformations, must be greater than or equal to 1."
-        )
-      end
-
       path = "/1/transformations"
       query_params = {}
       query_params[:itemsPerPage] = items_per_page unless items_per_page.nil?

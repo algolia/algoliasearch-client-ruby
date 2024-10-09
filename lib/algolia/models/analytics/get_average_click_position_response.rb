@@ -91,30 +91,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] average Value to be assigned
-      def average=(average)
-        if !average.nil? && average < 1
-          raise ArgumentError, "invalid value for \"average\", must be greater than or equal to 1."
-        end
-
-        @average = average
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] click_count Value to be assigned
-      def click_count=(click_count)
-        if click_count.nil?
-          raise ArgumentError, "click_count cannot be nil"
-        end
-
-        if click_count < 0
-          raise ArgumentError, "invalid value for \"click_count\", must be greater than or equal to 0."
-        end
-
-        @click_count = click_count
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

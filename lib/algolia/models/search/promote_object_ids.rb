@@ -79,20 +79,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] object_ids Value to be assigned
-      def object_ids=(object_ids)
-        if object_ids.nil?
-          raise ArgumentError, "object_ids cannot be nil"
-        end
-
-        if object_ids.length > 100
-          raise ArgumentError, "invalid value for \"object_ids\", number of items must be less than or equal to 100."
-        end
-
-        @object_ids = object_ids
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

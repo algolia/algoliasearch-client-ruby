@@ -100,38 +100,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] rate Value to be assigned
-      def rate=(rate)
-        if rate.nil?
-          raise ArgumentError, "rate cannot be nil"
-        end
-
-        if rate > 1
-          raise ArgumentError, "invalid value for \"rate\", must be smaller than or equal to 1."
-        end
-
-        if rate < 0
-          raise ArgumentError, "invalid value for \"rate\", must be greater than or equal to 0."
-        end
-
-        @rate = rate
-      end
-
-      # Custom attribute writer method with validation
-      # @param [Object] no_click_count Value to be assigned
-      def no_click_count=(no_click_count)
-        if no_click_count.nil?
-          raise ArgumentError, "no_click_count cannot be nil"
-        end
-
-        if no_click_count < 1
-          raise ArgumentError, "invalid value for \"no_click_count\", must be greater than or equal to 1."
-        end
-
-        @no_click_count = no_click_count
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

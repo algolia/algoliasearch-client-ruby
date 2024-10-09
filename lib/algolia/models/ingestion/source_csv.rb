@@ -102,27 +102,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] delimiter Value to be assigned
-      def delimiter=(delimiter)
-        if delimiter.nil?
-          raise ArgumentError, "delimiter cannot be nil"
-        end
-
-        if delimiter.to_s.length > 1
-          raise(
-            ArgumentError,
-            "invalid value for \"delimiter\", the character length must be smaller than or equal to 1."
-          )
-        end
-
-        if delimiter.to_s.length < 1
-          raise ArgumentError, "invalid value for \"delimiter\", the character length must be great than or equal to 1."
-        end
-
-        @delimiter = delimiter
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

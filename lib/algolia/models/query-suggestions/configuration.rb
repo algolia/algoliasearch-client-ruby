@@ -106,23 +106,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] source_indices Value to be assigned
-      def source_indices=(source_indices)
-        if source_indices.nil?
-          raise ArgumentError, "source_indices cannot be nil"
-        end
-
-        if source_indices.length < 1
-          raise(
-            ArgumentError,
-            "invalid value for \"source_indices\", number of items must be greater than or equal to 1."
-          )
-        end
-
-        @source_indices = source_indices
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

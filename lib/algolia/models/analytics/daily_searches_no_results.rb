@@ -87,20 +87,6 @@ module Algolia
         end
       end
 
-      # Custom attribute writer method with validation
-      # @param [Object] with_filter_count Value to be assigned
-      def with_filter_count=(with_filter_count)
-        if with_filter_count.nil?
-          raise ArgumentError, "with_filter_count cannot be nil"
-        end
-
-        if with_filter_count < 0
-          raise ArgumentError, "invalid value for \"with_filter_count\", must be greater than or equal to 0."
-        end
-
-        @with_filter_count = with_filter_count
-      end
-
       # Checks equality by comparing each attribute.
       # @param [Object] Object to be compared
       def ==(other)

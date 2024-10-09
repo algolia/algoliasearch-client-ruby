@@ -819,27 +819,6 @@ module Algolia
         raise ArgumentError, "Parameter `index` is required when calling `get_searches_no_clicks`."
       end
 
-      if @api_client.config.client_side_validation && !limit.nil? && limit > 1000
-        raise(
-          ArgumentError,
-          "invalid value for \"\"limit\"\" when calling AnalyticsClient.get_searches_no_clicks, must be smaller than or equal to 1000."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !offset.nil? && offset > 1000
-        raise(
-          ArgumentError,
-          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_searches_no_clicks, must be smaller than or equal to 1000."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !offset.nil? && offset < 0
-        raise(
-          ArgumentError,
-          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_searches_no_clicks, must be greater than or equal to 0."
-        )
-      end
-
       path = "/2/searches/noClicks"
       query_params = {}
       query_params[:index] = index
@@ -925,27 +904,6 @@ module Algolia
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_searches_no_results`."
-      end
-
-      if @api_client.config.client_side_validation && !limit.nil? && limit > 1000
-        raise(
-          ArgumentError,
-          "invalid value for \"\"limit\"\" when calling AnalyticsClient.get_searches_no_results, must be smaller than or equal to 1000."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !offset.nil? && offset > 1000
-        raise(
-          ArgumentError,
-          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_searches_no_results, must be smaller than or equal to 1000."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !offset.nil? && offset < 0
-        raise(
-          ArgumentError,
-          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_searches_no_results, must be greater than or equal to 0."
-        )
       end
 
       path = "/2/searches/noResults"
@@ -1080,27 +1038,6 @@ module Algolia
         raise ArgumentError, "Parameter `index` is required when calling `get_top_countries`."
       end
 
-      if @api_client.config.client_side_validation && !limit.nil? && limit > 1000
-        raise(
-          ArgumentError,
-          "invalid value for \"\"limit\"\" when calling AnalyticsClient.get_top_countries, must be smaller than or equal to 1000."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !offset.nil? && offset > 1000
-        raise(
-          ArgumentError,
-          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_top_countries, must be smaller than or equal to 1000."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !offset.nil? && offset < 0
-        raise(
-          ArgumentError,
-          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_top_countries, must be greater than or equal to 0."
-        )
-      end
-
       path = "/2/countries"
       query_params = {}
       query_params[:index] = index
@@ -1180,27 +1117,6 @@ module Algolia
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_filter_attributes`."
-      end
-
-      if @api_client.config.client_side_validation && !limit.nil? && limit > 1000
-        raise(
-          ArgumentError,
-          "invalid value for \"\"limit\"\" when calling AnalyticsClient.get_top_filter_attributes, must be smaller than or equal to 1000."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !offset.nil? && offset > 1000
-        raise(
-          ArgumentError,
-          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_top_filter_attributes, must be smaller than or equal to 1000."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !offset.nil? && offset < 0
-        raise(
-          ArgumentError,
-          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_top_filter_attributes, must be greater than or equal to 0."
-        )
       end
 
       path = "/2/filters"
@@ -1302,27 +1218,6 @@ module Algolia
         raise ArgumentError, "Parameter `index` is required when calling `get_top_filter_for_attribute`."
       end
 
-      if @api_client.config.client_side_validation && !limit.nil? && limit > 1000
-        raise(
-          ArgumentError,
-          "invalid value for \"\"limit\"\" when calling AnalyticsClient.get_top_filter_for_attribute, must be smaller than or equal to 1000."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !offset.nil? && offset > 1000
-        raise(
-          ArgumentError,
-          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_top_filter_for_attribute, must be smaller than or equal to 1000."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !offset.nil? && offset < 0
-        raise(
-          ArgumentError,
-          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_top_filter_for_attribute, must be greater than or equal to 0."
-        )
-      end
-
       path = "/2/filters/{attribute}".sub("{" + "attribute" + "}", Transport.encode_uri(attribute.to_s))
       query_params = {}
       query_params[:index] = index
@@ -1417,27 +1312,6 @@ module Algolia
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_filters_no_results`."
-      end
-
-      if @api_client.config.client_side_validation && !limit.nil? && limit > 1000
-        raise(
-          ArgumentError,
-          "invalid value for \"\"limit\"\" when calling AnalyticsClient.get_top_filters_no_results, must be smaller than or equal to 1000."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !offset.nil? && offset > 1000
-        raise(
-          ArgumentError,
-          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_top_filters_no_results, must be smaller than or equal to 1000."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !offset.nil? && offset < 0
-        raise(
-          ArgumentError,
-          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_top_filters_no_results, must be greater than or equal to 0."
-        )
       end
 
       path = "/2/filters/noResults"
@@ -1535,27 +1409,6 @@ module Algolia
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_hits`."
-      end
-
-      if @api_client.config.client_side_validation && !limit.nil? && limit > 1000
-        raise(
-          ArgumentError,
-          "invalid value for \"\"limit\"\" when calling AnalyticsClient.get_top_hits, must be smaller than or equal to 1000."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !offset.nil? && offset > 1000
-        raise(
-          ArgumentError,
-          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_top_hits, must be smaller than or equal to 1000."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !offset.nil? && offset < 0
-        raise(
-          ArgumentError,
-          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_top_hits, must be greater than or equal to 0."
-        )
       end
 
       path = "/2/hits"
@@ -1660,27 +1513,6 @@ module Algolia
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_searches`."
-      end
-
-      if @api_client.config.client_side_validation && !limit.nil? && limit > 1000
-        raise(
-          ArgumentError,
-          "invalid value for \"\"limit\"\" when calling AnalyticsClient.get_top_searches, must be smaller than or equal to 1000."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !offset.nil? && offset > 1000
-        raise(
-          ArgumentError,
-          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_top_searches, must be smaller than or equal to 1000."
-        )
-      end
-
-      if @api_client.config.client_side_validation && !offset.nil? && offset < 0
-        raise(
-          ArgumentError,
-          "invalid value for \"\"offset\"\" when calling AnalyticsClient.get_top_searches, must be greater than or equal to 0."
-        )
       end
 
       path = "/2/searches"
