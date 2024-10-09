@@ -489,7 +489,7 @@ module Algolia
     # @return [Hash<String, Hash>]
     def get_reachability(clusters, request_options = {})
       response = get_reachability_with_http_info(clusters, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Monitoring::Hash<String, Hash>")
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Hash<String, Hash>")
     end
 
     # Retrieves the servers that belong to clusters.  The response depends on whether you authenticate your API request:  - With authentication, the response lists the servers assigned to your Algolia application&#39;s cluster.  - Without authentication, the response lists the servers for all Algolia clusters.

@@ -1245,7 +1245,7 @@ module Algolia
     # @return [Hash<String, Languages>]
     def get_dictionary_languages(request_options = {})
       response = get_dictionary_languages_with_http_info(request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::Hash<String, Languages>")
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Hash<String, Languages>")
     end
 
     # Retrieves the languages for which standard dictionary entries are turned off.
@@ -1400,7 +1400,7 @@ module Algolia
     # @return [Object]
     def get_object(index_name, object_id, attributes_to_retrieve = nil, request_options = {})
       response = get_object_with_http_info(index_name, object_id, attributes_to_retrieve, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::Object")
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
     # Retrieves one or more records, potentially from different indices.  Records are returned in the same order as the requests.
