@@ -210,7 +210,7 @@ module Algolia
 
     # Retrieves known incidents for the selected clusters.
 
-    # @param clusters [String] Subset of clusters, separated by comma. (required)
+    # @param clusters [String] Subset of clusters, separated by commas. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_cluster_incidents_with_http_info(clusters, request_options = {})
@@ -240,7 +240,7 @@ module Algolia
 
     # Retrieves known incidents for the selected clusters.
 
-    # @param clusters [String] Subset of clusters, separated by comma. (required)
+    # @param clusters [String] Subset of clusters, separated by commas. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [IncidentsResponse]
     def get_cluster_incidents(clusters, request_options = {})
@@ -250,7 +250,7 @@ module Algolia
 
     # Retrieves the status of selected clusters.
 
-    # @param clusters [String] Subset of clusters, separated by comma. (required)
+    # @param clusters [String] Subset of clusters, separated by commas. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_cluster_status_with_http_info(clusters, request_options = {})
@@ -280,7 +280,7 @@ module Algolia
 
     # Retrieves the status of selected clusters.
 
-    # @param clusters [String] Subset of clusters, separated by comma. (required)
+    # @param clusters [String] Subset of clusters, separated by commas. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [StatusResponse]
     def get_cluster_status(clusters, request_options = {})
@@ -323,7 +323,7 @@ module Algolia
 
     # Retrieves average times for indexing operations for selected clusters.
 
-    # @param clusters [String] Subset of clusters, separated by comma. (required)
+    # @param clusters [String] Subset of clusters, separated by commas. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_indexing_time_with_http_info(clusters, request_options = {})
@@ -353,7 +353,7 @@ module Algolia
 
     # Retrieves average times for indexing operations for selected clusters.
 
-    # @param clusters [String] Subset of clusters, separated by comma. (required)
+    # @param clusters [String] Subset of clusters, separated by commas. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [IndexingTimeResponse]
     def get_indexing_time(clusters, request_options = {})
@@ -363,7 +363,7 @@ module Algolia
 
     # Retrieves the average latency for search requests for selected clusters.
 
-    # @param clusters [String] Subset of clusters, separated by comma. (required)
+    # @param clusters [String] Subset of clusters, separated by commas. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_latency_with_http_info(clusters, request_options = {})
@@ -393,7 +393,7 @@ module Algolia
 
     # Retrieves the average latency for search requests for selected clusters.
 
-    # @param clusters [String] Subset of clusters, separated by comma. (required)
+    # @param clusters [String] Subset of clusters, separated by commas. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [LatencyResponse]
     def get_latency(clusters, request_options = {})
@@ -454,7 +454,7 @@ module Algolia
 
     # Test whether clusters are reachable or not.
 
-    # @param clusters [String] Subset of clusters, separated by comma. (required)
+    # @param clusters [String] Subset of clusters, separated by commas. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_reachability_with_http_info(clusters, request_options = {})
@@ -484,7 +484,7 @@ module Algolia
 
     # Test whether clusters are reachable or not.
 
-    # @param clusters [String] Subset of clusters, separated by comma. (required)
+    # @param clusters [String] Subset of clusters, separated by commas. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Hash<String, Hash>]
     def get_reachability(clusters, request_options = {})

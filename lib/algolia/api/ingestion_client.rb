@@ -1578,7 +1578,7 @@ module Algolia
       )
     end
 
-    # Retrieves a list of events for a task run, identified by it&#39;s ID.
+    # Retrieves a list of events for a task run, identified by its ID.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -1660,7 +1660,7 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Retrieves a list of events for a task run, identified by it's ID.
+    # Retrieves a list of events for a task run, identified by its ID.
     #
     # Required API Key ACLs:
     #   - addObject

@@ -9,7 +9,7 @@ module Algolia
       # Universally unique identifier (UUID) of a transformation.
       attr_accessor :transformation_id
 
-      # The authentications associated for the current transformation.
+      # The authentications associated with the current transformation.
       attr_accessor :authentication_ids
 
       # The source code of the transformation.

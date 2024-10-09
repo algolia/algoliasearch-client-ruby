@@ -16,7 +16,7 @@ module Algolia
       # A descriptive name for your transformation of what it does.
       attr_accessor :description
 
-      # The authentications associated for the current transformation.
+      # The authentications associated with the current transformation.
       attr_accessor :authentication_ids
 
       # Attribute mapping from ruby-style variable name to JSON key.
