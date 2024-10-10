@@ -431,7 +431,7 @@ module Algolia
         :header_params => header_params,
         :query_params => query_params,
         :body => post_body,
-        :use_read_transporter => false
+        :use_read_transporter => true
       )
 
       @api_client.call_api(:POST, path, new_options)
