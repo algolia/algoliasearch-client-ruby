@@ -7,6 +7,7 @@ module Algolia
   module Recommend
     # widgets returned from any rules that are applied to the current search.
     class Widgets
+      # banners defined in the merchandising studio for the given search.
       attr_accessor :banners
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -24,7 +25,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :banners => :"Banners"
+          :banners => :"Array<Banner>"
         }
       end
 
@@ -56,7 +57,9 @@ module Algolia
         }
 
         if attributes.key?(:banners)
-          self.banners = attributes[:banners]
+          if (value = attributes[:banners]).is_a?(Array)
+            self.banners = value
+          end
         end
       end
 

@@ -27,7 +27,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :urls => :"BannerImageUrl",
+          :urls => :"Array<BannerImageUrl>",
           :title => :"String"
         }
       end
@@ -63,7 +63,9 @@ module Algolia
         }
 
         if attributes.key?(:urls)
-          self.urls = attributes[:urls]
+          if (value = attributes[:urls]).is_a?(Array)
+            self.urls = value
+          end
         end
 
         if attributes.key?(:title)
