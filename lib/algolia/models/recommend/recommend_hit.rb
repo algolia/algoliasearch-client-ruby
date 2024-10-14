@@ -99,8 +99,6 @@ module Algolia
 
         if attributes.key?(:_score)
           self._score = attributes[:_score]
-        else
-          self._score = nil
         end
 
         # add extra attribute to additional_properties
