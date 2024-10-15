@@ -42,7 +42,7 @@ module Algolia
 
     # This method allow you to send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -74,7 +74,7 @@ module Algolia
 
     # This method allow you to send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Object]
@@ -85,7 +85,7 @@ module Algolia
 
     # This method allow you to send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -117,7 +117,7 @@ module Algolia
 
     # This method allow you to send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Object]
@@ -128,7 +128,7 @@ module Algolia
 
     # This method allow you to send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -161,7 +161,7 @@ module Algolia
 
     # This method allow you to send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -173,7 +173,7 @@ module Algolia
 
     # This method allow you to send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -206,7 +206,7 @@ module Algolia
 
     # This method allow you to send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -409,10 +409,10 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Monitoring::LatencyResponse")
     end
 
-    # Retrieves metrics related to your Algolia infrastructure, aggregated over a selected time window.  Access to this API is available as part of the [Premium or Elevate plans](https://www.algolia.com/pricing). You must authenticate requests with the &#x60;x-algolia-application-id&#x60; and &#x60;x-algolia-api-key&#x60; headers (using the Monitoring API key).
+    # Retrieves metrics related to your Algolia infrastructure, aggregated over a selected time window.  Access to this API is available as part of the [Premium or Elevate plans](https://www.algolia.com/pricing). You must authenticate requests with the `x-algolia-application-id` and `x-algolia-api-key` headers (using the Monitoring API key).
 
-    # @param metric [Metric] Metric to report.  For more information about the individual metrics, see the description of the API response. To include all metrics, use &#x60;*&#x60;.  (required)
-    # @param period [Period] Period over which to aggregate the metrics:  - &#x60;minute&#x60;. Aggregate the last minute. 1 data point per 10 seconds. - &#x60;hour&#x60;. Aggregate the last hour. 1 data point per minute. - &#x60;day&#x60;. Aggregate the last day. 1 data point per 10 minutes. - &#x60;week&#x60;. Aggregate the last week. 1 data point per hour. - &#x60;month&#x60;. Aggregate the last month. 1 data point per day.  (required)
+    # @param metric [Metric] Metric to report.  For more information about the individual metrics, see the description of the API response. To include all metrics, use `*`.  (required)
+    # @param period [Period] Period over which to aggregate the metrics:  - `minute`. Aggregate the last minute. 1 data point per 10 seconds. - `hour`. Aggregate the last hour. 1 data point per minute. - `day`. Aggregate the last day. 1 data point per 10 minutes. - `week`. Aggregate the last week. 1 data point per hour. - `month`. Aggregate the last month. 1 data point per day.  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_metrics_with_http_info(metric, period, request_options = {})
@@ -448,8 +448,8 @@ module Algolia
 
     # Retrieves metrics related to your Algolia infrastructure, aggregated over a selected time window.  Access to this API is available as part of the [Premium or Elevate plans](https://www.algolia.com/pricing). You must authenticate requests with the `x-algolia-application-id` and `x-algolia-api-key` headers (using the Monitoring API key).
 
-    # @param metric [Metric] Metric to report.  For more information about the individual metrics, see the description of the API response. To include all metrics, use &#x60;*&#x60;.  (required)
-    # @param period [Period] Period over which to aggregate the metrics:  - &#x60;minute&#x60;. Aggregate the last minute. 1 data point per 10 seconds. - &#x60;hour&#x60;. Aggregate the last hour. 1 data point per minute. - &#x60;day&#x60;. Aggregate the last day. 1 data point per 10 minutes. - &#x60;week&#x60;. Aggregate the last week. 1 data point per hour. - &#x60;month&#x60;. Aggregate the last month. 1 data point per day.  (required)
+    # @param metric [Metric] Metric to report.  For more information about the individual metrics, see the description of the API response. To include all metrics, use `*`.  (required)
+    # @param period [Period] Period over which to aggregate the metrics:  - `minute`. Aggregate the last minute. 1 data point per 10 seconds. - `hour`. Aggregate the last hour. 1 data point per minute. - `day`. Aggregate the last day. 1 data point per 10 minutes. - `week`. Aggregate the last week. 1 data point per hour. - `month`. Aggregate the last month. 1 data point per day.  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [InfrastructureResponse]
     def get_metrics(metric, period, request_options = {})
@@ -500,7 +500,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Hash<String, Hash>")
     end
 
-    # Retrieves the servers that belong to clusters.  The response depends on whether you authenticate your API request:  - With authentication, the response lists the servers assigned to your Algolia application&#39;s cluster.  - Without authentication, the response lists the servers for all Algolia clusters.
+    # Retrieves the servers that belong to clusters.  The response depends on whether you authenticate your API request:  - With authentication, the response lists the servers assigned to your Algolia application's cluster.  - Without authentication, the response lists the servers for all Algolia clusters.
 
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response

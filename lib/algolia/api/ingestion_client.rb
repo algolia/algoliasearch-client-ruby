@@ -245,7 +245,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskCreateResponse")
     end
 
-    # Creates a new task using the v1 endpoint, please use &#x60;createTask&#x60; instead.
+    # Creates a new task using the v1 endpoint, please use `createTask` instead.
 
     # @param task_create [TaskCreateV1] Request body for creating a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -330,7 +330,7 @@ module Algolia
 
     # This method allow you to send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -362,7 +362,7 @@ module Algolia
 
     # This method allow you to send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Object]
@@ -373,7 +373,7 @@ module Algolia
 
     # This method allow you to send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -405,7 +405,7 @@ module Algolia
 
     # This method allow you to send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Object]
@@ -416,7 +416,7 @@ module Algolia
 
     # This method allow you to send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -449,7 +449,7 @@ module Algolia
 
     # This method allow you to send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -461,7 +461,7 @@ module Algolia
 
     # This method allow you to send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -494,7 +494,7 @@ module Algolia
 
     # This method allow you to send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \&quot;/1\&quot; must be specified. (required)
+    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -504,7 +504,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
-    # Deletes an authentication resource. You can&#39;t delete authentication resources that are used by a source or a destination.
+    # Deletes an authentication resource. You can't delete authentication resources that are used by a source or a destination.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -555,7 +555,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::DeleteResponse")
     end
 
-    # Deletes a destination by its ID. You can&#39;t delete destinations that are referenced in tasks.
+    # Deletes a destination by its ID. You can't delete destinations that are referenced in tasks.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -606,7 +606,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::DeleteResponse")
     end
 
-    # Deletes a source by its ID. You can&#39;t delete sources that are referenced in tasks.
+    # Deletes a source by its ID. You can't delete sources that are referenced in tasks.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -694,7 +694,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::DeleteResponse")
     end
 
-    # Deletes a task by its ID using the v1 endpoint, please use &#x60;deleteTask&#x60; instead.
+    # Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
 
     # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -825,7 +825,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskUpdateResponse")
     end
 
-    # Disables a task using the v1 endpoint, please use &#x60;disableTask&#x60; instead.
+    # Disables a task using the v1 endpoint, please use `disableTask` instead.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -921,7 +921,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskUpdateResponse")
     end
 
-    # Enables a task using the v1 endpoint, please use &#x60;enableTask&#x60; instead.
+    # Enables a task using the v1 endpoint, please use `enableTask` instead.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -1272,7 +1272,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::Task")
     end
 
-    # Retrieves a task by its ID using the v1 endpoint, please use &#x60;getTask&#x60; instead.
+    # Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -1759,7 +1759,7 @@ module Algolia
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
     # @param type [Array<SourceType>] Source type. Some sources require authentication.
-    # @param authentication_id [Array<String>] Authentication IDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication.
+    # @param authentication_id [Array<String>] Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication.
     # @param sort [SourceSortKeys] Property by which to sort the list of sources. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1810,7 +1810,7 @@ module Algolia
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
     # @param type [Array<SourceType>] Source type. Some sources require authentication.
-    # @param authentication_id [Array<String>] Authentication IDs of the sources to retrieve. &#39;none&#39; returns sources that doesn&#39;t have an authentication.
+    # @param authentication_id [Array<String>] Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication.
     # @param sort [SourceSortKeys] Property by which to sort the list of sources. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1845,7 +1845,7 @@ module Algolia
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
     # @param action [Array<ActionType>] Actions for filtering the list of tasks.
-    # @param enabled [Boolean] Whether to filter the list of tasks by the &#x60;enabled&#x60; status.
+    # @param enabled [Boolean] Whether to filter the list of tasks by the `enabled` status.
     # @param source_id [Array<String>] Source IDs for filtering the list of tasks.
     # @param destination_id [Array<String>] Destination IDs for filtering the list of tasks.
     # @param trigger_type [Array<TriggerType>] Type of task trigger for filtering the list of tasks.
@@ -1905,7 +1905,7 @@ module Algolia
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
     # @param action [Array<ActionType>] Actions for filtering the list of tasks.
-    # @param enabled [Boolean] Whether to filter the list of tasks by the &#x60;enabled&#x60; status.
+    # @param enabled [Boolean] Whether to filter the list of tasks by the `enabled` status.
     # @param source_id [Array<String>] Source IDs for filtering the list of tasks.
     # @param destination_id [Array<String>] Destination IDs for filtering the list of tasks.
     # @param trigger_type [Array<TriggerType>] Type of task trigger for filtering the list of tasks.
@@ -1940,7 +1940,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::ListTasksResponse")
     end
 
-    # Retrieves a list of tasks using the v1 endpoint, please use &#x60;getTasks&#x60; instead.
+    # Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -1949,7 +1949,7 @@ module Algolia
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
     # @param action [Array<ActionType>] Actions for filtering the list of tasks.
-    # @param enabled [Boolean] Whether to filter the list of tasks by the &#x60;enabled&#x60; status.
+    # @param enabled [Boolean] Whether to filter the list of tasks by the `enabled` status.
     # @param source_id [Array<String>] Source IDs for filtering the list of tasks.
     # @param destination_id [Array<String>] Destination IDs for filtering the list of tasks.
     # @param trigger_type [Array<TriggerType>] Type of task trigger for filtering the list of tasks.
@@ -2009,7 +2009,7 @@ module Algolia
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
     # @param action [Array<ActionType>] Actions for filtering the list of tasks.
-    # @param enabled [Boolean] Whether to filter the list of tasks by the &#x60;enabled&#x60; status.
+    # @param enabled [Boolean] Whether to filter the list of tasks by the `enabled` status.
     # @param source_id [Array<String>] Source IDs for filtering the list of tasks.
     # @param destination_id [Array<String>] Destination IDs for filtering the list of tasks.
     # @param trigger_type [Array<TriggerType>] Type of task trigger for filtering the list of tasks.
@@ -2106,14 +2106,14 @@ module Algolia
       )
     end
 
-    # Push a &#x60;batch&#x60; request payload through the Pipeline. You can check the status of task pushes with the observability endpoints.
+    # Push a `batch` request payload through the Pipeline. You can check the status of task pushes with the observability endpoints.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
-    # @param push_task_payload [PushTaskPayload] Request body of a Search API &#x60;batch&#x60; request that will be pushed in the Connectors pipeline. (required)
+    # @param push_task_payload [PushTaskPayload] Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def push_task_with_http_info(task_id, push_task_payload, request_options = {})
@@ -2152,7 +2152,7 @@ module Algolia
     #   - deleteIndex
     #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
-    # @param push_task_payload [PushTaskPayload] Request body of a Search API &#x60;batch&#x60; request that will be pushed in the Connectors pipeline. (required)
+    # @param push_task_payload [PushTaskPayload] Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [RunResponse]
     def push_task(task_id, push_task_payload, request_options = {})
@@ -2258,7 +2258,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::RunResponse")
     end
 
-    # Runs a task using the v1 endpoint, please use &#x60;runTask&#x60; instead. You can check the status of task runs with the observability endpoints.
+    # Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of task runs with the observability endpoints.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2498,7 +2498,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Array<Ingestion::Task>")
     end
 
-    # Searches for tasks using the v1 endpoint, please use &#x60;searchTasks&#x60; instead.
+    # Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2594,7 +2594,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Array<Ingestion::Transformation>")
     end
 
-    # Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with &#x60;type: docker&#x60; and &#x60;imageType: singer&#x60;.
+    # Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2979,7 +2979,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskUpdateResponse")
     end
 
-    # Updates a task by its ID using the v1 endpoint, please use &#x60;updateTask&#x60; instead.
+    # Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
 
     # @param task_id [String] Unique identifier of a task. (required)
     # @param task_update [TaskUpdateV1]  (required)
