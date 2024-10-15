@@ -33,11 +33,17 @@ module Algolia
 
       @user_agent = UserAgent.new.add(client_name, VERSION)
 
+      if opts[:user_agent_segments]
+        opts[:user_agent_segments].each do |segment|
+          @user_agent.add(segment)
+        end
+      end
+
       @header_params = {
         "X-Algolia-Application-Id" => app_id,
         "X-Algolia-API-Key" => api_key,
         "Content-Type" => "application/json",
-        "User-Agent" => @user_agent
+        "User-Agent" => @user_agent.value
       }
       @header_params.transform_keys!(&:downcase)
 
@@ -47,11 +53,20 @@ module Algolia
     def set_client_api_key(api_key)
       @api_key = api_key
       @header_params["X-Algolia-API-Key"] = api_key
+
+      self
     end
 
     # The default Configuration object.
     def self.default
       @@default ||= Configuration.new
+    end
+
+    def add_user_agent_segment(segment, version = nil)
+      @user_agent.add(segment, version)
+      @header_params["user-agent"] = @user_agent.value
+
+      self
     end
   end
 end

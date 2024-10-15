@@ -38,6 +38,14 @@ module Algolia
     # @return [void]
     def set_client_api_key(api_key)
       @api_client.set_client_api_key(api_key)
+
+      self
+    end
+
+    def add_user_agent_segment(segment, version = nil)
+      @api_client.config.add_user_agent_segment(segment, version)
+
+      self
     end
 
     # Create or update a batch of Recommend Rules  Each Recommend Rule is created or updated, depending on whether a Recommend Rule with the same &#x60;objectID&#x60; already exists. You may also specify &#x60;true&#x60; for &#x60;clearExistingRules&#x60;, in which case the batch will atomically replace all the existing Recommend Rules.  Recommend Rules are similar to Search Rules, except that the conditions and consequences apply to a [source item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main differences are the following: - Conditions &#x60;pattern&#x60; and &#x60;anchoring&#x60; are unavailable. - Condition &#x60;filters&#x60; triggers if the source item matches the specified filters. - Condition &#x60;filters&#x60; accepts numeric filters. - Consequence &#x60;params&#x60; only covers filtering parameters. - Consequence &#x60;automaticFacetFilters&#x60; doesn&#39;t require a facet value placeholder (it tries to match the data source item&#39;s attributes instead).

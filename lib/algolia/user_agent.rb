@@ -8,8 +8,14 @@ module Algolia
 
     # Adds a segment to the UserAgent
     #
-    def add(segment, version)
-      @value += format("; %<segment>s (%<version>s)", segment: segment, version: version)
+    def add(segment, version = nil)
+      if version.nil?
+        @value += format("; %<segment>s", segment: segment)
+      else
+        @value += format("; %<segment>s (%<version>s)", segment: segment, version: version)
+      end
+
+      self
     end
   end
 end

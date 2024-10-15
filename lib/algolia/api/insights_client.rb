@@ -45,6 +45,14 @@ module Algolia
     # @return [void]
     def set_client_api_key(api_key)
       @api_client.set_client_api_key(api_key)
+
+      self
+    end
+
+    def add_user_agent_segment(segment, version = nil)
+      @api_client.config.add_user_agent_segment(segment, version)
+
+      self
     end
 
     # This method allow you to send requests to the Algolia REST API.
