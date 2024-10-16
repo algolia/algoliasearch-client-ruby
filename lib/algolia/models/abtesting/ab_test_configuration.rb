@@ -68,8 +68,6 @@ module Algolia
 
         if attributes.key?(:outliers)
           self.outliers = attributes[:outliers]
-        else
-          self.outliers = nil
         end
 
         if attributes.key?(:empty_search)

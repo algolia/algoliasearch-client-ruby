@@ -20,6 +20,9 @@ module Algolia
 
       attr_accessor :exhaustive
 
+      # Rules applied to the query.
+      attr_accessor :applied_rules
+
       # See the `facetsCount` field of the `exhaustive` object in the response.
       attr_accessor :exhaustive_facets_count
 
@@ -110,6 +113,7 @@ module Algolia
           :around_lat_lng => :aroundLatLng,
           :automatic_radius => :automaticRadius,
           :exhaustive => :exhaustive,
+          :applied_rules => :appliedRules,
           :exhaustive_facets_count => :exhaustiveFacetsCount,
           :exhaustive_nb_hits => :exhaustiveNbHits,
           :exhaustive_typo => :exhaustiveTypo,
@@ -154,6 +158,7 @@ module Algolia
           :around_lat_lng => :"String",
           :automatic_radius => :"String",
           :exhaustive => :"Exhaustive",
+          :applied_rules => :"Array<Object>",
           :exhaustive_facets_count => :"Boolean",
           :exhaustive_nb_hits => :"Boolean",
           :exhaustive_typo => :"Boolean",
@@ -243,6 +248,12 @@ module Algolia
 
         if attributes.key?(:exhaustive)
           self.exhaustive = attributes[:exhaustive]
+        end
+
+        if attributes.key?(:applied_rules)
+          if (value = attributes[:applied_rules]).is_a?(Array)
+            self.applied_rules = value
+          end
         end
 
         if attributes.key?(:exhaustive_facets_count)
@@ -382,6 +393,7 @@ module Algolia
           around_lat_lng == other.around_lat_lng &&
           automatic_radius == other.automatic_radius &&
           exhaustive == other.exhaustive &&
+          applied_rules == other.applied_rules &&
           exhaustive_facets_count == other.exhaustive_facets_count &&
           exhaustive_nb_hits == other.exhaustive_nb_hits &&
           exhaustive_typo == other.exhaustive_typo &&
@@ -427,6 +439,7 @@ module Algolia
           around_lat_lng,
           automatic_radius,
           exhaustive,
+          applied_rules,
           exhaustive_facets_count,
           exhaustive_nb_hits,
           exhaustive_typo,

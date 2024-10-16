@@ -113,6 +113,8 @@ module Algolia
 
         if attributes.key?(:value)
           self.value = attributes[:value]
+        else
+          self.value = nil
         end
 
         if attributes.key?(:created_at)

@@ -62,8 +62,6 @@ module Algolia
           if (value = attributes[:results]).is_a?(Array)
             self.results = value
           end
-        else
-          self.results = nil
         end
       end
 
