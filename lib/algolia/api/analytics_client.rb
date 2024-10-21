@@ -808,8 +808,8 @@ module Algolia
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param limit [Integer] Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.  (default to 10)
-    # @param offset [Integer] Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.  (default to 0)
+    # @param limit [Integer] Number of items to return.  (default to 10)
+    # @param offset [Integer] Position of the first item to return.  (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -859,8 +859,8 @@ module Algolia
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param limit [Integer] Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.  (default to 10)
-    # @param offset [Integer] Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.  (default to 0)
+    # @param limit [Integer] Number of items to return.  (default to 10)
+    # @param offset [Integer] Position of the first item to return.  (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetSearchesNoClicksResponse]
@@ -895,8 +895,8 @@ module Algolia
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param limit [Integer] Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.  (default to 10)
-    # @param offset [Integer] Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.  (default to 0)
+    # @param limit [Integer] Number of items to return.  (default to 10)
+    # @param offset [Integer] Position of the first item to return.  (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -946,8 +946,8 @@ module Algolia
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param limit [Integer] Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.  (default to 10)
-    # @param offset [Integer] Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.  (default to 0)
+    # @param limit [Integer] Number of items to return.  (default to 10)
+    # @param offset [Integer] Position of the first item to return.  (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetSearchesNoResultsResponse]
@@ -1027,8 +1027,8 @@ module Algolia
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param limit [Integer] Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.  (default to 10)
-    # @param offset [Integer] Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.  (default to 0)
+    # @param limit [Integer] Number of items to return.  (default to 10)
+    # @param offset [Integer] Position of the first item to return.  (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1078,8 +1078,8 @@ module Algolia
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param limit [Integer] Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.  (default to 10)
-    # @param offset [Integer] Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.  (default to 0)
+    # @param limit [Integer] Number of items to return.  (default to 10)
+    # @param offset [Integer] Position of the first item to return.  (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopCountriesResponse]
@@ -1107,8 +1107,8 @@ module Algolia
     # @param search [String] Search query.
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param limit [Integer] Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.  (default to 10)
-    # @param offset [Integer] Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.  (default to 0)
+    # @param limit [Integer] Number of items to return.  (default to 10)
+    # @param offset [Integer] Position of the first item to return.  (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1161,8 +1161,8 @@ module Algolia
     # @param search [String] Search query.
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param limit [Integer] Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.  (default to 10)
-    # @param offset [Integer] Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.  (default to 0)
+    # @param limit [Integer] Number of items to return.  (default to 10)
+    # @param offset [Integer] Position of the first item to return.  (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopFilterAttributesResponse]
@@ -1201,8 +1201,8 @@ module Algolia
     # @param search [String] Search query.
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param limit [Integer] Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.  (default to 10)
-    # @param offset [Integer] Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.  (default to 0)
+    # @param limit [Integer] Number of items to return.  (default to 10)
+    # @param offset [Integer] Position of the first item to return.  (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1261,8 +1261,8 @@ module Algolia
     # @param search [String] Search query.
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param limit [Integer] Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.  (default to 10)
-    # @param offset [Integer] Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.  (default to 0)
+    # @param limit [Integer] Number of items to return.  (default to 10)
+    # @param offset [Integer] Position of the first item to return.  (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopFilterForAttributeResponse]
@@ -1302,8 +1302,8 @@ module Algolia
     # @param search [String] Search query.
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param limit [Integer] Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.  (default to 10)
-    # @param offset [Integer] Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.  (default to 0)
+    # @param limit [Integer] Number of items to return.  (default to 10)
+    # @param offset [Integer] Position of the first item to return.  (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1356,8 +1356,8 @@ module Algolia
     # @param search [String] Search query.
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param limit [Integer] Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.  (default to 10)
-    # @param offset [Integer] Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.  (default to 0)
+    # @param limit [Integer] Number of items to return.  (default to 10)
+    # @param offset [Integer] Position of the first item to return.  (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopFiltersNoResultsResponse]
@@ -1397,8 +1397,8 @@ module Algolia
     # @param revenue_analytics [Boolean] Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.  (default to false)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param limit [Integer] Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.  (default to 10)
-    # @param offset [Integer] Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.  (default to 0)
+    # @param limit [Integer] Number of items to return.  (default to 10)
+    # @param offset [Integer] Position of the first item to return.  (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1457,8 +1457,8 @@ module Algolia
     # @param revenue_analytics [Boolean] Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.  (default to false)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param limit [Integer] Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.  (default to 10)
-    # @param offset [Integer] Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.  (default to 0)
+    # @param limit [Integer] Number of items to return.  (default to 10)
+    # @param offset [Integer] Position of the first item to return.  (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopHitsResponse]
@@ -1500,8 +1500,8 @@ module Algolia
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
     # @param order_by [OrderBy] Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available.  (default to 'searchCount')
     # @param direction [Direction] Sorting direction of the results: ascending or descending.  (default to 'asc')
-    # @param limit [Integer] Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.  (default to 10)
-    # @param offset [Integer] Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.  (default to 0)
+    # @param limit [Integer] Number of items to return.  (default to 10)
+    # @param offset [Integer] Position of the first item to return.  (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1563,8 +1563,8 @@ module Algolia
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
     # @param order_by [OrderBy] Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available.  (default to 'searchCount')
     # @param direction [Direction] Sorting direction of the results: ascending or descending.  (default to 'asc')
-    # @param limit [Integer] Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.  (default to 10)
-    # @param offset [Integer] Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.  (default to 0)
+    # @param limit [Integer] Number of items to return.  (default to 10)
+    # @param offset [Integer] Position of the first item to return.  (default to 0)
     # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopSearchesResponse]
