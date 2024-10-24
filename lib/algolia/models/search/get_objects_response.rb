@@ -6,12 +6,16 @@ require "time"
 module Algolia
   module Search
     class GetObjectsResponse
+      # An optional status message.
+      attr_accessor :message
+
       # Retrieved records.
       attr_accessor :results
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
+          :message => :message,
           :results => :results
         }
       end
@@ -24,6 +28,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
+          :message => :"String",
           :results => :"Array<Object>"
         }
       end
@@ -58,6 +63,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
+        if attributes.key?(:message)
+          self.message = attributes[:message]
+        end
+
         if attributes.key?(:results)
           if (value = attributes[:results]).is_a?(Array)
             self.results = value
@@ -72,6 +81,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
+          message == other.message &&
           results == other.results
       end
 
@@ -84,7 +94,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [results].hash
+        [message, results].hash
       end
 
       # Builds the object from hash
