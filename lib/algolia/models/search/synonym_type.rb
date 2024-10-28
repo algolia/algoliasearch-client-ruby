@@ -11,9 +11,21 @@ module Algolia
       ALTCORRECTION1 = "altcorrection1".freeze
       ALTCORRECTION2 = "altcorrection2".freeze
       PLACEHOLDER = "placeholder".freeze
+      ONE_WAY_SYNONYM = "oneWaySynonym".freeze
+      ALT_CORRECTION1 = "altCorrection1".freeze
+      ALT_CORRECTION2 = "altCorrection2".freeze
 
       def self.all_vars
-        @all_vars ||= [SYNONYM, ONEWAYSYNONYM, ALTCORRECTION1, ALTCORRECTION2, PLACEHOLDER].freeze
+        @all_vars ||= [
+          SYNONYM,
+          ONEWAYSYNONYM,
+          ALTCORRECTION1,
+          ALTCORRECTION2,
+          PLACEHOLDER,
+          ONE_WAY_SYNONYM,
+          ALT_CORRECTION1,
+          ALT_CORRECTION2
+        ].freeze
       end
 
       # Builds the enum from string
