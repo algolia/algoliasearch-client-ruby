@@ -15,7 +15,8 @@ module Algolia
             :"AuthAlgoliaInsights",
             :"AuthBasic",
             :"AuthGoogleServiceAccount",
-            :"AuthOAuth"
+            :"AuthOAuth",
+            :"Hash<String, String>"
           ]
         end
 

@@ -12,9 +12,10 @@ module Algolia
       OAUTH = "oauth".freeze
       ALGOLIA = "algolia".freeze
       ALGOLIA_INSIGHTS = "algoliaInsights".freeze
+      SECRETS = "secrets".freeze
 
       def self.all_vars
-        @all_vars ||= [GOOGLE_SERVICE_ACCOUNT, BASIC, API_KEY, OAUTH, ALGOLIA, ALGOLIA_INSIGHTS].freeze
+        @all_vars ||= [GOOGLE_SERVICE_ACCOUNT, BASIC, API_KEY, OAUTH, ALGOLIA, ALGOLIA_INSIGHTS, SECRETS].freeze
       end
 
       # Builds the enum from string
