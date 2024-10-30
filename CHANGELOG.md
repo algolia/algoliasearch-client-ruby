@@ -1,3 +1,7 @@
+## [3.7.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.6.0...3.7.0)
+
+- [be40cf61d](https://github.com/algolia/api-clients-automation/commit/be40cf61d) feat(specs): add secrets authentications to ingestion ([#4054](https://github.com/algolia/api-clients-automation/pull/4054)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [3.6.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.5.4...3.6.0)
 
 - [46ba4b50a](https://github.com/algolia/api-clients-automation/commit/46ba4b50a) fix(ruby): provide default ttl ([#4027](https://github.com/algolia/api-clients-automation/pull/4027)) by [@millotp](https://github.com/millotp/)
