@@ -3201,6 +3201,8 @@ module Algolia
     # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `browse` method.
     # @param block [Proc] the block to execute on each object of the index.
     def browse_objects(index_name, browse_params = Search::BrowseParamsObject.new, request_options = {}, &block)
+      browse_params[:hits_per_page] = browse_params[:hits_per_page] || 1000
+
       hits = []
       loop do
         res = browse(index_name, browse_params, request_options)
@@ -3243,7 +3245,7 @@ module Algolia
         end
 
         search_rules_params.page += 1
-        break if res.nb_hits < search_rules_params.hits_per_page
+        break if res.hits.length < search_rules_params.hits_per_page
       end
 
       rules unless block_given?
@@ -3273,7 +3275,7 @@ module Algolia
         end
 
         search_synonyms_params.page += 1
-        break if res.nb_hits < search_synonyms_params.hits_per_page
+        break if res.hits.length < search_synonyms_params.hits_per_page
       end
 
       synonyms unless block_given?
