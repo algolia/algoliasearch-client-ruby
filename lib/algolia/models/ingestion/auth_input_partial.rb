@@ -15,7 +15,8 @@ module Algolia
             :"AuthAlgoliaPartial",
             :"AuthBasicPartial",
             :"AuthGoogleServiceAccountPartial",
-            :"AuthOAuthPartial"
+            :"AuthOAuthPartial",
+            :"Hash<String, String>"
           ]
         end
 
