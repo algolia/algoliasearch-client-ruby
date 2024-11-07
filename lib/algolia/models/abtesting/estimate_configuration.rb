@@ -5,18 +5,20 @@ require "time"
 
 module Algolia
   module Abtesting
-    # Configuration for the smallest difference between test variants you want to detect.
-    class MinimumDetectableEffect
-      # Smallest difference in an observable metric between variants. For example, to detect a 10% difference between variants, set this value to 0.1.
-      attr_accessor :size
+    # A/B test configuration for estimating the sample size and duration using minimum detectable effect.
+    class EstimateConfiguration
+      attr_accessor :outliers
 
-      attr_accessor :metric
+      attr_accessor :empty_search
+
+      attr_accessor :minimum_detectable_effect
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :size => :size,
-          :metric => :metric
+          :outliers => :outliers,
+          :empty_search => :emptySearch,
+          :minimum_detectable_effect => :minimumDetectableEffect
         }
       end
 
@@ -28,8 +30,9 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :size => :"Float",
-          :metric => :"EffectMetric"
+          :outliers => :"Outliers",
+          :empty_search => :"EmptySearch",
+          :minimum_detectable_effect => :"MinimumDetectableEffect"
         }
       end
 
@@ -46,7 +49,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::MinimumDetectableEffect` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::EstimateConfiguration` initialize method"
           )
         end
 
@@ -55,7 +58,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::MinimumDetectableEffect`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::EstimateConfiguration`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -63,16 +66,18 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:size)
-          self.size = attributes[:size]
-        else
-          self.size = nil
+        if attributes.key?(:outliers)
+          self.outliers = attributes[:outliers]
         end
 
-        if attributes.key?(:metric)
-          self.metric = attributes[:metric]
+        if attributes.key?(:empty_search)
+          self.empty_search = attributes[:empty_search]
+        end
+
+        if attributes.key?(:minimum_detectable_effect)
+          self.minimum_detectable_effect = attributes[:minimum_detectable_effect]
         else
-          self.metric = nil
+          self.minimum_detectable_effect = nil
         end
       end
 
@@ -81,8 +86,9 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          size == other.size &&
-          metric == other.metric
+          outliers == other.outliers &&
+          empty_search == other.empty_search &&
+          minimum_detectable_effect == other.minimum_detectable_effect
       end
 
       # @see the `==` method
@@ -94,7 +100,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [size, metric].hash
+        [outliers, empty_search, minimum_detectable_effect].hash
       end
 
       # Builds the object from hash

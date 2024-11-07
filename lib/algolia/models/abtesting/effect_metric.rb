@@ -5,7 +5,7 @@ require "time"
 
 module Algolia
   module Abtesting
-    class Effect
+    class EffectMetric
       ADD_TO_CART_RATE = "addToCartRate".freeze
       CLICK_THROUGH_RATE = "clickThroughRate".freeze
       CONVERSION_RATE = "conversionRate".freeze
@@ -26,8 +26,8 @@ module Algolia
       # @param [String] The enum value in the form of the string
       # @return [String] The enum value
       def build_from_hash(value)
-        return value if Effect.all_vars.include?(value)
-        raise "Invalid ENUM value #{value} for class #Effect"
+        return value if EffectMetric.all_vars.include?(value)
+        raise "Invalid ENUM value #{value} for class #EffectMetric"
       end
     end
   end

@@ -5,18 +5,22 @@ require "time"
 
 module Algolia
   module Abtesting
-    # Configuration for the smallest difference between test variants you want to detect.
-    class MinimumDetectableEffect
-      # Smallest difference in an observable metric between variants. For example, to detect a 10% difference between variants, set this value to 0.1.
-      attr_accessor :size
+    class EstimateABTestResponse
+      # Estimated number of days needed to reach the sample sizes required for detecting the configured effect. This value is based on historical traffic.
+      attr_accessor :duration_days
 
-      attr_accessor :metric
+      # Number of tracked searches needed to be able to detect the configured effect for the control variant.
+      attr_accessor :control_sample_size
+
+      # Number of tracked searches needed to be able to detect the configured effect for the experiment variant.
+      attr_accessor :experiment_sample_size
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :size => :size,
-          :metric => :metric
+          :duration_days => :durationDays,
+          :control_sample_size => :controlSampleSize,
+          :experiment_sample_size => :experimentSampleSize
         }
       end
 
@@ -28,8 +32,9 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :size => :"Float",
-          :metric => :"EffectMetric"
+          :duration_days => :"Integer",
+          :control_sample_size => :"Integer",
+          :experiment_sample_size => :"Integer"
         }
       end
 
@@ -46,7 +51,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::MinimumDetectableEffect` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::EstimateABTestResponse` initialize method"
           )
         end
 
@@ -55,7 +60,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::MinimumDetectableEffect`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::EstimateABTestResponse`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -63,16 +68,16 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:size)
-          self.size = attributes[:size]
-        else
-          self.size = nil
+        if attributes.key?(:duration_days)
+          self.duration_days = attributes[:duration_days]
         end
 
-        if attributes.key?(:metric)
-          self.metric = attributes[:metric]
-        else
-          self.metric = nil
+        if attributes.key?(:control_sample_size)
+          self.control_sample_size = attributes[:control_sample_size]
+        end
+
+        if attributes.key?(:experiment_sample_size)
+          self.experiment_sample_size = attributes[:experiment_sample_size]
         end
       end
 
@@ -81,8 +86,9 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          size == other.size &&
-          metric == other.metric
+          duration_days == other.duration_days &&
+          control_sample_size == other.control_sample_size &&
+          experiment_sample_size == other.experiment_sample_size
       end
 
       # @see the `==` method
@@ -94,7 +100,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [size, metric].hash
+        [duration_days, control_sample_size, experiment_sample_size].hash
       end
 
       # Builds the object from hash

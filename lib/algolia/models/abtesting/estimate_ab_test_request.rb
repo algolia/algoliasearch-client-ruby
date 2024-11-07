@@ -5,18 +5,17 @@ require "time"
 
 module Algolia
   module Abtesting
-    # Configuration for the smallest difference between test variants you want to detect.
-    class MinimumDetectableEffect
-      # Smallest difference in an observable metric between variants. For example, to detect a 10% difference between variants, set this value to 0.1.
-      attr_accessor :size
+    class EstimateABTestRequest
+      attr_accessor :configuration
 
-      attr_accessor :metric
+      # A/B test variants.
+      attr_accessor :variants
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :size => :size,
-          :metric => :metric
+          :configuration => :configuration,
+          :variants => :variants
         }
       end
 
@@ -28,8 +27,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :size => :"Float",
-          :metric => :"EffectMetric"
+          :configuration => :"EstimateConfiguration",
+          :variants => :"Array<AddABTestsVariant>"
         }
       end
 
@@ -46,7 +45,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::MinimumDetectableEffect` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::EstimateABTestRequest` initialize method"
           )
         end
 
@@ -55,7 +54,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::MinimumDetectableEffect`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::EstimateABTestRequest`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -63,16 +62,18 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:size)
-          self.size = attributes[:size]
+        if attributes.key?(:configuration)
+          self.configuration = attributes[:configuration]
         else
-          self.size = nil
+          self.configuration = nil
         end
 
-        if attributes.key?(:metric)
-          self.metric = attributes[:metric]
+        if attributes.key?(:variants)
+          if (value = attributes[:variants]).is_a?(Array)
+            self.variants = value
+          end
         else
-          self.metric = nil
+          self.variants = nil
         end
       end
 
@@ -81,8 +82,8 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          size == other.size &&
-          metric == other.metric
+          configuration == other.configuration &&
+          variants == other.variants
       end
 
       # @see the `==` method
@@ -94,7 +95,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [size, metric].hash
+        [configuration, variants].hash
       end
 
       # Builds the object from hash

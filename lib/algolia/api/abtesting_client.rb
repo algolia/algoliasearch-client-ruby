@@ -319,6 +319,50 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Abtesting::ABTestResponse")
     end
 
+    # Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of an A/B test based on historical traffic.
+    #
+    # Required API Key ACLs:
+    #   - analytics
+    # @param estimate_ab_test_request [EstimateABTestRequest]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def estimate_ab_test_with_http_info(estimate_ab_test_request, request_options = {})
+      # verify the required parameter 'estimate_ab_test_request' is set
+      if @api_client.config.client_side_validation && estimate_ab_test_request.nil?
+        raise ArgumentError, "Parameter `estimate_ab_test_request` is required when calling `estimate_ab_test`."
+      end
+
+      path = "/2/abtests/estimate"
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(estimate_ab_test_request)
+
+      new_options = request_options.merge(
+        :operation => :"AbtestingClient.estimate_ab_test",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of an A/B test based on historical traffic.
+    #
+    # Required API Key ACLs:
+    #   - analytics
+    # @param estimate_ab_test_request [EstimateABTestRequest]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [EstimateABTestResponse]
+    def estimate_ab_test(estimate_ab_test_request, request_options = {})
+      response = estimate_ab_test_with_http_info(estimate_ab_test_request, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Abtesting::EstimateABTestResponse")
+    end
+
     # Retrieves the details for an A/B test by its ID.
     #
     # Required API Key ACLs:
