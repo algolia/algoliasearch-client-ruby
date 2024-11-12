@@ -143,8 +143,6 @@ module Algolia
 
         if attributes.key?(:action)
           self.action = attributes[:action]
-        else
-          self.action = nil
         end
 
         if attributes.key?(:cursor)
