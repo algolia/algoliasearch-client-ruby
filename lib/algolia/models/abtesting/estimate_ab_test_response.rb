@@ -9,18 +9,14 @@ module Algolia
       # Estimated number of days needed to reach the sample sizes required for detecting the configured effect. This value is based on historical traffic.
       attr_accessor :duration_days
 
-      # Number of tracked searches needed to be able to detect the configured effect for the control variant.
-      attr_accessor :control_sample_size
-
-      # Number of tracked searches needed to be able to detect the configured effect for the experiment variant.
-      attr_accessor :experiment_sample_size
+      # Sample size estimates for each variant. The first element is the control variant. Each element is the estimated number of searches required to achieve the desired statistical significance.
+      attr_accessor :sample_sizes
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :duration_days => :durationDays,
-          :control_sample_size => :controlSampleSize,
-          :experiment_sample_size => :experimentSampleSize
+          :sample_sizes => :sampleSizes
         }
       end
 
@@ -33,8 +29,7 @@ module Algolia
       def self.types_mapping
         {
           :duration_days => :"Integer",
-          :control_sample_size => :"Integer",
-          :experiment_sample_size => :"Integer"
+          :sample_sizes => :"Array<Integer>"
         }
       end
 
@@ -72,12 +67,10 @@ module Algolia
           self.duration_days = attributes[:duration_days]
         end
 
-        if attributes.key?(:control_sample_size)
-          self.control_sample_size = attributes[:control_sample_size]
-        end
-
-        if attributes.key?(:experiment_sample_size)
-          self.experiment_sample_size = attributes[:experiment_sample_size]
+        if attributes.key?(:sample_sizes)
+          if (value = attributes[:sample_sizes]).is_a?(Array)
+            self.sample_sizes = value
+          end
         end
       end
 
@@ -87,8 +80,7 @@ module Algolia
         return true if self.equal?(other)
         self.class == other.class &&
           duration_days == other.duration_days &&
-          control_sample_size == other.control_sample_size &&
-          experiment_sample_size == other.experiment_sample_size
+          sample_sizes == other.sample_sizes
       end
 
       # @see the `==` method
@@ -100,7 +92,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [duration_days, control_sample_size, experiment_sample_size].hash
+        [duration_days, sample_sizes].hash
       end
 
       # Builds the object from hash
