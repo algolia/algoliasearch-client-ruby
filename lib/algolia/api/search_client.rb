@@ -860,10 +860,10 @@ module Algolia
     # @param index_name [String] Name of the index on which to perform the operation. (required)
     # @param delete_by_params [DeleteByParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [DeletedAtResponse]
+    # @return [UpdatedAtResponse]
     def delete_by(index_name, delete_by_params, request_options = {})
       response = delete_by_with_http_info(index_name, delete_by_params, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::DeletedAtResponse")
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::UpdatedAtResponse")
     end
 
     # Deletes an index and all its settings.  - Deleting an index doesn't delete its analytics data. - If you try to delete a non-existing index, the operation is ignored without warning. - If the index you want to delete has replica indices, the replicas become independent indices. - If the index you want to delete is a replica index, you must first unlink it from its primary index before you can delete it.   For more information, see [Delete replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas/).
