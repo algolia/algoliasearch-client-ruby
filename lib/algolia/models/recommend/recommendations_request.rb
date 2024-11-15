@@ -12,7 +12,6 @@ module Algolia
           [
             :"BoughtTogetherQuery",
             :"LookingSimilarQuery",
-            :"RecommendedForYouQuery",
             :"RelatedQuery",
             :"TrendingFacetsQuery",
             :"TrendingItemsQuery"
