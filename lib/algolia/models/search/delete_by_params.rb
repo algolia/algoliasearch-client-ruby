@@ -20,7 +20,6 @@ module Algolia
 
       attr_accessor :around_radius
 
-      # Coordinates for a rectangular area in which to search.  Each bounding box is defined by the two opposite points of its diagonal, and expressed as latitude and longitude pair: `[p1 lat, p1 long, p2 lat, p2 long]`. Provide multiple bounding boxes as nested arrays. For more information, see [rectangular area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
       attr_accessor :inside_bounding_box
 
       # Coordinates of a polygon in which to search.  Polygons are defined by 3 to 10,000 points. Each point is represented by its latitude and longitude. Provide multiple polygons as nested arrays. For more information, see [filtering inside polygons](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas). This parameter is ignored if you also specify `insideBoundingBox`.
@@ -54,7 +53,7 @@ module Algolia
           :tag_filters => :"TagFilters",
           :around_lat_lng => :"String",
           :around_radius => :"AroundRadius",
-          :inside_bounding_box => :"Array<Array<Float>>",
+          :inside_bounding_box => :"InsideBoundingBox",
           :inside_polygon => :"Array<Array<Float>>"
         }
       end
@@ -62,7 +61,9 @@ module Algolia
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new(
-          []
+          [
+            :inside_bounding_box
+          ]
         )
       end
 
@@ -114,9 +115,7 @@ module Algolia
         end
 
         if attributes.key?(:inside_bounding_box)
-          if (value = attributes[:inside_bounding_box]).is_a?(Array)
-            self.inside_bounding_box = value
-          end
+          self.inside_bounding_box = attributes[:inside_bounding_box]
         end
 
         if attributes.key?(:inside_polygon)

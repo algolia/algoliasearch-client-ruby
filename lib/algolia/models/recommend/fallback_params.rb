@@ -45,7 +45,6 @@ module Algolia
       # Minimum radius (in meters) for a search around a location when `aroundRadius` isn't set.
       attr_accessor :minimum_around_radius
 
-      # Coordinates for a rectangular area in which to search.  Each bounding box is defined by the two opposite points of its diagonal, and expressed as latitude and longitude pair: `[p1 lat, p1 long, p2 lat, p2 long]`. Provide multiple bounding boxes as nested arrays. For more information, see [rectangular area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
       attr_accessor :inside_bounding_box
 
       # Coordinates of a polygon in which to search.  Polygons are defined by 3 to 10,000 points. Each point is represented by its latitude and longitude. Provide multiple polygons as nested arrays. For more information, see [filtering inside polygons](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas). This parameter is ignored if you also specify `insideBoundingBox`.
@@ -138,6 +137,9 @@ module Algolia
       # Attribute that should be used to establish groups of results. Attribute names are case-sensitive.  All records with the same value for this attribute are considered a group. You can combine `attributeForDistinct` with the `distinct` search parameter to control how many items per group are included in the search results.  If you want to use the same attribute also for faceting, use the `afterDistinct` modifier of the `attributesForFaceting` setting. This applies faceting _after_ deduplication, which will result in accurate facet counts.
       attr_accessor :attribute_for_distinct
 
+      # Maximum number of facet values to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
+      attr_accessor :max_facet_hits
+
       # Attributes to include in the API response.  To reduce the size of your response, you can retrieve only some of the attributes. Attribute names are case-sensitive.  - `*` retrieves all attributes, except attributes included in the `customRanking` and `unretrievableAttributes` settings. - To retrieve all attributes except a specific one, prefix the attribute with a dash and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`. - The `objectID` attribute is always included.
       attr_accessor :attributes_to_retrieve
 
@@ -202,7 +204,6 @@ module Algolia
       # Whether to support phrase matching and excluding words from search queries.  Use the `advancedSyntaxFeatures` parameter to control which feature is supported.
       attr_accessor :advanced_syntax
 
-      # Words that should be considered optional when found in the query.  By default, records must match all words in the search query to be included in the search results. Adding optional words can help to increase the number of search results by running an additional search query that doesn't include the optional words. For example, if the search query is \"action video\" and \"video\" is an optional word, the search engine runs two queries. One for \"action video\" and one for \"action\". Records that match all words are ranked higher.  For a search query with 4 or more words **and** all its words are optional, the number of matched words required for a record to be included in the search results increases for every 1,000 records:  - If `optionalWords` has less than 10 words, the required number of matched words increases by 1:   results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words. - If `optionalWords` has 10 or more words, the number of required matched words increases by the number of optional words divided by 5 (rounded down).   For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words.  For more information, see [Optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
       attr_accessor :optional_words
 
       # Searchable attributes for which you want to [turn off the Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes). Attribute names are case-sensitive.  This can be useful for attributes with long values, where the likelihood of an exact match is high, such as product descriptions. Turning off the Exact ranking criterion for these attributes favors exact matching on other attributes. This reduces the impact of individual attributes with a lot of content on ranking.
@@ -226,9 +227,6 @@ module Algolia
 
       # Properties to include in the API response of `search` and `browse` requests.  By default, all response properties are included. To reduce the response size, you can select, which attributes should be included.  You can't exclude these properties: `message`, `warning`, `cursor`, `serverUsed`, `indexUsed`, `abTestVariantID`, `parsedQuery`, or any property triggered by the `getRankingInfo` parameter.  Don't exclude properties that you might need in your search UI.
       attr_accessor :response_fields
-
-      # Maximum number of facet values to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
-      attr_accessor :max_facet_hits
 
       # Maximum number of facet values to return for each facet.
       attr_accessor :max_values_per_facet
@@ -295,6 +293,7 @@ module Algolia
           :user_data => :userData,
           :custom_normalization => :customNormalization,
           :attribute_for_distinct => :attributeForDistinct,
+          :max_facet_hits => :maxFacetHits,
           :attributes_to_retrieve => :attributesToRetrieve,
           :ranking => :ranking,
           :relevancy_strictness => :relevancyStrictness,
@@ -327,7 +326,6 @@ module Algolia
           :replace_synonyms_in_highlight => :replaceSynonymsInHighlight,
           :min_proximity => :minProximity,
           :response_fields => :responseFields,
-          :max_facet_hits => :maxFacetHits,
           :max_values_per_facet => :maxValuesPerFacet,
           :sort_facet_values_by => :sortFacetValuesBy,
           :attribute_criteria_computed_by_min_proximity => :attributeCriteriaComputedByMinProximity,
@@ -360,7 +358,7 @@ module Algolia
           :around_radius => :"AroundRadius",
           :around_precision => :"AroundPrecision",
           :minimum_around_radius => :"Integer",
-          :inside_bounding_box => :"Array<Array<Float>>",
+          :inside_bounding_box => :"InsideBoundingBox",
           :inside_polygon => :"Array<Array<Float>>",
           :natural_languages => :"Array<SupportedLanguage>",
           :rule_contexts => :"Array<String>",
@@ -391,6 +389,7 @@ module Algolia
           :user_data => :"Object",
           :custom_normalization => :"Hash<String, Hash<String, String>>",
           :attribute_for_distinct => :"String",
+          :max_facet_hits => :"Integer",
           :attributes_to_retrieve => :"Array<String>",
           :ranking => :"Array<String>",
           :relevancy_strictness => :"Integer",
@@ -414,7 +413,7 @@ module Algolia
           :query_type => :"QueryType",
           :remove_words_if_no_results => :"RemoveWordsIfNoResults",
           :advanced_syntax => :"Boolean",
-          :optional_words => :"Array<String>",
+          :optional_words => :"OptionalWords",
           :disable_exact_on_attributes => :"Array<String>",
           :exact_on_single_word_query => :"ExactOnSingleWordQuery",
           :alternatives_as_exact => :"Array<AlternativesAsExact>",
@@ -423,7 +422,6 @@ module Algolia
           :replace_synonyms_in_highlight => :"Boolean",
           :min_proximity => :"Integer",
           :response_fields => :"Array<String>",
-          :max_facet_hits => :"Integer",
           :max_values_per_facet => :"Integer",
           :sort_facet_values_by => :"String",
           :attribute_criteria_computed_by_min_proximity => :"Boolean",
@@ -436,7 +434,10 @@ module Algolia
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new(
-          []
+          [
+            :inside_bounding_box,
+            :optional_words
+          ]
         )
       end
 
@@ -535,9 +536,7 @@ module Algolia
         end
 
         if attributes.key?(:inside_bounding_box)
-          if (value = attributes[:inside_bounding_box]).is_a?(Array)
-            self.inside_bounding_box = value
-          end
+          self.inside_bounding_box = attributes[:inside_bounding_box]
         end
 
         if attributes.key?(:inside_polygon)
@@ -690,6 +689,10 @@ module Algolia
           self.attribute_for_distinct = attributes[:attribute_for_distinct]
         end
 
+        if attributes.key?(:max_facet_hits)
+          self.max_facet_hits = attributes[:max_facet_hits]
+        end
+
         if attributes.key?(:attributes_to_retrieve)
           if (value = attributes[:attributes_to_retrieve]).is_a?(Array)
             self.attributes_to_retrieve = value
@@ -795,9 +798,7 @@ module Algolia
         end
 
         if attributes.key?(:optional_words)
-          if (value = attributes[:optional_words]).is_a?(Array)
-            self.optional_words = value
-          end
+          self.optional_words = attributes[:optional_words]
         end
 
         if attributes.key?(:disable_exact_on_attributes)
@@ -838,10 +839,6 @@ module Algolia
           if (value = attributes[:response_fields]).is_a?(Array)
             self.response_fields = value
           end
-        end
-
-        if attributes.key?(:max_facet_hits)
-          self.max_facet_hits = attributes[:max_facet_hits]
         end
 
         if attributes.key?(:max_values_per_facet)
@@ -920,6 +917,7 @@ module Algolia
           user_data == other.user_data &&
           custom_normalization == other.custom_normalization &&
           attribute_for_distinct == other.attribute_for_distinct &&
+          max_facet_hits == other.max_facet_hits &&
           attributes_to_retrieve == other.attributes_to_retrieve &&
           ranking == other.ranking &&
           relevancy_strictness == other.relevancy_strictness &&
@@ -952,7 +950,6 @@ module Algolia
           replace_synonyms_in_highlight == other.replace_synonyms_in_highlight &&
           min_proximity == other.min_proximity &&
           response_fields == other.response_fields &&
-          max_facet_hits == other.max_facet_hits &&
           max_values_per_facet == other.max_values_per_facet &&
           sort_facet_values_by == other.sort_facet_values_by &&
           attribute_criteria_computed_by_min_proximity == other.attribute_criteria_computed_by_min_proximity &&
@@ -1017,6 +1014,7 @@ module Algolia
           user_data,
           custom_normalization,
           attribute_for_distinct,
+          max_facet_hits,
           attributes_to_retrieve,
           ranking,
           relevancy_strictness,
@@ -1049,7 +1047,6 @@ module Algolia
           replace_synonyms_in_highlight,
           min_proximity,
           response_fields,
-          max_facet_hits,
           max_values_per_facet,
           sort_facet_values_by,
           attribute_criteria_computed_by_min_proximity,
