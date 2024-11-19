@@ -39,14 +39,24 @@ module Algolia
             @logger.info("Request succeeded. Response status: #{response.status}, body: #{response.body}")
           end
 
-          return Http::Response.new(status: response.status, body: response.body, headers: response.headers)
+          return Http::Response.new(
+            status: response.status,
+            reason_phrase: response.reason_phrase,
+            body: response.body,
+            headers: response.headers
+          )
         end
 
         if ENV["ALGOLIA_DEBUG"]
           @logger.info("Request failed. Response status: #{response.status}, error: #{response.body}")
         end
 
-        Http::Response.new(status: response.status, error: response.body, headers: response.headers)
+        Http::Response.new(
+          status: response.status,
+          reason_phrase: response.reason_phrase,
+          error: response.body,
+          headers: response.headers
+        )
       rescue Faraday::TimeoutError => e
         @logger.info("Request timed out. Error: #{e.message}") if ENV["ALGOLIA_DEBUG"]
         Http::Response.new(error: e.message, has_timed_out: true)

@@ -1,13 +1,14 @@
 module Algolia
   module Http
     class Response
-      attr_reader :status, :body, :error, :headers, :has_timed_out, :network_failure
+      attr_reader :status, :reason_phrase, :body, :error, :headers, :has_timed_out, :network_failure
 
       # used for the echo requester
       attr_reader :method, :path, :query_params, :host, :timeout, :connect_timeout
 
       #
       # @option status    [String]  Response status
+      # @option reason_phrase    [String]  Response reason phrase
       # @option body    [String]  Response body
       # @option error    [String]  Response error or caught error
       # @option headers    [String]  Response headers
@@ -15,6 +16,7 @@ module Algolia
       #
       def initialize(opts = {})
         @status = opts[:status]
+        @reason_phrase = opts[:reason_phrase]
         @body = opts[:body]
         @error = opts[:error] || ""
         @headers = opts[:headers] || ""

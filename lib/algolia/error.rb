@@ -27,12 +27,12 @@ module Algolia
   # which is also included in the response attribute.
   #
   class AlgoliaHttpError < AlgoliaError
-    attr_accessor :code, :message
+    attr_accessor :code, :http_message
 
     def initialize(code, message)
       self.code = code
-      self.message = message
-      super("#{self.code()}: #{self.message()}")
+      self.http_message = message
+      super("#{code}: #{message}")
     end
   end
 end

@@ -69,6 +69,11 @@ module Algolia
             network_failure: response.network_failure
           )
           if outcome == FAILURE
+            # handle HTML error
+            if response.headers["content-type"]&.include?("text/html")
+              raise Algolia::AlgoliaHttpError.new(response.status, response.reason_phrase)
+            end
+
             decoded_error = JSON.parse(response.error, :symbolize_names => true)
             raise Algolia::AlgoliaHttpError.new(response.status, decoded_error[:message])
           end
