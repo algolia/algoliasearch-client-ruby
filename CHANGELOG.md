@@ -1,3 +1,7 @@
+## [3.8.2](https://github.com/algolia/algoliasearch-client-ruby/compare/3.8.1...3.8.2)
+
+- [f97e44ce0](https://github.com/algolia/api-clients-automation/commit/f97e44ce0) fix(cts): add tests for HTML error ([#4097](https://github.com/algolia/api-clients-automation/pull/4097)) by [@millotp](https://github.com/millotp/)
+
 ## [3.8.1](https://github.com/algolia/algoliasearch-client-ruby/compare/3.8.0...3.8.1)
 
 - [36d583e35](https://github.com/algolia/api-clients-automation/commit/36d583e35) fix(specs): make the searchParams compatible with v4 ([#4108](https://github.com/algolia/api-clients-automation/pull/4108)) by [@millotp](https://github.com/millotp/)
