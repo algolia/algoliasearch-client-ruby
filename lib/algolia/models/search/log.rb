@@ -181,8 +181,6 @@ module Algolia
 
         if attributes.key?(:nb_api_calls)
           self.nb_api_calls = attributes[:nb_api_calls]
-        else
-          self.nb_api_calls = nil
         end
 
         if attributes.key?(:processing_time_ms)
