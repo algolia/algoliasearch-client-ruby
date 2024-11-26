@@ -94,6 +94,8 @@ module Algolia
 
         if attributes.key?(:consequence)
           self.consequence = attributes[:consequence]
+        else
+          self.consequence = nil
         end
 
         if attributes.key?(:description)
