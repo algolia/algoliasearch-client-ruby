@@ -2360,10 +2360,10 @@ module Algolia
     # @param rule [Rule]  (required)
     # @param forward_to_replicas [Boolean] Whether changes are applied to replica indices.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [UpdatedRuleResponse]
+    # @return [UpdatedAtResponse]
     def save_rule(index_name, object_id, rule, forward_to_replicas = nil, request_options = {})
       response = save_rule_with_http_info(index_name, object_id, rule, forward_to_replicas, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::UpdatedRuleResponse")
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::UpdatedAtResponse")
     end
 
     # Create or update multiple rules.  If a rule with the specified object ID doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced.  This operation is subject to [indexing rate limits](https://support.algolia.com/hc/en-us/articles/4406975251089-Is-there-a-rate-limit-for-indexing-on-Algolia).
