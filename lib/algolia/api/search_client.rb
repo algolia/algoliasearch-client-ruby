@@ -3288,7 +3288,7 @@ module Algolia
     #
     # @return [String]
     #
-    def generate_secured_api_key(parent_api_key, restrictions = {})
+    def self.generate_secured_api_key(parent_api_key, restrictions = {})
       restrictions = restrictions.to_hash
       if restrictions.key?(:searchParams)
         # merge searchParams with the root of the restrictions
@@ -3310,13 +3310,24 @@ module Algolia
       Base64.encode64("#{hmac}#{url_encoded_restrictions}").gsub("\n", "")
     end
 
+    # Helper: Generates a secured API key based on the given `parent_api_key` and given `restrictions`.
+    #
+    # @param parent_api_key [String] Parent API key used the generate the secured key
+    # @param restrictions [SecuredApiKeyRestrictions] Restrictions to apply on the secured key
+    #
+    # @return [String]
+    #
+    def generate_secured_api_key(parent_api_key, restrictions = {})
+      self.class.generate_secured_api_key(parent_api_key, restrictions)
+    end
+
     # Helper: Retrieves the remaining validity of the previous generated `secured_api_key`, the `validUntil` parameter must have been provided.
     #
     # @param secured_api_key [String]
     #
     # @return [Integer]
     #
-    def get_secured_api_key_remaining_validity(secured_api_key)
+    def self.get_secured_api_key_remaining_validity(secured_api_key)
       now = Time.now.to_i
       decoded_key = Base64.decode64(secured_api_key)
       regex = "validUntil=(\\d+)"
@@ -3329,6 +3340,16 @@ module Algolia
       valid_until = matches[1].to_i
 
       valid_until - now
+    end
+
+    # Helper: Retrieves the remaining validity of the previous generated `secured_api_key`, the `validUntil` parameter must have been provided.
+    #
+    # @param secured_api_key [String]
+    #
+    # @return [Integer]
+    #
+    def get_secured_api_key_remaining_validity(secured_api_key)
+      self.class.get_secured_api_key_remaining_validity(secured_api_key)
     end
 
     # Helper: Saves the given array of objects in the given index. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
