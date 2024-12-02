@@ -14,22 +14,10 @@ module Algolia
       GA4_BIGQUERY_EXPORT = "ga4BigqueryExport".freeze
       JSON = "json".freeze
       SHOPIFY = "shopify".freeze
-      SFCC = "sfcc".freeze
       PUSH = "push".freeze
 
       def self.all_vars
-        @all_vars ||= [
-          BIGCOMMERCE,
-          BIGQUERY,
-          COMMERCETOOLS,
-          CSV,
-          DOCKER,
-          GA4_BIGQUERY_EXPORT,
-          JSON,
-          SHOPIFY,
-          SFCC,
-          PUSH
-        ].freeze
+        @all_vars ||= [BIGCOMMERCE, BIGQUERY, COMMERCETOOLS, CSV, DOCKER, GA4_BIGQUERY_EXPORT, JSON, SHOPIFY, PUSH].freeze
       end
 
       # Builds the enum from string
