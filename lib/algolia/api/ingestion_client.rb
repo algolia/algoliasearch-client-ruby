@@ -1847,6 +1847,7 @@ module Algolia
     # @param action [Array<ActionType>] Actions for filtering the list of tasks.
     # @param enabled [Boolean] Whether to filter the list of tasks by the `enabled` status.
     # @param source_id [Array<String>] Source IDs for filtering the list of tasks.
+    # @param source_type [Array<SourceType>] Filters the tasks with the specified source type.
     # @param destination_id [Array<String>] Destination IDs for filtering the list of tasks.
     # @param trigger_type [Array<TriggerType>] Type of task trigger for filtering the list of tasks.
     # @param sort [TaskSortKeys] Property by which to sort the list of tasks. (default to 'createdAt')
@@ -1859,6 +1860,7 @@ module Algolia
       action = nil,
       enabled = nil,
       source_id = nil,
+      source_type = nil,
       destination_id = nil,
       trigger_type = nil,
       sort = nil,
@@ -1872,6 +1874,7 @@ module Algolia
       query_params[:action] = @api_client.build_collection_param(action, :csv) unless action.nil?
       query_params[:enabled] = enabled unless enabled.nil?
       query_params[:sourceID] = @api_client.build_collection_param(source_id, :csv) unless source_id.nil?
+      query_params[:sourceType] = @api_client.build_collection_param(source_type, :csv) unless source_type.nil?
       unless destination_id.nil?
         query_params[:destinationID] = @api_client.build_collection_param(destination_id, :csv)
       end
@@ -1907,6 +1910,7 @@ module Algolia
     # @param action [Array<ActionType>] Actions for filtering the list of tasks.
     # @param enabled [Boolean] Whether to filter the list of tasks by the `enabled` status.
     # @param source_id [Array<String>] Source IDs for filtering the list of tasks.
+    # @param source_type [Array<SourceType>] Filters the tasks with the specified source type.
     # @param destination_id [Array<String>] Destination IDs for filtering the list of tasks.
     # @param trigger_type [Array<TriggerType>] Type of task trigger for filtering the list of tasks.
     # @param sort [TaskSortKeys] Property by which to sort the list of tasks. (default to 'createdAt')
@@ -1919,6 +1923,7 @@ module Algolia
       action = nil,
       enabled = nil,
       source_id = nil,
+      source_type = nil,
       destination_id = nil,
       trigger_type = nil,
       sort = nil,
@@ -1931,6 +1936,7 @@ module Algolia
         action,
         enabled,
         source_id,
+        source_type,
         destination_id,
         trigger_type,
         sort,
