@@ -21,6 +21,18 @@ module Algolia
         region = nil
       end
 
+      if opts.nil? || opts[:connect_timeout].nil?
+        opts[:connect_timeout] = 2000
+      end
+
+      if opts.nil? || opts[:read_timeout].nil?
+        opts[:read_timeout] = 5000
+      end
+
+      if opts.nil? || opts[:write_timeout].nil?
+        opts[:write_timeout] = 30000
+      end
+
       if region.nil? || !region.is_a?(String) || !regions.include?(region)
         raise "`region` is required and must be one of the following: #{regions.join(", ")}"
       end
