@@ -2132,9 +2132,10 @@ module Algolia
     #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
     # @param push_task_payload [PushTaskPayload] Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
+    # @param watch [Boolean] When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def push_task_with_http_info(task_id, push_task_payload, request_options = {})
+    def push_task_with_http_info(task_id, push_task_payload, watch = nil, request_options = {})
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
         raise ArgumentError, "Parameter `task_id` is required when calling `push_task`."
@@ -2146,6 +2147,7 @@ module Algolia
 
       path = "/2/tasks/{taskID}/push".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
       query_params = {}
+      query_params[:watch] = watch unless watch.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
@@ -2171,10 +2173,11 @@ module Algolia
     #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
     # @param push_task_payload [PushTaskPayload] Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
+    # @param watch [Boolean] When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [RunResponse]
-    def push_task(task_id, push_task_payload, request_options = {})
-      response = push_task_with_http_info(task_id, push_task_payload, request_options)
+    def push_task(task_id, push_task_payload, watch = nil, request_options = {})
+      response = push_task_with_http_info(task_id, push_task_payload, watch, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::RunResponse")
     end
 
