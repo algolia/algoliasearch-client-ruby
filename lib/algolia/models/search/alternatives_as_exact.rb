@@ -9,9 +9,10 @@ module Algolia
       IGNORE_PLURALS = "ignorePlurals".freeze
       SINGLE_WORD_SYNONYM = "singleWordSynonym".freeze
       MULTI_WORDS_SYNONYM = "multiWordsSynonym".freeze
+      IGNORE_CONJUGATIONS = "ignoreConjugations".freeze
 
       def self.all_vars
-        @all_vars ||= [IGNORE_PLURALS, SINGLE_WORD_SYNONYM, MULTI_WORDS_SYNONYM].freeze
+        @all_vars ||= [IGNORE_PLURALS, SINGLE_WORD_SYNONYM, MULTI_WORDS_SYNONYM, IGNORE_CONJUGATIONS].freeze
       end
 
       # Builds the enum from string
