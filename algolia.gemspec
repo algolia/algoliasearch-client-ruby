@@ -30,6 +30,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'net-http-persistent'
 
-  s.add_development_dependency 'bundler'
+  s.add_development_dependency 'bundler', '>= 2.4.10'
   s.add_development_dependency 'rake'
 end
