@@ -2175,10 +2175,10 @@ module Algolia
     # @param push_task_payload [PushTaskPayload] Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
     # @param watch [Boolean] When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [RunResponse]
+    # @return [WatchResponse]
     def push_task(task_id, push_task_payload, watch = nil, request_options = {})
       response = push_task_with_http_info(task_id, push_task_payload, watch, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::RunResponse")
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::WatchResponse")
     end
 
     # Runs all tasks linked to a source, only available for Shopify sources. It will create 1 run per task.
@@ -2657,10 +2657,10 @@ module Algolia
     #   - editSettings
     # @param source_id [String] Unique identifier of a source. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [SourceWatchResponse]
+    # @return [WatchResponse]
     def trigger_docker_source_discover(source_id, request_options = {})
       response = trigger_docker_source_discover_with_http_info(source_id, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::SourceWatchResponse")
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::WatchResponse")
     end
 
     # Try a transformation before creating it.
@@ -3135,10 +3135,10 @@ module Algolia
     #   - editSettings
     # @param source_create [SourceCreate]
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [SourceWatchResponse]
+    # @return [WatchResponse]
     def validate_source(source_create = nil, request_options = {})
       response = validate_source_with_http_info(source_create, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::SourceWatchResponse")
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::WatchResponse")
     end
 
     # Validates an update of a source payload to ensure it can be created and that the data source can be reached by Algolia.
@@ -3189,10 +3189,10 @@ module Algolia
     # @param source_id [String] Unique identifier of a source. (required)
     # @param source_update [SourceUpdate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
-    # @return [SourceWatchResponse]
+    # @return [WatchResponse]
     def validate_source_before_update(source_id, source_update, request_options = {})
       response = validate_source_before_update_with_http_info(source_id, source_update, request_options)
-      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::SourceWatchResponse")
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::WatchResponse")
     end
 
   end

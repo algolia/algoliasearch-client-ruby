@@ -5,11 +5,11 @@ require "time"
 
 module Algolia
   module Ingestion
-    class SourceWatchResponse
+    class WatchResponse
       # Universally unique identifier (UUID) of a task run.
       attr_accessor :run_id
 
-      # depending on the source type, the validation returns sampling data of your source (JSON, CSV, BigQuery).
+      # when used with discovering or validating sources, the sampled data of your source is returned.
       attr_accessor :data
 
       # in case of error, observability events will be added to the response, if any.
@@ -56,7 +56,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::SourceWatchResponse` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::WatchResponse` initialize method"
           )
         end
 
@@ -65,7 +65,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::SourceWatchResponse`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::WatchResponse`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
