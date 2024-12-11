@@ -3533,13 +3533,16 @@ module Algolia
     def index_exists?(index_name)
       begin
         get_settings(index_name)
-      rescue AlgoliaHttpError => e
-        return false if e.code == 404
+      rescue Exception => e
+        if e.is_a?(AlgoliaHttpError)
+          return false if e.code == 404
 
-        raise e
+          raise e
+        end
       end
 
       true
     end
+
   end
 end
