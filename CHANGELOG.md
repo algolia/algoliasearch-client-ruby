@@ -1,3 +1,10 @@
+## [3.10.1](https://github.com/algolia/algoliasearch-client-ruby/compare/3.10.0...3.10.1)
+
+- [6fb57f9ba](https://github.com/algolia/api-clients-automation/commit/6fb57f9ba) fix(clients): lock version ([#4228](https://github.com/algolia/api-clients-automation/pull/4228)) by [@millotp](https://github.com/millotp/)
+- [3f5ceb540](https://github.com/algolia/api-clients-automation/commit/3f5ceb540) fix(ruby): handle unknown attributes in index_exists ([#4231](https://github.com/algolia/api-clients-automation/pull/4231)) by [@millotp](https://github.com/millotp/)
+- [cd59f445e](https://github.com/algolia/api-clients-automation/commit/cd59f445e) fix(specs): enable watcher for push ([#4229](https://github.com/algolia/api-clients-automation/pull/4229)) by [@shortcuts](https://github.com/shortcuts/)
+- [baf7d6f4d](https://github.com/algolia/api-clients-automation/commit/baf7d6f4d) fix(specs): add `ignoreConjugations` to `AlternativesAsExact` ([#4230](https://github.com/algolia/api-clients-automation/pull/4230)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [3.10.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.9.0...3.10.0)
 
 - [866d859f8](https://github.com/algolia/api-clients-automation/commit/866d859f8) fix(specs): different summaries for saveObject/addOrUpdate methods ([#4223](https://github.com/algolia/api-clients-automation/pull/4223)) by [@kai687](https://github.com/kai687/)
