@@ -3150,11 +3150,13 @@ module Algolia
     def wait_for_api_key(
       key,
       operation,
-      api_key = {},
+      api_key = Search::ApiKey.new,
       max_retries = 50,
       timeout = -> (retry_count) { [retry_count * 200, 5000].min },
       request_options = {}
     )
+      api_key = api_client.object_to_hash(api_key)
+
       retries = 0
       if operation == "update"
         raise ArgumentError, "`api_key` is required when waiting for an `update` operation." if api_key.nil?
@@ -3162,7 +3164,7 @@ module Algolia
           updated_key = get_api_key(key, request_options)
           updated_key_hash = updated_key.to_hash
           equals = true
-          api_key.to_hash.each do |k, v|
+          api_key.each do |k, v|
             equals &&= updated_key_hash[k] == v
           end
 
@@ -3201,7 +3203,9 @@ module Algolia
     # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `browse` method.
     # @param block [Proc] the block to execute on each object of the index.
     def browse_objects(index_name, browse_params = Search::BrowseParamsObject.new, request_options = {}, &block)
-      browse_params.hits_per_page ||= 1000
+      browse_params = api_client.object_to_hash(browse_params)
+
+      browse_params[:hitsPerPage] = 1000 unless browse_params.key?(:hitsPerPage)
 
       hits = []
       loop do
@@ -3214,8 +3218,8 @@ module Algolia
           hits.concat(res.hits)
         end
 
-        browse_params.cursor = res.cursor
-        break if browse_params.cursor.nil?
+        browse_params[:cursor] = res.cursor
+        break if browse_params[:cursor].nil?
       end
 
       hits unless block_given?
@@ -3227,12 +3231,11 @@ module Algolia
     # @param search_rules_params [SearchRulesParams] the parameters to send along with the query, they will be forwarded to the `searchRules` method.
     # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `searchRules` method.
     # @param block [Proc] the block to execute on each rule of the index.
-    def browse_rules(
-      index_name,
-      search_rules_params = Search::SearchRulesParams.new(hits_per_page: 1000, page: 0),
-      request_options = {},
-      &block
-    )
+    def browse_rules(index_name, search_rules_params = Search::SearchRulesParams.new, request_options = {}, &block)
+      search_rules_params = api_client.object_to_hash(search_rules_params)
+
+      search_rules_params[:hitsPerPage] = 1000 unless search_rules_params.key?(:hitsPerPage)
+
       rules = []
       loop do
         res = search_rules(index_name, search_rules_params, request_options)
@@ -3244,8 +3247,8 @@ module Algolia
           rules.concat(res.hits)
         end
 
-        search_rules_params.page += 1
-        break if res.hits.length < search_rules_params.hits_per_page
+        search_rules_params[:page] += 1
+        break if res.hits.length < search_rules_params[:hitsPerPage]
       end
 
       rules unless block_given?
@@ -3259,10 +3262,14 @@ module Algolia
     # @param block [Proc] the block to execute on each synonym of the index.
     def browse_synonyms(
       index_name,
-      search_synonyms_params = Search::SearchSynonymsParams.new(hits_per_page: 1000, page: 0),
+      search_synonyms_params = Search::SearchSynonymsParams.new,
       request_options = {},
       &block
     )
+      search_synonyms_params = api_client.object_to_hash(search_synonyms_params)
+
+      search_synonyms_params[:hitsPerPage] = 1000 unless search_synonyms_params.key?(:hitsPerPage)
+
       synonyms = []
       loop do
         res = search_synonyms(index_name, search_synonyms_params, request_options)
@@ -3274,8 +3281,8 @@ module Algolia
           synonyms.concat(res.hits)
         end
 
-        search_synonyms_params.page += 1
-        break if res.hits.length < search_synonyms_params.hits_per_page
+        search_synonyms_params[:page] += 1
+        break if res.hits.length < search_synonyms_params[:hitsPerPage]
       end
 
       synonyms unless block_given?
@@ -3543,6 +3550,5 @@ module Algolia
 
       true
     end
-
   end
 end
