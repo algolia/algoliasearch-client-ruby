@@ -2151,6 +2151,7 @@ module Algolia
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+      request_options[:timeout] ||= 180000
 
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(push_task_payload)
 
@@ -2635,6 +2636,7 @@ module Algolia
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+      request_options[:timeout] ||= 180000
 
       post_body = request_options[:debug_body]
 
@@ -3113,6 +3115,7 @@ module Algolia
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+      request_options[:timeout] ||= 180000
 
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(source_create)
 
@@ -3166,6 +3169,7 @@ module Algolia
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+      request_options[:timeout] ||= 180000
 
       post_body = request_options[:debug_body] || @api_client.object_to_http_body(source_update)
 
