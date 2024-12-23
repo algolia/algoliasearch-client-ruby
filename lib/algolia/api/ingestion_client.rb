@@ -2616,7 +2616,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Array<Ingestion::Transformation>")
     end
 
-    # Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`.
+    # Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: airbyte`.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2651,7 +2651,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`.
+    # Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: airbyte`.
     #
     # Required API Key ACLs:
     #   - addObject

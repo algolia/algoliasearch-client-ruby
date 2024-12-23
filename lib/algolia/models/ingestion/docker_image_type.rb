@@ -6,12 +6,11 @@ require "time"
 module Algolia
   module Ingestion
     class DockerImageType
-      SINGER = "singer".freeze
       CUSTOM = "custom".freeze
       AIRBYTE = "airbyte".freeze
 
       def self.all_vars
-        @all_vars ||= [SINGER, CUSTOM, AIRBYTE].freeze
+        @all_vars ||= [CUSTOM, AIRBYTE].freeze
       end
 
       # Builds the enum from string
