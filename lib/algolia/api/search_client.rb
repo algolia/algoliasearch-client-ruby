@@ -3478,63 +3478,69 @@ module Algolia
     def replace_all_objects(index_name, objects, batch_size = 1000, request_options = {})
       tmp_index_name = index_name + "_tmp_" + rand(10_000_000).to_s
 
-      copy_operation_response = operation_index(
-        index_name,
-        Search::OperationIndexParams.new(
-          operation: Search::OperationType::COPY,
-          destination: tmp_index_name,
-          scope: [
-            Search::ScopeType::SETTINGS,
-            Search::ScopeType::RULES,
-            Search::ScopeType::SYNONYMS
-          ]
-        ),
-        request_options
-      )
+      begin
+        copy_operation_response = operation_index(
+          index_name,
+          Search::OperationIndexParams.new(
+            operation: Search::OperationType::COPY,
+            destination: tmp_index_name,
+            scope: [
+              Search::ScopeType::SETTINGS,
+              Search::ScopeType::RULES,
+              Search::ScopeType::SYNONYMS
+            ]
+          ),
+          request_options
+        )
 
-      batch_responses = chunked_batch(
-        tmp_index_name,
-        objects,
-        Search::Action::ADD_OBJECT,
-        true,
-        batch_size,
-        request_options
-      )
+        batch_responses = chunked_batch(
+          tmp_index_name,
+          objects,
+          Search::Action::ADD_OBJECT,
+          true,
+          batch_size,
+          request_options
+        )
 
-      wait_for_task(tmp_index_name, copy_operation_response.task_id)
+        wait_for_task(tmp_index_name, copy_operation_response.task_id)
 
-      copy_operation_response = operation_index(
-        index_name,
-        Search::OperationIndexParams.new(
-          operation: Search::OperationType::COPY,
-          destination: tmp_index_name,
-          scope: [
-            Search::ScopeType::SETTINGS,
-            Search::ScopeType::RULES,
-            Search::ScopeType::SYNONYMS
-          ]
-        ),
-        request_options
-      )
+        copy_operation_response = operation_index(
+          index_name,
+          Search::OperationIndexParams.new(
+            operation: Search::OperationType::COPY,
+            destination: tmp_index_name,
+            scope: [
+              Search::ScopeType::SETTINGS,
+              Search::ScopeType::RULES,
+              Search::ScopeType::SYNONYMS
+            ]
+          ),
+          request_options
+        )
 
-      wait_for_task(tmp_index_name, copy_operation_response.task_id)
+        wait_for_task(tmp_index_name, copy_operation_response.task_id)
 
-      move_operation_response = operation_index(
-        tmp_index_name,
-        Search::OperationIndexParams.new(
-          operation: Search::OperationType::MOVE,
-          destination: index_name
-        ),
-        request_options
-      )
+        move_operation_response = operation_index(
+          tmp_index_name,
+          Search::OperationIndexParams.new(
+            operation: Search::OperationType::MOVE,
+            destination: index_name
+          ),
+          request_options
+        )
 
-      wait_for_task(tmp_index_name, move_operation_response.task_id)
+        wait_for_task(tmp_index_name, move_operation_response.task_id)
 
-      Search::ReplaceAllObjectsResponse.new(
-        copy_operation_response: copy_operation_response,
-        batch_responses: batch_responses,
-        move_operation_response: move_operation_response
-      )
+        Search::ReplaceAllObjectsResponse.new(
+          copy_operation_response: copy_operation_response,
+          batch_responses: batch_responses,
+          move_operation_response: move_operation_response
+        )
+      rescue Exception => e
+        delete_index(tmp_index_name)
+
+        raise e
+      end
     end
 
     def index_exists?(index_name)
