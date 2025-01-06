@@ -5,66 +5,14 @@ require "time"
 
 module Algolia
   module Ingestion
-    class Task
-      # Universally unique identifier (UUID) of a task.
-      attr_accessor :task_id
-
-      # Universally uniqud identifier (UUID) of a source.
-      attr_accessor :source_id
-
-      # Universally unique identifier (UUID) of a destination resource.
-      attr_accessor :destination_id
-
-      # Cron expression for the task's schedule.
-      attr_accessor :cron
-
-      # The last time the scheduled task ran in RFC 3339 format.
-      attr_accessor :last_run
-
-      # The next scheduled run of the task in RFC 3339 format.
-      attr_accessor :next_run
-
-      attr_accessor :input
-
-      # Whether the task is enabled.
+    class EmailNotifications
+      # Whether to send email notifications, note that this doesn't prevent the task from being blocked.
       attr_accessor :enabled
-
-      # Maximum accepted percentage of failures for a task run to finish successfully.
-      attr_accessor :failure_threshold
-
-      attr_accessor :action
-
-      # Date of the last cursor in RFC 3339 format.
-      attr_accessor :cursor
-
-      attr_accessor :notifications
-
-      attr_accessor :policies
-
-      # Date of creation in RFC 3339 format.
-      attr_accessor :created_at
-
-      # Date of last update in RFC 3339 format.
-      attr_accessor :updated_at
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :task_id => :taskID,
-          :source_id => :sourceID,
-          :destination_id => :destinationID,
-          :cron => :cron,
-          :last_run => :lastRun,
-          :next_run => :nextRun,
-          :input => :input,
-          :enabled => :enabled,
-          :failure_threshold => :failureThreshold,
-          :action => :action,
-          :cursor => :cursor,
-          :notifications => :notifications,
-          :policies => :policies,
-          :created_at => :createdAt,
-          :updated_at => :updatedAt
+          :enabled => :enabled
         }
       end
 
@@ -76,21 +24,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :task_id => :"String",
-          :source_id => :"String",
-          :destination_id => :"String",
-          :cron => :"String",
-          :last_run => :"String",
-          :next_run => :"String",
-          :input => :"TaskInput",
-          :enabled => :"Boolean",
-          :failure_threshold => :"Integer",
-          :action => :"ActionType",
-          :cursor => :"String",
-          :notifications => :"Notifications",
-          :policies => :"Policies",
-          :created_at => :"String",
-          :updated_at => :"String"
+          :enabled => :"Boolean"
         }
       end
 
@@ -105,7 +39,10 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         if (!attributes.is_a?(Hash))
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Task` initialize method"
+          raise(
+            ArgumentError,
+            "The input argument (attributes) must be a hash in `Algolia::EmailNotifications` initialize method"
+          )
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
@@ -113,7 +50,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::Task`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::EmailNotifications`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -121,74 +58,8 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:task_id)
-          self.task_id = attributes[:task_id]
-        else
-          self.task_id = nil
-        end
-
-        if attributes.key?(:source_id)
-          self.source_id = attributes[:source_id]
-        else
-          self.source_id = nil
-        end
-
-        if attributes.key?(:destination_id)
-          self.destination_id = attributes[:destination_id]
-        else
-          self.destination_id = nil
-        end
-
-        if attributes.key?(:cron)
-          self.cron = attributes[:cron]
-        end
-
-        if attributes.key?(:last_run)
-          self.last_run = attributes[:last_run]
-        end
-
-        if attributes.key?(:next_run)
-          self.next_run = attributes[:next_run]
-        end
-
-        if attributes.key?(:input)
-          self.input = attributes[:input]
-        end
-
         if attributes.key?(:enabled)
           self.enabled = attributes[:enabled]
-        else
-          self.enabled = nil
-        end
-
-        if attributes.key?(:failure_threshold)
-          self.failure_threshold = attributes[:failure_threshold]
-        end
-
-        if attributes.key?(:action)
-          self.action = attributes[:action]
-        end
-
-        if attributes.key?(:cursor)
-          self.cursor = attributes[:cursor]
-        end
-
-        if attributes.key?(:notifications)
-          self.notifications = attributes[:notifications]
-        end
-
-        if attributes.key?(:policies)
-          self.policies = attributes[:policies]
-        end
-
-        if attributes.key?(:created_at)
-          self.created_at = attributes[:created_at]
-        else
-          self.created_at = nil
-        end
-
-        if attributes.key?(:updated_at)
-          self.updated_at = attributes[:updated_at]
         end
       end
 
@@ -197,21 +68,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          task_id == other.task_id &&
-          source_id == other.source_id &&
-          destination_id == other.destination_id &&
-          cron == other.cron &&
-          last_run == other.last_run &&
-          next_run == other.next_run &&
-          input == other.input &&
-          enabled == other.enabled &&
-          failure_threshold == other.failure_threshold &&
-          action == other.action &&
-          cursor == other.cursor &&
-          notifications == other.notifications &&
-          policies == other.policies &&
-          created_at == other.created_at &&
-          updated_at == other.updated_at
+          enabled == other.enabled
       end
 
       # @see the `==` method
@@ -223,23 +80,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [
-          task_id,
-          source_id,
-          destination_id,
-          cron,
-          last_run,
-          next_run,
-          input,
-          enabled,
-          failure_threshold,
-          action,
-          cursor,
-          notifications,
-          policies,
-          created_at,
-          updated_at
-        ].hash
+        [enabled].hash
       end
 
       # Builds the object from hash

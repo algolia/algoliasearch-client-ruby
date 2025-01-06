@@ -21,6 +21,10 @@ module Algolia
       # Maximum accepted percentage of failures for a task run to finish successfully.
       attr_accessor :failure_threshold
 
+      attr_accessor :notifications
+
+      attr_accessor :policies
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -28,7 +32,9 @@ module Algolia
           :cron => :cron,
           :input => :input,
           :enabled => :enabled,
-          :failure_threshold => :failureThreshold
+          :failure_threshold => :failureThreshold,
+          :notifications => :notifications,
+          :policies => :policies
         }
       end
 
@@ -44,7 +50,9 @@ module Algolia
           :cron => :"String",
           :input => :"TaskInput",
           :enabled => :"Boolean",
-          :failure_threshold => :"Integer"
+          :failure_threshold => :"Integer",
+          :notifications => :"Notifications",
+          :policies => :"Policies"
         }
       end
 
@@ -97,6 +105,14 @@ module Algolia
         if attributes.key?(:failure_threshold)
           self.failure_threshold = attributes[:failure_threshold]
         end
+
+        if attributes.key?(:notifications)
+          self.notifications = attributes[:notifications]
+        end
+
+        if attributes.key?(:policies)
+          self.policies = attributes[:policies]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -108,7 +124,9 @@ module Algolia
           cron == other.cron &&
           input == other.input &&
           enabled == other.enabled &&
-          failure_threshold == other.failure_threshold
+          failure_threshold == other.failure_threshold &&
+          notifications == other.notifications &&
+          policies == other.policies
       end
 
       # @see the `==` method
@@ -120,7 +138,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [destination_id, cron, input, enabled, failure_threshold].hash
+        [destination_id, cron, input, enabled, failure_threshold, notifications, policies].hash
       end
 
       # Builds the object from hash

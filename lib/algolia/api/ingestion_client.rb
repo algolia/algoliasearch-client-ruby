@@ -1862,6 +1862,7 @@ module Algolia
     # @param source_type [Array<SourceType>] Filters the tasks with the specified source type.
     # @param destination_id [Array<String>] Destination IDs for filtering the list of tasks.
     # @param trigger_type [Array<TriggerType>] Type of task trigger for filtering the list of tasks.
+    # @param with_email_notifications [Boolean] If specified, the response only includes tasks with notifications.email.enabled set to this value.
     # @param sort [TaskSortKeys] Property by which to sort the list of tasks. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1875,6 +1876,7 @@ module Algolia
       source_type = nil,
       destination_id = nil,
       trigger_type = nil,
+      with_email_notifications = nil,
       sort = nil,
       order = nil,
       request_options = {}
@@ -1892,6 +1894,7 @@ module Algolia
       end
 
       query_params[:triggerType] = @api_client.build_collection_param(trigger_type, :csv) unless trigger_type.nil?
+      query_params[:withEmailNotifications] = with_email_notifications unless with_email_notifications.nil?
       query_params[:sort] = sort unless sort.nil?
       query_params[:order] = order unless order.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
@@ -1925,6 +1928,7 @@ module Algolia
     # @param source_type [Array<SourceType>] Filters the tasks with the specified source type.
     # @param destination_id [Array<String>] Destination IDs for filtering the list of tasks.
     # @param trigger_type [Array<TriggerType>] Type of task trigger for filtering the list of tasks.
+    # @param with_email_notifications [Boolean] If specified, the response only includes tasks with notifications.email.enabled set to this value.
     # @param sort [TaskSortKeys] Property by which to sort the list of tasks. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1938,6 +1942,7 @@ module Algolia
       source_type = nil,
       destination_id = nil,
       trigger_type = nil,
+      with_email_notifications = nil,
       sort = nil,
       order = nil,
       request_options = {}
@@ -1951,6 +1956,7 @@ module Algolia
         source_type,
         destination_id,
         trigger_type,
+        with_email_notifications,
         sort,
         order,
         request_options

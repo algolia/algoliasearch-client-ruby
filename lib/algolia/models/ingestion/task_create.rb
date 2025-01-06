@@ -29,6 +29,10 @@ module Algolia
       # Date of the last cursor in RFC 3339 format.
       attr_accessor :cursor
 
+      attr_accessor :notifications
+
+      attr_accessor :policies
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -39,7 +43,9 @@ module Algolia
           :enabled => :enabled,
           :failure_threshold => :failureThreshold,
           :input => :input,
-          :cursor => :cursor
+          :cursor => :cursor,
+          :notifications => :notifications,
+          :policies => :policies
         }
       end
 
@@ -58,7 +64,9 @@ module Algolia
           :enabled => :"Boolean",
           :failure_threshold => :"Integer",
           :input => :"TaskInput",
-          :cursor => :"String"
+          :cursor => :"String",
+          :notifications => :"Notifications",
+          :policies => :"Policies"
         }
       end
 
@@ -129,6 +137,14 @@ module Algolia
         if attributes.key?(:cursor)
           self.cursor = attributes[:cursor]
         end
+
+        if attributes.key?(:notifications)
+          self.notifications = attributes[:notifications]
+        end
+
+        if attributes.key?(:policies)
+          self.policies = attributes[:policies]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -143,7 +159,9 @@ module Algolia
           enabled == other.enabled &&
           failure_threshold == other.failure_threshold &&
           input == other.input &&
-          cursor == other.cursor
+          cursor == other.cursor &&
+          notifications == other.notifications &&
+          policies == other.policies
       end
 
       # @see the `==` method
@@ -155,7 +173,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [source_id, destination_id, action, cron, enabled, failure_threshold, input, cursor].hash
+        [source_id, destination_id, action, cron, enabled, failure_threshold, input, cursor, notifications, policies].hash
       end
 
       # Builds the object from hash

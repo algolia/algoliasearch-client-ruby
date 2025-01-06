@@ -31,6 +31,10 @@ module Algolia
       # Date of the last cursor in RFC 3339 format.
       attr_accessor :cursor
 
+      attr_accessor :notifications
+
+      attr_accessor :policies
+
       # Date of creation in RFC 3339 format.
       attr_accessor :created_at
 
@@ -49,6 +53,8 @@ module Algolia
           :failure_threshold => :failureThreshold,
           :action => :action,
           :cursor => :cursor,
+          :notifications => :notifications,
+          :policies => :policies,
           :created_at => :createdAt,
           :updated_at => :updatedAt
         }
@@ -71,6 +77,8 @@ module Algolia
           :failure_threshold => :"Integer",
           :action => :"ActionType",
           :cursor => :"String",
+          :notifications => :"Notifications",
+          :policies => :"Policies",
           :created_at => :"String",
           :updated_at => :"String"
         }
@@ -149,6 +157,14 @@ module Algolia
           self.cursor = attributes[:cursor]
         end
 
+        if attributes.key?(:notifications)
+          self.notifications = attributes[:notifications]
+        end
+
+        if attributes.key?(:policies)
+          self.policies = attributes[:policies]
+        end
+
         if attributes.key?(:created_at)
           self.created_at = attributes[:created_at]
         else
@@ -174,6 +190,8 @@ module Algolia
           failure_threshold == other.failure_threshold &&
           action == other.action &&
           cursor == other.cursor &&
+          notifications == other.notifications &&
+          policies == other.policies &&
           created_at == other.created_at &&
           updated_at == other.updated_at
       end
@@ -197,6 +215,8 @@ module Algolia
           failure_threshold,
           action,
           cursor,
+          notifications,
+          policies,
           created_at,
           updated_at
         ].hash
