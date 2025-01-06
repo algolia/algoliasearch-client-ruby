@@ -30,9 +30,14 @@ module Algolia
         }
       end
 
-      # Returns all the JSON keys this model knows about
-      def self.acceptable_attributes
-        attribute_map.values
+      # Returns the keys that uniquely identify this oneOf variant when present
+      def self.discriminator_attributes
+        [
+          :registry,
+          :image,
+          :imageType,
+          :configuration
+        ]
       end
 
       # Attribute type mapping.

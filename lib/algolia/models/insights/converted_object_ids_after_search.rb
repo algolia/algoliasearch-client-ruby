@@ -44,9 +44,12 @@ module Algolia
         }
       end
 
-      # Returns all the JSON keys this model knows about
-      def self.acceptable_attributes
-        attribute_map.values
+      # Returns the keys that uniquely identify this oneOf variant when present
+      def self.discriminator_attributes
+        [
+          :queryID,
+          :eventType
+        ]
       end
 
       # Attribute type mapping.

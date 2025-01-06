@@ -46,7 +46,6 @@ module Algolia
 
         SchemaMismatchError = Class.new(StandardError)
 
-        # Note: 'File' is missing here because in the regular case we get the data _after_ a call to JSON.parse.
         def find_and_cast_into_type(klass, data)
           return if data.nil?
 
@@ -85,12 +84,12 @@ module Algolia
               if const.respond_to?(:openapi_one_of)
                 # nested oneOf model
                 model = const.build(data)
-              elsif const.respond_to?(:acceptable_attributes)
-                # raise if data contains keys that are not known to the model
-                raise unless (data.keys - const.acceptable_attributes).empty?
-                model = const.build_from_hash(data)
+              elsif const.respond_to?(:discriminator_attributes)
+                if const.discriminator_attributes.all? { |attr| data.key?(attr) }
+                  model = const.build_from_hash(data)
+                end
               else
-                # maybe it's an enum
+                # maybe it's an enum, or doens't have discriminators
                 model = const.build_from_hash(data)
               end
 
