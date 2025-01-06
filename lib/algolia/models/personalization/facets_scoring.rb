@@ -5,21 +5,18 @@ require "time"
 
 module Algolia
   module Personalization
-    class EventScoring
+    class FacetsScoring
       # Event score.
       attr_accessor :score
 
-      # Event name.
-      attr_accessor :event_name
-
-      attr_accessor :event_type
+      # Facet attribute name.
+      attr_accessor :facet_name
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :score => :score,
-          :event_name => :eventName,
-          :event_type => :eventType
+          :facet_name => :facetName
         }
       end
 
@@ -32,8 +29,7 @@ module Algolia
       def self.types_mapping
         {
           :score => :"Integer",
-          :event_name => :"String",
-          :event_type => :"EventType"
+          :facet_name => :"String"
         }
       end
 
@@ -50,7 +46,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::EventScoring` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::FacetsScoring` initialize method"
           )
         end
 
@@ -59,7 +55,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::EventScoring`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::FacetsScoring`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -73,16 +69,10 @@ module Algolia
           self.score = nil
         end
 
-        if attributes.key?(:event_name)
-          self.event_name = attributes[:event_name]
+        if attributes.key?(:facet_name)
+          self.facet_name = attributes[:facet_name]
         else
-          self.event_name = nil
-        end
-
-        if attributes.key?(:event_type)
-          self.event_type = attributes[:event_type]
-        else
-          self.event_type = nil
+          self.facet_name = nil
         end
       end
 
@@ -92,8 +82,7 @@ module Algolia
         return true if self.equal?(other)
         self.class == other.class &&
           score == other.score &&
-          event_name == other.event_name &&
-          event_type == other.event_type
+          facet_name == other.facet_name
       end
 
       # @see the `==` method
@@ -105,7 +94,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [score, event_name, event_type].hash
+        [score, facet_name].hash
       end
 
       # Builds the object from hash

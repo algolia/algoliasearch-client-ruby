@@ -7,10 +7,10 @@ module Algolia
   module Personalization
     class PersonalizationStrategyParams
       # Scores associated with each event.  The higher the scores, the higher the impact of those events on the personalization of search results.
-      attr_accessor :event_scoring
+      attr_accessor :events_scoring
 
       # Scores associated with each facet.  The higher the scores, the higher the impact of those events on the personalization of search results.
-      attr_accessor :facet_scoring
+      attr_accessor :facets_scoring
 
       # Impact of personalization on the search results.  If set to 0, personalization has no impact on the search results.
       attr_accessor :personalization_impact
@@ -18,8 +18,8 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :event_scoring => :eventScoring,
-          :facet_scoring => :facetScoring,
+          :events_scoring => :eventsScoring,
+          :facets_scoring => :facetsScoring,
           :personalization_impact => :personalizationImpact
         }
       end
@@ -32,8 +32,8 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :event_scoring => :"Array<EventScoring>",
-          :facet_scoring => :"Array<FacetScoring>",
+          :events_scoring => :"Array<EventsScoring>",
+          :facets_scoring => :"Array<FacetsScoring>",
           :personalization_impact => :"Integer"
         }
       end
@@ -68,20 +68,20 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:event_scoring)
-          if (value = attributes[:event_scoring]).is_a?(Array)
-            self.event_scoring = value
+        if attributes.key?(:events_scoring)
+          if (value = attributes[:events_scoring]).is_a?(Array)
+            self.events_scoring = value
           end
         else
-          self.event_scoring = nil
+          self.events_scoring = nil
         end
 
-        if attributes.key?(:facet_scoring)
-          if (value = attributes[:facet_scoring]).is_a?(Array)
-            self.facet_scoring = value
+        if attributes.key?(:facets_scoring)
+          if (value = attributes[:facets_scoring]).is_a?(Array)
+            self.facets_scoring = value
           end
         else
-          self.facet_scoring = nil
+          self.facets_scoring = nil
         end
 
         if attributes.key?(:personalization_impact)
@@ -96,8 +96,8 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          event_scoring == other.event_scoring &&
-          facet_scoring == other.facet_scoring &&
+          events_scoring == other.events_scoring &&
+          facets_scoring == other.facets_scoring &&
           personalization_impact == other.personalization_impact
       end
 
@@ -110,7 +110,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [event_scoring, facet_scoring, personalization_impact].hash
+        [events_scoring, facets_scoring, personalization_impact].hash
       end
 
       # Builds the object from hash
