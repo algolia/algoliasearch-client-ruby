@@ -3472,10 +3472,17 @@ module Algolia
     # @param index_name [String] The `index_name` to replace `objects` in.
     # @param objects [Array] The array of `objects` to store in the given Algolia `index_name`.
     # @param batch_size [int] The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+    # @param scopes [Array] The `scopes` to keep from the index. Defaults to `['settings', 'rules', 'synonyms']`.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     #
     # @return [Array<ReplaceAllObjectsResponse>]
-    def replace_all_objects(index_name, objects, batch_size = 1000, request_options = {})
+    def replace_all_objects(
+      index_name,
+      objects,
+      batch_size = 1000,
+      scopes = [Search::ScopeType::SETTINGS, Search::ScopeType::RULES, Search::ScopeType::SYNONYMS],
+      request_options = {}
+    )
       tmp_index_name = index_name + "_tmp_" + rand(10_000_000).to_s
 
       begin
@@ -3484,11 +3491,7 @@ module Algolia
           Search::OperationIndexParams.new(
             operation: Search::OperationType::COPY,
             destination: tmp_index_name,
-            scope: [
-              Search::ScopeType::SETTINGS,
-              Search::ScopeType::RULES,
-              Search::ScopeType::SYNONYMS
-            ]
+            scope: scopes
           ),
           request_options
         )
@@ -3509,11 +3512,7 @@ module Algolia
           Search::OperationIndexParams.new(
             operation: Search::OperationType::COPY,
             destination: tmp_index_name,
-            scope: [
-              Search::ScopeType::SETTINGS,
-              Search::ScopeType::RULES,
-              Search::ScopeType::SYNONYMS
-            ]
+            scope: scopes
           ),
           request_options
         )
