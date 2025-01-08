@@ -6,15 +6,8 @@ require "time"
 module Algolia
   module Ingestion
     class SourceDocker
-      attr_accessor :image_type
-
-      attr_accessor :registry
-
-      # Docker image name.
+      # Shortname of the image, as returned by the referential.
       attr_accessor :image
-
-      # Docker image version.
-      attr_accessor :version
 
       # Configuration of the spec.
       attr_accessor :configuration
@@ -22,10 +15,7 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :image_type => :imageType,
-          :registry => :registry,
           :image => :image,
-          :version => :version,
           :configuration => :configuration
         }
       end
@@ -33,9 +23,7 @@ module Algolia
       # Returns the keys that uniquely identify this oneOf variant when present
       def self.discriminator_attributes
         [
-          :registry,
           :image,
-          :imageType,
           :configuration
         ]
       end
@@ -43,10 +31,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :image_type => :"DockerImageType",
-          :registry => :"DockerRegistry",
           :image => :"String",
-          :version => :"String",
           :configuration => :"Object"
         }
       end
@@ -81,26 +66,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:image_type)
-          self.image_type = attributes[:image_type]
-        else
-          self.image_type = nil
-        end
-
-        if attributes.key?(:registry)
-          self.registry = attributes[:registry]
-        else
-          self.registry = nil
-        end
-
         if attributes.key?(:image)
           self.image = attributes[:image]
         else
           self.image = nil
-        end
-
-        if attributes.key?(:version)
-          self.version = attributes[:version]
         end
 
         if attributes.key?(:configuration)
@@ -115,10 +84,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          image_type == other.image_type &&
-          registry == other.registry &&
           image == other.image &&
-          version == other.version &&
           configuration == other.configuration
       end
 
@@ -131,7 +97,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [image_type, registry, image, version, configuration].hash
+        [image, configuration].hash
       end
 
       # Builds the object from hash
