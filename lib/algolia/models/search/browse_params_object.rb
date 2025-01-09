@@ -101,9 +101,6 @@ module Algolia
       # Determines the order in which Algolia returns your results.  By default, each entry corresponds to a [ranking criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/). The tie-breaking algorithm sequentially applies each criterion in the order they're specified. If you configure a replica index for [sorting by an attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute/), you put the sorting attribute at the top of the list.  **Modifiers**  - `asc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in ascending order. - `desc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in descending order.  Before you modify the default setting, you should test your changes in the dashboard, and by [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/).
       attr_accessor :ranking
 
-      # Attributes to use as [custom ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/). Attribute names are case-sensitive.  The custom ranking attributes decide which items are shown first if the other ranking criteria are equal.  Records with missing values for your selected custom ranking attributes are always sorted last. Boolean attributes are sorted based on their alphabetical order.  **Modifiers**  - `asc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in ascending order.  - `desc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in descending order.  If you use two or more custom ranking attributes, [reduce the precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/) of your first attributes, or the other attributes will never be applied.
-      attr_accessor :custom_ranking
-
       # Relevancy threshold below which less relevant results aren't included in the results.  You can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas). Use this setting to strike a balance between the relevance and number of returned results.
       attr_accessor :relevancy_strictness
 
@@ -145,9 +142,6 @@ module Algolia
       attr_accessor :ignore_plurals
 
       attr_accessor :remove_stop_words
-
-      # Characters for which diacritics should be preserved.  By default, Algolia removes diacritics from letters. For example, `é` becomes `e`. If this causes issues in your search, you can specify characters that should keep their diacritics.
-      attr_accessor :keep_diacritics_on_characters
 
       # Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries.  This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings. This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages. To support this, you must place the CJK language **first**.  **You should always specify a query language.** If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/), or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
       attr_accessor :query_languages
@@ -252,7 +246,6 @@ module Algolia
           :enable_ab_test => :enableABTest,
           :attributes_to_retrieve => :attributesToRetrieve,
           :ranking => :ranking,
-          :custom_ranking => :customRanking,
           :relevancy_strictness => :relevancyStrictness,
           :attributes_to_highlight => :attributesToHighlight,
           :attributes_to_snippet => :attributesToSnippet,
@@ -268,7 +261,6 @@ module Algolia
           :disable_typo_tolerance_on_attributes => :disableTypoToleranceOnAttributes,
           :ignore_plurals => :ignorePlurals,
           :remove_stop_words => :removeStopWords,
-          :keep_diacritics_on_characters => :keepDiacriticsOnCharacters,
           :query_languages => :queryLanguages,
           :decompound_query => :decompoundQuery,
           :enable_rules => :enableRules,
@@ -334,7 +326,6 @@ module Algolia
           :enable_ab_test => :"Boolean",
           :attributes_to_retrieve => :"Array<String>",
           :ranking => :"Array<String>",
-          :custom_ranking => :"Array<String>",
           :relevancy_strictness => :"Integer",
           :attributes_to_highlight => :"Array<String>",
           :attributes_to_snippet => :"Array<String>",
@@ -350,7 +341,6 @@ module Algolia
           :disable_typo_tolerance_on_attributes => :"Array<String>",
           :ignore_plurals => :"IgnorePlurals",
           :remove_stop_words => :"RemoveStopWords",
-          :keep_diacritics_on_characters => :"String",
           :query_languages => :"Array<SupportedLanguage>",
           :decompound_query => :"Boolean",
           :enable_rules => :"Boolean",
@@ -572,12 +562,6 @@ module Algolia
           end
         end
 
-        if attributes.key?(:custom_ranking)
-          if (value = attributes[:custom_ranking]).is_a?(Array)
-            self.custom_ranking = value
-          end
-        end
-
         if attributes.key?(:relevancy_strictness)
           self.relevancy_strictness = attributes[:relevancy_strictness]
         end
@@ -642,10 +626,6 @@ module Algolia
 
         if attributes.key?(:remove_stop_words)
           self.remove_stop_words = attributes[:remove_stop_words]
-        end
-
-        if attributes.key?(:keep_diacritics_on_characters)
-          self.keep_diacritics_on_characters = attributes[:keep_diacritics_on_characters]
         end
 
         if attributes.key?(:query_languages)
@@ -798,7 +778,6 @@ module Algolia
           enable_ab_test == other.enable_ab_test &&
           attributes_to_retrieve == other.attributes_to_retrieve &&
           ranking == other.ranking &&
-          custom_ranking == other.custom_ranking &&
           relevancy_strictness == other.relevancy_strictness &&
           attributes_to_highlight == other.attributes_to_highlight &&
           attributes_to_snippet == other.attributes_to_snippet &&
@@ -814,7 +793,6 @@ module Algolia
           disable_typo_tolerance_on_attributes == other.disable_typo_tolerance_on_attributes &&
           ignore_plurals == other.ignore_plurals &&
           remove_stop_words == other.remove_stop_words &&
-          keep_diacritics_on_characters == other.keep_diacritics_on_characters &&
           query_languages == other.query_languages &&
           decompound_query == other.decompound_query &&
           enable_rules == other.enable_rules &&
@@ -886,7 +864,6 @@ module Algolia
           enable_ab_test,
           attributes_to_retrieve,
           ranking,
-          custom_ranking,
           relevancy_strictness,
           attributes_to_highlight,
           attributes_to_snippet,
@@ -902,7 +879,6 @@ module Algolia
           disable_typo_tolerance_on_attributes,
           ignore_plurals,
           remove_stop_words,
-          keep_diacritics_on_characters,
           query_languages,
           decompound_query,
           enable_rules,

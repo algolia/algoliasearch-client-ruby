@@ -141,6 +141,12 @@ module Algolia
       # Maximum number of facet values to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
       attr_accessor :max_facet_hits
 
+      # Characters for which diacritics should be preserved.  By default, Algolia removes diacritics from letters. For example, `é` becomes `e`. If this causes issues in your search, you can specify characters that should keep their diacritics.
+      attr_accessor :keep_diacritics_on_characters
+
+      # Attributes to use as [custom ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/). Attribute names are case-sensitive.  The custom ranking attributes decide which items are shown first if the other ranking criteria are equal.  Records with missing values for your selected custom ranking attributes are always sorted last. Boolean attributes are sorted based on their alphabetical order.  **Modifiers**  - `asc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in ascending order.  - `desc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in descending order.  If you use two or more custom ranking attributes, [reduce the precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/) of your first attributes, or the other attributes will never be applied.
+      attr_accessor :custom_ranking
+
       # Attributes to include in the API response.  To reduce the size of your response, you can retrieve only some of the attributes. Attribute names are case-sensitive.  - `*` retrieves all attributes, except attributes included in the `customRanking` and `unretrievableAttributes` settings. - To retrieve all attributes except a specific one, prefix the attribute with a dash and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`. - The `objectID` attribute is always included.
       attr_accessor :attributes_to_retrieve
 
@@ -295,6 +301,8 @@ module Algolia
           :custom_normalization => :customNormalization,
           :attribute_for_distinct => :attributeForDistinct,
           :max_facet_hits => :maxFacetHits,
+          :keep_diacritics_on_characters => :keepDiacriticsOnCharacters,
+          :custom_ranking => :customRanking,
           :attributes_to_retrieve => :attributesToRetrieve,
           :ranking => :ranking,
           :relevancy_strictness => :relevancyStrictness,
@@ -386,6 +394,8 @@ module Algolia
           :custom_normalization => :"Hash<String, Hash<String, String>>",
           :attribute_for_distinct => :"String",
           :max_facet_hits => :"Integer",
+          :keep_diacritics_on_characters => :"String",
+          :custom_ranking => :"Array<String>",
           :attributes_to_retrieve => :"Array<String>",
           :ranking => :"Array<String>",
           :relevancy_strictness => :"Integer",
@@ -691,6 +701,16 @@ module Algolia
           self.max_facet_hits = attributes[:max_facet_hits]
         end
 
+        if attributes.key?(:keep_diacritics_on_characters)
+          self.keep_diacritics_on_characters = attributes[:keep_diacritics_on_characters]
+        end
+
+        if attributes.key?(:custom_ranking)
+          if (value = attributes[:custom_ranking]).is_a?(Array)
+            self.custom_ranking = value
+          end
+        end
+
         if attributes.key?(:attributes_to_retrieve)
           if (value = attributes[:attributes_to_retrieve]).is_a?(Array)
             self.attributes_to_retrieve = value
@@ -916,6 +936,8 @@ module Algolia
           custom_normalization == other.custom_normalization &&
           attribute_for_distinct == other.attribute_for_distinct &&
           max_facet_hits == other.max_facet_hits &&
+          keep_diacritics_on_characters == other.keep_diacritics_on_characters &&
+          custom_ranking == other.custom_ranking &&
           attributes_to_retrieve == other.attributes_to_retrieve &&
           ranking == other.ranking &&
           relevancy_strictness == other.relevancy_strictness &&
@@ -1013,6 +1035,8 @@ module Algolia
           custom_normalization,
           attribute_for_distinct,
           max_facet_hits,
+          keep_diacritics_on_characters,
+          custom_ranking,
           attributes_to_retrieve,
           ranking,
           relevancy_strictness,
