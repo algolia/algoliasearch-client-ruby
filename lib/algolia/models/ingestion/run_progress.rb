@@ -58,10 +58,14 @@ module Algolia
 
         if attributes.key?(:expected_nb_of_events)
           self.expected_nb_of_events = attributes[:expected_nb_of_events]
+        else
+          self.expected_nb_of_events = nil
         end
 
         if attributes.key?(:received_nb_of_events)
           self.received_nb_of_events = attributes[:received_nb_of_events]
+        else
+          self.received_nb_of_events = nil
         end
       end
 
