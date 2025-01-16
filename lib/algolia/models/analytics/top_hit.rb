@@ -6,7 +6,7 @@ require "time"
 module Algolia
   module Analytics
     class TopHit
-      # Object ID of a record that's returned as a search result.
+      # Object ID of a record returned as a search result.
       attr_accessor :hit
 
       # Number of occurrences.

@@ -6,7 +6,7 @@ require "time"
 module Algolia
   module Analytics
     class DailyRevenue
-      # Revenue associated with this search, broken-down by currencies.
+      # Revenue associated with this search: broken down by currency.
       attr_accessor :currencies
 
       # Date in the format YYYY-MM-DD.

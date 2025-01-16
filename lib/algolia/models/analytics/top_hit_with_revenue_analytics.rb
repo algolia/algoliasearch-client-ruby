@@ -6,16 +6,16 @@ require "time"
 module Algolia
   module Analytics
     class TopHitWithRevenueAnalytics
-      # Object ID of a record that's returned as a search result.
+      # Object ID of a record returned as a search result.
       attr_accessor :hit
 
       # Number of occurrences.
       attr_accessor :count
 
-      # Click-through rate, calculated as number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+      # Click-through rate: calculated as the number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
       attr_accessor :click_through_rate
 
-      # Conversion rate, calculated as number of tracked searches with at least one conversion event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+      # Conversion rate: calculated as the number of tracked searches with at least one conversion event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
       attr_accessor :conversion_rate
 
       # Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
@@ -27,19 +27,19 @@ module Algolia
       # Number of conversions from this search.
       attr_accessor :conversion_count
 
-      # Add-to-cart rate, calculated as number of tracked searches with at least one add-to-cart event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+      # Add-to-cart rate: calculated as the number of tracked searches with at least one add-to-cart event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
       attr_accessor :add_to_cart_rate
 
       # Number of add-to-cart events from this search.
       attr_accessor :add_to_cart_count
 
-      # Purchase rate, calculated as number of tracked searches with at least one purchase event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+      # Purchase rate: calculated as the number of tracked searches with at least one purchase event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
       attr_accessor :purchase_rate
 
       # Number of purchase events from this search.
       attr_accessor :purchase_count
 
-      # Revenue associated with this search, broken-down by currencies.
+      # Revenue associated with this search: broken down by currency.
       attr_accessor :currencies
 
       # Attribute mapping from ruby-style variable name to JSON key.

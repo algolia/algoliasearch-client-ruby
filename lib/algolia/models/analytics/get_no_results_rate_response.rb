@@ -6,7 +6,7 @@ require "time"
 module Algolia
   module Analytics
     class GetNoResultsRateResponse
-      # No results rate, calculated as number of searches with zero results divided by the total number of searches.
+      # No results rate: calculated as the number of searches with zero results divided by the total number of searches.
       attr_accessor :rate
 
       # Number of searches.

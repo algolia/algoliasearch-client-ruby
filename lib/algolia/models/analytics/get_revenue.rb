@@ -6,7 +6,7 @@ require "time"
 module Algolia
   module Analytics
     class GetRevenue
-      # Revenue associated with this search, broken-down by currencies.
+      # Revenue associated with this search: broken down by currency.
       attr_accessor :currencies
 
       # Daily revenue.

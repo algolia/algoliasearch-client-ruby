@@ -6,7 +6,7 @@ require "time"
 module Algolia
   module Analytics
     class GetPurchaseRateResponse
-      # Purchase rate, calculated as number of tracked searches with at least one purchase event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+      # Purchase rate: calculated as the number of tracked searches with at least one purchase event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
       attr_accessor :rate
 
       # Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.

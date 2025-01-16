@@ -6,16 +6,16 @@ require "time"
 module Algolia
   module Analytics
     class TopHitWithAnalytics
-      # Object ID of a record that's returned as a search result.
+      # Object ID of a record returned as a search result.
       attr_accessor :hit
 
       # Number of occurrences.
       attr_accessor :count
 
-      # Click-through rate, calculated as number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+      # Click-through rate: calculated as the number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
       attr_accessor :click_through_rate
 
-      # Conversion rate, calculated as number of tracked searches with at least one conversion event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+      # Conversion rate: calculated as the number of tracked searches with at least one conversion event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
       attr_accessor :conversion_rate
 
       # Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
