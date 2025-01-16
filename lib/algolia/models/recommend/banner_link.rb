@@ -5,7 +5,7 @@ require "time"
 
 module Algolia
   module Recommend
-    # link for a banner defined in merchandising studio.
+    # Link for a banner defined in the Merchandising Studio.
     class BannerLink
       attr_accessor :url
 

@@ -5,7 +5,7 @@ require "time"
 
 module Algolia
   module Search
-    # url for a search banner image.
+    # URL for an image to show inside a banner.
     class BannerImageUrl
       attr_accessor :url
 

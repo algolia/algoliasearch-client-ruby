@@ -5,9 +5,9 @@ require "time"
 
 module Algolia
   module Recommend
-    # widgets returned from any rules that are applied to the current search.
+    # Widgets returned from any rules that are applied to the current search.
     class Widgets
-      # banners defined in the merchandising studio for the given search.
+      # Banners defined in the Merchandising Studio for a given search.
       attr_accessor :banners
 
       # Attribute mapping from ruby-style variable name to JSON key.

@@ -5,7 +5,7 @@ require "time"
 
 module Algolia
   module Recommend
-    # a search banner with image and url.
+    # Banner with image and link to redirect users.
     class Banner
       attr_accessor :image
 
