@@ -8,10 +8,9 @@ module Algolia
     class RunOutcome
       SUCCESS = "success".freeze
       FAILURE = "failure".freeze
-      PROCESSING = "processing".freeze
 
       def self.all_vars
-        @all_vars ||= [SUCCESS, FAILURE, PROCESSING].freeze
+        @all_vars ||= [SUCCESS, FAILURE].freeze
       end
 
       # Builds the enum from string
