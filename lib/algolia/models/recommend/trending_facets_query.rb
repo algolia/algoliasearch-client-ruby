@@ -46,7 +46,7 @@ module Algolia
           :threshold => :"Float",
           :max_recommendations => :"Integer",
           :query_parameters => :"RecommendSearchParams",
-          :facet_name => :"Object",
+          :facet_name => :"String",
           :model => :"TrendingFacetsModel",
           :fallback_parameters => :"FallbackParams"
         }
@@ -55,9 +55,7 @@ module Algolia
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new(
-          [
-            :facet_name
-          ]
+          []
         )
       end
 
