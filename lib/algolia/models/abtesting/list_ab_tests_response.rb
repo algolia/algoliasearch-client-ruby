@@ -8,7 +8,7 @@ require "time"
 module Algolia
   module Abtesting
     class ListABTestsResponse
-      # A/B tests.
+      # The list of A/B tests, null if no A/B tests are configured for this application.
       attr_accessor :abtests
 
       # Number of A/B tests.
