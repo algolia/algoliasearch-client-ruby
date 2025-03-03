@@ -11,7 +11,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     base64 (0.2.0)
-    connection_pool (2.4.1)
+    connection_pool (2.5.0)
     faraday (2.12.2)
       faraday-net_http (>= 2.0, < 3.5)
       json
@@ -21,14 +21,14 @@ GEM
     faraday-net_http_persistent (2.3.0)
       faraday (~> 2.5)
       net-http-persistent (>= 4.0.4, < 5)
-    json (2.9.0)
-    logger (1.6.2)
+    json (2.10.1)
+    logger (1.6.6)
     net-http (0.6.0)
       uri
     net-http-persistent (4.0.5)
       connection_pool (~> 2.2)
     rake (13.2.1)
-    uri (1.0.2)
+    uri (1.0.3)
 
 PLATFORMS
   aarch64-linux
