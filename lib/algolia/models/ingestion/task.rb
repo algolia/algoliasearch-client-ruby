@@ -36,6 +36,8 @@ module Algolia
 
       attr_accessor :action
 
+      attr_accessor :subscription_action
+
       # Date of the last cursor in RFC 3339 format.
       attr_accessor :cursor
 
@@ -62,6 +64,7 @@ module Algolia
           :enabled => :enabled,
           :failure_threshold => :failureThreshold,
           :action => :action,
+          :subscription_action => :subscriptionAction,
           :cursor => :cursor,
           :notifications => :notifications,
           :policies => :policies,
@@ -83,6 +86,7 @@ module Algolia
           :enabled => :"Boolean",
           :failure_threshold => :"Integer",
           :action => :"ActionType",
+          :subscription_action => :"ActionType",
           :cursor => :"String",
           :notifications => :"Notifications",
           :policies => :"Policies",
@@ -166,6 +170,10 @@ module Algolia
           self.action = attributes[:action]
         end
 
+        if attributes.key?(:subscription_action)
+          self.subscription_action = attributes[:subscription_action]
+        end
+
         if attributes.key?(:cursor)
           self.cursor = attributes[:cursor]
         end
@@ -204,6 +212,7 @@ module Algolia
           enabled == other.enabled &&
           failure_threshold == other.failure_threshold &&
           action == other.action &&
+          subscription_action == other.subscription_action &&
           cursor == other.cursor &&
           notifications == other.notifications &&
           policies == other.policies &&
@@ -231,6 +240,7 @@ module Algolia
           enabled,
           failure_threshold,
           action,
+          subscription_action,
           cursor,
           notifications,
           policies,

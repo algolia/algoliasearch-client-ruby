@@ -20,6 +20,8 @@ module Algolia
       # Whether the task is enabled.
       attr_accessor :enabled
 
+      attr_accessor :subscription_action
+
       # Maximum accepted percentage of failures for a task run to finish successfully.
       attr_accessor :failure_threshold
 
@@ -34,6 +36,7 @@ module Algolia
           :cron => :cron,
           :input => :input,
           :enabled => :enabled,
+          :subscription_action => :subscriptionAction,
           :failure_threshold => :failureThreshold,
           :notifications => :notifications,
           :policies => :policies
@@ -47,6 +50,7 @@ module Algolia
           :cron => :"String",
           :input => :"TaskInput",
           :enabled => :"Boolean",
+          :subscription_action => :"ActionType",
           :failure_threshold => :"Integer",
           :notifications => :"Notifications",
           :policies => :"Policies"
@@ -99,6 +103,10 @@ module Algolia
           self.enabled = attributes[:enabled]
         end
 
+        if attributes.key?(:subscription_action)
+          self.subscription_action = attributes[:subscription_action]
+        end
+
         if attributes.key?(:failure_threshold)
           self.failure_threshold = attributes[:failure_threshold]
         end
@@ -121,6 +129,7 @@ module Algolia
           cron == other.cron &&
           input == other.input &&
           enabled == other.enabled &&
+          subscription_action == other.subscription_action &&
           failure_threshold == other.failure_threshold &&
           notifications == other.notifications &&
           policies == other.policies
@@ -135,7 +144,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [destination_id, cron, input, enabled, failure_threshold, notifications, policies].hash
+        [destination_id, cron, input, enabled, subscription_action, failure_threshold, notifications, policies].hash
       end
 
       # Builds the object from hash
