@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    algolia (3.12.3)
+    algolia (3.13.0)
       base64 (>= 0.2.0, < 1)
       faraday (>= 1.0.1, < 3.0)
       faraday-net_http_persistent (>= 0.15, < 3)
