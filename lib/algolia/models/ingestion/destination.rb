@@ -17,6 +17,9 @@ module Algolia
       # Descriptive name for the resource.
       attr_accessor :name
 
+      # Owner of the resource.
+      attr_accessor :owner
+
       attr_accessor :input
 
       # Date of creation in RFC 3339 format.
@@ -36,6 +39,7 @@ module Algolia
           :destination_id => :destinationID,
           :type => :type,
           :name => :name,
+          :owner => :owner,
           :input => :input,
           :created_at => :createdAt,
           :updated_at => :updatedAt,
@@ -50,6 +54,7 @@ module Algolia
           :destination_id => :"String",
           :type => :"DestinationType",
           :name => :"String",
+          :owner => :"String",
           :input => :"DestinationInput",
           :created_at => :"String",
           :updated_at => :"String",
@@ -61,7 +66,9 @@ module Algolia
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new(
-          []
+          [
+            :owner
+          ]
         )
       end
 
@@ -106,6 +113,10 @@ module Algolia
           self.name = nil
         end
 
+        if attributes.key?(:owner)
+          self.owner = attributes[:owner]
+        end
+
         if attributes.key?(:input)
           self.input = attributes[:input]
         else
@@ -141,6 +152,7 @@ module Algolia
           destination_id == other.destination_id &&
           type == other.type &&
           name == other.name &&
+          owner == other.owner &&
           input == other.input &&
           created_at == other.created_at &&
           updated_at == other.updated_at &&
@@ -157,7 +169,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [destination_id, type, name, input, created_at, updated_at, authentication_id, transformation_ids].hash
+        [destination_id, type, name, owner, input, created_at, updated_at, authentication_id, transformation_ids].hash
       end
 
       # Builds the object from hash

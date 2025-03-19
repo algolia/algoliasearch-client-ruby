@@ -19,6 +19,9 @@ module Algolia
 
       attr_accessor :platform
 
+      # Owner of the resource.
+      attr_accessor :owner
+
       attr_accessor :input
 
       # Date of creation in RFC 3339 format.
@@ -34,6 +37,7 @@ module Algolia
           :type => :type,
           :name => :name,
           :platform => :platform,
+          :owner => :owner,
           :input => :input,
           :created_at => :createdAt,
           :updated_at => :updatedAt
@@ -47,6 +51,7 @@ module Algolia
           :type => :"AuthenticationType",
           :name => :"String",
           :platform => :"Platform",
+          :owner => :"String",
           :input => :"AuthInputPartial",
           :created_at => :"String",
           :updated_at => :"String"
@@ -57,7 +62,8 @@ module Algolia
       def self.openapi_nullable
         Set.new(
           [
-            :platform
+            :platform,
+            :owner
           ]
         )
       end
@@ -107,6 +113,10 @@ module Algolia
           self.platform = attributes[:platform]
         end
 
+        if attributes.key?(:owner)
+          self.owner = attributes[:owner]
+        end
+
         if attributes.key?(:input)
           self.input = attributes[:input]
         else
@@ -133,6 +143,7 @@ module Algolia
           type == other.type &&
           name == other.name &&
           platform == other.platform &&
+          owner == other.owner &&
           input == other.input &&
           created_at == other.created_at &&
           updated_at == other.updated_at
@@ -147,7 +158,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [authentication_id, type, name, platform, input, created_at, updated_at].hash
+        [authentication_id, type, name, platform, owner, input, created_at, updated_at].hash
       end
 
       # Builds the object from hash

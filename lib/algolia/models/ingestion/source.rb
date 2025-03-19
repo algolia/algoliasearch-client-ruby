@@ -15,6 +15,9 @@ module Algolia
 
       attr_accessor :name
 
+      # Owner of the resource.
+      attr_accessor :owner
+
       attr_accessor :input
 
       # Universally unique identifier (UUID) of an authentication resource.
@@ -32,6 +35,7 @@ module Algolia
           :source_id => :sourceID,
           :type => :type,
           :name => :name,
+          :owner => :owner,
           :input => :input,
           :authentication_id => :authenticationID,
           :created_at => :createdAt,
@@ -45,6 +49,7 @@ module Algolia
           :source_id => :"String",
           :type => :"SourceType",
           :name => :"String",
+          :owner => :"String",
           :input => :"SourceInput",
           :authentication_id => :"String",
           :created_at => :"String",
@@ -55,7 +60,9 @@ module Algolia
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new(
-          []
+          [
+            :owner
+          ]
         )
       end
 
@@ -97,6 +104,10 @@ module Algolia
           self.name = nil
         end
 
+        if attributes.key?(:owner)
+          self.owner = attributes[:owner]
+        end
+
         if attributes.key?(:input)
           self.input = attributes[:input]
         end
@@ -124,6 +135,7 @@ module Algolia
           source_id == other.source_id &&
           type == other.type &&
           name == other.name &&
+          owner == other.owner &&
           input == other.input &&
           authentication_id == other.authentication_id &&
           created_at == other.created_at &&
@@ -139,7 +151,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [source_id, type, name, input, authentication_id, created_at, updated_at].hash
+        [source_id, type, name, owner, input, authentication_id, created_at, updated_at].hash
       end
 
       # Builds the object from hash

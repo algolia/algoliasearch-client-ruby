@@ -26,6 +26,9 @@ module Algolia
       # The next scheduled run of the task in RFC 3339 format.
       attr_accessor :next_run
 
+      # Owner of the resource.
+      attr_accessor :owner
+
       attr_accessor :input
 
       # Whether the task is enabled.
@@ -60,6 +63,7 @@ module Algolia
           :cron => :cron,
           :last_run => :lastRun,
           :next_run => :nextRun,
+          :owner => :owner,
           :input => :input,
           :enabled => :enabled,
           :failure_threshold => :failureThreshold,
@@ -82,6 +86,7 @@ module Algolia
           :cron => :"String",
           :last_run => :"String",
           :next_run => :"String",
+          :owner => :"String",
           :input => :"TaskInput",
           :enabled => :"Boolean",
           :failure_threshold => :"Integer",
@@ -98,7 +103,9 @@ module Algolia
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new(
-          []
+          [
+            :owner
+          ]
         )
       end
 
@@ -150,6 +157,10 @@ module Algolia
 
         if attributes.key?(:next_run)
           self.next_run = attributes[:next_run]
+        end
+
+        if attributes.key?(:owner)
+          self.owner = attributes[:owner]
         end
 
         if attributes.key?(:input)
@@ -208,6 +219,7 @@ module Algolia
           cron == other.cron &&
           last_run == other.last_run &&
           next_run == other.next_run &&
+          owner == other.owner &&
           input == other.input &&
           enabled == other.enabled &&
           failure_threshold == other.failure_threshold &&
@@ -236,6 +248,7 @@ module Algolia
           cron,
           last_run,
           next_run,
+          owner,
           input,
           enabled,
           failure_threshold,
