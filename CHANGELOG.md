@@ -1,3 +1,7 @@
+## [3.15.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.14.0...3.15.0)
+
+- [c3addb449](https://github.com/algolia/api-clients-automation/commit/c3addb449) feat(specs): add CT Query predicate property ([#4654](https://github.com/algolia/api-clients-automation/pull/4654)) by [@morganleroi](https://github.com/morganleroi/)
+
 ## [3.14.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.13.0...3.14.0)
 
 - [26457d0ec8](https://github.com/algolia/api-clients-automation/commit/26457d0ec8) feat(specs): add the owner attributes to ingestion resources ([#4616](https://github.com/algolia/api-clients-automation/pull/4616)) by [@millotp](https://github.com/millotp/)
