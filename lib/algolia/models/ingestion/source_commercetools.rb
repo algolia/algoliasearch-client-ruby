@@ -20,6 +20,9 @@ module Algolia
       # Whether a fallback value is stored in the Algolia record if there's no inventory information about the product.
       attr_accessor :fallback_is_in_stock_value
 
+      # Predicate to filter out specific products when indexing. For more information, see [Query Predicate](https://docs.commercetools.com/api/predicates/query).
+      attr_accessor :product_query_predicate
+
       attr_accessor :custom_fields
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -30,6 +33,7 @@ module Algolia
           :url => :url,
           :project_key => :projectKey,
           :fallback_is_in_stock_value => :fallbackIsInStockValue,
+          :product_query_predicate => :productQueryPredicate,
           :custom_fields => :customFields
         }
       end
@@ -49,6 +53,7 @@ module Algolia
           :url => :"String",
           :project_key => :"String",
           :fallback_is_in_stock_value => :"Boolean",
+          :product_query_predicate => :"String",
           :custom_fields => :"CommercetoolsCustomFields"
         }
       end
@@ -111,6 +116,10 @@ module Algolia
           self.fallback_is_in_stock_value = attributes[:fallback_is_in_stock_value]
         end
 
+        if attributes.key?(:product_query_predicate)
+          self.product_query_predicate = attributes[:product_query_predicate]
+        end
+
         if attributes.key?(:custom_fields)
           self.custom_fields = attributes[:custom_fields]
         end
@@ -126,6 +135,7 @@ module Algolia
           url == other.url &&
           project_key == other.project_key &&
           fallback_is_in_stock_value == other.fallback_is_in_stock_value &&
+          product_query_predicate == other.product_query_predicate &&
           custom_fields == other.custom_fields
       end
 
@@ -138,7 +148,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [store_keys, locales, url, project_key, fallback_is_in_stock_value, custom_fields].hash
+        [store_keys, locales, url, project_key, fallback_is_in_stock_value, product_query_predicate, custom_fields].hash
       end
 
       # Builds the object from hash
