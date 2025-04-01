@@ -23,18 +23,6 @@ module Algolia
         region = nil
       end
 
-      if opts.nil? || opts[:connect_timeout].nil?
-        opts[:connect_timeout] = 2000
-      end
-
-      if opts.nil? || opts[:read_timeout].nil?
-        opts[:read_timeout] = 5000
-      end
-
-      if opts.nil? || opts[:write_timeout].nil?
-        opts[:write_timeout] = 30000
-      end
-
       if !region.nil? && (!region.is_a?(String) || !regions.include?(region))
         raise "`region` must be one of the following: #{regions.join(", ")}"
       end
@@ -50,6 +38,18 @@ module Algolia
     end
 
     def self.create_with_config(config)
+      if config.connect_timeout.nil? || config.connect_timeout.empty?
+        config.connect_timeout = 2000
+      end
+
+      if config.read_timeout.nil? || config.read_timeout.empty?
+        config.read_timeout = 5000
+      end
+
+      if config.write_timeout.nil? || config.write_timeout.empty?
+        config.write_timeout = 30000
+      end
+
       new(config)
     end
 

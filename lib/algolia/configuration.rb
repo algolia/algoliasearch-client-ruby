@@ -25,9 +25,9 @@ module Algolia
       @app_id = app_id
       @api_key = api_key
       @client_side_validation = opts[:client_side_validation].nil? ? true : opts[:client_side_validation]
-      @connect_timeout = opts[:connect_timeout] || 2_000
-      @read_timeout = opts[:read_timeout] || 5_000
-      @write_timeout = opts[:write_timeout] || 30_000
+      @connect_timeout = opts[:connect_timeout]
+      @read_timeout = opts[:read_timeout]
+      @write_timeout = opts[:write_timeout]
       @compression_type = opts[:compression_type] || "none"
       @requester = opts[:requester]
 
