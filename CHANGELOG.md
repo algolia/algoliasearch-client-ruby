@@ -1,3 +1,8 @@
+## [3.15.1](https://github.com/algolia/algoliasearch-client-ruby/compare/3.15.0...3.15.1)
+
+- [a51683025e](https://github.com/algolia/api-clients-automation/commit/a51683025e) chore: deprecate mcm methods ([#4694](https://github.com/algolia/api-clients-automation/pull/4694)) by [@kai687](https://github.com/kai687/)
+- [2ced1c526b](https://github.com/algolia/api-clients-automation/commit/2ced1c526b) chore: assert long lasting requests on the ingestion api ([#4615](https://github.com/algolia/api-clients-automation/pull/4615)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [3.15.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.14.0...3.15.0)
 
 - [c3addb449](https://github.com/algolia/api-clients-automation/commit/c3addb449) feat(specs): add CT Query predicate property ([#4654](https://github.com/algolia/api-clients-automation/pull/4654)) by [@morganleroi](https://github.com/morganleroi/)
