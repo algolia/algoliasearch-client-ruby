@@ -207,6 +207,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
+    # THIS OPERATION IS DEPRECATED
     # @param x_algolia_user_id [String] Unique identifier of the user who makes the search request. (required)
     # @param assign_user_id_params [AssignUserIdParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -304,6 +305,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
+    # THIS OPERATION IS DEPRECATED
     # @param x_algolia_user_id [String] Unique identifier of the user who makes the search request. (required)
     # @param batch_assign_user_ids_params [BatchAssignUserIdsParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1673,6 +1675,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
+    # THIS OPERATION IS DEPRECATED
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_top_user_ids_with_http_info(request_options = {})
@@ -1710,6 +1713,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
+    # THIS OPERATION IS DEPRECATED
     # @param user_id [String] Unique identifier of the user who makes the search request. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1754,6 +1758,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
+    # THIS OPERATION IS DEPRECATED
     # @param get_clusters [Boolean] Whether to include the cluster's pending mapping state in the response.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1834,6 +1839,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
+    # THIS OPERATION IS DEPRECATED
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def list_clusters_with_http_info(request_options = {})
@@ -1914,6 +1920,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
+    # THIS OPERATION IS DEPRECATED
     # @param page [Integer] Requested page of the API response. If `null`, the API response is not paginated.
     # @param hits_per_page [Integer] Number of hits per page. (default to 100)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -2129,6 +2136,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
+    # THIS OPERATION IS DEPRECATED
     # @param user_id [String] Unique identifier of the user who makes the search request. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -2906,6 +2914,7 @@ module Algolia
     #
     # Required API Key ACLs:
     #   - admin
+    # THIS OPERATION IS DEPRECATED
     # @param search_user_ids_params [SearchUserIdsParams]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response

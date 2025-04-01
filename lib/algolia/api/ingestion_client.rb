@@ -261,6 +261,7 @@ module Algolia
 
     # Creates a new task using the v1 endpoint, please use `createTask` instead.
 
+    # THIS OPERATION IS DEPRECATED
     # @param task_create [TaskCreateV1] Request body for creating a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -710,6 +711,7 @@ module Algolia
 
     # Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
 
+    # THIS OPERATION IS DEPRECATED
     # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -845,6 +847,7 @@ module Algolia
     #   - addObject
     #   - deleteIndex
     #   - editSettings
+    # THIS OPERATION IS DEPRECATED
     # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -941,6 +944,7 @@ module Algolia
     #   - addObject
     #   - deleteIndex
     #   - editSettings
+    # THIS OPERATION IS DEPRECATED
     # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1292,6 +1296,7 @@ module Algolia
     #   - addObject
     #   - deleteIndex
     #   - editSettings
+    # THIS OPERATION IS DEPRECATED
     # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1972,6 +1977,7 @@ module Algolia
     #   - addObject
     #   - deleteIndex
     #   - editSettings
+    # THIS OPERATION IS DEPRECATED
     # @param items_per_page [Integer] Number of items per page. (default to 10)
     # @param page [Integer] Page number of the paginated API response.
     # @param action [Array<ActionType>] Actions for filtering the list of tasks.
@@ -2295,6 +2301,7 @@ module Algolia
     #   - addObject
     #   - deleteIndex
     #   - editSettings
+    # THIS OPERATION IS DEPRECATED
     # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -2535,6 +2542,7 @@ module Algolia
     #   - addObject
     #   - deleteIndex
     #   - editSettings
+    # THIS OPERATION IS DEPRECATED
     # @param task_search [TaskSearch]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -3014,6 +3022,7 @@ module Algolia
 
     # Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
 
+    # THIS OPERATION IS DEPRECATED
     # @param task_id [String] Unique identifier of a task. (required)
     # @param task_update [TaskUpdateV1]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
