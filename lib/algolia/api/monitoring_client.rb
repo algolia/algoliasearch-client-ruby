@@ -23,15 +23,15 @@ module Algolia
     end
 
     def self.create_with_config(config)
-      if config.connect_timeout.nil? || config.connect_timeout.empty?
+      if config.connect_timeout.nil?
         config.connect_timeout = 2000
       end
 
-      if config.read_timeout.nil? || config.read_timeout.empty?
+      if config.read_timeout.nil?
         config.read_timeout = 5000
       end
 
-      if config.write_timeout.nil? || config.write_timeout.empty?
+      if config.write_timeout.nil?
         config.write_timeout = 30000
       end
 
