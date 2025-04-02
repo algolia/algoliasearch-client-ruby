@@ -8,7 +8,7 @@ require "time"
 module Algolia
   module Ingestion
     class TransformationTryResponse
-      # The array of records returned by the transformation service.
+      # The array of stringified records returned by the transformation service.
       attr_accessor :payloads
 
       attr_accessor :error
@@ -24,7 +24,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :payloads => :"Array<Object>",
+          :payloads => :"Array<String>",
           :error => :"TransformationError"
         }
       end

@@ -124,6 +124,8 @@ module Algolia
 
         if attributes.key?(:updated_at)
           self.updated_at = attributes[:updated_at]
+        else
+          self.updated_at = nil
         end
       end
 
