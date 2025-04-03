@@ -443,6 +443,7 @@ module Algolia
         Set.new(
           [
             :inside_bounding_box,
+            :user_data,
             :optional_words
           ]
         )

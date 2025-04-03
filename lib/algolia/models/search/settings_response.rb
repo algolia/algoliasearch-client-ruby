@@ -322,6 +322,7 @@ module Algolia
       def self.openapi_nullable
         Set.new(
           [
+            :user_data,
             :optional_words
           ]
         )
