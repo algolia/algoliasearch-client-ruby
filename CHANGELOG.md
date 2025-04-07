@@ -1,3 +1,9 @@
+## [3.15.3](https://github.com/algolia/algoliasearch-client-ruby/compare/3.15.2...3.15.3)
+
+- [dbaef6696](https://github.com/algolia/api-clients-automation/commit/dbaef6696) fix(specs): userData is any type ([#4702](https://github.com/algolia/api-clients-automation/pull/4702)) by [@millotp](https://github.com/millotp/)
+- [a922dca5a](https://github.com/algolia/api-clients-automation/commit/a922dca5a) docs(partialUpdate): add note about multiple operations ([#4721](https://github.com/algolia/api-clients-automation/pull/4721)) by [@Jerska](https://github.com/Jerska/)
+- [e150cd934](https://github.com/algolia/api-clients-automation/commit/e150cd934) fix(specs): message is not required in WatchResponse ([#4723](https://github.com/algolia/api-clients-automation/pull/4723)) by [@millotp](https://github.com/millotp/)
+
 ## [3.15.2](https://github.com/algolia/algoliasearch-client-ruby/compare/3.15.1...3.15.2)
 
 - [345e830176](https://github.com/algolia/api-clients-automation/commit/345e830176) fix(ruby): remove integer empty check ([#4698](https://github.com/algolia/api-clients-automation/pull/4698)) by [@lucas-aragno](https://github.com/lucas-aragno/)
