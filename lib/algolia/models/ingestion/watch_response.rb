@@ -72,6 +72,8 @@ module Algolia
 
         if attributes.key?(:run_id)
           self.run_id = attributes[:run_id]
+        else
+          self.run_id = nil
         end
 
         if attributes.key?(:data)
@@ -88,8 +90,6 @@ module Algolia
 
         if attributes.key?(:message)
           self.message = attributes[:message]
-        else
-          self.message = nil
         end
       end
 
