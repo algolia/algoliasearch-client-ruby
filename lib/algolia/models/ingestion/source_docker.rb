@@ -8,7 +8,7 @@ require "time"
 module Algolia
   module Ingestion
     class SourceDocker
-      # Shortname of the image, as returned by the referential.
+      # Name of the connector.
       attr_accessor :image
 
       # Configuration of the spec.
