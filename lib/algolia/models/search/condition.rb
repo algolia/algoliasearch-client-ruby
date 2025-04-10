@@ -19,7 +19,7 @@ module Algolia
       # An additional restriction that only triggers the rule, when the search has the same value as `ruleContexts` parameter. For example, if `context: mobile`, the rule is only triggered when the search request has a matching `ruleContexts: mobile`. A rule context must only contain alphanumeric characters.
       attr_accessor :context
 
-      # Filters that trigger the rule.  You can add add filters using the syntax `facet:value` so that the rule is triggered, when the specific filter is selected. You can use `filters` on its own or combine it with the `pattern` parameter.
+      # Filters that trigger the rule.  You can add filters using the syntax `facet:value` so that the rule is triggered, when the specific filter is selected. You can use `filters` on its own or combine it with the `pattern` parameter. You can't combine multiple filters with `OR` and you can't use numeric filters.
       attr_accessor :filters
 
       # Attribute mapping from ruby-style variable name to JSON key.
