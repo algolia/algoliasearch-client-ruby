@@ -30,7 +30,7 @@ module Algolia
         connection.options.open_timeout = connect_timeout / 1000
         path += handle_query_params(query_params)
 
-        @logger.info("Sending #{method.to_s.upcase!} request to #{path} with body #{body}") if ENV["ALGOLIA_DEBUG"]
+        @logger.info("Sending #{method.to_s.upcase} request to #{path} with body #{body}") if ENV["ALGOLIA_DEBUG"]
 
         response = connection.run_request(method, path, body, headers)
 
