@@ -10,9 +10,10 @@ module Algolia
     class RecordType
       PRODUCT = "product".freeze
       VARIANT = "variant".freeze
+      COLLECTION = "collection".freeze
 
       def self.all_vars
-        @all_vars ||= [PRODUCT, VARIANT].freeze
+        @all_vars ||= [PRODUCT, VARIANT, COLLECTION].freeze
       end
 
       # Builds the enum from string
