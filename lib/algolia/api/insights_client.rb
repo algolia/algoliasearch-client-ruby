@@ -246,7 +246,9 @@ module Algolia
     end
 
     # Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
-
+    #
+    # Required API Key ACLs:
+    #   - deleteObject
     # @param user_token [String] User token for which to delete all associated events. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -276,7 +278,9 @@ module Algolia
     end
 
     # Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
-
+    #
+    # Required API Key ACLs:
+    #   - deleteObject
     # @param user_token [String] User token for which to delete all associated events. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [nil]
@@ -286,7 +290,9 @@ module Algolia
     end
 
     # Sends a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
-
+    #
+    # Required API Key ACLs:
+    #   - search
     # @param insights_events [InsightsEvents]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -316,7 +322,9 @@ module Algolia
     end
 
     # Sends a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
-
+    #
+    # Required API Key ACLs:
+    #   - search
     # @param insights_events [InsightsEvents]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [EventsResponse]
