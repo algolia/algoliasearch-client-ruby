@@ -2138,14 +2138,73 @@ module Algolia
       )
     end
 
-    # Push a `batch` request payload through the Pipeline. You can check the status of task pushes with the observability endpoints.
+    # Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `pushTask`, but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error will be returned.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param index_name [String] Name of the index on which to perform the operation. (required)
+    # @param push_task_payload [PushTaskPayload]  (required)
+    # @param watch [Boolean] When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def push_with_http_info(index_name, push_task_payload, watch = nil, request_options = {})
+      # verify the required parameter 'index_name' is set
+      if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `push`."
+      end
+      # verify the required parameter 'push_task_payload' is set
+      if @api_client.config.client_side_validation && push_task_payload.nil?
+        raise ArgumentError, "Parameter `push_task_payload` is required when calling `push`."
+      end
+
+      path = "/1/push/{indexName}".sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
+      query_params = {}
+      query_params[:watch] = watch unless watch.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+      request_options[:timeout] ||= 180000
+      request_options[:connect_timeout] ||= 180000
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(push_task_payload)
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.push",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `pushTask`, but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error will be returned.
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
+    # @param index_name [String] Name of the index on which to perform the operation. (required)
+    # @param push_task_payload [PushTaskPayload]  (required)
+    # @param watch [Boolean] When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [WatchResponse]
+    def push(index_name, push_task_payload, watch = nil, request_options = {})
+      response = push_with_http_info(index_name, push_task_payload, watch, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::WatchResponse")
+    end
+
+    # Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target the same `indexName`.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
-    # @param push_task_payload [PushTaskPayload] Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
+    # @param push_task_payload [PushTaskPayload]  (required)
     # @param watch [Boolean] When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -2181,14 +2240,14 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Push a `batch` request payload through the Pipeline. You can check the status of task pushes with the observability endpoints.
+    # Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task. If you want to leverage the [pre-indexing data transformation](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data/), this is the recommended way of ingesting your records. This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target the same `indexName`.
     #
     # Required API Key ACLs:
     #   - addObject
     #   - deleteIndex
     #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
-    # @param push_task_payload [PushTaskPayload] Request body of a Search API `batch` request that will be pushed in the Connectors pipeline. (required)
+    # @param push_task_payload [PushTaskPayload]  (required)
     # @param watch [Boolean] When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [WatchResponse]

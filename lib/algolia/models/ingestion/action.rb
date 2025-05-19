@@ -12,20 +12,9 @@ module Algolia
       UPDATE_OBJECT = "updateObject".freeze
       PARTIAL_UPDATE_OBJECT = "partialUpdateObject".freeze
       PARTIAL_UPDATE_OBJECT_NO_CREATE = "partialUpdateObjectNoCreate".freeze
-      DELETE_OBJECT = "deleteObject".freeze
-      DELETE = "delete".freeze
-      CLEAR = "clear".freeze
 
       def self.all_vars
-        @all_vars ||= [
-          ADD_OBJECT,
-          UPDATE_OBJECT,
-          PARTIAL_UPDATE_OBJECT,
-          PARTIAL_UPDATE_OBJECT_NO_CREATE,
-          DELETE_OBJECT,
-          DELETE,
-          CLEAR
-        ].freeze
+        @all_vars ||= [ADD_OBJECT, UPDATE_OBJECT, PARTIAL_UPDATE_OBJECT, PARTIAL_UPDATE_OBJECT_NO_CREATE].freeze
       end
 
       # Builds the enum from string
