@@ -10,9 +10,11 @@ module Algolia
     class TypoToleranceEnum
       MIN = "min".freeze
       STRICT = "strict".freeze
+      TRUE = "true".freeze
+      FALSE = "false".freeze
 
       def self.all_vars
-        @all_vars ||= [MIN, STRICT].freeze
+        @all_vars ||= [MIN, STRICT, TRUE, FALSE].freeze
       end
 
       # Builds the enum from string
