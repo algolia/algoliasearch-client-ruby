@@ -8,7 +8,7 @@ require "time"
 module Algolia
   module Ingestion
     class TransformationTry
-      # The source code of the transformation.
+      # It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
       attr_accessor :code
 
       # The record to apply the given code to.

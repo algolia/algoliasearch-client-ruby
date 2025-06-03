@@ -9,11 +9,15 @@ module Algolia
   module Ingestion
     # API request body for creating a transformation.
     class TransformationCreate
-      # The source code of the transformation.
+      # It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
       attr_accessor :code
 
       # The uniquely identified name of your transformation.
       attr_accessor :name
+
+      attr_accessor :type
+
+      attr_accessor :input
 
       # A descriptive name for your transformation of what it does.
       attr_accessor :description
@@ -26,6 +30,8 @@ module Algolia
         {
           :code => :code,
           :name => :name,
+          :type => :type,
+          :input => :input,
           :description => :description,
           :authentication_ids => :authenticationIDs
         }
@@ -36,6 +42,8 @@ module Algolia
         {
           :code => :"String",
           :name => :"String",
+          :type => :"TransformationType",
+          :input => :"TransformationInput",
           :description => :"String",
           :authentication_ids => :"Array<String>"
         }
@@ -73,14 +81,24 @@ module Algolia
 
         if attributes.key?(:code)
           self.code = attributes[:code]
-        else
-          self.code = nil
         end
 
         if attributes.key?(:name)
           self.name = attributes[:name]
         else
           self.name = nil
+        end
+
+        if attributes.key?(:type)
+          self.type = attributes[:type]
+        else
+          self.type = nil
+        end
+
+        if attributes.key?(:input)
+          self.input = attributes[:input]
+        else
+          self.input = nil
         end
 
         if attributes.key?(:description)
@@ -101,6 +119,8 @@ module Algolia
         self.class == other.class &&
           code == other.code &&
           name == other.name &&
+          type == other.type &&
+          input == other.input &&
           description == other.description &&
           authentication_ids == other.authentication_ids
       end
@@ -114,7 +134,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [code, name, description, authentication_ids].hash
+        [code, name, type, input, description, authentication_ids].hash
       end
 
       # Builds the object from hash

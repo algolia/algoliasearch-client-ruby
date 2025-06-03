@@ -7,73 +7,28 @@ require "time"
 
 module Algolia
   module Ingestion
-    class Transformation
-      # Universally unique identifier (UUID) of a transformation.
-      attr_accessor :transformation_id
-
-      # The authentications associated with the current transformation.
-      attr_accessor :authentication_ids
-
-      # It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
-      attr_accessor :code
-
-      attr_accessor :type
-
-      attr_accessor :input
-
-      # The uniquely identified name of your transformation.
-      attr_accessor :name
-
-      # A descriptive name for your transformation of what it does.
-      attr_accessor :description
-
-      # Owner of the resource.
-      attr_accessor :owner
-
-      # Date of creation in RFC 3339 format.
-      attr_accessor :created_at
-
-      # Date of last update in RFC 3339 format.
-      attr_accessor :updated_at
+    # Input for a no-code transformation that contains a series of steps.
+    class TransformationNoCode
+      attr_accessor :steps
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :transformation_id => :transformationID,
-          :authentication_ids => :authenticationIDs,
-          :code => :code,
-          :type => :type,
-          :input => :input,
-          :name => :name,
-          :description => :description,
-          :owner => :owner,
-          :created_at => :createdAt,
-          :updated_at => :updatedAt
+          :steps => :steps
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :transformation_id => :"String",
-          :authentication_ids => :"Array<String>",
-          :code => :"String",
-          :type => :"TransformationType",
-          :input => :"TransformationInput",
-          :name => :"String",
-          :description => :"String",
-          :owner => :"String",
-          :created_at => :"String",
-          :updated_at => :"String"
+          :steps => :"Array<Object>"
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new(
-          [
-            :owner
-          ]
+          []
         )
       end
 
@@ -83,7 +38,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::Transformation` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::TransformationNoCode` initialize method"
           )
         end
 
@@ -92,7 +47,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::Transformation`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::TransformationNoCode`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -100,56 +55,12 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:transformation_id)
-          self.transformation_id = attributes[:transformation_id]
-        else
-          self.transformation_id = nil
-        end
-
-        if attributes.key?(:authentication_ids)
-          if (value = attributes[:authentication_ids]).is_a?(Array)
-            self.authentication_ids = value
+        if attributes.key?(:steps)
+          if (value = attributes[:steps]).is_a?(Array)
+            self.steps = value
           end
-        end
-
-        if attributes.key?(:code)
-          self.code = attributes[:code]
         else
-          self.code = nil
-        end
-
-        if attributes.key?(:type)
-          self.type = attributes[:type]
-        end
-
-        if attributes.key?(:input)
-          self.input = attributes[:input]
-        end
-
-        if attributes.key?(:name)
-          self.name = attributes[:name]
-        else
-          self.name = nil
-        end
-
-        if attributes.key?(:description)
-          self.description = attributes[:description]
-        end
-
-        if attributes.key?(:owner)
-          self.owner = attributes[:owner]
-        end
-
-        if attributes.key?(:created_at)
-          self.created_at = attributes[:created_at]
-        else
-          self.created_at = nil
-        end
-
-        if attributes.key?(:updated_at)
-          self.updated_at = attributes[:updated_at]
-        else
-          self.updated_at = nil
+          self.steps = nil
         end
       end
 
@@ -158,16 +69,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          transformation_id == other.transformation_id &&
-          authentication_ids == other.authentication_ids &&
-          code == other.code &&
-          type == other.type &&
-          input == other.input &&
-          name == other.name &&
-          description == other.description &&
-          owner == other.owner &&
-          created_at == other.created_at &&
-          updated_at == other.updated_at
+          steps == other.steps
       end
 
       # @see the `==` method
@@ -179,7 +81,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [transformation_id, authentication_ids, code, type, input, name, description, owner, created_at, updated_at].hash
+        [steps].hash
       end
 
       # Builds the object from hash
