@@ -6,54 +6,60 @@ require "date"
 require "time"
 
 module Algolia
-  module Ingestion
-    class WatchResponse
-      # Universally unique identifier (UUID) of a task run.
-      attr_accessor :run_id
-
+  module Search
+    # An event describe a step of the task execution flow..
+    class Event
       # Universally unique identifier (UUID) of an event.
       attr_accessor :event_id
 
-      # This field is always null when used with the Push endpoint. When used for a source discover or source validate run, it will include the sampled data of the source.
+      # Universally unique identifier (UUID) of a task run.
+      attr_accessor :run_id
+
+      attr_accessor :status
+
+      attr_accessor :type
+
+      # The extracted record batch size.
+      attr_accessor :batch_size
+
       attr_accessor :data
 
-      # in case of error, observability events will be added to the response.
-      attr_accessor :events
-
-      # a message describing the outcome of the operation that has been ran (push, discover or validate) run.
-      attr_accessor :message
-
-      # Date of creation in RFC 3339 format.
-      attr_accessor :created_at
+      # Date of publish RFC 3339 format.
+      attr_accessor :published_at
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :run_id => :runID,
           :event_id => :eventID,
+          :run_id => :runID,
+          :status => :status,
+          :type => :type,
+          :batch_size => :batchSize,
           :data => :data,
-          :events => :events,
-          :message => :message,
-          :created_at => :createdAt
+          :published_at => :publishedAt
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :run_id => :"String",
           :event_id => :"String",
-          :data => :"Array<Object>",
-          :events => :"Array<Event>",
-          :message => :"String",
-          :created_at => :"String"
+          :run_id => :"String",
+          :status => :"EventStatus",
+          :type => :"EventType",
+          :batch_size => :"Integer",
+          :data => :"Hash<String, Object>",
+          :published_at => :"String"
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new(
-          []
+          [
+            :status,
+            :data
+          ]
         )
       end
 
@@ -61,10 +67,7 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         if (!attributes.is_a?(Hash))
-          raise(
-            ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::WatchResponse` initialize method"
-          )
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Event` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
@@ -72,7 +75,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::WatchResponse`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::Event`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -80,34 +83,46 @@ module Algolia
           h[k.to_sym] = v
         }
 
+        if attributes.key?(:event_id)
+          self.event_id = attributes[:event_id]
+        else
+          self.event_id = nil
+        end
+
         if attributes.key?(:run_id)
           self.run_id = attributes[:run_id]
         else
           self.run_id = nil
         end
 
-        if attributes.key?(:event_id)
-          self.event_id = attributes[:event_id]
+        if attributes.key?(:status)
+          self.status = attributes[:status]
+        else
+          self.status = nil
+        end
+
+        if attributes.key?(:type)
+          self.type = attributes[:type]
+        else
+          self.type = nil
+        end
+
+        if attributes.key?(:batch_size)
+          self.batch_size = attributes[:batch_size]
+        else
+          self.batch_size = nil
         end
 
         if attributes.key?(:data)
-          if (value = attributes[:data]).is_a?(Array)
+          if (value = attributes[:data]).is_a?(Hash)
             self.data = value
           end
         end
 
-        if attributes.key?(:events)
-          if (value = attributes[:events]).is_a?(Array)
-            self.events = value
-          end
-        end
-
-        if attributes.key?(:message)
-          self.message = attributes[:message]
-        end
-
-        if attributes.key?(:created_at)
-          self.created_at = attributes[:created_at]
+        if attributes.key?(:published_at)
+          self.published_at = attributes[:published_at]
+        else
+          self.published_at = nil
         end
       end
 
@@ -116,12 +131,13 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          run_id == other.run_id &&
           event_id == other.event_id &&
+          run_id == other.run_id &&
+          status == other.status &&
+          type == other.type &&
+          batch_size == other.batch_size &&
           data == other.data &&
-          events == other.events &&
-          message == other.message &&
-          created_at == other.created_at
+          published_at == other.published_at
       end
 
       # @see the `==` method
@@ -133,7 +149,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [run_id, event_id, data, events, message, created_at].hash
+        [event_id, run_id, status, type, batch_size, data, published_at].hash
       end
 
       # Builds the object from hash
@@ -202,7 +218,7 @@ module Algolia
           # model
         else
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Ingestion.const_get(type)
+          klass = Algolia::Search.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass
             .build_from_hash(value)
         end

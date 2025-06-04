@@ -6,7 +6,7 @@ require "date"
 require "time"
 
 module Algolia
-  module Ingestion
+  module Search
     class WatchResponse
       # Universally unique identifier (UUID) of a task run.
       attr_accessor :run_id
@@ -202,7 +202,7 @@ module Algolia
           # model
         else
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Ingestion.const_get(type)
+          klass = Algolia::Search.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass
             .build_from_hash(value)
         end
