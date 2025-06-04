@@ -1501,7 +1501,7 @@ module Algolia
     # Retrieves an object with non-null index settings.
     #
     # Required API Key ACLs:
-    #   - search
+    #   - settings
     # @param index_name [String] Name of the index on which to perform the operation. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1533,7 +1533,7 @@ module Algolia
     # Retrieves an object with non-null index settings.
     #
     # Required API Key ACLs:
-    #   - search
+    #   - settings
     # @param index_name [String] Name of the index on which to perform the operation. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [SettingsResponse]
