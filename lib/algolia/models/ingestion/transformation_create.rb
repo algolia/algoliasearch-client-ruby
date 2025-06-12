@@ -91,14 +91,10 @@ module Algolia
 
         if attributes.key?(:type)
           self.type = attributes[:type]
-        else
-          self.type = nil
         end
 
         if attributes.key?(:input)
           self.input = attributes[:input]
-        else
-          self.input = nil
         end
 
         if attributes.key?(:description)

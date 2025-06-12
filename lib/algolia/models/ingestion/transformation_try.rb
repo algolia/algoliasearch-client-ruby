@@ -11,6 +11,10 @@ module Algolia
       # It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
       attr_accessor :code
 
+      attr_accessor :type
+
+      attr_accessor :input
+
       # The record to apply the given code to.
       attr_accessor :sample_record
 
@@ -20,6 +24,8 @@ module Algolia
       def self.attribute_map
         {
           :code => :code,
+          :type => :type,
+          :input => :input,
           :sample_record => :sampleRecord,
           :authentications => :authentications
         }
@@ -29,6 +35,8 @@ module Algolia
       def self.types_mapping
         {
           :code => :"String",
+          :type => :"TransformationType",
+          :input => :"TransformationInput",
           :sample_record => :"Object",
           :authentications => :"Array<AuthenticationCreate>"
         }
@@ -66,8 +74,14 @@ module Algolia
 
         if attributes.key?(:code)
           self.code = attributes[:code]
-        else
-          self.code = nil
+        end
+
+        if attributes.key?(:type)
+          self.type = attributes[:type]
+        end
+
+        if attributes.key?(:input)
+          self.input = attributes[:input]
         end
 
         if attributes.key?(:sample_record)
@@ -89,6 +103,8 @@ module Algolia
         return true if self.equal?(other)
         self.class == other.class &&
           code == other.code &&
+          type == other.type &&
+          input == other.input &&
           sample_record == other.sample_record &&
           authentications == other.authentications
       end
@@ -102,7 +118,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [code, sample_record, authentications].hash
+        [code, type, input, sample_record, authentications].hash
       end
 
       # Builds the object from hash
