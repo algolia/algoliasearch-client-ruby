@@ -300,8 +300,6 @@ module Algolia
 
         if attributes.key?(:processing_time_ms)
           self.processing_time_ms = attributes[:processing_time_ms]
-        else
-          self.processing_time_ms = nil
         end
 
         if attributes.key?(:processing_timings_ms)
