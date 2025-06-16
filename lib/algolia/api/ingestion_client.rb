@@ -2147,9 +2147,16 @@ module Algolia
     # @param index_name [String] Name of the index on which to perform the operation. (required)
     # @param push_task_payload [PushTaskPayload]  (required)
     # @param watch [Boolean] When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+    # @param reference_index_name [String] This is required when targeting an index that does not have a push connector setup (e.g. a tmp index), but you wish to attach another index's transformation to it (e.g. the source index name).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def push_with_http_info(index_name, push_task_payload, watch = nil, request_options = {})
+    def push_with_http_info(
+      index_name,
+      push_task_payload,
+      watch = nil,
+      reference_index_name = nil,
+      request_options = {}
+    )
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `push`."
@@ -2162,6 +2169,7 @@ module Algolia
       path = "/1/push/{indexName}".sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
       query_params = {}
       query_params[:watch] = watch unless watch.nil?
+      query_params[:referenceIndexName] = reference_index_name unless reference_index_name.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
@@ -2190,10 +2198,11 @@ module Algolia
     # @param index_name [String] Name of the index on which to perform the operation. (required)
     # @param push_task_payload [PushTaskPayload]  (required)
     # @param watch [Boolean] When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+    # @param reference_index_name [String] This is required when targeting an index that does not have a push connector setup (e.g. a tmp index), but you wish to attach another index's transformation to it (e.g. the source index name).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [WatchResponse]
-    def push(index_name, push_task_payload, watch = nil, request_options = {})
-      response = push_with_http_info(index_name, push_task_payload, watch, request_options)
+    def push(index_name, push_task_payload, watch = nil, reference_index_name = nil, request_options = {})
+      response = push_with_http_info(index_name, push_task_payload, watch, reference_index_name, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::WatchResponse")
     end
 
