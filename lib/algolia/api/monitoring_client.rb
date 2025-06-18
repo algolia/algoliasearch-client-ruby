@@ -56,7 +56,7 @@ module Algolia
 
     # This method lets you send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
+    # @param path [String] Path of the endpoint, for example `1/newFeature`. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -88,7 +88,7 @@ module Algolia
 
     # This method lets you send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
+    # @param path [String] Path of the endpoint, for example `1/newFeature`. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Object]
@@ -99,7 +99,7 @@ module Algolia
 
     # This method lets you send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
+    # @param path [String] Path of the endpoint, for example `1/newFeature`. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -131,7 +131,7 @@ module Algolia
 
     # This method lets you send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
+    # @param path [String] Path of the endpoint, for example `1/newFeature`. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Object]
@@ -142,7 +142,7 @@ module Algolia
 
     # This method lets you send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
+    # @param path [String] Path of the endpoint, for example `1/newFeature`. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -175,7 +175,7 @@ module Algolia
 
     # This method lets you send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
+    # @param path [String] Path of the endpoint, for example `1/newFeature`. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -187,7 +187,7 @@ module Algolia
 
     # This method lets you send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
+    # @param path [String] Path of the endpoint, for example `1/newFeature`. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -220,7 +220,7 @@ module Algolia
 
     # This method lets you send requests to the Algolia REST API.
 
-    # @param path [String] Path of the endpoint, anything after \"/1\" must be specified. (required)
+    # @param path [String] Path of the endpoint, for example `1/newFeature`. (required)
     # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
     # @param body [Object] Parameters to send with the custom request.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
