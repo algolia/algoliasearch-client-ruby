@@ -20,13 +20,17 @@ module Algolia
       # Standard deviation for this currency.
       attr_accessor :standard_deviation
 
+      # The amount of revenue for this currency that was removed after capping purchase amounts to the 95th percentile.
+      attr_accessor :winsorized_amount
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :currency => :currency,
           :revenue => :revenue,
           :mean => :mean,
-          :standard_deviation => :standardDeviation
+          :standard_deviation => :standardDeviation,
+          :winsorized_amount => :winsorizedAmount
         }
       end
 
@@ -36,7 +40,8 @@ module Algolia
           :currency => :"String",
           :revenue => :"Float",
           :mean => :"Float",
-          :standard_deviation => :"Float"
+          :standard_deviation => :"Float",
+          :winsorized_amount => :"Float"
         }
       end
 
@@ -82,6 +87,10 @@ module Algolia
         if attributes.key?(:standard_deviation)
           self.standard_deviation = attributes[:standard_deviation]
         end
+
+        if attributes.key?(:winsorized_amount)
+          self.winsorized_amount = attributes[:winsorized_amount]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -92,7 +101,8 @@ module Algolia
           currency == other.currency &&
           revenue == other.revenue &&
           mean == other.mean &&
-          standard_deviation == other.standard_deviation
+          standard_deviation == other.standard_deviation &&
+          winsorized_amount == other.winsorized_amount
       end
 
       # @see the `==` method
@@ -104,7 +114,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [currency, revenue, mean, standard_deviation].hash
+        [currency, revenue, mean, standard_deviation, winsorized_amount].hash
       end
 
       # Builds the object from hash
