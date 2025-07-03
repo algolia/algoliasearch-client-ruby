@@ -2265,7 +2265,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::WatchResponse")
     end
 
-    # Runs all tasks linked to a source, only available for Shopify sources. It will create 1 run per task.
+    # Runs all tasks linked to a source, only available for Shopify, BigCommerce and commercetools sources. Creates one run per task.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2300,7 +2300,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Runs all tasks linked to a source, only available for Shopify sources. It will create 1 run per task.
+    # Runs all tasks linked to a source, only available for Shopify, BigCommerce and commercetools sources. Creates one run per task.
     #
     # Required API Key ACLs:
     #   - addObject

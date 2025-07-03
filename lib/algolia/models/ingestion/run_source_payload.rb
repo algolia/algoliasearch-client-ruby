@@ -8,13 +8,13 @@ require "time"
 module Algolia
   module Ingestion
     class RunSourcePayload
-      # List of index names to include in reidexing/update.
+      # List of index names to include in reindex/update.
       attr_accessor :index_to_include
 
-      # List of index names to exclude in reidexing/update.
+      # List of index names to exclude in reindex/update.
       attr_accessor :index_to_exclude
 
-      # List of entityID to update.
+      # List of entityIDs to update.
       attr_accessor :entity_ids
 
       attr_accessor :entity_type
