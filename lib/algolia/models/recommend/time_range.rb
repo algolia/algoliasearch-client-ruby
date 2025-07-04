@@ -62,14 +62,10 @@ module Algolia
 
         if attributes.key?(:from)
           self.from = attributes[:from]
-        else
-          self.from = nil
         end
 
         if attributes.key?(:_until)
           self._until = attributes[:_until]
-        else
-          self._until = nil
         end
       end
 
