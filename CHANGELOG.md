@@ -1,3 +1,8 @@
+## [3.21.1](https://github.com/algolia/algoliasearch-client-ruby/compare/3.21.0...3.21.1)
+
+- [4c9416a9fe](https://github.com/algolia/api-clients-automation/commit/4c9416a9fe) fix(specs): update sourceRun docs ([#5057](https://github.com/algolia/api-clients-automation/pull/5057)) by [@DevinCodes](https://github.com/DevinCodes/)
+- [754efceb80](https://github.com/algolia/api-clients-automation/commit/754efceb80) fix(specs): allow one sided rule validity ([#5060](https://github.com/algolia/api-clients-automation/pull/5060)) by [@millotp](https://github.com/millotp/)
+
 ## [3.21.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.20.0...3.21.0)
 
 - [791a0c045d](https://github.com/algolia/api-clients-automation/commit/791a0c045d) feat(specs): abtesting winsorizedAmount ([#5053](https://github.com/algolia/api-clients-automation/pull/5053)) by [@cdhawke](https://github.com/cdhawke/)
