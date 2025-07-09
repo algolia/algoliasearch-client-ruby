@@ -2322,9 +2322,10 @@ module Algolia
     #   - deleteIndex
     #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
+    # @param run_task_payload [RunTaskPayload]
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def run_task_with_http_info(task_id, request_options = {})
+    def run_task_with_http_info(task_id, run_task_payload = nil, request_options = {})
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
         raise ArgumentError, "Parameter `task_id` is required when calling `run_task`."
@@ -2336,7 +2337,7 @@ module Algolia
       header_params = {}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = request_options[:debug_body]
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(run_task_payload)
 
       new_options = request_options.merge(
         :operation => :"IngestionClient.run_task",
@@ -2356,10 +2357,11 @@ module Algolia
     #   - deleteIndex
     #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
+    # @param run_task_payload [RunTaskPayload]
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [RunResponse]
-    def run_task(task_id, request_options = {})
-      response = run_task_with_http_info(task_id, request_options)
+    def run_task(task_id, run_task_payload = nil, request_options = {})
+      response = run_task_with_http_info(task_id, run_task_payload, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::RunResponse")
     end
 
@@ -2371,9 +2373,10 @@ module Algolia
     #   - editSettings
     # THIS OPERATION IS DEPRECATED
     # @param task_id [String] Unique identifier of a task. (required)
+    # @param run_task_payload [RunTaskPayload]
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def run_task_v1_with_http_info(task_id, request_options = {})
+    def run_task_v1_with_http_info(task_id, run_task_payload = nil, request_options = {})
       # verify the required parameter 'task_id' is set
       if @api_client.config.client_side_validation && task_id.nil?
         raise ArgumentError, "Parameter `task_id` is required when calling `run_task_v1`."
@@ -2385,7 +2388,7 @@ module Algolia
       header_params = {}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
 
-      post_body = request_options[:debug_body]
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(run_task_payload)
 
       new_options = request_options.merge(
         :operation => :"IngestionClient.run_task_v1",
@@ -2405,10 +2408,11 @@ module Algolia
     #   - deleteIndex
     #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
+    # @param run_task_payload [RunTaskPayload]
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [RunResponse]
-    def run_task_v1(task_id, request_options = {})
-      response = run_task_v1_with_http_info(task_id, request_options)
+    def run_task_v1(task_id, run_task_payload = nil, request_options = {})
+      response = run_task_v1_with_http_info(task_id, run_task_payload, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::RunResponse")
     end
 

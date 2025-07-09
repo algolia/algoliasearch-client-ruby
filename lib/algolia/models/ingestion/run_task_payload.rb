@@ -7,28 +7,13 @@ require "time"
 
 module Algolia
   module Ingestion
-    class RunSourcePayload
-      # List of index names to include in reindex/update.
-      attr_accessor :index_to_include
-
-      # List of index names to exclude in reindex/update.
-      attr_accessor :index_to_exclude
-
-      # List of entityIDs to update.
-      attr_accessor :entity_ids
-
-      attr_accessor :entity_type
-
-      # Additional information that will be passed to the created runs.
+    class RunTaskPayload
+      # Additional information that will be passed to the created run.
       attr_accessor :run_metadata
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :index_to_include => :indexToInclude,
-          :index_to_exclude => :indexToExclude,
-          :entity_ids => :entityIDs,
-          :entity_type => :entityType,
           :run_metadata => :runMetadata
         }
       end
@@ -36,10 +21,6 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :index_to_include => :"Array<String>",
-          :index_to_exclude => :"Array<String>",
-          :entity_ids => :"Array<String>",
-          :entity_type => :"EntityType",
           :run_metadata => :"Hash<String, Object>"
         }
       end
@@ -57,7 +38,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::RunSourcePayload` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::RunTaskPayload` initialize method"
           )
         end
 
@@ -66,35 +47,13 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::RunSourcePayload`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::RunTaskPayload`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
 
           h[k.to_sym] = v
         }
-
-        if attributes.key?(:index_to_include)
-          if (value = attributes[:index_to_include]).is_a?(Array)
-            self.index_to_include = value
-          end
-        end
-
-        if attributes.key?(:index_to_exclude)
-          if (value = attributes[:index_to_exclude]).is_a?(Array)
-            self.index_to_exclude = value
-          end
-        end
-
-        if attributes.key?(:entity_ids)
-          if (value = attributes[:entity_ids]).is_a?(Array)
-            self.entity_ids = value
-          end
-        end
-
-        if attributes.key?(:entity_type)
-          self.entity_type = attributes[:entity_type]
-        end
 
         if attributes.key?(:run_metadata)
           if (value = attributes[:run_metadata]).is_a?(Hash)
@@ -108,10 +67,6 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          index_to_include == other.index_to_include &&
-          index_to_exclude == other.index_to_exclude &&
-          entity_ids == other.entity_ids &&
-          entity_type == other.entity_type &&
           run_metadata == other.run_metadata
       end
 
@@ -124,7 +79,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [index_to_include, index_to_exclude, entity_ids, entity_type, run_metadata].hash
+        [run_metadata].hash
       end
 
       # Builds the object from hash
