@@ -98,7 +98,7 @@ module Algolia
         {
           :add_to_cart_count => :"Integer",
           :add_to_cart_rate => :"Float",
-          :average_click_position => :"Integer",
+          :average_click_position => :"Float",
           :click_count => :"Integer",
           :click_through_rate => :"Float",
           :conversion_count => :"Integer",
