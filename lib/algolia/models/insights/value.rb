@@ -7,7 +7,7 @@ require "time"
 
 module Algolia
   module Insights
-    # Total monetary value of this event in units of `currency`.
+    # Total monetary value of this event in units of `currency`. This should be equal to the sum of `price` times `quantity`.
     module Value
       class << self
       # List of class defined in oneOf (OpenAPI v3)
