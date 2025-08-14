@@ -7,46 +7,24 @@ require "time"
 
 module Algolia
   module Composition
-    # Search result.  A hit is a record from your index, augmented with special attributes for highlighting, snippeting, and ranking.
-    class Hit
-      # Unique record identifier.
-      attr_accessor :algolia_object_id
-
-      # Surround words that match the query with HTML tags for highlighting.
-      attr_accessor :_highlight_result
-
-      # Snippets that show the context around a matching search query.
-      attr_accessor :_snippet_result
-
-      attr_accessor :_ranking_info
-
-      attr_accessor :_distinct_seq_id
-
-      attr_accessor :_extra
+    # An object that contains the extra key-value pairs provided in the injectedItem definition.
+    class HitMetadata
+      # The key of the injectedItem that inserted this metadata.
+      attr_accessor :_injected_item_key
 
       attr_accessor :additional_properties
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :algolia_object_id => :objectID,
-          :_highlight_result => :_highlightResult,
-          :_snippet_result => :_snippetResult,
-          :_ranking_info => :_rankingInfo,
-          :_distinct_seq_id => :_distinctSeqID,
-          :_extra => :_extra
+          :_injected_item_key => :_injectedItemKey
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :algolia_object_id => :"String",
-          :_highlight_result => :"Hash<String, HighlightResult>",
-          :_snippet_result => :"Hash<String, SnippetResult>",
-          :_ranking_info => :"HitRankingInfo",
-          :_distinct_seq_id => :"Integer",
-          :_extra => :"HitMetadata"
+          :_injected_item_key => :"String"
         }
       end
 
@@ -61,37 +39,14 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         if (!attributes.is_a?(Hash))
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Hit` initialize method"
+          raise(
+            ArgumentError,
+            "The input argument (attributes) must be a hash in `Algolia::HitMetadata` initialize method"
+          )
         end
 
-        if attributes.key?(:algolia_object_id)
-          self.algolia_object_id = attributes[:algolia_object_id]
-        else
-          self.algolia_object_id = nil
-        end
-
-        if attributes.key?(:_highlight_result)
-          if (value = attributes[:_highlight_result]).is_a?(Hash)
-            self._highlight_result = value
-          end
-        end
-
-        if attributes.key?(:_snippet_result)
-          if (value = attributes[:_snippet_result]).is_a?(Hash)
-            self._snippet_result = value
-          end
-        end
-
-        if attributes.key?(:_ranking_info)
-          self._ranking_info = attributes[:_ranking_info]
-        end
-
-        if attributes.key?(:_distinct_seq_id)
-          self._distinct_seq_id = attributes[:_distinct_seq_id]
-        end
-
-        if attributes.key?(:_extra)
-          self._extra = attributes[:_extra]
+        if attributes.key?(:_injected_item_key)
+          self._injected_item_key = attributes[:_injected_item_key]
         end
 
         # add extra attribute to additional_properties
@@ -104,12 +59,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          algolia_object_id == other.algolia_object_id &&
-          _highlight_result == other._highlight_result &&
-          _snippet_result == other._snippet_result &&
-          _ranking_info == other._ranking_info &&
-          _distinct_seq_id == other._distinct_seq_id &&
-          _extra == other._extra
+          _injected_item_key == other._injected_item_key
       end
 
       # @see the `==` method
@@ -121,7 +71,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [algolia_object_id, _highlight_result, _snippet_result, _ranking_info, _distinct_seq_id, _extra].hash
+        [_injected_item_key].hash
       end
 
       # Builds the object from hash
