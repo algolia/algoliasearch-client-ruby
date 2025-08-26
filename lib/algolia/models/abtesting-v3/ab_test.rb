@@ -20,6 +20,9 @@ module Algolia
       # End date and time of the A/B test, in RFC 3339 format.
       attr_accessor :end_at
 
+      # Date and time when the A/B test was stopped, in RFC 3339 format.
+      attr_accessor :stopped_at
+
       # A/B test name.
       attr_accessor :name
 
@@ -40,6 +43,7 @@ module Algolia
           :updated_at => :updatedAt,
           :created_at => :createdAt,
           :end_at => :endAt,
+          :stopped_at => :stoppedAt,
           :name => :name,
           :status => :status,
           :variants => :variants,
@@ -55,6 +59,7 @@ module Algolia
           :updated_at => :"String",
           :created_at => :"String",
           :end_at => :"String",
+          :stopped_at => :"String",
           :name => :"String",
           :status => :"Status",
           :variants => :"Array<Variant>",
@@ -66,7 +71,9 @@ module Algolia
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new(
-          []
+          [
+            :stopped_at
+          ]
         )
       end
 
@@ -114,6 +121,10 @@ module Algolia
           self.end_at = nil
         end
 
+        if attributes.key?(:stopped_at)
+          self.stopped_at = attributes[:stopped_at]
+        end
+
         if attributes.key?(:name)
           self.name = attributes[:name]
         else
@@ -152,6 +163,7 @@ module Algolia
           updated_at == other.updated_at &&
           created_at == other.created_at &&
           end_at == other.end_at &&
+          stopped_at == other.stopped_at &&
           name == other.name &&
           status == other.status &&
           variants == other.variants &&
@@ -168,7 +180,18 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [ab_test_id, updated_at, created_at, end_at, name, status, variants, configuration, migrated_ab_test_id].hash
+        [
+          ab_test_id,
+          updated_at,
+          created_at,
+          end_at,
+          stopped_at,
+          name,
+          status,
+          variants,
+          configuration,
+          migrated_ab_test_id
+        ].hash
       end
 
       # Builds the object from hash

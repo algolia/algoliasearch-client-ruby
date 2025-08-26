@@ -30,6 +30,9 @@ module Algolia
       # End date and time of the A/B test, in RFC 3339 format.
       attr_accessor :end_at
 
+      # Date and time when the A/B test was stopped, in RFC 3339 format.
+      attr_accessor :stopped_at
+
       # A/B test name.
       attr_accessor :name
 
@@ -52,6 +55,7 @@ module Algolia
           :updated_at => :updatedAt,
           :created_at => :createdAt,
           :end_at => :endAt,
+          :stopped_at => :stoppedAt,
           :name => :name,
           :status => :status,
           :variants => :variants,
@@ -71,6 +75,7 @@ module Algolia
           :updated_at => :"String",
           :created_at => :"String",
           :end_at => :"String",
+          :stopped_at => :"String",
           :name => :"String",
           :status => :"Status",
           :variants => :"Array<Variant>",
@@ -86,7 +91,8 @@ module Algolia
             :conversion_significance,
             :add_to_cart_significance,
             :purchase_significance,
-            :revenue_significance
+            :revenue_significance,
+            :stopped_at
           ]
         )
       end
@@ -157,6 +163,10 @@ module Algolia
           self.end_at = nil
         end
 
+        if attributes.key?(:stopped_at)
+          self.stopped_at = attributes[:stopped_at]
+        end
+
         if attributes.key?(:name)
           self.name = attributes[:name]
         else
@@ -196,6 +206,7 @@ module Algolia
           updated_at == other.updated_at &&
           created_at == other.created_at &&
           end_at == other.end_at &&
+          stopped_at == other.stopped_at &&
           name == other.name &&
           status == other.status &&
           variants == other.variants &&
@@ -221,6 +232,7 @@ module Algolia
           updated_at,
           created_at,
           end_at,
+          stopped_at,
           name,
           status,
           variants,
