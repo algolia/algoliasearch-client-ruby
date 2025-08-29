@@ -2265,6 +2265,52 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::WatchResponse")
     end
 
+    # Fully updates a task by its ID, use partialUpdateTask if you only want to update a subset of fields.
+
+    # @param task_id [String] Unique identifier of a task. (required)
+    # @param task_replace [TaskReplace]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def replace_task_with_http_info(task_id, task_replace, request_options = {})
+      # verify the required parameter 'task_id' is set
+      if @api_client.config.client_side_validation && task_id.nil?
+        raise ArgumentError, "Parameter `task_id` is required when calling `replace_task`."
+      end
+      # verify the required parameter 'task_replace' is set
+      if @api_client.config.client_side_validation && task_replace.nil?
+        raise ArgumentError, "Parameter `task_replace` is required when calling `replace_task`."
+      end
+
+      path = "/2/tasks/{taskID}".sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(task_replace)
+
+      new_options = request_options.merge(
+        :operation => :"IngestionClient.replace_task",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:PUT, path, new_options)
+    end
+
+    # Fully updates a task by its ID, use partialUpdateTask if you only want to update a subset of fields.
+
+    # @param task_id [String] Unique identifier of a task. (required)
+    # @param task_replace [TaskReplace]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [TaskUpdateResponse]
+    def replace_task(task_id, task_replace, request_options = {})
+      response = replace_task_with_http_info(task_id, task_replace, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskUpdateResponse")
+    end
+
     # Runs all tasks linked to a source, only available for Shopify, BigCommerce and commercetools sources. Creates one run per task.
     #
     # Required API Key ACLs:
@@ -3046,7 +3092,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::SourceUpdateResponse")
     end
 
-    # Updates a task by its ID.
+    # Partially updates a task by its ID.
 
     # @param task_id [String] Unique identifier of a task. (required)
     # @param task_update [TaskUpdate]  (required)
@@ -3081,7 +3127,7 @@ module Algolia
       @api_client.call_api(:PATCH, path, new_options)
     end
 
-    # Updates a task by its ID.
+    # Partially updates a task by its ID.
 
     # @param task_id [String] Unique identifier of a task. (required)
     # @param task_update [TaskUpdate]  (required)

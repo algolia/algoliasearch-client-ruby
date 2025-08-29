@@ -7,23 +7,28 @@ require "time"
 
 module Algolia
   module Ingestion
-    # API request body for partially updating a task.
-    class TaskUpdate
+    # API request body for updating a task.
+    class TaskReplace
       # Universally unique identifier (UUID) of a destination resource.
       attr_accessor :destination_id
+
+      attr_accessor :action
+
+      attr_accessor :subscription_action
 
       # Cron expression for the task's schedule.
       attr_accessor :cron
 
-      attr_accessor :input
-
       # Whether the task is enabled.
       attr_accessor :enabled
 
-      attr_accessor :subscription_action
-
       # Maximum accepted percentage of failures for a task run to finish successfully.
       attr_accessor :failure_threshold
+
+      attr_accessor :input
+
+      # Date of the last cursor in RFC 3339 format.
+      attr_accessor :cursor
 
       attr_accessor :notifications
 
@@ -33,11 +38,13 @@ module Algolia
       def self.attribute_map
         {
           :destination_id => :destinationID,
-          :cron => :cron,
-          :input => :input,
-          :enabled => :enabled,
+          :action => :action,
           :subscription_action => :subscriptionAction,
+          :cron => :cron,
+          :enabled => :enabled,
           :failure_threshold => :failureThreshold,
+          :input => :input,
+          :cursor => :cursor,
           :notifications => :notifications,
           :policies => :policies
         }
@@ -47,11 +54,13 @@ module Algolia
       def self.types_mapping
         {
           :destination_id => :"String",
-          :cron => :"String",
-          :input => :"TaskInput",
-          :enabled => :"Boolean",
+          :action => :"ActionType",
           :subscription_action => :"ActionType",
+          :cron => :"String",
+          :enabled => :"Boolean",
           :failure_threshold => :"Integer",
+          :input => :"TaskInput",
+          :cursor => :"String",
           :notifications => :"Notifications",
           :policies => :"Policies"
         }
@@ -70,7 +79,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::TaskUpdate` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::TaskReplace` initialize method"
           )
         end
 
@@ -79,7 +88,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::TaskUpdate`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::TaskReplace`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -89,26 +98,38 @@ module Algolia
 
         if attributes.key?(:destination_id)
           self.destination_id = attributes[:destination_id]
+        else
+          self.destination_id = nil
         end
 
-        if attributes.key?(:cron)
-          self.cron = attributes[:cron]
-        end
-
-        if attributes.key?(:input)
-          self.input = attributes[:input]
-        end
-
-        if attributes.key?(:enabled)
-          self.enabled = attributes[:enabled]
+        if attributes.key?(:action)
+          self.action = attributes[:action]
+        else
+          self.action = nil
         end
 
         if attributes.key?(:subscription_action)
           self.subscription_action = attributes[:subscription_action]
         end
 
+        if attributes.key?(:cron)
+          self.cron = attributes[:cron]
+        end
+
+        if attributes.key?(:enabled)
+          self.enabled = attributes[:enabled]
+        end
+
         if attributes.key?(:failure_threshold)
           self.failure_threshold = attributes[:failure_threshold]
+        end
+
+        if attributes.key?(:input)
+          self.input = attributes[:input]
+        end
+
+        if attributes.key?(:cursor)
+          self.cursor = attributes[:cursor]
         end
 
         if attributes.key?(:notifications)
@@ -126,11 +147,13 @@ module Algolia
         return true if self.equal?(other)
         self.class == other.class &&
           destination_id == other.destination_id &&
-          cron == other.cron &&
-          input == other.input &&
-          enabled == other.enabled &&
+          action == other.action &&
           subscription_action == other.subscription_action &&
+          cron == other.cron &&
+          enabled == other.enabled &&
           failure_threshold == other.failure_threshold &&
+          input == other.input &&
+          cursor == other.cursor &&
           notifications == other.notifications &&
           policies == other.policies
       end
@@ -144,7 +167,18 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [destination_id, cron, input, enabled, subscription_action, failure_threshold, notifications, policies].hash
+        [
+          destination_id,
+          action,
+          subscription_action,
+          cron,
+          enabled,
+          failure_threshold,
+          input,
+          cursor,
+          notifications,
+          policies
+        ].hash
       end
 
       # Builds the object from hash
