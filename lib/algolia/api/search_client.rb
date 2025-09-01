@@ -1503,9 +1503,10 @@ module Algolia
     # Required API Key ACLs:
     #   - settings
     # @param index_name [String] Name of the index on which to perform the operation. (required)
+    # @param get_version [Integer] When set to 2, the endpoint will not include `synonyms` in the response. This parameter is here for backward compatibility. (default to 1)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_settings_with_http_info(index_name, request_options = {})
+    def get_settings_with_http_info(index_name, get_version = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `get_settings`."
@@ -1513,6 +1514,7 @@ module Algolia
 
       path = "/1/indexes/{indexName}/settings".sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
       query_params = {}
+      query_params[:getVersion] = get_version unless get_version.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
@@ -1535,10 +1537,11 @@ module Algolia
     # Required API Key ACLs:
     #   - settings
     # @param index_name [String] Name of the index on which to perform the operation. (required)
+    # @param get_version [Integer] When set to 2, the endpoint will not include `synonyms` in the response. This parameter is here for backward compatibility. (default to 1)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [SettingsResponse]
-    def get_settings(index_name, request_options = {})
-      response = get_settings_with_http_info(index_name, request_options)
+    def get_settings(index_name, get_version = nil, request_options = {})
+      response = get_settings_with_http_info(index_name, get_version, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::SettingsResponse")
     end
 
