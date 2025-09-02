@@ -80,6 +80,9 @@ module Algolia
       # Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) This setting only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
       attr_accessor :enable_re_ranking
 
+      # A list of extenrally injected objectID groups into from an external source.
+      attr_accessor :injected_items
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -108,7 +111,8 @@ module Algolia
           :analytics => :analytics,
           :analytics_tags => :analyticsTags,
           :enable_ab_test => :enableABTest,
-          :enable_re_ranking => :enableReRanking
+          :enable_re_ranking => :enableReRanking,
+          :injected_items => :injectedItems
         }
       end
 
@@ -140,7 +144,8 @@ module Algolia
           :analytics => :"Boolean",
           :analytics_tags => :"Array<String>",
           :enable_ab_test => :"Boolean",
-          :enable_re_ranking => :"Boolean"
+          :enable_re_ranking => :"Boolean",
+          :injected_items => :"Hash<String, ExternalInjectedItem>"
         }
       end
 
@@ -286,6 +291,12 @@ module Algolia
         if attributes.key?(:enable_re_ranking)
           self.enable_re_ranking = attributes[:enable_re_ranking]
         end
+
+        if attributes.key?(:injected_items)
+          if (value = attributes[:injected_items]).is_a?(Hash)
+            self.injected_items = value
+          end
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -318,7 +329,8 @@ module Algolia
           analytics == other.analytics &&
           analytics_tags == other.analytics_tags &&
           enable_ab_test == other.enable_ab_test &&
-          enable_re_ranking == other.enable_re_ranking
+          enable_re_ranking == other.enable_re_ranking &&
+          injected_items == other.injected_items
       end
 
       # @see the `==` method
@@ -356,7 +368,8 @@ module Algolia
           analytics,
           analytics_tags,
           enable_ab_test,
-          enable_re_ranking
+          enable_re_ranking,
+          injected_items
         ].hash
       end
 
