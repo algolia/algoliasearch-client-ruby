@@ -2086,6 +2086,7 @@ module Algolia
     # @param page [Integer] Page number of the paginated API response.
     # @param sort [TransformationSortKeys] Property by which to sort the list of transformations. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param type [TransformationType] Whether to filter the list of transformations by the type of transformation.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def list_transformations_with_http_info(
@@ -2093,6 +2094,7 @@ module Algolia
       page = nil,
       sort = nil,
       order = nil,
+      type = nil,
       request_options = {}
     )
       path = "/1/transformations"
@@ -2101,6 +2103,7 @@ module Algolia
       query_params[:page] = page unless page.nil?
       query_params[:sort] = sort unless sort.nil?
       query_params[:order] = order unless order.nil?
+      query_params[:type] = type unless type.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
@@ -2128,10 +2131,18 @@ module Algolia
     # @param page [Integer] Page number of the paginated API response.
     # @param sort [TransformationSortKeys] Property by which to sort the list of transformations. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
+    # @param type [TransformationType] Whether to filter the list of transformations by the type of transformation.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListTransformationsResponse]
-    def list_transformations(items_per_page = nil, page = nil, sort = nil, order = nil, request_options = {})
-      response = list_transformations_with_http_info(items_per_page, page, sort, order, request_options)
+    def list_transformations(
+      items_per_page = nil,
+      page = nil,
+      sort = nil,
+      order = nil,
+      type = nil,
+      request_options = {}
+    )
+      response = list_transformations_with_http_info(items_per_page, page, sort, order, type, request_options)
       @api_client.deserialize(
         response.body,
         request_options[:debug_return_type] || "Ingestion::ListTransformationsResponse"
