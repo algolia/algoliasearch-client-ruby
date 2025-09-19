@@ -62,6 +62,711 @@ module Algolia
       self
     end
 
+    # This method lets you send requests to the Algolia REST API.
+
+    # @param path [String] Path of the endpoint, for example `1/newFeature`. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def custom_delete_with_http_info(path, parameters = nil, request_options = {})
+      # verify the required parameter 'path' is set
+      if @api_client.config.client_side_validation && path.nil?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
+      end
+
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
+      query_params = {}
+      query_params = query_params.merge(parameters) unless parameters.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"CompositionClient.custom_delete",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:DELETE, path, new_options)
+    end
+
+    # This method lets you send requests to the Algolia REST API.
+
+    # @param path [String] Path of the endpoint, for example `1/newFeature`. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Object]
+    def custom_delete(path, parameters = nil, request_options = {})
+      response = custom_delete_with_http_info(path, parameters, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
+    end
+
+    # This method lets you send requests to the Algolia REST API.
+
+    # @param path [String] Path of the endpoint, for example `1/newFeature`. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def custom_get_with_http_info(path, parameters = nil, request_options = {})
+      # verify the required parameter 'path' is set
+      if @api_client.config.client_side_validation && path.nil?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
+      end
+
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
+      query_params = {}
+      query_params = query_params.merge(parameters) unless parameters.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"CompositionClient.custom_get",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # This method lets you send requests to the Algolia REST API.
+
+    # @param path [String] Path of the endpoint, for example `1/newFeature`. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Object]
+    def custom_get(path, parameters = nil, request_options = {})
+      response = custom_get_with_http_info(path, parameters, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
+    end
+
+    # This method lets you send requests to the Algolia REST API.
+
+    # @param path [String] Path of the endpoint, for example `1/newFeature`. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param body [Object] Parameters to send with the custom request.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def custom_post_with_http_info(path, parameters = nil, body = nil, request_options = {})
+      # verify the required parameter 'path' is set
+      if @api_client.config.client_side_validation && path.nil?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
+      end
+
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
+      query_params = {}
+      query_params = query_params.merge(parameters) unless parameters.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
+
+      new_options = request_options.merge(
+        :operation => :"CompositionClient.custom_post",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # This method lets you send requests to the Algolia REST API.
+
+    # @param path [String] Path of the endpoint, for example `1/newFeature`. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param body [Object] Parameters to send with the custom request.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Object]
+    def custom_post(path, parameters = nil, body = nil, request_options = {})
+      response = custom_post_with_http_info(path, parameters, body, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
+    end
+
+    # This method lets you send requests to the Algolia REST API.
+
+    # @param path [String] Path of the endpoint, for example `1/newFeature`. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param body [Object] Parameters to send with the custom request.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def custom_put_with_http_info(path, parameters = nil, body = nil, request_options = {})
+      # verify the required parameter 'path' is set
+      if @api_client.config.client_side_validation && path.nil?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
+      end
+
+      path = "/{path}".sub("{" + "path" + "}", path.to_s)
+      query_params = {}
+      query_params = query_params.merge(parameters) unless parameters.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(body)
+
+      new_options = request_options.merge(
+        :operation => :"CompositionClient.custom_put",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:PUT, path, new_options)
+    end
+
+    # This method lets you send requests to the Algolia REST API.
+
+    # @param path [String] Path of the endpoint, for example `1/newFeature`. (required)
+    # @param parameters [Hash<String, Object>] Query parameters to apply to the current query.
+    # @param body [Object] Parameters to send with the custom request.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Object]
+    def custom_put(path, parameters = nil, body = nil, request_options = {})
+      response = custom_put_with_http_info(path, parameters, body, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
+    end
+
+    # Delete a composition from the current Algolia application.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param composition_id [String] Unique Composition ObjectID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def delete_composition_with_http_info(composition_id, request_options = {})
+      # verify the required parameter 'composition_id' is set
+      if @api_client.config.client_side_validation && composition_id.nil?
+        raise ArgumentError, "Parameter `composition_id` is required when calling `delete_composition`."
+      end
+
+      path = "/1/compositions/{compositionID}".sub(
+        "{" + "compositionID" + "}",
+        Transport.encode_uri(composition_id.to_s)
+      )
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"CompositionClient.delete_composition",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:DELETE, path, new_options)
+    end
+
+    # Delete a composition from the current Algolia application.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param composition_id [String] Unique Composition ObjectID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [TaskIDResponse]
+    def delete_composition(composition_id, request_options = {})
+      response = delete_composition_with_http_info(composition_id, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Composition::TaskIDResponse")
+    end
+
+    # Delete a Composition Rule from the specified Composition ID.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param composition_id [String] Unique Composition ObjectID. (required)
+    # @param algolia_object_id [String] Unique identifier of a rule object. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def delete_composition_rule_with_http_info(composition_id, algolia_object_id, request_options = {})
+      # verify the required parameter 'composition_id' is set
+      if @api_client.config.client_side_validation && composition_id.nil?
+        raise ArgumentError, "Parameter `composition_id` is required when calling `delete_composition_rule`."
+      end
+      # verify the required parameter 'algolia_object_id' is set
+      if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `delete_composition_rule`."
+      end
+
+      path = "/1/compositions/{compositionID}/rules/{objectID}"
+        .sub("{" + "compositionID" + "}", Transport.encode_uri(composition_id.to_s))
+        .sub("{" + "objectID" + "}", Transport.encode_uri(algolia_object_id.to_s))
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"CompositionClient.delete_composition_rule",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:DELETE, path, new_options)
+    end
+
+    # Delete a Composition Rule from the specified Composition ID.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param composition_id [String] Unique Composition ObjectID. (required)
+    # @param algolia_object_id [String] Unique identifier of a rule object. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [TaskIDResponse]
+    def delete_composition_rule(composition_id, algolia_object_id, request_options = {})
+      response = delete_composition_rule_with_http_info(composition_id, algolia_object_id, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Composition::TaskIDResponse")
+    end
+
+    # Retrieve a single composition in the current Algolia application.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    #   - settings
+    # @param composition_id [String] Unique Composition ObjectID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_composition_with_http_info(composition_id, request_options = {})
+      # verify the required parameter 'composition_id' is set
+      if @api_client.config.client_side_validation && composition_id.nil?
+        raise ArgumentError, "Parameter `composition_id` is required when calling `get_composition`."
+      end
+
+      path = "/1/compositions/{compositionID}".sub(
+        "{" + "compositionID" + "}",
+        Transport.encode_uri(composition_id.to_s)
+      )
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"CompositionClient.get_composition",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Retrieve a single composition in the current Algolia application.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    #   - settings
+    # @param composition_id [String] Unique Composition ObjectID. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Composition]
+    def get_composition(composition_id, request_options = {})
+      response = get_composition_with_http_info(composition_id, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Composition::Composition")
+    end
+
+    # Retrieves a rule by its ID. To find the object ID of rules, use the [`search` operation](#tag/Rules/operation/searchRules).
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    #   - settings
+    # @param composition_id [String] Unique Composition ObjectID. (required)
+    # @param algolia_object_id [String] Unique identifier of a rule object. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_rule_with_http_info(composition_id, algolia_object_id, request_options = {})
+      # verify the required parameter 'composition_id' is set
+      if @api_client.config.client_side_validation && composition_id.nil?
+        raise ArgumentError, "Parameter `composition_id` is required when calling `get_rule`."
+      end
+      # verify the required parameter 'algolia_object_id' is set
+      if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `get_rule`."
+      end
+
+      path = "/1/compositions/{compositionID}/rules/{objectID}"
+        .sub("{" + "compositionID" + "}", Transport.encode_uri(composition_id.to_s))
+        .sub("{" + "objectID" + "}", Transport.encode_uri(algolia_object_id.to_s))
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"CompositionClient.get_rule",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Retrieves a rule by its ID. To find the object ID of rules, use the [`search` operation](#tag/Rules/operation/searchRules).
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    #   - settings
+    # @param composition_id [String] Unique Composition ObjectID. (required)
+    # @param algolia_object_id [String] Unique identifier of a rule object. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [CompositionRule]
+    def get_rule(composition_id, algolia_object_id, request_options = {})
+      response = get_rule_with_http_info(composition_id, algolia_object_id, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Composition::CompositionRule")
+    end
+
+    # Checks the status of a given task.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    #   - settings
+    #   - addObject
+    #   - deleteObject
+    #   - deleteIndex
+    # @param composition_id [String] Unique Composition ObjectID. (required)
+    # @param task_id [Integer] Unique task identifier. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_task_with_http_info(composition_id, task_id, request_options = {})
+      # verify the required parameter 'composition_id' is set
+      if @api_client.config.client_side_validation && composition_id.nil?
+        raise ArgumentError, "Parameter `composition_id` is required when calling `get_task`."
+      end
+      # verify the required parameter 'task_id' is set
+      if @api_client.config.client_side_validation && task_id.nil?
+        raise ArgumentError, "Parameter `task_id` is required when calling `get_task`."
+      end
+
+      path = "/1/compositions/{compositionID}/task/{taskID}"
+        .sub("{" + "compositionID" + "}", Transport.encode_uri(composition_id.to_s))
+        .sub("{" + "taskID" + "}", Transport.encode_uri(task_id.to_s))
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"CompositionClient.get_task",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Checks the status of a given task.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    #   - settings
+    #   - addObject
+    #   - deleteObject
+    #   - deleteIndex
+    # @param composition_id [String] Unique Composition ObjectID. (required)
+    # @param task_id [Integer] Unique task identifier. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [GetTaskResponse]
+    def get_task(composition_id, task_id, request_options = {})
+      response = get_task_with_http_info(composition_id, task_id, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Composition::GetTaskResponse")
+    end
+
+    # Lists all compositions in the current Algolia application.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    #   - settings
+    # @param page [Integer] Requested page of the API response. If `null`, the API response is not paginated.
+    # @param hits_per_page [Integer] Number of hits per page. (default to 100)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def list_compositions_with_http_info(page = nil, hits_per_page = nil, request_options = {})
+      path = "/1/compositions"
+      query_params = {}
+      query_params[:page] = page unless page.nil?
+      query_params[:hitsPerPage] = hits_per_page unless hits_per_page.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"CompositionClient.list_compositions",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Lists all compositions in the current Algolia application.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    #   - settings
+    # @param page [Integer] Requested page of the API response. If `null`, the API response is not paginated.
+    # @param hits_per_page [Integer] Number of hits per page. (default to 100)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [ListCompositionsResponse]
+    def list_compositions(page = nil, hits_per_page = nil, request_options = {})
+      response = list_compositions_with_http_info(page, hits_per_page, request_options)
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Composition::ListCompositionsResponse"
+      )
+    end
+
+    # Adds, updates, or deletes compositions with a single API request.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param batch_params [BatchParams]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def multiple_batch_with_http_info(batch_params, request_options = {})
+      # verify the required parameter 'batch_params' is set
+      if @api_client.config.client_side_validation && batch_params.nil?
+        raise ArgumentError, "Parameter `batch_params` is required when calling `multiple_batch`."
+      end
+
+      path = "/1/compositions/*/batch"
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(batch_params)
+
+      new_options = request_options.merge(
+        :operation => :"CompositionClient.multiple_batch",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Adds, updates, or deletes compositions with a single API request.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param batch_params [BatchParams]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [MultipleBatchResponse]
+    def multiple_batch(batch_params, request_options = {})
+      response = multiple_batch_with_http_info(batch_params, request_options)
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Composition::MultipleBatchResponse"
+      )
+    end
+
+    # Upsert a composition in the current Algolia application.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param composition_id [String] Unique Composition ObjectID. (required)
+    # @param composition [Composition]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def put_composition_with_http_info(composition_id, composition, request_options = {})
+      # verify the required parameter 'composition_id' is set
+      if @api_client.config.client_side_validation && composition_id.nil?
+        raise ArgumentError, "Parameter `composition_id` is required when calling `put_composition`."
+      end
+      # verify the required parameter 'composition' is set
+      if @api_client.config.client_side_validation && composition.nil?
+        raise ArgumentError, "Parameter `composition` is required when calling `put_composition`."
+      end
+
+      path = "/1/compositions/{compositionID}".sub(
+        "{" + "compositionID" + "}",
+        Transport.encode_uri(composition_id.to_s)
+      )
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(composition)
+
+      new_options = request_options.merge(
+        :operation => :"CompositionClient.put_composition",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:PUT, path, new_options)
+    end
+
+    # Upsert a composition in the current Algolia application.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param composition_id [String] Unique Composition ObjectID. (required)
+    # @param composition [Composition]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [TaskIDResponse]
+    def put_composition(composition_id, composition, request_options = {})
+      response = put_composition_with_http_info(composition_id, composition, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Composition::TaskIDResponse")
+    end
+
+    # Upsert a Composition Rule for the specified composition ID.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param composition_id [String] Unique Composition ObjectID. (required)
+    # @param algolia_object_id [String] Unique identifier of a rule object. (required)
+    # @param composition_rule [CompositionRule]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def put_composition_rule_with_http_info(composition_id, algolia_object_id, composition_rule, request_options = {})
+      # verify the required parameter 'composition_id' is set
+      if @api_client.config.client_side_validation && composition_id.nil?
+        raise ArgumentError, "Parameter `composition_id` is required when calling `put_composition_rule`."
+      end
+      # verify the required parameter 'algolia_object_id' is set
+      if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `put_composition_rule`."
+      end
+      # verify the required parameter 'composition_rule' is set
+      if @api_client.config.client_side_validation && composition_rule.nil?
+        raise ArgumentError, "Parameter `composition_rule` is required when calling `put_composition_rule`."
+      end
+
+      path = "/1/compositions/{compositionID}/rules/{objectID}"
+        .sub("{" + "compositionID" + "}", Transport.encode_uri(composition_id.to_s))
+        .sub("{" + "objectID" + "}", Transport.encode_uri(algolia_object_id.to_s))
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(composition_rule)
+
+      new_options = request_options.merge(
+        :operation => :"CompositionClient.put_composition_rule",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:PUT, path, new_options)
+    end
+
+    # Upsert a Composition Rule for the specified composition ID.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param composition_id [String] Unique Composition ObjectID. (required)
+    # @param algolia_object_id [String] Unique identifier of a rule object. (required)
+    # @param composition_rule [CompositionRule]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [TaskIDResponse]
+    def put_composition_rule(composition_id, algolia_object_id, composition_rule, request_options = {})
+      response = put_composition_rule_with_http_info(
+        composition_id,
+        algolia_object_id,
+        composition_rule,
+        request_options
+      )
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Composition::TaskIDResponse")
+    end
+
+    # Create or update or delete multiple composition rules.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param composition_id [String] Unique Composition ObjectID. (required)
+    # @param rules [CompositionRulesBatchParams]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def save_rules_with_http_info(composition_id, rules, request_options = {})
+      # verify the required parameter 'composition_id' is set
+      if @api_client.config.client_side_validation && composition_id.nil?
+        raise ArgumentError, "Parameter `composition_id` is required when calling `save_rules`."
+      end
+      # verify the required parameter 'rules' is set
+      if @api_client.config.client_side_validation && rules.nil?
+        raise ArgumentError, "Parameter `rules` is required when calling `save_rules`."
+      end
+
+      path = "/1/compositions/{compositionID}/rules/batch".sub(
+        "{" + "compositionID" + "}",
+        Transport.encode_uri(composition_id.to_s)
+      )
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(rules)
+
+      new_options = request_options.merge(
+        :operation => :"CompositionClient.save_rules",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Create or update or delete multiple composition rules.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param composition_id [String] Unique Composition ObjectID. (required)
+    # @param rules [CompositionRulesBatchParams]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [RulesMultipleBatchResponse]
+    def save_rules(composition_id, rules, request_options = {})
+      response = save_rules_with_http_info(composition_id, rules, request_options)
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Composition::RulesMultipleBatchResponse"
+      )
+    end
+
     # Runs a query on a single composition and returns matching results.
     #
     # Required API Key ACLs:
@@ -113,6 +818,66 @@ module Algolia
     def search(composition_id, request_body, request_options = {})
       response = search_with_http_info(composition_id, request_body, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Composition::SearchResponse")
+    end
+
+    # Searches for composition rules in your index.
+    #
+    # Required API Key ACLs:
+    #   - settings
+    # @param composition_id [String] Unique Composition ObjectID. (required)
+    # @param search_composition_rules_params [SearchCompositionRulesParams]
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def search_composition_rules_with_http_info(
+      composition_id,
+      search_composition_rules_params = nil,
+      request_options = {}
+    )
+      # verify the required parameter 'composition_id' is set
+      if @api_client.config.client_side_validation && composition_id.nil?
+        raise ArgumentError, "Parameter `composition_id` is required when calling `search_composition_rules`."
+      end
+
+      path = "/1/compositions/{compositionID}/rules/search".sub(
+        "{" + "compositionID" + "}",
+        Transport.encode_uri(composition_id.to_s)
+      )
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(search_composition_rules_params)
+
+      new_options = request_options.merge(
+        :operation => :"CompositionClient.search_composition_rules",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Searches for composition rules in your index.
+    #
+    # Required API Key ACLs:
+    #   - settings
+    # @param composition_id [String] Unique Composition ObjectID. (required)
+    # @param search_composition_rules_params [SearchCompositionRulesParams]
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [SearchCompositionRulesResponse]
+    def search_composition_rules(composition_id, search_composition_rules_params = nil, request_options = {})
+      response = search_composition_rules_with_http_info(
+        composition_id,
+        search_composition_rules_params,
+        request_options
+      )
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "Composition::SearchCompositionRulesResponse"
+      )
     end
 
     # Searches for values of a specified facet attribute on the composition's main source's index.  - By default, facet values are sorted by decreasing count.   You can adjust this with the `sortFacetValueBy` parameter. - Searching for facet values doesn't work if you have **more than 65 searchable facets and searchable attributes combined**.
