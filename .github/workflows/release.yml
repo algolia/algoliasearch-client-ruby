@@ -21,7 +21,7 @@ jobs:
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.5
+          ruby-version: 3.4.6
           bundler-cache: true
 
       - uses: rubygems/release-gem@ebe1ec66bd8d2c709ac29aa2b43438d450e7a0a6
