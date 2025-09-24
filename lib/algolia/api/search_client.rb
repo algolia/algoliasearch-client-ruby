@@ -3272,7 +3272,8 @@ module Algolia
     def browse_rules(index_name, search_rules_params = Search::SearchRulesParams.new, request_options = {}, &block)
       search_rules_params = api_client.object_to_hash(search_rules_params)
 
-      search_rules_params[:hitsPerPage] = 1000 unless search_rules_params.key?(:hitsPerPage)
+      search_rules_params[:page] ||= 0
+      search_rules_params[:hitsPerPage] ||= 1000
 
       rules = []
       loop do
@@ -3306,7 +3307,8 @@ module Algolia
     )
       search_synonyms_params = api_client.object_to_hash(search_synonyms_params)
 
-      search_synonyms_params[:hitsPerPage] = 1000 unless search_synonyms_params.key?(:hitsPerPage)
+      search_synonyms_params[:page] ||= 0
+      search_synonyms_params[:hitsPerPage] ||= 1000
 
       synonyms = []
       loop do
