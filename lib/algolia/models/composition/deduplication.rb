@@ -7,29 +7,21 @@ require "time"
 
 module Algolia
   module Composition
-    class Injection
-      attr_accessor :main
-
-      # list of injected items of the current Composition.
-      attr_accessor :injected_items
-
-      attr_accessor :deduplication
+    # Deduplication configures the methods used to resolve duplicate items between main search results and injected group results.
+    class Deduplication
+      attr_accessor :positioning
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :main => :main,
-          :injected_items => :injectedItems,
-          :deduplication => :deduplication
+          :positioning => :positioning
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :main => :"Main",
-          :injected_items => :"Array<InjectedItem>",
-          :deduplication => :"Deduplication"
+          :positioning => :"DedupPositioning"
         }
       end
 
@@ -46,7 +38,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::Injection` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::Deduplication` initialize method"
           )
         end
 
@@ -55,7 +47,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::Injection`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::Deduplication`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -63,20 +55,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:main)
-          self.main = attributes[:main]
+        if attributes.key?(:positioning)
+          self.positioning = attributes[:positioning]
         else
-          self.main = nil
-        end
-
-        if attributes.key?(:injected_items)
-          if (value = attributes[:injected_items]).is_a?(Array)
-            self.injected_items = value
-          end
-        end
-
-        if attributes.key?(:deduplication)
-          self.deduplication = attributes[:deduplication]
+          self.positioning = nil
         end
       end
 
@@ -85,9 +67,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          main == other.main &&
-          injected_items == other.injected_items &&
-          deduplication == other.deduplication
+          positioning == other.positioning
       end
 
       # @see the `==` method
@@ -99,7 +79,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [main, injected_items, deduplication].hash
+        [positioning].hash
       end
 
       # Builds the object from hash
