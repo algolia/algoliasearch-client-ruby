@@ -77,7 +77,7 @@ module Algolia
       # An object with custom data.  You can store up to 32kB as custom data.
       attr_accessor :user_data
 
-      # Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+      # Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics).
       attr_accessor :query_id
 
       # Whether automatic events collection is enabled for the application.

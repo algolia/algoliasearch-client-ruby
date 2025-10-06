@@ -8,7 +8,7 @@ require "time"
 module Algolia
   module Personalization
     class GetUserTokenResponse
-      # Unique pseudonymous or anonymous user identifier.  This helps with analytics and click and conversion events. For more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+      # Unique pseudonymous or anonymous user identifier.  This helps with analytics and click and conversion events. For more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
       attr_accessor :user_token
 
       # Date and time of the last event from this user, in RFC 3339 format.

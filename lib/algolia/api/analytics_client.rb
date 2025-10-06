@@ -245,14 +245,14 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Object")
     end
 
-    # Retrieves the add-to-cart rate for all your searches with at least one add-to-cart event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  The rate is the number of add-to-cart conversion events divided by the number of tracked searches. A search is tracked if it returns a queryID (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.  **There's a difference between a 0 and null add-to-cart rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, the add-to-cart rate is null. - **0** mean there _were_ queries but no [add-to-cart events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    # Retrieves the add-to-cart rate for all your searches with at least one add-to-cart event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  The rate is the number of add-to-cart conversion events divided by the number of tracked searches. A search is tracked if it returns a queryID (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.  **There's a difference between a 0 and null add-to-cart rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, the add-to-cart rate is null. - **0** mean there _were_ queries but no [add-to-cart events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     #
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_add_to_cart_rate_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
@@ -284,14 +284,14 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Retrieves the add-to-cart rate for all your searches with at least one add-to-cart event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  The rate is the number of add-to-cart conversion events divided by the number of tracked searches. A search is tracked if it returns a queryID (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.  **There's a difference between a 0 and null add-to-cart rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, the add-to-cart rate is null. - **0** mean there _were_ queries but no [add-to-cart events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    # Retrieves the add-to-cart rate for all your searches with at least one add-to-cart event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  The rate is the number of add-to-cart conversion events divided by the number of tracked searches. A search is tracked if it returns a queryID (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.  **There's a difference between a 0 and null add-to-cart rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, the add-to-cart rate is null. - **0** mean there _were_ queries but no [add-to-cart events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     #
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetAddToCartRateResponse]
     def get_add_to_cart_rate(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
@@ -302,14 +302,14 @@ module Algolia
       )
     end
 
-    # Retrieves the average click position of your search results, including a daily breakdown.  The average click position is the average of all clicked search result positions. For example, if users only ever click on the first result for any search, the average click position is 1. By default, the analyzed period includes the last eight days including the current day.  An average of `null` when `clickAnalytics` is enabled means Algolia didn't receive any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries. The average is `null` until Algolia receives at least one click event.
+    # Retrieves the average click position of your search results, including a daily breakdown.  The average click position is the average of all clicked search result positions. For example, if users only ever click on the first result for any search, the average click position is 1. By default, the analyzed period includes the last eight days including the current day.  An average of `null` when `clickAnalytics` is enabled means Algolia didn't receive any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries. The average is `null` until Algolia receives at least one click event.
     #
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_average_click_position_with_http_info(
@@ -347,14 +347,14 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Retrieves the average click position of your search results, including a daily breakdown.  The average click position is the average of all clicked search result positions. For example, if users only ever click on the first result for any search, the average click position is 1. By default, the analyzed period includes the last eight days including the current day.  An average of `null` when `clickAnalytics` is enabled means Algolia didn't receive any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries. The average is `null` until Algolia receives at least one click event.
+    # Retrieves the average click position of your search results, including a daily breakdown.  The average click position is the average of all clicked search result positions. For example, if users only ever click on the first result for any search, the average click position is 1. By default, the analyzed period includes the last eight days including the current day.  An average of `null` when `clickAnalytics` is enabled means Algolia didn't receive any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries. The average is `null` until Algolia receives at least one click event.
     #
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetAverageClickPositionResponse]
     def get_average_click_position(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
@@ -365,14 +365,14 @@ module Algolia
       )
     end
 
-    # Retrieves the positions in the search results and their associated number of clicks.  This lets you check how many clicks the first, second, or tenth search results receive.  An average of `0` when `clickAnalytics` is enabled means Algolia didn't receive any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
+    # Retrieves the positions in the search results and their associated number of clicks.  This lets you check how many clicks the first, second, or tenth search results receive.  An average of `0` when `clickAnalytics` is enabled means Algolia didn't receive any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
     #
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_click_positions_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
@@ -404,14 +404,14 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Retrieves the positions in the search results and their associated number of clicks.  This lets you check how many clicks the first, second, or tenth search results receive.  An average of `0` when `clickAnalytics` is enabled means Algolia didn't receive any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started/) for the queries.
+    # Retrieves the positions in the search results and their associated number of clicks.  This lets you check how many clicks the first, second, or tenth search results receive.  An average of `0` when `clickAnalytics` is enabled means Algolia didn't receive any [click events](https://www.algolia.com/doc/guides/sending-events/getting-started) for the queries.
     #
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetClickPositionsResponse]
     def get_click_positions(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
@@ -422,14 +422,14 @@ module Algolia
       )
     end
 
-    # Retrieves the click-through rate (CTR) for all your searches with at least one click event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  **There's a difference between a 0 and null CTR when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, CTR is null. - **0** mean there _were_ queries but no [click events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    # Retrieves the click-through rate (CTR) for all your searches with at least one click event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  **There's a difference between a 0 and null CTR when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, CTR is null. - **0** mean there _were_ queries but no [click events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     #
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_click_through_rate_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
@@ -461,14 +461,14 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Retrieves the click-through rate (CTR) for all your searches with at least one click event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  **There's a difference between a 0 and null CTR when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, CTR is null. - **0** mean there _were_ queries but no [click events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    # Retrieves the click-through rate (CTR) for all your searches with at least one click event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  **There's a difference between a 0 and null CTR when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, CTR is null. - **0** mean there _were_ queries but no [click events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     #
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetClickThroughRateResponse]
     def get_click_through_rate(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
@@ -479,14 +479,14 @@ module Algolia
       )
     end
 
-    # Retrieves the conversion rate (CR) for all your searches with at least one conversion event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  **There's a difference between a 0 and null CR when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, CR is null. - **0** mean there _were_ queries but no [conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    # Retrieves the conversion rate (CR) for all your searches with at least one conversion event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  **There's a difference between a 0 and null CR when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, CR is null. - **0** mean there _were_ queries but no [conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     #
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_conversion_rate_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
@@ -518,14 +518,14 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Retrieves the conversion rate (CR) for all your searches with at least one conversion event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  **There's a difference between a 0 and null CR when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, CR is null. - **0** mean there _were_ queries but no [conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    # Retrieves the conversion rate (CR) for all your searches with at least one conversion event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  **There's a difference between a 0 and null CR when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, CR is null. - **0** mean there _were_ queries but no [conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     #
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetConversionRateResponse]
     def get_conversion_rate(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
@@ -543,7 +543,7 @@ module Algolia
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_no_click_rate_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
@@ -582,7 +582,7 @@ module Algolia
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetNoClickRateResponse]
     def get_no_click_rate(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
@@ -597,7 +597,7 @@ module Algolia
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_no_results_rate_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
@@ -636,7 +636,7 @@ module Algolia
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetNoResultsRateResponse]
     def get_no_results_rate(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
@@ -647,14 +647,14 @@ module Algolia
       )
     end
 
-    # Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  The rate is the number of purchase conversion events divided by the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    # Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  The rate is the number of purchase conversion events divided by the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     #
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_purchase_rate_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
@@ -686,14 +686,14 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  The rate is the number of purchase conversion events divided by the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    # Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.  The rate is the number of purchase conversion events divided by the number of tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries: since Algolia didn't receive any events, the purchase rate is null. - **0** mean there _were_ queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     #
     # Required API Key ACLs:
     #   - analytics
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetPurchaseRateResponse]
     def get_purchase_rate(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
@@ -711,7 +711,7 @@ module Algolia
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_revenue_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
@@ -750,7 +750,7 @@ module Algolia
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetRevenue]
     def get_revenue(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
@@ -765,7 +765,7 @@ module Algolia
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_searches_count_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
@@ -804,7 +804,7 @@ module Algolia
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetSearchesCountResponse]
     def get_searches_count(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
@@ -824,7 +824,7 @@ module Algolia
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
     # @param limit [Integer] Number of items to return.  (default to 10)
     # @param offset [Integer] Position of the first item to return.  (default to 0)
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_searches_no_clicks_with_http_info(
@@ -875,7 +875,7 @@ module Algolia
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
     # @param limit [Integer] Number of items to return.  (default to 10)
     # @param offset [Integer] Position of the first item to return.  (default to 0)
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetSearchesNoClicksResponse]
     def get_searches_no_clicks(
@@ -911,7 +911,7 @@ module Algolia
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
     # @param limit [Integer] Number of items to return.  (default to 10)
     # @param offset [Integer] Position of the first item to return.  (default to 0)
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_searches_no_results_with_http_info(
@@ -962,7 +962,7 @@ module Algolia
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
     # @param limit [Integer] Number of items to return.  (default to 10)
     # @param offset [Integer] Position of the first item to return.  (default to 0)
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetSearchesNoResultsResponse]
     def get_searches_no_results(
@@ -1043,7 +1043,7 @@ module Algolia
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
     # @param limit [Integer] Number of items to return.  (default to 10)
     # @param offset [Integer] Position of the first item to return.  (default to 0)
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_top_countries_with_http_info(
@@ -1094,7 +1094,7 @@ module Algolia
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
     # @param limit [Integer] Number of items to return.  (default to 10)
     # @param offset [Integer] Position of the first item to return.  (default to 0)
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopCountriesResponse]
     def get_top_countries(
@@ -1123,7 +1123,7 @@ module Algolia
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
     # @param limit [Integer] Number of items to return.  (default to 10)
     # @param offset [Integer] Position of the first item to return.  (default to 0)
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_top_filter_attributes_with_http_info(
@@ -1177,7 +1177,7 @@ module Algolia
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
     # @param limit [Integer] Number of items to return.  (default to 10)
     # @param offset [Integer] Position of the first item to return.  (default to 0)
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopFilterAttributesResponse]
     def get_top_filter_attributes(
@@ -1217,7 +1217,7 @@ module Algolia
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
     # @param limit [Integer] Number of items to return.  (default to 10)
     # @param offset [Integer] Position of the first item to return.  (default to 0)
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_top_filter_for_attribute_with_http_info(
@@ -1277,7 +1277,7 @@ module Algolia
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
     # @param limit [Integer] Number of items to return.  (default to 10)
     # @param offset [Integer] Position of the first item to return.  (default to 0)
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopFilterForAttributeResponse]
     def get_top_filter_for_attribute(
@@ -1308,7 +1308,7 @@ module Algolia
       )
     end
 
-    # Retrieves the 1,000 most frequently used filters for a search that didn't return any results.  To get the most frequent searches without results, use the [Retrieve searches without results](#tag/search/operation/getSearchesNoResults) operation.
+    # Retrieves the 1,000 most frequently used filters for a search that didn't return any results.  To get the most frequent searches without results, use the [Retrieve searches without results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
     #
     # Required API Key ACLs:
     #   - analytics
@@ -1318,7 +1318,7 @@ module Algolia
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
     # @param limit [Integer] Number of items to return.  (default to 10)
     # @param offset [Integer] Position of the first item to return.  (default to 0)
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_top_filters_no_results_with_http_info(
@@ -1362,7 +1362,7 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Retrieves the 1,000 most frequently used filters for a search that didn't return any results.  To get the most frequent searches without results, use the [Retrieve searches without results](#tag/search/operation/getSearchesNoResults) operation.
+    # Retrieves the 1,000 most frequently used filters for a search that didn't return any results.  To get the most frequent searches without results, use the [Retrieve searches without results](https://www.algolia.com/doc/rest-api/analytics/get-searches-no-results) operation.
     #
     # Required API Key ACLs:
     #   - analytics
@@ -1372,7 +1372,7 @@ module Algolia
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
     # @param limit [Integer] Number of items to return.  (default to 10)
     # @param offset [Integer] Position of the first item to return.  (default to 0)
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopFiltersNoResultsResponse]
     def get_top_filters_no_results(
@@ -1401,7 +1401,7 @@ module Algolia
       )
     end
 
-    # Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to true, the response also includes:  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    # Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to true, the response also includes:  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     #
     # Required API Key ACLs:
     #   - analytics
@@ -1413,7 +1413,7 @@ module Algolia
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
     # @param limit [Integer] Number of items to return.  (default to 10)
     # @param offset [Integer] Position of the first item to return.  (default to 0)
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_top_hits_with_http_info(
@@ -1461,7 +1461,7 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to true, the response also includes:  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    # Retrieves the object IDs of the 1,000 most frequent search results.  If you set the `clickAnalytics` query parameter to true, the response also includes:  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     #
     # Required API Key ACLs:
     #   - analytics
@@ -1473,7 +1473,7 @@ module Algolia
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
     # @param limit [Integer] Number of items to return.  (default to 10)
     # @param offset [Integer] Position of the first item to return.  (default to 0)
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopHitsResponse]
     def get_top_hits(
@@ -1503,7 +1503,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Analytics::GetTopHitsResponse")
     end
 
-    # Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    # Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     #
     # Required API Key ACLs:
     #   - analytics
@@ -1516,7 +1516,7 @@ module Algolia
     # @param direction [Direction] Sorting direction of the results: ascending or descending.  (default to 'asc')
     # @param limit [Integer] Number of items to return.  (default to 10)
     # @param offset [Integer] Position of the first item to return.  (default to 0)
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_top_searches_with_http_info(
@@ -1566,7 +1566,7 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started/) were received.
+    # Returns the most popular searches. For each search, it also includes the average number of hits.  If you set the `clickAnalytics` query parameter to `true`, the response also includes  - Tracked searches count. Tracked searches are Search API requests with the `clickAnalytics` parameter set to `true`. This differs from the response's `count`, which shows the overall number of searches, including those where `clickAnalytics` is `false`. - Click count - Click-through rate (CTR) - Conversion count - Conversion rate (CR) - Average click position  If you set the `revenueAnalytics` query parameter to `true`, the response also includes:  - Add-to-cart count - Add-to-cart rate (ATCR) - Purchase count - Purchase rate - Revenue details for each currency  **There's a difference between 0% rates and null rates:**  - **Null** means there were no queries: since Algolia didn't receive any events, the rates (CTR, CR, ATCR, purchase rate) are null. - **0% rates** mean there _were_ queries but no [click or conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     #
     # Required API Key ACLs:
     #   - analytics
@@ -1579,7 +1579,7 @@ module Algolia
     # @param direction [Direction] Sorting direction of the results: ascending or descending.  (default to 'asc')
     # @param limit [Integer] Number of items to return.  (default to 10)
     # @param offset [Integer] Position of the first item to return.  (default to 0)
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetTopSearchesResponse]
     def get_top_searches(
@@ -1618,7 +1618,7 @@ module Algolia
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def get_users_count_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
@@ -1657,7 +1657,7 @@ module Algolia
     # @param index [String] Index name. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    # @param tags [String] Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [GetUsersCountResponse]
     def get_users_count(index, start_date = nil, end_date = nil, tags = nil, request_options = {})

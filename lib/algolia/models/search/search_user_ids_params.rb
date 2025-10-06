@@ -9,7 +9,6 @@ module Algolia
   module Search
     # OK
     class SearchUserIdsParams
-      # Query to search. The search is a prefix search with [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/) enabled. An empty query will retrieve all users.
       attr_accessor :query
 
       # Cluster name.

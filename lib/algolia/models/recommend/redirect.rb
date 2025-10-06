@@ -7,7 +7,7 @@ require "time"
 
 module Algolia
   module Recommend
-    # [Redirect results to a URL](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/redirects/), this this parameter is for internal use only.
+    # [Redirect results to a URL](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/redirects), this this parameter is for internal use only.
     class Redirect
       attr_accessor :index
 
