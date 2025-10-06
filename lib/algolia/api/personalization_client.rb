@@ -11,6 +11,18 @@ module Algolia
       raise "`app_id` is missing." if config.app_id.nil? || config.app_id == ""
       raise "`api_key` is missing." if config.api_key.nil? || config.api_key == ""
 
+      if config.connect_timeout.nil?
+        config.connect_timeout = 2000
+      end
+
+      if config.read_timeout.nil?
+        config.read_timeout = 5000
+      end
+
+      if config.write_timeout.nil?
+        config.write_timeout = 30000
+      end
+
       @api_client = Algolia::ApiClient.new(config)
     end
 
@@ -34,22 +46,10 @@ module Algolia
         )
 
       config = Algolia::Configuration.new(app_id, api_key, hosts, "Personalization", opts)
-      create_with_config(config)
+      new(config)
     end
 
     def self.create_with_config(config)
-      if config.connect_timeout.nil?
-        config.connect_timeout = 2000
-      end
-
-      if config.read_timeout.nil?
-        config.read_timeout = 5000
-      end
-
-      if config.write_timeout.nil?
-        config.write_timeout = 30000
-      end
-
       new(config)
     end
 

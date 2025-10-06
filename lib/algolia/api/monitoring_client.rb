@@ -11,18 +11,6 @@ module Algolia
       raise "`app_id` is missing." if config.app_id.nil? || config.app_id == ""
       raise "`api_key` is missing." if config.api_key.nil? || config.api_key == ""
 
-      @api_client = Algolia::ApiClient.new(config)
-    end
-
-    def self.create(app_id, api_key, opts = {})
-      hosts = []
-      hosts << Transport::StatefulHost.new("status.algolia.com", accept: CallType::READ | CallType::WRITE)
-
-      config = Algolia::Configuration.new(app_id, api_key, hosts, "Monitoring", opts)
-      create_with_config(config)
-    end
-
-    def self.create_with_config(config)
       if config.connect_timeout.nil?
         config.connect_timeout = 2000
       end
@@ -35,6 +23,18 @@ module Algolia
         config.write_timeout = 30000
       end
 
+      @api_client = Algolia::ApiClient.new(config)
+    end
+
+    def self.create(app_id, api_key, opts = {})
+      hosts = []
+      hosts << Transport::StatefulHost.new("status.algolia.com", accept: CallType::READ | CallType::WRITE)
+
+      config = Algolia::Configuration.new(app_id, api_key, hosts, "Monitoring", opts)
+      new(config)
+    end
+
+    def self.create_with_config(config)
       new(config)
     end
 
