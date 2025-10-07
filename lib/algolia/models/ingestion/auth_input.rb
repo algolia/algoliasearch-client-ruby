@@ -109,6 +109,5 @@ module Algolia
         end
       end
     end
-
   end
 end

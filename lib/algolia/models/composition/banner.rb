@@ -208,8 +208,6 @@ module Algolia
           value
         end
       end
-
     end
-
   end
 end
