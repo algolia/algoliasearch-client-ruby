@@ -15,7 +15,7 @@ module Algolia
       # Filter scores to give different weights to individual filters.
       attr_accessor :score
 
-      # Whether the filter is disjunctive or conjunctive.  If true the filter has multiple matches, multiple occurences are combined with the logical `OR` operation. If false, multiple occurences are combined with the logical `AND` operation.
+      # Whether the filter is disjunctive or conjunctive.  If true the filter has multiple matches, multiple occurrences are combined with the logical `OR` operation. If false, multiple occurrences are combined with the logical `AND` operation.
       attr_accessor :disjunctive
 
       # Attribute mapping from ruby-style variable name to JSON key.

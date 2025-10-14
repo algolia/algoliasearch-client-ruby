@@ -7,7 +7,7 @@ require "time"
 
 module Algolia
   module Search
-    # An event describe a step of the task execution flow..
+    # An event describe a step of the task execution flow.
     class Event
       # Universally unique identifier (UUID) of an event.
       attr_accessor :event_id
