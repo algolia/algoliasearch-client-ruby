@@ -14,8 +14,6 @@ module Algolia
       # Descriptive name for the resource.
       attr_accessor :name
 
-      attr_accessor :platform
-
       attr_accessor :input
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -23,7 +21,6 @@ module Algolia
         {
           :type => :type,
           :name => :name,
-          :platform => :platform,
           :input => :input
         }
       end
@@ -33,7 +30,6 @@ module Algolia
         {
           :type => :"AuthenticationType",
           :name => :"String",
-          :platform => :"Platform",
           :input => :"AuthInputPartial"
         }
       end
@@ -41,9 +37,7 @@ module Algolia
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new(
-          [
-            :platform
-          ]
+          []
         )
       end
 
@@ -78,10 +72,6 @@ module Algolia
           self.name = attributes[:name]
         end
 
-        if attributes.key?(:platform)
-          self.platform = attributes[:platform]
-        end
-
         if attributes.key?(:input)
           self.input = attributes[:input]
         end
@@ -94,7 +84,6 @@ module Algolia
         self.class == other.class &&
           type == other.type &&
           name == other.name &&
-          platform == other.platform &&
           input == other.input
       end
 
@@ -107,7 +96,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [type, name, platform, input].hash
+        [type, name, input].hash
       end
 
       # Builds the object from hash

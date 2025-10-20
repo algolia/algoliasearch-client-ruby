@@ -7,6 +7,7 @@ require "time"
 
 module Algolia
   module Ingestion
+    # Specific configuration attributes of a `ga4BigqueryExport` source.
     class SourceGA4BigQueryExport
       # GCP project ID that the BigQuery export writes to.
       attr_accessor :project_id

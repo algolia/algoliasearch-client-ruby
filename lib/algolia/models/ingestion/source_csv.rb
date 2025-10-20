@@ -7,6 +7,7 @@ require "time"
 
 module Algolia
   module Ingestion
+    # Specific configuration attributes of a `csv` source.
     class SourceCSV
       # URL of the file.
       attr_accessor :url

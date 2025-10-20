@@ -7,6 +7,7 @@ require "time"
 
 module Algolia
   module Ingestion
+    # Specific configuration attributes of a `json` source.
     class SourceJSON
       # URL of the file.
       attr_accessor :url

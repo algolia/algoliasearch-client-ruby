@@ -7,6 +7,7 @@ require "time"
 
 module Algolia
   module Ingestion
+    # Specific configuration attributes of a `shopify` source.
     class SourceUpdateShopify
       # Feature flags for the Shopify source.
       attr_accessor :feature_flags

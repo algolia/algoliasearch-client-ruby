@@ -7,6 +7,7 @@ require "time"
 
 module Algolia
   module Ingestion
+    # Specific configuration attributes of a `commercetools` source.
     class SourceCommercetools
       attr_accessor :store_keys
 

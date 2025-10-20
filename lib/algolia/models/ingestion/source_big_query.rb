@@ -7,6 +7,7 @@ require "time"
 
 module Algolia
   module Ingestion
+    # Specific configuration attributes of a `bigquery` source.
     class SourceBigQuery
       # Project ID of the BigQuery source.
       attr_accessor :project_id

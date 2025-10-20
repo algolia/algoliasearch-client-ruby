@@ -7,6 +7,7 @@ require "time"
 
 module Algolia
   module Ingestion
+    # Specific configuration attributes of a `docker` source.
     class SourceDocker
       # Name of the connector.
       attr_accessor :image

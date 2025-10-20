@@ -7,6 +7,7 @@ require "time"
 
 module Algolia
   module Ingestion
+    # Specific configuration attributes of a `bigcommerce` source.
     class SourceBigCommerce
       # Store hash identifying your BigCommerce store.
       attr_accessor :store_hash

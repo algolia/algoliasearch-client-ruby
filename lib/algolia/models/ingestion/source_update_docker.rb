@@ -7,6 +7,7 @@ require "time"
 
 module Algolia
   module Ingestion
+    # Specific configuration attributes of a `docker` source.
     class SourceUpdateDocker
       # Configuration of the spec.
       attr_accessor :configuration
