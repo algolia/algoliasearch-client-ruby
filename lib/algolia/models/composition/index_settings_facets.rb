@@ -8,7 +8,7 @@ require "time"
 module Algolia
   module Composition
     # Order of facet names.
-    class Facets
+    class IndexSettingsFacets
       # Explicit order of facets or facet values.  This setting lets you always show specific facets or facet values at the top of the list.
       attr_accessor :order
 
@@ -37,7 +37,10 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         if (!attributes.is_a?(Hash))
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Facets` initialize method"
+          raise(
+            ArgumentError,
+            "The input argument (attributes) must be a hash in `Algolia::IndexSettingsFacets` initialize method"
+          )
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
@@ -45,7 +48,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::Facets`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::IndexSettingsFacets`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
