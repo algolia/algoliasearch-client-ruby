@@ -220,7 +220,11 @@ module Algolia
     end
 
     # Creates a new task.
-
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_create [TaskCreate] Request body for creating a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -250,7 +254,11 @@ module Algolia
     end
 
     # Creates a new task.
-
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_create [TaskCreate] Request body for creating a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [TaskCreateResponse]
@@ -260,7 +268,11 @@ module Algolia
     end
 
     # Creates a new task using the v1 endpoint, please use `createTask` instead.
-
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # THIS OPERATION IS DEPRECATED
     # @param task_create [TaskCreateV1] Request body for creating a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -291,7 +303,11 @@ module Algolia
     end
 
     # Creates a new task using the v1 endpoint, please use `createTask` instead.
-
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_create [TaskCreateV1] Request body for creating a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [TaskCreateResponse]
@@ -301,7 +317,11 @@ module Algolia
     end
 
     # Creates a new transformation.
-
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param transformation_create [TransformationCreate] Request body for creating a transformation. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -331,7 +351,11 @@ module Algolia
     end
 
     # Creates a new transformation.
-
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param transformation_create [TransformationCreate] Request body for creating a transformation. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [TransformationCreateResponse]
@@ -670,7 +694,11 @@ module Algolia
     end
 
     # Deletes a task by its ID.
-
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -700,7 +728,11 @@ module Algolia
     end
 
     # Deletes a task by its ID.
-
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeleteResponse]
@@ -710,7 +742,11 @@ module Algolia
     end
 
     # Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
-
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # THIS OPERATION IS DEPRECATED
     # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -741,7 +777,11 @@ module Algolia
     end
 
     # Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
-
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeleteResponse]
@@ -751,7 +791,11 @@ module Algolia
     end
 
     # Deletes a transformation by its ID.
-
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param transformation_id [String] Unique identifier of a transformation. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -784,7 +828,11 @@ module Algolia
     end
 
     # Deletes a transformation by its ID.
-
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param transformation_id [String] Unique identifier of a transformation. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [DeleteResponse]
@@ -2277,7 +2325,11 @@ module Algolia
     end
 
     # Fully updates a task by its ID, use partialUpdateTask if you only want to update a subset of fields.
-
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
     # @param task_replace [TaskReplace]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -2312,7 +2364,11 @@ module Algolia
     end
 
     # Fully updates a task by its ID, use partialUpdateTask if you only want to update a subset of fields.
-
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
     # @param task_replace [TaskReplace]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -3104,7 +3160,11 @@ module Algolia
     end
 
     # Partially updates a task by its ID.
-
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
     # @param task_update [TaskUpdate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -3139,7 +3199,11 @@ module Algolia
     end
 
     # Partially updates a task by its ID.
-
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
     # @param task_update [TaskUpdate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -3150,7 +3214,11 @@ module Algolia
     end
 
     # Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
-
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # THIS OPERATION IS DEPRECATED
     # @param task_id [String] Unique identifier of a task. (required)
     # @param task_update [TaskUpdateV1]  (required)
@@ -3186,7 +3254,11 @@ module Algolia
     end
 
     # Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
-
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param task_id [String] Unique identifier of a task. (required)
     # @param task_update [TaskUpdateV1]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -3197,7 +3269,11 @@ module Algolia
     end
 
     # Updates a transformation by its ID.
-
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param transformation_id [String] Unique identifier of a transformation. (required)
     # @param transformation_create [TransformationCreate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -3235,7 +3311,11 @@ module Algolia
     end
 
     # Updates a transformation by its ID.
-
+    #
+    # Required API Key ACLs:
+    #   - addObject
+    #   - deleteIndex
+    #   - editSettings
     # @param transformation_id [String] Unique identifier of a transformation. (required)
     # @param transformation_create [TransformationCreate]  (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
