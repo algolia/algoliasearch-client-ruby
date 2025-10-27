@@ -150,6 +150,8 @@ module Algolia
       # Maximum number of facet values to return for each facet.
       attr_accessor :max_values_per_facet
 
+      attr_accessor :rendering_content
+
       # Order in which to retrieve facet values - `count`.   Facet values are retrieved by decreasing count.   The count is the number of matching records containing this facet value - `alpha`.   Retrieve facet values alphabetically This setting doesn't influence how facet values are displayed in your UI (see `renderingContent`). For more information, see [facet value display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js).
       attr_accessor :sort_facet_values_by
 
@@ -210,6 +212,7 @@ module Algolia
           :facets => :facets,
           :hits_per_page => :hitsPerPage,
           :max_values_per_facet => :maxValuesPerFacet,
+          :rendering_content => :renderingContent,
           :sort_facet_values_by => :sortFacetValuesBy,
           :sum_or_filters_scores => :sumOrFiltersScores
         }
@@ -269,6 +272,7 @@ module Algolia
           :facets => :"Array<String>",
           :hits_per_page => :"Integer",
           :max_values_per_facet => :"Integer",
+          :rendering_content => :"RenderingContent",
           :sort_facet_values_by => :"String",
           :sum_or_filters_scores => :"Boolean"
         }
@@ -543,6 +547,10 @@ module Algolia
           self.max_values_per_facet = attributes[:max_values_per_facet]
         end
 
+        if attributes.key?(:rendering_content)
+          self.rendering_content = attributes[:rendering_content]
+        end
+
         if attributes.key?(:sort_facet_values_by)
           self.sort_facet_values_by = attributes[:sort_facet_values_by]
         end
@@ -608,6 +616,7 @@ module Algolia
           facets == other.facets &&
           hits_per_page == other.hits_per_page &&
           max_values_per_facet == other.max_values_per_facet &&
+          rendering_content == other.rendering_content &&
           sort_facet_values_by == other.sort_facet_values_by &&
           sum_or_filters_scores == other.sum_or_filters_scores
       end
@@ -673,6 +682,7 @@ module Algolia
           facets,
           hits_per_page,
           max_values_per_facet,
+          rendering_content,
           sort_facet_values_by,
           sum_or_filters_scores
         ].hash
