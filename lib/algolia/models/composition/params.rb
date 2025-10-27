@@ -23,10 +23,10 @@ module Algolia
       # Relevancy threshold below which less relevant results aren't included in the results You can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas). Use this setting to strike a balance between the relevance and number of returned results.
       attr_accessor :relevancy_strictness
 
-      # Facets for which to retrieve facet values that match the search criteria and the number of matching facet values To retrieve all facets, use the wildcard character `*`. For more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
-      attr_accessor :facets
-
       attr_accessor :facet_filters
+
+      # Facets for which to retrieve facet values that match the search criteria and the number of matching facet values To retrieve all facets, use the wildcard character `*`. To retrieve disjunctive facets lists, annotate any facets with the `disjunctive` modifier. For more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts) and [disjunctive faceting for Smart Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).
+      attr_accessor :facets
 
       attr_accessor :optional_filters
 
@@ -94,8 +94,8 @@ module Algolia
           :page => :page,
           :get_ranking_info => :getRankingInfo,
           :relevancy_strictness => :relevancyStrictness,
-          :facets => :facets,
           :facet_filters => :facetFilters,
+          :facets => :facets,
           :optional_filters => :optionalFilters,
           :numeric_filters => :numericFilters,
           :hits_per_page => :hitsPerPage,
@@ -128,8 +128,8 @@ module Algolia
           :page => :"Integer",
           :get_ranking_info => :"Boolean",
           :relevancy_strictness => :"Integer",
-          :facets => :"Array<String>",
           :facet_filters => :"FacetFilters",
+          :facets => :"Array<String>",
           :optional_filters => :"OptionalFilters",
           :numeric_filters => :"NumericFilters",
           :hits_per_page => :"Integer",
@@ -203,14 +203,14 @@ module Algolia
           self.relevancy_strictness = attributes[:relevancy_strictness]
         end
 
+        if attributes.key?(:facet_filters)
+          self.facet_filters = attributes[:facet_filters]
+        end
+
         if attributes.key?(:facets)
           if (value = attributes[:facets]).is_a?(Array)
             self.facets = value
           end
-        end
-
-        if attributes.key?(:facet_filters)
-          self.facet_filters = attributes[:facet_filters]
         end
 
         if attributes.key?(:optional_filters)
@@ -320,8 +320,8 @@ module Algolia
           page == other.page &&
           get_ranking_info == other.get_ranking_info &&
           relevancy_strictness == other.relevancy_strictness &&
-          facets == other.facets &&
           facet_filters == other.facet_filters &&
+          facets == other.facets &&
           optional_filters == other.optional_filters &&
           numeric_filters == other.numeric_filters &&
           hits_per_page == other.hits_per_page &&
@@ -360,8 +360,8 @@ module Algolia
           page,
           get_ranking_info,
           relevancy_strictness,
-          facets,
           facet_filters,
+          facets,
           optional_filters,
           numeric_filters,
           hits_per_page,
