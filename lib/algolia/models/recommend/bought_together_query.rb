@@ -24,6 +24,8 @@ module Algolia
       # Unique record identifier.
       attr_accessor :algolia_object_id
 
+      attr_accessor :fallback_parameters
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -32,7 +34,8 @@ module Algolia
           :max_recommendations => :maxRecommendations,
           :query_parameters => :queryParameters,
           :model => :model,
-          :algolia_object_id => :objectID
+          :algolia_object_id => :objectID,
+          :fallback_parameters => :fallbackParameters
         }
       end
 
@@ -44,7 +47,8 @@ module Algolia
           :max_recommendations => :"Integer",
           :query_parameters => :"RecommendSearchParams",
           :model => :"FbtModel",
-          :algolia_object_id => :"String"
+          :algolia_object_id => :"String",
+          :fallback_parameters => :"FallbackParams"
         }
       end
 
@@ -117,6 +121,10 @@ module Algolia
         else
           self.algolia_object_id = nil
         end
+
+        if attributes.key?(:fallback_parameters)
+          self.fallback_parameters = attributes[:fallback_parameters]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -129,7 +137,8 @@ module Algolia
           max_recommendations == other.max_recommendations &&
           query_parameters == other.query_parameters &&
           model == other.model &&
-          algolia_object_id == other.algolia_object_id
+          algolia_object_id == other.algolia_object_id &&
+          fallback_parameters == other.fallback_parameters
       end
 
       # @see the `==` method
@@ -141,7 +150,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [index_name, threshold, max_recommendations, query_parameters, model, algolia_object_id].hash
+        [index_name, threshold, max_recommendations, query_parameters, model, algolia_object_id, fallback_parameters].hash
       end
 
       # Builds the object from hash
