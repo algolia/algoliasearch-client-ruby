@@ -1,3 +1,9 @@
+## [3.31.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.30.0...3.31.0)
+
+- [ecfea56dc](https://github.com/algolia/api-clients-automation/commit/ecfea56dc) feat(clients): remove schedule capabilities ([#5552](https://github.com/algolia/api-clients-automation/pull/5552)) by [@cdhawke](https://github.com/cdhawke/)
+- [391059ed9](https://github.com/algolia/api-clients-automation/commit/391059ed9) chore(deps): dependencies 2025-11-03 ([#5553](https://github.com/algolia/api-clients-automation/pull/5553)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [ff4b8f02c](https://github.com/algolia/api-clients-automation/commit/ff4b8f02c) feat(specs): add fallbackParameters to Frequently bought together [RECO-2443] ([#5579](https://github.com/algolia/api-clients-automation/pull/5579)) by [@raed667](https://github.com/raed667/)
+
 ## [3.30.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.29.0...3.30.0)
 
 - [d9b21b4b1](https://github.com/algolia/api-clients-automation/commit/d9b21b4b1) feat(specs): add `renderingContent` query parameter in Composition API main injection ([#5549](https://github.com/algolia/api-clients-automation/pull/5549)) by [@ClaraMuller](https://github.com/ClaraMuller/)
