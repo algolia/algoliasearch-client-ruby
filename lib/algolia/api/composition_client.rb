@@ -595,7 +595,7 @@ module Algolia
       )
     end
 
-    # Upsert a composition in the current Algolia application.
+    # Update and insert a composition in the current Algolia application.
     #
     # Required API Key ACLs:
     #   - editSettings
@@ -635,7 +635,7 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # Upsert a composition in the current Algolia application.
+    # Update and insert a composition in the current Algolia application.
     #
     # Required API Key ACLs:
     #   - editSettings
