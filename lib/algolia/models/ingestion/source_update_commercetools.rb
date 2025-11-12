@@ -22,6 +22,9 @@ module Algolia
       # Predicate to filter out specific products when indexing. For more information, see [Query Predicate](https://docs.commercetools.com/api/predicates/query).
       attr_accessor :product_query_predicate
 
+      # When set to true, the connector indexes objects with all images attributes instead of only the URLs.
+      attr_accessor :use_images_objects
+
       attr_accessor :custom_fields
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -32,6 +35,7 @@ module Algolia
           :url => :url,
           :fallback_is_in_stock_value => :fallbackIsInStockValue,
           :product_query_predicate => :productQueryPredicate,
+          :use_images_objects => :useImagesObjects,
           :custom_fields => :customFields
         }
       end
@@ -44,6 +48,7 @@ module Algolia
           :url => :"String",
           :fallback_is_in_stock_value => :"Boolean",
           :product_query_predicate => :"String",
+          :use_images_objects => :"Boolean",
           :custom_fields => :"CommercetoolsCustomFields"
         }
       end
@@ -102,6 +107,10 @@ module Algolia
           self.product_query_predicate = attributes[:product_query_predicate]
         end
 
+        if attributes.key?(:use_images_objects)
+          self.use_images_objects = attributes[:use_images_objects]
+        end
+
         if attributes.key?(:custom_fields)
           self.custom_fields = attributes[:custom_fields]
         end
@@ -117,6 +126,7 @@ module Algolia
           url == other.url &&
           fallback_is_in_stock_value == other.fallback_is_in_stock_value &&
           product_query_predicate == other.product_query_predicate &&
+          use_images_objects == other.use_images_objects &&
           custom_fields == other.custom_fields
       end
 
@@ -129,7 +139,15 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [store_keys, locales, url, fallback_is_in_stock_value, product_query_predicate, custom_fields].hash
+        [
+          store_keys,
+          locales,
+          url,
+          fallback_is_in_stock_value,
+          product_query_predicate,
+          use_images_objects,
+          custom_fields
+        ].hash
       end
 
       # Builds the object from hash
