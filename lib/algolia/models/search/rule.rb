@@ -26,6 +26,10 @@ module Algolia
       # Time periods when the rule is active.
       attr_accessor :validity
 
+      attr_accessor :tags
+
+      attr_accessor :scope
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -34,7 +38,9 @@ module Algolia
           :consequence => :consequence,
           :description => :description,
           :enabled => :enabled,
-          :validity => :validity
+          :validity => :validity,
+          :tags => :tags,
+          :scope => :scope
         }
       end
 
@@ -46,7 +52,9 @@ module Algolia
           :consequence => :"Consequence",
           :description => :"String",
           :enabled => :"Boolean",
-          :validity => :"Array<TimeRange>"
+          :validity => :"Array<TimeRange>",
+          :tags => :"Array<String>",
+          :scope => :"String"
         }
       end
 
@@ -108,6 +116,16 @@ module Algolia
             self.validity = value
           end
         end
+
+        if attributes.key?(:tags)
+          if (value = attributes[:tags]).is_a?(Array)
+            self.tags = value
+          end
+        end
+
+        if attributes.key?(:scope)
+          self.scope = attributes[:scope]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -120,7 +138,9 @@ module Algolia
           consequence == other.consequence &&
           description == other.description &&
           enabled == other.enabled &&
-          validity == other.validity
+          validity == other.validity &&
+          tags == other.tags &&
+          scope == other.scope
       end
 
       # @see the `==` method
@@ -132,7 +152,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [algolia_object_id, conditions, consequence, description, enabled, validity].hash
+        [algolia_object_id, conditions, consequence, description, enabled, validity, tags, scope].hash
       end
 
       # Builds the object from hash
