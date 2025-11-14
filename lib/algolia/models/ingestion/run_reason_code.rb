@@ -9,15 +9,17 @@ module Algolia
   module Ingestion
     class RunReasonCode
       INTERNAL = "internal".freeze
+      CANCELLED = "cancelled".freeze
       CRITICAL = "critical".freeze
       NO_EVENTS = "no_events".freeze
       TOO_MANY_ERRORS = "too_many_errors".freeze
+      LACKING_EVENTS = "lacking_events".freeze
       OK = "ok".freeze
-      DISCARDED = "discarded".freeze
       BLOCKING = "blocking".freeze
+      IDLE = "idle".freeze
 
       def self.all_vars
-        @all_vars ||= [INTERNAL, CRITICAL, NO_EVENTS, TOO_MANY_ERRORS, OK, DISCARDED, BLOCKING].freeze
+        @all_vars ||= [INTERNAL, CANCELLED, CRITICAL, NO_EVENTS, TOO_MANY_ERRORS, LACKING_EVENTS, OK, BLOCKING, IDLE].freeze
       end
 
       # Builds the enum from string

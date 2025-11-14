@@ -10,12 +10,11 @@ module Algolia
     class RunStatus
       CREATED = "created".freeze
       STARTED = "started".freeze
-      IDLED = "idled".freeze
       FINISHED = "finished".freeze
       SKIPPED = "skipped".freeze
 
       def self.all_vars
-        @all_vars ||= [CREATED, STARTED, IDLED, FINISHED, SKIPPED].freeze
+        @all_vars ||= [CREATED, STARTED, FINISHED, SKIPPED].freeze
       end
 
       # Builds the enum from string
