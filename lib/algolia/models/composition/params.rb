@@ -8,32 +8,11 @@ require "time"
 module Algolia
   module Composition
     class Params
-      # Search query.
-      attr_accessor :query
+      # Whether this search will be included in Analytics.
+      attr_accessor :analytics
 
-      # Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
-      attr_accessor :filters
-
-      # Page of search results to retrieve.
-      attr_accessor :page
-
-      # Whether the run response should include detailed ranking information.
-      attr_accessor :get_ranking_info
-
-      # Relevancy threshold below which less relevant results aren't included in the results You can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas). Use this setting to strike a balance between the relevance and number of returned results.
-      attr_accessor :relevancy_strictness
-
-      attr_accessor :facet_filters
-
-      # Facets for which to retrieve facet values that match the search criteria and the number of matching facet values To retrieve all facets, use the wildcard character `*`. To retrieve disjunctive facets lists, annotate any facets with the `disjunctive` modifier. For more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts) and [disjunctive faceting for Smart Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).
-      attr_accessor :facets
-
-      attr_accessor :optional_filters
-
-      attr_accessor :numeric_filters
-
-      # Number of hits per page.
-      attr_accessor :hits_per_page
+      # Tags to apply to the query for [segmenting analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+      attr_accessor :analytics_tags
 
       # Coordinates for the center of a circle, expressed as a comma-separated string of latitude and longitude.  Only records included within a circle around this central location are included in the results. The radius of the circle is determined by the `aroundRadius` and `minimumAroundRadius` settings. This parameter is ignored if you also specify `insidePolygon` or `insideBoundingBox`.
       attr_accessor :around_lat_lng
@@ -45,22 +24,64 @@ module Algolia
 
       attr_accessor :around_precision
 
-      # Minimum radius (in meters) for a search around a location when `aroundRadius` isn't set.
-      attr_accessor :minimum_around_radius
+      # Whether to include a `queryID` attribute in the response The query ID is a unique identifier for a search query and is required for tracking [click and conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started).
+      attr_accessor :click_analytics
+
+      # Whether to enable index level A/B testing for this run request. If the composition mixes multiple indices, the A/B test is ignored.
+      attr_accessor :enable_ab_test
+
+      # Whether to enable Personalization.
+      attr_accessor :enable_personalization
+
+      # Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) This setting only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
+      attr_accessor :enable_re_ranking
+
+      # Whether to enable composition rules.
+      attr_accessor :enable_rules
+
+      attr_accessor :facet_filters
+
+      # Facets for which to retrieve facet values that match the search criteria and the number of matching facet values To retrieve all facets, use the wildcard character `*`. To retrieve disjunctive facets lists, annotate any facets with the `disjunctive` modifier. For more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts) and [disjunctive faceting for Smart Groups](https://www.algolia.com/doc/guides/managing-results/compositions/search-based-groups#facets-including-disjunctive-faceting).
+      attr_accessor :facets
+
+      # Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
+      attr_accessor :filters
+
+      # Whether the run response should include detailed ranking information.
+      attr_accessor :get_ranking_info
+
+      # Number of hits per page.
+      attr_accessor :hits_per_page
+
+      # A list of extenrally injected objectID groups into from an external source.
+      attr_accessor :injected_items
 
       attr_accessor :inside_bounding_box
 
       # Coordinates of a polygon in which to search.  Polygons are defined by 3 to 10,000 points. Each point is represented by its latitude and longitude. Provide multiple polygons as nested arrays. For more information, see [filtering inside polygons](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas). This parameter is ignored if you also specify `insideBoundingBox`.
       attr_accessor :inside_polygon
 
-      # Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries  This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings. This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages. To support this, you must place the CJK language **first**  **You should always specify a query language.** If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages), or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
-      attr_accessor :query_languages
+      # Minimum radius (in meters) for a search around a location when `aroundRadius` isn't set.
+      attr_accessor :minimum_around_radius
 
       # ISO language codes that adjust settings that are useful for processing natural language queries (as opposed to keyword searches) - Sets `removeStopWords` and `ignorePlurals` to the list of provided languages. - Sets `removeWordsIfNoResults` to `allOptional`. - Adds a `natural_language` attribute to `ruleContexts` and `analyticsTags`.
       attr_accessor :natural_languages
 
-      # Whether to enable composition rules.
-      attr_accessor :enable_rules
+      attr_accessor :numeric_filters
+
+      attr_accessor :optional_filters
+
+      # Page of search results to retrieve.
+      attr_accessor :page
+
+      # Search query.
+      attr_accessor :query
+
+      # Relevancy threshold below which less relevant results aren't included in the results You can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas). Use this setting to strike a balance between the relevance and number of returned results.
+      attr_accessor :relevancy_strictness
+
+      # Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries  This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings. This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages. To support this, you must place the CJK language **first**  **You should always specify a query language.** If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages), or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
+      attr_accessor :query_languages
 
       # Assigns a rule context to the run query [Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context) are strings that you can use to trigger matching rules.
       attr_accessor :rule_contexts
@@ -68,89 +89,73 @@ module Algolia
       # Unique pseudonymous or anonymous user identifier.  This helps with analytics and click and conversion events. For more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
       attr_accessor :user_token
 
-      # Whether to include a `queryID` attribute in the response The query ID is a unique identifier for a search query and is required for tracking [click and conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started).
-      attr_accessor :click_analytics
-
-      # Whether this search will be included in Analytics.
-      attr_accessor :analytics
-
-      # Tags to apply to the query for [segmenting analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
-      attr_accessor :analytics_tags
-
-      # Whether to enable index level A/B testing for this run request. If the composition mixes multiple indices, the A/B test is ignored.
-      attr_accessor :enable_ab_test
-
-      # Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) This setting only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
-      attr_accessor :enable_re_ranking
-
-      # A list of extenrally injected objectID groups into from an external source.
-      attr_accessor :injected_items
-
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :query => :query,
-          :filters => :filters,
-          :page => :page,
-          :get_ranking_info => :getRankingInfo,
-          :relevancy_strictness => :relevancyStrictness,
-          :facet_filters => :facetFilters,
-          :facets => :facets,
-          :optional_filters => :optionalFilters,
-          :numeric_filters => :numericFilters,
-          :hits_per_page => :hitsPerPage,
+          :analytics => :analytics,
+          :analytics_tags => :analyticsTags,
           :around_lat_lng => :aroundLatLng,
           :around_lat_lng_via_ip => :aroundLatLngViaIP,
           :around_radius => :aroundRadius,
           :around_precision => :aroundPrecision,
-          :minimum_around_radius => :minimumAroundRadius,
+          :click_analytics => :clickAnalytics,
+          :enable_ab_test => :enableABTest,
+          :enable_personalization => :enablePersonalization,
+          :enable_re_ranking => :enableReRanking,
+          :enable_rules => :enableRules,
+          :facet_filters => :facetFilters,
+          :facets => :facets,
+          :filters => :filters,
+          :get_ranking_info => :getRankingInfo,
+          :hits_per_page => :hitsPerPage,
+          :injected_items => :injectedItems,
           :inside_bounding_box => :insideBoundingBox,
           :inside_polygon => :insidePolygon,
-          :query_languages => :queryLanguages,
+          :minimum_around_radius => :minimumAroundRadius,
           :natural_languages => :naturalLanguages,
-          :enable_rules => :enableRules,
+          :numeric_filters => :numericFilters,
+          :optional_filters => :optionalFilters,
+          :page => :page,
+          :query => :query,
+          :relevancy_strictness => :relevancyStrictness,
+          :query_languages => :queryLanguages,
           :rule_contexts => :ruleContexts,
-          :user_token => :userToken,
-          :click_analytics => :clickAnalytics,
-          :analytics => :analytics,
-          :analytics_tags => :analyticsTags,
-          :enable_ab_test => :enableABTest,
-          :enable_re_ranking => :enableReRanking,
-          :injected_items => :injectedItems
+          :user_token => :userToken
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :query => :"String",
-          :filters => :"String",
-          :page => :"Integer",
-          :get_ranking_info => :"Boolean",
-          :relevancy_strictness => :"Integer",
-          :facet_filters => :"FacetFilters",
-          :facets => :"Array<String>",
-          :optional_filters => :"OptionalFilters",
-          :numeric_filters => :"NumericFilters",
-          :hits_per_page => :"Integer",
+          :analytics => :"Boolean",
+          :analytics_tags => :"Array<String>",
           :around_lat_lng => :"String",
           :around_lat_lng_via_ip => :"Boolean",
           :around_radius => :"AroundRadius",
           :around_precision => :"AroundPrecision",
-          :minimum_around_radius => :"Integer",
+          :click_analytics => :"Boolean",
+          :enable_ab_test => :"Boolean",
+          :enable_personalization => :"Boolean",
+          :enable_re_ranking => :"Boolean",
+          :enable_rules => :"Boolean",
+          :facet_filters => :"FacetFilters",
+          :facets => :"Array<String>",
+          :filters => :"String",
+          :get_ranking_info => :"Boolean",
+          :hits_per_page => :"Integer",
+          :injected_items => :"Hash<String, ExternalInjectedItem>",
           :inside_bounding_box => :"InsideBoundingBox",
           :inside_polygon => :"Array<Array<Float>>",
-          :query_languages => :"Array<SupportedLanguage>",
+          :minimum_around_radius => :"Integer",
           :natural_languages => :"Array<SupportedLanguage>",
-          :enable_rules => :"Boolean",
+          :numeric_filters => :"NumericFilters",
+          :optional_filters => :"OptionalFilters",
+          :page => :"Integer",
+          :query => :"String",
+          :relevancy_strictness => :"Integer",
+          :query_languages => :"Array<SupportedLanguage>",
           :rule_contexts => :"Array<String>",
-          :user_token => :"String",
-          :click_analytics => :"Boolean",
-          :analytics => :"Boolean",
-          :analytics_tags => :"Array<String>",
-          :enable_ab_test => :"Boolean",
-          :enable_re_ranking => :"Boolean",
-          :injected_items => :"Hash<String, ExternalInjectedItem>"
+          :user_token => :"String"
         }
       end
 
@@ -183,46 +188,14 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:query)
-          self.query = attributes[:query]
+        if attributes.key?(:analytics)
+          self.analytics = attributes[:analytics]
         end
 
-        if attributes.key?(:filters)
-          self.filters = attributes[:filters]
-        end
-
-        if attributes.key?(:page)
-          self.page = attributes[:page]
-        end
-
-        if attributes.key?(:get_ranking_info)
-          self.get_ranking_info = attributes[:get_ranking_info]
-        end
-
-        if attributes.key?(:relevancy_strictness)
-          self.relevancy_strictness = attributes[:relevancy_strictness]
-        end
-
-        if attributes.key?(:facet_filters)
-          self.facet_filters = attributes[:facet_filters]
-        end
-
-        if attributes.key?(:facets)
-          if (value = attributes[:facets]).is_a?(Array)
-            self.facets = value
+        if attributes.key?(:analytics_tags)
+          if (value = attributes[:analytics_tags]).is_a?(Array)
+            self.analytics_tags = value
           end
-        end
-
-        if attributes.key?(:optional_filters)
-          self.optional_filters = attributes[:optional_filters]
-        end
-
-        if attributes.key?(:numeric_filters)
-          self.numeric_filters = attributes[:numeric_filters]
-        end
-
-        if attributes.key?(:hits_per_page)
-          self.hits_per_page = attributes[:hits_per_page]
         end
 
         if attributes.key?(:around_lat_lng)
@@ -241,8 +214,52 @@ module Algolia
           self.around_precision = attributes[:around_precision]
         end
 
-        if attributes.key?(:minimum_around_radius)
-          self.minimum_around_radius = attributes[:minimum_around_radius]
+        if attributes.key?(:click_analytics)
+          self.click_analytics = attributes[:click_analytics]
+        end
+
+        if attributes.key?(:enable_ab_test)
+          self.enable_ab_test = attributes[:enable_ab_test]
+        end
+
+        if attributes.key?(:enable_personalization)
+          self.enable_personalization = attributes[:enable_personalization]
+        end
+
+        if attributes.key?(:enable_re_ranking)
+          self.enable_re_ranking = attributes[:enable_re_ranking]
+        end
+
+        if attributes.key?(:enable_rules)
+          self.enable_rules = attributes[:enable_rules]
+        end
+
+        if attributes.key?(:facet_filters)
+          self.facet_filters = attributes[:facet_filters]
+        end
+
+        if attributes.key?(:facets)
+          if (value = attributes[:facets]).is_a?(Array)
+            self.facets = value
+          end
+        end
+
+        if attributes.key?(:filters)
+          self.filters = attributes[:filters]
+        end
+
+        if attributes.key?(:get_ranking_info)
+          self.get_ranking_info = attributes[:get_ranking_info]
+        end
+
+        if attributes.key?(:hits_per_page)
+          self.hits_per_page = attributes[:hits_per_page]
+        end
+
+        if attributes.key?(:injected_items)
+          if (value = attributes[:injected_items]).is_a?(Hash)
+            self.injected_items = value
+          end
         end
 
         if attributes.key?(:inside_bounding_box)
@@ -255,10 +272,8 @@ module Algolia
           end
         end
 
-        if attributes.key?(:query_languages)
-          if (value = attributes[:query_languages]).is_a?(Array)
-            self.query_languages = value
-          end
+        if attributes.key?(:minimum_around_radius)
+          self.minimum_around_radius = attributes[:minimum_around_radius]
         end
 
         if attributes.key?(:natural_languages)
@@ -267,8 +282,30 @@ module Algolia
           end
         end
 
-        if attributes.key?(:enable_rules)
-          self.enable_rules = attributes[:enable_rules]
+        if attributes.key?(:numeric_filters)
+          self.numeric_filters = attributes[:numeric_filters]
+        end
+
+        if attributes.key?(:optional_filters)
+          self.optional_filters = attributes[:optional_filters]
+        end
+
+        if attributes.key?(:page)
+          self.page = attributes[:page]
+        end
+
+        if attributes.key?(:query)
+          self.query = attributes[:query]
+        end
+
+        if attributes.key?(:relevancy_strictness)
+          self.relevancy_strictness = attributes[:relevancy_strictness]
+        end
+
+        if attributes.key?(:query_languages)
+          if (value = attributes[:query_languages]).is_a?(Array)
+            self.query_languages = value
+          end
         end
 
         if attributes.key?(:rule_contexts)
@@ -280,34 +317,6 @@ module Algolia
         if attributes.key?(:user_token)
           self.user_token = attributes[:user_token]
         end
-
-        if attributes.key?(:click_analytics)
-          self.click_analytics = attributes[:click_analytics]
-        end
-
-        if attributes.key?(:analytics)
-          self.analytics = attributes[:analytics]
-        end
-
-        if attributes.key?(:analytics_tags)
-          if (value = attributes[:analytics_tags]).is_a?(Array)
-            self.analytics_tags = value
-          end
-        end
-
-        if attributes.key?(:enable_ab_test)
-          self.enable_ab_test = attributes[:enable_ab_test]
-        end
-
-        if attributes.key?(:enable_re_ranking)
-          self.enable_re_ranking = attributes[:enable_re_ranking]
-        end
-
-        if attributes.key?(:injected_items)
-          if (value = attributes[:injected_items]).is_a?(Hash)
-            self.injected_items = value
-          end
-        end
       end
 
       # Checks equality by comparing each attribute.
@@ -315,34 +324,35 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          query == other.query &&
-          filters == other.filters &&
-          page == other.page &&
-          get_ranking_info == other.get_ranking_info &&
-          relevancy_strictness == other.relevancy_strictness &&
-          facet_filters == other.facet_filters &&
-          facets == other.facets &&
-          optional_filters == other.optional_filters &&
-          numeric_filters == other.numeric_filters &&
-          hits_per_page == other.hits_per_page &&
+          analytics == other.analytics &&
+          analytics_tags == other.analytics_tags &&
           around_lat_lng == other.around_lat_lng &&
           around_lat_lng_via_ip == other.around_lat_lng_via_ip &&
           around_radius == other.around_radius &&
           around_precision == other.around_precision &&
-          minimum_around_radius == other.minimum_around_radius &&
+          click_analytics == other.click_analytics &&
+          enable_ab_test == other.enable_ab_test &&
+          enable_personalization == other.enable_personalization &&
+          enable_re_ranking == other.enable_re_ranking &&
+          enable_rules == other.enable_rules &&
+          facet_filters == other.facet_filters &&
+          facets == other.facets &&
+          filters == other.filters &&
+          get_ranking_info == other.get_ranking_info &&
+          hits_per_page == other.hits_per_page &&
+          injected_items == other.injected_items &&
           inside_bounding_box == other.inside_bounding_box &&
           inside_polygon == other.inside_polygon &&
-          query_languages == other.query_languages &&
+          minimum_around_radius == other.minimum_around_radius &&
           natural_languages == other.natural_languages &&
-          enable_rules == other.enable_rules &&
+          numeric_filters == other.numeric_filters &&
+          optional_filters == other.optional_filters &&
+          page == other.page &&
+          query == other.query &&
+          relevancy_strictness == other.relevancy_strictness &&
+          query_languages == other.query_languages &&
           rule_contexts == other.rule_contexts &&
-          user_token == other.user_token &&
-          click_analytics == other.click_analytics &&
-          analytics == other.analytics &&
-          analytics_tags == other.analytics_tags &&
-          enable_ab_test == other.enable_ab_test &&
-          enable_re_ranking == other.enable_re_ranking &&
-          injected_items == other.injected_items
+          user_token == other.user_token
       end
 
       # @see the `==` method
@@ -355,34 +365,35 @@ module Algolia
       # @return [Integer] Hash code
       def hash
         [
-          query,
-          filters,
-          page,
-          get_ranking_info,
-          relevancy_strictness,
-          facet_filters,
-          facets,
-          optional_filters,
-          numeric_filters,
-          hits_per_page,
+          analytics,
+          analytics_tags,
           around_lat_lng,
           around_lat_lng_via_ip,
           around_radius,
           around_precision,
-          minimum_around_radius,
+          click_analytics,
+          enable_ab_test,
+          enable_personalization,
+          enable_re_ranking,
+          enable_rules,
+          facet_filters,
+          facets,
+          filters,
+          get_ranking_info,
+          hits_per_page,
+          injected_items,
           inside_bounding_box,
           inside_polygon,
-          query_languages,
+          minimum_around_radius,
           natural_languages,
-          enable_rules,
+          numeric_filters,
+          optional_filters,
+          page,
+          query,
+          relevancy_strictness,
+          query_languages,
           rule_contexts,
-          user_token,
-          click_analytics,
-          analytics,
-          analytics_tags,
-          enable_ab_test,
-          enable_re_ranking,
-          injected_items
+          user_token
         ].hash
       end
 
