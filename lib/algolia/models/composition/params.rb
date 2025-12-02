@@ -77,14 +77,17 @@ module Algolia
       # Search query.
       attr_accessor :query
 
-      # Relevancy threshold below which less relevant results aren't included in the results You can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas). Use this setting to strike a balance between the relevance and number of returned results.
-      attr_accessor :relevancy_strictness
-
       # Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries  This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings. This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages. To support this, you must place the CJK language **first**  **You should always specify a query language.** If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages), or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations).
       attr_accessor :query_languages
 
+      # Relevancy threshold below which less relevant results aren't included in the results You can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas). Use this setting to strike a balance between the relevance and number of returned results.
+      attr_accessor :relevancy_strictness
+
       # Assigns a rule context to the run query [Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context) are strings that you can use to trigger matching rules.
       attr_accessor :rule_contexts
+
+      # Indicates which sorting strategy to apply for the request. The value must match one of the labels defined in the \"sortingStrategy\" mapping. For example, \"Price (asc)\", see Upsert Composition. At runtime, this label is used to look up the corresponding index or replica configured in \"sortingStrategy\", and the query is executed using that index instead of main's.  In addition to \"sortingStrategy\", this parameter is also used to apply a matching Composition Rule that contains a condition defined to trigger on \"sortBy\", see Composition Rules.  If no value is provided or an invalid value, no sorting strategy is applied.
+      attr_accessor :sort_by
 
       # Unique pseudonymous or anonymous user identifier.  This helps with analytics and click and conversion events. For more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
       attr_accessor :user_token
@@ -117,9 +120,10 @@ module Algolia
           :optional_filters => :optionalFilters,
           :page => :page,
           :query => :query,
-          :relevancy_strictness => :relevancyStrictness,
           :query_languages => :queryLanguages,
+          :relevancy_strictness => :relevancyStrictness,
           :rule_contexts => :ruleContexts,
+          :sort_by => :sortBy,
           :user_token => :userToken
         }
       end
@@ -152,9 +156,10 @@ module Algolia
           :optional_filters => :"OptionalFilters",
           :page => :"Integer",
           :query => :"String",
-          :relevancy_strictness => :"Integer",
           :query_languages => :"Array<SupportedLanguage>",
+          :relevancy_strictness => :"Integer",
           :rule_contexts => :"Array<String>",
+          :sort_by => :"String",
           :user_token => :"String"
         }
       end
@@ -298,20 +303,24 @@ module Algolia
           self.query = attributes[:query]
         end
 
-        if attributes.key?(:relevancy_strictness)
-          self.relevancy_strictness = attributes[:relevancy_strictness]
-        end
-
         if attributes.key?(:query_languages)
           if (value = attributes[:query_languages]).is_a?(Array)
             self.query_languages = value
           end
         end
 
+        if attributes.key?(:relevancy_strictness)
+          self.relevancy_strictness = attributes[:relevancy_strictness]
+        end
+
         if attributes.key?(:rule_contexts)
           if (value = attributes[:rule_contexts]).is_a?(Array)
             self.rule_contexts = value
           end
+        end
+
+        if attributes.key?(:sort_by)
+          self.sort_by = attributes[:sort_by]
         end
 
         if attributes.key?(:user_token)
@@ -349,9 +358,10 @@ module Algolia
           optional_filters == other.optional_filters &&
           page == other.page &&
           query == other.query &&
-          relevancy_strictness == other.relevancy_strictness &&
           query_languages == other.query_languages &&
+          relevancy_strictness == other.relevancy_strictness &&
           rule_contexts == other.rule_contexts &&
+          sort_by == other.sort_by &&
           user_token == other.user_token
       end
 
@@ -390,9 +400,10 @@ module Algolia
           optional_filters,
           page,
           query,
-          relevancy_strictness,
           query_languages,
+          relevancy_strictness,
           rule_contexts,
+          sort_by,
           user_token
         ].hash
       end

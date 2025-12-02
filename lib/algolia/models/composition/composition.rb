@@ -19,13 +19,17 @@ module Algolia
 
       attr_accessor :behavior
 
+      # A mapping of sorting labels to the indices (or replicas) that implement those sorting rules. The sorting indices MUST be related to the associated main targeted index in the composition. Each key is the label your frontend sends at runtime (for example, \"Price (asc)\"), and each value is the name of the index that should be queried when that label is selected.  When a request includes a \"sortBy\" parameter, the platform looks up the corresponding index in this mapping and uses it to execute the query. The main targeted index is replaced with the sorting strategy index it is mapped to.  Up to 20 sorting strategies can be defined.
+      attr_accessor :sorting_strategy
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :algolia_object_id => :objectID,
           :name => :name,
           :description => :description,
-          :behavior => :behavior
+          :behavior => :behavior,
+          :sorting_strategy => :sortingStrategy
         }
       end
 
@@ -35,7 +39,8 @@ module Algolia
           :algolia_object_id => :"String",
           :name => :"String",
           :description => :"String",
-          :behavior => :"CompositionBehavior"
+          :behavior => :"CompositionBehavior",
+          :sorting_strategy => :"Hash<String, String>"
         }
       end
 
@@ -90,6 +95,12 @@ module Algolia
         else
           self.behavior = nil
         end
+
+        if attributes.key?(:sorting_strategy)
+          if (value = attributes[:sorting_strategy]).is_a?(Hash)
+            self.sorting_strategy = value
+          end
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -100,7 +111,8 @@ module Algolia
           algolia_object_id == other.algolia_object_id &&
           name == other.name &&
           description == other.description &&
-          behavior == other.behavior
+          behavior == other.behavior &&
+          sorting_strategy == other.sorting_strategy
       end
 
       # @see the `==` method
@@ -112,7 +124,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [algolia_object_id, name, description, behavior].hash
+        [algolia_object_id, name, description, behavior, sorting_strategy].hash
       end
 
       # Builds the object from hash

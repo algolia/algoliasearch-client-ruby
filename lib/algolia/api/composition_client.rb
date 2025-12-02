@@ -947,5 +947,61 @@ module Algolia
       )
     end
 
+    # Updates the \"sortingStrategy\" field of an existing composition. This endpoint allows you to create a new sorting strategy mapping or replace the currently configured one. The provided sorting indices MUST be associated indices or replicas of the main targeted index.  WARNING: This endpoint cannot validate if the sort index is related to the composition's main index.   Validation will fail at runtime if the index you updated is not related!  The update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param composition_id [String] Unique Composition ObjectID. (required)
+    # @param request_body [Hash<String, String>]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def update_sorting_strategy_composition_with_http_info(composition_id, request_body, request_options = {})
+      # verify the required parameter 'composition_id' is set
+      if @api_client.config.client_side_validation && composition_id.nil?
+        raise(
+          ArgumentError,
+          "Parameter `composition_id` is required when calling `update_sorting_strategy_composition`."
+        )
+      end
+      # verify the required parameter 'request_body' is set
+      if @api_client.config.client_side_validation && request_body.nil?
+        raise ArgumentError, "Parameter `request_body` is required when calling `update_sorting_strategy_composition`."
+      end
+
+      path = "/1/compositions/{compositionID}/sortingStrategy".sub(
+        "{" + "compositionID" + "}",
+        Transport.encode_uri(composition_id.to_s)
+      )
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(request_body)
+
+      new_options = request_options.merge(
+        :operation => :"CompositionClient.update_sorting_strategy_composition",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Updates the \"sortingStrategy\" field of an existing composition. This endpoint allows you to create a new sorting strategy mapping or replace the currently configured one. The provided sorting indices MUST be associated indices or replicas of the main targeted index.  WARNING: This endpoint cannot validate if the sort index is related to the composition's main index.   Validation will fail at runtime if the index you updated is not related!  The update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.
+    #
+    # Required API Key ACLs:
+    #   - editSettings
+    # @param composition_id [String] Unique Composition ObjectID. (required)
+    # @param request_body [Hash<String, String>]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [TaskIDResponse]
+    def update_sorting_strategy_composition(composition_id, request_body, request_options = {})
+      response = update_sorting_strategy_composition_with_http_info(composition_id, request_body, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Composition::TaskIDResponse")
+    end
+
   end
 end
