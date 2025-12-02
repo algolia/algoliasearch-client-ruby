@@ -19,13 +19,17 @@ module Algolia
       # Filters that trigger the rule.  You can add add filters using the syntax `facet:value` so that the rule is triggered, when the specific filter is selected. You can use `filters` on its own or combine it with the `pattern` parameter.
       attr_accessor :filters
 
+      # Sort criteria that trigger the rule.  You can trigger composition rules based on the selected sorting strategy set by the parameter `sortBy`. The rule will trigger if the value passed to `sortBy` matches the one defined in the condition.
+      attr_accessor :sort_by
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :pattern => :pattern,
           :anchoring => :anchoring,
           :context => :context,
-          :filters => :filters
+          :filters => :filters,
+          :sort_by => :sortBy
         }
       end
 
@@ -35,7 +39,8 @@ module Algolia
           :pattern => :"String",
           :anchoring => :"Anchoring",
           :context => :"String",
-          :filters => :"String"
+          :filters => :"String",
+          :sort_by => :"String"
         }
       end
 
@@ -84,6 +89,10 @@ module Algolia
         if attributes.key?(:filters)
           self.filters = attributes[:filters]
         end
+
+        if attributes.key?(:sort_by)
+          self.sort_by = attributes[:sort_by]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -94,7 +103,8 @@ module Algolia
           pattern == other.pattern &&
           anchoring == other.anchoring &&
           context == other.context &&
-          filters == other.filters
+          filters == other.filters &&
+          sort_by == other.sort_by
       end
 
       # @see the `==` method
@@ -106,7 +116,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [pattern, anchoring, context, filters].hash
+        [pattern, anchoring, context, filters, sort_by].hash
       end
 
       # Builds the object from hash
