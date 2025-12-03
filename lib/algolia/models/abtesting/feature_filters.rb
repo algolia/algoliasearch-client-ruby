@@ -7,33 +7,32 @@ require "time"
 
 module Algolia
   module Abtesting
-    # A/B test configuration.
-    class ABTestConfiguration
-      attr_accessor :feature_filters
+    # Configuration of feature-based filters applied to the A/B test population.
+    class FeatureFilters
+      # Whether to apply Dynamic Re-Ranking feature filters.
+      attr_accessor :dynamic_re_ranking
 
-      attr_accessor :outliers
+      # Whether to apply AI Personalization feature filters.
+      attr_accessor :ai_perso
 
-      attr_accessor :empty_search
-
-      attr_accessor :minimum_detectable_effect
+      # Whether to apply Multi-Signal Re-Ranking feature filters.
+      attr_accessor :multi_signal_ranking
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :feature_filters => :featureFilters,
-          :outliers => :outliers,
-          :empty_search => :emptySearch,
-          :minimum_detectable_effect => :minimumDetectableEffect
+          :dynamic_re_ranking => :dynamicReRanking,
+          :ai_perso => :aiPerso,
+          :multi_signal_ranking => :multiSignalRanking
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :feature_filters => :"FeatureFilters",
-          :outliers => :"Outliers",
-          :empty_search => :"EmptySearch",
-          :minimum_detectable_effect => :"MinimumDetectableEffect"
+          :dynamic_re_ranking => :"Boolean",
+          :ai_perso => :"Boolean",
+          :multi_signal_ranking => :"Boolean"
         }
       end
 
@@ -50,7 +49,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::ABTestConfiguration` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::FeatureFilters` initialize method"
           )
         end
 
@@ -59,7 +58,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::ABTestConfiguration`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::FeatureFilters`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -67,20 +66,16 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:feature_filters)
-          self.feature_filters = attributes[:feature_filters]
+        if attributes.key?(:dynamic_re_ranking)
+          self.dynamic_re_ranking = attributes[:dynamic_re_ranking]
         end
 
-        if attributes.key?(:outliers)
-          self.outliers = attributes[:outliers]
+        if attributes.key?(:ai_perso)
+          self.ai_perso = attributes[:ai_perso]
         end
 
-        if attributes.key?(:empty_search)
-          self.empty_search = attributes[:empty_search]
-        end
-
-        if attributes.key?(:minimum_detectable_effect)
-          self.minimum_detectable_effect = attributes[:minimum_detectable_effect]
+        if attributes.key?(:multi_signal_ranking)
+          self.multi_signal_ranking = attributes[:multi_signal_ranking]
         end
       end
 
@@ -89,10 +84,9 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          feature_filters == other.feature_filters &&
-          outliers == other.outliers &&
-          empty_search == other.empty_search &&
-          minimum_detectable_effect == other.minimum_detectable_effect
+          dynamic_re_ranking == other.dynamic_re_ranking &&
+          ai_perso == other.ai_perso &&
+          multi_signal_ranking == other.multi_signal_ranking
       end
 
       # @see the `==` method
@@ -104,7 +98,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [feature_filters, outliers, empty_search, minimum_detectable_effect].hash
+        [dynamic_re_ranking, ai_perso, multi_signal_ranking].hash
       end
 
       # Builds the object from hash

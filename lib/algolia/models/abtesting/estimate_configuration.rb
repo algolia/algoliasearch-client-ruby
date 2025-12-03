@@ -9,6 +9,8 @@ module Algolia
   module Abtesting
     # A/B test configuration for estimating the sample size and duration using minimum detectable effect.
     class EstimateConfiguration
+      attr_accessor :feature_filters
+
       attr_accessor :outliers
 
       attr_accessor :empty_search
@@ -18,6 +20,7 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
+          :feature_filters => :featureFilters,
           :outliers => :outliers,
           :empty_search => :emptySearch,
           :minimum_detectable_effect => :minimumDetectableEffect
@@ -27,6 +30,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
+          :feature_filters => :"FeatureFilters",
           :outliers => :"Outliers",
           :empty_search => :"EmptySearch",
           :minimum_detectable_effect => :"MinimumDetectableEffect"
@@ -63,6 +67,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
+        if attributes.key?(:feature_filters)
+          self.feature_filters = attributes[:feature_filters]
+        end
+
         if attributes.key?(:outliers)
           self.outliers = attributes[:outliers]
         end
@@ -83,6 +91,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
+          feature_filters == other.feature_filters &&
           outliers == other.outliers &&
           empty_search == other.empty_search &&
           minimum_detectable_effect == other.minimum_detectable_effect
@@ -97,7 +106,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [outliers, empty_search, minimum_detectable_effect].hash
+        [feature_filters, outliers, empty_search, minimum_detectable_effect].hash
       end
 
       # Builds the object from hash
