@@ -83,7 +83,7 @@ module Algolia
       # Whether automatic events collection is enabled for the application.
       attr_accessor :_automatic_insights
 
-      # Page of search results to retrieve.
+      # The current page of the results.
       attr_accessor :page
 
       # Number of results (hits).
@@ -92,13 +92,13 @@ module Algolia
       # Number of pages of results.
       attr_accessor :nb_pages
 
-      # Number of hits per page.
+      # Number of hits returned per page.
       attr_accessor :hits_per_page
 
       # Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
       attr_accessor :hits
 
-      # Search query.
+      # The search query string.
       attr_accessor :query
 
       # URL-encoded string of all search parameters.
