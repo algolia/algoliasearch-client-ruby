@@ -83,8 +83,11 @@ module Algolia
       # Whether automatic events collection is enabled for the application.
       attr_accessor :_automatic_insights
 
-      # The current page of the results.
-      attr_accessor :page
+      # Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
+      attr_accessor :hits
+
+      # Number of hits returned per page.
+      attr_accessor :hits_per_page
 
       # Number of results (hits).
       attr_accessor :nb_hits
@@ -92,17 +95,14 @@ module Algolia
       # Number of pages of results.
       attr_accessor :nb_pages
 
-      # Number of hits returned per page.
-      attr_accessor :hits_per_page
-
-      # Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
-      attr_accessor :hits
-
-      # The search query string.
-      attr_accessor :query
+      # The current page of the results.
+      attr_accessor :page
 
       # URL-encoded string of all search parameters.
       attr_accessor :params
+
+      # The search query string.
+      attr_accessor :query
 
       attr_accessor :compositions
 
@@ -135,13 +135,13 @@ module Algolia
           :user_data => :userData,
           :query_id => :queryID,
           :_automatic_insights => :_automaticInsights,
-          :page => :page,
+          :hits => :hits,
+          :hits_per_page => :hitsPerPage,
           :nb_hits => :nbHits,
           :nb_pages => :nbPages,
-          :hits_per_page => :hitsPerPage,
-          :hits => :hits,
-          :query => :query,
+          :page => :page,
           :params => :params,
+          :query => :query,
           :compositions => :compositions
         }
       end
@@ -175,13 +175,13 @@ module Algolia
           :user_data => :"Object",
           :query_id => :"String",
           :_automatic_insights => :"Boolean",
-          :page => :"Integer",
+          :hits => :"Array<Hit>",
+          :hits_per_page => :"Integer",
           :nb_hits => :"Integer",
           :nb_pages => :"Integer",
-          :hits_per_page => :"Integer",
-          :hits => :"Array<Hit>",
-          :query => :"String",
+          :page => :"Integer",
           :params => :"String",
+          :query => :"String",
           :compositions => :"Hash<String, ResultsCompositionInfoResponse>"
         }
       end
@@ -200,8 +200,7 @@ module Algolia
         [
           :"BaseSearchResponse",
           :"ResultsCompositionsResponse",
-          :"SearchHits",
-          :"SearchPagination"
+          :"SearchFields"
         ]
       end
 
@@ -338,10 +337,18 @@ module Algolia
           self._automatic_insights = attributes[:_automatic_insights]
         end
 
-        if attributes.key?(:page)
-          self.page = attributes[:page]
+        if attributes.key?(:hits)
+          if (value = attributes[:hits]).is_a?(Array)
+            self.hits = value
+          end
         else
-          self.page = nil
+          self.hits = nil
+        end
+
+        if attributes.key?(:hits_per_page)
+          self.hits_per_page = attributes[:hits_per_page]
+        else
+          self.hits_per_page = nil
         end
 
         if attributes.key?(:nb_hits)
@@ -356,30 +363,22 @@ module Algolia
           self.nb_pages = nil
         end
 
-        if attributes.key?(:hits_per_page)
-          self.hits_per_page = attributes[:hits_per_page]
+        if attributes.key?(:page)
+          self.page = attributes[:page]
         else
-          self.hits_per_page = nil
-        end
-
-        if attributes.key?(:hits)
-          if (value = attributes[:hits]).is_a?(Array)
-            self.hits = value
-          end
-        else
-          self.hits = nil
-        end
-
-        if attributes.key?(:query)
-          self.query = attributes[:query]
-        else
-          self.query = nil
+          self.page = nil
         end
 
         if attributes.key?(:params)
           self.params = attributes[:params]
         else
           self.params = nil
+        end
+
+        if attributes.key?(:query)
+          self.query = attributes[:query]
+        else
+          self.query = nil
         end
 
         if attributes.key?(:compositions)
@@ -422,13 +421,13 @@ module Algolia
           user_data == other.user_data &&
           query_id == other.query_id &&
           _automatic_insights == other._automatic_insights &&
-          page == other.page &&
+          hits == other.hits &&
+          hits_per_page == other.hits_per_page &&
           nb_hits == other.nb_hits &&
           nb_pages == other.nb_pages &&
-          hits_per_page == other.hits_per_page &&
-          hits == other.hits &&
-          query == other.query &&
+          page == other.page &&
           params == other.params &&
+          query == other.query &&
           compositions == other.compositions
       end
 
@@ -468,13 +467,13 @@ module Algolia
           user_data,
           query_id,
           _automatic_insights,
-          page,
+          hits,
+          hits_per_page,
           nb_hits,
           nb_pages,
-          hits_per_page,
-          hits,
-          query,
+          page,
           params,
+          query,
           compositions
         ].hash
       end

@@ -8,7 +8,7 @@ require "time"
 module Algolia
   module Composition
     class CompositionRunSearchResponse
-      # Unique record identifier.
+      # The objectID of the composition which generated this result set.
       attr_accessor :algolia_object_id
 
       attr_accessor :applied_rules

@@ -8,7 +8,7 @@ require "time"
 module Algolia
   module Composition
     class CompositionRunAppliedRules
-      # Unique record identifier.
+      # The objectID of the applied composition rule on this query.
       attr_accessor :algolia_object_id
 
       # Attribute mapping from ruby-style variable name to JSON key.

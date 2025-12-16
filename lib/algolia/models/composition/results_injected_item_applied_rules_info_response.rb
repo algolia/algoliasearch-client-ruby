@@ -8,7 +8,7 @@ require "time"
 module Algolia
   module Composition
     class ResultsInjectedItemAppliedRulesInfoResponse
-      # Unique record identifier.
+      # The objectID of the applied index level rule on this injected group.
       attr_accessor :algolia_object_id
 
       # Attribute mapping from ruby-style variable name to JSON key.

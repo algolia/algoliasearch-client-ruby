@@ -8,6 +8,7 @@ require "time"
 module Algolia
   module Composition
     class ResultsInjectedItemInfoResponse
+      # The key of the injected group.
       attr_accessor :key
 
       attr_accessor :applied_rules
