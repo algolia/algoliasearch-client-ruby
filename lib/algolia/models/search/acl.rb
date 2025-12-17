@@ -23,6 +23,14 @@ module Algolia
       SEE_UNRETRIEVABLE_ATTRIBUTES = "seeUnretrievableAttributes".freeze
       SETTINGS = "settings".freeze
       USAGE = "usage".freeze
+      NLU_WRITE_PROJECT = "nluWriteProject".freeze
+      NLU_READ_PROJECT = "nluReadProject".freeze
+      NLU_WRITE_ENTITY = "nluWriteEntity".freeze
+      NLU_READ_ENTITY = "nluReadEntity".freeze
+      NLU_WRITE_INTENT = "nluWriteIntent".freeze
+      NLU_READ_INTENT = "nluReadIntent".freeze
+      NLU_PREDICTION = "nluPrediction".freeze
+      NLU_READ_ANSWERS = "nluReadAnswers".freeze
 
       def self.all_vars
         @all_vars ||= [
@@ -40,7 +48,15 @@ module Algolia
           SEARCH,
           SEE_UNRETRIEVABLE_ATTRIBUTES,
           SETTINGS,
-          USAGE
+          USAGE,
+          NLU_WRITE_PROJECT,
+          NLU_READ_PROJECT,
+          NLU_WRITE_ENTITY,
+          NLU_READ_ENTITY,
+          NLU_WRITE_INTENT,
+          NLU_READ_INTENT,
+          NLU_PREDICTION,
+          NLU_READ_ANSWERS
         ].freeze
       end
 
