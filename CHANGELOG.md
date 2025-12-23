@@ -1,3 +1,7 @@
+## [3.34.2](https://github.com/algolia/algoliasearch-client-ruby/compare/3.34.1...3.34.2)
+
+- [005aa6524](https://github.com/algolia/api-clients-automation/commit/005aa6524) chore(deps): dependencies 2025-12-22 ([#5775](https://github.com/algolia/api-clients-automation/pull/5775)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [3.34.1](https://github.com/algolia/algoliasearch-client-ruby/compare/3.34.0...3.34.1)
 
 - [54606b3b2](https://github.com/algolia/api-clients-automation/commit/54606b3b2) refactor(specs): extract `results` field in a dedicated directory ([#5739](https://github.com/algolia/api-clients-automation/pull/5739)) by [@ClaraMuller](https://github.com/ClaraMuller/)
