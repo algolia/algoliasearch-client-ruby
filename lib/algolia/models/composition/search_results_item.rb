@@ -341,44 +341,30 @@ module Algolia
           if (value = attributes[:hits]).is_a?(Array)
             self.hits = value
           end
-        else
-          self.hits = nil
         end
 
         if attributes.key?(:hits_per_page)
           self.hits_per_page = attributes[:hits_per_page]
-        else
-          self.hits_per_page = nil
         end
 
         if attributes.key?(:nb_hits)
           self.nb_hits = attributes[:nb_hits]
-        else
-          self.nb_hits = nil
         end
 
         if attributes.key?(:nb_pages)
           self.nb_pages = attributes[:nb_pages]
-        else
-          self.nb_pages = nil
         end
 
         if attributes.key?(:page)
           self.page = attributes[:page]
-        else
-          self.page = nil
         end
 
         if attributes.key?(:params)
           self.params = attributes[:params]
-        else
-          self.params = nil
         end
 
         if attributes.key?(:query)
           self.query = attributes[:query]
-        else
-          self.query = nil
         end
 
         if attributes.key?(:compositions)
