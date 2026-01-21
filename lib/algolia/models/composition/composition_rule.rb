@@ -94,8 +94,6 @@ module Algolia
           if (value = attributes[:conditions]).is_a?(Array)
             self.conditions = value
           end
-        else
-          self.conditions = nil
         end
 
         if attributes.key?(:consequence)
