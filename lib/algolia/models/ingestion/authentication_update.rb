@@ -9,8 +9,6 @@ module Algolia
   module Ingestion
     # Request body for updating an authentication resource.
     class AuthenticationUpdate
-      attr_accessor :type
-
       # Descriptive name for the resource.
       attr_accessor :name
 
@@ -19,7 +17,6 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :type => :type,
           :name => :name,
           :input => :input
         }
@@ -28,7 +25,6 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :type => :"AuthenticationType",
           :name => :"String",
           :input => :"AuthInputPartial"
         }
@@ -64,10 +60,6 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:type)
-          self.type = attributes[:type]
-        end
-
         if attributes.key?(:name)
           self.name = attributes[:name]
         end
@@ -82,7 +74,6 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          type == other.type &&
           name == other.name &&
           input == other.input
       end
@@ -96,7 +87,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [type, name, input].hash
+        [name, input].hash
       end
 
       # Builds the object from hash
