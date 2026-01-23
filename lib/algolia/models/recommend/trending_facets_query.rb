@@ -17,14 +17,10 @@ module Algolia
       # Maximum number of recommendations to retrieve. By default, all recommendations are returned and no fallback request is made. Depending on the available recommendations and the other request parameters, the actual number of recommendations may be lower than this value.
       attr_accessor :max_recommendations
 
-      attr_accessor :query_parameters
-
       # Facet attribute for which to retrieve trending facet values.
       attr_accessor :facet_name
 
       attr_accessor :model
-
-      attr_accessor :fallback_parameters
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
@@ -32,10 +28,8 @@ module Algolia
           :index_name => :indexName,
           :threshold => :threshold,
           :max_recommendations => :maxRecommendations,
-          :query_parameters => :queryParameters,
           :facet_name => :facetName,
-          :model => :model,
-          :fallback_parameters => :fallbackParameters
+          :model => :model
         }
       end
 
@@ -45,10 +39,8 @@ module Algolia
           :index_name => :"String",
           :threshold => :"Float",
           :max_recommendations => :"Integer",
-          :query_parameters => :"RecommendSearchParams",
           :facet_name => :"String",
-          :model => :"TrendingFacetsModel",
-          :fallback_parameters => :"FallbackParams"
+          :model => :"TrendingFacetsModel"
         }
       end
 
@@ -62,7 +54,6 @@ module Algolia
       # List of class defined in allOf (OpenAPI v3)
       def self.openapi_all_of
         [
-          :"BaseRecommendRequest",
           :"TrendingFacets"
         ]
       end
@@ -106,10 +97,6 @@ module Algolia
           self.max_recommendations = attributes[:max_recommendations]
         end
 
-        if attributes.key?(:query_parameters)
-          self.query_parameters = attributes[:query_parameters]
-        end
-
         if attributes.key?(:facet_name)
           self.facet_name = attributes[:facet_name]
         else
@@ -121,10 +108,6 @@ module Algolia
         else
           self.model = nil
         end
-
-        if attributes.key?(:fallback_parameters)
-          self.fallback_parameters = attributes[:fallback_parameters]
-        end
       end
 
       # Checks equality by comparing each attribute.
@@ -135,10 +118,8 @@ module Algolia
           index_name == other.index_name &&
           threshold == other.threshold &&
           max_recommendations == other.max_recommendations &&
-          query_parameters == other.query_parameters &&
           facet_name == other.facet_name &&
-          model == other.model &&
-          fallback_parameters == other.fallback_parameters
+          model == other.model
       end
 
       # @see the `==` method
@@ -150,7 +131,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [index_name, threshold, max_recommendations, query_parameters, facet_name, model, fallback_parameters].hash
+        [index_name, threshold, max_recommendations, facet_name, model].hash
       end
 
       # Builds the object from hash
