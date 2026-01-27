@@ -7,7 +7,7 @@ require "time"
 
 module Algolia
   module Insights
-    # Click event after an Algolia request.  Use this event to track when users click items in the search results. If you're building your category pages with Algolia, you'll also use this event.
+    # Click event after an Algolia request. Use this event to track when users click items in the search results. If you're building your category pages with Algolia, you'll also use this event.
     class ClickedObjectIDsAfterSearch
       # Event name, up to 64 ASCII characters.  Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
       attr_accessor :event_name
