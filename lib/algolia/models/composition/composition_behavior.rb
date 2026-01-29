@@ -8,207 +8,100 @@ require "time"
 module Algolia
   module Composition
     # An object containing either an `injection` or `multifeed` behavior schema, but not both.
-    class CompositionBehavior
-      attr_accessor :injection
-
-      attr_accessor :multifeed
-
-      # Attribute mapping from ruby-style variable name to JSON key.
-      def self.attribute_map
-        {
-          :injection => :injection,
-          :multifeed => :multifeed
-        }
-      end
-
-      # Attribute type mapping.
-      def self.types_mapping
-        {
-          :injection => :"Injection",
-          :multifeed => :"Multifeed"
-        }
-      end
-
-      # List of attributes with nullable: true
-      def self.openapi_nullable
-        Set.new(
-          []
-        )
-      end
-
-      # Initializes the object
-      # @param [Hash] attributes Model attributes in the form of hash
-      def initialize(attributes = {})
-        if (!attributes.is_a?(Hash))
-          raise(
-            ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::CompositionBehavior` initialize method"
-          )
+    module CompositionBehavior
+      class << self
+      # List of class defined in oneOf (OpenAPI v3)
+        def openapi_one_of
+          [
+            :"CompositionInjectionBehavior",
+            :"CompositionMultifeedBehavior"
+          ]
         end
 
-        # check to see if the attribute exists and convert string to symbol for hash key
-        attributes = attributes.each_with_object({}) { |(k, v), h|
-          if (!self.class.attribute_map.key?(k.to_sym))
-            raise(
-              ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::CompositionBehavior`. Please check the name to make sure it's valid. List of attributes: " +
-                self.class.attribute_map.keys.inspect
-            )
-          end
-
-          h[k.to_sym] = v
-        }
-
-        if attributes.key?(:injection)
-          self.injection = attributes[:injection]
-        end
-
-        if attributes.key?(:multifeed)
-          self.multifeed = attributes[:multifeed]
-        end
-      end
-
-      # Checks equality by comparing each attribute.
-      # @param [Object] Object to be compared
-      def ==(other)
-        return true if self.equal?(other)
-        self.class == other.class &&
-          injection == other.injection &&
-          multifeed == other.multifeed
-      end
-
-      # @see the `==` method
-      # @param [Object] Object to be compared
-      def eql?(other)
-        self == other
-      end
-
-      # Calculates hash code according to all attributes.
-      # @return [Integer] Hash code
-      def hash
-        [injection, multifeed].hash
-      end
-
-      # Builds the object from hash
-      # @param [Hash] attributes Model attributes in the form of hash
-      # @return [Object] Returns the model itself
-      def self.build_from_hash(attributes)
-        return nil unless attributes.is_a?(Hash)
-        attributes = attributes.transform_keys(&:to_sym)
-        transformed_hash = {}
-        types_mapping.each_pair do |key, type|
-          if attributes.key?(attribute_map[key]) && attributes[attribute_map[key]].nil?
-            transformed_hash[key.to_sym] = nil
-          elsif type =~ /\AArray<(.*)>/i
-            # check to ensure the input is an array given that the attribute
-            # is documented as an array but the input is not
-            if attributes[attribute_map[key]].is_a?(Array)
-              transformed_hash[key.to_sym] = attributes[attribute_map[key]].map { |v|
-                _deserialize(::Regexp.last_match(1), v)
-              }
+        # Builds the object
+        # @param [Mixed] Data to be matched against the list of oneOf items
+        # @return [Object] Returns the model or the data itself
+        def build(data)
+          # Go through the list of oneOf items and attempt to identify the appropriate one.
+          # Note:
+          # - We do not attempt to check whether exactly one item matches.
+          # - No advanced validation of types in some cases (e.g. "x: { type: string }" will happily match { x: 123 })
+          #   due to the way the deserialization is made in the base_object template (it just casts without verifying).
+          # - TODO: scalar values are de facto behaving as if they were nullable.
+          # - TODO: logging when debugging is set.
+          openapi_one_of.each do |klass|
+            begin
+              # "nullable: true"
+              next if klass == :AnyType
+              typed_data = find_and_cast_into_type(klass, data)
+              return typed_data if typed_data
+              # rescue all errors so we keep iterating even if the current item lookup raises
+            rescue
             end
-          elsif !attributes[attribute_map[key]].nil?
-            transformed_hash[key.to_sym] = _deserialize(type, attributes[attribute_map[key]])
           end
+
+          openapi_one_of.include?(:AnyType) ? data : nil
         end
 
-        new(transformed_hash)
-      end
+        private
 
-      # Deserializes the data based on type
-      # @param string type Data type
-      # @param string value Value to be deserialized
-      # @return [Object] Deserialized data
-      def self._deserialize(type, value)
-        case type.to_sym
-        when :Time
-          Time.parse(value)
-        when :Date
-          Date.parse(value)
-        when :String
-          value.to_s
-        when :Integer
-          value.to_i
-        when :Float
-          value.to_f
-        when :Boolean
-          if value.to_s =~ /\A(true|t|yes|y|1)\z/i
-            true
+        SchemaMismatchError = Class.new(StandardError)
+
+        def find_and_cast_into_type(klass, data)
+          return if data.nil?
+
+          case klass.to_s
+          when "Boolean"
+            return data if data.instance_of?(TrueClass) || data.instance_of?(FalseClass)
+          when "Float"
+            return data if data.instance_of?(Float)
+          when "Integer"
+            return data if data.instance_of?(Integer)
+          when "Time"
+            return Time.parse(data)
+          when "Date"
+            return Date.parse(data)
+          when "String"
+            return data if data.instance_of?(String)
+            # "type: object"
+          when "Object"
+            return data if data.instance_of?(Hash)
+            # "type: array"
+          when /\AArray<(?<sub_type>.+)>\z/
+            if data.instance_of?(Array)
+              sub_type = Regexp.last_match[:sub_type]
+              return data.map { |item| find_and_cast_into_type(sub_type, item) }
+            end
+            # "type: object" with "additionalProperties: { ... }"
+          when /\AHash<String, (?<sub_type>.+)>\z/
+            if data.instance_of?(Hash) && data.keys.all? { |k| k.instance_of?(Symbol) || k.instance_of?(String) }
+              sub_type = Regexp.last_match[:sub_type]
+              return data.each_with_object({}) { |(k, v), hsh| hsh[k] = find_and_cast_into_type(sub_type, v) }
+            end
+            # model
           else
-            false
-          end
+            const = Algolia::Composition.const_get(klass)
+            if const
+              if const.respond_to?(:openapi_one_of)
+                # nested oneOf model
+                model = const.build(data)
+              elsif const.respond_to?(:discriminator_attributes)
+                if const.discriminator_attributes.all? { |attr| data.key?(attr) }
+                  model = const.build_from_hash(data)
+                end
+              else
+                # maybe it's an enum, or doens't have discriminators
+                model = const.build_from_hash(data)
+              end
 
-        when :Object
-          # generic object (usually a Hash), return directly
-          value
-        when /\AArray<(?<inner_type>.+)>\z/
-          inner_type = Regexp.last_match[:inner_type]
-          value.map { |v| _deserialize(inner_type, v) }
-        when /\AHash<(?<k_type>.+?), (?<v_type>.+)>\z/
-          k_type = Regexp.last_match[:k_type]
-          v_type = Regexp.last_match[:v_type]
-          {}.tap do |hash|
-            value.each do |k, v|
-              hash[_deserialize(k_type, k)] = _deserialize(v_type, v)
+              return model if model
             end
           end
-          # model
-        else
-          # models (e.g. Pet) or oneOf
-          klass = Algolia::Composition.const_get(type)
-          klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass
-            .build_from_hash(value)
-        end
-      end
 
-      # Returns the string representation of the object
-      # @return [String] String presentation of the object
-      def to_s
-        to_hash.to_s
-      end
-
-      # to_body is an alias to to_hash (backward compatibility)
-      # @return [Hash] Returns the object in the form of hash
-      def to_body
-        to_hash
-      end
-
-      def to_json(*_args)
-        to_hash.to_json
-      end
-
-      # Returns the object in the form of hash
-      # @return [Hash] Returns the object in the form of hash
-      def to_hash
-        hash = {}
-        self.class.attribute_map.each_pair do |attr, param|
-          value = send(attr)
-          if value.nil?
-            is_nullable = self.class.openapi_nullable.include?(attr)
-            next if !is_nullable || (is_nullable && !instance_variable_defined?(:"@#{attr}"))
-          end
-
-          hash[param] = _to_hash(value)
-        end
-
-        hash
-      end
-
-      # Outputs non-array value in the form of hash
-      # For object, use to_hash. Otherwise, just return the value
-      # @param [Object] value Any valid value
-      # @return [Hash] Returns the value in the form of hash
-      def _to_hash(value)
-        if value.is_a?(Array)
-          value.compact.map { |v| _to_hash(v) }
-        elsif value.is_a?(Hash)
-          {}.tap do |hash|
-            value.each { |k, v| hash[k] = _to_hash(v) }
-          end
-        elsif value.respond_to?(:to_hash)
-          value.to_hash
-        else
-          value
+          # if no match by now, raise
+          raise
+        rescue
+          raise SchemaMismatchError, "#{data} doesn't match the #{klass} type"
         end
       end
     end
