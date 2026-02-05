@@ -18,6 +18,9 @@ module Algolia
       # Client secret. This field is `null` in the API response.
       attr_accessor :client_secret
 
+      # Authorization code. Used during an `authorization_code` grant type flow, to request an access_token when creating/updating the authentication. This field is not returned in the API response.
+      attr_accessor :code
+
       # OAuth scope.
       attr_accessor :scope
 
@@ -27,6 +30,7 @@ module Algolia
           :url => :url,
           :client_id => :client_id,
           :client_secret => :client_secret,
+          :code => :code,
           :scope => :scope
         }
       end
@@ -44,6 +48,7 @@ module Algolia
           :url => :"String",
           :client_id => :"String",
           :client_secret => :"String",
+          :code => :"String",
           :scope => :"String"
         }
       end
@@ -90,6 +95,10 @@ module Algolia
           self.client_secret = attributes[:client_secret]
         end
 
+        if attributes.key?(:code)
+          self.code = attributes[:code]
+        end
+
         if attributes.key?(:scope)
           self.scope = attributes[:scope]
         end
@@ -103,6 +112,7 @@ module Algolia
           url == other.url &&
           client_id == other.client_id &&
           client_secret == other.client_secret &&
+          code == other.code &&
           scope == other.scope
       end
 
@@ -115,7 +125,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [url, client_id, client_secret, scope].hash
+        [url, client_id, client_secret, code, scope].hash
       end
 
       # Builds the object from hash
