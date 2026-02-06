@@ -41,17 +41,17 @@ module Algolia
 
       attr_accessor :subscription_action
 
-      # Date of the last cursor in RFC 3339 format.
+      # Date and time when the last cursor was created, in RFC 3339 format.
       attr_accessor :cursor
 
       attr_accessor :notifications
 
       attr_accessor :policies
 
-      # Date of creation in RFC 3339 format.
+      # Date and time when the resource was created, in RFC 3339 format.
       attr_accessor :created_at
 
-      # Date of last update in RFC 3339 format.
+      # Date and time when the resource was last updated, in RFC 3339 format.
       attr_accessor :updated_at
 
       # Attribute mapping from ruby-style variable name to JSON key.

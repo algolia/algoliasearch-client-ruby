@@ -7,7 +7,7 @@ require "time"
 
 module Algolia
   module Recommend
-    # Removes stop words from the search query.  Stop words are common words like articles, conjunctions, prepositions, or pronouns that have little or no meaning on their own. In English, \"the\", \"a\", or \"and\" are stop words.  You should only use this feature for the languages used in your index.
+    # Removes stop words from the search query.  Stop words are common words like articles, conjunctions, prepositions, or pronouns that have little or no meaning on their own. In English, \"the\", \"a\", or \"and\" are stop words.  Only use this feature for the languages used in your index.
     module RemoveStopWords
       class << self
       # List of class defined in oneOf (OpenAPI v3)

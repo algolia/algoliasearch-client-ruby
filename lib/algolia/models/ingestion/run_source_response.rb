@@ -11,7 +11,7 @@ module Algolia
       # Map of taskID sent for reindex with the corresponding runID.
       attr_accessor :task_with_run_id
 
-      # Date of creation in RFC 3339 format.
+      # Date and time when the resource was created, in RFC 3339 format.
       attr_accessor :created_at
 
       # Attribute mapping from ruby-style variable name to JSON key.

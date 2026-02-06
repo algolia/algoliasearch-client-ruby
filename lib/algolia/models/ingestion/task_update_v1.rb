@@ -7,7 +7,7 @@ require "time"
 
 module Algolia
   module Ingestion
-    # API request body for updating a task using the V1 shape, please use methods and types that don't contain the V1 suffix.
+    # API request body for updating a task using the V1 shape. Use methods and types that don't contain the V1 suffix.
     class TaskUpdateV1
       # Universally unique identifier (UUID) of a destination resource.
       attr_accessor :destination_id

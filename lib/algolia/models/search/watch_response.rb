@@ -23,7 +23,7 @@ module Algolia
       # a message describing the outcome of the operation that has been ran (push, discover or validate) run.
       attr_accessor :message
 
-      # Date of creation in RFC 3339 format.
+      # Date and time when the resource was created, in RFC 3339 format.
       attr_accessor :created_at
 
       # Attribute mapping from ruby-style variable name to JSON key.

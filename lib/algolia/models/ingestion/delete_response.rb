@@ -8,7 +8,7 @@ require "time"
 module Algolia
   module Ingestion
     class DeleteResponse
-      # Date of deletion in RFC 3339 format.
+      # Date and time when the resource was deleted, in RFC 3339 format.
       attr_accessor :deleted_at
 
       # Attribute mapping from ruby-style variable name to JSON key.

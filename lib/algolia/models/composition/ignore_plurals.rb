@@ -7,7 +7,7 @@ require "time"
 
 module Algolia
   module Composition
-    # Treat singular, plurals, and other forms of declensions as equivalent. You should only use this feature for the languages used in your index.
+    # Treat singular, plurals, and other forms of declensions as equivalent. Only use this feature for the languages used in your index.
     module IgnorePlurals
       class << self
       # List of class defined in oneOf (OpenAPI v3)

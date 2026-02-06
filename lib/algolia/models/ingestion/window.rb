@@ -9,10 +9,10 @@ module Algolia
   module Ingestion
     # Time window by which to filter the observability data.
     class Window
-      # Date in RFC 3339 format representing the oldest data in the time window.
+      # Date and time representing the oldest data in the time window, in RFC 3339 format.
       attr_accessor :start_date
 
-      # Date in RFC 3339 format representing the newest data in the time window.
+      # Date and time representing the newest data in the time window, in RFC 3339 format.
       attr_accessor :end_date
 
       # Attribute mapping from ruby-style variable name to JSON key.

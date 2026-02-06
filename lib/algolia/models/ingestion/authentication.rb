@@ -24,10 +24,10 @@ module Algolia
 
       attr_accessor :input
 
-      # Date of creation in RFC 3339 format.
+      # Date and time when the resource was created, in RFC 3339 format.
       attr_accessor :created_at
 
-      # Date of last update in RFC 3339 format.
+      # Date and time when the resource was last updated, in RFC 3339 format.
       attr_accessor :updated_at
 
       # Attribute mapping from ruby-style variable name to JSON key.

@@ -8,10 +8,10 @@ require "time"
 module Algolia
   module Composition
     class TimeRange
-      # When the rule should start to be active, in Unix epoch time.
+      # Timestamp when the rule should start to be active, measured in seconds since the Unix epoch.
       attr_accessor :from
 
-      # When the rule should stop to be active, in Unix epoch time.
+      # Timestamp when the rule should stop to be active, measured in seconds since the Unix epoch.
       attr_accessor :_until
 
       # Attribute mapping from ruby-style variable name to JSON key.

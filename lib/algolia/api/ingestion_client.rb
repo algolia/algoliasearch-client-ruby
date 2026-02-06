@@ -267,7 +267,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskCreateResponse")
     end
 
-    # Creates a new task using the v1 endpoint, please use `createTask` instead.
+    # Creates a new task using the v1 endpoint. Use `createTask` instead.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -302,7 +302,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Creates a new task using the v1 endpoint, please use `createTask` instead.
+    # Creates a new task using the v1 endpoint. Use `createTask` instead.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -741,7 +741,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::DeleteResponse")
     end
 
-    # Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+    # Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -776,7 +776,7 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+    # Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -889,7 +889,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskUpdateResponse")
     end
 
-    # Disables a task using the v1 endpoint, please use `disableTask` instead.
+    # Disables a task using the v1 endpoint. Use `disableTask` instead.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -924,7 +924,7 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # Disables a task using the v1 endpoint, please use `disableTask` instead.
+    # Disables a task using the v1 endpoint. Use `disableTask` instead.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -986,7 +986,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskUpdateResponse")
     end
 
-    # Enables a task using the v1 endpoint, please use `enableTask` instead.
+    # Enables a task using the v1 endpoint. Use `enableTask` instead.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -1021,7 +1021,7 @@ module Algolia
       @api_client.call_api(:PUT, path, new_options)
     end
 
-    # Enables a task using the v1 endpoint, please use `enableTask` instead.
+    # Enables a task using the v1 endpoint. Use `enableTask` instead.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -1338,7 +1338,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::Task")
     end
 
-    # Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+    # Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -1373,7 +1373,7 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+    # Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -1729,8 +1729,8 @@ module Algolia
     # @param task_id [String] Task ID for filtering the list of task runs.
     # @param sort [RunSortKeys] Property by which to sort the list of task runs. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
-    # @param start_date [String] Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
-    # @param end_date [String] Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
+    # @param start_date [String] Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used.
+    # @param end_date [String] Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def list_runs_with_http_info(
@@ -1786,8 +1786,8 @@ module Algolia
     # @param task_id [String] Task ID for filtering the list of task runs.
     # @param sort [RunSortKeys] Property by which to sort the list of task runs. (default to 'createdAt')
     # @param order [OrderKeys] Sort order of the response, ascending or descending. (default to 'desc')
-    # @param start_date [String] Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
-    # @param end_date [String] Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
+    # @param start_date [String] Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used.
+    # @param end_date [String] Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [RunListResponse]
     def list_runs(
@@ -2019,7 +2019,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::ListTasksResponse")
     end
 
-    # Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+    # Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2080,7 +2080,7 @@ module Algolia
       @api_client.call_api(:GET, path, new_options)
     end
 
-    # Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
+    # Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2478,7 +2478,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::RunResponse")
     end
 
-    # Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of task runs with the observability endpoints.
+    # Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs with the observability endpoints.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2514,7 +2514,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of task runs with the observability endpoints.
+    # Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs with the observability endpoints.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2721,7 +2721,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Array<Ingestion::Task>")
     end
 
-    # Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+    # Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -2756,7 +2756,7 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+    # Searches for tasks using the v1 endpoint. Use `searchTasks` instead.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -3213,7 +3213,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::TaskUpdateResponse")
     end
 
-    # Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+    # Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
     #
     # Required API Key ACLs:
     #   - addObject
@@ -3253,7 +3253,7 @@ module Algolia
       @api_client.call_api(:PATCH, path, new_options)
     end
 
-    # Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+    # Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
     #
     # Required API Key ACLs:
     #   - addObject

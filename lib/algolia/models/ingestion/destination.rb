@@ -22,10 +22,10 @@ module Algolia
 
       attr_accessor :input
 
-      # Date of creation in RFC 3339 format.
+      # Date and time when the resource was created, in RFC 3339 format.
       attr_accessor :created_at
 
-      # Date of last update in RFC 3339 format.
+      # Date and time when the resource was last updated, in RFC 3339 format.
       attr_accessor :updated_at
 
       # Universally unique identifier (UUID) of an authentication resource.

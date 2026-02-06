@@ -15,7 +15,7 @@ module Algolia
       # Descriptive name for the resource.
       attr_accessor :name
 
-      # Date of last update in RFC 3339 format.
+      # Date and time when the resource was last updated, in RFC 3339 format.
       attr_accessor :updated_at
 
       # Attribute mapping from ruby-style variable name to JSON key.

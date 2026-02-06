@@ -32,13 +32,13 @@ module Algolia
 
       attr_accessor :type
 
-      # Date of creation in RFC 3339 format.
+      # Date and time when the resource was created, in RFC 3339 format.
       attr_accessor :created_at
 
-      # Date of start in RFC 3339 format.
+      # Date and time when the task started, in RFC 3339 format.
       attr_accessor :started_at
 
-      # Date of finish in RFC 3339 format.
+      # Date and time when the task finished, in RFC 3339 format.
       attr_accessor :finished_at
 
       # Attribute mapping from ruby-style variable name to JSON key.
