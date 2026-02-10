@@ -43,8 +43,7 @@ module Algolia
       def decide(tryable_host, http_response_code: nil, is_timed_out: false, network_failure: false)
         @lock.synchronize do
           if !is_timed_out && success?(http_response_code)
-            tryable_host.up = true
-            tryable_host.last_use = Time.now.utc
+            reset(tryable_host)
             SUCCESS
           elsif !is_timed_out && retryable?(http_response_code, network_failure)
             tryable_host.up = false
