@@ -348,14 +348,10 @@ module Algolia
 
         if attributes.key?(:query)
           self.query = attributes[:query]
-        else
-          self.query = nil
         end
 
         if attributes.key?(:params)
           self.params = attributes[:params]
-        else
-          self.params = nil
         end
 
         # add extra attribute to additional_properties
