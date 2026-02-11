@@ -7,45 +7,22 @@ require "time"
 
 module Algolia
   module Search
-    # Effect of the rule.  For more information, see [Consequences](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#consequences).
-    class Consequence
-      attr_accessor :params
-
-      # Records you want to pin to a specific position in the search results.  You can promote up to 300 records, either individually, or as groups of up to 100 records each.
-      attr_accessor :promote
-
-      # Determines whether promoted records must also match active filters for the consequence to apply.  This ensures user-applied filters take priority and irrelevant matches aren't shown. For example, if you promote a record with `color: red` but the user filters for `color: blue`, the \"red\" record won't be shown.  > In the Algolia dashboard, when you use the **Pin an item** consequence, `filterPromotes` appears as the checkbox: **Pinned items must match active filters to be displayed.** For examples, see [Promote results with rules](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/promote-hits/#promote-results-matching-active-filters).
-      attr_accessor :filter_promotes
-
-      # Records you want to hide from the search results.
-      attr_accessor :hide
-
-      attr_accessor :redirect
-
-      # A JSON object with custom data that will be appended to the `userData` array in the response. This object isn't interpreted by the API and is limited to 1&nbsp;kB of minified JSON.
-      attr_accessor :user_data
+    # Redirect to a virtual replica index.  This consequence is only valid for rules with `scope: redirect`.
+    class ConsequenceRedirect
+      # Name of the virtual replica index to redirect searches to.
+      attr_accessor :index_name
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :params => :params,
-          :promote => :promote,
-          :filter_promotes => :filterPromotes,
-          :hide => :hide,
-          :redirect => :redirect,
-          :user_data => :userData
+          :index_name => :indexName
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :params => :"ConsequenceParams",
-          :promote => :"Array<Promote>",
-          :filter_promotes => :"Boolean",
-          :hide => :"Array<ConsequenceHide>",
-          :redirect => :"ConsequenceRedirect",
-          :user_data => :"Object"
+          :index_name => :"String"
         }
       end
 
@@ -62,7 +39,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::Consequence` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::ConsequenceRedirect` initialize method"
           )
         end
 
@@ -71,7 +48,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::Consequence`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::ConsequenceRedirect`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -79,32 +56,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:params)
-          self.params = attributes[:params]
-        end
-
-        if attributes.key?(:promote)
-          if (value = attributes[:promote]).is_a?(Array)
-            self.promote = value
-          end
-        end
-
-        if attributes.key?(:filter_promotes)
-          self.filter_promotes = attributes[:filter_promotes]
-        end
-
-        if attributes.key?(:hide)
-          if (value = attributes[:hide]).is_a?(Array)
-            self.hide = value
-          end
-        end
-
-        if attributes.key?(:redirect)
-          self.redirect = attributes[:redirect]
-        end
-
-        if attributes.key?(:user_data)
-          self.user_data = attributes[:user_data]
+        if attributes.key?(:index_name)
+          self.index_name = attributes[:index_name]
+        else
+          self.index_name = nil
         end
       end
 
@@ -113,12 +68,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          params == other.params &&
-          promote == other.promote &&
-          filter_promotes == other.filter_promotes &&
-          hide == other.hide &&
-          redirect == other.redirect &&
-          user_data == other.user_data
+          index_name == other.index_name
       end
 
       # @see the `==` method
@@ -130,7 +80,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [params, promote, filter_promotes, hide, redirect, user_data].hash
+        [index_name].hash
       end
 
       # Builds the object from hash
