@@ -104,6 +104,9 @@ module Algolia
       # The search query string.
       attr_accessor :query
 
+      # The ID of the feed.
+      attr_accessor :feed_id
+
       attr_accessor :compositions
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -142,6 +145,7 @@ module Algolia
           :page => :page,
           :params => :params,
           :query => :query,
+          :feed_id => :feedID,
           :compositions => :compositions
         }
       end
@@ -182,6 +186,7 @@ module Algolia
           :page => :"Integer",
           :params => :"String",
           :query => :"String",
+          :feed_id => :"String",
           :compositions => :"Hash<String, ResultsCompositionInfoResponse>"
         }
       end
@@ -367,6 +372,10 @@ module Algolia
           self.query = attributes[:query]
         end
 
+        if attributes.key?(:feed_id)
+          self.feed_id = attributes[:feed_id]
+        end
+
         if attributes.key?(:compositions)
           if (value = attributes[:compositions]).is_a?(Hash)
             self.compositions = value
@@ -414,6 +423,7 @@ module Algolia
           page == other.page &&
           params == other.params &&
           query == other.query &&
+          feed_id == other.feed_id &&
           compositions == other.compositions
       end
 
@@ -460,6 +470,7 @@ module Algolia
           page,
           params,
           query,
+          feed_id,
           compositions
         ].hash
       end
