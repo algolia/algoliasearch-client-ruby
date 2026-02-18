@@ -7,26 +7,21 @@ require "time"
 
 module Algolia
   module Composition
-    class Multifeed
-      # A key-value store of Feed ID to Feed. Currently, the only supported Feed type is an Injection.
-      attr_accessor :feeds
-
-      # A list of Feed IDs that specifies the order in which to order the results in the response. The IDs should be a subset of those in the Feeds object, and only those specified will be processed. When this field is not set, all Feeds are processed and returned with a default ordering.
-      attr_accessor :feeds_order
+    # Feed formatted as an injection.
+    class FeedInjection
+      attr_accessor :injection
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :feeds => :feeds,
-          :feeds_order => :feedsOrder
+          :injection => :injection
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :feeds => :"Hash<String, FeedInjection>",
-          :feeds_order => :"Array<String>"
+          :injection => :"Injection"
         }
       end
 
@@ -43,7 +38,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::Multifeed` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::FeedInjection` initialize method"
           )
         end
 
@@ -52,7 +47,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::Multifeed`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::FeedInjection`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -60,18 +55,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:feeds)
-          if (value = attributes[:feeds]).is_a?(Hash)
-            self.feeds = value
-          end
+        if attributes.key?(:injection)
+          self.injection = attributes[:injection]
         else
-          self.feeds = nil
-        end
-
-        if attributes.key?(:feeds_order)
-          if (value = attributes[:feeds_order]).is_a?(Array)
-            self.feeds_order = value
-          end
+          self.injection = nil
         end
       end
 
@@ -80,8 +67,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          feeds == other.feeds &&
-          feeds_order == other.feeds_order
+          injection == other.injection
       end
 
       # @see the `==` method
@@ -93,7 +79,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [feeds, feeds_order].hash
+        [injection].hash
       end
 
       # Builds the object from hash
