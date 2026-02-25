@@ -30,6 +30,8 @@ module Algolia
 
       attr_accessor :scope
 
+      attr_accessor :condition
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -40,7 +42,8 @@ module Algolia
           :enabled => :enabled,
           :validity => :validity,
           :tags => :tags,
-          :scope => :scope
+          :scope => :scope,
+          :condition => :condition
         }
       end
 
@@ -54,7 +57,8 @@ module Algolia
           :enabled => :"Boolean",
           :validity => :"Array<TimeRange>",
           :tags => :"Array<String>",
-          :scope => :"String"
+          :scope => :"String",
+          :condition => :"Condition"
         }
       end
 
@@ -126,6 +130,10 @@ module Algolia
         if attributes.key?(:scope)
           self.scope = attributes[:scope]
         end
+
+        if attributes.key?(:condition)
+          self.condition = attributes[:condition]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -140,7 +148,8 @@ module Algolia
           enabled == other.enabled &&
           validity == other.validity &&
           tags == other.tags &&
-          scope == other.scope
+          scope == other.scope &&
+          condition == other.condition
       end
 
       # @see the `==` method
@@ -152,7 +161,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [algolia_object_id, conditions, consequence, description, enabled, validity, tags, scope].hash
+        [algolia_object_id, conditions, consequence, description, enabled, validity, tags, scope, condition].hash
       end
 
       # Builds the object from hash
