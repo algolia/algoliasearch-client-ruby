@@ -136,7 +136,6 @@ module Algolia
       def generate_header_params(body, request_options)
         header_params = request_options.header_params.transform_keys(&:downcase)
         header_params = @config.header_params.merge(header_params)
-        header_params["accept-encoding"] = "gzip" if request_options.compression_type == "gzip"
         if request_options.compression_type == "gzip" && body.is_a?(String) && !body.to_s.strip.empty?
           header_params["content-encoding"] = "gzip"
         end
