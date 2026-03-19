@@ -20,9 +20,6 @@ module Algolia
       # Determine which plurals and synonyms should be considered an exact matches By default, Algolia treats singular and plural forms of a word, and single-word synonyms, as [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact) matches when searching. For example - \"swimsuit\" and \"swimsuits\" are treated the same - \"swimsuit\" and \"swimwear\" are treated the same (if they are [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms)) - `ignorePlurals`.   Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches - `singleWordSynonym`.   Single-word synonyms, such as \"NY\" = \"NYC\", are considered exact matches - `multiWordsSynonym`.   Multi-word synonyms, such as \"NY\" = \"New York\", are considered exact matches.
       attr_accessor :alternatives_as_exact
 
-      # Whether this search will be included in Analytics.
-      attr_accessor :analytics
-
       # Whether the best matching attribute should be determined by minimum proximity This setting only affects ranking if the Attribute ranking criterion comes before Proximity in the `ranking` setting. If true, the best matching attribute is selected based on the minimum proximity of multiple matches. Otherwise, the best matching attribute is determined by the order in the `searchableAttributes` setting.
       attr_accessor :attribute_criteria_computed_by_min_proximity
 
@@ -37,9 +34,6 @@ module Algolia
 
       # Whether to include a `queryID` attribute in the response The query ID is a unique identifier for a search query and is required for tracking [click and conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started).
       attr_accessor :click_analytics
-
-      # Whether to split compound words in the query into their building blocks For more information, see [Word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words). Word segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and Norwegian. Decompounding doesn't work for words with [non-spacing mark Unicode characters](https://www.charactercodes.net/category/non-spacing_mark). For example, `Gartenstühle` won't be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).
-      attr_accessor :decompound_query
 
       # Searchable attributes for which you want to [turn off the Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes). Attribute names are case-sensitive This can be useful for attributes with long values, where the likelihood of an exact match is high, such as product descriptions. Turning off the Exact ranking criterion for these attributes favors exact matching on other attributes. This reduces the impact of individual attributes with a lot of content on ranking.
       attr_accessor :disable_exact_on_attributes
@@ -78,9 +72,6 @@ module Algolia
       attr_accessor :highlight_pre_tag
 
       attr_accessor :ignore_plurals
-
-      # Maximum number of facet values to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
-      attr_accessor :max_facet_hits
 
       # Minimum proximity score for two matching words This adjusts the [Proximity ranking criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity) by equally scoring matches that are farther apart For example, if `minProximity` is 2, neighboring matches and matches with one word between them would have the same score.
       attr_accessor :min_proximity
@@ -145,13 +136,11 @@ module Algolia
           :advanced_syntax_features => :advancedSyntaxFeatures,
           :allow_typos_on_numeric_tokens => :allowTyposOnNumericTokens,
           :alternatives_as_exact => :alternativesAsExact,
-          :analytics => :analytics,
           :attribute_criteria_computed_by_min_proximity => :attributeCriteriaComputedByMinProximity,
           :attributes_to_highlight => :attributesToHighlight,
           :attributes_to_retrieve => :attributesToRetrieve,
           :attributes_to_snippet => :attributesToSnippet,
           :click_analytics => :clickAnalytics,
-          :decompound_query => :decompoundQuery,
           :disable_exact_on_attributes => :disableExactOnAttributes,
           :disable_typo_tolerance_on_attributes => :disableTypoToleranceOnAttributes,
           :distinct => :distinct,
@@ -166,7 +155,6 @@ module Algolia
           :highlight_post_tag => :highlightPostTag,
           :highlight_pre_tag => :highlightPreTag,
           :ignore_plurals => :ignorePlurals,
-          :max_facet_hits => :maxFacetHits,
           :min_proximity => :minProximity,
           :min_word_sizefor1_typo => :minWordSizefor1Typo,
           :min_word_sizefor2_typos => :minWordSizefor2Typos,
@@ -198,13 +186,11 @@ module Algolia
           :advanced_syntax_features => :"Array<AdvancedSyntaxFeatures>",
           :allow_typos_on_numeric_tokens => :"Boolean",
           :alternatives_as_exact => :"Array<AlternativesAsExact>",
-          :analytics => :"Boolean",
           :attribute_criteria_computed_by_min_proximity => :"Boolean",
           :attributes_to_highlight => :"Array<String>",
           :attributes_to_retrieve => :"Array<String>",
           :attributes_to_snippet => :"Array<String>",
           :click_analytics => :"Boolean",
-          :decompound_query => :"Boolean",
           :disable_exact_on_attributes => :"Array<String>",
           :disable_typo_tolerance_on_attributes => :"Array<String>",
           :distinct => :"Distinct",
@@ -219,7 +205,6 @@ module Algolia
           :highlight_post_tag => :"String",
           :highlight_pre_tag => :"String",
           :ignore_plurals => :"IgnorePlurals",
-          :max_facet_hits => :"Integer",
           :min_proximity => :"Integer",
           :min_word_sizefor1_typo => :"Integer",
           :min_word_sizefor2_typos => :"Integer",
@@ -296,10 +281,6 @@ module Algolia
           end
         end
 
-        if attributes.key?(:analytics)
-          self.analytics = attributes[:analytics]
-        end
-
         if attributes.key?(:attribute_criteria_computed_by_min_proximity)
           self.attribute_criteria_computed_by_min_proximity = attributes[:attribute_criteria_computed_by_min_proximity]
         end
@@ -324,10 +305,6 @@ module Algolia
 
         if attributes.key?(:click_analytics)
           self.click_analytics = attributes[:click_analytics]
-        end
-
-        if attributes.key?(:decompound_query)
-          self.decompound_query = attributes[:decompound_query]
         end
 
         if attributes.key?(:disable_exact_on_attributes)
@@ -388,10 +365,6 @@ module Algolia
 
         if attributes.key?(:ignore_plurals)
           self.ignore_plurals = attributes[:ignore_plurals]
-        end
-
-        if attributes.key?(:max_facet_hits)
-          self.max_facet_hits = attributes[:max_facet_hits]
         end
 
         if attributes.key?(:min_proximity)
@@ -498,13 +471,11 @@ module Algolia
           advanced_syntax_features == other.advanced_syntax_features &&
           allow_typos_on_numeric_tokens == other.allow_typos_on_numeric_tokens &&
           alternatives_as_exact == other.alternatives_as_exact &&
-          analytics == other.analytics &&
           attribute_criteria_computed_by_min_proximity == other.attribute_criteria_computed_by_min_proximity &&
           attributes_to_highlight == other.attributes_to_highlight &&
           attributes_to_retrieve == other.attributes_to_retrieve &&
           attributes_to_snippet == other.attributes_to_snippet &&
           click_analytics == other.click_analytics &&
-          decompound_query == other.decompound_query &&
           disable_exact_on_attributes == other.disable_exact_on_attributes &&
           disable_typo_tolerance_on_attributes == other.disable_typo_tolerance_on_attributes &&
           distinct == other.distinct &&
@@ -519,7 +490,6 @@ module Algolia
           highlight_post_tag == other.highlight_post_tag &&
           highlight_pre_tag == other.highlight_pre_tag &&
           ignore_plurals == other.ignore_plurals &&
-          max_facet_hits == other.max_facet_hits &&
           min_proximity == other.min_proximity &&
           min_word_sizefor1_typo == other.min_word_sizefor1_typo &&
           min_word_sizefor2_typos == other.min_word_sizefor2_typos &&
@@ -557,13 +527,11 @@ module Algolia
           advanced_syntax_features,
           allow_typos_on_numeric_tokens,
           alternatives_as_exact,
-          analytics,
           attribute_criteria_computed_by_min_proximity,
           attributes_to_highlight,
           attributes_to_retrieve,
           attributes_to_snippet,
           click_analytics,
-          decompound_query,
           disable_exact_on_attributes,
           disable_typo_tolerance_on_attributes,
           distinct,
@@ -578,7 +546,6 @@ module Algolia
           highlight_post_tag,
           highlight_pre_tag,
           ignore_plurals,
-          max_facet_hits,
           min_proximity,
           min_word_sizefor1_typo,
           min_word_sizefor2_typos,
