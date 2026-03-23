@@ -21,7 +21,7 @@ GEM
     faraday-net_http_persistent (2.3.1)
       faraday (~> 2.5)
       net-http-persistent (>= 4.0.4, < 5)
-    json (2.18.1)
+    json (2.19.2)
     logger (1.7.0)
     net-http (0.9.1)
       uri (>= 0.11.1)
