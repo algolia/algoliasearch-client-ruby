@@ -18,6 +18,13 @@ module Algolia
         }
       end
 
+      # Returns the keys that uniquely identify this oneOf variant when present
+      def self.discriminator_attributes
+        [
+          :search
+        ]
+      end
+
       # Attribute type mapping.
       def self.types_mapping
         {
