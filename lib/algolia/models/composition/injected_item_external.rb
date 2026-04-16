@@ -7,20 +7,29 @@ require "time"
 
 module Algolia
   module Composition
-    class CompositionSource
-      attr_accessor :search
+    class InjectedItemExternal
+      # Composition Index name.
+      attr_accessor :index
+
+      attr_accessor :params
+
+      attr_accessor :ordering
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :search => :search
+          :index => :index,
+          :params => :params,
+          :ordering => :ordering
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :search => :"CompositionSourceSearch"
+          :index => :"String",
+          :params => :"BaseInjectionQueryParameters",
+          :ordering => :"ExternalOrdering"
         }
       end
 
@@ -37,7 +46,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::CompositionSource` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::InjectedItemExternal` initialize method"
           )
         end
 
@@ -46,7 +55,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::CompositionSource`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::InjectedItemExternal`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -54,10 +63,18 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:search)
-          self.search = attributes[:search]
+        if attributes.key?(:index)
+          self.index = attributes[:index]
         else
-          self.search = nil
+          self.index = nil
+        end
+
+        if attributes.key?(:params)
+          self.params = attributes[:params]
+        end
+
+        if attributes.key?(:ordering)
+          self.ordering = attributes[:ordering]
         end
       end
 
@@ -66,7 +83,9 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          search == other.search
+          index == other.index &&
+          params == other.params &&
+          ordering == other.ordering
       end
 
       # @see the `==` method
@@ -78,7 +97,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [search].hash
+        [index, params, ordering].hash
       end
 
       # Builds the object from hash

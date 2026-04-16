@@ -7,13 +7,14 @@ require "time"
 
 module Algolia
   module Composition
-    module InjectedItemSource
+    # Source to be used to retrieve organic result set.
+    module InjectionMainSource
       class << self
       # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
-            :"InjectedItemExternalSource",
-            :"InjectedItemSearchSource"
+            :"InjectionMainRecommendSource",
+            :"InjectionMainSearchSource"
           ]
         end
 

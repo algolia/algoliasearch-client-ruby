@@ -7,29 +7,28 @@ require "time"
 
 module Algolia
   module Composition
-    class External
-      # Composition Index name.
-      attr_accessor :index
-
-      attr_accessor :params
-
-      attr_accessor :ordering
+    # Injected items will originate from a search request performed on the specified index.
+    class InjectedItemSearchSource
+      attr_accessor :search
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :index => :index,
-          :params => :params,
-          :ordering => :ordering
+          :search => :search
         }
+      end
+
+      # Returns the keys that uniquely identify this oneOf variant when present
+      def self.discriminator_attributes
+        [
+          :search
+        ]
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :index => :"String",
-          :params => :"BaseInjectionQueryParameters",
-          :ordering => :"ExternalOrdering"
+          :search => :"InjectedItemSearch"
         }
       end
 
@@ -44,7 +43,10 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         if (!attributes.is_a?(Hash))
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::External` initialize method"
+          raise(
+            ArgumentError,
+            "The input argument (attributes) must be a hash in `Algolia::InjectedItemSearchSource` initialize method"
+          )
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
@@ -52,7 +54,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::External`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::InjectedItemSearchSource`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -60,18 +62,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:index)
-          self.index = attributes[:index]
+        if attributes.key?(:search)
+          self.search = attributes[:search]
         else
-          self.index = nil
-        end
-
-        if attributes.key?(:params)
-          self.params = attributes[:params]
-        end
-
-        if attributes.key?(:ordering)
-          self.ordering = attributes[:ordering]
+          self.search = nil
         end
       end
 
@@ -80,9 +74,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          index == other.index &&
-          params == other.params &&
-          ordering == other.ordering
+          search == other.search
       end
 
       # @see the `==` method
@@ -94,7 +86,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [index, params, ordering].hash
+        [search].hash
       end
 
       # Builds the object from hash

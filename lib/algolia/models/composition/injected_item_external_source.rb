@@ -7,29 +7,28 @@ require "time"
 
 module Algolia
   module Composition
-    class Injection
-      attr_accessor :main
-
-      # list of injected items of the current Composition.
-      attr_accessor :injected_items
-
-      attr_accessor :deduplication
+    # Injected items will originate from externally provided objectIDs (that must exist in the index) given at runtime in the run request payload.
+    class InjectedItemExternalSource
+      attr_accessor :external
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :main => :main,
-          :injected_items => :injectedItems,
-          :deduplication => :deduplication
+          :external => :external
         }
+      end
+
+      # Returns the keys that uniquely identify this oneOf variant when present
+      def self.discriminator_attributes
+        [
+          :external
+        ]
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :main => :"InjectionMain",
-          :injected_items => :"Array<InjectionInjectedItem>",
-          :deduplication => :"Deduplication"
+          :external => :"InjectedItemExternal"
         }
       end
 
@@ -46,7 +45,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::Injection` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::InjectedItemExternalSource` initialize method"
           )
         end
 
@@ -55,7 +54,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::Injection`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::InjectedItemExternalSource`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -63,20 +62,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:main)
-          self.main = attributes[:main]
+        if attributes.key?(:external)
+          self.external = attributes[:external]
         else
-          self.main = nil
-        end
-
-        if attributes.key?(:injected_items)
-          if (value = attributes[:injected_items]).is_a?(Array)
-            self.injected_items = value
-          end
-        end
-
-        if attributes.key?(:deduplication)
-          self.deduplication = attributes[:deduplication]
+          self.external = nil
         end
       end
 
@@ -85,9 +74,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          main == other.main &&
-          injected_items == other.injected_items &&
-          deduplication == other.deduplication
+          external == other.external
       end
 
       # @see the `==` method
@@ -99,7 +86,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [main, injected_items, deduplication].hash
+        [external].hash
       end
 
       # Builds the object from hash

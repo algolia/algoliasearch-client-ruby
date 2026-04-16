@@ -7,28 +7,21 @@ require "time"
 
 module Algolia
   module Composition
-    # Injected items will originate from externally provided objectIDs (that must exist in the index) given at runtime in the run request payload.
-    class ExternalSource
-      attr_accessor :external
+    class MainRecommend
+      # Targeted index name.
+      attr_accessor :index
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :external => :external
+          :index => :index
         }
-      end
-
-      # Returns the keys that uniquely identify this oneOf variant when present
-      def self.discriminator_attributes
-        [
-          :external
-        ]
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :external => :"External"
+          :index => :"String"
         }
       end
 
@@ -45,7 +38,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::ExternalSource` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::MainRecommend` initialize method"
           )
         end
 
@@ -54,7 +47,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::ExternalSource`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::MainRecommend`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -62,10 +55,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:external)
-          self.external = attributes[:external]
+        if attributes.key?(:index)
+          self.index = attributes[:index]
         else
-          self.external = nil
+          self.index = nil
         end
       end
 
@@ -74,7 +67,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          external == other.external
+          index == other.index
       end
 
       # @see the `==` method
@@ -86,7 +79,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [external].hash
+        [index].hash
       end
 
       # Builds the object from hash

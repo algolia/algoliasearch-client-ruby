@@ -7,37 +7,25 @@ require "time"
 
 module Algolia
   module Composition
-    class InjectedItem
-      # injected Item unique identifier.
-      attr_accessor :key
+    class MainSearch
+      # Targeted index name.
+      attr_accessor :index
 
-      attr_accessor :source
-
-      attr_accessor :position
-
-      attr_accessor :length
-
-      attr_accessor :metadata
+      attr_accessor :params
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :key => :key,
-          :source => :source,
-          :position => :position,
-          :length => :length,
-          :metadata => :metadata
+          :index => :index,
+          :params => :params
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :key => :"String",
-          :source => :"InjectedItemSource",
-          :position => :"Integer",
-          :length => :"Integer",
-          :metadata => :"InjectedItemMetadata"
+          :index => :"String",
+          :params => :"MainInjectionQueryParameters"
         }
       end
 
@@ -54,7 +42,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::InjectedItem` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::MainSearch` initialize method"
           )
         end
 
@@ -63,7 +51,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::InjectedItem`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::MainSearch`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -71,32 +59,14 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:key)
-          self.key = attributes[:key]
+        if attributes.key?(:index)
+          self.index = attributes[:index]
         else
-          self.key = nil
+          self.index = nil
         end
 
-        if attributes.key?(:source)
-          self.source = attributes[:source]
-        else
-          self.source = nil
-        end
-
-        if attributes.key?(:position)
-          self.position = attributes[:position]
-        else
-          self.position = nil
-        end
-
-        if attributes.key?(:length)
-          self.length = attributes[:length]
-        else
-          self.length = nil
-        end
-
-        if attributes.key?(:metadata)
-          self.metadata = attributes[:metadata]
+        if attributes.key?(:params)
+          self.params = attributes[:params]
         end
       end
 
@@ -105,11 +75,8 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          key == other.key &&
-          source == other.source &&
-          position == other.position &&
-          length == other.length &&
-          metadata == other.metadata
+          index == other.index &&
+          params == other.params
       end
 
       # @see the `==` method
@@ -121,7 +88,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [key, source, position, length, metadata].hash
+        [index, params].hash
       end
 
       # Builds the object from hash

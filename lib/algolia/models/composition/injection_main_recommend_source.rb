@@ -7,20 +7,28 @@ require "time"
 
 module Algolia
   module Composition
-    class Main
-      attr_accessor :source
+    # Organic result set will originate from a recommend request.
+    class InjectionMainRecommendSource
+      attr_accessor :recommend
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :source => :source
+          :recommend => :recommend
         }
+      end
+
+      # Returns the keys that uniquely identify this oneOf variant when present
+      def self.discriminator_attributes
+        [
+          :recommend
+        ]
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :source => :"CompositionSource"
+          :recommend => :"MainRecommend"
         }
       end
 
@@ -35,7 +43,10 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         if (!attributes.is_a?(Hash))
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Main` initialize method"
+          raise(
+            ArgumentError,
+            "The input argument (attributes) must be a hash in `Algolia::InjectionMainRecommendSource` initialize method"
+          )
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
@@ -43,7 +54,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::Main`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::InjectionMainRecommendSource`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -51,10 +62,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:source)
-          self.source = attributes[:source]
+        if attributes.key?(:recommend)
+          self.recommend = attributes[:recommend]
         else
-          self.source = nil
+          self.recommend = nil
         end
       end
 
@@ -63,7 +74,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          source == other.source
+          recommend == other.recommend
       end
 
       # @see the `==` method
@@ -75,7 +86,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [source].hash
+        [recommend].hash
       end
 
       # Builds the object from hash
