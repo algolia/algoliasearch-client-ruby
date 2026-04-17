@@ -8,7 +8,7 @@ require "time"
 module Algolia
   module Composition
     class MainSearch
-      # Targeted index name.
+      # Index to retrieve search results from.
       attr_accessor :index
 
       attr_accessor :params

@@ -13,6 +13,7 @@ module Algolia
         def openapi_one_of
           [
             :"InjectedItemExternalSource",
+            :"InjectedItemRecommendSource",
             :"InjectedItemSearchSource"
           ]
         end

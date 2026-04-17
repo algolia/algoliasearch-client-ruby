@@ -7,38 +7,28 @@ require "time"
 
 module Algolia
   module Composition
-    class MainRecommend
-      # Index to retrieve recommendations from.
-      attr_accessor :index_name
-
-      attr_accessor :model
-
-      # Minimum score a recommendation must have to be included.
-      attr_accessor :threshold
-
-      attr_accessor :query_parameters
-
-      attr_accessor :fallback_parameters
+    # Injected items will originate from a recommendation request performed on the specified index.
+    class InjectedItemRecommendSource
+      attr_accessor :recommend
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :index_name => :indexName,
-          :model => :model,
-          :threshold => :threshold,
-          :query_parameters => :queryParameters,
-          :fallback_parameters => :fallbackParameters
+          :recommend => :recommend
         }
+      end
+
+      # Returns the keys that uniquely identify this oneOf variant when present
+      def self.discriminator_attributes
+        [
+          :recommend
+        ]
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :index_name => :"String",
-          :model => :"Model",
-          :threshold => :"Integer",
-          :query_parameters => :"MainInjectionQueryParameters",
-          :fallback_parameters => :"MainInjectionQueryParameters"
+          :recommend => :"Recommend"
         }
       end
 
@@ -55,7 +45,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::MainRecommend` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::InjectedItemRecommendSource` initialize method"
           )
         end
 
@@ -64,7 +54,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::MainRecommend`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::InjectedItemRecommendSource`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -72,30 +62,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:index_name)
-          self.index_name = attributes[:index_name]
+        if attributes.key?(:recommend)
+          self.recommend = attributes[:recommend]
         else
-          self.index_name = nil
-        end
-
-        if attributes.key?(:model)
-          self.model = attributes[:model]
-        else
-          self.model = nil
-        end
-
-        if attributes.key?(:threshold)
-          self.threshold = attributes[:threshold]
-        else
-          self.threshold = nil
-        end
-
-        if attributes.key?(:query_parameters)
-          self.query_parameters = attributes[:query_parameters]
-        end
-
-        if attributes.key?(:fallback_parameters)
-          self.fallback_parameters = attributes[:fallback_parameters]
+          self.recommend = nil
         end
       end
 
@@ -104,11 +74,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          index_name == other.index_name &&
-          model == other.model &&
-          threshold == other.threshold &&
-          query_parameters == other.query_parameters &&
-          fallback_parameters == other.fallback_parameters
+          recommend == other.recommend
       end
 
       # @see the `==` method
@@ -120,7 +86,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [index_name, model, threshold, query_parameters, fallback_parameters].hash
+        [recommend].hash
       end
 
       # Builds the object from hash

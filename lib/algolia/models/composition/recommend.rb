@@ -7,7 +7,7 @@ require "time"
 
 module Algolia
   module Composition
-    class MainRecommend
+    class Recommend
       # Index to retrieve recommendations from.
       attr_accessor :index_name
 
@@ -37,8 +37,8 @@ module Algolia
           :index_name => :"String",
           :model => :"Model",
           :threshold => :"Integer",
-          :query_parameters => :"MainInjectionQueryParameters",
-          :fallback_parameters => :"MainInjectionQueryParameters"
+          :query_parameters => :"BaseInjectionQueryParameters",
+          :fallback_parameters => :"BaseInjectionQueryParameters"
         }
       end
 
@@ -55,7 +55,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::MainRecommend` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::Recommend` initialize method"
           )
         end
 
@@ -64,7 +64,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::MainRecommend`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::Recommend`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
