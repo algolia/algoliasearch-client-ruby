@@ -104,6 +104,8 @@ module Algolia
       # URL-encoded string of all search parameters.
       attr_accessor :params
 
+      attr_accessor :extensions
+
       # Cursor to get the next page of the response.  The parameter must match the value returned in the response of a previous request. The last page of the response does not return a `cursor` attribute.
       attr_accessor :cursor
 
@@ -143,6 +145,7 @@ module Algolia
           :hits => :hits,
           :query => :query,
           :params => :params,
+          :extensions => :extensions,
           :cursor => :cursor
         }
       end
@@ -183,6 +186,7 @@ module Algolia
           :hits => :"Array<Hit>",
           :query => :"String",
           :params => :"String",
+          :extensions => :"ResponseExtensions",
           :cursor => :"String"
         }
       end
@@ -371,6 +375,10 @@ module Algolia
           self.params = attributes[:params]
         end
 
+        if attributes.key?(:extensions)
+          self.extensions = attributes[:extensions]
+        end
+
         if attributes.key?(:cursor)
           self.cursor = attributes[:cursor]
         end
@@ -414,6 +422,7 @@ module Algolia
           hits == other.hits &&
           query == other.query &&
           params == other.params &&
+          extensions == other.extensions &&
           cursor == other.cursor
       end
 
@@ -460,6 +469,7 @@ module Algolia
           hits,
           query,
           params,
+          extensions,
           cursor
         ].hash
       end

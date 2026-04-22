@@ -216,6 +216,8 @@ module Algolia
 
       attr_accessor :type
 
+      attr_accessor :extensions
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -294,7 +296,8 @@ module Algolia
           :enable_re_ranking => :enableReRanking,
           :re_ranking_apply_filter => :reRankingApplyFilter,
           :index_name => :indexName,
-          :type => :type
+          :type => :type,
+          :extensions => :extensions
         }
       end
 
@@ -376,7 +379,8 @@ module Algolia
           :enable_re_ranking => :"Boolean",
           :re_ranking_apply_filter => :"ReRankingApplyFilter",
           :index_name => :"String",
-          :type => :"SearchTypeDefault"
+          :type => :"SearchTypeDefault",
+          :extensions => :"SearchExtensions"
         }
       end
 
@@ -758,6 +762,10 @@ module Algolia
         if attributes.key?(:type)
           self.type = attributes[:type]
         end
+
+        if attributes.key?(:extensions)
+          self.extensions = attributes[:extensions]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -840,7 +848,8 @@ module Algolia
           enable_re_ranking == other.enable_re_ranking &&
           re_ranking_apply_filter == other.re_ranking_apply_filter &&
           index_name == other.index_name &&
-          type == other.type
+          type == other.type &&
+          extensions == other.extensions
       end
 
       # @see the `==` method
@@ -928,7 +937,8 @@ module Algolia
           enable_re_ranking,
           re_ranking_apply_filter,
           index_name,
-          type
+          type,
+          extensions
         ].hash
       end
 
