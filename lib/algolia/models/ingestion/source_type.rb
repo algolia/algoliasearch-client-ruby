@@ -8,6 +8,7 @@ require "time"
 module Algolia
   module Ingestion
     class SourceType
+      ALGOLIA_INDEX = "algoliaIndex".freeze
       BIGCOMMERCE = "bigcommerce".freeze
       BIGQUERY = "bigquery".freeze
       COMMERCETOOLS = "commercetools".freeze
@@ -19,7 +20,18 @@ module Algolia
       PUSH = "push".freeze
 
       def self.all_vars
-        @all_vars ||= [BIGCOMMERCE, BIGQUERY, COMMERCETOOLS, CSV, DOCKER, GA4_BIGQUERY_EXPORT, JSON, SHOPIFY, PUSH].freeze
+        @all_vars ||= [
+          ALGOLIA_INDEX,
+          BIGCOMMERCE,
+          BIGQUERY,
+          COMMERCETOOLS,
+          CSV,
+          DOCKER,
+          GA4_BIGQUERY_EXPORT,
+          JSON,
+          SHOPIFY,
+          PUSH
+        ].freeze
       end
 
       # Builds the enum from string

@@ -16,6 +16,7 @@ module Algolia
             :"SourceCSV",
             :"SourceGA4BigQueryExport",
             :"SourceJSON",
+            :"SourceUpdateAlgoliaIndex",
             :"SourceUpdateCommercetools",
             :"SourceUpdateDocker",
             :"SourceUpdateShopify"

@@ -2618,11 +2618,11 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::UpdatedAtResponse")
     end
 
-    # Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
+    # Runs multiple search queries against one or more indices in a single API request.  Use cases include:  - Searching different indices, such as products and marketing content. - Run multiple queries on the same index with different parameters or filters.  If you know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
     #
     # Required API Key ACLs:
     #   - search
-    # @param search_method_params [SearchMethodParams] Muli-search request body. Results are returned in the same order as the requests. (required)
+    # @param search_method_params [SearchMethodParams] Multi-query search request body. Results are returned in the same order as the requests. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def search_with_http_info(search_method_params, request_options = {})
@@ -2650,11 +2650,11 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Sends multiple search requests to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.  Use the helper `searchForHits` or `searchForFacets` to get the results in a more convenient format, if you already know the return type you want.
+    # Runs multiple search queries against one or more indices in a single API request.  Use cases include:  - Searching different indices, such as products and marketing content. - Run multiple queries on the same index with different parameters or filters.  If you know the expected result type, use the `searchForHits` or `searchForFacets` helper to simplify the response format.
     #
     # Required API Key ACLs:
     #   - search
-    # @param search_method_params [SearchMethodParams] Muli-search request body. Results are returned in the same order as the requests. (required)
+    # @param search_method_params [SearchMethodParams] Multi-query search request body. Results are returned in the same order as the requests. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [SearchResponses]
     def search(search_method_params, request_options = {})
