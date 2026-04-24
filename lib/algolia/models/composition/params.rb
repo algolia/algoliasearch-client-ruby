@@ -53,7 +53,7 @@ module Algolia
       # Number of hits per page.
       attr_accessor :hits_per_page
 
-      # A list of extenrally injected objectID groups into from an external source.
+      # An object containing keys corresponding to the `key`s from an injection's `injectedItems` and values containing a list of hits to inject.
       attr_accessor :injected_items
 
       attr_accessor :inside_bounding_box

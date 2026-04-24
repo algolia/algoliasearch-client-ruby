@@ -7,6 +7,7 @@ require "time"
 
 module Algolia
   module Composition
+    # Contains a list of objects to inject from an external source.
     class ExternalInjectedItem
       attr_accessor :items
 
