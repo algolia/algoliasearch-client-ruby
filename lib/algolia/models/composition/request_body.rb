@@ -10,17 +10,22 @@ module Algolia
     class RequestBody
       attr_accessor :params
 
+      # A list of Feed IDs that specifies the order in which to order the results in the response.  The IDs should be a subset of those in the `feeds` object of the targeted `multifeed` Composition / Composition Rule, and only those specified will be processed.   The value overrides the value in the defined behavior, and when unspecified, the value defined in the behavior is used. When neither value is present, all feeds are processed.
+      attr_accessor :feeds_order
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :params => :params
+          :params => :params,
+          :feeds_order => :feedsOrder
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :params => :"Params"
+          :params => :"Params",
+          :feeds_order => :"Array<String>"
         }
       end
 
@@ -57,6 +62,12 @@ module Algolia
         if attributes.key?(:params)
           self.params = attributes[:params]
         end
+
+        if attributes.key?(:feeds_order)
+          if (value = attributes[:feeds_order]).is_a?(Array)
+            self.feeds_order = value
+          end
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -64,7 +75,8 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          params == other.params
+          params == other.params &&
+          feeds_order == other.feeds_order
       end
 
       # @see the `==` method
@@ -76,7 +88,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [params].hash
+        [params, feeds_order].hash
       end
 
       # Builds the object from hash
