@@ -7,35 +7,30 @@ require "time"
 
 module Algolia
   module Ingestion
-    # API request body for updating a destination.
-    class DestinationUpdate
-      # Descriptive name for the resource.
-      attr_accessor :name
+    class DestinationUpdateInput
+      # Algolia index name (case-sensitive).
+      attr_accessor :index_name
 
-      attr_accessor :input
+      attr_accessor :record_type
 
-      # Universally unique identifier (UUID) of an authentication resource.
-      attr_accessor :authentication_id
-
-      attr_accessor :transformation_ids
+      # Attributes from your source to exclude from Algolia records.  Not all your data attributes will be useful for searching. Keeping your Algolia records small increases indexing and search performance.  - Exclude nested attributes with `.` notation. For example, `foo.bar` indexes the `foo` attribute and all its children **except** the `bar` attribute. - Exclude attributes from arrays with `[i]`, where `i` is the index of the array element.   For example, `foo.[0].bar` only excludes the `bar` attribute from the first element of the `foo` array, but indexes the complete `foo` attribute for all other elements.   Use `*` as wildcard: `foo.[*].bar` excludes `bar` from all elements of the `foo` array.
+      attr_accessor :attributes_to_exclude
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :name => :name,
-          :input => :input,
-          :authentication_id => :authenticationID,
-          :transformation_ids => :transformationIDs
+          :index_name => :indexName,
+          :record_type => :recordType,
+          :attributes_to_exclude => :attributesToExclude
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :name => :"String",
-          :input => :"DestinationUpdateInput",
-          :authentication_id => :"String",
-          :transformation_ids => :"Array<String>"
+          :index_name => :"String",
+          :record_type => :"RecordType",
+          :attributes_to_exclude => :"Array<String>"
         }
       end
 
@@ -52,7 +47,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::DestinationUpdate` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::DestinationUpdateInput` initialize method"
           )
         end
 
@@ -61,7 +56,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::DestinationUpdate`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::DestinationUpdateInput`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -69,21 +64,17 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:name)
-          self.name = attributes[:name]
+        if attributes.key?(:index_name)
+          self.index_name = attributes[:index_name]
         end
 
-        if attributes.key?(:input)
-          self.input = attributes[:input]
+        if attributes.key?(:record_type)
+          self.record_type = attributes[:record_type]
         end
 
-        if attributes.key?(:authentication_id)
-          self.authentication_id = attributes[:authentication_id]
-        end
-
-        if attributes.key?(:transformation_ids)
-          if (value = attributes[:transformation_ids]).is_a?(Array)
-            self.transformation_ids = value
+        if attributes.key?(:attributes_to_exclude)
+          if (value = attributes[:attributes_to_exclude]).is_a?(Array)
+            self.attributes_to_exclude = value
           end
         end
       end
@@ -93,10 +84,9 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          name == other.name &&
-          input == other.input &&
-          authentication_id == other.authentication_id &&
-          transformation_ids == other.transformation_ids
+          index_name == other.index_name &&
+          record_type == other.record_type &&
+          attributes_to_exclude == other.attributes_to_exclude
       end
 
       # @see the `==` method
@@ -108,7 +98,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [name, input, authentication_id, transformation_ids].hash
+        [index_name, record_type, attributes_to_exclude].hash
       end
 
       # Builds the object from hash
