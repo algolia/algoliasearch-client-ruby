@@ -124,6 +124,10 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
+      end
 
       path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
@@ -165,6 +169,10 @@ module Algolia
     def custom_get_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
+      end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
         raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
@@ -209,6 +217,10 @@ module Algolia
     def custom_post_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
+      end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
         raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
@@ -256,6 +268,10 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
+      end
 
       path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
@@ -299,6 +315,10 @@ module Algolia
     def delete_config_with_http_info(index_name, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `delete_config`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `delete_config`."
       end
 
@@ -385,6 +405,10 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `get_config`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_config`."
+      end
 
       path = "/1/configs/{indexName}".sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
       query_params = {}
@@ -432,6 +456,10 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `get_config_status`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_config_status`."
+      end
 
       path = "/1/configs/{indexName}/status".sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
       query_params = {}
@@ -474,6 +502,10 @@ module Algolia
     def get_log_file_with_http_info(index_name, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_log_file`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `get_log_file`."
       end
 
@@ -519,6 +551,10 @@ module Algolia
     def update_config_with_http_info(index_name, configuration, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `update_config`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `update_config`."
       end
       # verify the required parameter 'configuration' is set

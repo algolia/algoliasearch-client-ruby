@@ -80,6 +80,10 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
+      end
 
       path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
@@ -121,6 +125,10 @@ module Algolia
     def custom_get_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
+      end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
         raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
@@ -167,6 +175,10 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
+      end
 
       path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
@@ -210,6 +222,10 @@ module Algolia
     def custom_put_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
+      end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
         raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
 
@@ -258,6 +274,10 @@ module Algolia
     def get_add_to_cart_rate_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
+        raise ArgumentError, "Parameter `index` is required when calling `get_add_to_cart_rate`."
+      end
+      # verify the required parameter 'index' is not empty
+      if @api_client.config.client_side_validation && index.empty?
         raise ArgumentError, "Parameter `index` is required when calling `get_add_to_cart_rate`."
       end
 
@@ -323,6 +343,10 @@ module Algolia
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_average_click_position`."
       end
+      # verify the required parameter 'index' is not empty
+      if @api_client.config.client_side_validation && index.empty?
+        raise ArgumentError, "Parameter `index` is required when calling `get_average_click_position`."
+      end
 
       path = "/2/clicks/averageClickPosition"
       query_params = {}
@@ -378,6 +402,10 @@ module Algolia
     def get_click_positions_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
+        raise ArgumentError, "Parameter `index` is required when calling `get_click_positions`."
+      end
+      # verify the required parameter 'index' is not empty
+      if @api_client.config.client_side_validation && index.empty?
         raise ArgumentError, "Parameter `index` is required when calling `get_click_positions`."
       end
 
@@ -437,6 +465,10 @@ module Algolia
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_click_through_rate`."
       end
+      # verify the required parameter 'index' is not empty
+      if @api_client.config.client_side_validation && index.empty?
+        raise ArgumentError, "Parameter `index` is required when calling `get_click_through_rate`."
+      end
 
       path = "/2/clicks/clickThroughRate"
       query_params = {}
@@ -492,6 +524,10 @@ module Algolia
     def get_conversion_rate_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
+        raise ArgumentError, "Parameter `index` is required when calling `get_conversion_rate`."
+      end
+      # verify the required parameter 'index' is not empty
+      if @api_client.config.client_side_validation && index.empty?
         raise ArgumentError, "Parameter `index` is required when calling `get_conversion_rate`."
       end
 
@@ -551,6 +587,10 @@ module Algolia
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_no_click_rate`."
       end
+      # verify the required parameter 'index' is not empty
+      if @api_client.config.client_side_validation && index.empty?
+        raise ArgumentError, "Parameter `index` is required when calling `get_no_click_rate`."
+      end
 
       path = "/2/searches/noClickRate"
       query_params = {}
@@ -603,6 +643,10 @@ module Algolia
     def get_no_results_rate_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
+        raise ArgumentError, "Parameter `index` is required when calling `get_no_results_rate`."
+      end
+      # verify the required parameter 'index' is not empty
+      if @api_client.config.client_side_validation && index.empty?
         raise ArgumentError, "Parameter `index` is required when calling `get_no_results_rate`."
       end
 
@@ -662,6 +706,10 @@ module Algolia
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_purchase_rate`."
       end
+      # verify the required parameter 'index' is not empty
+      if @api_client.config.client_side_validation && index.empty?
+        raise ArgumentError, "Parameter `index` is required when calling `get_purchase_rate`."
+      end
 
       path = "/2/conversions/purchaseRate"
       query_params = {}
@@ -719,6 +767,10 @@ module Algolia
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_revenue`."
       end
+      # verify the required parameter 'index' is not empty
+      if @api_client.config.client_side_validation && index.empty?
+        raise ArgumentError, "Parameter `index` is required when calling `get_revenue`."
+      end
 
       path = "/2/conversions/revenue"
       query_params = {}
@@ -771,6 +823,10 @@ module Algolia
     def get_searches_count_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
+        raise ArgumentError, "Parameter `index` is required when calling `get_searches_count`."
+      end
+      # verify the required parameter 'index' is not empty
+      if @api_client.config.client_side_validation && index.empty?
         raise ArgumentError, "Parameter `index` is required when calling `get_searches_count`."
       end
 
@@ -838,6 +894,10 @@ module Algolia
     )
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
+        raise ArgumentError, "Parameter `index` is required when calling `get_searches_no_clicks`."
+      end
+      # verify the required parameter 'index' is not empty
+      if @api_client.config.client_side_validation && index.empty?
         raise ArgumentError, "Parameter `index` is required when calling `get_searches_no_clicks`."
       end
 
@@ -927,6 +987,10 @@ module Algolia
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_searches_no_results`."
       end
+      # verify the required parameter 'index' is not empty
+      if @api_client.config.client_side_validation && index.empty?
+        raise ArgumentError, "Parameter `index` is required when calling `get_searches_no_results`."
+      end
 
       path = "/2/searches/noResults"
       query_params = {}
@@ -1001,6 +1065,10 @@ module Algolia
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_status`."
       end
+      # verify the required parameter 'index' is not empty
+      if @api_client.config.client_side_validation && index.empty?
+        raise ArgumentError, "Parameter `index` is required when calling `get_status`."
+      end
 
       path = "/2/status"
       query_params = {}
@@ -1057,6 +1125,10 @@ module Algolia
     )
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
+        raise ArgumentError, "Parameter `index` is required when calling `get_top_countries`."
+      end
+      # verify the required parameter 'index' is not empty
+      if @api_client.config.client_side_validation && index.empty?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_countries`."
       end
 
@@ -1138,6 +1210,10 @@ module Algolia
     )
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
+        raise ArgumentError, "Parameter `index` is required when calling `get_top_filter_attributes`."
+      end
+      # verify the required parameter 'index' is not empty
+      if @api_client.config.client_side_validation && index.empty?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_filter_attributes`."
       end
 
@@ -1235,8 +1311,16 @@ module Algolia
       if @api_client.config.client_side_validation && attribute.nil?
         raise ArgumentError, "Parameter `attribute` is required when calling `get_top_filter_for_attribute`."
       end
+      # verify the required parameter 'attribute' is not empty
+      if @api_client.config.client_side_validation && attribute.empty?
+        raise ArgumentError, "Parameter `attribute` is required when calling `get_top_filter_for_attribute`."
+      end
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
+        raise ArgumentError, "Parameter `index` is required when calling `get_top_filter_for_attribute`."
+      end
+      # verify the required parameter 'index' is not empty
+      if @api_client.config.client_side_validation && index.empty?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_filter_for_attribute`."
       end
 
@@ -1335,6 +1419,10 @@ module Algolia
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_filters_no_results`."
       end
+      # verify the required parameter 'index' is not empty
+      if @api_client.config.client_side_validation && index.empty?
+        raise ArgumentError, "Parameter `index` is required when calling `get_top_filters_no_results`."
+      end
 
       path = "/2/filters/noResults"
       query_params = {}
@@ -1430,6 +1518,10 @@ module Algolia
     )
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
+        raise ArgumentError, "Parameter `index` is required when calling `get_top_hits`."
+      end
+      # verify the required parameter 'index' is not empty
+      if @api_client.config.client_side_validation && index.empty?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_hits`."
       end
 
@@ -1536,6 +1628,10 @@ module Algolia
       if @api_client.config.client_side_validation && index.nil?
         raise ArgumentError, "Parameter `index` is required when calling `get_top_searches`."
       end
+      # verify the required parameter 'index' is not empty
+      if @api_client.config.client_side_validation && index.empty?
+        raise ArgumentError, "Parameter `index` is required when calling `get_top_searches`."
+      end
 
       path = "/2/searches"
       query_params = {}
@@ -1624,6 +1720,10 @@ module Algolia
     def get_users_count_with_http_info(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       # verify the required parameter 'index' is set
       if @api_client.config.client_side_validation && index.nil?
+        raise ArgumentError, "Parameter `index` is required when calling `get_users_count`."
+      end
+      # verify the required parameter 'index' is not empty
+      if @api_client.config.client_side_validation && index.empty?
         raise ArgumentError, "Parameter `index` is required when calling `get_users_count`."
       end
 

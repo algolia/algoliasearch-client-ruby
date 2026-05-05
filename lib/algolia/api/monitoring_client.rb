@@ -65,6 +65,10 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
+      end
 
       path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
@@ -106,6 +110,10 @@ module Algolia
     def custom_get_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
+      end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
         raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
@@ -150,6 +158,10 @@ module Algolia
     def custom_post_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
+      end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
         raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
@@ -197,6 +209,10 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
+      end
 
       path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
@@ -240,6 +256,10 @@ module Algolia
       if @api_client.config.client_side_validation && clusters.nil?
         raise ArgumentError, "Parameter `clusters` is required when calling `get_cluster_incidents`."
       end
+      # verify the required parameter 'clusters' is not empty
+      if @api_client.config.client_side_validation && clusters.empty?
+        raise ArgumentError, "Parameter `clusters` is required when calling `get_cluster_incidents`."
+      end
 
       path = "/1/incidents/{clusters}".sub("{" + "clusters" + "}", Transport.encode_uri(clusters.to_s))
       query_params = {}
@@ -278,6 +298,10 @@ module Algolia
     def get_cluster_status_with_http_info(clusters, request_options = {})
       # verify the required parameter 'clusters' is set
       if @api_client.config.client_side_validation && clusters.nil?
+        raise ArgumentError, "Parameter `clusters` is required when calling `get_cluster_status`."
+      end
+      # verify the required parameter 'clusters' is not empty
+      if @api_client.config.client_side_validation && clusters.empty?
         raise ArgumentError, "Parameter `clusters` is required when calling `get_cluster_status`."
       end
 
@@ -353,6 +377,10 @@ module Algolia
       if @api_client.config.client_side_validation && clusters.nil?
         raise ArgumentError, "Parameter `clusters` is required when calling `get_indexing_time`."
       end
+      # verify the required parameter 'clusters' is not empty
+      if @api_client.config.client_side_validation && clusters.empty?
+        raise ArgumentError, "Parameter `clusters` is required when calling `get_indexing_time`."
+      end
 
       path = "/1/indexing/{clusters}".sub("{" + "clusters" + "}", Transport.encode_uri(clusters.to_s))
       query_params = {}
@@ -391,6 +419,10 @@ module Algolia
     def get_latency_with_http_info(clusters, request_options = {})
       # verify the required parameter 'clusters' is set
       if @api_client.config.client_side_validation && clusters.nil?
+        raise ArgumentError, "Parameter `clusters` is required when calling `get_latency`."
+      end
+      # verify the required parameter 'clusters' is not empty
+      if @api_client.config.client_side_validation && clusters.empty?
         raise ArgumentError, "Parameter `clusters` is required when calling `get_latency`."
       end
 
@@ -482,6 +514,10 @@ module Algolia
     def get_reachability_with_http_info(clusters, request_options = {})
       # verify the required parameter 'clusters' is set
       if @api_client.config.client_side_validation && clusters.nil?
+        raise ArgumentError, "Parameter `clusters` is required when calling `get_reachability`."
+      end
+      # verify the required parameter 'clusters' is not empty
+      if @api_client.config.client_side_validation && clusters.empty?
         raise ArgumentError, "Parameter `clusters` is required when calling `get_reachability`."
       end
 

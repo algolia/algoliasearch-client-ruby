@@ -80,6 +80,10 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
+      end
 
       path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
@@ -121,6 +125,10 @@ module Algolia
     def custom_get_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
+      end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
         raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
@@ -165,6 +173,10 @@ module Algolia
     def custom_post_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
+      end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
         raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
@@ -212,6 +224,10 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
+      end
 
       path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
@@ -255,6 +271,10 @@ module Algolia
     def delete_user_profile_with_http_info(user_token, request_options = {})
       # verify the required parameter 'user_token' is set
       if @api_client.config.client_side_validation && user_token.nil?
+        raise ArgumentError, "Parameter `user_token` is required when calling `delete_user_profile`."
+      end
+      # verify the required parameter 'user_token' is not empty
+      if @api_client.config.client_side_validation && user_token.empty?
         raise ArgumentError, "Parameter `user_token` is required when calling `delete_user_profile`."
       end
 
@@ -342,6 +362,10 @@ module Algolia
     def get_user_token_profile_with_http_info(user_token, request_options = {})
       # verify the required parameter 'user_token' is set
       if @api_client.config.client_side_validation && user_token.nil?
+        raise ArgumentError, "Parameter `user_token` is required when calling `get_user_token_profile`."
+      end
+      # verify the required parameter 'user_token' is not empty
+      if @api_client.config.client_side_validation && user_token.empty?
         raise ArgumentError, "Parameter `user_token` is required when calling `get_user_token_profile`."
       end
 

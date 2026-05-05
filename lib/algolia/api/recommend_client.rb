@@ -76,6 +76,10 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `batch_recommend_rules`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `batch_recommend_rules`."
+      end
       # verify the required parameter 'model' is set
       if @api_client.config.client_side_validation && model.nil?
         raise ArgumentError, "Parameter `model` is required when calling `batch_recommend_rules`."
@@ -130,6 +134,10 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
+      end
 
       path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
@@ -171,6 +179,10 @@ module Algolia
     def custom_get_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
+      end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
         raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
@@ -217,6 +229,10 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
+      end
 
       path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
@@ -260,6 +276,10 @@ module Algolia
     def custom_put_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
+      end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
         raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
 
@@ -309,12 +329,20 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `delete_recommend_rule`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `delete_recommend_rule`."
+      end
       # verify the required parameter 'model' is set
       if @api_client.config.client_side_validation && model.nil?
         raise ArgumentError, "Parameter `model` is required when calling `delete_recommend_rule`."
       end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `delete_recommend_rule`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `delete_recommend_rule`."
       end
 
@@ -368,12 +396,20 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `get_recommend_rule`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_recommend_rule`."
+      end
       # verify the required parameter 'model' is set
       if @api_client.config.client_side_validation && model.nil?
         raise ArgumentError, "Parameter `model` is required when calling `get_recommend_rule`."
       end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `get_recommend_rule`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `get_recommend_rule`."
       end
 
@@ -425,6 +461,10 @@ module Algolia
     def get_recommend_status_with_http_info(index_name, model, task_id, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_recommend_status`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `get_recommend_status`."
       end
       # verify the required parameter 'model' is set
@@ -539,6 +579,10 @@ module Algolia
     )
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `search_recommend_rules`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `search_recommend_rules`."
       end
       # verify the required parameter 'model' is set

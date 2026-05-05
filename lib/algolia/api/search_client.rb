@@ -123,8 +123,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `add_or_update_object`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `add_or_update_object`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `add_or_update_object`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `add_or_update_object`."
       end
       # verify the required parameter 'body' is set
@@ -229,6 +237,10 @@ module Algolia
       if @api_client.config.client_side_validation && x_algolia_user_id.nil?
         raise ArgumentError, "Parameter `x_algolia_user_id` is required when calling `assign_user_id`."
       end
+      # verify the required parameter 'x_algolia_user_id' is not empty
+      if @api_client.config.client_side_validation && x_algolia_user_id.empty?
+        raise ArgumentError, "Parameter `x_algolia_user_id` is required when calling `assign_user_id`."
+      end
       # verify the required parameter 'assign_user_id_params' is set
       if @api_client.config.client_side_validation && assign_user_id_params.nil?
         raise ArgumentError, "Parameter `assign_user_id_params` is required when calling `assign_user_id`."
@@ -280,6 +292,10 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `batch`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `batch`."
+      end
       # verify the required parameter 'batch_write_params' is set
       if @api_client.config.client_side_validation && batch_write_params.nil?
         raise ArgumentError, "Parameter `batch_write_params` is required when calling `batch`."
@@ -329,6 +345,10 @@ module Algolia
     def batch_assign_user_ids_with_http_info(x_algolia_user_id, batch_assign_user_ids_params, request_options = {})
       # verify the required parameter 'x_algolia_user_id' is set
       if @api_client.config.client_side_validation && x_algolia_user_id.nil?
+        raise ArgumentError, "Parameter `x_algolia_user_id` is required when calling `batch_assign_user_ids`."
+      end
+      # verify the required parameter 'x_algolia_user_id' is not empty
+      if @api_client.config.client_side_validation && x_algolia_user_id.empty?
         raise ArgumentError, "Parameter `x_algolia_user_id` is required when calling `batch_assign_user_ids`."
       end
       # verify the required parameter 'batch_assign_user_ids_params' is set
@@ -445,6 +465,10 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `browse`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `browse`."
+      end
 
       path = "/1/indexes/{indexName}/browse".sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
       query_params = {}
@@ -490,6 +514,10 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `clear_objects`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `clear_objects`."
+      end
 
       path = "/1/indexes/{indexName}/clear".sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
       query_params = {}
@@ -533,6 +561,10 @@ module Algolia
     def clear_rules_with_http_info(index_name, forward_to_replicas = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `clear_rules`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `clear_rules`."
       end
 
@@ -582,6 +614,10 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `clear_synonyms`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `clear_synonyms`."
+      end
 
       path = "/1/indexes/{indexName}/synonyms/clear".sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
       query_params = {}
@@ -627,6 +663,10 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
       end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_delete`."
+      end
 
       path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
@@ -668,6 +708,10 @@ module Algolia
     def custom_get_with_http_info(path, parameters = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
+      end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
         raise ArgumentError, "Parameter `path` is required when calling `custom_get`."
       end
 
@@ -712,6 +756,10 @@ module Algolia
     def custom_post_with_http_info(path, parameters = nil, body = nil, request_options = {})
       # verify the required parameter 'path' is set
       if @api_client.config.client_side_validation && path.nil?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
+      end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
         raise ArgumentError, "Parameter `path` is required when calling `custom_post`."
       end
 
@@ -759,6 +807,10 @@ module Algolia
       if @api_client.config.client_side_validation && path.nil?
         raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
       end
+      # verify the required parameter 'path' is not empty
+      if @api_client.config.client_side_validation && path.empty?
+        raise ArgumentError, "Parameter `path` is required when calling `custom_put`."
+      end
 
       path = "/{path}".sub("{" + "path" + "}", path.to_s)
       query_params = {}
@@ -804,6 +856,10 @@ module Algolia
       if @api_client.config.client_side_validation && key.nil?
         raise ArgumentError, "Parameter `key` is required when calling `delete_api_key`."
       end
+      # verify the required parameter 'key' is not empty
+      if @api_client.config.client_side_validation && key.empty?
+        raise ArgumentError, "Parameter `key` is required when calling `delete_api_key`."
+      end
 
       path = "/1/keys/{key}".sub("{" + "key" + "}", Transport.encode_uri(key.to_s))
       query_params = {}
@@ -847,6 +903,10 @@ module Algolia
     def delete_by_with_http_info(index_name, delete_by_params, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `delete_by`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `delete_by`."
       end
       # verify the required parameter 'delete_by_params' is set
@@ -898,6 +958,10 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `delete_index`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `delete_index`."
+      end
 
       path = "/1/indexes/{indexName}".sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
       query_params = {}
@@ -943,8 +1007,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `delete_object`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `delete_object`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `delete_object`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `delete_object`."
       end
 
@@ -997,8 +1069,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `delete_rule`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `delete_rule`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `delete_rule`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `delete_rule`."
       end
 
@@ -1050,6 +1130,10 @@ module Algolia
       if @api_client.config.client_side_validation && source.nil?
         raise ArgumentError, "Parameter `source` is required when calling `delete_source`."
       end
+      # verify the required parameter 'source' is not empty
+      if @api_client.config.client_side_validation && source.empty?
+        raise ArgumentError, "Parameter `source` is required when calling `delete_source`."
+      end
 
       path = "/1/security/sources/{source}".sub("{" + "source" + "}", Transport.encode_uri(source.to_s))
       query_params = {}
@@ -1096,8 +1180,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `delete_synonym`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `delete_synonym`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `delete_synonym`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `delete_synonym`."
       end
 
@@ -1147,6 +1239,10 @@ module Algolia
     def get_api_key_with_http_info(key, request_options = {})
       # verify the required parameter 'key' is set
       if @api_client.config.client_side_validation && key.nil?
+        raise ArgumentError, "Parameter `key` is required when calling `get_api_key`."
+      end
+      # verify the required parameter 'key' is not empty
+      if @api_client.config.client_side_validation && key.empty?
         raise ArgumentError, "Parameter `key` is required when calling `get_api_key`."
       end
 
@@ -1365,8 +1461,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `get_object`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_object`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `get_object`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `get_object`."
       end
 
@@ -1467,8 +1571,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `get_rule`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_rule`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `get_rule`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `get_rule`."
       end
 
@@ -1517,6 +1629,10 @@ module Algolia
     def get_settings_with_http_info(index_name, get_version = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_settings`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `get_settings`."
       end
 
@@ -1603,8 +1719,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `get_synonym`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_synonym`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `get_synonym`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `get_synonym`."
       end
 
@@ -1653,6 +1777,10 @@ module Algolia
     def get_task_with_http_info(index_name, task_id, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `get_task`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `get_task`."
       end
       # verify the required parameter 'task_id' is set
@@ -1743,6 +1871,10 @@ module Algolia
     def get_user_id_with_http_info(user_id, request_options = {})
       # verify the required parameter 'user_id' is set
       if @api_client.config.client_side_validation && user_id.nil?
+        raise ArgumentError, "Parameter `user_id` is required when calling `get_user_id`."
+      end
+      # verify the required parameter 'user_id' is not empty
+      if @api_client.config.client_side_validation && user_id.empty?
         raise ArgumentError, "Parameter `user_id` is required when calling `get_user_id`."
       end
 
@@ -2040,6 +2172,10 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `operation_index`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `operation_index`."
+      end
       # verify the required parameter 'operation_index_params' is set
       if @api_client.config.client_side_validation && operation_index_params.nil?
         raise ArgumentError, "Parameter `operation_index_params` is required when calling `operation_index`."
@@ -2098,8 +2234,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `partial_update_object`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `partial_update_object`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `partial_update_object`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `partial_update_object`."
       end
       # verify the required parameter 'attributes_to_update' is set
@@ -2170,6 +2314,10 @@ module Algolia
     def remove_user_id_with_http_info(user_id, request_options = {})
       # verify the required parameter 'user_id' is set
       if @api_client.config.client_side_validation && user_id.nil?
+        raise ArgumentError, "Parameter `user_id` is required when calling `remove_user_id`."
+      end
+      # verify the required parameter 'user_id' is not empty
+      if @api_client.config.client_side_validation && user_id.empty?
         raise ArgumentError, "Parameter `user_id` is required when calling `remove_user_id`."
       end
 
@@ -2260,6 +2408,10 @@ module Algolia
       if @api_client.config.client_side_validation && key.nil?
         raise ArgumentError, "Parameter `key` is required when calling `restore_api_key`."
       end
+      # verify the required parameter 'key' is not empty
+      if @api_client.config.client_side_validation && key.empty?
+        raise ArgumentError, "Parameter `key` is required when calling `restore_api_key`."
+      end
 
       path = "/1/keys/{key}/restore".sub("{" + "key" + "}", Transport.encode_uri(key.to_s))
       query_params = {}
@@ -2303,6 +2455,10 @@ module Algolia
     def save_object_with_http_info(index_name, body, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `save_object`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `save_object`."
       end
       # verify the required parameter 'body' is set
@@ -2357,8 +2513,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `save_rule`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `save_rule`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `save_rule`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `save_rule`."
       end
       # verify the required parameter 'rule' is set
@@ -2422,6 +2586,10 @@ module Algolia
     )
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `save_rules`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `save_rules`."
       end
       # verify the required parameter 'rules' is set
@@ -2492,8 +2660,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `save_synonym`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `save_synonym`."
+      end
       # verify the required parameter 'algolia_object_id' is set
       if @api_client.config.client_side_validation && algolia_object_id.nil?
+        raise ArgumentError, "Parameter `algolia_object_id` is required when calling `save_synonym`."
+      end
+      # verify the required parameter 'algolia_object_id' is not empty
+      if @api_client.config.client_side_validation && algolia_object_id.empty?
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `save_synonym`."
       end
       # verify the required parameter 'synonym_hit' is set
@@ -2563,6 +2739,10 @@ module Algolia
     )
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `save_synonyms`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `save_synonyms`."
       end
       # verify the required parameter 'synonym_hit' is set
@@ -2748,8 +2928,16 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `search_for_facet_values`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `search_for_facet_values`."
+      end
       # verify the required parameter 'facet_name' is set
       if @api_client.config.client_side_validation && facet_name.nil?
+        raise ArgumentError, "Parameter `facet_name` is required when calling `search_for_facet_values`."
+      end
+      # verify the required parameter 'facet_name' is not empty
+      if @api_client.config.client_side_validation && facet_name.empty?
         raise ArgumentError, "Parameter `facet_name` is required when calling `search_for_facet_values`."
       end
 
@@ -2809,6 +2997,10 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `search_rules`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `search_rules`."
+      end
 
       path = "/1/indexes/{indexName}/rules/search".sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
       query_params = {}
@@ -2855,6 +3047,10 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `search_single_index`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `search_single_index`."
+      end
 
       path = "/1/indexes/{indexName}/query".sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
       query_params = {}
@@ -2899,6 +3095,10 @@ module Algolia
     def search_synonyms_with_http_info(index_name, search_synonyms_params = nil, request_options = {})
       # verify the required parameter 'index_name' is set
       if @api_client.config.client_side_validation && index_name.nil?
+        raise ArgumentError, "Parameter `index_name` is required when calling `search_synonyms`."
+      end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
         raise ArgumentError, "Parameter `index_name` is required when calling `search_synonyms`."
       end
 
@@ -3043,6 +3243,10 @@ module Algolia
       if @api_client.config.client_side_validation && index_name.nil?
         raise ArgumentError, "Parameter `index_name` is required when calling `set_settings`."
       end
+      # verify the required parameter 'index_name' is not empty
+      if @api_client.config.client_side_validation && index_name.empty?
+        raise ArgumentError, "Parameter `index_name` is required when calling `set_settings`."
+      end
       # verify the required parameter 'index_settings' is set
       if @api_client.config.client_side_validation && index_settings.nil?
         raise ArgumentError, "Parameter `index_settings` is required when calling `set_settings`."
@@ -3093,6 +3297,10 @@ module Algolia
     def update_api_key_with_http_info(key, api_key, request_options = {})
       # verify the required parameter 'key' is set
       if @api_client.config.client_side_validation && key.nil?
+        raise ArgumentError, "Parameter `key` is required when calling `update_api_key`."
+      end
+      # verify the required parameter 'key' is not empty
+      if @api_client.config.client_side_validation && key.empty?
         raise ArgumentError, "Parameter `key` is required when calling `update_api_key`."
       end
       # verify the required parameter 'api_key' is set
