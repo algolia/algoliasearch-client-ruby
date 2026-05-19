@@ -11,14 +11,19 @@ module Algolia
       # Unique A/B test identifier.
       attr_accessor :ab_test_id
 
+      # A/B test significance calculated from click events.  Values of 0.95 or higher can be considered significant, that is, the difference between A and B variants is _not_ due to random variations. Lower values have a.
       attr_accessor :click_significance
 
+      # A/B test significance calculated from conversion events.  Values of 0.95 or higher can be considered significant, that is, the difference between A and B variants is _not_ due to random variations.
       attr_accessor :conversion_significance
 
+      # A/B test significance calculated from add-to-cart events.  Values of 0.95 or higher can be considered significant, that is, the difference between A and B variants is _not_ due to random variations.
       attr_accessor :add_to_cart_significance
 
+      # A/B test significance calculated from purchase events.  Values of 0.95 or higher can be considered significant, that is, the difference between A and B variants is _not_ due to random variations.
       attr_accessor :purchase_significance
 
+      # A/B test significance calculated from revenue data.  Values of 0.95 or higher can be considered significant, that is, the difference between A and B variants is _not_ due to random variations.
       attr_accessor :revenue_significance
 
       # Date and time when the A/B test was last updated, in RFC 3339 format.

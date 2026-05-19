@@ -445,7 +445,8 @@ module Algolia
           [
             :inside_bounding_box,
             :user_data,
-            :optional_words
+            :optional_words,
+            :re_ranking_apply_filter
           ]
         )
       end

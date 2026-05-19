@@ -372,7 +372,8 @@ module Algolia
         Set.new(
           [
             :inside_bounding_box,
-            :optional_words
+            :optional_words,
+            :re_ranking_apply_filter
           ]
         )
       end

@@ -323,7 +323,8 @@ module Algolia
         Set.new(
           [
             :user_data,
-            :optional_words
+            :optional_words,
+            :re_ranking_apply_filter
           ]
         )
       end

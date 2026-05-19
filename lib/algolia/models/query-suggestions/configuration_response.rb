@@ -20,6 +20,7 @@ module Algolia
 
       attr_accessor :languages
 
+      # Words or regular expressions to exclude from the suggestions.
       attr_accessor :exclude
 
       # Whether to turn on personalized query suggestions.

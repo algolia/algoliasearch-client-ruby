@@ -15,8 +15,10 @@ module Algolia
       # If true, Query Suggestions uses all replica indices to find popular searches. If false, only the primary index is used.
       attr_accessor :replicas
 
+      # Analytics tags for filtering the popular searches. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
       attr_accessor :analytics_tags
 
+      # Facets to use as top categories with your suggestions.  If provided, Query Suggestions adds the top facet values to each suggestion.
       attr_accessor :facets
 
       # Minimum number of hits required to be included as a suggestion.  A search query must at least generate `minHits` search results to be included in the Query Suggestions index.
@@ -25,8 +27,10 @@ module Algolia
       # Minimum letters required to be included as a suggestion.  A search query must be at least `minLetters` long to be included in the Query Suggestions index.
       attr_accessor :min_letters
 
+      # Facets used for generating query suggestions from facet values.  For example, if you set `generate: [\"color\", \"brand\"]`, combinations from the facet values are added as query suggestions, such as \"blue adidas\", \"red adidas\", \"blue nike\", \"red nike\", etc.  You can include nested lists.
       attr_accessor :generate
 
+      # Algolia indices with popular searches to use as query suggestions.  Records of these indices must have these attributes:  - `query`: search query which will be added as a suggestion - `count`: measure of popularity of that search query  For example, you can export popular searches from an external analytics provider, such as Google Analytics or Adobe Analytics, and feed this data into an Algolia index. You can use this index to generate query suggestions until your Algolia Analytics has collected enough data.
       attr_accessor :external
 
       # Attribute mapping from ruby-style variable name to JSON key.
