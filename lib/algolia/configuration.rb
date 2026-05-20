@@ -12,7 +12,8 @@ module Algolia
       :write_timeout,
       :connect_timeout,
       :compression_type,
-      :requester
+      :requester,
+      :transformation_options
     )
 
     # Set this to false to skip client side validation in the operation.
@@ -30,6 +31,7 @@ module Algolia
       @write_timeout = opts[:write_timeout]
       @compression_type = opts[:compression_type] || "none"
       @requester = opts[:requester]
+      @transformation_options = opts[:transformation_options]
 
       @user_agent = UserAgent.new.add(client_name, VERSION)
 

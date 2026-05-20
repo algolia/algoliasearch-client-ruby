@@ -3588,5 +3588,69 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Ingestion::WatchResponse")
     end
 
+    # Helper: Pushes objects to the given index in chunks, optionally waiting for each batch to be processed.
+    #
+    # @param index_name [String] the `index_name` where the operation will be performed. (required)
+    # @param objects [Array] the array of objects to push to the given Algolia `index_name`. (required)
+    # @param action [String] the push action to perform on the objects. (optional, default: addObject)
+    # @param wait_for_tasks [Boolean] whether to wait until every task has been processed. (optional, default: false)
+    # @param batch_size [Integer] the size of each chunk of objects sent in a single push call. (optional, default: 1000)
+    # @param reference_index_name [String] the reference index name used for replace-all operations. (optional)
+    # @param request_options [Hash] the request options to send along with the query. (optional)
+    #
+    # @return [Array<Ingestion::WatchResponse>]
+    def chunked_push(
+      index_name,
+      objects,
+      action = Ingestion::Action::ADD_OBJECT,
+      wait_for_tasks = false,
+      batch_size = 1000,
+      reference_index_name = nil,
+      request_options = {}
+    )
+      responses = []
+      offset = 0
+      wait_batch_size = batch_size / 10
+      wait_batch_size = batch_size if wait_batch_size < 1
+      total_batches = (objects.length.to_f / batch_size).ceil
+      max_retries = 50
+
+      objects.each_slice(batch_size).with_index do |chunk, batch_index|
+        response = push(
+          index_name,
+          Ingestion::PushTaskPayload.new(action: action, records: chunk),
+          false,
+          reference_index_name,
+          request_options
+        )
+        responses << response
+
+        if wait_for_tasks && (responses.length % wait_batch_size == 0 || batch_index == total_batches - 1)
+          responses[offset, wait_batch_size].each do |watch_response|
+            if watch_response.event_id.nil?
+              raise ArgumentError, "received unexpected response from the push endpoint, eventID must not be nil"
+            end
+
+            retries = 0
+            loop do
+              begin
+                event = get_event(watch_response.run_id, watch_response.event_id, request_options)
+                break if event
+              rescue AlgoliaHttpError => e
+                raise e unless e.code == 404
+              end
+
+              retries += 1
+              raise ApiError, "The maximum number of retries exceeded. (#{max_retries})" if retries >= max_retries
+              sleep([retries * 1.5, 5].min)
+            end
+          end
+
+          offset += wait_batch_size
+        end
+      end
+
+      responses
+    end
   end
 end
