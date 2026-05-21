@@ -12,9 +12,6 @@ module Algolia
       # A/B test ID.
       attr_accessor :id
 
-      # Whether the A/B test is a dark test (server-side measured, not user-facing). Only present when true.
-      attr_accessor :is_dark
-
       # A/B test schema version. Only present for v2 and later tests.
       attr_accessor :version
 
@@ -30,7 +27,6 @@ module Algolia
       def self.attribute_map
         {
           :id => :id,
-          :is_dark => :isDark,
           :version => :version,
           :type => :type,
           :target => :target,
@@ -42,7 +38,6 @@ module Algolia
       def self.types_mapping
         {
           :id => :"Integer",
-          :is_dark => :"Boolean",
           :version => :"Integer",
           :type => :"String",
           :target => :"FetchedIndexAbTestTarget",
@@ -86,10 +81,6 @@ module Algolia
           self.id = nil
         end
 
-        if attributes.key?(:is_dark)
-          self.is_dark = attributes[:is_dark]
-        end
-
         if attributes.key?(:version)
           self.version = attributes[:version]
         end
@@ -117,7 +108,6 @@ module Algolia
         return true if self.equal?(other)
         self.class == other.class &&
           id == other.id &&
-          is_dark == other.is_dark &&
           version == other.version &&
           type == other.type &&
           target == other.target &&
@@ -133,7 +123,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [id, is_dark, version, type, target, variants].hash
+        [id, version, type, target, variants].hash
       end
 
       # Builds the object from hash
