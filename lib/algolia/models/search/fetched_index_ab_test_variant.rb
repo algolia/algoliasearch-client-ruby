@@ -7,85 +7,37 @@ require "time"
 
 module Algolia
   module Search
-    class FetchedIndex
-      # Index name.
-      attr_accessor :name
+    # A/B test variant for an index.
+    class FetchedIndexAbTestVariant
+      # Index name of the variant. Only present for v0/v1 tests; in v2 this moves into `payload`.
+      attr_accessor :index_name
 
-      # Index creation date. An empty string means that the index has no records.
-      attr_accessor :created_at
+      # Percentage of search traffic routed to this variant.
+      attr_accessor :percentage
 
-      # Date and time when the object was updated, in RFC 3339 format.
-      attr_accessor :updated_at
+      # URL-encoded custom search parameters applied to this variant. Only present for v0/v1 tests; in v2 this moves into `payload`.
+      attr_accessor :custom_search_parameters
 
-      # Number of records contained in the index.
-      attr_accessor :entries
-
-      # Number of bytes of the index in minified format.
-      attr_accessor :data_size
-
-      # Number of bytes of the index binary file.
-      attr_accessor :file_size
-
-      # Last build time.
-      attr_accessor :last_build_time_s
-
-      # Number of pending indexing operations. This value is deprecated and should not be used.
-      attr_accessor :number_of_pending_tasks
-
-      # A boolean which says whether the index has pending tasks. This value is deprecated and should not be used.
-      attr_accessor :pending_task
-
-      # Only present if the index is a replica. Contains the name of the related primary index.
-      attr_accessor :primary
-
-      # Only present if the index is a primary index with replicas. Contains the names of all linked replicas.
-      attr_accessor :replicas
-
-      # Only present if the index is a [virtual replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
-      attr_accessor :virtual
-
-      attr_accessor :ab_test
-
-      # Name of the index that owns the A/B test configuration. Only present when this index participates in an A/B test configured on another index.
-      attr_accessor :source_ab_test
+      # Type-specific configuration. Only present for v2 and later tests. Shape depends on the parent A/B test's `type`.
+      attr_accessor :payload
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :name => :name,
-          :created_at => :createdAt,
-          :updated_at => :updatedAt,
-          :entries => :entries,
-          :data_size => :dataSize,
-          :file_size => :fileSize,
-          :last_build_time_s => :lastBuildTimeS,
-          :number_of_pending_tasks => :numberOfPendingTasks,
-          :pending_task => :pendingTask,
-          :primary => :primary,
-          :replicas => :replicas,
-          :virtual => :virtual,
-          :ab_test => :abTest,
-          :source_ab_test => :sourceABTest
+          :index_name => :indexName,
+          :percentage => :percentage,
+          :custom_search_parameters => :customSearchParameters,
+          :payload => :payload
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :name => :"String",
-          :created_at => :"String",
-          :updated_at => :"String",
-          :entries => :"Integer",
-          :data_size => :"Integer",
-          :file_size => :"Integer",
-          :last_build_time_s => :"Integer",
-          :number_of_pending_tasks => :"Integer",
-          :pending_task => :"Boolean",
-          :primary => :"String",
-          :replicas => :"Array<String>",
-          :virtual => :"Boolean",
-          :ab_test => :"FetchedIndexAbTest",
-          :source_ab_test => :"String"
+          :index_name => :"String",
+          :percentage => :"Integer",
+          :custom_search_parameters => :"String",
+          :payload => :"Hash<String, Object>"
         }
       end
 
@@ -102,7 +54,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::FetchedIndex` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::FetchedIndexAbTestVariant` initialize method"
           )
         end
 
@@ -111,7 +63,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::FetchedIndex`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::FetchedIndexAbTestVariant`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -119,80 +71,24 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:name)
-          self.name = attributes[:name]
+        if attributes.key?(:index_name)
+          self.index_name = attributes[:index_name]
+        end
+
+        if attributes.key?(:percentage)
+          self.percentage = attributes[:percentage]
         else
-          self.name = nil
+          self.percentage = nil
         end
 
-        if attributes.key?(:created_at)
-          self.created_at = attributes[:created_at]
-        else
-          self.created_at = nil
+        if attributes.key?(:custom_search_parameters)
+          self.custom_search_parameters = attributes[:custom_search_parameters]
         end
 
-        if attributes.key?(:updated_at)
-          self.updated_at = attributes[:updated_at]
-        else
-          self.updated_at = nil
-        end
-
-        if attributes.key?(:entries)
-          self.entries = attributes[:entries]
-        else
-          self.entries = nil
-        end
-
-        if attributes.key?(:data_size)
-          self.data_size = attributes[:data_size]
-        else
-          self.data_size = nil
-        end
-
-        if attributes.key?(:file_size)
-          self.file_size = attributes[:file_size]
-        else
-          self.file_size = nil
-        end
-
-        if attributes.key?(:last_build_time_s)
-          self.last_build_time_s = attributes[:last_build_time_s]
-        else
-          self.last_build_time_s = nil
-        end
-
-        if attributes.key?(:number_of_pending_tasks)
-          self.number_of_pending_tasks = attributes[:number_of_pending_tasks]
-        else
-          self.number_of_pending_tasks = nil
-        end
-
-        if attributes.key?(:pending_task)
-          self.pending_task = attributes[:pending_task]
-        else
-          self.pending_task = nil
-        end
-
-        if attributes.key?(:primary)
-          self.primary = attributes[:primary]
-        end
-
-        if attributes.key?(:replicas)
-          if (value = attributes[:replicas]).is_a?(Array)
-            self.replicas = value
+        if attributes.key?(:payload)
+          if (value = attributes[:payload]).is_a?(Hash)
+            self.payload = value
           end
-        end
-
-        if attributes.key?(:virtual)
-          self.virtual = attributes[:virtual]
-        end
-
-        if attributes.key?(:ab_test)
-          self.ab_test = attributes[:ab_test]
-        end
-
-        if attributes.key?(:source_ab_test)
-          self.source_ab_test = attributes[:source_ab_test]
         end
       end
 
@@ -201,20 +97,10 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          name == other.name &&
-          created_at == other.created_at &&
-          updated_at == other.updated_at &&
-          entries == other.entries &&
-          data_size == other.data_size &&
-          file_size == other.file_size &&
-          last_build_time_s == other.last_build_time_s &&
-          number_of_pending_tasks == other.number_of_pending_tasks &&
-          pending_task == other.pending_task &&
-          primary == other.primary &&
-          replicas == other.replicas &&
-          virtual == other.virtual &&
-          ab_test == other.ab_test &&
-          source_ab_test == other.source_ab_test
+          index_name == other.index_name &&
+          percentage == other.percentage &&
+          custom_search_parameters == other.custom_search_parameters &&
+          payload == other.payload
       end
 
       # @see the `==` method
@@ -226,22 +112,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [
-          name,
-          created_at,
-          updated_at,
-          entries,
-          data_size,
-          file_size,
-          last_build_time_s,
-          number_of_pending_tasks,
-          pending_task,
-          primary,
-          replicas,
-          virtual,
-          ab_test,
-          source_ab_test
-        ].hash
+        [index_name, percentage, custom_search_parameters, payload].hash
       end
 
       # Builds the object from hash
