@@ -13,7 +13,8 @@ module Algolia
         def openapi_one_of
           [
             :"SearchForFacetValuesResponse",
-            :"SearchResponse"
+            :"SearchResponse",
+            :"SearchResponsePartial"
           ]
         end
 
