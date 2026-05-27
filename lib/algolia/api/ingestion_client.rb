@@ -3606,14 +3606,15 @@ module Algolia
       wait_for_tasks = false,
       batch_size = 1000,
       reference_index_name = nil,
-      request_options = {}
+      request_options = {},
+      chunked_options = nil
     )
       responses = []
       offset = 0
       wait_batch_size = batch_size / 10
       wait_batch_size = batch_size if wait_batch_size < 1
       total_batches = (objects.length.to_f / batch_size).ceil
-      max_retries = 50
+      opts = Algolia::ChunkedHelperOptions.resolve(chunked_options)
 
       objects.each_slice(batch_size).with_index do |chunk, batch_index|
         response = push(
@@ -3641,7 +3642,13 @@ module Algolia
               end
 
               retries += 1
-              raise ApiError, "The maximum number of retries exceeded. (#{max_retries})" if retries >= max_retries
+              if retries >= opts.max_retries
+                raise(
+                  ApiError,
+                  "Stopped waiting for the task after #{opts.max_retries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher max_retries."
+                )
+              end
+
               sleep([retries * 1.5, 5].min)
             end
           end
