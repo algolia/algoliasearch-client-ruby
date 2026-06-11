@@ -1,3 +1,8 @@
+## [3.41.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.40.0...3.41.0)
+
+- [e6753bc802](https://github.com/algolia/api-clients-automation/commit/e6753bc802) chore(deps): dependencies 2026-06-01 ([#6476](https://github.com/algolia/api-clients-automation/pull/6476)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [7f2ce8cd3a](https://github.com/algolia/api-clients-automation/commit/7f2ce8cd3a) feat(clients): Agent Studio v1 ([#6097](https://github.com/algolia/api-clients-automation/pull/6097)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [3.40.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.39.1...3.40.0)
 
 BREAKING CHANGES: this minor version includes breaking changes. See below for more details.
