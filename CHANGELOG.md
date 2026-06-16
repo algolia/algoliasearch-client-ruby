@@ -1,3 +1,7 @@
+## [3.42.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.41.0...3.42.0)
+
+- [52ebd28f58](https://github.com/algolia/api-clients-automation/commit/52ebd28f58) feat(clients): release Agent Studio package updates ([#6573](https://github.com/algolia/api-clients-automation/pull/6573)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [3.41.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.40.0...3.41.0)
 
 - [e6753bc802](https://github.com/algolia/api-clients-automation/commit/e6753bc802) chore(deps): dependencies 2026-06-01 ([#6476](https://github.com/algolia/api-clients-automation/pull/6476)) by [@algolia-bot](https://github.com/algolia-bot/)
