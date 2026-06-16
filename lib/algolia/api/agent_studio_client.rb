@@ -27,9 +27,6 @@ module Algolia
       end
 
       @api_client = Algolia::ApiClient.new(config)
-      warn(
-        "[algolia] Agent Studio API is in beta and subject to breaking changes. See https://www.algolia.com/doc/rest-api/agent-studio"
-      )
     end
 
     def self.create(app_id, api_key, opts = {})
