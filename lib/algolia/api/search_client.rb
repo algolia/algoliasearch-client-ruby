@@ -3559,7 +3559,10 @@ module Algolia
     )
       assert_ingestion_transporter!
 
-      opts = Algolia::ChunkedHelperOptions.resolve(chunked_options)
+      opts = Algolia::ChunkedHelperOptions.resolve(
+        chunked_options,
+        default_max_retries: Algolia::ChunkedHelperOptions::DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES
+      )
       tmp_index_name = index_name + "_tmp_" + rand(10_000_000).to_s
 
       begin
@@ -4061,7 +4064,10 @@ module Algolia
       request_options = {},
       chunked_options = nil
     )
-      opts = Algolia::ChunkedHelperOptions.resolve(chunked_options)
+      opts = Algolia::ChunkedHelperOptions.resolve(
+        chunked_options,
+        default_max_retries: Algolia::ChunkedHelperOptions::DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES
+      )
       tmp_index_name = index_name + "_tmp_" + rand(10_000_000).to_s
 
       begin
