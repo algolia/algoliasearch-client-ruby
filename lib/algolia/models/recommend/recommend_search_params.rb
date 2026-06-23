@@ -15,8 +15,6 @@ module Algolia
       # Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>`, where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>`, where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes if the facet attribute name or facet value contains spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).
       attr_accessor :filters
 
-      attr_accessor :facet_filters
-
       attr_accessor :optional_filters
 
       attr_accessor :numeric_filters
@@ -82,9 +80,6 @@ module Algolia
 
       # Whether to include this search when calculating processing-time percentiles.
       attr_accessor :percentile_computation
-
-      # Whether to enable A/B testing for this search.
-      attr_accessor :enable_ab_test
 
       # Search query.
       attr_accessor :query
@@ -152,9 +147,6 @@ module Algolia
       # Attributes to include in the API response To reduce the size of your response, you can retrieve only some of the attributes. Attribute names are case-sensitive - `*` retrieves all attributes, except attributes included in the `customRanking` and `unretrievableAttributes` settings. - To retrieve all attributes except a specific one, prefix the attribute with a dash and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`. - The `objectID` attribute is always included.
       attr_accessor :attributes_to_retrieve
 
-      # Determines the order in which Algolia returns your results.  By default, each entry corresponds to a [ranking criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria). The tie-breaking algorithm sequentially applies each criterion in the order they're specified. If you configure a replica index for [sorting by an attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute), you put the sorting attribute at the top of the list.  **Modifiers**  - `asc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in ascending order. - `desc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in descending order.  Before you modify the default setting, test your changes in the dashboard, and by [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing).
-      attr_accessor :ranking
-
       # Relevancy threshold below which less relevant results aren't included in the results You can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas). Use this setting to strike a balance between the relevance and number of returned results.
       attr_accessor :relevancy_strictness
 
@@ -199,9 +191,6 @@ module Algolia
 
       # Whether to split compound words in the query into their building blocks For more information, see [Word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words). Word segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and Norwegian. Decompounding doesn't work for words with [non-spacing mark Unicode characters](https://www.charactercodes.net/category/non-spacing_mark). For example, `Gartenstühle` won't be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).
       attr_accessor :decompound_query
-
-      # Whether to enable rules.
-      attr_accessor :enable_rules
 
       # Whether to enable Personalization.
       attr_accessor :enable_personalization
@@ -253,12 +242,14 @@ module Algolia
 
       attr_accessor :re_ranking_apply_filter
 
+      # Whether to enable rules.
+      attr_accessor :enable_rules
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :similar_query => :similarQuery,
           :filters => :filters,
-          :facet_filters => :facetFilters,
           :optional_filters => :optionalFilters,
           :numeric_filters => :numericFilters,
           :tag_filters => :tagFilters,
@@ -283,7 +274,6 @@ module Algolia
           :analytics => :analytics,
           :analytics_tags => :analyticsTags,
           :percentile_computation => :percentileComputation,
-          :enable_ab_test => :enableABTest,
           :query => :query,
           :attributes_for_faceting => :attributesForFaceting,
           :replicas => :replicas,
@@ -306,7 +296,6 @@ module Algolia
           :keep_diacritics_on_characters => :keepDiacriticsOnCharacters,
           :custom_ranking => :customRanking,
           :attributes_to_retrieve => :attributesToRetrieve,
-          :ranking => :ranking,
           :relevancy_strictness => :relevancyStrictness,
           :attributes_to_highlight => :attributesToHighlight,
           :attributes_to_snippet => :attributesToSnippet,
@@ -323,7 +312,6 @@ module Algolia
           :remove_stop_words => :removeStopWords,
           :query_languages => :queryLanguages,
           :decompound_query => :decompoundQuery,
-          :enable_rules => :enableRules,
           :enable_personalization => :enablePersonalization,
           :query_type => :queryType,
           :remove_words_if_no_results => :removeWordsIfNoResults,
@@ -342,7 +330,8 @@ module Algolia
           :attribute_criteria_computed_by_min_proximity => :attributeCriteriaComputedByMinProximity,
           :rendering_content => :renderingContent,
           :enable_re_ranking => :enableReRanking,
-          :re_ranking_apply_filter => :reRankingApplyFilter
+          :re_ranking_apply_filter => :reRankingApplyFilter,
+          :enable_rules => :enableRules
         }
       end
 
@@ -351,7 +340,6 @@ module Algolia
         {
           :similar_query => :"String",
           :filters => :"String",
-          :facet_filters => :"FacetFilters",
           :optional_filters => :"OptionalFilters",
           :numeric_filters => :"NumericFilters",
           :tag_filters => :"TagFilters",
@@ -376,7 +364,6 @@ module Algolia
           :analytics => :"Boolean",
           :analytics_tags => :"Array<String>",
           :percentile_computation => :"Boolean",
-          :enable_ab_test => :"Boolean",
           :query => :"String",
           :attributes_for_faceting => :"Array<String>",
           :replicas => :"Array<String>",
@@ -399,7 +386,6 @@ module Algolia
           :keep_diacritics_on_characters => :"String",
           :custom_ranking => :"Array<String>",
           :attributes_to_retrieve => :"Array<String>",
-          :ranking => :"Array<String>",
           :relevancy_strictness => :"Integer",
           :attributes_to_highlight => :"Array<String>",
           :attributes_to_snippet => :"Array<String>",
@@ -416,7 +402,6 @@ module Algolia
           :remove_stop_words => :"RemoveStopWords",
           :query_languages => :"Array<SupportedLanguage>",
           :decompound_query => :"Boolean",
-          :enable_rules => :"Boolean",
           :enable_personalization => :"Boolean",
           :query_type => :"QueryType",
           :remove_words_if_no_results => :"RemoveWordsIfNoResults",
@@ -435,7 +420,8 @@ module Algolia
           :attribute_criteria_computed_by_min_proximity => :"Boolean",
           :rendering_content => :"RenderingContent",
           :enable_re_ranking => :"Boolean",
-          :re_ranking_apply_filter => :"ReRankingApplyFilter"
+          :re_ranking_apply_filter => :"ReRankingApplyFilter",
+          :enable_rules => :"Boolean"
         }
       end
 
@@ -489,10 +475,6 @@ module Algolia
 
         if attributes.key?(:filters)
           self.filters = attributes[:filters]
-        end
-
-        if attributes.key?(:facet_filters)
-          self.facet_filters = attributes[:facet_filters]
         end
 
         if attributes.key?(:optional_filters)
@@ -601,10 +583,6 @@ module Algolia
 
         if attributes.key?(:percentile_computation)
           self.percentile_computation = attributes[:percentile_computation]
-        end
-
-        if attributes.key?(:enable_ab_test)
-          self.enable_ab_test = attributes[:enable_ab_test]
         end
 
         if attributes.key?(:query)
@@ -721,12 +699,6 @@ module Algolia
           end
         end
 
-        if attributes.key?(:ranking)
-          if (value = attributes[:ranking]).is_a?(Array)
-            self.ranking = value
-          end
-        end
-
         if attributes.key?(:relevancy_strictness)
           self.relevancy_strictness = attributes[:relevancy_strictness]
         end
@@ -797,10 +769,6 @@ module Algolia
 
         if attributes.key?(:decompound_query)
           self.decompound_query = attributes[:decompound_query]
-        end
-
-        if attributes.key?(:enable_rules)
-          self.enable_rules = attributes[:enable_rules]
         end
 
         if attributes.key?(:enable_personalization)
@@ -886,6 +854,10 @@ module Algolia
         if attributes.key?(:re_ranking_apply_filter)
           self.re_ranking_apply_filter = attributes[:re_ranking_apply_filter]
         end
+
+        if attributes.key?(:enable_rules)
+          self.enable_rules = attributes[:enable_rules]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -895,7 +867,6 @@ module Algolia
         self.class == other.class &&
           similar_query == other.similar_query &&
           filters == other.filters &&
-          facet_filters == other.facet_filters &&
           optional_filters == other.optional_filters &&
           numeric_filters == other.numeric_filters &&
           tag_filters == other.tag_filters &&
@@ -920,7 +891,6 @@ module Algolia
           analytics == other.analytics &&
           analytics_tags == other.analytics_tags &&
           percentile_computation == other.percentile_computation &&
-          enable_ab_test == other.enable_ab_test &&
           query == other.query &&
           attributes_for_faceting == other.attributes_for_faceting &&
           replicas == other.replicas &&
@@ -943,7 +913,6 @@ module Algolia
           keep_diacritics_on_characters == other.keep_diacritics_on_characters &&
           custom_ranking == other.custom_ranking &&
           attributes_to_retrieve == other.attributes_to_retrieve &&
-          ranking == other.ranking &&
           relevancy_strictness == other.relevancy_strictness &&
           attributes_to_highlight == other.attributes_to_highlight &&
           attributes_to_snippet == other.attributes_to_snippet &&
@@ -960,7 +929,6 @@ module Algolia
           remove_stop_words == other.remove_stop_words &&
           query_languages == other.query_languages &&
           decompound_query == other.decompound_query &&
-          enable_rules == other.enable_rules &&
           enable_personalization == other.enable_personalization &&
           query_type == other.query_type &&
           remove_words_if_no_results == other.remove_words_if_no_results &&
@@ -979,7 +947,8 @@ module Algolia
           attribute_criteria_computed_by_min_proximity == other.attribute_criteria_computed_by_min_proximity &&
           rendering_content == other.rendering_content &&
           enable_re_ranking == other.enable_re_ranking &&
-          re_ranking_apply_filter == other.re_ranking_apply_filter
+          re_ranking_apply_filter == other.re_ranking_apply_filter &&
+          enable_rules == other.enable_rules
       end
 
       # @see the `==` method
@@ -994,7 +963,6 @@ module Algolia
         [
           similar_query,
           filters,
-          facet_filters,
           optional_filters,
           numeric_filters,
           tag_filters,
@@ -1019,7 +987,6 @@ module Algolia
           analytics,
           analytics_tags,
           percentile_computation,
-          enable_ab_test,
           query,
           attributes_for_faceting,
           replicas,
@@ -1042,7 +1009,6 @@ module Algolia
           keep_diacritics_on_characters,
           custom_ranking,
           attributes_to_retrieve,
-          ranking,
           relevancy_strictness,
           attributes_to_highlight,
           attributes_to_snippet,
@@ -1059,7 +1025,6 @@ module Algolia
           remove_stop_words,
           query_languages,
           decompound_query,
-          enable_rules,
           enable_personalization,
           query_type,
           remove_words_if_no_results,
@@ -1078,7 +1043,8 @@ module Algolia
           attribute_criteria_computed_by_min_proximity,
           rendering_content,
           enable_re_ranking,
-          re_ranking_apply_filter
+          re_ranking_apply_filter,
+          enable_rules
         ].hash
       end
 
