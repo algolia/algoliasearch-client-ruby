@@ -8,11 +8,15 @@ module Algolia
 
     attr_accessor :transporter
 
+    # The logger, shared with the requester when it provides one.
+    attr_reader :logger
+
     # Initializes the ApiClient
     # @option config [Configuration] Configuration for initializing the object, default to Configuration.default
     def initialize(config = Configuration.default)
       @config = config
       @requester = config.requester || Http::HttpRequester.new("net_http_persistent", LoggerHelper.create)
+      @logger = (@requester.logger if @requester.respond_to?(:logger)) || LoggerHelper.create
       @transporter = Transport::Transport.new(config, @requester)
     end
 

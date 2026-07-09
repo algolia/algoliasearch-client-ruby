@@ -3542,6 +3542,8 @@ module Algolia
     # in order to transform records before indexing them to Algolia.
     # `set_transformation_options` must have been called, or the client created via `SearchClient.with_transformation`.
     #
+    # Warning: Calling this method with an empty `objects` array will delete all records currently in the given `index_name`.
+    #
     # @param index_name [String] the `index_name` to replace objects in. (required)
     # @param objects [Array] the array of objects to store in the given Algolia `index_name`. (required)
     # @param batch_size [Integer] the size of each chunk of objects sent in a single push call. (optional, default: 1000)
@@ -3558,6 +3560,12 @@ module Algolia
       chunked_options = nil
     )
       assert_ingestion_transporter!
+
+      if objects.empty?
+        @api_client.logger.warn(
+          "replace_all_objects_with_transformation was called with an empty list of objects, which will delete all records currently in the \"#{index_name}\" index."
+        )
+      end
 
       opts = Algolia::ChunkedHelperOptions.resolve(
         chunked_options,
@@ -4049,6 +4057,8 @@ module Algolia
 
     # Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
     #
+    # Warning: Calling this method with an empty `objects` array will delete all records currently in the given `index_name`.
+    #
     # @param index_name [String] The `index_name` to replace `objects` in.
     # @param objects [Array] The array of `objects` to store in the given Algolia `index_name`.
     # @param batch_size [int] The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
@@ -4064,6 +4074,12 @@ module Algolia
       request_options = {},
       chunked_options = nil
     )
+      if objects.empty?
+        @api_client.logger.warn(
+          "replace_all_objects was called with an empty list of objects, which will delete all records currently in the \"#{index_name}\" index."
+        )
+      end
+
       opts = Algolia::ChunkedHelperOptions.resolve(
         chunked_options,
         default_max_retries: Algolia::ChunkedHelperOptions::DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES
