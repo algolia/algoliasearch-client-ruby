@@ -242,6 +242,8 @@ module Algolia
 
       attr_accessor :re_ranking_apply_filter
 
+      attr_accessor :facet_filters
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -327,7 +329,8 @@ module Algolia
           :attribute_criteria_computed_by_min_proximity => :attributeCriteriaComputedByMinProximity,
           :rendering_content => :renderingContent,
           :enable_re_ranking => :enableReRanking,
-          :re_ranking_apply_filter => :reRankingApplyFilter
+          :re_ranking_apply_filter => :reRankingApplyFilter,
+          :facet_filters => :facetFilters
         }
       end
 
@@ -416,7 +419,8 @@ module Algolia
           :attribute_criteria_computed_by_min_proximity => :"Boolean",
           :rendering_content => :"RenderingContent",
           :enable_re_ranking => :"Boolean",
-          :re_ranking_apply_filter => :"ReRankingApplyFilter"
+          :re_ranking_apply_filter => :"ReRankingApplyFilter",
+          :facet_filters => :"FacetFilters"
         }
       end
 
@@ -849,6 +853,10 @@ module Algolia
         if attributes.key?(:re_ranking_apply_filter)
           self.re_ranking_apply_filter = attributes[:re_ranking_apply_filter]
         end
+
+        if attributes.key?(:facet_filters)
+          self.facet_filters = attributes[:facet_filters]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -938,7 +946,8 @@ module Algolia
           attribute_criteria_computed_by_min_proximity == other.attribute_criteria_computed_by_min_proximity &&
           rendering_content == other.rendering_content &&
           enable_re_ranking == other.enable_re_ranking &&
-          re_ranking_apply_filter == other.re_ranking_apply_filter
+          re_ranking_apply_filter == other.re_ranking_apply_filter &&
+          facet_filters == other.facet_filters
       end
 
       # @see the `==` method
@@ -1033,7 +1042,8 @@ module Algolia
           attribute_criteria_computed_by_min_proximity,
           rendering_content,
           enable_re_ranking,
-          re_ranking_apply_filter
+          re_ranking_apply_filter,
+          facet_filters
         ].hash
       end
 
