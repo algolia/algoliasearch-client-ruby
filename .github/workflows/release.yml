@@ -16,14 +16,14 @@ jobs:
       id-token: write
       contents: write
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Install Ruby
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1.321.0
         with:
           ruby-version: 4.0.5
           bundler-cache: true
 
-      - uses: rubygems/release-gem@e9a6361a0b14562539327c2a02373edc56dd3169
+      - uses: rubygems/release-gem@e9a6361a0b14562539327c2a02373edc56dd3169 # v1.1.4
         with:
           await-release: false
