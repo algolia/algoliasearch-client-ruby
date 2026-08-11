@@ -7,77 +7,34 @@ require "time"
 
 module Algolia
   module AbtestingV3
-    class ABTest
-      # Unique A/B test identifier.
-      attr_accessor :ab_test_id
+    # Outcome of the A/B test once a winner has been declared. Only present when a winning variant has been declared, so its presence indicates the test has been decided.
+    class Decision
+      # Identifier of the declared winning variant. The control variant is 1.
+      attr_accessor :winner_variant_id
 
-      # Date and time when the A/B test was last updated, in RFC 3339 format.
-      attr_accessor :updated_at
-
-      # Date and time when the A/B test was created, in RFC 3339 format.
-      attr_accessor :created_at
-
-      # End date and time of the A/B test, in RFC 3339 format.
-      attr_accessor :end_at
-
-      # Date and time when the A/B test was stopped, in RFC 3339 format.
-      attr_accessor :stopped_at
-
-      # A/B test name.
-      attr_accessor :name
-
-      attr_accessor :status
-
-      # A/B test variants.  The first variant is your _control_ index, typically your production index. All of the additional variants are indexes with changed settings that you want to test against the control.
-      attr_accessor :variants
-
-      attr_accessor :configuration
-
-      # Unique migrated A/B test identifier.
-      attr_accessor :migrated_ab_test_id
-
-      attr_accessor :decision
+      # Date and time when the winning variant was declared, in RFC 3339 format.
+      attr_accessor :declared_at
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :ab_test_id => :abTestID,
-          :updated_at => :updatedAt,
-          :created_at => :createdAt,
-          :end_at => :endAt,
-          :stopped_at => :stoppedAt,
-          :name => :name,
-          :status => :status,
-          :variants => :variants,
-          :configuration => :configuration,
-          :migrated_ab_test_id => :migratedAbTestID,
-          :decision => :decision
+          :winner_variant_id => :winnerVariantId,
+          :declared_at => :declaredAt
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :ab_test_id => :"Integer",
-          :updated_at => :"String",
-          :created_at => :"String",
-          :end_at => :"String",
-          :stopped_at => :"String",
-          :name => :"String",
-          :status => :"Status",
-          :variants => :"Array<Variant>",
-          :configuration => :"ABTestConfiguration",
-          :migrated_ab_test_id => :"Integer",
-          :decision => :"Decision"
+          :winner_variant_id => :"Integer",
+          :declared_at => :"String"
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new(
-          [
-            :stopped_at
-          ]
+          []
         )
       end
 
@@ -85,7 +42,7 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         if (!attributes.is_a?(Hash))
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::ABTest` initialize method"
+          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Decision` initialize method"
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
@@ -93,7 +50,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::ABTest`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::Decision`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -101,64 +58,16 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:ab_test_id)
-          self.ab_test_id = attributes[:ab_test_id]
+        if attributes.key?(:winner_variant_id)
+          self.winner_variant_id = attributes[:winner_variant_id]
         else
-          self.ab_test_id = nil
+          self.winner_variant_id = nil
         end
 
-        if attributes.key?(:updated_at)
-          self.updated_at = attributes[:updated_at]
+        if attributes.key?(:declared_at)
+          self.declared_at = attributes[:declared_at]
         else
-          self.updated_at = nil
-        end
-
-        if attributes.key?(:created_at)
-          self.created_at = attributes[:created_at]
-        else
-          self.created_at = nil
-        end
-
-        if attributes.key?(:end_at)
-          self.end_at = attributes[:end_at]
-        else
-          self.end_at = nil
-        end
-
-        if attributes.key?(:stopped_at)
-          self.stopped_at = attributes[:stopped_at]
-        end
-
-        if attributes.key?(:name)
-          self.name = attributes[:name]
-        else
-          self.name = nil
-        end
-
-        if attributes.key?(:status)
-          self.status = attributes[:status]
-        else
-          self.status = nil
-        end
-
-        if attributes.key?(:variants)
-          if (value = attributes[:variants]).is_a?(Array)
-            self.variants = value
-          end
-        else
-          self.variants = nil
-        end
-
-        if attributes.key?(:configuration)
-          self.configuration = attributes[:configuration]
-        end
-
-        if attributes.key?(:migrated_ab_test_id)
-          self.migrated_ab_test_id = attributes[:migrated_ab_test_id]
-        end
-
-        if attributes.key?(:decision)
-          self.decision = attributes[:decision]
+          self.declared_at = nil
         end
       end
 
@@ -167,17 +76,8 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          ab_test_id == other.ab_test_id &&
-          updated_at == other.updated_at &&
-          created_at == other.created_at &&
-          end_at == other.end_at &&
-          stopped_at == other.stopped_at &&
-          name == other.name &&
-          status == other.status &&
-          variants == other.variants &&
-          configuration == other.configuration &&
-          migrated_ab_test_id == other.migrated_ab_test_id &&
-          decision == other.decision
+          winner_variant_id == other.winner_variant_id &&
+          declared_at == other.declared_at
       end
 
       # @see the `==` method
@@ -189,19 +89,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [
-          ab_test_id,
-          updated_at,
-          created_at,
-          end_at,
-          stopped_at,
-          name,
-          status,
-          variants,
-          configuration,
-          migrated_ab_test_id,
-          decision
-        ].hash
+        [winner_variant_id, declared_at].hash
       end
 
       # Builds the object from hash
