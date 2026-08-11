@@ -20,6 +20,7 @@ module Algolia
             :"ConvertedFilters",
             :"ConvertedObjectIDs",
             :"ConvertedObjectIDsAfterSearch",
+            :"Instantsearch",
             :"PurchasedObjectIDs",
             :"PurchasedObjectIDsAfterSearch",
             :"ViewedFilters",

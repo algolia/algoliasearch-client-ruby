@@ -7,23 +7,11 @@ require "time"
 
 module Algolia
   module Insights
-    # Use this event to track when users add items to their shopping cart after a previous Algolia request. If you're building your category pages with Algolia, you'll also use this event.
-    class AddedToCartObjectIDsAfterSearch
+    class Instantsearch
       # Event name, up to 64 ASCII characters.  Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
       attr_accessor :event_name
 
       attr_accessor :event_type
-
-      attr_accessor :event_subtype
-
-      # Index name (case-sensitive) to which the event's items belong.
-      attr_accessor :index
-
-      # Unique identifier for a search query.  The query ID is required for events related to search or browse requests. If you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response. For agentic analytics events, the query ID may be prefixed with `message_` followed by any printable string.
-      attr_accessor :query_id
-
-      # Object IDs of the records that are part of the event.
-      attr_accessor :object_ids
 
       # Anonymous or pseudonymous user identifier.  Don't use personally identifiable information in user tokens. For more information, see [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
       attr_accessor :user_token
@@ -31,42 +19,28 @@ module Algolia
       # Identifier for authenticated users.  When the user signs in, you can get an identifier from your system and send it as `authenticatedUserToken`. This lets you keep using the `userToken` from before the user signed in, while providing a reliable way to identify users across sessions. Don't use personally identifiable information in user tokens. For more information, see [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
       attr_accessor :authenticated_user_token
 
-      # Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html).
-      attr_accessor :currency
-
-      # Extra information about the records involved in a purchase or add-to-cart events.  If provided, it must be the same length as `objectIDs`.
-      attr_accessor :object_data
-
       # Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30 days. If not provided, we use the time at which the request was received.
       attr_accessor :timestamp
 
-      attr_accessor :value
+      # Unique identifier for an agent session. Used to correlate instantsearch events with a specific agent interaction.
+      attr_accessor :agent_id
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :event_name => :eventName,
           :event_type => :eventType,
-          :event_subtype => :eventSubtype,
-          :index => :index,
-          :query_id => :queryID,
-          :object_ids => :objectIDs,
           :user_token => :userToken,
           :authenticated_user_token => :authenticatedUserToken,
-          :currency => :currency,
-          :object_data => :objectData,
           :timestamp => :timestamp,
-          :value => :value
+          :agent_id => :agentID
         }
       end
 
       # Returns the keys that uniquely identify this oneOf variant when present
       def self.discriminator_attributes
         [
-          :eventType,
-          :eventSubtype,
-          :queryID,
-          :objectIDs
+          :eventType
         ]
       end
 
@@ -74,17 +48,11 @@ module Algolia
       def self.types_mapping
         {
           :event_name => :"String",
-          :event_type => :"ConversionEvent",
-          :event_subtype => :"AddToCartEvent",
-          :index => :"String",
-          :query_id => :"String",
-          :object_ids => :"Array<String>",
+          :event_type => :"InstantsearchEvent",
           :user_token => :"String",
           :authenticated_user_token => :"String",
-          :currency => :"String",
-          :object_data => :"Array<ObjectDataAfterSearch>",
           :timestamp => :"Integer",
-          :value => :"Value"
+          :agent_id => :"String"
         }
       end
 
@@ -101,7 +69,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::AddedToCartObjectIDsAfterSearch` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::Instantsearch` initialize method"
           )
         end
 
@@ -110,7 +78,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::AddedToCartObjectIDsAfterSearch`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::Instantsearch`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -130,32 +98,6 @@ module Algolia
           self.event_type = nil
         end
 
-        if attributes.key?(:event_subtype)
-          self.event_subtype = attributes[:event_subtype]
-        else
-          self.event_subtype = nil
-        end
-
-        if attributes.key?(:index)
-          self.index = attributes[:index]
-        else
-          self.index = nil
-        end
-
-        if attributes.key?(:query_id)
-          self.query_id = attributes[:query_id]
-        else
-          self.query_id = nil
-        end
-
-        if attributes.key?(:object_ids)
-          if (value = attributes[:object_ids]).is_a?(Array)
-            self.object_ids = value
-          end
-        else
-          self.object_ids = nil
-        end
-
         if attributes.key?(:user_token)
           self.user_token = attributes[:user_token]
         else
@@ -166,22 +108,12 @@ module Algolia
           self.authenticated_user_token = attributes[:authenticated_user_token]
         end
 
-        if attributes.key?(:currency)
-          self.currency = attributes[:currency]
-        end
-
-        if attributes.key?(:object_data)
-          if (value = attributes[:object_data]).is_a?(Array)
-            self.object_data = value
-          end
-        end
-
         if attributes.key?(:timestamp)
           self.timestamp = attributes[:timestamp]
         end
 
-        if attributes.key?(:value)
-          self.value = attributes[:value]
+        if attributes.key?(:agent_id)
+          self.agent_id = attributes[:agent_id]
         end
       end
 
@@ -192,16 +124,10 @@ module Algolia
         self.class == other.class &&
           event_name == other.event_name &&
           event_type == other.event_type &&
-          event_subtype == other.event_subtype &&
-          index == other.index &&
-          query_id == other.query_id &&
-          object_ids == other.object_ids &&
           user_token == other.user_token &&
           authenticated_user_token == other.authenticated_user_token &&
-          currency == other.currency &&
-          object_data == other.object_data &&
           timestamp == other.timestamp &&
-          value == other.value
+          agent_id == other.agent_id
       end
 
       # @see the `==` method
@@ -213,20 +139,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [
-          event_name,
-          event_type,
-          event_subtype,
-          index,
-          query_id,
-          object_ids,
-          user_token,
-          authenticated_user_token,
-          currency,
-          object_data,
-          timestamp,
-          value
-        ].hash
+        [event_name, event_type, user_token, authenticated_user_token, timestamp, agent_id].hash
       end
 
       # Builds the object from hash
