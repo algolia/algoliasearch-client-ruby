@@ -691,6 +691,39 @@ module Algolia
       )
     end
 
+    # **Beta**: this endpoint is under active development and may change without notice.  Returns the static catalog of analytics fields, grouped by domain and usage (metrics, filters, groups, distributions). No authentication is required. Use it to discover valid `(domain, kind)` pairs before building the other `/3/patterns/*` queries; two fields are combinable in one query only when their `roots` intersect. Each entry's `requires` lists the ACLs needed when that field is actually used in a query.
+
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_patterns_fields_with_http_info(request_options = {})
+      path = "/3/patterns/fields"
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"AnalyticsClient.get_patterns_fields",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # **Beta**: this endpoint is under active development and may change without notice.  Returns the static catalog of analytics fields, grouped by domain and usage (metrics, filters, groups, distributions). No authentication is required. Use it to discover valid `(domain, kind)` pairs before building the other `/3/patterns/*` queries; two fields are combinable in one query only when their `roots` intersect. Each entry's `requires` lists the ACLs needed when that field is actually used in a query.
+
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Catalog]
+    def get_patterns_fields(request_options = {})
+      response = get_patterns_fields_with_http_info(request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Analytics::Catalog")
+    end
+
     # Retrieves the purchase rate for all your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days, including the current day.  The rate is purchase conversion events divided by tracked searches. A search is tracked if it returns a query ID (`clickAnalytics` is `true`). This differs from the response's `count`, which includes searches where `clickAnalytics` is `false`.  **There's a difference between a 0 and null purchase rate when `clickAnalytics` is enabled:**  - **Null** means there were no queries. Algolia didn't receive any events, so the purchase rate is null. - **0** means there were queries but no [purchase conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started) were received.
     #
     # Required API Key ACLs:
@@ -1763,6 +1796,194 @@ module Algolia
     def get_users_count(index, start_date = nil, end_date = nil, tags = nil, request_options = {})
       response = get_users_count_with_http_info(index, start_date, end_date, tags, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Analytics::GetUsersCountResponse")
+    end
+
+    # **Beta**: this endpoint is under active development and may change without notice.  Buckets one or more numeric fields into histograms and returns an object keyed by `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+    #
+    # Required API Key ACLs:
+    #   - analytics
+    # @param distribution_payload [DistributionPayload]  (required)
+    # @param index [String] Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted keys.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def query_patterns_distribution_with_http_info(distribution_payload, index = nil, request_options = {})
+      # verify the required parameter 'distribution_payload' is set
+      if @api_client.config.client_side_validation && distribution_payload.nil?
+        raise ArgumentError, "Parameter `distribution_payload` is required when calling `query_patterns_distribution`."
+      end
+
+      path = "/3/patterns/distribution"
+      query_params = {}
+      query_params[:index] = index unless index.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(distribution_payload)
+
+      new_options = request_options.merge(
+        :operation => :"AnalyticsClient.query_patterns_distribution",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # **Beta**: this endpoint is under active development and may change without notice.  Buckets one or more numeric fields into histograms and returns an object keyed by `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+    #
+    # Required API Key ACLs:
+    #   - analytics
+    # @param distribution_payload [DistributionPayload]  (required)
+    # @param index [String] Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted keys.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Hash<String, Object>]
+    def query_patterns_distribution(distribution_payload, index = nil, request_options = {})
+      response = query_patterns_distribution_with_http_info(distribution_payload, index, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Hash<String, Object>")
+    end
+
+    # **Beta**: this endpoint is under active development and may change without notice.  Aggregates the requested `metrics` over the whole period and returns a single object keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+    #
+    # Required API Key ACLs:
+    #   - analytics
+    # @param scalar_payload [ScalarPayload]  (required)
+    # @param index [String] Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted keys.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def query_patterns_scalar_with_http_info(scalar_payload, index = nil, request_options = {})
+      # verify the required parameter 'scalar_payload' is set
+      if @api_client.config.client_side_validation && scalar_payload.nil?
+        raise ArgumentError, "Parameter `scalar_payload` is required when calling `query_patterns_scalar`."
+      end
+
+      path = "/3/patterns/scalar"
+      query_params = {}
+      query_params[:index] = index unless index.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(scalar_payload)
+
+      new_options = request_options.merge(
+        :operation => :"AnalyticsClient.query_patterns_scalar",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # **Beta**: this endpoint is under active development and may change without notice.  Aggregates the requested `metrics` over the whole period and returns a single object keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+    #
+    # Required API Key ACLs:
+    #   - analytics
+    # @param scalar_payload [ScalarPayload]  (required)
+    # @param index [String] Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted keys.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Hash<String, Object>]
+    def query_patterns_scalar(scalar_payload, index = nil, request_options = {})
+      response = query_patterns_scalar_with_http_info(scalar_payload, index, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Hash<String, Object>")
+    end
+
+    # **Beta**: this endpoint is under active development and may change without notice.  Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+    #
+    # Required API Key ACLs:
+    #   - analytics
+    # @param table_payload [TablePayload]  (required)
+    # @param index [String] Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted keys.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def query_patterns_table_with_http_info(table_payload, index = nil, request_options = {})
+      # verify the required parameter 'table_payload' is set
+      if @api_client.config.client_side_validation && table_payload.nil?
+        raise ArgumentError, "Parameter `table_payload` is required when calling `query_patterns_table`."
+      end
+
+      path = "/3/patterns/table"
+      query_params = {}
+      query_params[:index] = index unless index.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(table_payload)
+
+      new_options = request_options.merge(
+        :operation => :"AnalyticsClient.query_patterns_table",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # **Beta**: this endpoint is under active development and may change without notice.  Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+    #
+    # Required API Key ACLs:
+    #   - analytics
+    # @param table_payload [TablePayload]  (required)
+    # @param index [String] Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted keys.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [TableResponse]
+    def query_patterns_table(table_payload, index = nil, request_options = {})
+      response = query_patterns_table_with_http_info(table_payload, index, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Analytics::TableResponse")
+    end
+
+    # **Beta**: this endpoint is under active development and may change without notice.  Returns one time series per `groupBy` combination, each with period `totals` and a per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+    #
+    # Required API Key ACLs:
+    #   - analytics
+    # @param timeseries_payload [TimeseriesPayload]  (required)
+    # @param index [String] Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted keys.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def query_patterns_timeseries_with_http_info(timeseries_payload, index = nil, request_options = {})
+      # verify the required parameter 'timeseries_payload' is set
+      if @api_client.config.client_side_validation && timeseries_payload.nil?
+        raise ArgumentError, "Parameter `timeseries_payload` is required when calling `query_patterns_timeseries`."
+      end
+
+      path = "/3/patterns/timeseries"
+      query_params = {}
+      query_params[:index] = index unless index.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(timeseries_payload)
+
+      new_options = request_options.merge(
+        :operation => :"AnalyticsClient.query_patterns_timeseries",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # **Beta**: this endpoint is under active development and may change without notice.  Returns one time series per `groupBy` combination, each with period `totals` and a per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+    #
+    # Required API Key ACLs:
+    #   - analytics
+    # @param timeseries_payload [TimeseriesPayload]  (required)
+    # @param index [String] Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body's `indices` parameter; optional for unrestricted keys.
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [TimeseriesResponse]
+    def query_patterns_timeseries(timeseries_payload, index = nil, request_options = {})
+      response = query_patterns_timeseries_with_http_info(timeseries_payload, index, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "Analytics::TimeseriesResponse")
     end
 
   end
