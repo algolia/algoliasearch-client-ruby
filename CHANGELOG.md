@@ -1,3 +1,12 @@
+## [3.43.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.42.3...3.43.0)
+
+- [3bee6d1dee](https://github.com/algolia/api-clients-automation/commit/3bee6d1dee) chore(ci): pin all GitHub Action refs to commit SHAs (API-475) ([#6819](https://github.com/algolia/api-clients-automation/pull/6819)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [22af756864](https://github.com/algolia/api-clients-automation/commit/22af756864) chore(deps): dependencies 2026-07-20 ([#6733](https://github.com/algolia/api-clients-automation/pull/6733)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+- [1f389d1f7f](https://github.com/algolia/api-clients-automation/commit/1f389d1f7f) feat(specs): add agentic analytics support to insights spec ([#6876](https://github.com/algolia/api-clients-automation/pull/6876)) by [@sirockin](https://github.com/sirockin/)
+- [65cc642811](https://github.com/algolia/api-clients-automation/commit/65cc642811) feat(specs): add decision (declared winner) to abtesting-v3 ABTest ([#6732](https://github.com/algolia/api-clients-automation/pull/6732)) by [@cdhawke](https://github.com/cdhawke/)
+- [637defc23a](https://github.com/algolia/api-clients-automation/commit/637defc23a) feat(specs): add analytics v3 pattern endpoints ([#6795](https://github.com/algolia/api-clients-automation/pull/6795)) by [@Niamsy](https://github.com/Niamsy/)
+- [bed536e149](https://github.com/algolia/api-clients-automation/commit/bed536e149) chore(deps): dependencies 2026-08-10 ([#6835](https://github.com/algolia/api-clients-automation/pull/6835)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+
 ## [3.42.3](https://github.com/algolia/algoliasearch-client-ruby/compare/3.42.2...3.42.3)
 
 - [772f7055cc](https://github.com/algolia/api-clients-automation/commit/772f7055cc) fix(clients): add warning in replace_all_objects for empty objects ([#6610](https://github.com/algolia/api-clients-automation/pull/6610)) by [@eric-zaharia](https://github.com/eric-zaharia/)
