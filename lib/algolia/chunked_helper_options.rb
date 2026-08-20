@@ -3,6 +3,7 @@ module Algolia
   class ChunkedHelperOptions
     DEFAULT_MAX_RETRIES = 100
     DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES = 800
+    DEFAULT_TIMEOUT = -> (retry_count) { [retry_count * 200, 5000].min }
     attr_reader :max_retries
 
     def initialize(max_retries: DEFAULT_MAX_RETRIES)

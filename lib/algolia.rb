@@ -17,6 +17,7 @@ require "algolia/transport/call_type"
 require "algolia/transport/retry_outcome_type"
 require "algolia/transport/stateful_host"
 require "algolia/transport/retry_strategy"
+require "algolia/transport/request_id"
 require "algolia/transport/request_options"
 require "algolia/transport/transport"
 

@@ -13,11 +13,19 @@ module Algolia
 
     # Initializes the ApiClient
     # @option config [Configuration] Configuration for initializing the object, default to Configuration.default
-    def initialize(config = Configuration.default)
+    # @param request_id_support [true, false] the generated per-client Request-ID capability,
+    #   applied when config.request_id_enabled is nil. Kept on the transport so a shared Configuration is never mutated.
+    def initialize(config = Configuration.default, request_id_support: false)
       @config = config
       @requester = config.requester || Http::HttpRequester.new("net_http_persistent", LoggerHelper.create)
       @logger = (@requester.logger if @requester.respond_to?(:logger)) || LoggerHelper.create
-      @transporter = Transport::Transport.new(config, @requester)
+      @transporter = Transport::Transport.new(config, @requester, request_id_support: request_id_support)
+    end
+
+    # Whether the transport mints Request-ID headers, resolved per request.
+    # @return [true, false]
+    def request_id_enabled?
+      @transporter.request_id_enabled?
     end
 
     def self.default

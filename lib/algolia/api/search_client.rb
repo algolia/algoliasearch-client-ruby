@@ -69,7 +69,8 @@ module Algolia
         config.write_timeout = 30000
       end
 
-      @api_client = Algolia::ApiClient.new(config)
+      # Per-client capability; an explicit config.request_id_enabled always wins.
+      @api_client = Algolia::ApiClient.new(config, request_id_support: true)
       @ingestion_transporter = nil
       if config.transformation_options
         @ingestion_transporter = _build_ingestion_transporter(config.transformation_options)
@@ -3412,6 +3413,42 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Search::UpdateApiKeyResponse")
     end
 
+    # Helper: Derives the request options carrying the Request-ID shared by every request
+    # of one helper invocation. Returns the options untouched when the client does not
+    # support Request-ID or the caller already supplied one through the options (as a
+    # header or an x-algolia-request-id query parameter) or the config headers, which
+    # also makes nested helpers reuse the ID minted by their caller.
+    #
+    # @param request_options [Hash]
+    #
+    # @return [Hash]
+    private def with_request_id(request_options = {})
+      config = api_client.config
+      unless api_client.request_id_enabled? &&
+          !Transport::RequestId.request_id?(request_options[:header_params]) &&
+          !Transport::RequestId.request_id?(config.header_params) &&
+          !Transport::RequestId.request_id_query_param?(request_options[:query_params])
+        return request_options
+      end
+
+      request_options.merge(
+        :header_params => (request_options[:header_params] || {}).merge(
+          Transport::RequestId::HEADER => Transport::RequestId.generate
+        )
+      )
+    end
+
+    # Helper: Drops the caller's timeouts from the given request options, so that the
+    # failure-path cleanup calls run with the client defaults while keeping the other
+    # options, notably the headers carrying the invocation's shared Request-ID.
+    #
+    # @param request_options [Hash]
+    #
+    # @return [Hash]
+    private def without_timeouts(request_options)
+      request_options.reject { |key, _| key == :timeout || key == :connect_timeout }
+    end
+
     # The parent search config MUST NOT leak into the ingestion transporter.
     def _build_ingestion_transporter(transformation_options)
       hosts = if transformation_options.hosts
@@ -3561,6 +3598,10 @@ module Algolia
     )
       assert_ingestion_transporter!
 
+      # The shared Request-ID only covers the search-side calls: the ingestion
+      # push goes to an API that must not receive the header.
+      search_request_options = with_request_id(request_options)
+
       if objects.empty?
         @api_client.logger.warn(
           "replace_all_objects_with_transformation was called with an empty list of objects, which will delete all records currently in the \"#{index_name}\" index."
@@ -3581,7 +3622,7 @@ module Algolia
             destination: tmp_index_name,
             scope: scopes
           ),
-          request_options
+          search_request_options
         )
 
         watch_responses = @ingestion_transporter.chunked_push(
@@ -3595,7 +3636,13 @@ module Algolia
           opts
         )
 
-        wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries)
+        wait_for_task(
+          tmp_index_name,
+          copy_operation_response.task_id,
+          opts.max_retries,
+          Algolia::ChunkedHelperOptions::DEFAULT_TIMEOUT,
+          search_request_options
+        )
 
         copy_operation_response = operation_index(
           index_name,
@@ -3604,10 +3651,16 @@ module Algolia
             destination: tmp_index_name,
             scope: scopes
           ),
-          request_options
+          search_request_options
         )
 
-        wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries)
+        wait_for_task(
+          tmp_index_name,
+          copy_operation_response.task_id,
+          opts.max_retries,
+          Algolia::ChunkedHelperOptions::DEFAULT_TIMEOUT,
+          search_request_options
+        )
 
         move_operation_response = operation_index(
           tmp_index_name,
@@ -3615,10 +3668,16 @@ module Algolia
             operation: Search::OperationType::MOVE,
             destination: index_name
           ),
-          request_options
+          search_request_options
         )
 
-        wait_for_task(tmp_index_name, move_operation_response.task_id, opts.max_retries)
+        wait_for_task(
+          tmp_index_name,
+          move_operation_response.task_id,
+          opts.max_retries,
+          Algolia::ChunkedHelperOptions::DEFAULT_TIMEOUT,
+          search_request_options
+        )
 
         search_watch_responses = watch_responses.map do |wr|
           Search::WatchResponse.build_from_hash(wr.to_hash)
@@ -3630,7 +3689,13 @@ module Algolia
           move_operation_response: move_operation_response
         )
       rescue Exception => e
-        delete_index(tmp_index_name)
+        begin
+          delete_index(tmp_index_name, without_timeouts(search_request_options))
+        rescue StandardError => cleanup_error
+          @api_client.logger.warn(
+            "Failed to delete the temporary index \"#{tmp_index_name}\", please delete it manually: #{cleanup_error}"
+          )
+        end
 
         raise e
       end
@@ -3641,16 +3706,17 @@ module Algolia
     # @param index_name [String] the `index_name` where the operation was performed. (required)
     # @param task_id [Integer] the `task_id` returned in the method response. (required)
     # @param max_retries [Integer] the maximum number of retries. (optional, default to Algolia::ChunkedHelperOptions::DEFAULT_MAX_RETRIES)
-    # @param timeout [Proc] the function to decide how long to wait between retries. (optional)
+    # @param timeout [Proc] the function to decide how long to wait between retries. (optional, default to Algolia::ChunkedHelperOptions::DEFAULT_TIMEOUT)
     # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `get_task` method.
     # @return [Http::Response] the last get_task response
     def wait_for_task(
       index_name,
       task_id,
       max_retries = Algolia::ChunkedHelperOptions::DEFAULT_MAX_RETRIES,
-      timeout = -> (retry_count) { [retry_count * 200, 5000].min },
+      timeout = Algolia::ChunkedHelperOptions::DEFAULT_TIMEOUT,
       request_options = {}
     )
+      request_options = with_request_id(request_options)
       retries = 0
       while retries < max_retries
         res = get_task(index_name, task_id, request_options)
@@ -3672,15 +3738,16 @@ module Algolia
     #
     # @param task_id [Integer] the `task_id` returned in the method response. (required)
     # @param max_retries [Integer] the maximum number of retries. (optional, default to Algolia::ChunkedHelperOptions::DEFAULT_MAX_RETRIES)
-    # @param timeout [Proc] the function to decide how long to wait between retries. (optional)
+    # @param timeout [Proc] the function to decide how long to wait between retries. (optional, default to Algolia::ChunkedHelperOptions::DEFAULT_TIMEOUT)
     # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `get_task` method.
     # @return [Http::Response] the last get_task response
     def wait_for_app_task(
       task_id,
       max_retries = Algolia::ChunkedHelperOptions::DEFAULT_MAX_RETRIES,
-      timeout = -> (retry_count) { [retry_count * 200, 5000].min },
+      timeout = Algolia::ChunkedHelperOptions::DEFAULT_TIMEOUT,
       request_options = {}
     )
+      request_options = with_request_id(request_options)
       retries = 0
       while retries < max_retries
         res = get_app_task(task_id, request_options)
@@ -3703,8 +3770,8 @@ module Algolia
     # @param key [String] the `key` that has been added, deleted or updated.
     # @param operation [String] the `operation` that was done on a `key`.
     # @param api_key [Hash] necessary to know if an `update` operation has been processed, compare fields of the response with it.
-    # @param max_retries [Integer] the maximum number of retries.
-    # @param timeout [Proc] the function to decide how long to wait between retries.
+    # @param max_retries [Integer] the maximum number of retries. (optional, default to Algolia::ChunkedHelperOptions::DEFAULT_MAX_RETRIES)
+    # @param timeout [Proc] the function to decide how long to wait between retries. (optional, default to Algolia::ChunkedHelperOptions::DEFAULT_TIMEOUT)
     # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `getApikey` method and merged with the transporter requestOptions.
     # @return [Http::Response] the last get_api_key response
     def wait_for_api_key(
@@ -3712,9 +3779,10 @@ module Algolia
       operation,
       api_key = Search::ApiKey.new,
       max_retries = Algolia::ChunkedHelperOptions::DEFAULT_MAX_RETRIES,
-      timeout = -> (retry_count) { [retry_count * 200, 5000].min },
+      timeout = Algolia::ChunkedHelperOptions::DEFAULT_TIMEOUT,
       request_options = {}
     )
+      request_options = with_request_id(request_options)
       api_key = api_client.object_to_hash(api_key)
 
       retries = 0
@@ -3769,6 +3837,7 @@ module Algolia
     # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `browse` method.
     # @param block [Proc] the block to execute on each object of the index.
     def browse_objects(index_name, browse_params = Search::BrowseParamsObject.new, request_options = {}, &block)
+      request_options = with_request_id(request_options)
       browse_params = api_client.object_to_hash(browse_params)
 
       browse_params[:hitsPerPage] = 1000 unless browse_params.key?(:hitsPerPage)
@@ -3798,6 +3867,7 @@ module Algolia
     # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `searchRules` method.
     # @param block [Proc] the block to execute on each rule of the index.
     def browse_rules(index_name, search_rules_params = Search::SearchRulesParams.new, request_options = {}, &block)
+      request_options = with_request_id(request_options)
       search_rules_params = api_client.object_to_hash(search_rules_params)
 
       search_rules_params[:page] ||= 0
@@ -3833,6 +3903,7 @@ module Algolia
       request_options = {},
       &block
     )
+      request_options = with_request_id(request_options)
       search_synonyms_params = api_client.object_to_hash(search_synonyms_params)
 
       search_synonyms_params[:page] ||= 0
@@ -4036,6 +4107,7 @@ module Algolia
       request_options = {},
       chunked_options = nil
     )
+      request_options = with_request_id(request_options)
       opts = Algolia::ChunkedHelperOptions.resolve(chunked_options)
       responses = []
       objects.each_slice(batch_size) do |chunk|
@@ -4048,7 +4120,13 @@ module Algolia
 
       if wait_for_tasks
         responses.each do |response|
-          wait_for_task(index_name, response.task_id, opts.max_retries)
+          wait_for_task(
+            index_name,
+            response.task_id,
+            opts.max_retries,
+            Algolia::ChunkedHelperOptions::DEFAULT_TIMEOUT,
+            request_options
+          )
         end
       end
 
@@ -4074,6 +4152,8 @@ module Algolia
       request_options = {},
       chunked_options = nil
     )
+      request_options = with_request_id(request_options)
+
       if objects.empty?
         @api_client.logger.warn(
           "replace_all_objects was called with an empty list of objects, which will delete all records currently in the \"#{index_name}\" index."
@@ -4107,7 +4187,13 @@ module Algolia
           opts
         )
 
-        wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries)
+        wait_for_task(
+          tmp_index_name,
+          copy_operation_response.task_id,
+          opts.max_retries,
+          Algolia::ChunkedHelperOptions::DEFAULT_TIMEOUT,
+          request_options
+        )
 
         copy_operation_response = operation_index(
           index_name,
@@ -4119,7 +4205,13 @@ module Algolia
           request_options
         )
 
-        wait_for_task(tmp_index_name, copy_operation_response.task_id, opts.max_retries)
+        wait_for_task(
+          tmp_index_name,
+          copy_operation_response.task_id,
+          opts.max_retries,
+          Algolia::ChunkedHelperOptions::DEFAULT_TIMEOUT,
+          request_options
+        )
 
         move_operation_response = operation_index(
           tmp_index_name,
@@ -4130,7 +4222,13 @@ module Algolia
           request_options
         )
 
-        wait_for_task(tmp_index_name, move_operation_response.task_id, opts.max_retries)
+        wait_for_task(
+          tmp_index_name,
+          move_operation_response.task_id,
+          opts.max_retries,
+          Algolia::ChunkedHelperOptions::DEFAULT_TIMEOUT,
+          request_options
+        )
 
         Search::ReplaceAllObjectsResponse.new(
           copy_operation_response: copy_operation_response,
@@ -4138,7 +4236,13 @@ module Algolia
           move_operation_response: move_operation_response
         )
       rescue Exception => e
-        delete_index(tmp_index_name)
+        begin
+          delete_index(tmp_index_name, without_timeouts(request_options))
+        rescue StandardError => cleanup_error
+          @api_client.logger.warn(
+            "Failed to delete the temporary index \"#{tmp_index_name}\", please delete it manually: #{cleanup_error}"
+          )
+        end
 
         raise e
       end

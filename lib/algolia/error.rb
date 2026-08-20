@@ -12,13 +12,20 @@ module Algolia
   class AlgoliaUnreachableHostError < AlgoliaError
     attr_reader :errors
 
-    def initialize(message, errors = [])
+    # The last non-empty Correlation-ID header among the retried attempts, or nil.
+    # Quote it when contacting Algolia support.
+    attr_reader :correlation_id
+
+    def initialize(message, errors = [], correlation_id = nil)
       errors.last&.tap do |last_error|
         message += " Last error for #{last_error[:host]}: #{last_error[:error]}"
       end
 
+      message += " (Correlation-ID: #{correlation_id})" unless correlation_id.nil? || correlation_id.empty?
+
       super(message)
       @errors = errors
+      @correlation_id = correlation_id
     end
   end
 
@@ -29,10 +36,20 @@ module Algolia
   class AlgoliaHttpError < AlgoliaError
     attr_accessor :code, :http_message
 
-    def initialize(code, message)
+    # The Correlation-ID header of the failed response (possibly ""), or nil.
+    # Quote it when contacting Algolia support.
+    attr_reader :correlation_id
+
+    def initialize(code, message, correlation_id = nil)
       self.code = code
       self.http_message = message
-      super("#{code}: #{message}")
+      @correlation_id = correlation_id
+
+      if correlation_id.nil? || correlation_id.empty?
+        super("#{code}: #{message}")
+      else
+        super("#{code}: #{message} (Correlation-ID: #{correlation_id})")
+      end
     end
   end
 end

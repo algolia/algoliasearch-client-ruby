@@ -23,7 +23,8 @@ module Algolia
         config.write_timeout = 30000
       end
 
-      @api_client = Algolia::ApiClient.new(config)
+      # Per-client capability; an explicit config.request_id_enabled always wins.
+      @api_client = Algolia::ApiClient.new(config, request_id_support: false)
     end
 
     def self.create(app_id, api_key, region = nil, opts = {})
