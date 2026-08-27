@@ -33,9 +33,6 @@ module Algolia
 
       attr_accessor :configuration
 
-      # Unique migrated A/B test identifier.
-      attr_accessor :migrated_ab_test_id
-
       attr_accessor :decision
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -50,7 +47,6 @@ module Algolia
           :status => :status,
           :variants => :variants,
           :configuration => :configuration,
-          :migrated_ab_test_id => :migratedAbTestID,
           :decision => :decision
         }
       end
@@ -67,7 +63,6 @@ module Algolia
           :status => :"Status",
           :variants => :"Array<Variant>",
           :configuration => :"ABTestConfiguration",
-          :migrated_ab_test_id => :"Integer",
           :decision => :"Decision"
         }
       end
@@ -153,10 +148,6 @@ module Algolia
           self.configuration = attributes[:configuration]
         end
 
-        if attributes.key?(:migrated_ab_test_id)
-          self.migrated_ab_test_id = attributes[:migrated_ab_test_id]
-        end
-
         if attributes.key?(:decision)
           self.decision = attributes[:decision]
         end
@@ -176,7 +167,6 @@ module Algolia
           status == other.status &&
           variants == other.variants &&
           configuration == other.configuration &&
-          migrated_ab_test_id == other.migrated_ab_test_id &&
           decision == other.decision
       end
 
@@ -189,19 +179,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [
-          ab_test_id,
-          updated_at,
-          created_at,
-          end_at,
-          stopped_at,
-          name,
-          status,
-          variants,
-          configuration,
-          migrated_ab_test_id,
-          decision
-        ].hash
+        [ab_test_id, updated_at, created_at, end_at, stopped_at, name, status, variants, configuration, decision].hash
       end
 
       # Builds the object from hash

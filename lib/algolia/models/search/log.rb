@@ -8,6 +8,9 @@ require "time"
 module Algolia
   module Search
     class Log
+      # Correlation ID of the logged API request, also returned in that request's `Correlation-ID` response header.
+      attr_accessor :cid
+
       # Date and time of the API request, in RFC 3339 format.
       attr_accessor :timestamp
 
@@ -56,6 +59,7 @@ module Algolia
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
+          :cid => :cid,
           :timestamp => :timestamp,
           :method => :method,
           :answer_code => :answer_code,
@@ -77,6 +81,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
+          :cid => :"String",
           :timestamp => :"String",
           :method => :"String",
           :answer_code => :"String",
@@ -121,6 +126,10 @@ module Algolia
 
           h[k.to_sym] = v
         }
+
+        if attributes.key?(:cid)
+          self.cid = attributes[:cid]
+        end
 
         if attributes.key?(:timestamp)
           self.timestamp = attributes[:timestamp]
@@ -210,6 +219,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
+          cid == other.cid &&
           timestamp == other.timestamp &&
           method == other.method &&
           answer_code == other.answer_code &&
@@ -237,6 +247,7 @@ module Algolia
       # @return [Integer] Hash code
       def hash
         [
+          cid,
           timestamp,
           method,
           answer_code,
