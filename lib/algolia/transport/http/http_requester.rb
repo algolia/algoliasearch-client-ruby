@@ -26,8 +26,8 @@ module Algolia
       #
       def send_request(host, method, path, body, query_params, headers, timeout, connect_timeout)
         connection = connection(host)
-        connection.options.timeout = timeout / 1000
-        connection.options.open_timeout = connect_timeout / 1000
+        connection.options.timeout = timeout / 1000.0
+        connection.options.open_timeout = connect_timeout / 1000.0
         path += handle_query_params(query_params)
 
         @logger.info("Sending #{method.to_s.upcase} request to #{path} with body #{body}") if ENV["ALGOLIA_DEBUG"]
