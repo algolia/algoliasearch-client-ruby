@@ -1,3 +1,16 @@
+## [3.45.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.44.0...3.45.0)
+
+BREAKING CHANGES: this minor version includes breaking changes in the A/B Testing V3 API. See below for more details.
+
+- [c974374aff](https://github.com/algolia/api-clients-automation/commit/c974374aff) feat(ruby): Request-ID and Correlation-ID support ([#6877](https://github.com/algolia/api-clients-automation/pull/6877)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [e4a6ab510a](https://github.com/algolia/api-clients-automation/commit/e4a6ab510a) chore(ci): fail CI if a personal access token secret is referenced ([#6919](https://github.com/algolia/api-clients-automation/pull/6919)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [085364de00](https://github.com/algolia/api-clients-automation/commit/085364de00) feat(specs): deprecates /2 abtests endpoints ([#6921](https://github.com/algolia/api-clients-automation/pull/6921)) by [@Niamsy](https://github.com/Niamsy/)
+- [32c1aaa192](https://github.com/algolia/api-clients-automation/commit/32c1aaa192) chore(deps): dependencies 2026-08-24 ([#6922](https://github.com/algolia/api-clients-automation/pull/6922)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+- [28aa13de2e](https://github.com/algolia/api-clients-automation/commit/28aa13de2e) fix(clients): support guzzlehttp/psr7 v3 ([#6945](https://github.com/algolia/api-clients-automation/pull/6945)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [b4c4109163](https://github.com/algolia/api-clients-automation/commit/b4c4109163) fix(specs): flag analytics patterns endpoints with x-beta ([#6954](https://github.com/algolia/api-clients-automation/pull/6954)) by [@cdhawke](https://github.com/cdhawke/)
+- [8317b3a8ef](https://github.com/algolia/api-clients-automation/commit/8317b3a8ef) feat(specs): BREAKING CHANGE – remove migratedAbTestID from abtesting-v3 ([#6883](https://github.com/algolia/api-clients-automation/pull/6883)) by [@cdhawke](https://github.com/cdhawke/)
+- [808f5ebcea](https://github.com/algolia/api-clients-automation/commit/808f5ebcea) fix(ruby): keep millisecond precision when converting timeouts to seconds ([#6946](https://github.com/algolia/api-clients-automation/pull/6946)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+
 ## [3.44.0](https://github.com/algolia/algoliasearch-client-ruby/compare/3.43.0...3.44.0)
 
 - [c974374aff](https://github.com/algolia/api-clients-automation/commit/c974374aff) feat(ruby): Request-ID and Correlation-ID support ([#6877](https://github.com/algolia/api-clients-automation/pull/6877)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
