@@ -27,6 +27,13 @@ module Algolia
     # @return [true, false, nil]
     attr_accessor :request_id_enabled
 
+    # How many times a 429 is waited out on the same host before it is raised.
+    # nil means Defaults::MAX_RATE_LIMIT_RETRIES (3); 0 fails on the first 429
+    # without waiting; a negative value behaves like 0. The wait is the Retry-After
+    # header in whole seconds, or 1 second when it is missing or invalid.
+    # @return [Integer, nil]
+    attr_accessor :max_rate_limit_retries
+
     def initialize(app_id, api_key, hosts, client_name, opts = {})
       @hosts = hosts
       @app_id = app_id
@@ -40,6 +47,7 @@ module Algolia
       @transformation_options = opts[:transformation_options]
 
       @request_id_enabled = opts[:request_id_enabled]
+      @max_rate_limit_retries = opts[:max_rate_limit_retries]
 
       @user_agent = UserAgent.new.add(client_name, VERSION)
 

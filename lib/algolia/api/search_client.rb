@@ -9,7 +9,7 @@ module Algolia
   # Configuration options for the ingestion transporter used by *_with_transformation helpers.
   # When passed to SearchClient.with_transformation or set via set_transformation_options,
   # the ingestion transporter is eagerly created using Ingestion API defaults (25s timeouts,
-  # no compression). Only fields explicitly set here override those defaults.
+  # no compression, 3 waits on HTTP 429). Only fields explicitly set here override those defaults.
   # See https://www.algolia.com/doc/libraries/ruby/v3/methods/ingestion
   class TransformationOptions
     attr_accessor(
@@ -19,7 +19,8 @@ module Algolia
       :write_timeout,
       :hosts,
       :compression_type,
-      :header_params
+      :header_params,
+      :max_rate_limit_retries
     )
 
     def initialize(region, opts = {})
@@ -30,7 +31,15 @@ module Algolia
         )
       end
 
-      valid_keys = %i[connect_timeout read_timeout write_timeout hosts compression_type header_params]
+      valid_keys = %i[
+        connect_timeout
+        read_timeout
+        write_timeout
+        hosts
+        compression_type
+        header_params
+        max_rate_limit_retries
+      ]
       unknown = opts.keys - valid_keys
       unless unknown.empty?
         raise(
@@ -46,6 +55,7 @@ module Algolia
       @hosts = opts[:hosts]
       @compression_type = opts[:compression_type]
       @header_params = opts[:header_params]
+      @max_rate_limit_retries = opts[:max_rate_limit_retries]
     end
   end
 
@@ -3471,6 +3481,10 @@ module Algolia
       opts[:write_timeout] = transformation_options.write_timeout unless transformation_options.write_timeout.nil?
       unless transformation_options.compression_type.nil?
         opts[:compression_type] = transformation_options.compression_type
+      end
+
+      unless transformation_options.max_rate_limit_retries.nil?
+        opts[:max_rate_limit_retries] = transformation_options.max_rate_limit_retries
       end
 
       config = Algolia::Configuration.new(
