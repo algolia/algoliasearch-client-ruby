@@ -17,7 +17,7 @@ module Algolia
       # Root stages the field depends on. Two fields are combinable in one query only when their roots intersect.
       attr_accessor :roots
 
-      # Public ACL identifiers required to read the field, for example `clickAnalyticsEnabled`.
+      # Public ACL identifiers required to read the field, for example `revenueAnalyticsEnabled`.
       attr_accessor :requires
 
       # Attribute mapping from ruby-style variable name to JSON key.
