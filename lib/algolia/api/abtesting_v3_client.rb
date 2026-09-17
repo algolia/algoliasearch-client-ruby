@@ -114,6 +114,61 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "AbtestingV3::ABTestResponse")
     end
 
+    # Applies the captured settings of the given variant to the control index.  The settings must first be captured with the `saveVariantSettings` operation. To revert previously applied settings on the control index, use this operation with the control variant (variant 1).  Settings can be applied up to 14 days after the A/B test ends, and reverted up to 15 days after. Later requests return `400`.  Each set of captured settings can only be applied once, and settings that were reverted can't be applied again. Both cases return `400`.  The control index must not be in use by an active A/B test. Otherwise, the request returns `422`.
+    #
+    # Required API Key ACLs:
+    #   - analytics
+    #   - editSettings
+    # @param id [Integer] Unique A/B test identifier. (required)
+    # @param variant_id [Integer] One-based index of the A/B test variant. The control is variant 1. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def apply_variant_settings_with_http_info(id, variant_id, request_options = {})
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        raise ArgumentError, "Parameter `id` is required when calling `apply_variant_settings`."
+      end
+      # verify the required parameter 'variant_id' is set
+      if @api_client.config.client_side_validation && variant_id.nil?
+        raise ArgumentError, "Parameter `variant_id` is required when calling `apply_variant_settings`."
+      end
+
+      path = "/3/abtests/{id}/settings/{variantId}/apply".sub("{" + "id" + "}", Transport.encode_uri(id.to_s)).sub(
+        "{" + "variantId" + "}",
+        Transport.encode_uri(variant_id.to_s)
+      )
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"AbtestingV3Client.apply_variant_settings",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Applies the captured settings of the given variant to the control index.  The settings must first be captured with the `saveVariantSettings` operation. To revert previously applied settings on the control index, use this operation with the control variant (variant 1).  Settings can be applied up to 14 days after the A/B test ends, and reverted up to 15 days after. Later requests return `400`.  Each set of captured settings can only be applied once, and settings that were reverted can't be applied again. Both cases return `400`.  The control index must not be in use by an active A/B test. Otherwise, the request returns `422`.
+    #
+    # Required API Key ACLs:
+    #   - analytics
+    #   - editSettings
+    # @param id [Integer] Unique A/B test identifier. (required)
+    # @param variant_id [Integer] One-based index of the A/B test variant. The control is variant 1. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [nil]
+    def apply_variant_settings(id, variant_id, request_options = {})
+      apply_variant_settings_with_http_info(id, variant_id, request_options)
+      nil
+    end
+
     # This method lets you send requests to the Algolia REST API.
 
     # @param path [String] Path of the endpoint, for example `1/newFeature`. (required)
@@ -441,6 +496,53 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "AbtestingV3::ABTest")
     end
 
+    # Retrieves the settings captured for each variant of an A/B test, and whether another active A/B test is using the control index.  Settings are captured by the `saveVariantSettings` operation. The response includes an entry for the control (variant 1) alongside the captured variant, so the control's original configuration can be restored later.  Returns `404` if the A/B test doesn't exist or no settings have been captured for it.
+    #
+    # Required API Key ACLs:
+    #   - analytics
+    # @param id [Integer] Unique A/B test identifier. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def get_ab_test_settings_with_http_info(id, request_options = {})
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        raise ArgumentError, "Parameter `id` is required when calling `get_ab_test_settings`."
+      end
+
+      path = "/3/abtests/{id}/settings".sub("{" + "id" + "}", Transport.encode_uri(id.to_s))
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"AbtestingV3Client.get_ab_test_settings",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Retrieves the settings captured for each variant of an A/B test, and whether another active A/B test is using the control index.  Settings are captured by the `saveVariantSettings` operation. The response includes an entry for the control (variant 1) alongside the captured variant, so the control's original configuration can be restored later.  Returns `404` if the A/B test doesn't exist or no settings have been captured for it.
+    #
+    # Required API Key ACLs:
+    #   - analytics
+    # @param id [Integer] Unique A/B test identifier. (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [ABTestSettingsResponse]
+    def get_ab_test_settings(id, request_options = {})
+      response = get_ab_test_settings_with_http_info(id, request_options)
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "AbtestingV3::ABTestSettingsResponse"
+      )
+    end
+
     # Retrieves timeseries for an A/B test by its ID.
     #
     # Required API Key ACLs:
@@ -558,6 +660,67 @@ module Algolia
     )
       response = list_ab_tests_with_http_info(offset, limit, index_prefix, index_suffix, direction, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "AbtestingV3::ListABTestsResponse")
+    end
+
+    # Captures the settings of the given variant and of the control, then stops the A/B test.  The captured settings can later be applied to the control index with the `applyVariantSettings` operation, and read back with the `getABTestSettings` operation.  The A/B test must have reached 80% of its planned duration. Earlier requests return `400`.  Settings can only be captured once per A/B test. A second request returns `409`.  `synonyms` and `enableRules` are not captured, so applying the captured settings never changes them on the control index.
+    #
+    # Required API Key ACLs:
+    #   - analytics
+    #   - editSettings
+    # @param id [Integer] Unique A/B test identifier. (required)
+    # @param variant_id [Integer] One-based index of the A/B test variant. The control is variant 1. (required)
+    # @param save_settings_request [SaveSettingsRequest]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def save_variant_settings_with_http_info(id, variant_id, save_settings_request, request_options = {})
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        raise ArgumentError, "Parameter `id` is required when calling `save_variant_settings`."
+      end
+      # verify the required parameter 'variant_id' is set
+      if @api_client.config.client_side_validation && variant_id.nil?
+        raise ArgumentError, "Parameter `variant_id` is required when calling `save_variant_settings`."
+      end
+      # verify the required parameter 'save_settings_request' is set
+      if @api_client.config.client_side_validation && save_settings_request.nil?
+        raise ArgumentError, "Parameter `save_settings_request` is required when calling `save_variant_settings`."
+      end
+
+      path = "/3/abtests/{id}/settings/{variantId}".sub("{" + "id" + "}", Transport.encode_uri(id.to_s)).sub(
+        "{" + "variantId" + "}",
+        Transport.encode_uri(variant_id.to_s)
+      )
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(save_settings_request)
+
+      new_options = request_options.merge(
+        :operation => :"AbtestingV3Client.save_variant_settings",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Captures the settings of the given variant and of the control, then stops the A/B test.  The captured settings can later be applied to the control index with the `applyVariantSettings` operation, and read back with the `getABTestSettings` operation.  The A/B test must have reached 80% of its planned duration. Earlier requests return `400`.  Settings can only be captured once per A/B test. A second request returns `409`.  `synonyms` and `enableRules` are not captured, so applying the captured settings never changes them on the control index.
+    #
+    # Required API Key ACLs:
+    #   - analytics
+    #   - editSettings
+    # @param id [Integer] Unique A/B test identifier. (required)
+    # @param variant_id [Integer] One-based index of the A/B test variant. The control is variant 1. (required)
+    # @param save_settings_request [SaveSettingsRequest]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [nil]
+    def save_variant_settings(id, variant_id, save_settings_request, request_options = {})
+      save_variant_settings_with_http_info(id, variant_id, save_settings_request, request_options)
+      nil
     end
 
     # Stops an A/B test by its ID.  You can't restart stopped A/B tests.
