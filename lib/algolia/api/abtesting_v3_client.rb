@@ -457,9 +457,10 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param id [Integer] Unique A/B test identifier. (required)
+    # @param methods [Array<AnalysisMethod>] Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_ab_test_with_http_info(id, request_options = {})
+    def get_ab_test_with_http_info(id, methods = nil, request_options = {})
       # verify the required parameter 'id' is set
       if @api_client.config.client_side_validation && id.nil?
         raise ArgumentError, "Parameter `id` is required when calling `get_ab_test`."
@@ -467,6 +468,7 @@ module Algolia
 
       path = "/3/abtests/{id}".sub("{" + "id" + "}", Transport.encode_uri(id.to_s))
       query_params = {}
+      query_params[:methods] = @api_client.build_collection_param(methods, :csv) unless methods.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
@@ -489,10 +491,11 @@ module Algolia
     # Required API Key ACLs:
     #   - analytics
     # @param id [Integer] Unique A/B test identifier. (required)
+    # @param methods [Array<AnalysisMethod>] Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ABTest]
-    def get_ab_test(id, request_options = {})
-      response = get_ab_test_with_http_info(id, request_options)
+    def get_ab_test(id, methods = nil, request_options = {})
+      response = get_ab_test_with_http_info(id, methods, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "AbtestingV3::ABTest")
     end
 
@@ -551,9 +554,17 @@ module Algolia
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
     # @param metric [Array<MetricName>] List of metrics to retrieve. If not specified, all metrics are returned.
+    # @param methods [Array<AnalysisMethod>] Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def get_timeseries_with_http_info(id, start_date = nil, end_date = nil, metric = nil, request_options = {})
+    def get_timeseries_with_http_info(
+      id,
+      start_date = nil,
+      end_date = nil,
+      metric = nil,
+      methods = nil,
+      request_options = {}
+    )
       # verify the required parameter 'id' is set
       if @api_client.config.client_side_validation && id.nil?
         raise ArgumentError, "Parameter `id` is required when calling `get_timeseries`."
@@ -564,6 +575,7 @@ module Algolia
       query_params[:startDate] = start_date unless start_date.nil?
       query_params[:endDate] = end_date unless end_date.nil?
       query_params[:metric] = @api_client.build_collection_param(metric, :multi) unless metric.nil?
+      query_params[:methods] = @api_client.build_collection_param(methods, :csv) unless methods.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
@@ -589,10 +601,11 @@ module Algolia
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
     # @param metric [Array<MetricName>] List of metrics to retrieve. If not specified, all metrics are returned.
+    # @param methods [Array<AnalysisMethod>] Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Timeseries]
-    def get_timeseries(id, start_date = nil, end_date = nil, metric = nil, request_options = {})
-      response = get_timeseries_with_http_info(id, start_date, end_date, metric, request_options)
+    def get_timeseries(id, start_date = nil, end_date = nil, metric = nil, methods = nil, request_options = {})
+      response = get_timeseries_with_http_info(id, start_date, end_date, metric, methods, request_options)
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "AbtestingV3::Timeseries")
     end
 
@@ -605,6 +618,7 @@ module Algolia
     # @param index_prefix [String] Index name prefix. Only A/B tests for indices starting with this string are included in the response.
     # @param index_suffix [String] Index name suffix. Only A/B tests for indices ending with this string are included in the response.
     # @param direction [Direction] Sort order for A/B tests by start date. Use 'asc' for ascending or 'desc' for descending. Active A/B tests are always listed first.
+    # @param methods [Array<AnalysisMethod>] Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def list_ab_tests_with_http_info(
@@ -613,6 +627,7 @@ module Algolia
       index_prefix = nil,
       index_suffix = nil,
       direction = nil,
+      methods = nil,
       request_options = {}
     )
       path = "/3/abtests"
@@ -622,6 +637,7 @@ module Algolia
       query_params[:indexPrefix] = index_prefix unless index_prefix.nil?
       query_params[:indexSuffix] = index_suffix unless index_suffix.nil?
       query_params[:direction] = direction unless direction.nil?
+      query_params[:methods] = @api_client.build_collection_param(methods, :csv) unless methods.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
@@ -648,6 +664,7 @@ module Algolia
     # @param index_prefix [String] Index name prefix. Only A/B tests for indices starting with this string are included in the response.
     # @param index_suffix [String] Index name suffix. Only A/B tests for indices ending with this string are included in the response.
     # @param direction [Direction] Sort order for A/B tests by start date. Use 'asc' for ascending or 'desc' for descending. Active A/B tests are always listed first.
+    # @param methods [Array<AnalysisMethod>] Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ListABTestsResponse]
     def list_ab_tests(
@@ -656,9 +673,18 @@ module Algolia
       index_prefix = nil,
       index_suffix = nil,
       direction = nil,
+      methods = nil,
       request_options = {}
     )
-      response = list_ab_tests_with_http_info(offset, limit, index_prefix, index_suffix, direction, request_options)
+      response = list_ab_tests_with_http_info(
+        offset,
+        limit,
+        index_prefix,
+        index_suffix,
+        direction,
+        methods,
+        request_options
+      )
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "AbtestingV3::ListABTestsResponse")
     end
 

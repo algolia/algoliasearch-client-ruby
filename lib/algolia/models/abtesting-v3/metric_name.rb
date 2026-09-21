@@ -13,6 +13,7 @@ module Algolia
       USER_COUNT = "user_count".freeze
       TRACKED_USER_COUNT = "tracked_user_count".freeze
       NO_RESULT_COUNT = "no_result_count".freeze
+      TRACKED_NO_RESULT_COUNT = "tracked_no_result_count".freeze
       ADD_TO_CART_COUNT = "add_to_cart_count".freeze
       PURCHASE_COUNT = "purchase_count".freeze
       CLICKED_SEARCH_COUNT = "clicked_search_count".freeze
@@ -23,6 +24,8 @@ module Algolia
       PURCHASE_RATE = "purchase_rate".freeze
       AVERAGE_CLICK_POSITION = "average_click_position".freeze
       REVENUE = "revenue".freeze
+      REVENUE_PER_SEARCH = "revenue_per_search".freeze
+      AVERAGE_ORDER_VALUE = "average_order_value".freeze
 
       def self.all_vars
         @all_vars ||= [
@@ -31,6 +34,7 @@ module Algolia
           USER_COUNT,
           TRACKED_USER_COUNT,
           NO_RESULT_COUNT,
+          TRACKED_NO_RESULT_COUNT,
           ADD_TO_CART_COUNT,
           PURCHASE_COUNT,
           CLICKED_SEARCH_COUNT,
@@ -40,7 +44,9 @@ module Algolia
           ADD_TO_CART_RATE,
           PURCHASE_RATE,
           AVERAGE_CLICK_POSITION,
-          REVENUE
+          REVENUE,
+          REVENUE_PER_SEARCH,
+          AVERAGE_ORDER_VALUE
         ].freeze
       end
 

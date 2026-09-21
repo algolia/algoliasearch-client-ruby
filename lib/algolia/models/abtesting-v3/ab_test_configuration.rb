@@ -16,12 +16,18 @@ module Algolia
 
       attr_accessor :error_correction
 
+      attr_accessor :method
+
+      attr_accessor :primary_metric
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :minimum_detectable_effect => :minimumDetectableEffect,
           :filters => :filters,
-          :error_correction => :errorCorrection
+          :error_correction => :errorCorrection,
+          :method => :method,
+          :primary_metric => :primaryMetric
         }
       end
 
@@ -30,7 +36,9 @@ module Algolia
         {
           :minimum_detectable_effect => :"MinimumDetectableEffect",
           :filters => :"Array<MetricsFilter>",
-          :error_correction => :"ErrorCorrectionType"
+          :error_correction => :"ErrorCorrectionType",
+          :method => :"AnalysisMethod",
+          :primary_metric => :"PrimaryMetric"
         }
       end
 
@@ -77,6 +85,14 @@ module Algolia
         if attributes.key?(:error_correction)
           self.error_correction = attributes[:error_correction]
         end
+
+        if attributes.key?(:method)
+          self.method = attributes[:method]
+        end
+
+        if attributes.key?(:primary_metric)
+          self.primary_metric = attributes[:primary_metric]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -86,7 +102,9 @@ module Algolia
         self.class == other.class &&
           minimum_detectable_effect == other.minimum_detectable_effect &&
           filters == other.filters &&
-          error_correction == other.error_correction
+          error_correction == other.error_correction &&
+          method == other.method &&
+          primary_metric == other.primary_metric
       end
 
       # @see the `==` method
@@ -98,7 +116,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [minimum_detectable_effect, filters, error_correction].hash
+        [minimum_detectable_effect, filters, error_correction, method, primary_metric].hash
       end
 
       # Builds the object from hash

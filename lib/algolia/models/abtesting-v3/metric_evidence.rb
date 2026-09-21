@@ -7,69 +7,21 @@ require "time"
 
 module Algolia
   module AbtestingV3
-    class MetricResult
-      # Metric name. Revenue per search results use `revenue_per_search`.
-      attr_accessor :name
-
-      # Date and time when the metric was last updated, in RFC 3339 format.
-      attr_accessor :updated_at
-
-      # Metric value. For `revenue_per_search`, this is the winsorized mean revenue per search in the specified currency.
-      attr_accessor :value
-
-      # The upper bound of the 95% confidence interval for the metric value. The confidence interval is calculated using either the relative ratio or relative difference between the metric values for the control and the variant. Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate), while relative difference is used for continuous metrics (e.g., revenue).
-      attr_accessor :value_ci_high
-
-      # The lower bound of the 95% confidence interval for the metric value. The confidence interval is calculated using either the relative ratio or relative difference between the metric values for the control and the variant. Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate), while relative difference is used for continuous metrics (e.g., revenue).
-      attr_accessor :value_ci_low
-
-      # P-value for this variant compared to the control. Omitted when no p-value is available for this metric.
-      attr_accessor :p_value
-
-      # Dimension defined during test creation. For revenue metrics, including `revenue_per_search`, this is the currency.
-      attr_accessor :dimension
-
-      attr_accessor :metadata
-
-      # The value that was computed during error correction. It is used to determine significance of the metric pValue. The critical value is calculated using Bonferroni or Benjamini-Hochberg corrections, based on the given configuration during the A/B test creation.
-      attr_accessor :critical_value
-
-      # Whether the pValue is significant or not based on the critical value and the error correction algorithm used.
-      attr_accessor :significant
-
-      attr_accessor :bayesian
+    # Evidence status for this variant metric's comparison with the control. Only present when the API has an evidence status for the comparison. Omitted when evidence isn't applicable or no status exists.
+    class MetricEvidence
+      attr_accessor :status
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :name => :name,
-          :updated_at => :updatedAt,
-          :value => :value,
-          :value_ci_high => :valueCIHigh,
-          :value_ci_low => :valueCILow,
-          :p_value => :pValue,
-          :dimension => :dimension,
-          :metadata => :metadata,
-          :critical_value => :criticalValue,
-          :significant => :significant,
-          :bayesian => :bayesian
+          :status => :status
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :name => :"String",
-          :updated_at => :"String",
-          :value => :"Float",
-          :value_ci_high => :"Float",
-          :value_ci_low => :"Float",
-          :p_value => :"Float",
-          :dimension => :"String",
-          :metadata => :"MetricMetadata",
-          :critical_value => :"Float",
-          :significant => :"Boolean",
-          :bayesian => :"BayesianMetricResult"
+          :status => :"EvidenceStatus"
         }
       end
 
@@ -86,7 +38,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::MetricResult` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::MetricEvidence` initialize method"
           )
         end
 
@@ -95,7 +47,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::MetricResult`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::MetricEvidence`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -103,54 +55,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:name)
-          self.name = attributes[:name]
+        if attributes.key?(:status)
+          self.status = attributes[:status]
         else
-          self.name = nil
-        end
-
-        if attributes.key?(:updated_at)
-          self.updated_at = attributes[:updated_at]
-        else
-          self.updated_at = nil
-        end
-
-        if attributes.key?(:value)
-          self.value = attributes[:value]
-        else
-          self.value = nil
-        end
-
-        if attributes.key?(:value_ci_high)
-          self.value_ci_high = attributes[:value_ci_high]
-        end
-
-        if attributes.key?(:value_ci_low)
-          self.value_ci_low = attributes[:value_ci_low]
-        end
-
-        if attributes.key?(:p_value)
-          self.p_value = attributes[:p_value]
-        end
-
-        if attributes.key?(:dimension)
-          self.dimension = attributes[:dimension]
-        end
-
-        if attributes.key?(:metadata)
-          self.metadata = attributes[:metadata]
-        end
-
-        if attributes.key?(:critical_value)
-          self.critical_value = attributes[:critical_value]
-        end
-
-        if attributes.key?(:significant)
-          self.significant = attributes[:significant]
-        end
-
-        if attributes.key?(:bayesian)
-          self.bayesian = attributes[:bayesian]
+          self.status = nil
         end
       end
 
@@ -159,17 +67,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          name == other.name &&
-          updated_at == other.updated_at &&
-          value == other.value &&
-          value_ci_high == other.value_ci_high &&
-          value_ci_low == other.value_ci_low &&
-          p_value == other.p_value &&
-          dimension == other.dimension &&
-          metadata == other.metadata &&
-          critical_value == other.critical_value &&
-          significant == other.significant &&
-          bayesian == other.bayesian
+          status == other.status
       end
 
       # @see the `==` method
@@ -181,19 +79,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [
-          name,
-          updated_at,
-          value,
-          value_ci_high,
-          value_ci_low,
-          p_value,
-          dimension,
-          metadata,
-          critical_value,
-          significant,
-          bayesian
-        ].hash
+        [status].hash
       end
 
       # Builds the object from hash

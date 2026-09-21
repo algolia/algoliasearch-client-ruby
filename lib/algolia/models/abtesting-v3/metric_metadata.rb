@@ -9,7 +9,7 @@ module Algolia
   module AbtestingV3
     # Metric specific metadata.
     class MetricMetadata
-      # Only present in case the metric is 'revenue'. It is the amount exceeding the 95th percentile of global revenue transactions involved in the AB Test. This amount is not considered when calculating statistical significance. It is tied to a per revenue-currency pair contrary to other global filter effects (such as outliers and empty search count).
+      # Only present for `revenue` metrics. It is the amount exceeding the 95th percentile of global revenue transactions involved in the AB Test. This amount is not considered when calculating statistical significance. It is tied to a per revenue-currency pair contrary to other global filter effects (such as outliers and empty search count).
       attr_accessor :winsorized_value
 
       # Mean value for this metric.

@@ -7,7 +7,7 @@ require "time"
 
 module Algolia
   module AbtestingV3
-    # Configuration for the smallest difference between test variants you want to detect.
+    # Configuration for the smallest difference between test variants you want to detect, used to estimate the required sample size.
     class MinimumDetectableEffect
       # Smallest difference in an observable metric between variants. For example, to detect a 10% difference between variants, set this value to 0.1.
       attr_accessor :size
