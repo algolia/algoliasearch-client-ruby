@@ -11,6 +11,9 @@ module Algolia
       # A/B test name.
       attr_accessor :name
 
+      # Expected outcome of the A/B test.
+      attr_accessor :hypothesis
+
       # A/B test variants.
       attr_accessor :variants
 
@@ -26,6 +29,7 @@ module Algolia
       def self.attribute_map
         {
           :name => :name,
+          :hypothesis => :hypothesis,
           :variants => :variants,
           :metrics => :metrics,
           :configuration => :configuration,
@@ -37,6 +41,7 @@ module Algolia
       def self.types_mapping
         {
           :name => :"String",
+          :hypothesis => :"String",
           :variants => :"Array<AddABTestsVariant>",
           :metrics => :"Array<CreateMetric>",
           :configuration => :"ABTestConfiguration",
@@ -80,6 +85,10 @@ module Algolia
           self.name = nil
         end
 
+        if attributes.key?(:hypothesis)
+          self.hypothesis = attributes[:hypothesis]
+        end
+
         if attributes.key?(:variants)
           if (value = attributes[:variants]).is_a?(Array)
             self.variants = value
@@ -113,6 +122,7 @@ module Algolia
         return true if self.equal?(other)
         self.class == other.class &&
           name == other.name &&
+          hypothesis == other.hypothesis &&
           variants == other.variants &&
           metrics == other.metrics &&
           configuration == other.configuration &&
@@ -128,7 +138,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [name, variants, metrics, configuration, end_at].hash
+        [name, hypothesis, variants, metrics, configuration, end_at].hash
       end
 
       # Builds the object from hash
