@@ -7,29 +7,39 @@ require "time"
 
 module Algolia
   module Composition
-    class RequestBody
+    class InjectedItemExternalProvider
+      # Algolia index used to fetch the records.
+      attr_accessor :index
+
+      # Identifier of the external provider configuration.
+      attr_accessor :configuration_id
+
+      # Default values for the configuration placeholders that are not reserved Composition placeholders.
+      attr_accessor :configuration_params
+
       attr_accessor :params
 
-      # A list of Feed IDs that specifies the order in which to order the results in the response.  The IDs should be a subset of those in the `feeds` object of the targeted `multifeed` Composition / Composition Rule, and only those specified will be processed.   The value overrides the value in the defined behavior, and when unspecified, the value defined in the behavior is used. When neither value is present, all feeds are processed.
-      attr_accessor :feeds_order
-
-      attr_accessor :external_provider
+      attr_accessor :ordering
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
+          :index => :index,
+          :configuration_id => :configurationID,
+          :configuration_params => :configurationParams,
           :params => :params,
-          :feeds_order => :feedsOrder,
-          :external_provider => :externalProvider
+          :ordering => :ordering
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :params => :"Params",
-          :feeds_order => :"Array<String>",
-          :external_provider => :"ExternalProvider"
+          :index => :"String",
+          :configuration_id => :"String",
+          :configuration_params => :"Hash<String, Object>",
+          :params => :"BaseInjectionQueryParameters",
+          :ordering => :"ExternalProviderOrdering"
         }
       end
 
@@ -46,7 +56,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::RequestBody` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::InjectedItemExternalProvider` initialize method"
           )
         end
 
@@ -55,7 +65,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::RequestBody`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::InjectedItemExternalProvider`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -63,18 +73,30 @@ module Algolia
           h[k.to_sym] = v
         }
 
+        if attributes.key?(:index)
+          self.index = attributes[:index]
+        else
+          self.index = nil
+        end
+
+        if attributes.key?(:configuration_id)
+          self.configuration_id = attributes[:configuration_id]
+        else
+          self.configuration_id = nil
+        end
+
+        if attributes.key?(:configuration_params)
+          if (value = attributes[:configuration_params]).is_a?(Hash)
+            self.configuration_params = value
+          end
+        end
+
         if attributes.key?(:params)
           self.params = attributes[:params]
         end
 
-        if attributes.key?(:feeds_order)
-          if (value = attributes[:feeds_order]).is_a?(Array)
-            self.feeds_order = value
-          end
-        end
-
-        if attributes.key?(:external_provider)
-          self.external_provider = attributes[:external_provider]
+        if attributes.key?(:ordering)
+          self.ordering = attributes[:ordering]
         end
       end
 
@@ -83,9 +105,11 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
+          index == other.index &&
+          configuration_id == other.configuration_id &&
+          configuration_params == other.configuration_params &&
           params == other.params &&
-          feeds_order == other.feeds_order &&
-          external_provider == other.external_provider
+          ordering == other.ordering
       end
 
       # @see the `==` method
@@ -97,7 +121,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [params, feeds_order, external_provider].hash
+        [index, configuration_id, configuration_params, params, ordering].hash
       end
 
       # Builds the object from hash

@@ -13,13 +13,17 @@ module Algolia
       # Search results.
       attr_accessor :results
 
+      # Non-critical errors encountered while processing the request that may have affected the returned results (for example, an external provider failure that fell back to another result set).
+      attr_accessor :errors
+
       attr_accessor :additional_properties
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :compositions => :compositions,
-          :results => :results
+          :results => :results,
+          :errors => :errors
         }
       end
 
@@ -27,7 +31,8 @@ module Algolia
       def self.types_mapping
         {
           :compositions => :"CompositionsSearchResponse",
-          :results => :"Array<SearchResultsItem>"
+          :results => :"Array<SearchResultsItem>",
+          :errors => :"Array<ProcessingError>"
         }
       end
 
@@ -68,6 +73,12 @@ module Algolia
           self.results = nil
         end
 
+        if attributes.key?(:errors)
+          if (value = attributes[:errors]).is_a?(Array)
+            self.errors = value
+          end
+        end
+
         # add extra attribute to additional_properties
         self.additional_properties ||= {}
         self.additional_properties.merge!(attributes.reject { |k, _| self.class.attribute_map.key?(k.to_sym) })
@@ -79,7 +90,8 @@ module Algolia
         return true if self.equal?(other)
         self.class == other.class &&
           compositions == other.compositions &&
-          results == other.results
+          results == other.results &&
+          errors == other.errors
       end
 
       # @see the `==` method
@@ -91,7 +103,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [compositions, results].hash
+        [compositions, results, errors].hash
       end
 
       # Builds the object from hash

@@ -7,29 +7,28 @@ require "time"
 
 module Algolia
   module Composition
-    class RequestBody
-      attr_accessor :params
-
-      # A list of Feed IDs that specifies the order in which to order the results in the response.  The IDs should be a subset of those in the `feeds` object of the targeted `multifeed` Composition / Composition Rule, and only those specified will be processed.   The value overrides the value in the defined behavior, and when unspecified, the value defined in the behavior is used. When neither value is present, all feeds are processed.
-      attr_accessor :feeds_order
-
+    # Injected items will originate from a request to an external provider configuration.
+    class InjectedItemExternalProviderSource
       attr_accessor :external_provider
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :params => :params,
-          :feeds_order => :feedsOrder,
           :external_provider => :externalProvider
         }
+      end
+
+      # Returns the keys that uniquely identify this oneOf variant when present
+      def self.discriminator_attributes
+        [
+          :externalProvider
+        ]
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :params => :"Params",
-          :feeds_order => :"Array<String>",
-          :external_provider => :"ExternalProvider"
+          :external_provider => :"InjectedItemExternalProvider"
         }
       end
 
@@ -46,7 +45,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::RequestBody` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::InjectedItemExternalProviderSource` initialize method"
           )
         end
 
@@ -55,7 +54,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::RequestBody`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::InjectedItemExternalProviderSource`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -63,18 +62,10 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:params)
-          self.params = attributes[:params]
-        end
-
-        if attributes.key?(:feeds_order)
-          if (value = attributes[:feeds_order]).is_a?(Array)
-            self.feeds_order = value
-          end
-        end
-
         if attributes.key?(:external_provider)
           self.external_provider = attributes[:external_provider]
+        else
+          self.external_provider = nil
         end
       end
 
@@ -83,8 +74,6 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          params == other.params &&
-          feeds_order == other.feeds_order &&
           external_provider == other.external_provider
       end
 
@@ -97,7 +86,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [params, feeds_order, external_provider].hash
+        [external_provider].hash
       end
 
       # Builds the object from hash
