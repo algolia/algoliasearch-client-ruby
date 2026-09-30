@@ -12,17 +12,21 @@ module Algolia
       # Banners defined in the Merchandising Studio for a given search.
       attr_accessor :banners
 
+      attr_accessor :result_card
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :banners => :banners
+          :banners => :banners,
+          :result_card => :resultCard
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :banners => :"Array<Banner>"
+          :banners => :"Array<Banner>",
+          :result_card => :"ResultCard"
         }
       end
 
@@ -58,6 +62,10 @@ module Algolia
             self.banners = value
           end
         end
+
+        if attributes.key?(:result_card)
+          self.result_card = attributes[:result_card]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -65,7 +73,8 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          banners == other.banners
+          banners == other.banners &&
+          result_card == other.result_card
       end
 
       # @see the `==` method
@@ -77,7 +86,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [banners].hash
+        [banners, result_card].hash
       end
 
       # Builds the object from hash

@@ -6,27 +6,23 @@ require "date"
 require "time"
 
 module Algolia
-  module Composition
-    # Widgets returned from any rules that are applied to the current search.
-    class Widgets
-      # Banners defined in the Merchandising Studio for a given search.
-      attr_accessor :banners
-
-      attr_accessor :result_card
+  module Search
+    # Agent Studio Result Card to display for a given search.
+    class ResultCard
+      # Whether to show the Result Card for the current search.
+      attr_accessor :enabled
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :banners => :banners,
-          :result_card => :resultCard
+          :enabled => :enabled
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :banners => :"Array<Banner>",
-          :result_card => :"ResultCard"
+          :enabled => :"Boolean"
         }
       end
 
@@ -41,7 +37,10 @@ module Algolia
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         if (!attributes.is_a?(Hash))
-          raise ArgumentError, "The input argument (attributes) must be a hash in `Algolia::Widgets` initialize method"
+          raise(
+            ArgumentError,
+            "The input argument (attributes) must be a hash in `Algolia::ResultCard` initialize method"
+          )
         end
 
         # check to see if the attribute exists and convert string to symbol for hash key
@@ -49,7 +48,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::Widgets`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::ResultCard`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -57,14 +56,8 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:banners)
-          if (value = attributes[:banners]).is_a?(Array)
-            self.banners = value
-          end
-        end
-
-        if attributes.key?(:result_card)
-          self.result_card = attributes[:result_card]
+        if attributes.key?(:enabled)
+          self.enabled = attributes[:enabled]
         end
       end
 
@@ -73,8 +66,7 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          banners == other.banners &&
-          result_card == other.result_card
+          enabled == other.enabled
       end
 
       # @see the `==` method
@@ -86,7 +78,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [banners, result_card].hash
+        [enabled].hash
       end
 
       # Builds the object from hash
@@ -155,7 +147,7 @@ module Algolia
           # model
         else
           # models (e.g. Pet) or oneOf
-          klass = Algolia::Composition.const_get(type)
+          klass = Algolia::Search.const_get(type)
           klass.respond_to?(:openapi_any_of) || klass.respond_to?(:openapi_one_of) ? klass.build(value) : klass
             .build_from_hash(value)
         end
