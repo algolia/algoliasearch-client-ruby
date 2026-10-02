@@ -8,7 +8,7 @@ require "time"
 module Algolia
   module Composition
     class InjectedItemSearch
-      # Composition Index name.
+      # Algolia index used to retrieve records.
       attr_accessor :index
 
       attr_accessor :params
@@ -34,6 +34,13 @@ module Algolia
         Set.new(
           []
         )
+      end
+
+      # List of class defined in allOf (OpenAPI v3)
+      def self.openapi_all_of
+        [
+          :"BaseSearchSource"
+        ]
       end
 
       # Initializes the object

@@ -28,7 +28,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :search => :"MainSearch"
+          :search => :"InjectionMainSearch"
         }
       end
 

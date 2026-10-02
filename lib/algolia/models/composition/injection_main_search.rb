@@ -7,8 +7,8 @@ require "time"
 
 module Algolia
   module Composition
-    class MainSearch
-      # Index to retrieve search results from.
+    class InjectionMainSearch
+      # Algolia index used to retrieve records.
       attr_accessor :index
 
       attr_accessor :params
@@ -36,13 +36,20 @@ module Algolia
         )
       end
 
+      # List of class defined in allOf (OpenAPI v3)
+      def self.openapi_all_of
+        [
+          :"BaseSearchSource"
+        ]
+      end
+
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::MainSearch` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::InjectionMainSearch` initialize method"
           )
         end
 
@@ -51,7 +58,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::MainSearch`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::InjectionMainSearch`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end

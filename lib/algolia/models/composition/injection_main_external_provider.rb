@@ -7,38 +7,39 @@ require "time"
 
 module Algolia
   module Composition
-    class MainRecommend
-      # Index to retrieve recommendations from.
-      attr_accessor :index_name
+    class InjectionMainExternalProvider
+      # Algolia index used to fetch the records.
+      attr_accessor :index
 
-      attr_accessor :model
+      # Identifier of the external provider configuration.
+      attr_accessor :configuration_id
 
-      # Minimum score a recommendation must have to be included.
-      attr_accessor :threshold
+      # Default values for the configuration placeholders that are not reserved Composition placeholders.
+      attr_accessor :configuration_params
 
-      attr_accessor :query_parameters
+      attr_accessor :ordering
 
-      attr_accessor :fallback_parameters
+      attr_accessor :params
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :index_name => :indexName,
-          :model => :model,
-          :threshold => :threshold,
-          :query_parameters => :queryParameters,
-          :fallback_parameters => :fallbackParameters
+          :index => :index,
+          :configuration_id => :configurationID,
+          :configuration_params => :configurationParams,
+          :ordering => :ordering,
+          :params => :params
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :index_name => :"String",
-          :model => :"Model",
-          :threshold => :"Integer",
-          :query_parameters => :"MainInjectionQueryParameters",
-          :fallback_parameters => :"MainInjectionQueryParameters"
+          :index => :"String",
+          :configuration_id => :"String",
+          :configuration_params => :"Hash<String, Object>",
+          :ordering => :"ExternalProviderOrdering",
+          :params => :"MainInjectionQueryParameters"
         }
       end
 
@@ -49,13 +50,20 @@ module Algolia
         )
       end
 
+      # List of class defined in allOf (OpenAPI v3)
+      def self.openapi_all_of
+        [
+          :"BaseExternalProviderSource"
+        ]
+      end
+
       # Initializes the object
       # @param [Hash] attributes Model attributes in the form of hash
       def initialize(attributes = {})
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::MainRecommend` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::InjectionMainExternalProvider` initialize method"
           )
         end
 
@@ -64,7 +72,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::MainRecommend`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::InjectionMainExternalProvider`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -72,30 +80,30 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:index_name)
-          self.index_name = attributes[:index_name]
+        if attributes.key?(:index)
+          self.index = attributes[:index]
         else
-          self.index_name = nil
+          self.index = nil
         end
 
-        if attributes.key?(:model)
-          self.model = attributes[:model]
+        if attributes.key?(:configuration_id)
+          self.configuration_id = attributes[:configuration_id]
         else
-          self.model = nil
+          self.configuration_id = nil
         end
 
-        if attributes.key?(:threshold)
-          self.threshold = attributes[:threshold]
-        else
-          self.threshold = nil
+        if attributes.key?(:configuration_params)
+          if (value = attributes[:configuration_params]).is_a?(Hash)
+            self.configuration_params = value
+          end
         end
 
-        if attributes.key?(:query_parameters)
-          self.query_parameters = attributes[:query_parameters]
+        if attributes.key?(:ordering)
+          self.ordering = attributes[:ordering]
         end
 
-        if attributes.key?(:fallback_parameters)
-          self.fallback_parameters = attributes[:fallback_parameters]
+        if attributes.key?(:params)
+          self.params = attributes[:params]
         end
       end
 
@@ -104,11 +112,11 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          index_name == other.index_name &&
-          model == other.model &&
-          threshold == other.threshold &&
-          query_parameters == other.query_parameters &&
-          fallback_parameters == other.fallback_parameters
+          index == other.index &&
+          configuration_id == other.configuration_id &&
+          configuration_params == other.configuration_params &&
+          ordering == other.ordering &&
+          params == other.params
       end
 
       # @see the `==` method
@@ -120,7 +128,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [index_name, model, threshold, query_parameters, fallback_parameters].hash
+        [index, configuration_id, configuration_params, ordering, params].hash
       end
 
       # Builds the object from hash

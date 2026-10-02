@@ -17,9 +17,9 @@ module Algolia
       # Default values for the configuration placeholders that are not reserved Composition placeholders.
       attr_accessor :configuration_params
 
-      attr_accessor :params
-
       attr_accessor :ordering
+
+      attr_accessor :params
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
@@ -27,8 +27,8 @@ module Algolia
           :index => :index,
           :configuration_id => :configurationID,
           :configuration_params => :configurationParams,
-          :params => :params,
-          :ordering => :ordering
+          :ordering => :ordering,
+          :params => :params
         }
       end
 
@@ -38,8 +38,8 @@ module Algolia
           :index => :"String",
           :configuration_id => :"String",
           :configuration_params => :"Hash<String, Object>",
-          :params => :"BaseInjectionQueryParameters",
-          :ordering => :"ExternalProviderOrdering"
+          :ordering => :"ExternalProviderOrdering",
+          :params => :"BaseInjectionQueryParameters"
         }
       end
 
@@ -48,6 +48,13 @@ module Algolia
         Set.new(
           []
         )
+      end
+
+      # List of class defined in allOf (OpenAPI v3)
+      def self.openapi_all_of
+        [
+          :"BaseExternalProviderSource"
+        ]
       end
 
       # Initializes the object
@@ -91,12 +98,12 @@ module Algolia
           end
         end
 
-        if attributes.key?(:params)
-          self.params = attributes[:params]
-        end
-
         if attributes.key?(:ordering)
           self.ordering = attributes[:ordering]
+        end
+
+        if attributes.key?(:params)
+          self.params = attributes[:params]
         end
       end
 
@@ -108,8 +115,8 @@ module Algolia
           index == other.index &&
           configuration_id == other.configuration_id &&
           configuration_params == other.configuration_params &&
-          params == other.params &&
-          ordering == other.ordering
+          ordering == other.ordering &&
+          params == other.params
       end
 
       # @see the `==` method
@@ -121,7 +128,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [index, configuration_id, configuration_params, params, ordering].hash
+        [index, configuration_id, configuration_params, ordering, params].hash
       end
 
       # Builds the object from hash

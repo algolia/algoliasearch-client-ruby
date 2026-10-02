@@ -28,7 +28,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :external_provider => :"MainExternalProvider"
+          :external_provider => :"InjectionMainExternalProvider"
         }
       end
 

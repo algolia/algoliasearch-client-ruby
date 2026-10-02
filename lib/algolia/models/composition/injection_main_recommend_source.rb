@@ -28,7 +28,7 @@ module Algolia
       # Attribute type mapping.
       def self.types_mapping
         {
-          :recommend => :"MainRecommend"
+          :recommend => :"InjectionMainRecommend"
         }
       end
 
