@@ -7,33 +7,28 @@ require "time"
 
 module Algolia
   module AgentStudio
-    # Configuration for the Algolia Recommend tool. Allows specifying recommend models and related parameters.
-    class AlgoliaRecommendToolConfigInput
-      attr_accessor :name
+    class ToolApprovalAGUI
+      attr_accessor :id
 
-      attr_accessor :type
+      attr_accessor :needs_approval
 
-      attr_accessor :allowed_configs
-
-      attr_accessor :predefined_recommend_parameters
+      attr_accessor :approved
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :name => :name,
-          :type => :type,
-          :allowed_configs => :allowedConfigs,
-          :predefined_recommend_parameters => :predefinedRecommendParameters
+          :id => :id,
+          :needs_approval => :needsApproval,
+          :approved => :approved
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :name => :"String",
-          :type => :"String",
-          :allowed_configs => :"Array<AlgoliaRecommendToolIndexConfig>",
-          :predefined_recommend_parameters => :"Hash<String, Object>"
+          :id => :"String",
+          :needs_approval => :"Boolean",
+          :approved => :"Boolean"
         }
       end
 
@@ -50,7 +45,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::AlgoliaRecommendToolConfigInput` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::ToolApprovalAGUI` initialize method"
           )
         end
 
@@ -59,7 +54,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::AlgoliaRecommendToolConfigInput`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::ToolApprovalAGUI`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -67,28 +62,20 @@ module Algolia
           h[k.to_sym] = v
         }
 
-        if attributes.key?(:name)
-          self.name = attributes[:name]
+        if attributes.key?(:id)
+          self.id = attributes[:id]
         else
-          self.name = nil
+          self.id = nil
         end
 
-        if attributes.key?(:type)
-          self.type = attributes[:type]
+        if attributes.key?(:needs_approval)
+          self.needs_approval = attributes[:needs_approval]
         else
-          self.type = nil
+          self.needs_approval = nil
         end
 
-        if attributes.key?(:allowed_configs)
-          if (value = attributes[:allowed_configs]).is_a?(Array)
-            self.allowed_configs = value
-          end
-        end
-
-        if attributes.key?(:predefined_recommend_parameters)
-          if (value = attributes[:predefined_recommend_parameters]).is_a?(Hash)
-            self.predefined_recommend_parameters = value
-          end
+        if attributes.key?(:approved)
+          self.approved = attributes[:approved]
         end
       end
 
@@ -97,10 +84,9 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          name == other.name &&
-          type == other.type &&
-          allowed_configs == other.allowed_configs &&
-          predefined_recommend_parameters == other.predefined_recommend_parameters
+          id == other.id &&
+          needs_approval == other.needs_approval &&
+          approved == other.approved
       end
 
       # @see the `==` method
@@ -112,7 +98,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [name, type, allowed_configs, predefined_recommend_parameters].hash
+        [id, needs_approval, approved].hash
       end
 
       # Builds the object from hash

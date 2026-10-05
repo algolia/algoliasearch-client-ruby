@@ -68,7 +68,7 @@ module Algolia
           :instructions => :"String",
           :system_prompt => :"String",
           :config => :"Hash<String, Object>",
-          :tools => :"Array<ToolConfigInput>",
+          :tools => :"Array<ToolConfigOutput>",
           :template_type => :"String",
           :created_at => :"String",
           :updated_at => :"String",

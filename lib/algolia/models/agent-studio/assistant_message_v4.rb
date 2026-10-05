@@ -44,6 +44,7 @@ module Algolia
       def self.openapi_nullable
         Set.new(
           [
+            :id,
             :tool_invocations
           ]
         )

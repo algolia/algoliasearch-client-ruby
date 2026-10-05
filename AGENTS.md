@@ -122,18 +122,6 @@ response['hits']     # Works
 response.hits        # Works if using model objects
 ```
 
-### Block Syntax
-
-```ruby
-# Use do..end for multi-line, braces for single-line
-client.search { |r| r.query = 'test' }
-
-client.search do |params|
-  params.query = 'test'
-  params.hits_per_page = 10
-end
-```
-
 ### Error Handling
 
 ```ruby
@@ -145,18 +133,6 @@ rescue Algolia::ApiError => e
   # API returned error
   puts e.status_code
   puts e.message
-end
-```
-
-### Nil Safety
-
-```ruby
-# Use safe navigation
-result&.hits&.first&.object_id
-
-# Or explicit checks
-if result && result.hits && result.hits.any?
-  result.hits.first.object_id
 end
 ```
 

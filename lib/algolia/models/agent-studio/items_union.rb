@@ -7,13 +7,18 @@ require "time"
 
 module Algolia
   module AgentStudio
-    module ToolConfig
+    module ItemsUnion
       class << self
       # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
-            :"Boolean",
-            :"McpToolConfig"
+            :"AlgoliaGroupedResultsCompatToolConfig",
+            :"AlgoliaGroupedResultsToolConfig",
+            :"AlgoliaRecommendToolConfig",
+            :"AlgoliaSearchToolConfig",
+            :"ClientSideToolConfig",
+            :"McpServerToolConfig",
+            :"UnknownToolConfig"
           ]
         end
 
@@ -28,6 +33,25 @@ module Algolia
           #   due to the way the deserialization is made in the base_object template (it just casts without verifying).
           # - TODO: scalar values are de facto behaving as if they were nullable.
           # - TODO: logging when debugging is set.
+          if data.is_a?(Hash) && data.key?("type")
+            case data["type"]
+            when "algolia_display_results"
+              return find_and_cast_into_type(:"AlgoliaGroupedResultsCompatToolConfig", data)
+            when "algolia_grouped_results"
+              return find_and_cast_into_type(:"AlgoliaGroupedResultsToolConfig", data)
+            when "algolia_recommend"
+              return find_and_cast_into_type(:"AlgoliaRecommendToolConfig", data)
+            when "algolia_search_index"
+              return find_and_cast_into_type(:"AlgoliaSearchToolConfig", data)
+            when "client_side"
+              return find_and_cast_into_type(:"ClientSideToolConfig", data)
+            when "mcp_tools"
+              return find_and_cast_into_type(:"McpServerToolConfig", data)
+            when "unknown"
+              return find_and_cast_into_type(:"UnknownToolConfig", data)
+            end
+          end
+
           openapi_one_of.each do |klass|
             begin
               # "nullable: true"

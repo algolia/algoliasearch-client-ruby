@@ -18,6 +18,14 @@ module Algolia
 
       attr_accessor :provider_options
 
+      attr_accessor :mcp_config_id
+
+      attr_accessor :mcp_config_name
+
+      attr_accessor :is_terminal
+
+      attr_accessor :output_metadata
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -25,7 +33,11 @@ module Algolia
           :tool_call_id => :toolCallId,
           :tool_name => :toolName,
           :output => :output,
-          :provider_options => :providerOptions
+          :provider_options => :providerOptions,
+          :mcp_config_id => :mcpConfigId,
+          :mcp_config_name => :mcpConfigName,
+          :is_terminal => :isTerminal,
+          :output_metadata => :outputMetadata
         }
       end
 
@@ -36,7 +48,11 @@ module Algolia
           :tool_call_id => :"String",
           :tool_name => :"String",
           :output => :"ToolResultOutput",
-          :provider_options => :"Hash<String, Object>"
+          :provider_options => :"Hash<String, Object>",
+          :mcp_config_id => :"String",
+          :mcp_config_name => :"String",
+          :is_terminal => :"Boolean",
+          :output_metadata => :"Hash<String, Object>"
         }
       end
 
@@ -44,7 +60,11 @@ module Algolia
       def self.openapi_nullable
         Set.new(
           [
-            :provider_options
+            :provider_options,
+            :mcp_config_id,
+            :mcp_config_name,
+            :is_terminal,
+            :output_metadata
           ]
         )
       end
@@ -101,6 +121,24 @@ module Algolia
             self.provider_options = value
           end
         end
+
+        if attributes.key?(:mcp_config_id)
+          self.mcp_config_id = attributes[:mcp_config_id]
+        end
+
+        if attributes.key?(:mcp_config_name)
+          self.mcp_config_name = attributes[:mcp_config_name]
+        end
+
+        if attributes.key?(:is_terminal)
+          self.is_terminal = attributes[:is_terminal]
+        end
+
+        if attributes.key?(:output_metadata)
+          if (value = attributes[:output_metadata]).is_a?(Hash)
+            self.output_metadata = value
+          end
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -112,7 +150,11 @@ module Algolia
           tool_call_id == other.tool_call_id &&
           tool_name == other.tool_name &&
           output == other.output &&
-          provider_options == other.provider_options
+          provider_options == other.provider_options &&
+          mcp_config_id == other.mcp_config_id &&
+          mcp_config_name == other.mcp_config_name &&
+          is_terminal == other.is_terminal &&
+          output_metadata == other.output_metadata
       end
 
       # @see the `==` method
@@ -124,7 +166,17 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [type, tool_call_id, tool_name, output, provider_options].hash
+        [
+          type,
+          tool_call_id,
+          tool_name,
+          output,
+          provider_options,
+          mcp_config_id,
+          mcp_config_name,
+          is_terminal,
+          output_metadata
+        ].hash
       end
 
       # Builds the object from hash

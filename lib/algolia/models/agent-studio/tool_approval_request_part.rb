@@ -24,6 +24,8 @@ module Algolia
 
       attr_accessor :app_id
 
+      attr_accessor :conversation_id
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -34,7 +36,8 @@ module Algolia
           :description => :description,
           :provider_options => :providerOptions,
           :args_hash => :argsHash,
-          :app_id => :appId
+          :app_id => :appId,
+          :conversation_id => :conversationId
         }
       end
 
@@ -48,7 +51,8 @@ module Algolia
           :description => :"String",
           :provider_options => :"Hash<String, Object>",
           :args_hash => :"String",
-          :app_id => :"String"
+          :app_id => :"String",
+          :conversation_id => :"String"
         }
       end
 
@@ -60,7 +64,8 @@ module Algolia
             :description,
             :provider_options,
             :args_hash,
-            :app_id
+            :app_id,
+            :conversation_id
           ]
         )
       end
@@ -129,6 +134,10 @@ module Algolia
         if attributes.key?(:app_id)
           self.app_id = attributes[:app_id]
         end
+
+        if attributes.key?(:conversation_id)
+          self.conversation_id = attributes[:conversation_id]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -143,7 +152,8 @@ module Algolia
           description == other.description &&
           provider_options == other.provider_options &&
           args_hash == other.args_hash &&
-          app_id == other.app_id
+          app_id == other.app_id &&
+          conversation_id == other.conversation_id
       end
 
       # @see the `==` method
@@ -155,7 +165,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [type, tool_call_id, tool_name, args, description, provider_options, args_hash, app_id].hash
+        [type, tool_call_id, tool_name, args, description, provider_options, args_hash, app_id, conversation_id].hash
       end
 
       # Builds the object from hash

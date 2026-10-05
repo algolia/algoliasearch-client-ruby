@@ -14,12 +14,18 @@ module Algolia
 
       attr_accessor :indices
 
+      attr_accessor :mode
+
+      attr_accessor :allow_unlisted_indices
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :name => :name,
           :type => :type,
-          :indices => :indices
+          :indices => :indices,
+          :mode => :mode,
+          :allow_unlisted_indices => :allowUnlistedIndices
         }
       end
 
@@ -28,7 +34,9 @@ module Algolia
         {
           :name => :"String",
           :type => :"String",
-          :indices => :"Array<AlgoliaSearchToolIndexConfig>"
+          :indices => :"Array<AlgoliaSearchToolIndexConfig>",
+          :mode => :"ModeEnum",
+          :allow_unlisted_indices => :"Boolean"
         }
       end
 
@@ -81,6 +89,14 @@ module Algolia
         else
           self.indices = nil
         end
+
+        if attributes.key?(:mode)
+          self.mode = attributes[:mode]
+        end
+
+        if attributes.key?(:allow_unlisted_indices)
+          self.allow_unlisted_indices = attributes[:allow_unlisted_indices]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -90,7 +106,9 @@ module Algolia
         self.class == other.class &&
           name == other.name &&
           type == other.type &&
-          indices == other.indices
+          indices == other.indices &&
+          mode == other.mode &&
+          allow_unlisted_indices == other.allow_unlisted_indices
       end
 
       # @see the `==` method
@@ -102,7 +120,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [name, type, indices].hash
+        [name, type, indices, mode, allow_unlisted_indices].hash
       end
 
       # Builds the object from hash

@@ -7,7 +7,7 @@ require "time"
 
 module Algolia
   module AgentStudio
-    # Exists only to ensure that when you change branch from toolX to feat/toolY, your config stays valid.
+    # A tool configuration that this version of the API does not recognize.
     class UnknownToolConfig
       attr_accessor :name
 

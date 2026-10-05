@@ -7,48 +7,58 @@ require "time"
 
 module Algolia
   module AgentStudio
-    # Configuration for the algolia_display_results tool.
-    class AlgoliaDisplayResultsToolConfig
+    # An official AG-UI assistant message or a TanStack ``UIMessage`` extension.  Standard AG-UI represents text through ``content`` and tool calls through ``toolCalls``. TanStack sends those fields alongside its authoritative ``parts`` array. A populated ``parts`` array takes precedence during conversion, preventing the redundant fields from duplicating history. Unknown vendor fields are intentionally ignored, matching the other AG-UI message variants; TanStack, for example, attaches its own ``metadata`` object.
+    class AssistantMessageAGUI
+      attr_accessor :id
+
+      attr_accessor :role
+
+      attr_accessor :content
+
       attr_accessor :name
 
-      attr_accessor :type
+      attr_accessor :tool_calls
 
-      attr_accessor :min_groups
+      attr_accessor :encrypted_content
 
-      attr_accessor :max_groups
+      attr_accessor :parts
 
-      attr_accessor :min_results_per_group
-
-      attr_accessor :max_results_per_group
+      attr_accessor :created_at
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
+          :id => :id,
+          :role => :role,
+          :content => :content,
           :name => :name,
-          :type => :type,
-          :min_groups => :minGroups,
-          :max_groups => :maxGroups,
-          :min_results_per_group => :minResultsPerGroup,
-          :max_results_per_group => :maxResultsPerGroup
+          :tool_calls => :toolCalls,
+          :encrypted_content => :encryptedContent,
+          :parts => :parts,
+          :created_at => :createdAt
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
+          :id => :"String",
+          :role => :"String",
+          :content => :"String",
           :name => :"String",
-          :type => :"String",
-          :min_groups => :"Integer",
-          :max_groups => :"Integer",
-          :min_results_per_group => :"Integer",
-          :max_results_per_group => :"Integer"
+          :tool_calls => :"Array<ToolCallAGUI>",
+          :encrypted_content => :"String",
+          :parts => :"Array<MessagePartAssistantMessageAGUI>",
+          :created_at => :"String"
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new(
-          []
+          [
+            :tool_calls
+          ]
         )
       end
 
@@ -58,7 +68,7 @@ module Algolia
         if (!attributes.is_a?(Hash))
           raise(
             ArgumentError,
-            "The input argument (attributes) must be a hash in `Algolia::AlgoliaDisplayResultsToolConfig` initialize method"
+            "The input argument (attributes) must be a hash in `Algolia::AssistantMessageAGUI` initialize method"
           )
         end
 
@@ -67,7 +77,7 @@ module Algolia
           if (!self.class.attribute_map.key?(k.to_sym))
             raise(
               ArgumentError,
-              "`#{k}` is not a valid attribute in `Algolia::AlgoliaDisplayResultsToolConfig`. Please check the name to make sure it's valid. List of attributes: " +
+              "`#{k}` is not a valid attribute in `Algolia::AssistantMessageAGUI`. Please check the name to make sure it's valid. List of attributes: " +
                 self.class.attribute_map.keys.inspect
             )
           end
@@ -75,30 +85,44 @@ module Algolia
           h[k.to_sym] = v
         }
 
+        if attributes.key?(:id)
+          self.id = attributes[:id]
+        else
+          self.id = nil
+        end
+
+        if attributes.key?(:role)
+          self.role = attributes[:role]
+        else
+          self.role = nil
+        end
+
+        if attributes.key?(:content)
+          self.content = attributes[:content]
+        end
+
         if attributes.key?(:name)
           self.name = attributes[:name]
         end
 
-        if attributes.key?(:type)
-          self.type = attributes[:type]
-        else
-          self.type = nil
+        if attributes.key?(:tool_calls)
+          if (value = attributes[:tool_calls]).is_a?(Array)
+            self.tool_calls = value
+          end
         end
 
-        if attributes.key?(:min_groups)
-          self.min_groups = attributes[:min_groups]
+        if attributes.key?(:encrypted_content)
+          self.encrypted_content = attributes[:encrypted_content]
         end
 
-        if attributes.key?(:max_groups)
-          self.max_groups = attributes[:max_groups]
+        if attributes.key?(:parts)
+          if (value = attributes[:parts]).is_a?(Array)
+            self.parts = value
+          end
         end
 
-        if attributes.key?(:min_results_per_group)
-          self.min_results_per_group = attributes[:min_results_per_group]
-        end
-
-        if attributes.key?(:max_results_per_group)
-          self.max_results_per_group = attributes[:max_results_per_group]
+        if attributes.key?(:created_at)
+          self.created_at = attributes[:created_at]
         end
       end
 
@@ -107,12 +131,14 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
+          id == other.id &&
+          role == other.role &&
+          content == other.content &&
           name == other.name &&
-          type == other.type &&
-          min_groups == other.min_groups &&
-          max_groups == other.max_groups &&
-          min_results_per_group == other.min_results_per_group &&
-          max_results_per_group == other.max_results_per_group
+          tool_calls == other.tool_calls &&
+          encrypted_content == other.encrypted_content &&
+          parts == other.parts &&
+          created_at == other.created_at
       end
 
       # @see the `==` method
@@ -124,7 +150,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [name, type, min_groups, max_groups, min_results_per_group, max_results_per_group].hash
+        [id, role, content, name, tool_calls, encrypted_content, parts, created_at].hash
       end
 
       # Builds the object from hash

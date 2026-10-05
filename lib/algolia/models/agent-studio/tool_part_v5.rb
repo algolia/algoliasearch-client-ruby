@@ -7,7 +7,7 @@ require "time"
 
 module Algolia
   module AgentStudio
-    # Model for tool invocation in a Message.
+    # A tool invocation in a message.
     class ToolPartV5
       attr_accessor :type
 
@@ -17,7 +17,11 @@ module Algolia
 
       attr_accessor :input
 
+      attr_accessor :raw_input
+
       attr_accessor :output
+
+      attr_accessor :output_metadata
 
       attr_accessor :error_text
 
@@ -36,7 +40,9 @@ module Algolia
           :tool_call_id => :toolCallId,
           :state => :state,
           :input => :input,
+          :raw_input => :rawInput,
           :output => :output,
+          :output_metadata => :outputMetadata,
           :error_text => :errorText,
           :provider_options => :providerOptions,
           :requires_approval => :requiresApproval,
@@ -52,7 +58,9 @@ module Algolia
           :tool_call_id => :"String",
           :state => :"ToolState",
           :input => :"Hash<String, Object>",
+          :raw_input => :"Hash<String, Object>",
           :output => :"Hash<String, Object>",
+          :output_metadata => :"Hash<String, Object>",
           :error_text => :"String",
           :provider_options => :"Hash<String, Object>",
           :requires_approval => :"Boolean",
@@ -64,7 +72,17 @@ module Algolia
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new(
-          []
+          [
+            :input,
+            :raw_input,
+            :output,
+            :output_metadata,
+            :error_text,
+            :provider_options,
+            :requires_approval,
+            :description,
+            :args_hash
+          ]
         )
       end
 
@@ -113,9 +131,21 @@ module Algolia
           end
         end
 
+        if attributes.key?(:raw_input)
+          if (value = attributes[:raw_input]).is_a?(Hash)
+            self.raw_input = value
+          end
+        end
+
         if attributes.key?(:output)
           if (value = attributes[:output]).is_a?(Hash)
             self.output = value
+          end
+        end
+
+        if attributes.key?(:output_metadata)
+          if (value = attributes[:output_metadata]).is_a?(Hash)
+            self.output_metadata = value
           end
         end
 
@@ -151,7 +181,9 @@ module Algolia
           tool_call_id == other.tool_call_id &&
           state == other.state &&
           input == other.input &&
+          raw_input == other.raw_input &&
           output == other.output &&
+          output_metadata == other.output_metadata &&
           error_text == other.error_text &&
           provider_options == other.provider_options &&
           requires_approval == other.requires_approval &&
@@ -173,7 +205,9 @@ module Algolia
           tool_call_id,
           state,
           input,
+          raw_input,
           output,
+          output_metadata,
           error_text,
           provider_options,
           requires_approval,

@@ -13,7 +13,7 @@ module Algolia
 
       attr_accessor :azure_endpoint
 
-      # Azure model deployment name is required.
+      # Azure model deployment name.
       attr_accessor :azure_deployment
 
       attr_accessor :api_version

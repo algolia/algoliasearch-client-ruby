@@ -7,7 +7,7 @@ require "time"
 
 module Algolia
   module AgentStudio
-    # Model for tool invocation in a Message.
+    # A tool invocation in a message.
     class ToolInvocationV4
       attr_accessor :tool_call_id
 
@@ -64,7 +64,15 @@ module Algolia
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new(
-          []
+          [
+            :result,
+            :step,
+            :state,
+            :provider_options,
+            :requires_approval,
+            :description,
+            :args_hash
+          ]
         )
       end
 

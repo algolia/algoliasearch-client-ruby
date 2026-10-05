@@ -12,11 +12,14 @@ module Algolia
 
       attr_accessor :pagination
 
+      attr_accessor :analytics_degraded
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :data => :data,
-          :pagination => :pagination
+          :pagination => :pagination,
+          :analytics_degraded => :analyticsDegraded
         }
       end
 
@@ -24,7 +27,8 @@ module Algolia
       def self.types_mapping
         {
           :data => :"Array<ConversationBaseResponse>",
-          :pagination => :"PaginationMetadata"
+          :pagination => :"PaginationMetadata",
+          :analytics_degraded => :"Boolean"
         }
       end
 
@@ -71,6 +75,10 @@ module Algolia
         else
           self.pagination = nil
         end
+
+        if attributes.key?(:analytics_degraded)
+          self.analytics_degraded = attributes[:analytics_degraded]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -79,7 +87,8 @@ module Algolia
         return true if self.equal?(other)
         self.class == other.class &&
           data == other.data &&
-          pagination == other.pagination
+          pagination == other.pagination &&
+          analytics_degraded == other.analytics_degraded
       end
 
       # @see the `==` method
@@ -91,7 +100,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [data, pagination].hash
+        [data, pagination, analytics_degraded].hash
       end
 
       # Builds the object from hash

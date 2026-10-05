@@ -37,7 +37,11 @@ module Algolia
 
       attr_accessor :feedback
 
+      attr_accessor :impact_analytics
+
       attr_accessor :messages
+
+      attr_accessor :analytics_degraded
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
@@ -56,7 +60,9 @@ module Algolia
           :total_tokens => :totalTokens,
           :conversation_metadata => :conversationMetadata,
           :feedback => :feedback,
-          :messages => :messages
+          :impact_analytics => :impactAnalytics,
+          :messages => :messages,
+          :analytics_degraded => :analyticsDegraded
         }
       end
 
@@ -77,7 +83,9 @@ module Algolia
           :total_tokens => :"Integer",
           :conversation_metadata => :"ConversationMetadata",
           :feedback => :"Array<FeedbackResponse>",
-          :messages => :"Array<MessageResponse>"
+          :impact_analytics => :"ImpactAnalytics",
+          :messages => :"Array<MessageResponse>",
+          :analytics_degraded => :"Boolean"
         }
       end
 
@@ -89,7 +97,8 @@ module Algolia
             :last_activity_at,
             :user_token,
             :conversation_metadata,
-            :feedback
+            :feedback,
+            :impact_analytics
           ]
         )
       end
@@ -183,12 +192,20 @@ module Algolia
           end
         end
 
+        if attributes.key?(:impact_analytics)
+          self.impact_analytics = attributes[:impact_analytics]
+        end
+
         if attributes.key?(:messages)
           if (value = attributes[:messages]).is_a?(Array)
             self.messages = value
           end
         else
           self.messages = nil
+        end
+
+        if attributes.key?(:analytics_degraded)
+          self.analytics_degraded = attributes[:analytics_degraded]
         end
       end
 
@@ -211,7 +228,9 @@ module Algolia
           total_tokens == other.total_tokens &&
           conversation_metadata == other.conversation_metadata &&
           feedback == other.feedback &&
-          messages == other.messages
+          impact_analytics == other.impact_analytics &&
+          messages == other.messages &&
+          analytics_degraded == other.analytics_degraded
       end
 
       # @see the `==` method
@@ -238,7 +257,9 @@ module Algolia
           total_tokens,
           conversation_metadata,
           feedback,
-          messages
+          impact_analytics,
+          messages,
+          analytics_degraded
         ].hash
       end
 

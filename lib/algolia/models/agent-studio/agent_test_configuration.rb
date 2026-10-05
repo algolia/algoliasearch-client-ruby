@@ -45,7 +45,7 @@ module Algolia
           :instructions => :"String",
           :system_prompt => :"String",
           :config => :"Hash<String, Object>",
-          :tools => :"Array<ToolConfigInput>"
+          :tools => :"Array<ItemsUnion>"
         }
       end
 

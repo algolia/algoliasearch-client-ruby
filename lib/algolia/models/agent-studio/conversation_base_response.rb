@@ -37,6 +37,8 @@ module Algolia
 
       attr_accessor :feedback
 
+      attr_accessor :impact_analytics
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -53,7 +55,8 @@ module Algolia
           :total_output_tokens => :totalOutputTokens,
           :total_tokens => :totalTokens,
           :conversation_metadata => :conversationMetadata,
-          :feedback => :feedback
+          :feedback => :feedback,
+          :impact_analytics => :impactAnalytics
         }
       end
 
@@ -73,7 +76,8 @@ module Algolia
           :total_output_tokens => :"Integer",
           :total_tokens => :"Integer",
           :conversation_metadata => :"ConversationMetadata",
-          :feedback => :"Array<FeedbackResponse>"
+          :feedback => :"Array<FeedbackResponse>",
+          :impact_analytics => :"ImpactAnalytics"
         }
       end
 
@@ -85,7 +89,8 @@ module Algolia
             :last_activity_at,
             :user_token,
             :conversation_metadata,
-            :feedback
+            :feedback,
+            :impact_analytics
           ]
         )
       end
@@ -178,6 +183,10 @@ module Algolia
             self.feedback = value
           end
         end
+
+        if attributes.key?(:impact_analytics)
+          self.impact_analytics = attributes[:impact_analytics]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -198,7 +207,8 @@ module Algolia
           total_output_tokens == other.total_output_tokens &&
           total_tokens == other.total_tokens &&
           conversation_metadata == other.conversation_metadata &&
-          feedback == other.feedback
+          feedback == other.feedback &&
+          impact_analytics == other.impact_analytics
       end
 
       # @see the `==` method
@@ -224,7 +234,8 @@ module Algolia
           total_output_tokens,
           total_tokens,
           conversation_metadata,
-          feedback
+          feedback,
+          impact_analytics
         ].hash
       end
 

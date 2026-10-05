@@ -16,6 +16,8 @@ module Algolia
 
       attr_accessor :args
 
+      attr_accessor :raw_args
+
       attr_accessor :requires_approval
 
       attr_accessor :provider_options
@@ -27,6 +29,7 @@ module Algolia
           :tool_call_id => :toolCallId,
           :tool_name => :toolName,
           :args => :args,
+          :raw_args => :rawArgs,
           :requires_approval => :requiresApproval,
           :provider_options => :providerOptions
         }
@@ -39,6 +42,7 @@ module Algolia
           :tool_call_id => :"String",
           :tool_name => :"String",
           :args => :"Object",
+          :raw_args => :"Hash<String, Object>",
           :requires_approval => :"Boolean",
           :provider_options => :"Hash<String, Object>"
         }
@@ -49,6 +53,7 @@ module Algolia
         Set.new(
           [
             :args,
+            :raw_args,
             :requires_approval,
             :provider_options
           ]
@@ -102,6 +107,12 @@ module Algolia
           self.args = nil
         end
 
+        if attributes.key?(:raw_args)
+          if (value = attributes[:raw_args]).is_a?(Hash)
+            self.raw_args = value
+          end
+        end
+
         if attributes.key?(:requires_approval)
           self.requires_approval = attributes[:requires_approval]
         end
@@ -122,6 +133,7 @@ module Algolia
           tool_call_id == other.tool_call_id &&
           tool_name == other.tool_name &&
           args == other.args &&
+          raw_args == other.raw_args &&
           requires_approval == other.requires_approval &&
           provider_options == other.provider_options
       end
@@ -135,7 +147,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [type, tool_call_id, tool_name, args, requires_approval, provider_options].hash
+        [type, tool_call_id, tool_name, args, raw_args, requires_approval, provider_options].hash
       end
 
       # Builds the object from hash

@@ -16,7 +16,8 @@ module Algolia
             :"AzureOpenAIProviderInput",
             :"BaseProviderInput",
             :"OpenAICompatibleProviderInput",
-            :"OpenAIProviderInput"
+            :"OpenAIProviderInput",
+            :"XAIProviderInput"
           ]
         end
 

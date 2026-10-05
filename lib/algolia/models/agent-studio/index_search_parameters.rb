@@ -19,6 +19,8 @@ module Algolia
 
       attr_accessor :response_fields
 
+      attr_accessor :distinct
+
       attr_accessor :facets
 
       attr_accessor :custom
@@ -31,6 +33,7 @@ module Algolia
           :page => :page,
           :attributes_to_retrieve => :attributesToRetrieve,
           :response_fields => :responseFields,
+          :distinct => :distinct,
           :facets => :facets,
           :custom => :custom
         }
@@ -44,6 +47,7 @@ module Algolia
           :page => :"NumberParam",
           :attributes_to_retrieve => :"StringArrayParam",
           :response_fields => :"StringArrayParam",
+          :distinct => :"BooleanParam",
           :facets => :"FacetsParam",
           :custom => :"Hash<String, Object>"
         }
@@ -54,6 +58,7 @@ module Algolia
         Set.new(
           [
             :query,
+            :distinct,
             :facets,
             :custom
           ]
@@ -103,6 +108,10 @@ module Algolia
           self.response_fields = attributes[:response_fields]
         end
 
+        if attributes.key?(:distinct)
+          self.distinct = attributes[:distinct]
+        end
+
         if attributes.key?(:facets)
           self.facets = attributes[:facets]
         end
@@ -124,6 +133,7 @@ module Algolia
           page == other.page &&
           attributes_to_retrieve == other.attributes_to_retrieve &&
           response_fields == other.response_fields &&
+          distinct == other.distinct &&
           facets == other.facets &&
           custom == other.custom
       end
@@ -137,7 +147,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [query, hits_per_page, page, attributes_to_retrieve, response_fields, facets, custom].hash
+        [query, hits_per_page, page, attributes_to_retrieve, response_fields, distinct, facets, custom].hash
       end
 
       # Builds the object from hash

@@ -14,18 +14,12 @@ module Algolia
 
       attr_accessor :type
 
-      attr_accessor :input
-
-      attr_accessor :ctx
-
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :loc => :loc,
           :msg => :msg,
-          :type => :type,
-          :input => :input,
-          :ctx => :ctx
+          :type => :type
         }
       end
 
@@ -34,18 +28,14 @@ module Algolia
         {
           :loc => :"Array<LocationItemUnion>",
           :msg => :"String",
-          :type => :"String",
-          :input => :"Object",
-          :ctx => :"Object"
+          :type => :"String"
         }
       end
 
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new(
-          [
-            :input
-          ]
+          []
         )
       end
 
@@ -91,14 +81,6 @@ module Algolia
         else
           self.type = nil
         end
-
-        if attributes.key?(:input)
-          self.input = attributes[:input]
-        end
-
-        if attributes.key?(:ctx)
-          self.ctx = attributes[:ctx]
-        end
       end
 
       # Checks equality by comparing each attribute.
@@ -108,9 +90,7 @@ module Algolia
         self.class == other.class &&
           loc == other.loc &&
           msg == other.msg &&
-          type == other.type &&
-          input == other.input &&
-          ctx == other.ctx
+          type == other.type
       end
 
       # @see the `==` method
@@ -122,7 +102,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [loc, msg, type, input, ctx].hash
+        [loc, msg, type].hash
       end
 
       # Builds the object from hash

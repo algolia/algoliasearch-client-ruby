@@ -27,7 +27,19 @@ module Algolia
 
       attr_accessor :output_tokens
 
+      attr_accessor :reasoning_tokens
+
+      attr_accessor :input_token_details
+
+      attr_accessor :output_token_details
+
+      attr_accessor :is_cache_hit
+
       attr_accessor :turn_context
+
+      attr_accessor :events
+
+      attr_accessor :guardrail
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
@@ -41,7 +53,13 @@ module Algolia
           :model => :model,
           :input_tokens => :inputTokens,
           :output_tokens => :outputTokens,
-          :turn_context => :turnContext
+          :reasoning_tokens => :reasoningTokens,
+          :input_token_details => :inputTokenDetails,
+          :output_token_details => :outputTokenDetails,
+          :is_cache_hit => :isCacheHit,
+          :turn_context => :turnContext,
+          :events => :events,
+          :guardrail => :guardrail
         }
       end
 
@@ -57,7 +75,13 @@ module Algolia
           :model => :"String",
           :input_tokens => :"Integer",
           :output_tokens => :"Integer",
-          :turn_context => :"Hash<String, String>"
+          :reasoning_tokens => :"Integer",
+          :input_token_details => :"Hash<String, Integer>",
+          :output_token_details => :"Hash<String, Integer>",
+          :is_cache_hit => :"Boolean",
+          :turn_context => :"Hash<String, Object>",
+          :events => :"Array<MessageEvent>",
+          :guardrail => :"GuardrailOutcome"
         }
       end
 
@@ -68,7 +92,12 @@ module Algolia
             :model,
             :input_tokens,
             :output_tokens,
-            :turn_context
+            :reasoning_tokens,
+            :input_token_details,
+            :output_token_details,
+            :is_cache_hit,
+            :turn_context,
+            :guardrail
           ]
         )
       end
@@ -146,10 +175,40 @@ module Algolia
           self.output_tokens = attributes[:output_tokens]
         end
 
+        if attributes.key?(:reasoning_tokens)
+          self.reasoning_tokens = attributes[:reasoning_tokens]
+        end
+
+        if attributes.key?(:input_token_details)
+          if (value = attributes[:input_token_details]).is_a?(Hash)
+            self.input_token_details = value
+          end
+        end
+
+        if attributes.key?(:output_token_details)
+          if (value = attributes[:output_token_details]).is_a?(Hash)
+            self.output_token_details = value
+          end
+        end
+
+        if attributes.key?(:is_cache_hit)
+          self.is_cache_hit = attributes[:is_cache_hit]
+        end
+
         if attributes.key?(:turn_context)
           if (value = attributes[:turn_context]).is_a?(Hash)
             self.turn_context = value
           end
+        end
+
+        if attributes.key?(:events)
+          if (value = attributes[:events]).is_a?(Array)
+            self.events = value
+          end
+        end
+
+        if attributes.key?(:guardrail)
+          self.guardrail = attributes[:guardrail]
         end
       end
 
@@ -167,7 +226,13 @@ module Algolia
           model == other.model &&
           input_tokens == other.input_tokens &&
           output_tokens == other.output_tokens &&
-          turn_context == other.turn_context
+          reasoning_tokens == other.reasoning_tokens &&
+          input_token_details == other.input_token_details &&
+          output_token_details == other.output_token_details &&
+          is_cache_hit == other.is_cache_hit &&
+          turn_context == other.turn_context &&
+          events == other.events &&
+          guardrail == other.guardrail
       end
 
       # @see the `==` method
@@ -179,7 +244,24 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [id, conversation_id, role, parts, created_at, updated_at, model, input_tokens, output_tokens, turn_context].hash
+        [
+          id,
+          conversation_id,
+          role,
+          parts,
+          created_at,
+          updated_at,
+          model,
+          input_tokens,
+          output_tokens,
+          reasoning_tokens,
+          input_token_details,
+          output_token_details,
+          is_cache_hit,
+          turn_context,
+          events,
+          guardrail
+        ].hash
       end
 
       # Builds the object from hash

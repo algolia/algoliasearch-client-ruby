@@ -45,7 +45,7 @@ module Algolia
           :name => :"String",
           :type => :"String",
           :id => :"String",
-          :allowed_tools => :"Hash<String, ToolConfig>"
+          :allowed_tools => :"Hash<String, ToolConfigOrBooleanUnion>"
         }
       end
 

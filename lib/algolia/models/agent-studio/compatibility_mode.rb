@@ -10,9 +10,10 @@ module Algolia
     class CompatibilityMode
       AI_SDK_4 = "ai-sdk-4".freeze
       AI_SDK_5 = "ai-sdk-5".freeze
+      AG_UI = "ag-ui".freeze
 
       def self.all_vars
-        @all_vars ||= [AI_SDK_4, AI_SDK_5].freeze
+        @all_vars ||= [AI_SDK_4, AI_SDK_5, AG_UI].freeze
       end
 
       # Builds the enum from string

@@ -189,6 +189,50 @@ module Algolia
       nil
     end
 
+    # Summarize the older part of a conversation into a single user message via the caller's LLM.  Everything except the trailing `keepLastMessages` messages is summarized; the summary is returned as a user-role message followed by the kept tail verbatim. Your provider runs the summary, so the provider adds the cost to your account.  A conversation too large for the summarizer's context window is split into chunks that each fit, summarized concurrently, then merged in a reduce pass - so payload size alone does not fail the request. When the conversation still cannot be summarized (it needs more chunks than the server allows, or the chunk summaries will not converge), the response is a `400`, not a `500`.  Two optional controls shape the output. `instructions` adds caller guidance inside the server-owned prompt frame, so it steers the summary without the model echoing the wording back. `targetTokensEstimate` sets a desired summary size, translated into word-count guidance.  The `compaction` block reports what happened: `compacted` is `false` when the payload passed through untouched (nothing older than the kept tail), alongside chunk/pass counts and the summarizer's own token usage.
+    #
+    # Required API Key ACLs:
+    #   - search
+    # @param context_compact_request [ContextCompactRequest]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def compact_context_with_http_info(context_compact_request, request_options = {})
+      # verify the required parameter 'context_compact_request' is set
+      if @api_client.config.client_side_validation && context_compact_request.nil?
+        raise ArgumentError, "Parameter `context_compact_request` is required when calling `compact_context`."
+      end
+
+      path = "/agent-studio/1/unstable/context/compact"
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(context_compact_request)
+
+      new_options = request_options.merge(
+        :operation => :"AgentStudioClient.compact_context",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Summarize the older part of a conversation into a single user message via the caller's LLM.  Everything except the trailing `keepLastMessages` messages is summarized; the summary is returned as a user-role message followed by the kept tail verbatim. Your provider runs the summary, so the provider adds the cost to your account.  A conversation too large for the summarizer's context window is split into chunks that each fit, summarized concurrently, then merged in a reduce pass - so payload size alone does not fail the request. When the conversation still cannot be summarized (it needs more chunks than the server allows, or the chunk summaries will not converge), the response is a `400`, not a `500`.  Two optional controls shape the output. `instructions` adds caller guidance inside the server-owned prompt frame, so it steers the summary without the model echoing the wording back. `targetTokensEstimate` sets a desired summary size, translated into word-count guidance.  The `compaction` block reports what happened: `compacted` is `false` when the payload passed through untouched (nothing older than the kept tail), alongside chunk/pass counts and the summarizer's own token usage.
+    #
+    # Required API Key ACLs:
+    #   - search
+    # @param context_compact_request [ContextCompactRequest]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [ContextResponse]
+    def compact_context(context_compact_request, request_options = {})
+      response = compact_context_with_http_info(context_compact_request, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "AgentStudio::ContextResponse")
+    end
+
     # Create a new agent.
     #
     # Required API Key ACLs:
@@ -296,13 +340,13 @@ module Algolia
       )
     end
 
-    # Create a completion for the specified agent.  This endpoint handles two types of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval response: User approval -> Execute tool -> Agent response  Tool Approval Flow (for MCP tools with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return approval request. - Request 2: User approves -> Execute tool -> Agent continues with result.
+    # Create a completion for the specified agent.  This endpoint handles two types of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval response: User approval -> Execute tool -> Agent response  Tool Approval Flow (for MCP tools with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return approval request - Request 2: User approves -> Execute tool -> Agent continues with result.
     #
     # Required API Key ACLs:
     #   - search
     # @param agent_id [String] The agentId. (required)
     # @param compatibility_mode [CompatibilityMode] Compatibility mode for the completion API. (required)
-    # @param agent_completion_request [AgentCompletionRequest]  (required)
+    # @param agent_completion_request [AgentCompletionRequestUnion]  (required)
     # @param stream [Boolean] Whether to stream the response or not. (default to true)
     # @param cache [Boolean] Use cached responses if available. (default to true)
     # @param memory [Boolean] Set to false to disable memory (enabled by default).
@@ -369,13 +413,13 @@ module Algolia
       @api_client.call_api(:POST, path, new_options)
     end
 
-    # Create a completion for the specified agent.  This endpoint handles two types of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval response: User approval -> Execute tool -> Agent response  Tool Approval Flow (for MCP tools with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return approval request. - Request 2: User approves -> Execute tool -> Agent continues with result.
+    # Create a completion for the specified agent.  This endpoint handles two types of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval response: User approval -> Execute tool -> Agent response  Tool Approval Flow (for MCP tools with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return approval request - Request 2: User approves -> Execute tool -> Agent continues with result.
     #
     # Required API Key ACLs:
     #   - search
     # @param agent_id [String] The agentId. (required)
     # @param compatibility_mode [CompatibilityMode] Compatibility mode for the completion API. (required)
-    # @param agent_completion_request [AgentCompletionRequest]  (required)
+    # @param agent_completion_request [AgentCompletionRequestUnion]  (required)
     # @param stream [Boolean] Whether to stream the response or not. (default to true)
     # @param cache [Boolean] Use cached responses if available. (default to true)
     # @param memory [Boolean] Set to false to disable memory (enabled by default).
@@ -406,6 +450,76 @@ module Algolia
         request_options
       )
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Hash<String, Object>")
+    end
+
+    # Run a configured task and return the generated object as ``{ output }``.  With ``?stream=true``, returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``. The streamed JSON is the task output itself.
+    #
+    # Required API Key ACLs:
+    #   - search
+    # @param agent_id [String] The agentId. (required)
+    # @param task_request [TaskRequest]  (required)
+    # @param stream [Boolean] Whether to stream the response or not. (default to false)
+    # @param cache [Boolean] Use cached responses if available. (default to true)
+    # @param analytics [Boolean] Set to false to skip endpoint-specific analytics for this task call (default: true). Disables the task analytics event; operational metrics and traces are always emitted. (default to true)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def create_agent_task_with_http_info(
+      agent_id,
+      task_request,
+      stream = nil,
+      cache = nil,
+      analytics = nil,
+      request_options = {}
+    )
+      # verify the required parameter 'agent_id' is set
+      if @api_client.config.client_side_validation && agent_id.nil?
+        raise ArgumentError, "Parameter `agent_id` is required when calling `create_agent_task`."
+      end
+      # verify the required parameter 'agent_id' is not empty
+      if @api_client.config.client_side_validation && agent_id.empty?
+        raise ArgumentError, "Parameter `agent_id` is required when calling `create_agent_task`."
+      end
+      # verify the required parameter 'task_request' is set
+      if @api_client.config.client_side_validation && task_request.nil?
+        raise ArgumentError, "Parameter `task_request` is required when calling `create_agent_task`."
+      end
+
+      path = "/agent-studio/1/agents/{agentId}/tasks".sub("{" + "agentId" + "}", Transport.encode_uri(agent_id.to_s))
+      query_params = {}
+      query_params[:stream] = stream unless stream.nil?
+      query_params[:cache] = cache unless cache.nil?
+      query_params[:analytics] = analytics unless analytics.nil?
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(task_request)
+
+      new_options = request_options.merge(
+        :operation => :"AgentStudioClient.create_agent_task",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Run a configured task and return the generated object as ``{ output }``.  With ``?stream=true``, returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``. The streamed JSON is the task output itself.
+    #
+    # Required API Key ACLs:
+    #   - search
+    # @param agent_id [String] The agentId. (required)
+    # @param task_request [TaskRequest]  (required)
+    # @param stream [Boolean] Whether to stream the response or not. (default to false)
+    # @param cache [Boolean] Use cached responses if available. (default to true)
+    # @param analytics [Boolean] Set to false to skip endpoint-specific analytics for this task call (default: true). Disables the task analytics event; operational metrics and traces are always emitted. (default to true)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [TaskResponse]
+    def create_agent_task(agent_id, task_request, stream = nil, cache = nil, analytics = nil, request_options = {})
+      response = create_agent_task_with_http_info(agent_id, task_request, stream, cache, analytics, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "AgentStudio::TaskResponse")
     end
 
     # Create new feedback entry.
@@ -783,7 +897,7 @@ module Algolia
       nil
     end
 
-    # Deletes the conversations matching the given filers.
+    # Deletes the conversations matching the given filters.
     #
     # Required API Key ACLs:
     #   - logs
@@ -826,7 +940,7 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Deletes the conversations matching the given filers.
+    # Deletes the conversations matching the given filters.
     #
     # Required API Key ACLs:
     #   - logs
@@ -1331,6 +1445,8 @@ module Algolia
     # @param conversation_id [String] The conversationId. (required)
     # @param agent_id [String] The agentId. (required)
     # @param include_feedback [Boolean] Include feedback for the conversation. (default to false)
+    # @param include_message_events [Boolean] Include Insights events attributed to each assistant message. (default to false)
+    # @param include_impact_analytics [Boolean] Include outcome signals (hasView, hasClick, hasConversion) for the conversation. (default to false)
     # @param x_algolia_secure_user_token [String] The X-Algolia-Secure-User-Token.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1338,6 +1454,8 @@ module Algolia
       conversation_id,
       agent_id,
       include_feedback = nil,
+      include_message_events = nil,
+      include_impact_analytics = nil,
       x_algolia_secure_user_token = nil,
       request_options = {}
     )
@@ -1363,6 +1481,8 @@ module Algolia
         .sub("{" + "agentId" + "}", Transport.encode_uri(agent_id.to_s))
       query_params = {}
       query_params[:includeFeedback] = include_feedback unless include_feedback.nil?
+      query_params[:includeMessageEvents] = include_message_events unless include_message_events.nil?
+      query_params[:includeImpactAnalytics] = include_impact_analytics unless include_impact_analytics.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
       unless x_algolia_secure_user_token.nil?
@@ -1391,6 +1511,8 @@ module Algolia
     # @param conversation_id [String] The conversationId. (required)
     # @param agent_id [String] The agentId. (required)
     # @param include_feedback [Boolean] Include feedback for the conversation. (default to false)
+    # @param include_message_events [Boolean] Include Insights events attributed to each assistant message. (default to false)
+    # @param include_impact_analytics [Boolean] Include outcome signals (hasView, hasClick, hasConversion) for the conversation. (default to false)
     # @param x_algolia_secure_user_token [String] The X-Algolia-Secure-User-Token.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ConversationFullResponse]
@@ -1398,6 +1520,8 @@ module Algolia
       conversation_id,
       agent_id,
       include_feedback = nil,
+      include_message_events = nil,
+      include_impact_analytics = nil,
       x_algolia_secure_user_token = nil,
       request_options = {}
     )
@@ -1405,6 +1529,8 @@ module Algolia
         conversation_id,
         agent_id,
         include_feedback,
+        include_message_events,
+        include_impact_analytics,
         x_algolia_secure_user_token,
         request_options
       )
@@ -1567,7 +1693,7 @@ module Algolia
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "AgentStudio::UserDataResponse")
     end
 
-    # Invalidate cached completions for this agent. Filter with `before` (exclusive).
+    # Invalidate cached completions and task outputs for this agent. Filter with `before` (exclusive).
     #
     # Required API Key ACLs:
     #   - editSettings
@@ -1605,7 +1731,7 @@ module Algolia
       @api_client.call_api(:DELETE, path, new_options)
     end
 
-    # Invalidate cached completions for this agent. Filter with `before` (exclusive).
+    # Invalidate cached completions and task outputs for this agent. Filter with `before` (exclusive).
     #
     # Required API Key ACLs:
     #   - editSettings
@@ -1683,6 +1809,10 @@ module Algolia
     # @param feedback_vote [Integer] Filter by feedback value (requires includeFeedback=true).
     # @param page [Integer] Page number. (default to 1)
     # @param limit [Integer] Items per page. (default to 20)
+    # @param include_impact_analytics [Boolean] Include impact analytics (hasView, hasClick, hasConversion) per conversation.
+    # @param clicked [Boolean] Filter by conversations with at least one item click.
+    # @param converted [Boolean] Filter by conversations with at least one conversion.
+    # @param has_algolia_search [Boolean] Filter by conversations where the search tool was used.
     # @param x_algolia_secure_user_token [String] The X-Algolia-Secure-User-Token.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1694,6 +1824,10 @@ module Algolia
       feedback_vote = nil,
       page = nil,
       limit = nil,
+      include_impact_analytics = nil,
+      clicked = nil,
+      converted = nil,
+      has_algolia_search = nil,
       x_algolia_secure_user_token = nil,
       request_options = {}
     )
@@ -1717,6 +1851,10 @@ module Algolia
       query_params[:feedbackVote] = feedback_vote unless feedback_vote.nil?
       query_params[:page] = page unless page.nil?
       query_params[:limit] = limit unless limit.nil?
+      query_params[:includeImpactAnalytics] = include_impact_analytics unless include_impact_analytics.nil?
+      query_params[:clicked] = clicked unless clicked.nil?
+      query_params[:converted] = converted unless converted.nil?
+      query_params[:hasAlgoliaSearch] = has_algolia_search unless has_algolia_search.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
       unless x_algolia_secure_user_token.nil?
@@ -1749,6 +1887,10 @@ module Algolia
     # @param feedback_vote [Integer] Filter by feedback value (requires includeFeedback=true).
     # @param page [Integer] Page number. (default to 1)
     # @param limit [Integer] Items per page. (default to 20)
+    # @param include_impact_analytics [Boolean] Include impact analytics (hasView, hasClick, hasConversion) per conversation.
+    # @param clicked [Boolean] Filter by conversations with at least one item click.
+    # @param converted [Boolean] Filter by conversations with at least one conversion.
+    # @param has_algolia_search [Boolean] Filter by conversations where the search tool was used.
     # @param x_algolia_secure_user_token [String] The X-Algolia-Secure-User-Token.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [PaginatedConversationsResponse]
@@ -1760,6 +1902,10 @@ module Algolia
       feedback_vote = nil,
       page = nil,
       limit = nil,
+      include_impact_analytics = nil,
+      clicked = nil,
+      converted = nil,
+      has_algolia_search = nil,
       x_algolia_secure_user_token = nil,
       request_options = {}
     )
@@ -1771,6 +1917,10 @@ module Algolia
         feedback_vote,
         page,
         limit,
+        include_impact_analytics,
+        clicked,
+        converted,
+        has_algolia_search,
         x_algolia_secure_user_token,
         request_options
       )
@@ -2060,6 +2210,50 @@ module Algolia
       )
     end
 
+    # Deterministically trim a conversation payload (no LLM calls).  Keep the last N messages and/or fit a heuristic token budget, optionally dropping tool parts from what is kept (tool parts are stripped before the budget is applied). Returns the trimmed messages plus before/after stats.  With no constraints set, the messages are returned unchanged and only the stats are computed - a deliberate, cheap \"how big is my context?\" probe (no LLM call, no mutation).
+    #
+    # Required API Key ACLs:
+    #   - search
+    # @param context_trim_request [ContextTrimRequest]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def trim_context_with_http_info(context_trim_request, request_options = {})
+      # verify the required parameter 'context_trim_request' is set
+      if @api_client.config.client_side_validation && context_trim_request.nil?
+        raise ArgumentError, "Parameter `context_trim_request` is required when calling `trim_context`."
+      end
+
+      path = "/agent-studio/1/unstable/context/trim"
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(context_trim_request)
+
+      new_options = request_options.merge(
+        :operation => :"AgentStudioClient.trim_context",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:POST, path, new_options)
+    end
+
+    # Deterministically trim a conversation payload (no LLM calls).  Keep the last N messages and/or fit a heuristic token budget, optionally dropping tool parts from what is kept (tool parts are stripped before the budget is applied). Returns the trimmed messages plus before/after stats.  With no constraints set, the messages are returned unchanged and only the stats are computed - a deliberate, cheap \"how big is my context?\" probe (no LLM call, no mutation).
+    #
+    # Required API Key ACLs:
+    #   - search
+    # @param context_trim_request [ContextTrimRequest]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [ContextResponse]
+    def trim_context(context_trim_request, request_options = {})
+      response = trim_context_with_http_info(context_trim_request, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "AgentStudio::ContextResponse")
+    end
+
     # Unpublish the specified agent.
     #
     # Required API Key ACLs:
@@ -2216,6 +2410,50 @@ module Algolia
         response.body,
         request_options[:debug_return_type] || "AgentStudio::ApplicationConfigResponse"
       )
+    end
+
+    # Update an existing feedback entry.
+    #
+    # Required API Key ACLs:
+    #   - search
+    # @param feedback_update_request [FeedbackUpdateRequest]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def update_feedback_with_http_info(feedback_update_request, request_options = {})
+      # verify the required parameter 'feedback_update_request' is set
+      if @api_client.config.client_side_validation && feedback_update_request.nil?
+        raise ArgumentError, "Parameter `feedback_update_request` is required when calling `update_feedback`."
+      end
+
+      path = "/agent-studio/1/feedback"
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body] || @api_client.object_to_http_body(feedback_update_request)
+
+      new_options = request_options.merge(
+        :operation => :"AgentStudioClient.update_feedback",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:PATCH, path, new_options)
+    end
+
+    # Update an existing feedback entry.
+    #
+    # Required API Key ACLs:
+    #   - search
+    # @param feedback_update_request [FeedbackUpdateRequest]  (required)
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [FeedbackResponse]
+    def update_feedback(feedback_update_request, request_options = {})
+      response = update_feedback_with_http_info(feedback_update_request, request_options)
+      @api_client.deserialize(response.body, request_options[:debug_return_type] || "AgentStudio::FeedbackResponse")
     end
 
     # Update Provider.

@@ -12,8 +12,7 @@ module Algolia
       # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
-            :"AlgoliaDisplayResultsToolConfig",
-            :"AlgoliaRecommendToolConfigInput",
+            :"AlgoliaRecommendToolConfig",
             :"AlgoliaSearchToolConfig",
             :"ClientSideToolConfig",
             :"McpServerToolConfig",
@@ -34,10 +33,8 @@ module Algolia
           # - TODO: logging when debugging is set.
           if data.is_a?(Hash) && data.key?("type")
             case data["type"]
-            when "algolia_display_results"
-              return find_and_cast_into_type(:"AlgoliaDisplayResultsToolConfig", data)
             when "algolia_recommend"
-              return find_and_cast_into_type(:"AlgoliaRecommendToolConfigInput", data)
+              return find_and_cast_into_type(:"AlgoliaRecommendToolConfig", data)
             when "algolia_search_index"
               return find_and_cast_into_type(:"AlgoliaSearchToolConfig", data)
             when "client_side"

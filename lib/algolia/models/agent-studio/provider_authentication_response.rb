@@ -22,6 +22,8 @@ module Algolia
 
       attr_accessor :last_used_at
 
+      attr_accessor :is_algolia_managed
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -31,7 +33,8 @@ module Algolia
           :input => :input,
           :created_at => :createdAt,
           :updated_at => :updatedAt,
-          :last_used_at => :lastUsedAt
+          :last_used_at => :lastUsedAt,
+          :is_algolia_managed => :isAlgoliaManaged
         }
       end
 
@@ -41,10 +44,11 @@ module Algolia
           :id => :"String",
           :name => :"String",
           :provider_name => :"String",
-          :input => :"ProviderInput",
+          :input => :"InputUnion",
           :created_at => :"String",
           :updated_at => :"String",
-          :last_used_at => :"String"
+          :last_used_at => :"String",
+          :is_algolia_managed => :"Boolean"
         }
       end
 
@@ -119,6 +123,10 @@ module Algolia
         if attributes.key?(:last_used_at)
           self.last_used_at = attributes[:last_used_at]
         end
+
+        if attributes.key?(:is_algolia_managed)
+          self.is_algolia_managed = attributes[:is_algolia_managed]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -132,7 +140,8 @@ module Algolia
           input == other.input &&
           created_at == other.created_at &&
           updated_at == other.updated_at &&
-          last_used_at == other.last_used_at
+          last_used_at == other.last_used_at &&
+          is_algolia_managed == other.is_algolia_managed
       end
 
       # @see the `==` method
@@ -144,7 +153,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [id, name, provider_name, input, created_at, updated_at, last_used_at].hash
+        [id, name, provider_name, input, created_at, updated_at, last_used_at, is_algolia_managed].hash
       end
 
       # Builds the object from hash
