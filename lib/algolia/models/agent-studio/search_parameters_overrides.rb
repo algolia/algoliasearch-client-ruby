@@ -25,6 +25,18 @@ module Algolia
 
       attr_accessor :optional_filters
 
+      attr_accessor :around_lat_lng
+
+      attr_accessor :around_radius
+
+      attr_accessor :around_precision
+
+      attr_accessor :minimum_around_radius
+
+      attr_accessor :inside_bounding_box
+
+      attr_accessor :inside_polygon
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -35,7 +47,13 @@ module Algolia
           :user_token => :userToken,
           :enable_personalization => :enablePersonalization,
           :personalization_impact => :personalizationImpact,
-          :optional_filters => :optionalFilters
+          :optional_filters => :optionalFilters,
+          :around_lat_lng => :aroundLatLng,
+          :around_radius => :aroundRadius,
+          :around_precision => :aroundPrecision,
+          :minimum_around_radius => :minimumAroundRadius,
+          :inside_bounding_box => :insideBoundingBox,
+          :inside_polygon => :insidePolygon
         }
       end
 
@@ -49,7 +67,13 @@ module Algolia
           :user_token => :"String",
           :enable_personalization => :"Boolean",
           :personalization_impact => :"Integer",
-          :optional_filters => :"OptionalFiltersUnion"
+          :optional_filters => :"OptionalFiltersUnion",
+          :around_lat_lng => :"String",
+          :around_radius => :"AroundRadiusUnion",
+          :around_precision => :"AroundPrecisionUnion",
+          :minimum_around_radius => :"Integer",
+          :inside_bounding_box => :"InsideBoundingBoxUnion",
+          :inside_polygon => :"InsidePolygonUnion"
         }
       end
 
@@ -58,7 +82,11 @@ module Algolia
         Set.new(
           [
             :distinct,
-            :optional_filters
+            :optional_filters,
+            :around_radius,
+            :around_precision,
+            :inside_bounding_box,
+            :inside_polygon
           ]
         )
       end
@@ -121,6 +149,30 @@ module Algolia
         if attributes.key?(:optional_filters)
           self.optional_filters = attributes[:optional_filters]
         end
+
+        if attributes.key?(:around_lat_lng)
+          self.around_lat_lng = attributes[:around_lat_lng]
+        end
+
+        if attributes.key?(:around_radius)
+          self.around_radius = attributes[:around_radius]
+        end
+
+        if attributes.key?(:around_precision)
+          self.around_precision = attributes[:around_precision]
+        end
+
+        if attributes.key?(:minimum_around_radius)
+          self.minimum_around_radius = attributes[:minimum_around_radius]
+        end
+
+        if attributes.key?(:inside_bounding_box)
+          self.inside_bounding_box = attributes[:inside_bounding_box]
+        end
+
+        if attributes.key?(:inside_polygon)
+          self.inside_polygon = attributes[:inside_polygon]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -135,7 +187,13 @@ module Algolia
           user_token == other.user_token &&
           enable_personalization == other.enable_personalization &&
           personalization_impact == other.personalization_impact &&
-          optional_filters == other.optional_filters
+          optional_filters == other.optional_filters &&
+          around_lat_lng == other.around_lat_lng &&
+          around_radius == other.around_radius &&
+          around_precision == other.around_precision &&
+          minimum_around_radius == other.minimum_around_radius &&
+          inside_bounding_box == other.inside_bounding_box &&
+          inside_polygon == other.inside_polygon
       end
 
       # @see the `==` method
@@ -155,7 +213,13 @@ module Algolia
           user_token,
           enable_personalization,
           personalization_impact,
-          optional_filters
+          optional_filters,
+          around_lat_lng,
+          around_radius,
+          around_precision,
+          minimum_around_radius,
+          inside_bounding_box,
+          inside_polygon
         ].hash
       end
 
