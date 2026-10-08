@@ -25,6 +25,8 @@ module Algolia
 
       attr_accessor :error_text
 
+      attr_accessor :terminal
+
       attr_accessor :provider_options
 
       attr_accessor :requires_approval
@@ -44,6 +46,7 @@ module Algolia
           :output => :output,
           :output_metadata => :outputMetadata,
           :error_text => :errorText,
+          :terminal => :terminal,
           :provider_options => :providerOptions,
           :requires_approval => :requiresApproval,
           :description => :description,
@@ -62,6 +65,7 @@ module Algolia
           :output => :"Hash<String, Object>",
           :output_metadata => :"Hash<String, Object>",
           :error_text => :"String",
+          :terminal => :"Boolean",
           :provider_options => :"Hash<String, Object>",
           :requires_approval => :"Boolean",
           :description => :"String",
@@ -78,6 +82,7 @@ module Algolia
             :output,
             :output_metadata,
             :error_text,
+            :terminal,
             :provider_options,
             :requires_approval,
             :description,
@@ -153,6 +158,10 @@ module Algolia
           self.error_text = attributes[:error_text]
         end
 
+        if attributes.key?(:terminal)
+          self.terminal = attributes[:terminal]
+        end
+
         if attributes.key?(:provider_options)
           if (value = attributes[:provider_options]).is_a?(Hash)
             self.provider_options = value
@@ -185,6 +194,7 @@ module Algolia
           output == other.output &&
           output_metadata == other.output_metadata &&
           error_text == other.error_text &&
+          terminal == other.terminal &&
           provider_options == other.provider_options &&
           requires_approval == other.requires_approval &&
           description == other.description &&
@@ -209,6 +219,7 @@ module Algolia
           output,
           output_metadata,
           error_text,
+          terminal,
           provider_options,
           requires_approval,
           description,

@@ -25,6 +25,8 @@ module Algolia
 
       attr_accessor :optional_filters
 
+      attr_accessor :facet_filters
+
       attr_accessor :around_lat_lng
 
       attr_accessor :around_radius
@@ -48,6 +50,7 @@ module Algolia
           :enable_personalization => :enablePersonalization,
           :personalization_impact => :personalizationImpact,
           :optional_filters => :optionalFilters,
+          :facet_filters => :facetFilters,
           :around_lat_lng => :aroundLatLng,
           :around_radius => :aroundRadius,
           :around_precision => :aroundPrecision,
@@ -68,6 +71,7 @@ module Algolia
           :enable_personalization => :"Boolean",
           :personalization_impact => :"Integer",
           :optional_filters => :"OptionalFiltersUnion",
+          :facet_filters => :"FacetFiltersUnionSearchParametersOverrides",
           :around_lat_lng => :"String",
           :around_radius => :"AroundRadiusUnion",
           :around_precision => :"AroundPrecisionUnion",
@@ -83,6 +87,7 @@ module Algolia
           [
             :distinct,
             :optional_filters,
+            :facet_filters,
             :around_radius,
             :around_precision,
             :inside_bounding_box,
@@ -150,6 +155,10 @@ module Algolia
           self.optional_filters = attributes[:optional_filters]
         end
 
+        if attributes.key?(:facet_filters)
+          self.facet_filters = attributes[:facet_filters]
+        end
+
         if attributes.key?(:around_lat_lng)
           self.around_lat_lng = attributes[:around_lat_lng]
         end
@@ -188,6 +197,7 @@ module Algolia
           enable_personalization == other.enable_personalization &&
           personalization_impact == other.personalization_impact &&
           optional_filters == other.optional_filters &&
+          facet_filters == other.facet_filters &&
           around_lat_lng == other.around_lat_lng &&
           around_radius == other.around_radius &&
           around_precision == other.around_precision &&
@@ -214,6 +224,7 @@ module Algolia
           enable_personalization,
           personalization_impact,
           optional_filters,
+          facet_filters,
           around_lat_lng,
           around_radius,
           around_precision,

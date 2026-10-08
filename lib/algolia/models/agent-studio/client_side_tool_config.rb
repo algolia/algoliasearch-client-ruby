@@ -16,13 +16,17 @@ module Algolia
 
       attr_accessor :input_schema
 
+      # Server-side declaration that this tool is display/render-only: a resolved result ends the turn and the model is not re-invoked on it (CR-11753). The client's terminal claim on a tool result is honored only when this agrees; leave false for data tools whose result the model must reason about.
+      attr_accessor :is_terminal
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :name => :name,
           :type => :type,
           :description => :description,
-          :input_schema => :inputSchema
+          :input_schema => :inputSchema,
+          :is_terminal => :isTerminal
         }
       end
 
@@ -32,7 +36,8 @@ module Algolia
           :name => :"String",
           :type => :"String",
           :description => :"String",
-          :input_schema => :"ClientToolsArgsSchema"
+          :input_schema => :"ClientToolsArgsSchema",
+          :is_terminal => :"Boolean"
         }
       end
 
@@ -89,6 +94,10 @@ module Algolia
         else
           self.input_schema = nil
         end
+
+        if attributes.key?(:is_terminal)
+          self.is_terminal = attributes[:is_terminal]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -99,7 +108,8 @@ module Algolia
           name == other.name &&
           type == other.type &&
           description == other.description &&
-          input_schema == other.input_schema
+          input_schema == other.input_schema &&
+          is_terminal == other.is_terminal
       end
 
       # @see the `==` method
@@ -111,7 +121,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [name, type, description, input_schema].hash
+        [name, type, description, input_schema, is_terminal].hash
       end
 
       # Builds the object from hash
