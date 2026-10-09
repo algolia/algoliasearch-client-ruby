@@ -8,11 +8,11 @@ require "time"
 module Algolia
   module Composition
     class ExternalProviderOrdering
-      DEFAULT = "default".freeze
+      ALGOLIA_DEFINED = "algoliaDefined".freeze
       PROVIDER_DEFINED = "providerDefined".freeze
 
       def self.all_vars
-        @all_vars ||= [DEFAULT, PROVIDER_DEFINED].freeze
+        @all_vars ||= [ALGOLIA_DEFINED, PROVIDER_DEFINED].freeze
       end
 
       # Builds the enum from string
