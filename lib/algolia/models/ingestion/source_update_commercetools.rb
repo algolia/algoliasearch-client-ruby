@@ -25,6 +25,9 @@ module Algolia
       # When set to true, the connector indexes objects with all images attributes instead of only the URLs.
       attr_accessor :use_images_objects
 
+      # When set to true, the connector uses the complete category path (e.g. \"Root > Level 1 > Category name\") in `categoriesCustomFields`.
+      attr_accessor :categories_custom_fields_full_path
+
       attr_accessor :custom_fields
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -36,6 +39,7 @@ module Algolia
           :fallback_is_in_stock_value => :fallbackIsInStockValue,
           :product_query_predicate => :productQueryPredicate,
           :use_images_objects => :useImagesObjects,
+          :categories_custom_fields_full_path => :categoriesCustomFieldsFullPath,
           :custom_fields => :customFields
         }
       end
@@ -49,6 +53,7 @@ module Algolia
           :fallback_is_in_stock_value => :"Boolean",
           :product_query_predicate => :"String",
           :use_images_objects => :"Boolean",
+          :categories_custom_fields_full_path => :"Boolean",
           :custom_fields => :"CommercetoolsCustomFields"
         }
       end
@@ -111,6 +116,10 @@ module Algolia
           self.use_images_objects = attributes[:use_images_objects]
         end
 
+        if attributes.key?(:categories_custom_fields_full_path)
+          self.categories_custom_fields_full_path = attributes[:categories_custom_fields_full_path]
+        end
+
         if attributes.key?(:custom_fields)
           self.custom_fields = attributes[:custom_fields]
         end
@@ -127,6 +136,7 @@ module Algolia
           fallback_is_in_stock_value == other.fallback_is_in_stock_value &&
           product_query_predicate == other.product_query_predicate &&
           use_images_objects == other.use_images_objects &&
+          categories_custom_fields_full_path == other.categories_custom_fields_full_path &&
           custom_fields == other.custom_fields
       end
 
@@ -146,6 +156,7 @@ module Algolia
           fallback_is_in_stock_value,
           product_query_predicate,
           use_images_objects,
+          categories_custom_fields_full_path,
           custom_fields
         ].hash
       end
