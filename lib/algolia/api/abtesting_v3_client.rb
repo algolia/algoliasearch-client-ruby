@@ -553,7 +553,7 @@ module Algolia
     # @param id [Integer] Unique A/B test identifier. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param metric [Array<MetricName>] List of metrics to retrieve. If not specified, all metrics are returned.
+    # @param metric [Array<MetricName>] Metrics to retrieve, as a comma-separated list. If not specified, all metrics are returned.
     # @param methods [Array<AnalysisMethod>] Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -574,7 +574,7 @@ module Algolia
       query_params = {}
       query_params[:startDate] = start_date unless start_date.nil?
       query_params[:endDate] = end_date unless end_date.nil?
-      query_params[:metric] = @api_client.build_collection_param(metric, :multi) unless metric.nil?
+      query_params[:metric] = @api_client.build_collection_param(metric, :csv) unless metric.nil?
       query_params[:methods] = @api_client.build_collection_param(methods, :csv) unless methods.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -600,7 +600,7 @@ module Algolia
     # @param id [Integer] Unique A/B test identifier. (required)
     # @param start_date [String] Start date of the period to analyze, in `YYYY-MM-DD` format.
     # @param end_date [String] End date of the period to analyze, in `YYYY-MM-DD` format.
-    # @param metric [Array<MetricName>] List of metrics to retrieve. If not specified, all metrics are returned.
+    # @param metric [Array<MetricName>] Metrics to retrieve, as a comma-separated list. If not specified, all metrics are returned.
     # @param methods [Array<AnalysisMethod>] Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn't change the test configuration or compute missing results. Duplicate values aren't allowed.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Timeseries]

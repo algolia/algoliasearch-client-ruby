@@ -26,6 +26,22 @@ module Algolia
       REVENUE = "revenue".freeze
       REVENUE_PER_SEARCH = "revenue_per_search".freeze
       AVERAGE_ORDER_VALUE = "average_order_value".freeze
+      CLICKED_USERS_COUNT = "clicked_users_count".freeze
+      CONVERTED_USERS_COUNT = "converted_users_count".freeze
+      ADD_TO_CART_USERS_COUNT = "add_to_cart_users_count".freeze
+      PURCHASE_USERS_COUNT = "purchase_users_count".freeze
+      USERS_WITH_NO_RESULTS_COUNT = "users_with_no_results_count".freeze
+      CLICKED_USERS_RATE = "clicked_users_rate".freeze
+      CONVERTED_USERS_RATE = "converted_users_rate".freeze
+      ADD_TO_CART_USERS_RATE = "add_to_cart_users_rate".freeze
+      PURCHASE_USERS_RATE = "purchase_users_rate".freeze
+      AVG_CLICK_THROUGH_RATE_PER_USER = "avg_click_through_rate_per_user".freeze
+      AVG_CONVERSION_RATE_PER_USER = "avg_conversion_rate_per_user".freeze
+      AVG_PURCHASE_RATE_PER_USER = "avg_purchase_rate_per_user".freeze
+      AVG_ADD_TO_CART_RATE_PER_USER = "avg_add_to_cart_rate_per_user".freeze
+      AVG_CLICK_POSITION_PER_USER = "avg_click_position_per_user".freeze
+      WINSORIZED_REVENUE_PER_USER = "winsorized_revenue_per_user".freeze
+      WINSORIZED_REVENUE_PER_PURCHASER = "winsorized_revenue_per_purchaser".freeze
 
       def self.all_vars
         @all_vars ||= [
@@ -46,7 +62,23 @@ module Algolia
           AVERAGE_CLICK_POSITION,
           REVENUE,
           REVENUE_PER_SEARCH,
-          AVERAGE_ORDER_VALUE
+          AVERAGE_ORDER_VALUE,
+          CLICKED_USERS_COUNT,
+          CONVERTED_USERS_COUNT,
+          ADD_TO_CART_USERS_COUNT,
+          PURCHASE_USERS_COUNT,
+          USERS_WITH_NO_RESULTS_COUNT,
+          CLICKED_USERS_RATE,
+          CONVERTED_USERS_RATE,
+          ADD_TO_CART_USERS_RATE,
+          PURCHASE_USERS_RATE,
+          AVG_CLICK_THROUGH_RATE_PER_USER,
+          AVG_CONVERSION_RATE_PER_USER,
+          AVG_PURCHASE_RATE_PER_USER,
+          AVG_ADD_TO_CART_RATE_PER_USER,
+          AVG_CLICK_POSITION_PER_USER,
+          WINSORIZED_REVENUE_PER_USER,
+          WINSORIZED_REVENUE_PER_PURCHASER
         ].freeze
       end
 
