@@ -13,9 +13,23 @@ module Algolia
       CONVERSION_RATE = "conversionRate".freeze
       PURCHASE_RATE = "purchaseRate".freeze
       NO_RESULTS_RATE = "noResultsRate".freeze
+      ADD_TO_CART_USERS_RATE = "addToCartUsersRate".freeze
+      CLICKED_USERS_RATE = "clickedUsersRate".freeze
+      CONVERTED_USERS_RATE = "convertedUsersRate".freeze
+      PURCHASE_USERS_RATE = "purchaseUsersRate".freeze
 
       def self.all_vars
-        @all_vars ||= [ADD_TO_CART_RATE, CLICK_THROUGH_RATE, CONVERSION_RATE, PURCHASE_RATE, NO_RESULTS_RATE].freeze
+        @all_vars ||= [
+          ADD_TO_CART_RATE,
+          CLICK_THROUGH_RATE,
+          CONVERSION_RATE,
+          PURCHASE_RATE,
+          NO_RESULTS_RATE,
+          ADD_TO_CART_USERS_RATE,
+          CLICKED_USERS_RATE,
+          CONVERTED_USERS_RATE,
+          PURCHASE_USERS_RATE
+        ].freeze
       end
 
       # Builds the enum from string

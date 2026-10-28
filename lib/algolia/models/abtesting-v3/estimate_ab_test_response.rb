@@ -11,7 +11,7 @@ module Algolia
       # Estimated number of days needed to reach the sample sizes required for detecting the configured effect. This value is based on historical traffic.
       attr_accessor :duration_days
 
-      # Sample size estimates for each variant. The first element is the control variant. Each element is the estimated number of searches required to achieve the desired statistical significance.
+      # Sample size estimates for each variant. The first element is the control variant. Each element is the estimated number of searches, or users for user-level rates (metrics ending in `UsersRate`), required to achieve the desired statistical significance.
       attr_accessor :sample_sizes
 
       # Attribute mapping from ruby-style variable name to JSON key.
