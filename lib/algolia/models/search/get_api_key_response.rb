@@ -23,7 +23,7 @@ module Algolia
       # Index names or patterns that this API key can access. By default, an API key can access all indices in the same application.  You can use leading and trailing wildcard characters (`*`):  - `dev_*` matches all indices starting with \"dev_\". - `*_dev` matches all indices ending with \"_dev\". - `*_products_*` matches all indices containing \"_products_\".
       attr_accessor :indexes
 
-      # Maximum number of results this API key can retrieve in one query. By default, there's no limit.
+      # Maximum number of hits this API key can retrieve per page.  If you set this to 0, the maximum allowed value (1,000) applies. If you also set `hitsPerPage` on the index, the engine uses the lower of the two values.
       attr_accessor :max_hits_per_query
 
       # Maximum number of API requests allowed per IP address or [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken) per hour.  If this limit is reached, the API returns an error with status code `429`. By default, there's no limit.
