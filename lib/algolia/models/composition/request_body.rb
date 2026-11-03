@@ -15,12 +15,16 @@ module Algolia
 
       attr_accessor :external_provider
 
+      # Per-feed parameters for `multifeed` compositions. Each key is a feed ID.  Feed `params` take precedence over the root `params`. A feed inherits every root key it doesn't set. A feed value replaces the root value instead of combining with it. This applies to every key, including `filters`, `facetFilters`, `optionalFilters`, and `analyticsTags`. For example, `filters` must repeat the common values. An empty value such as `filters: \"\"` discards the root value.  The API validates feed `params` like the root `params`. An unsupported parameter returns a 400 error.  A feed ID may not exist in the composition (for example, because a rule removed it). The response reports it in the `errors` field but request still succeeds.  Rules match once per request, against the root `params` only.
+      attr_accessor :feeds
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :params => :params,
           :feeds_order => :feedsOrder,
-          :external_provider => :externalProvider
+          :external_provider => :externalProvider,
+          :feeds => :feeds
         }
       end
 
@@ -29,7 +33,8 @@ module Algolia
         {
           :params => :"Params",
           :feeds_order => :"Array<String>",
-          :external_provider => :"ExternalProvider"
+          :external_provider => :"ExternalProvider",
+          :feeds => :"Hash<String, FeedRequest>"
         }
       end
 
@@ -76,6 +81,12 @@ module Algolia
         if attributes.key?(:external_provider)
           self.external_provider = attributes[:external_provider]
         end
+
+        if attributes.key?(:feeds)
+          if (value = attributes[:feeds]).is_a?(Hash)
+            self.feeds = value
+          end
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -85,7 +96,8 @@ module Algolia
         self.class == other.class &&
           params == other.params &&
           feeds_order == other.feeds_order &&
-          external_provider == other.external_provider
+          external_provider == other.external_provider &&
+          feeds == other.feeds
       end
 
       # @see the `==` method
@@ -97,7 +109,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [params, feeds_order, external_provider].hash
+        [params, feeds_order, external_provider, feeds].hash
       end
 
       # Builds the object from hash
