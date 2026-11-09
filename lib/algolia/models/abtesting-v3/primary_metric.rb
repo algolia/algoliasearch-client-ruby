@@ -17,6 +17,7 @@ module Algolia
       CLICKED_USERS_RATE = "clicked_users_rate".freeze
       CONVERTED_USERS_RATE = "converted_users_rate".freeze
       PURCHASE_USERS_RATE = "purchase_users_rate".freeze
+      USERS_WITH_NO_RESULTS_RATE = "users_with_no_results_rate".freeze
 
       def self.all_vars
         @all_vars ||= [
@@ -28,7 +29,8 @@ module Algolia
           ADD_TO_CART_USERS_RATE,
           CLICKED_USERS_RATE,
           CONVERTED_USERS_RATE,
-          PURCHASE_USERS_RATE
+          PURCHASE_USERS_RATE,
+          USERS_WITH_NO_RESULTS_RATE
         ].freeze
       end
 

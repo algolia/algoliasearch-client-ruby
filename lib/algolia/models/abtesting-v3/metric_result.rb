@@ -26,7 +26,7 @@ module Algolia
       # P-value for this variant compared to the control. Omitted when no p-value is available for this metric.
       attr_accessor :p_value
 
-      # Dimension defined during test creation. For revenue metrics, including `revenue_per_search`, this is the currency.
+      # Dimension defined during test creation. For revenue metrics, including `revenue_per_search` and `winsorized_revenue_per_user`, this is the currency.
       attr_accessor :dimension
 
       attr_accessor :metadata

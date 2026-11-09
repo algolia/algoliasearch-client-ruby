@@ -15,11 +15,15 @@ module Algolia
       # Mean value for this metric.
       attr_accessor :mean
 
+      # Only present for `winsorized_revenue_per_user`. Number of tracked users in this variant with a tracked purchase in the metric's currency (`dimension`), plus tracked users with no tracked purchase in any currency. Users who purchased only in other currencies are excluded. It's the sample size behind the mean, p-value, and intervals, and differs from the overall `user_count` metric. Omitted when the variant has no record for that currency.
+      attr_accessor :user_count
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :winsorized_value => :winsorizedValue,
-          :mean => :mean
+          :mean => :mean,
+          :user_count => :userCount
         }
       end
 
@@ -27,7 +31,8 @@ module Algolia
       def self.types_mapping
         {
           :winsorized_value => :"Float",
-          :mean => :"Float"
+          :mean => :"Float",
+          :user_count => :"Integer"
         }
       end
 
@@ -68,6 +73,10 @@ module Algolia
         if attributes.key?(:mean)
           self.mean = attributes[:mean]
         end
+
+        if attributes.key?(:user_count)
+          self.user_count = attributes[:user_count]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -76,7 +85,8 @@ module Algolia
         return true if self.equal?(other)
         self.class == other.class &&
           winsorized_value == other.winsorized_value &&
-          mean == other.mean
+          mean == other.mean &&
+          user_count == other.user_count
       end
 
       # @see the `==` method
@@ -88,7 +98,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [winsorized_value, mean].hash
+        [winsorized_value, mean, user_count].hash
       end
 
       # Builds the object from hash
