@@ -7,6 +7,7 @@ require "time"
 
 module Algolia
   module Composition
+    # Information about the compositions processed by the run request. Only present when `getRankingInfo` is `true`.
     class CompositionsSearchResponse
       attr_accessor :run
 
