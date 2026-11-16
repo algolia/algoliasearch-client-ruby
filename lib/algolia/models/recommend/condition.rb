@@ -15,11 +15,14 @@ module Algolia
       # An additional restriction that only triggers the rule, when the search has the same value as `ruleContexts` parameter. For example, if `context: mobile`, the rule is only triggered when the search request has a matching `ruleContexts: mobile`. A rule context must only contain alphanumeric characters.
       attr_accessor :context
 
+      attr_accessor :request_scope
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :filters => :filters,
-          :context => :context
+          :context => :context,
+          :request_scope => :requestScope
         }
       end
 
@@ -27,7 +30,8 @@ module Algolia
       def self.types_mapping
         {
           :filters => :"String",
-          :context => :"String"
+          :context => :"String",
+          :request_scope => :"RequestScope"
         }
       end
 
@@ -68,6 +72,10 @@ module Algolia
         if attributes.key?(:context)
           self.context = attributes[:context]
         end
+
+        if attributes.key?(:request_scope)
+          self.request_scope = attributes[:request_scope]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -76,7 +84,8 @@ module Algolia
         return true if self.equal?(other)
         self.class == other.class &&
           filters == other.filters &&
-          context == other.context
+          context == other.context &&
+          request_scope == other.request_scope
       end
 
       # @see the `==` method
@@ -88,7 +97,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [filters, context].hash
+        [filters, context, request_scope].hash
       end
 
       # Builds the object from hash

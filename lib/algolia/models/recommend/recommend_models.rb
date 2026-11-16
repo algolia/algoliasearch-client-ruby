@@ -10,11 +10,11 @@ module Algolia
     class RecommendModels
       RELATED_PRODUCTS = "related-products".freeze
       BOUGHT_TOGETHER = "bought-together".freeze
-      TRENDING_FACETS = "trending-facets".freeze
       TRENDING_ITEMS = "trending-items".freeze
+      LOOKING_SIMILAR = "looking-similar".freeze
 
       def self.all_vars
-        @all_vars ||= [RELATED_PRODUCTS, BOUGHT_TOGETHER, TRENDING_FACETS, TRENDING_ITEMS].freeze
+        @all_vars ||= [RELATED_PRODUCTS, BOUGHT_TOGETHER, TRENDING_ITEMS, LOOKING_SIMILAR].freeze
       end
 
       # Builds the enum from string
