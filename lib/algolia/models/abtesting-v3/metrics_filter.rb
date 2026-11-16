@@ -9,17 +9,19 @@ module Algolia
   module AbtestingV3
     # Boolean filter applied to the A/B test population. Each filter targets a boolean metric and decides whether to include (true) or exclude (false) matching records.
     class MetricsFilter
-      # Metric domain (for example `abtesting`, `personalization`).
+      # Metric domain (for example `abtesting`, `core`, `personalization`).
       attr_accessor :domain
 
       # Public metric name.
       attr_accessor :name
 
-      # Whether the experiment should record the effects of this filter.
+      # Whether the experiment should record the effects of this filter. Not supported by `core.hasExactCategoryFilter`.
       attr_accessor :track_effects
 
-      # If true, keep items that match the filter; if false, exclude them.
+      # If true, keep items that match the filter; if false, exclude them. Defaults to false.
       attr_accessor :includes
+
+      attr_accessor :parameters
 
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
@@ -27,7 +29,8 @@ module Algolia
           :domain => :domain,
           :name => :name,
           :track_effects => :trackEffects,
-          :includes => :includes
+          :includes => :includes,
+          :parameters => :parameters
         }
       end
 
@@ -37,7 +40,8 @@ module Algolia
           :domain => :"String",
           :name => :"String",
           :track_effects => :"Boolean",
-          :includes => :"Boolean"
+          :includes => :"Boolean",
+          :parameters => :"MetricsFilterParameters"
         }
       end
 
@@ -90,6 +94,10 @@ module Algolia
         if attributes.key?(:includes)
           self.includes = attributes[:includes]
         end
+
+        if attributes.key?(:parameters)
+          self.parameters = attributes[:parameters]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -100,7 +108,8 @@ module Algolia
           domain == other.domain &&
           name == other.name &&
           track_effects == other.track_effects &&
-          includes == other.includes
+          includes == other.includes &&
+          parameters == other.parameters
       end
 
       # @see the `==` method
@@ -112,7 +121,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [domain, name, track_effects, includes].hash
+        [domain, name, track_effects, includes, parameters].hash
       end
 
       # Builds the object from hash
