@@ -28,9 +28,7 @@ module Algolia
       # List of attributes with nullable: true
       def self.openapi_nullable
         Set.new(
-          [
-            :default_model
-          ]
+          []
         )
       end
 
@@ -59,6 +57,8 @@ module Algolia
 
         if attributes.key?(:default_model)
           self.default_model = attributes[:default_model]
+        else
+          self.default_model = nil
         end
       end
 

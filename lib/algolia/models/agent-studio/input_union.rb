@@ -13,12 +13,15 @@ module Algolia
         def openapi_one_of
           [
             :"AnthropicProviderInput",
+            :"AzureOpenAIProviderCreateInput",
             :"AzureOpenAIProviderInput",
             :"BaseProviderInput",
-            :"ManagedProviderResponseInput",
+            :"MistralProviderInput",
             :"OpenAICompatibleProviderInput",
             :"OpenAIProviderInput",
-            :"XAIProviderInput"
+            :"VertexAIProviderInput",
+            :"XAIProviderInput",
+            :"AlgoliaManagedLLMCreateInput"
           ]
         end
 

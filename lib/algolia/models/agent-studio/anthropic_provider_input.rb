@@ -13,11 +13,15 @@ module Algolia
 
       attr_accessor :base_url
 
+      # Required for API keys not scoped to a single workspace (sk-ant-usr-...). Sent as the anthropic-workspace-id header on every request.
+      attr_accessor :workspace_id
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :api_key => :apiKey,
-          :base_url => :baseUrl
+          :base_url => :baseUrl,
+          :workspace_id => :workspaceId
         }
       end
 
@@ -25,7 +29,8 @@ module Algolia
       def self.types_mapping
         {
           :api_key => :"String",
-          :base_url => :"String"
+          :base_url => :"String",
+          :workspace_id => :"String"
         }
       end
 
@@ -33,7 +38,8 @@ module Algolia
       def self.openapi_nullable
         Set.new(
           [
-            :base_url
+            :base_url,
+            :workspace_id
           ]
         )
       end
@@ -70,6 +76,10 @@ module Algolia
         if attributes.key?(:base_url)
           self.base_url = attributes[:base_url]
         end
+
+        if attributes.key?(:workspace_id)
+          self.workspace_id = attributes[:workspace_id]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -78,7 +88,8 @@ module Algolia
         return true if self.equal?(other)
         self.class == other.class &&
           api_key == other.api_key &&
-          base_url == other.base_url
+          base_url == other.base_url &&
+          workspace_id == other.workspace_id
       end
 
       # @see the `==` method
@@ -90,7 +101,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [api_key, base_url].hash
+        [api_key, base_url, workspace_id].hash
       end
 
       # Builds the object from hash

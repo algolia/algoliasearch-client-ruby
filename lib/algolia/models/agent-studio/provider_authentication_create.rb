@@ -28,7 +28,7 @@ module Algolia
         {
           :name => :"String",
           :provider_name => :"ProviderName",
-          :input => :"ProviderInput"
+          :input => :"InputUnion"
         }
       end
 

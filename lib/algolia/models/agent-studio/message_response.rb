@@ -41,6 +41,8 @@ module Algolia
 
       attr_accessor :guardrail
 
+      attr_accessor :metadata
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -59,7 +61,8 @@ module Algolia
           :is_cache_hit => :isCacheHit,
           :turn_context => :turnContext,
           :events => :events,
-          :guardrail => :guardrail
+          :guardrail => :guardrail,
+          :metadata => :metadata
         }
       end
 
@@ -81,7 +84,8 @@ module Algolia
           :is_cache_hit => :"Boolean",
           :turn_context => :"Hash<String, Object>",
           :events => :"Array<MessageEvent>",
-          :guardrail => :"GuardrailOutcome"
+          :guardrail => :"GuardrailOutcome",
+          :metadata => :"Hash<String, Object>"
         }
       end
 
@@ -97,7 +101,8 @@ module Algolia
             :output_token_details,
             :is_cache_hit,
             :turn_context,
-            :guardrail
+            :guardrail,
+            :metadata
           ]
         )
       end
@@ -210,6 +215,12 @@ module Algolia
         if attributes.key?(:guardrail)
           self.guardrail = attributes[:guardrail]
         end
+
+        if attributes.key?(:metadata)
+          if (value = attributes[:metadata]).is_a?(Hash)
+            self.metadata = value
+          end
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -232,7 +243,8 @@ module Algolia
           is_cache_hit == other.is_cache_hit &&
           turn_context == other.turn_context &&
           events == other.events &&
-          guardrail == other.guardrail
+          guardrail == other.guardrail &&
+          metadata == other.metadata
       end
 
       # @see the `==` method
@@ -260,7 +272,8 @@ module Algolia
           is_cache_hit,
           turn_context,
           events,
-          guardrail
+          guardrail,
+          metadata
         ].hash
       end
 

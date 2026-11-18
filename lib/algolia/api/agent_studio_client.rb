@@ -1287,7 +1287,7 @@ module Algolia
     # Retrieve details of the specified agent.
     #
     # Required API Key ACLs:
-    #   - settings
+    #   - editSettings
     # @param agent_id [String] The agentId. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1323,7 +1323,7 @@ module Algolia
     # Retrieve details of the specified agent.
     #
     # Required API Key ACLs:
-    #   - settings
+    #   - editSettings
     # @param agent_id [String] The agentId. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [AgentWithVersionResponse]
@@ -1338,7 +1338,7 @@ module Algolia
     # Get a single allowed domain by id.
     #
     # Required API Key ACLs:
-    #   - settings
+    #   - editSettings
     # @param domain_id [String] The domainId. (required)
     # @param agent_id [String] The agentId. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1385,7 +1385,7 @@ module Algolia
     # Get a single allowed domain by id.
     #
     # Required API Key ACLs:
-    #   - settings
+    #   - editSettings
     # @param domain_id [String] The domainId. (required)
     # @param agent_id [String] The agentId. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -1543,7 +1543,7 @@ module Algolia
     # Get Provider.
     #
     # Required API Key ACLs:
-    #   - settings
+    #   - editSettings
     # @param provider_id [String] The providerId. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1582,7 +1582,7 @@ module Algolia
     # Get Provider.
     #
     # Required API Key ACLs:
-    #   - settings
+    #   - editSettings
     # @param provider_id [String] The providerId. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [ProviderAuthenticationResponse]
@@ -1747,7 +1747,7 @@ module Algolia
     # List all allowed domain patterns for this agent.
     #
     # Required API Key ACLs:
-    #   - settings
+    #   - editSettings
     # @param agent_id [String] The agentId. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -1786,7 +1786,7 @@ module Algolia
     # List all allowed domain patterns for this agent.
     #
     # Required API Key ACLs:
-    #   - settings
+    #   - editSettings
     # @param agent_id [String] The agentId. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [AllowedDomainListResponse]
@@ -1933,7 +1933,7 @@ module Algolia
     # List all agents with pagination and filtering.
     #
     # Required API Key ACLs:
-    #   - settings
+    #   - editSettings
     # @param page [Integer] Page number. (default to 1)
     # @param limit [Integer] Items per page. (default to 10)
     # @param provider_id [String] Filter by provider id.
@@ -1965,7 +1965,7 @@ module Algolia
     # List all agents with pagination and filtering.
     #
     # Required API Key ACLs:
-    #   - settings
+    #   - editSettings
     # @param page [Integer] Page number. (default to 1)
     # @param limit [Integer] Items per page. (default to 10)
     # @param provider_id [String] Filter by provider id.
@@ -2019,7 +2019,7 @@ module Algolia
     # Get available models for a specific provider.
     #
     # Required API Key ACLs:
-    #   - settings
+    #   - editSettings
     # @param provider_id [String] The providerId. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
@@ -2058,7 +2058,7 @@ module Algolia
     # Get available models for a specific provider.
     #
     # Required API Key ACLs:
-    #   - settings
+    #   - editSettings
     # @param provider_id [String] The providerId. (required)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Array<String>]
@@ -2070,7 +2070,7 @@ module Algolia
     # List Providers.
     #
     # Required API Key ACLs:
-    #   - settings
+    #   - editSettings
     # @param page [Integer] Page number. (default to 1)
     # @param limit [Integer] Items per page. (default to 10)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
@@ -2100,7 +2100,7 @@ module Algolia
     # List Providers.
     #
     # Required API Key ACLs:
-    #   - settings
+    #   - editSettings
     # @param page [Integer] Page number. (default to 1)
     # @param limit [Integer] Items per page. (default to 10)
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)

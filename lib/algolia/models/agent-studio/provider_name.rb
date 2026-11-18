@@ -11,13 +11,27 @@ module Algolia
       OPENAI = "openai".freeze
       AZURE_OPENAI = "azure_openai".freeze
       GOOGLE_GENAI = "google_genai".freeze
+      GOOGLE_VERTEXAI = "google_vertexai".freeze
       DEEPSEEK = "deepseek".freeze
       OPENAI_COMPATIBLE = "openai_compatible".freeze
+      ALGOLIA_MANAGED_LLM = "algolia_managed_llm".freeze
       XAI = "xai".freeze
       ANTHROPIC = "anthropic".freeze
+      MISTRALAI = "mistralai".freeze
 
       def self.all_vars
-        @all_vars ||= [OPENAI, AZURE_OPENAI, GOOGLE_GENAI, DEEPSEEK, OPENAI_COMPATIBLE, XAI, ANTHROPIC].freeze
+        @all_vars ||= [
+          OPENAI,
+          AZURE_OPENAI,
+          GOOGLE_GENAI,
+          GOOGLE_VERTEXAI,
+          DEEPSEEK,
+          OPENAI_COMPATIBLE,
+          ALGOLIA_MANAGED_LLM,
+          XAI,
+          ANTHROPIC,
+          MISTRALAI
+        ].freeze
       end
 
       # Builds the enum from string

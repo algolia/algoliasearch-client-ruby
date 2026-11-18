@@ -16,6 +16,8 @@ module Algolia
       # Azure model deployment name.
       attr_accessor :azure_deployment
 
+      attr_accessor :api_mode
+
       attr_accessor :api_version
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -24,6 +26,7 @@ module Algolia
           :api_key => :apiKey,
           :azure_endpoint => :azureEndpoint,
           :azure_deployment => :azureDeployment,
+          :api_mode => :apiMode,
           :api_version => :apiVersion
         }
       end
@@ -34,6 +37,7 @@ module Algolia
           :api_key => :"String",
           :azure_endpoint => :"String",
           :azure_deployment => :"String",
+          :api_mode => :"ApiModeEnum",
           :api_version => :"String"
         }
       end
@@ -88,6 +92,10 @@ module Algolia
           self.azure_deployment = nil
         end
 
+        if attributes.key?(:api_mode)
+          self.api_mode = attributes[:api_mode]
+        end
+
         if attributes.key?(:api_version)
           self.api_version = attributes[:api_version]
         end
@@ -101,6 +109,7 @@ module Algolia
           api_key == other.api_key &&
           azure_endpoint == other.azure_endpoint &&
           azure_deployment == other.azure_deployment &&
+          api_mode == other.api_mode &&
           api_version == other.api_version
       end
 
@@ -113,7 +122,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [api_key, azure_endpoint, azure_deployment, api_version].hash
+        [api_key, azure_endpoint, azure_deployment, api_mode, api_version].hash
       end
 
       # Builds the object from hash

@@ -15,8 +15,10 @@ module Algolia
             :"AnthropicProviderInput",
             :"AzureOpenAIProviderInput",
             :"BaseProviderInput",
+            :"MistralProviderInput",
             :"OpenAICompatibleProviderInput",
             :"OpenAIProviderInput",
+            :"VertexAIProviderInput",
             :"XAIProviderInput"
           ]
         end
