@@ -213,6 +213,9 @@ module Algolia
 
       attr_accessor :automatic_optional_facet_filters
 
+      # Whether [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) runs concurrently with Personalization.  Dynamic Re-Ranking isn't applied when `distinct` > 1, even if `allowReRankingOnPersonalization` is `true`.
+      attr_accessor :allow_re_ranking_on_personalization
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -291,7 +294,8 @@ module Algolia
           :re_ranking_apply_filter => :reRankingApplyFilter,
           :query => :query,
           :automatic_facet_filters => :automaticFacetFilters,
-          :automatic_optional_facet_filters => :automaticOptionalFacetFilters
+          :automatic_optional_facet_filters => :automaticOptionalFacetFilters,
+          :allow_re_ranking_on_personalization => :allowReRankingOnPersonalization
         }
       end
 
@@ -373,7 +377,8 @@ module Algolia
           :re_ranking_apply_filter => :"ReRankingApplyFilter",
           :query => :"ConsequenceQuery",
           :automatic_facet_filters => :"AutomaticFacetFilters",
-          :automatic_optional_facet_filters => :"AutomaticFacetFilters"
+          :automatic_optional_facet_filters => :"AutomaticFacetFilters",
+          :allow_re_ranking_on_personalization => :"Boolean"
         }
       end
 
@@ -393,7 +398,8 @@ module Algolia
         [
           :"BaseSearchParamsWithoutQuery",
           :"IndexSettingsAsSearchParams",
-          :"Params"
+          :"Params",
+          :"SearchParamsAllowReRanking"
         ]
       end
 
@@ -755,6 +761,10 @@ module Algolia
         if attributes.key?(:automatic_optional_facet_filters)
           self.automatic_optional_facet_filters = attributes[:automatic_optional_facet_filters]
         end
+
+        if attributes.key?(:allow_re_ranking_on_personalization)
+          self.allow_re_ranking_on_personalization = attributes[:allow_re_ranking_on_personalization]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -837,7 +847,8 @@ module Algolia
           re_ranking_apply_filter == other.re_ranking_apply_filter &&
           query == other.query &&
           automatic_facet_filters == other.automatic_facet_filters &&
-          automatic_optional_facet_filters == other.automatic_optional_facet_filters
+          automatic_optional_facet_filters == other.automatic_optional_facet_filters &&
+          allow_re_ranking_on_personalization == other.allow_re_ranking_on_personalization
       end
 
       # @see the `==` method
@@ -925,7 +936,8 @@ module Algolia
           re_ranking_apply_filter,
           query,
           automatic_facet_filters,
-          automatic_optional_facet_filters
+          automatic_optional_facet_filters,
+          allow_re_ranking_on_personalization
         ].hash
       end
 

@@ -210,6 +210,9 @@ module Algolia
 
       attr_accessor :re_ranking_apply_filter
 
+      # Whether [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) runs concurrently with Personalization.  Dynamic Re-Ranking isn't applied when `distinct` > 1, even if `allowReRankingOnPersonalization` is `true`.
+      attr_accessor :allow_re_ranking_on_personalization
+
       # Cursor to get the next page of the response.  The parameter must match the value returned in the response of a previous request. The last page of the response does not return a `cursor` attribute.
       attr_accessor :cursor
 
@@ -290,6 +293,7 @@ module Algolia
           :rendering_content => :renderingContent,
           :enable_re_ranking => :enableReRanking,
           :re_ranking_apply_filter => :reRankingApplyFilter,
+          :allow_re_ranking_on_personalization => :allowReRankingOnPersonalization,
           :cursor => :cursor
         }
       end
@@ -371,6 +375,7 @@ module Algolia
           :rendering_content => :"RenderingContent",
           :enable_re_ranking => :"Boolean",
           :re_ranking_apply_filter => :"ReRankingApplyFilter",
+          :allow_re_ranking_on_personalization => :"Boolean",
           :cursor => :"String"
         }
       end
@@ -745,6 +750,10 @@ module Algolia
           self.re_ranking_apply_filter = attributes[:re_ranking_apply_filter]
         end
 
+        if attributes.key?(:allow_re_ranking_on_personalization)
+          self.allow_re_ranking_on_personalization = attributes[:allow_re_ranking_on_personalization]
+        end
+
         if attributes.key?(:cursor)
           self.cursor = attributes[:cursor]
         end
@@ -829,6 +838,7 @@ module Algolia
           rendering_content == other.rendering_content &&
           enable_re_ranking == other.enable_re_ranking &&
           re_ranking_apply_filter == other.re_ranking_apply_filter &&
+          allow_re_ranking_on_personalization == other.allow_re_ranking_on_personalization &&
           cursor == other.cursor
       end
 
@@ -916,6 +926,7 @@ module Algolia
           rendering_content,
           enable_re_ranking,
           re_ranking_apply_filter,
+          allow_re_ranking_on_personalization,
           cursor
         ].hash
       end
