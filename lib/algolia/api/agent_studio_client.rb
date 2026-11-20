@@ -352,6 +352,7 @@ module Algolia
     # @param memory [Boolean] Set to false to disable memory (enabled by default).
     # @param analytics [Boolean] Set to false to skip analytics for this completion (default: true). Disables Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and query-suggestions training. Useful for offline-eval workflows. (default to true)
     # @param x_algolia_secure_user_token [String] The X-Algolia-Secure-User-Token.
+    # @param ephemeral [Boolean] Set to true to not retain the conversation: it is processed and analyzed like any other, but removed by the next cleanup run instead of being kept in the history. Overrides the agent's ephemeralConversations setting; omit to use it.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def create_agent_completion_with_http_info(
@@ -363,6 +364,7 @@ module Algolia
       memory = nil,
       analytics = nil,
       x_algolia_secure_user_token = nil,
+      ephemeral = nil,
       request_options = {}
     )
       # verify the required parameter 'agent_id' is set
@@ -392,6 +394,7 @@ module Algolia
       query_params[:cache] = cache unless cache.nil?
       query_params[:memory] = memory unless memory.nil?
       query_params[:analytics] = analytics unless analytics.nil?
+      query_params[:ephemeral] = ephemeral unless ephemeral.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
       unless x_algolia_secure_user_token.nil?
@@ -425,6 +428,7 @@ module Algolia
     # @param memory [Boolean] Set to false to disable memory (enabled by default).
     # @param analytics [Boolean] Set to false to skip analytics for this completion (default: true). Disables Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and query-suggestions training. Useful for offline-eval workflows. (default to true)
     # @param x_algolia_secure_user_token [String] The X-Algolia-Secure-User-Token.
+    # @param ephemeral [Boolean] Set to true to not retain the conversation: it is processed and analyzed like any other, but removed by the next cleanup run instead of being kept in the history. Overrides the agent's ephemeralConversations setting; omit to use it.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Hash<String, Object>]
     def create_agent_completion(
@@ -436,6 +440,7 @@ module Algolia
       memory = nil,
       analytics = nil,
       x_algolia_secure_user_token = nil,
+      ephemeral = nil,
       request_options = {}
     )
       response = create_agent_completion_with_http_info(
@@ -447,6 +452,7 @@ module Algolia
         memory,
         analytics,
         x_algolia_secure_user_token,
+        ephemeral,
         request_options
       )
       @api_client.deserialize(response.body, request_options[:debug_return_type] || "Hash<String, Object>")
@@ -904,9 +910,16 @@ module Algolia
     # @param agent_id [String] The agentId. (required)
     # @param start_date [String] Filter conversations created after this date (format: YYYY-MM-DD).
     # @param end_date [String] Filter conversations created before this date (format: YYYY-MM-DD).
+    # @param ephemeral [Boolean] Filter by ephemeral (not retained) conversations; omit to include both.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def delete_agent_conversations_with_http_info(agent_id, start_date = nil, end_date = nil, request_options = {})
+    def delete_agent_conversations_with_http_info(
+      agent_id,
+      start_date = nil,
+      end_date = nil,
+      ephemeral = nil,
+      request_options = {}
+    )
       # verify the required parameter 'agent_id' is set
       if @api_client.config.client_side_validation && agent_id.nil?
         raise ArgumentError, "Parameter `agent_id` is required when calling `delete_agent_conversations`."
@@ -923,6 +936,7 @@ module Algolia
       query_params = {}
       query_params[:startDate] = start_date unless start_date.nil?
       query_params[:endDate] = end_date unless end_date.nil?
+      query_params[:ephemeral] = ephemeral unless ephemeral.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
@@ -947,10 +961,11 @@ module Algolia
     # @param agent_id [String] The agentId. (required)
     # @param start_date [String] Filter conversations created after this date (format: YYYY-MM-DD).
     # @param end_date [String] Filter conversations created before this date (format: YYYY-MM-DD).
+    # @param ephemeral [Boolean] Filter by ephemeral (not retained) conversations; omit to include both.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [nil]
-    def delete_agent_conversations(agent_id, start_date = nil, end_date = nil, request_options = {})
-      delete_agent_conversations_with_http_info(agent_id, start_date, end_date, request_options)
+    def delete_agent_conversations(agent_id, start_date = nil, end_date = nil, ephemeral = nil, request_options = {})
+      delete_agent_conversations_with_http_info(agent_id, start_date, end_date, ephemeral, request_options)
       nil
     end
 
@@ -1231,9 +1246,16 @@ module Algolia
     # @param agent_id [String] The agentId. (required)
     # @param start_date [String] Filter conversations created after this date (format: YYYY-MM-DD).
     # @param end_date [String] Filter conversations created before this date (format: YYYY-MM-DD).
+    # @param ephemeral [Boolean] Filter by ephemeral (not retained) conversations; omit to include both.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
-    def export_conversations_with_http_info(agent_id, start_date = nil, end_date = nil, request_options = {})
+    def export_conversations_with_http_info(
+      agent_id,
+      start_date = nil,
+      end_date = nil,
+      ephemeral = nil,
+      request_options = {}
+    )
       # verify the required parameter 'agent_id' is set
       if @api_client.config.client_side_validation && agent_id.nil?
         raise ArgumentError, "Parameter `agent_id` is required when calling `export_conversations`."
@@ -1250,6 +1272,7 @@ module Algolia
       query_params = {}
       query_params[:startDate] = start_date unless start_date.nil?
       query_params[:endDate] = end_date unless end_date.nil?
+      query_params[:ephemeral] = ephemeral unless ephemeral.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
       header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
@@ -1274,10 +1297,11 @@ module Algolia
     # @param agent_id [String] The agentId. (required)
     # @param start_date [String] Filter conversations created after this date (format: YYYY-MM-DD).
     # @param end_date [String] Filter conversations created before this date (format: YYYY-MM-DD).
+    # @param ephemeral [Boolean] Filter by ephemeral (not retained) conversations; omit to include both.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Array<ConversationFullResponse>]
-    def export_conversations(agent_id, start_date = nil, end_date = nil, request_options = {})
-      response = export_conversations_with_http_info(agent_id, start_date, end_date, request_options)
+    def export_conversations(agent_id, start_date = nil, end_date = nil, ephemeral = nil, request_options = {})
+      response = export_conversations_with_http_info(agent_id, start_date, end_date, ephemeral, request_options)
       @api_client.deserialize(
         response.body,
         request_options[:debug_return_type] || "Array<AgentStudio::ConversationFullResponse>"
@@ -1814,6 +1838,7 @@ module Algolia
     # @param converted [Boolean] Filter by conversations with at least one conversion.
     # @param has_algolia_search [Boolean] Filter by conversations where the search tool was used.
     # @param x_algolia_secure_user_token [String] The X-Algolia-Secure-User-Token.
+    # @param ephemeral [Boolean] Filter by ephemeral (not retained) conversations; omit to include both.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [Http::Response] the response
     def list_agent_conversations_with_http_info(
@@ -1829,6 +1854,7 @@ module Algolia
       converted = nil,
       has_algolia_search = nil,
       x_algolia_secure_user_token = nil,
+      ephemeral = nil,
       request_options = {}
     )
       # verify the required parameter 'agent_id' is set
@@ -1855,6 +1881,7 @@ module Algolia
       query_params[:clicked] = clicked unless clicked.nil?
       query_params[:converted] = converted unless converted.nil?
       query_params[:hasAlgoliaSearch] = has_algolia_search unless has_algolia_search.nil?
+      query_params[:ephemeral] = ephemeral unless ephemeral.nil?
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
       unless x_algolia_secure_user_token.nil?
@@ -1892,6 +1919,7 @@ module Algolia
     # @param converted [Boolean] Filter by conversations with at least one conversion.
     # @param has_algolia_search [Boolean] Filter by conversations where the search tool was used.
     # @param x_algolia_secure_user_token [String] The X-Algolia-Secure-User-Token.
+    # @param ephemeral [Boolean] Filter by ephemeral (not retained) conversations; omit to include both.
     # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
     # @return [PaginatedConversationsResponse]
     def list_agent_conversations(
@@ -1907,6 +1935,7 @@ module Algolia
       converted = nil,
       has_algolia_search = nil,
       x_algolia_secure_user_token = nil,
+      ephemeral = nil,
       request_options = {}
     )
       response = list_agent_conversations_with_http_info(
@@ -1922,6 +1951,7 @@ module Algolia
         converted,
         has_algolia_search,
         x_algolia_secure_user_token,
+        ephemeral,
         request_options
       )
       @api_client.deserialize(
@@ -1976,6 +2006,46 @@ module Algolia
       @api_client.deserialize(
         response.body,
         request_options[:debug_return_type] || "AgentStudio::PaginatedAgentsResponse"
+      )
+    end
+
+    # Live conversations counted against the per-application limit.
+    #
+    # Required API Key ACLs:
+    #   - logs
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [Http::Response] the response
+    def list_conversation_usage_with_http_info(request_options = {})
+      path = "/agent-studio/1/configuration/conversation-usage"
+      query_params = {}
+      query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
+      header_params = {}
+      header_params = header_params.merge(request_options[:header_params]) unless request_options[:header_params].nil?
+
+      post_body = request_options[:debug_body]
+
+      new_options = request_options.merge(
+        :operation => :"AgentStudioClient.list_conversation_usage",
+        :header_params => header_params,
+        :query_params => query_params,
+        :body => post_body,
+        :use_read_transporter => false
+      )
+
+      @api_client.call_api(:GET, path, new_options)
+    end
+
+    # Live conversations counted against the per-application limit.
+    #
+    # Required API Key ACLs:
+    #   - logs
+    # @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+    # @return [ConversationUsageResponse]
+    def list_conversation_usage(request_options = {})
+      response = list_conversation_usage_with_http_info(request_options)
+      @api_client.deserialize(
+        response.body,
+        request_options[:debug_return_type] || "AgentStudio::ConversationUsageResponse"
       )
     end
 

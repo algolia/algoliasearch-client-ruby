@@ -43,6 +43,8 @@ module Algolia
 
       attr_accessor :analytics_degraded
 
+      attr_accessor :is_ephemeral
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -62,7 +64,8 @@ module Algolia
           :feedback => :feedback,
           :impact_analytics => :impactAnalytics,
           :messages => :messages,
-          :analytics_degraded => :analyticsDegraded
+          :analytics_degraded => :analyticsDegraded,
+          :is_ephemeral => :isEphemeral
         }
       end
 
@@ -85,7 +88,8 @@ module Algolia
           :feedback => :"Array<FeedbackResponse>",
           :impact_analytics => :"ImpactAnalytics",
           :messages => :"Array<MessageResponse>",
-          :analytics_degraded => :"Boolean"
+          :analytics_degraded => :"Boolean",
+          :is_ephemeral => :"Boolean"
         }
       end
 
@@ -207,6 +211,10 @@ module Algolia
         if attributes.key?(:analytics_degraded)
           self.analytics_degraded = attributes[:analytics_degraded]
         end
+
+        if attributes.key?(:is_ephemeral)
+          self.is_ephemeral = attributes[:is_ephemeral]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -230,7 +238,8 @@ module Algolia
           feedback == other.feedback &&
           impact_analytics == other.impact_analytics &&
           messages == other.messages &&
-          analytics_degraded == other.analytics_degraded
+          analytics_degraded == other.analytics_degraded &&
+          is_ephemeral == other.is_ephemeral
       end
 
       # @see the `==` method
@@ -259,7 +268,8 @@ module Algolia
           feedback,
           impact_analytics,
           messages,
-          analytics_degraded
+          analytics_degraded,
+          is_ephemeral
         ].hash
       end
 

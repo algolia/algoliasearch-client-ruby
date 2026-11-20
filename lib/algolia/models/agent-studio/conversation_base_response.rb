@@ -39,6 +39,8 @@ module Algolia
 
       attr_accessor :impact_analytics
 
+      attr_accessor :is_ephemeral
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
@@ -56,7 +58,8 @@ module Algolia
           :total_tokens => :totalTokens,
           :conversation_metadata => :conversationMetadata,
           :feedback => :feedback,
-          :impact_analytics => :impactAnalytics
+          :impact_analytics => :impactAnalytics,
+          :is_ephemeral => :isEphemeral
         }
       end
 
@@ -77,7 +80,8 @@ module Algolia
           :total_tokens => :"Integer",
           :conversation_metadata => :"ConversationMetadata",
           :feedback => :"Array<FeedbackResponse>",
-          :impact_analytics => :"ImpactAnalytics"
+          :impact_analytics => :"ImpactAnalytics",
+          :is_ephemeral => :"Boolean"
         }
       end
 
@@ -187,6 +191,10 @@ module Algolia
         if attributes.key?(:impact_analytics)
           self.impact_analytics = attributes[:impact_analytics]
         end
+
+        if attributes.key?(:is_ephemeral)
+          self.is_ephemeral = attributes[:is_ephemeral]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -208,7 +216,8 @@ module Algolia
           total_tokens == other.total_tokens &&
           conversation_metadata == other.conversation_metadata &&
           feedback == other.feedback &&
-          impact_analytics == other.impact_analytics
+          impact_analytics == other.impact_analytics &&
+          is_ephemeral == other.is_ephemeral
       end
 
       # @see the `==` method
@@ -235,7 +244,8 @@ module Algolia
           total_tokens,
           conversation_metadata,
           feedback,
-          impact_analytics
+          impact_analytics,
+          is_ephemeral
         ].hash
       end
 
