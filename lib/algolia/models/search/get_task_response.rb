@@ -10,17 +10,22 @@ module Algolia
     class GetTaskResponse
       attr_accessor :status
 
+      # Indicates whether the index has pending tasks. This value is deprecated and always `false`. Don't use it.
+      attr_accessor :pending_task
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
-          :status => :status
+          :status => :status,
+          :pending_task => :pendingTask
         }
       end
 
       # Attribute type mapping.
       def self.types_mapping
         {
-          :status => :"TaskStatus"
+          :status => :"TaskStatus",
+          :pending_task => :"Boolean"
         }
       end
 
@@ -59,6 +64,10 @@ module Algolia
         else
           self.status = nil
         end
+
+        if attributes.key?(:pending_task)
+          self.pending_task = attributes[:pending_task]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -66,7 +75,8 @@ module Algolia
       def ==(other)
         return true if self.equal?(other)
         self.class == other.class &&
-          status == other.status
+          status == other.status &&
+          pending_task == other.pending_task
       end
 
       # @see the `==` method
@@ -78,7 +88,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [status].hash
+        [status, pending_task].hash
       end
 
       # Builds the object from hash
