@@ -3637,7 +3637,20 @@ module Algolia
             loop do
               begin
                 event = get_event(watch_response.run_id, watch_response.event_id, request_options)
-                break if event
+                status = event&.status
+                break if event && (status.nil? || status == Ingestion::EventStatus::SUCCEEDED)
+
+                if event &&
+                    ![Ingestion::EventStatus::CREATED, Ingestion::EventStatus::STARTED, Ingestion::EventStatus::RETRIED].include?(
+                      status
+                    )
+                  message = event.data.is_a?(Hash) ? (event.data["message"] || event.data[:message]) : nil
+                  raise(
+                    AlgoliaError,
+                    "ingestion push to index #{index_name} did not succeed: event #{watch_response.event_id} of run #{watch_response.run_id} has status #{status}#{message ? ": #{message}" : ""}"
+                  )
+                end
+
               rescue AlgoliaHttpError => e
                 raise e unless e.code == 404
               end
