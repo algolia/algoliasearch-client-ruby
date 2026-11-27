@@ -1230,10 +1230,9 @@ module Algolia
         raise ArgumentError, "Parameter `event_id` is required when calling `get_event`."
       end
 
-      path = "/1/runs/{runID}/events/{eventID}".sub("{" + "runID" + "}", Transport.encode_uri(run_id.to_s)).sub(
-        "{" + "eventID" + "}",
-        Transport.encode_uri(event_id.to_s)
-      )
+      path = "/1/runs/{runID}/events/{eventID}"
+        .sub("{" + "runID" + "}", Transport.encode_uri(run_id.to_s))
+        .sub("{" + "eventID" + "}", Transport.encode_uri(event_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -2041,10 +2040,7 @@ module Algolia
       query_params[:enabled] = enabled unless enabled.nil?
       query_params[:sourceID] = @api_client.build_collection_param(source_id, :csv) unless source_id.nil?
       query_params[:sourceType] = @api_client.build_collection_param(source_type, :csv) unless source_type.nil?
-      unless destination_id.nil?
-        query_params[:destinationID] = @api_client.build_collection_param(destination_id, :csv)
-      end
-
+      query_params[:destinationID] = @api_client.build_collection_param(destination_id, :csv) unless destination_id.nil?
       query_params[:triggerType] = @api_client.build_collection_param(trigger_type, :csv) unless trigger_type.nil?
       query_params[:withEmailNotifications] = with_email_notifications unless with_email_notifications.nil?
       query_params[:sort] = sort unless sort.nil?
@@ -2153,10 +2149,7 @@ module Algolia
       query_params[:action] = @api_client.build_collection_param(action, :csv) unless action.nil?
       query_params[:enabled] = enabled unless enabled.nil?
       query_params[:sourceID] = @api_client.build_collection_param(source_id, :csv) unless source_id.nil?
-      unless destination_id.nil?
-        query_params[:destinationID] = @api_client.build_collection_param(destination_id, :csv)
-      end
-
+      query_params[:destinationID] = @api_client.build_collection_param(destination_id, :csv) unless destination_id.nil?
       query_params[:triggerType] = @api_client.build_collection_param(trigger_type, :csv) unless trigger_type.nil?
       query_params[:sort] = sort unless sort.nil?
       query_params[:order] = order unless order.nil?

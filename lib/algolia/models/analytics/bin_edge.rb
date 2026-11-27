@@ -10,7 +10,7 @@ module Algolia
     # A histogram bin edge. Use integers for discrete distributions and floating-point values for continuous ones.
     module BinEdge
       class << self
-      # List of class defined in oneOf (OpenAPI v3)
+        # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
             :"Float",

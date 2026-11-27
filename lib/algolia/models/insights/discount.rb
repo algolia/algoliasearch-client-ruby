@@ -10,7 +10,7 @@ module Algolia
     # Absolute value of the discount for this product, in units of `currency`.
     module Discount
       class << self
-      # List of class defined in oneOf (OpenAPI v3)
+        # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
             :"Float",

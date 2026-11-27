@@ -10,7 +10,7 @@ module Algolia
     # The input for the transformation, which can be either code or a no-code configuration.
     module TransformationInput
       class << self
-      # List of class defined in oneOf (OpenAPI v3)
+        # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
             :"TransformationCode",

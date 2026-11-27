@@ -10,7 +10,7 @@ module Algolia
     # Filter to be applied to the search.  You can use this to respond to search queries that match a facet value. For example, if users search for \"comedy\", which matches a facet value of the \"genre\" facet, you can filter the results to show the top-ranked comedy movies.
     module AutomaticFacetFilters
       class << self
-      # List of class defined in oneOf (OpenAPI v3)
+        # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
             :"Array<AutomaticFacetFilter>",

@@ -77,7 +77,9 @@ module Algolia
       def retryable?(http_response_code, network_failure)
         return true if network_failure
 
-        !http_response_code.nil? && (http_response_code.to_i / 100).floor != 2 && (http_response_code.to_i / 100).floor != 4
+        !http_response_code.nil? &&
+          (http_response_code.to_i / 100).floor != 2 &&
+          (http_response_code.to_i / 100).floor != 4
       end
 
       # Iterates in the hosts list and reset the ones that are down

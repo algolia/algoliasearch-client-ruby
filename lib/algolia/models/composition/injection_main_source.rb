@@ -10,7 +10,7 @@ module Algolia
     # Source to be used to retrieve organic result set.
     module InjectionMainSource
       class << self
-      # List of class defined in oneOf (OpenAPI v3)
+        # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
             :"InjectionMainExternalProviderSource",

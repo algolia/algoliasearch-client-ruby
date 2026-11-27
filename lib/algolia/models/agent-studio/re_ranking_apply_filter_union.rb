@@ -9,7 +9,7 @@ module Algolia
   module AgentStudio
     module ReRankingApplyFilterUnion
       class << self
-      # List of class defined in oneOf (OpenAPI v3)
+        # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
             :"Array<Hash<String, Object>>",

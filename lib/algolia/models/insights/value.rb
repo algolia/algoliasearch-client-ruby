@@ -10,7 +10,7 @@ module Algolia
     # Total monetary value of this event in units of `currency`. This should be equal to the sum of `price` times `quantity`.
     module Value
       class << self
-      # List of class defined in oneOf (OpenAPI v3)
+        # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
             :"Float",

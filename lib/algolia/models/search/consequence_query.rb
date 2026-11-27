@@ -10,7 +10,7 @@ module Algolia
     # Replace or edit the search query.  If `consequenceQuery` is a string, the entire search query is replaced with that string. If `consequenceQuery` is an object, it describes incremental edits made to the query.
     module ConsequenceQuery
       class << self
-      # List of class defined in oneOf (OpenAPI v3)
+        # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
             :"ConsequenceQueryObject",

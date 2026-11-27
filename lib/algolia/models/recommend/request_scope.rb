@@ -10,7 +10,7 @@ module Algolia
     # Facet that a Trending Items request must target for the rule to apply.  Only available for the `trending-items` model. Rules without `requestScope` apply to all Trending Items requests.
     module RequestScope
       class << self
-      # List of class defined in oneOf (OpenAPI v3)
+        # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
             :"FacetRequestScope",

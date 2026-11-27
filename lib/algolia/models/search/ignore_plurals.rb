@@ -10,7 +10,7 @@ module Algolia
     # Treat singular, plurals, and other forms of declensions as equivalent. Only use this feature for the languages used in your index.
     module IgnorePlurals
       class << self
-      # List of class defined in oneOf (OpenAPI v3)
+        # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
             :"Array<SupportedLanguage>",

@@ -9,7 +9,7 @@ module Algolia
   module AgentStudio
     module NumericFiltersUnion
       class << self
-      # List of class defined in oneOf (OpenAPI v3)
+        # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
             :"Array<NumericFiltersUnion>",

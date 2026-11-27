@@ -223,10 +223,9 @@ module Algolia
         raise ArgumentError, "Parameter `body` is required when calling `add_or_update_object`."
       end
 
-      path = "/1/indexes/{indexName}/{objectID}".sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s)).sub(
-        "{" + "objectID" + "}",
-        Transport.encode_uri(algolia_object_id.to_s)
-      )
+      path = "/1/indexes/{indexName}/{objectID}"
+        .sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
+        .sub("{" + "objectID" + "}", Transport.encode_uri(algolia_object_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1103,10 +1102,9 @@ module Algolia
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `delete_object`."
       end
 
-      path = "/1/indexes/{indexName}/{objectID}".sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s)).sub(
-        "{" + "objectID" + "}",
-        Transport.encode_uri(algolia_object_id.to_s)
-      )
+      path = "/1/indexes/{indexName}/{objectID}"
+        .sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
+        .sub("{" + "objectID" + "}", Transport.encode_uri(algolia_object_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -1557,10 +1555,9 @@ module Algolia
         raise ArgumentError, "Parameter `algolia_object_id` is required when calling `get_object`."
       end
 
-      path = "/1/indexes/{indexName}/{objectID}".sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s)).sub(
-        "{" + "objectID" + "}",
-        Transport.encode_uri(algolia_object_id.to_s)
-      )
+      path = "/1/indexes/{indexName}/{objectID}"
+        .sub("{" + "indexName" + "}", Transport.encode_uri(index_name.to_s))
+        .sub("{" + "objectID" + "}", Transport.encode_uri(algolia_object_id.to_s))
       query_params = {}
       unless attributes_to_retrieve.nil?
         query_params[:attributesToRetrieve] = @api_client.build_collection_param(attributes_to_retrieve, :multi)
@@ -3473,10 +3470,7 @@ module Algolia
       end
 
       opts = {}
-      unless transformation_options.connect_timeout.nil?
-        opts[:connect_timeout] = transformation_options.connect_timeout
-      end
-
+      opts[:connect_timeout] = transformation_options.connect_timeout unless transformation_options.connect_timeout.nil?
       opts[:read_timeout] = transformation_options.read_timeout unless transformation_options.read_timeout.nil?
       opts[:write_timeout] = transformation_options.write_timeout unless transformation_options.write_timeout.nil?
       unless transformation_options.compression_type.nil?
@@ -3617,9 +3611,11 @@ module Algolia
       search_request_options = with_request_id(request_options)
 
       if objects.empty?
-        @api_client.logger.warn(
-          "replace_all_objects_with_transformation was called with an empty list of objects, which will delete all records currently in the \"#{index_name}\" index."
-        )
+        @api_client
+          .logger
+          .warn(
+            "replace_all_objects_with_transformation was called with an empty list of objects, which will delete all records currently in the \"#{index_name}\" index."
+          )
       end
 
       opts = Algolia::ChunkedHelperOptions.resolve(
@@ -3706,9 +3702,11 @@ module Algolia
         begin
           delete_index(tmp_index_name, without_timeouts(search_request_options))
         rescue StandardError => cleanup_error
-          @api_client.logger.warn(
-            "Failed to delete the temporary index \"#{tmp_index_name}\", please delete it manually: #{cleanup_error}"
-          )
+          @api_client
+            .logger
+            .warn(
+              "Failed to delete the temporary index \"#{tmp_index_name}\", please delete it manually: #{cleanup_error}"
+            )
         end
 
         raise e
@@ -4169,9 +4167,11 @@ module Algolia
       request_options = with_request_id(request_options)
 
       if objects.empty?
-        @api_client.logger.warn(
-          "replace_all_objects was called with an empty list of objects, which will delete all records currently in the \"#{index_name}\" index."
-        )
+        @api_client
+          .logger
+          .warn(
+            "replace_all_objects was called with an empty list of objects, which will delete all records currently in the \"#{index_name}\" index."
+          )
       end
 
       opts = Algolia::ChunkedHelperOptions.resolve(
@@ -4253,9 +4253,11 @@ module Algolia
         begin
           delete_index(tmp_index_name, without_timeouts(request_options))
         rescue StandardError => cleanup_error
-          @api_client.logger.warn(
-            "Failed to delete the temporary index \"#{tmp_index_name}\", please delete it manually: #{cleanup_error}"
-          )
+          @api_client
+            .logger
+            .warn(
+              "Failed to delete the temporary index \"#{tmp_index_name}\", please delete it manually: #{cleanup_error}"
+            )
         end
 
         raise e

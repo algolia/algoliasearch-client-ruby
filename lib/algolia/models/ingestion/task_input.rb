@@ -10,7 +10,7 @@ module Algolia
     # Configuration of the task, depending on its type.
     module TaskInput
       class << self
-      # List of class defined in oneOf (OpenAPI v3)
+        # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
             :"DockerStreamsInput",

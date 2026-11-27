@@ -133,10 +133,9 @@ module Algolia
         raise ArgumentError, "Parameter `variant_id` is required when calling `apply_variant_settings`."
       end
 
-      path = "/3/abtests/{id}/settings/{variantId}/apply".sub("{" + "id" + "}", Transport.encode_uri(id.to_s)).sub(
-        "{" + "variantId" + "}",
-        Transport.encode_uri(variant_id.to_s)
-      )
+      path = "/3/abtests/{id}/settings/{variantId}/apply"
+        .sub("{" + "id" + "}", Transport.encode_uri(id.to_s))
+        .sub("{" + "variantId" + "}", Transport.encode_uri(variant_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}
@@ -712,10 +711,9 @@ module Algolia
         raise ArgumentError, "Parameter `save_settings_request` is required when calling `save_variant_settings`."
       end
 
-      path = "/3/abtests/{id}/settings/{variantId}".sub("{" + "id" + "}", Transport.encode_uri(id.to_s)).sub(
-        "{" + "variantId" + "}",
-        Transport.encode_uri(variant_id.to_s)
-      )
+      path = "/3/abtests/{id}/settings/{variantId}"
+        .sub("{" + "id" + "}", Transport.encode_uri(id.to_s))
+        .sub("{" + "variantId" + "}", Transport.encode_uri(variant_id.to_s))
       query_params = {}
       query_params = query_params.merge(request_options[:query_params]) unless request_options[:query_params].nil?
       header_params = {}

@@ -9,7 +9,7 @@ module Algolia
   module Recommend
     module InsideBoundingBox
       class << self
-      # List of class defined in oneOf (OpenAPI v3)
+        # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
             :"Array<Array<Float>>",

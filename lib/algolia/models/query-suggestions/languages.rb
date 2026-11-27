@@ -10,7 +10,7 @@ module Algolia
     # Languages for deduplicating singular and plural suggestions. If specified, only the more popular form is included.
     module Languages
       class << self
-      # List of class defined in oneOf (OpenAPI v3)
+        # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
             :"Array<String>",

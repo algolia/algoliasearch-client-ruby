@@ -10,7 +10,7 @@ on:
 jobs:
   release:
     name: Publish
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-26.04
     if: "startsWith(github.event.head_commit.message, 'chore: release')"
     permissions:
       id-token: write
@@ -19,11 +19,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Install Ruby
-        uses: ruby/setup-ruby@651ff0d62c5c79bed6d53ec518387aae20e72c1a # v1.329.0
+        uses: ruby/setup-ruby@f9c4492e86def3e644ab32a0ef185eda5b0c20d0 # v1.342.0
         with:
-          ruby-version: 4.0.7
+          ruby-version: 4.0.10
           bundler-cache: true
 
-      - uses: rubygems/release-gem@7f9650160c1a4e7989fdc9855807bdbd421d8b6b # v1.4.1
+      - uses: rubygems/release-gem@5c53f5308233b7c0f47411f0471b3faae6fa57b2 # v1.4.2
         with:
           await-release: false
